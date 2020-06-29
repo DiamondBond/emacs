@@ -15,7 +15,7 @@
 
 ;; Misc
 (tool-bar-mode -1)
-;;(toggle-scroll-bar -1)
+(toggle-scroll-bar -1)
 (setq major-mode 'text-mode)
 (setq-default major-mode 'text-mode)
 (global-visual-line-mode 1)

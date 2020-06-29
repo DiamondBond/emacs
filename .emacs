@@ -15,7 +15,7 @@
 
 ;; Misc
 (tool-bar-mode -1)
-(toggle-scroll-bar -1)
+;;(toggle-scroll-bar -1)
 (setq major-mode 'text-mode)
 (setq-default major-mode 'text-mode)
 (global-visual-line-mode 1)
@@ -74,6 +74,11 @@
 (global-set-key (kbd "s-C-<down>") 'shrink-window)
 (global-set-key (kbd "s-C-<up>") 'enlarge-window)
 
+;; Toggles
+(global-set-key (kbd "<f5>") 'menu-bar-mode)
+(global-set-key (kbd "<f7>") 'scroll-bar-mode)
+(global-set-key (kbd "<f12>") 'linum-mode)
+
 ;; Bracket completion
 (show-paren-mode 1)
 (setq electric-pair-pairs '(
@@ -84,5 +89,12 @@
                             ))
 (electric-pair-mode t)
 
-;; F12 toggles line numbers
-(global-set-key (kbd "<f12>") 'linum-mode)
+;; Light for the day
+(load-theme 'modus-operandi t t)
+(run-at-time "05:00" (* 60 60 24)
+             (lambda () (enable-theme 'modus-operandi)))
+
+;; Dark for the night
+(load-theme 'modus-vivendi t t)
+(run-at-time "21:00" (* 60 60 24)
+             (lambda () (enable-theme 'modus-vivendi)))

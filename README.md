@@ -5,7 +5,7 @@ Minimal emacs configuration.
 
 [Install](#install)
 
-![Screenshot](https://raw.githubusercontent.com/diamondbond/emacs/img/emacs.png)
+![Screenshot](https://raw.githubusercontent.com/DiamondBond/emacs/master/img/emacs.png)
 
 </div>
 

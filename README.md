@@ -23,7 +23,7 @@ use for the VIM convert.
 It is lightweight and only relies on a few MELPA packages.
 
 # Features
-- Mostly default emacs appearance with a few GUI tweaks (notably; hidden toolbar)
+- Mostly default emacs appearance with a few GUI tweaks
 - Misc QOL improvements to various things within emacs
 - Inhibited startup message
 - Pretty eshell

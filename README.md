@@ -35,6 +35,8 @@ This is a simple configuration file for [GNU Emacs]
   - F5: toggles menubar
   - F7: toggles scrollbar
   - F12: toggles line numbers
+  - Ctrl + F1: loads modus-operandi theme
+  - Ctrl + F2: loads modus-vivendi theme
 
 # Prerequisites
 + Git (sudo apt/dnf install git)

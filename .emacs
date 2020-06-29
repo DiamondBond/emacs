@@ -88,13 +88,10 @@
 (global-set-key (kbd "<f5>") 'menu-bar-mode)
 (global-set-key (kbd "<f7>") 'scroll-bar-mode)
 (global-set-key (kbd "<f12>") 'linum-mode)
+(global-set-key (kbd "C-<f1>")
+                (lambda () (interactive)
+                  (load-theme 'modus-operandi t)))
+(global-set-key (kbd "C-<f2>")
+                (lambda () (interactive)
+                  (load-theme 'modus-vivendi t)))
 
-;; Light for the day
-(load-theme 'modus-operandi t t)
-(run-at-time "05:00" (* 60 60 24)
-             (lambda () (enable-theme 'modus-operandi)))
-
-;; Dark for the night
-(load-theme 'modus-vivendi t t)
-(run-at-time "21:00" (* 60 60 24)
-             (lambda () (enable-theme 'modus-vivendi)))

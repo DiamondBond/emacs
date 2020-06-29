@@ -1,11 +1,11 @@
 <div align="center">
 
-# Diamond Emacs
-My personal minimal emacs configuration.
+# Diamond's Emacs
+Minimal emacs configuration.
 
-[Install](#install) • [Documentation] • [FAQ] • [Screenshots]
+[Install](#install)
 
-![Doom Emacs Screenshot](https://raw.githubusercontent.com/diamondbond/emacs/img/emacs.png)
+![Screenshot](https://raw.githubusercontent.com/diamondbond/emacs/img/emacs.png)
 
 </div>
 
@@ -25,16 +25,16 @@ It is lightweight and only relies on a few MELPA packages.
 # Features
 - Mostly default emacs appearance with a few GUI tweaks (notably; hidden toolbar)
 - Misc QOL improvements to various things within emacs
+- Inhibited startup message
+- Pretty eshell
+- Sane indentation
+- Bracket completion
+- A few simple aliases (open, clean & y-or-n)
+- VI modelines (via eVIl mode - make sure to M-x package-install evil)
 - Nifty keybinds
   - F12: toggles line numbers
   - Shift + Ctrl + Direction: Shrink or enlarge windows
   - Super + Ctrl + Return: Open eShell
-- Bracket completion
-- Inhibited startup message
-- Pretty eshell
-- Sane indentation
-- A few simple aliases (open, clean, y-or-n)
-- VI modelines (via eVIl mode - make sure to M-x package-install evil)
 
 # Prerequisites
 + Git

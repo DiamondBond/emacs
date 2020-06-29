@@ -18,30 +18,31 @@ Minimal emacs configuration.
 - [Install](#install)
 
 # Introduction
-This is a configuration file for [GNU Emacs] with the aim to make emacs easier
-to use for the VIM convert.
-It is lightweight and only relies on the EVIL Melpa package.
+This is a simple configuration file for [GNU Emacs]
 
 # Features
-- Mostly default emacs appearance with a few GUI tweaks
-- VI modelines (via eVIl mode - make sure to M-x package-install evil)
-- Misc QOL improvements to various things within emacs (see .emacs for more details)
-  Heres a few notable mentions:
-  - Inhibited startup message
-  - Pretty eshell
-  - Sane indentation
-  - Bracket completion
-  - A few simple aliases (open, clean & y-or-n)
-- Nifty keybinds
-  - F12: toggles line numbers
-  - Shift + Ctrl + Direction: Shrink or enlarge windows
+- VI modelines via eVIl
+- Inhibited startup message
+- Select to clipboard
+- Conservative scrolling
+- Inline org-mode images
+- Nicer eshell prompt
+- Bracket completion
+- Some aliases (open, clean & y-or-n)
+- Some keybindings:
   - Super + Ctrl + Return: Open eShell
+  - Shift + Ctrl + Direction: Shrink or enlarge windows
+  - F5: toggles menubar
+  - F7: toggles scrollbar
+  - F12: toggles line numbers
 
 # Prerequisites
 + Git (sudo apt/dnf install git)
 + Emacs (sudo apt/dnf install emacs)
 + MELPA
-+ EVIL (M-x package-install evil)
+  + M-x package-install RET evil
+  + M-x package-install RET modus-operandi
+  + M-x package-install RET modus-vivendi
 
 # Install
 ``` sh

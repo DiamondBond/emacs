@@ -40,6 +40,16 @@
 (setq-default indent-tabs-mode t)
 (setq backward-delete-char-untabify-method 'nil)
 
+;; Bracket completion
+(show-paren-mode 1)
+(setq electric-pair-pairs '(
+                            (?\{ . ?\})
+                            (?\( . ?\))
+                            (?\[ . ?\])
+                            (?\" . ?\")
+                            ))
+(electric-pair-mode t)
+
 ;; Eshell Prompt
 (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
 (setq eshell-prompt-function
@@ -78,16 +88,6 @@
 (global-set-key (kbd "<f5>") 'menu-bar-mode)
 (global-set-key (kbd "<f7>") 'scroll-bar-mode)
 (global-set-key (kbd "<f12>") 'linum-mode)
-
-;; Bracket completion
-(show-paren-mode 1)
-(setq electric-pair-pairs '(
-                            (?\{ . ?\})
-                            (?\( . ?\))
-                            (?\[ . ?\])
-                            (?\" . ?\")
-                            ))
-(electric-pair-mode t)
 
 ;; Light for the day
 (load-theme 'modus-operandi t t)

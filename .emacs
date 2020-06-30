@@ -8,6 +8,25 @@
 (evil-mode 1)
 
 ;; Startup
+(if (display-graphic-p)
+    (progn
+      (setq initial-frame-alist
+            '(
+              (tool-bar-lines . 0)
+              (width . 95) ; chars
+              (height . 42) ; lines
+              (left . 50)
+              (top . 50)))
+      (setq default-frame-alist
+            '(
+              (tool-bar-lines . 0)
+              (width . 95)
+              (height . 42)
+			  (left . 50)
+			  (top . 50))))
+  (progn
+    (setq initial-frame-alist '( (tool-bar-lines . 0)))
+    (setq default-frame-alist '( (tool-bar-lines . 0)))))
 (setq inhibit-startup-message t)
 (defun display-startup-echo-area-message ()
   (message nil))
@@ -94,4 +113,11 @@
 (global-set-key (kbd "C-<f2>")
                 (lambda () (interactive)
                   (load-theme 'modus-vivendi t)))
+(global-set-key (kbd "C-<f10>") 'disable-theme)
 
+;; Org
+(org-babel-do-load-languages 'org-babel-load-languages
+    '(
+        (shell . t)
+    )
+)

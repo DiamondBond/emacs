@@ -12,8 +12,7 @@ Minimal emacs configuration.
 ---
 
 ### Table of Contents
-- [Introduction](#introduction)
-- [Features](#features)
+- [Introduction](#introduction) - [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Install](#install)
 
@@ -23,6 +22,7 @@ This is a simple configuration file for [GNU Emacs]
 # Features
 - VI modelines via eVIl
 - Inhibited startup message
+- Window geometry: 95x42
 - Select to clipboard
 - Conservative scrolling
 - Inline org-mode images
@@ -35,6 +35,7 @@ This is a simple configuration file for [GNU Emacs]
   - F5: toggles menubar
   - F7: toggles scrollbar
   - F12: toggles line numbers
+  - Ctrl + F10: disable theme
   - Ctrl + F1: loads modus-operandi theme
   - Ctrl + F2: loads modus-vivendi theme
 

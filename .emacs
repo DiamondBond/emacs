@@ -33,8 +33,14 @@
 (setq initial-scratch-message "")
 
 ;; Misc
+(ido-mode 1)
+;;(global-auto-revert-mode 1)
 (tool-bar-mode -1)
-;;(toggle-scroll-bar -1)
+(menu-bar-mode -1)
+;;(global-hl-line-mode 1)
+(toggle-scroll-bar -1)
+;;(setq-default truncate-lines t) 
+(column-number-mode 1)
 (setq major-mode 'text-mode)
 (setq-default major-mode 'text-mode)
 (global-visual-line-mode 1)
@@ -44,7 +50,6 @@
 (global-prettify-symbols-mode t)
 (setq scroll-conservatively 100)
 (transient-mark-mode 1)
-(setq org-startup-with-inline-images t)
 
 ;; Aliases
 (defalias 'open 'find-file-other-window)
@@ -106,16 +111,18 @@
 ;; Toggles
 (global-set-key (kbd "<f5>") 'menu-bar-mode)
 (global-set-key (kbd "<f7>") 'scroll-bar-mode)
+(global-set-key (kbd "<f8>") 'tool-bar-mode)
 (global-set-key (kbd "<f12>") 'linum-mode)
-(global-set-key (kbd "C-<f1>")
+(global-set-key (kbd "<f1>")
                 (lambda () (interactive)
                   (load-theme 'modus-operandi t)))
-(global-set-key (kbd "C-<f2>")
+(global-set-key (kbd "<f2>")
                 (lambda () (interactive)
                   (load-theme 'modus-vivendi t)))
-(global-set-key (kbd "C-<f10>") 'disable-theme)
+(global-set-key (kbd "<f10>") 'disable-theme)
 
 ;; Org
+(setq org-startup-with-inline-images t)
 (org-babel-do-load-languages 'org-babel-load-languages
     '(
         (shell . t)

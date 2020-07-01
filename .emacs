@@ -8,7 +8,7 @@
 (evil-mode 1)
 
 ;; Startup
-;;(load-theme 'plan9)
+(load-theme 'plan9)
 (if (display-graphic-p)
     (progn
       (setq initial-frame-alist

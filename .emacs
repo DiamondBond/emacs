@@ -8,6 +8,7 @@
 (evil-mode 1)
 
 ;; Startup
+;;(load-theme 'plan9)
 (if (display-graphic-p)
     (progn
       (setq initial-frame-alist
@@ -33,6 +34,7 @@
 (setq initial-scratch-message "")
 
 ;; Misc
+;;(set-default-font "Ubuntu Mono-12")
 (ido-mode 1)
 ;;(global-auto-revert-mode 1)
 (tool-bar-mode -1)
@@ -128,3 +130,21 @@
         (shell . t)
     )
 )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+	("18cd5a0173772cdaee5522b79c444acbc85f9a06055ec54bb91491173bc90aaa" default)))
+ '(org-agenda-files (quote ("~/org/org4beginners.org")))
+ '(package-selected-packages
+   (quote
+	(plan9-theme xelb pdf-tools org modus-vivendi-theme modus-operandi-theme htmlize evil dracula-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

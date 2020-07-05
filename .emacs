@@ -8,26 +8,25 @@
 (evil-mode 1)
 
 ;; Startup
-(load-theme 'plan9)
-(if (display-graphic-p)
-    (progn
-      (setq initial-frame-alist
-            '(
-              (tool-bar-lines . 0)
-              (width . 95) ; chars
-              (height . 42) ; lines
-              (left . 50)
-              (top . 50)))
-      (setq default-frame-alist
-            '(
-              (tool-bar-lines . 0)
-              (width . 95)
-              (height . 42)
-			  (left . 50)
-			  (top . 50))))
-  (progn
-    (setq initial-frame-alist '( (tool-bar-lines . 0)))
-    (setq default-frame-alist '( (tool-bar-lines . 0)))))
+;;(load-theme 'plan9)
+;;(if (display-graphic-p)
+;;    (progn
+;;      (setq initial-frame-alist
+;;            '(
+;;              (tool-bar-lines . 0)
+;;              (width . 95) ; chars
+;;              (height . 42) ; lines
+;;              (left . 50)
+;;              (top . 50)))
+;;      (setq default-frame-alist
+;;            '(
+;;              (tool-bar-lines . 0)
+;;              (width . 95)
+;;              (height . 42)
+;;			  (left . 50)
+;;			  (top . 50))))
+;;  (progn (setq initial-frame-alist '( (tool-bar-lines . 0)))
+;;    (setq default-frame-alist '( (tool-bar-lines . 0)))))
 (setq inhibit-startup-message t)
 (defun display-startup-echo-area-message ()
   (message nil))
@@ -125,6 +124,7 @@
 
 ;; Org
 (setq org-startup-with-inline-images t)
+(setq initial-major-mode 'org-mode)
 (org-babel-do-load-languages 'org-babel-load-languages
     '(
         (shell . t)
@@ -138,10 +138,9 @@
  '(custom-safe-themes
    (quote
 	("18cd5a0173772cdaee5522b79c444acbc85f9a06055ec54bb91491173bc90aaa" default)))
- '(org-agenda-files (quote ("~/org/org4beginners.org")))
  '(package-selected-packages
    (quote
-	(plan9-theme xelb pdf-tools org modus-vivendi-theme modus-operandi-theme htmlize evil dracula-theme))))
+	(epresent plan9-theme xelb pdf-tools org modus-vivendi-theme modus-operandi-theme htmlize evil dracula-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

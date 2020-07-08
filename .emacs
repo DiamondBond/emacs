@@ -1,14 +1,34 @@
-;; Melpa
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+;; and `package-pinned-packages`. Most users will not need or want to do this.
+;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
 ;; EVIL ;; M-x package-install evil
 (require 'evil)
 (evil-mode 1)
 
-;; Startup
-;;(load-theme 'plan9)
+;; Magit
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+
+;; Org
+(setq org-startup-with-inline-images t)
+(setq initial-major-mode 'org-mode)
+(org-babel-do-load-languages 'org-babel-load-languages
+    '(
+        (shell . t)
+    )
+)
+
+;; Which-key
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
+
+;; Adjust window geometry
 ;;(if (display-graphic-p)
 ;;    (progn
 ;;      (setq initial-frame-alist
@@ -27,12 +47,14 @@
 ;;			  (top . 50))))
 ;;  (progn (setq initial-frame-alist '( (tool-bar-lines . 0)))
 ;;    (setq default-frame-alist '( (tool-bar-lines . 0)))))
+
 (setq inhibit-startup-message t)
 (defun display-startup-echo-area-message ()
   (message nil))
 (setq initial-scratch-message "")
 
 ;; Misc
+;;(load-theme 'plan9)
 ;;(set-default-font "Ubuntu Mono-12")
 (ido-mode 1)
 ;;(global-auto-revert-mode 1)
@@ -65,7 +87,7 @@
 (setq-default indent-tabs-mode t)
 (setq backward-delete-char-untabify-method 'nil)
 
-;; Bracket completion
+;; Bracket Completion
 (show-paren-mode 1)
 (setq electric-pair-pairs '(
                             (?\{ . ?\})
@@ -103,7 +125,7 @@
     (switch-to-buffer-other-window "*eshell*")))
 (global-set-key (kbd "<C-s-return>") 'eshell-other-window)
 
-;; Easier resize bindings
+;; Resize bindings
 (global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "s-C-<down>") 'shrink-window)
@@ -122,25 +144,76 @@
                   (load-theme 'modus-vivendi t)))
 (global-set-key (kbd "<f10>") 'disable-theme)
 
-;; Org
-(setq org-startup-with-inline-images t)
-(setq initial-major-mode 'org-mode)
-(org-babel-do-load-languages 'org-babel-load-languages
-    '(
-        (shell . t)
-    )
-)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#000000" "#a60000" "#005e00" "#813e00" "#0030a6" "#721045" "#00538b" "#ffffff"])
  '(custom-safe-themes
    (quote
 	("18cd5a0173772cdaee5522b79c444acbc85f9a06055ec54bb91491173bc90aaa" default)))
+ '(flymake-error-bitmap
+   (quote
+	(flymake-double-exclamation-mark modus-theme-fringe-red)))
+ '(flymake-note-bitmap (quote (exclamation-mark modus-theme-fringe-cyan)))
+ '(flymake-warning-bitmap (quote (exclamation-mark modus-theme-fringe-yellow)))
+ '(hl-todo-keyword-faces
+   (quote
+	(("HOLD" . "#70480f")
+	 ("TODO" . "#721045")
+	 ("NEXT" . "#5317ac")
+	 ("THEM" . "#8f0075")
+	 ("PROG" . "#00538b")
+	 ("OKAY" . "#30517f")
+	 ("DONT" . "#315b00")
+	 ("FAIL" . "#a60000")
+	 ("DONE" . "#005e00")
+	 ("NOTE" . "#863927")
+	 ("KLUDGE" . "#813e00")
+	 ("HACK" . "#813e00")
+	 ("TEMP" . "#4d0006")
+	 ("FIXME" . "#a0132f")
+	 ("XXX+" . "#972500")
+	 ("REVIEW" . "#005a5f")
+	 ("DEPRECATED" . "#001170"))))
+ '(ibuffer-deletion-face (quote modus-theme-mark-del))
+ '(ibuffer-filter-group-name-face (quote modus-theme-mark-symbol))
+ '(ibuffer-marked-face (quote modus-theme-mark-sel))
+ '(ibuffer-title-face (quote modus-theme-header))
  '(package-selected-packages
    (quote
-	(epresent plan9-theme xelb pdf-tools org modus-vivendi-theme modus-operandi-theme htmlize evil dracula-theme))))
+	(which-key use-package magit plan9-theme modus-vivendi-theme modus-operandi-theme pdf-tools evil)))
+ '(vc-annotate-background nil)
+ '(vc-annotate-background-mode nil)
+ '(vc-annotate-color-map
+   (quote
+	((20 . "#a60000")
+	 (40 . "#721045")
+	 (60 . "#8f0075")
+	 (80 . "#972500")
+	 (100 . "#813e00")
+	 (120 . "#70480f")
+	 (140 . "#5d3026")
+	 (160 . "#184034")
+	 (180 . "#005e00")
+	 (200 . "#315b00")
+	 (220 . "#005a5f")
+	 (240 . "#30517f")
+	 (260 . "#00538b")
+	 (280 . "#093060")
+	 (300 . "#0030a6")
+	 (320 . "#223fbf")
+	 (340 . "#0000bb")
+	 (360 . "#5317ac"))))
+ '(vc-annotate-very-old-color nil)
+ '(xterm-color-names
+   ["#000000" "#a60000" "#005e00" "#813e00" "#0030a6" "#721045" "#00538b" "#f0f0f0"])
+ '(xterm-color-names-bright
+   ["#505050" "#972500" "#315b00" "#70480f" "#223fbf" "#8f0075" "#30517f" "#ffffff"]))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

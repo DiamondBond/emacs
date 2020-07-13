@@ -9,11 +9,6 @@
 (require 'evil)
 (evil-mode 1)
 
-;; Magit
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-
 ;; Org
 (setq org-startup-with-inline-images t)
 (setq initial-major-mode 'org-mode)
@@ -27,6 +22,10 @@
 (use-package which-key
   :ensure t
   :config (which-key-mode))
+
+;; Windmove
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
 
 ;; Adjust window geometry
 ;;(if (display-graphic-p)
@@ -56,6 +55,7 @@
 ;; Misc
 ;;(load-theme 'plan9 t)
 ;;(set-default-font "Ubuntu Mono-12")
+;;(set-default-font "Monaco-10")
 (ido-mode 1)
 ;;(global-auto-revert-mode 1)
 (tool-bar-mode -1)
@@ -281,7 +281,7 @@
  '(ibuffer-title-face (quote modus-theme-header))
  '(package-selected-packages
    (quote
-	(perspective all-the-icons treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs which-key use-package magit plan9-theme modus-vivendi-theme modus-operandi-theme pdf-tools evil)))
+	(speed-type fireplace wttrin xkcd perspective all-the-icons treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs which-key use-package magit plan9-theme modus-vivendi-theme modus-operandi-theme pdf-tools evil)))
  '(vc-annotate-background nil)
  '(vc-annotate-background-mode nil)
  '(vc-annotate-color-map

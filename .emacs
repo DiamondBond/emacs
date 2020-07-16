@@ -11,6 +11,7 @@
 
 ;; Org
 (setq org-startup-with-inline-images t)
+(setq org-directory "~/org/")
 (setq initial-major-mode 'org-mode)
 (org-babel-do-load-languages 'org-babel-load-languages
     '(
@@ -26,6 +27,10 @@
 ;; Windmove
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
+
+;; vterm
+(use-package vterm
+    :ensure t)
 
 ;; Adjust window geometry
 ;;(if (display-graphic-p)
@@ -58,10 +63,12 @@
 ;;(set-default-font "Monaco-10")
 (ido-mode 1)
 ;;(global-auto-revert-mode 1)
+;;
 (tool-bar-mode -1)
 (menu-bar-mode -1)
-;;(global-hl-line-mode 1)
 (toggle-scroll-bar -1)
+;;
+;;(global-hl-line-mode 1)
 ;;(setq-default truncate-lines t) 
 (column-number-mode 1)
 (setq major-mode 'text-mode)
@@ -131,6 +138,10 @@
 (global-set-key (kbd "s-C-<down>") 'shrink-window)
 (global-set-key (kbd "s-C-<up>") 'enlarge-window)
 
+;; Line settings
+(setq display-line-numbers-type t)
+(global-set-key "\C-x\ g" 'toggle-truncate-lines)
+
 ;; Toggles
 (global-set-key (kbd "<f5>") 'menu-bar-mode)
 (global-set-key (kbd "<f7>") 'scroll-bar-mode)
@@ -143,6 +154,10 @@
                 (lambda () (interactive)
                   (load-theme 'modus-vivendi t)))
 (global-set-key (kbd "<f10>") 'disable-theme)
+(global-set-key (kbd "C-x w") 'elfeed)
+
+;; Browser (eww)
+(setq browse-url-browser-function 'eww-browse-url)
 
 (use-package treemacs
   :ensure t
@@ -239,6 +254,19 @@
 ;; all-the-icons
 (use-package all-the-icons)
 
+;; pdf-tools
+(use-package pdf-tools
+   :pin manual ;; manually update
+   :config
+   ;; initialise
+   (pdf-tools-install)
+   ;; open pdfs scaled to fit width
+   (setq-default pdf-view-display-size 'fit-width)
+   ;; use normal isearch
+   (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
+   :custom
+   (pdf-annot-activate-created-annotations t "automatically annotate highlights"))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -251,6 +279,9 @@
  '(custom-safe-themes
    (quote
 	("18cd5a0173772cdaee5522b79c444acbc85f9a06055ec54bb91491173bc90aaa" default)))
+ '(elfeed-feeds
+   (quote
+	("https://distrowatch.com/news/dwd.xml" "http://lxer.com/module/newswire/headlines.rss" "https://betanews.com/feed" "https://www.techrepublic.com/rssfeeds/topic/open-source/" "https://www.networkworld.com/category/linux/index.rss" "https://www.computerworld.com/index.rss" "http://feeds.feedburner.com/d0od" "https://www.phoronix.com/rss.php" "https://www.zdnet.com/topic/linux/rss.xml" "https://itsfoss.com/feed/" "https://linux.softpedia.com/backend.xml" "https://opensource.com/feed" "https://hackaday.com/blog/feed/" "https://www.gamingonlinux.com/article_rss.php" "https://www.reddit.com/r/linux.rss")))
  '(flymake-error-bitmap
    (quote
 	(flymake-double-exclamation-mark modus-theme-fringe-red)))
@@ -281,7 +312,7 @@
  '(ibuffer-title-face (quote modus-theme-header))
  '(package-selected-packages
    (quote
-	(speed-type fireplace wttrin xkcd perspective all-the-icons treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs which-key use-package magit plan9-theme modus-vivendi-theme modus-operandi-theme pdf-tools evil)))
+	(vterm elfeed speed-type fireplace wttrin xkcd perspective all-the-icons treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs which-key use-package magit plan9-theme modus-vivendi-theme modus-operandi-theme pdf-tools evil)))
  '(vc-annotate-background nil)
  '(vc-annotate-background-mode nil)
  '(vc-annotate-color-map

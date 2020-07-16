@@ -28,6 +28,10 @@
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
 
+;; vterm
+(use-package vterm
+    :ensure t)
+
 ;; Adjust window geometry
 ;;(if (display-graphic-p)
 ;;    (progn
@@ -308,7 +312,7 @@
  '(ibuffer-title-face (quote modus-theme-header))
  '(package-selected-packages
    (quote
-	(elfeed speed-type fireplace wttrin xkcd perspective all-the-icons treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs which-key use-package magit plan9-theme modus-vivendi-theme modus-operandi-theme pdf-tools evil)))
+	(vterm elfeed speed-type fireplace wttrin xkcd perspective all-the-icons treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs which-key use-package magit plan9-theme modus-vivendi-theme modus-operandi-theme pdf-tools evil)))
  '(vc-annotate-background nil)
  '(vc-annotate-background-mode nil)
  '(vc-annotate-color-map

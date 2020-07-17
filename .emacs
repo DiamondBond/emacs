@@ -107,6 +107,15 @@
     (switch-to-buffer-other-window "*eshell*")))
 (global-set-key (kbd "<C-s-return>") 'eshell-other-window)
 
+;; Split Compilation Buffer
+(setq special-display-buffer-names
+      '("*compilation*"))
+(setq special-display-function
+      (lambda (buffer &optional args)
+        (split-window)
+        (switch-to-buffer buffer)
+        (get-buffer-window buffer 0)))
+
 ;; Resize bindings
 (global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)

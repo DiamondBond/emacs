@@ -1,11 +1,8 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
-;; and `package-pinned-packages`. Most users will not need or want to do this.
-;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
-;; EVIL ;; M-x package-install evil
+;; EVIL
 (require 'evil)
 (evil-mode 1)
 
@@ -19,6 +16,12 @@
     )
 )
 
+;; Startup
+(setq inhibit-startup-message t)
+(defun display-startup-echo-area-message ()
+  (message nil))
+(setq initial-scratch-message "")
+
 ;; Which-key
 (use-package which-key
   :ensure t
@@ -27,35 +30,6 @@
 ;; Windmove
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
-
-;; vterm
-(use-package vterm
-    :ensure t)
-
-;; Adjust window geometry
-;;(if (display-graphic-p)
-;;    (progn
-;;      (setq initial-frame-alist
-;;            '(
-;;              (tool-bar-lines . 0)
-;;              (width . 95) ; chars
-;;              (height . 42) ; lines
-;;              (left . 50)
-;;              (top . 50)))
-;;      (setq default-frame-alist
-;;            '(
-;;              (tool-bar-lines . 0)
-;;              (width . 95)
-;;              (height . 42)
-;;			  (left . 50)
-;;			  (top . 50))))
-;;  (progn (setq initial-frame-alist '( (tool-bar-lines . 0)))
-;;    (setq default-frame-alist '( (tool-bar-lines . 0)))))
-
-(setq inhibit-startup-message t)
-(defun display-startup-echo-area-message ()
-  (message nil))
-(setq initial-scratch-message "")
 
 ;; Misc
 ;;(load-theme 'plan9 t)
@@ -143,22 +117,24 @@
 (global-set-key "\C-x\ g" 'toggle-truncate-lines)
 
 ;; Toggles
-(global-set-key (kbd "<f5>") 'menu-bar-mode)
+(global-set-key (kbd "<f5>") 'revert-buffer)
+(global-set-key (kbd "<f6>") 'menu-bar-mode)
 (global-set-key (kbd "<f7>") 'scroll-bar-mode)
 (global-set-key (kbd "<f8>") 'tool-bar-mode)
 (global-set-key (kbd "<f12>") 'linum-mode)
-(global-set-key (kbd "<f1>")
-                (lambda () (interactive)
-                  (load-theme 'modus-operandi t)))
-(global-set-key (kbd "<f2>")
-                (lambda () (interactive)
-                  (load-theme 'modus-vivendi t)))
+;;(global-set-key (kbd "<f1>")
+;;                (lambda () (interactive)
+;;                  (load-theme 'modus-operandi t)))
+;;(global-set-key (kbd "<f2>")
+;;                (lambda () (interactive)
+;;                  (load-theme 'modus-vivendi t)))
 (global-set-key (kbd "<f10>") 'disable-theme)
 (global-set-key (kbd "C-x w") 'elfeed)
 
 ;; Browser (eww)
 (setq browse-url-browser-function 'eww-browse-url)
 
+;; Treemacs
 (use-package treemacs
   :ensure t
   :defer t
@@ -267,79 +243,45 @@
    :custom
    (pdf-annot-activate-created-annotations t "automatically annotate highlights"))
 
+;; openwith
+(when (require 'openwith nil 'noerror)
+(setq openwith-associations
+    (list
+     (list (openwith-make-extension-regexp
+            '("mpg" "mpeg" "mp3" "mp4"
+              "avi" "wmv" "wav" "mov" "flv"
+              "ogm" "ogg" "mkv"))
+           "mpv"
+           '(file))
+     (list (openwith-make-extension-regexp
+            '("xbm" "pbm" "pgm" "ppm" "pnm"
+              "png" "gif" "bmp" "tif" "jpeg" "jpg"))
+           "nomacs"
+           '(file))
+     (list (openwith-make-extension-regexp
+            '("doc" "docx" "xls" "xlsx" "ppt" "pptx" "odt" "ods" "odg" "odp"))
+           "libreoffice"
+           '(file))
+     '("\\.lyx" "lyx" (file))
+     '("\\.chm" "kchmviewer" (file))
+     (list (openwith-make-extension-regexp
+            '("pdf" "epub" "ps" "ps.gz" "dvi"))
+           "zathura"
+           '(file))
+     ))
+(openwith-mode 1))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default bold shadow italic underline success warning error])
- '(ansi-color-names-vector
-   ["#000000" "#a60000" "#005e00" "#813e00" "#0030a6" "#721045" "#00538b" "#ffffff"])
- '(custom-safe-themes
-   (quote
-	("18cd5a0173772cdaee5522b79c444acbc85f9a06055ec54bb91491173bc90aaa" default)))
  '(elfeed-feeds
    (quote
-	("https://distrowatch.com/news/dwd.xml" "http://lxer.com/module/newswire/headlines.rss" "https://betanews.com/feed" "https://www.techrepublic.com/rssfeeds/topic/open-source/" "https://www.networkworld.com/category/linux/index.rss" "https://www.computerworld.com/index.rss" "http://feeds.feedburner.com/d0od" "https://www.phoronix.com/rss.php" "https://www.zdnet.com/topic/linux/rss.xml" "https://itsfoss.com/feed/" "https://linux.softpedia.com/backend.xml" "https://opensource.com/feed" "https://hackaday.com/blog/feed/" "https://www.gamingonlinux.com/article_rss.php" "https://www.reddit.com/r/linux.rss")))
- '(flymake-error-bitmap
-   (quote
-	(flymake-double-exclamation-mark modus-theme-fringe-red)))
- '(flymake-note-bitmap (quote (exclamation-mark modus-theme-fringe-cyan)))
- '(flymake-warning-bitmap (quote (exclamation-mark modus-theme-fringe-yellow)))
- '(hl-todo-keyword-faces
-   (quote
-	(("HOLD" . "#70480f")
-	 ("TODO" . "#721045")
-	 ("NEXT" . "#5317ac")
-	 ("THEM" . "#8f0075")
-	 ("PROG" . "#00538b")
-	 ("OKAY" . "#30517f")
-	 ("DONT" . "#315b00")
-	 ("FAIL" . "#a60000")
-	 ("DONE" . "#005e00")
-	 ("NOTE" . "#863927")
-	 ("KLUDGE" . "#813e00")
-	 ("HACK" . "#813e00")
-	 ("TEMP" . "#4d0006")
-	 ("FIXME" . "#a0132f")
-	 ("XXX+" . "#972500")
-	 ("REVIEW" . "#005a5f")
-	 ("DEPRECATED" . "#001170"))))
- '(ibuffer-deletion-face (quote modus-theme-mark-del))
- '(ibuffer-filter-group-name-face (quote modus-theme-mark-symbol))
- '(ibuffer-marked-face (quote modus-theme-mark-sel))
- '(ibuffer-title-face (quote modus-theme-header))
+	("https://news.ycombinator.com/rss" "https://www.reddit.com/r/linux.rss" "https://opensource.com/feed" "https://itsfoss.com/feed/" "https://www.phoronix.com/rss.php")))
  '(package-selected-packages
    (quote
-	(vterm elfeed speed-type fireplace wttrin xkcd perspective all-the-icons treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs which-key use-package magit plan9-theme modus-vivendi-theme modus-operandi-theme pdf-tools evil)))
- '(vc-annotate-background nil)
- '(vc-annotate-background-mode nil)
- '(vc-annotate-color-map
-   (quote
-	((20 . "#a60000")
-	 (40 . "#721045")
-	 (60 . "#8f0075")
-	 (80 . "#972500")
-	 (100 . "#813e00")
-	 (120 . "#70480f")
-	 (140 . "#5d3026")
-	 (160 . "#184034")
-	 (180 . "#005e00")
-	 (200 . "#315b00")
-	 (220 . "#005a5f")
-	 (240 . "#30517f")
-	 (260 . "#00538b")
-	 (280 . "#093060")
-	 (300 . "#0030a6")
-	 (320 . "#223fbf")
-	 (340 . "#0000bb")
-	 (360 . "#5317ac"))))
- '(vc-annotate-very-old-color nil)
- '(xterm-color-names
-   ["#000000" "#a60000" "#005e00" "#813e00" "#0030a6" "#721045" "#00538b" "#f0f0f0"])
- '(xterm-color-names-bright
-   ["#505050" "#972500" "#315b00" "#70480f" "#223fbf" "#8f0075" "#30517f" "#ffffff"]))
+	(lorem-ipsum openwith elfeed vterm pdf-tools treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil which-key eww-lnum magit modus-operandi-theme treemacs all-the-icons perspective xkcd wttrin fireplace speed-type use-package evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

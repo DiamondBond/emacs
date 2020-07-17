@@ -22,6 +22,7 @@
   (message nil))
 (setq initial-scratch-message "")
 
+
 ;; Which-key
 (use-package which-key
   :ensure t
@@ -32,9 +33,9 @@
   (windmove-default-keybindings))
 
 ;; Misc
-;;(load-theme 'plan9 t)
+(setenv "BROWSER" "firefox")t
 ;;(set-default-font "Ubuntu Mono-12")
-;;(set-default-font "Monaco-10")
+;;(load-theme 'modus-operandi t)
 (ido-mode 1)
 ;;(global-auto-revert-mode 1)
 ;;
@@ -122,12 +123,12 @@
 (global-set-key (kbd "<f7>") 'scroll-bar-mode)
 (global-set-key (kbd "<f8>") 'tool-bar-mode)
 (global-set-key (kbd "<f12>") 'linum-mode)
-;;(global-set-key (kbd "<f1>")
-;;                (lambda () (interactive)
-;;                  (load-theme 'modus-operandi t)))
-;;(global-set-key (kbd "<f2>")
-;;                (lambda () (interactive)
-;;                  (load-theme 'modus-vivendi t)))
+(global-set-key (kbd "<f1>")
+                (lambda () (interactive)
+                  (load-theme 'modus-operandi t)))
+(global-set-key (kbd "<f2>")
+                (lambda () (interactive)
+                  (load-theme 'modus-vivendi t)))
 (global-set-key (kbd "<f10>") 'disable-theme)
 (global-set-key (kbd "C-x w") 'elfeed)
 
@@ -244,32 +245,32 @@
    (pdf-annot-activate-created-annotations t "automatically annotate highlights"))
 
 ;; openwith
-(when (require 'openwith nil 'noerror)
-(setq openwith-associations
-    (list
-     (list (openwith-make-extension-regexp
-            '("mpg" "mpeg" "mp3" "mp4"
-              "avi" "wmv" "wav" "mov" "flv"
-              "ogm" "ogg" "mkv"))
-           "mpv"
-           '(file))
-     (list (openwith-make-extension-regexp
-            '("xbm" "pbm" "pgm" "ppm" "pnm"
-              "png" "gif" "bmp" "tif" "jpeg" "jpg"))
-           "nomacs"
-           '(file))
-     (list (openwith-make-extension-regexp
-            '("doc" "docx" "xls" "xlsx" "ppt" "pptx" "odt" "ods" "odg" "odp"))
-           "libreoffice"
-           '(file))
-     '("\\.lyx" "lyx" (file))
-     '("\\.chm" "kchmviewer" (file))
-     (list (openwith-make-extension-regexp
-            '("pdf" "epub" "ps" "ps.gz" "dvi"))
-           "zathura"
-           '(file))
-     ))
-(openwith-mode 1))
+;;(when (require 'openwith nil 'noerror)
+;;(setq openwith-associations
+;;    (list
+;;     (list (openwith-make-extension-regexp
+;;            '("mpg" "mpeg" "mp3" "mp4"
+;;              "avi" "wmv" "wav" "mov" "flv"
+;;              "ogm" "ogg" "mkv"))
+;;           "mpv"
+;;           '(file))
+;;     (list (openwith-make-extension-regexp
+;;            '("xbm" "pbm" "pgm" "ppm" "pnm"
+;;              "png" "gif" "bmp" "tif" "jpeg" "jpg"))
+;;           "nomacs"
+;;           '(file))
+;;     (list (openwith-make-extension-regexp
+;;            '("doc" "docx" "xls" "xlsx" "ppt" "pptx" "odt" "ods" "odg" "odp"))
+;;           "libreoffice"
+;;           '(file))
+;;     '("\\.lyx" "lyx" (file))
+;;     '("\\.chm" "kchmviewer" (file))
+;;     (list (openwith-make-extension-regexp
+;;            '("pdf" "epub" "ps" "ps.gz" "dvi"))
+;;           "zathura"
+;;           '(file))
+;;     ))
+;;(openwith-mode 1))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -281,10 +282,5 @@
 	("https://news.ycombinator.com/rss" "https://www.reddit.com/r/linux.rss" "https://opensource.com/feed" "https://itsfoss.com/feed/" "https://www.phoronix.com/rss.php")))
  '(package-selected-packages
    (quote
-	(lorem-ipsum openwith elfeed vterm pdf-tools treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil which-key eww-lnum magit modus-operandi-theme treemacs all-the-icons perspective xkcd wttrin fireplace speed-type use-package evil))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+	(plan9-theme epresent lorem-ipsum openwith elfeed vterm pdf-tools treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil which-key eww-lnum magit modus-operandi-theme treemacs all-the-icons perspective xkcd wttrin fireplace speed-type use-package evil)))
+)

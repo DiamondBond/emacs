@@ -10,7 +10,7 @@ Minimal emacs configuration.
 </div>
 
 ---
-# Introduction
+# Intro
 Simple [GNU Emacs] configuration file for eVIl users.
 
 # Install

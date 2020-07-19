@@ -7,7 +7,12 @@
 (evil-mode 1)
 
 ;; Org
-(setq org-startup-with-inline-images t)
+;;(setq org-startup-with-inline-images t)
+;;
+(setq org-display-inline-images t)
+(setq org-redisplay-inline-images t)
+(setq org-startup-with-inline-images "inlineimages")
+;;
 (setq org-directory "~/org/")
 (setq initial-major-mode 'org-mode)
 (org-babel-do-load-languages 'org-babel-load-languages
@@ -16,12 +21,15 @@
     )
 )
 
+;; Org bullets
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
 ;; Startup
 (setq inhibit-startup-message t)
 (defun display-startup-echo-area-message ()
   (message nil))
 (setq initial-scratch-message "")
-
 
 ;; Which-key
 (use-package which-key
@@ -290,12 +298,11 @@
    (quote
 	("https://news.ycombinator.com/rss" "https://www.reddit.com/r/linux.rss" "https://opensource.com/feed" "https://itsfoss.com/feed/" "https://www.phoronix.com/rss.php")))
  '(package-selected-packages
-   (custom-set-faces
-	;; custom-set-faces was added by Custom.
-	;; If you edit it by hand, you could mess it up, so be careful.
-	;; Your init file should contain only one such instance.
-	;; If there is more than one, they won't work right.
-	)
    (quote
-	(plan9-theme epresent lorem-ipsum openwith elfeed vterm pdf-tools treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil which-key eww-lnum magit modus-operandi-theme treemacs all-the-icons perspective xkcd wttrin fireplace speed-type use-package evil)))
-)
+	(olivetti org-bullets htmlize zenburn-theme xkcd wttrin which-key vterm use-package treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil tao-theme speed-type poet-theme plan9-theme perspective pdf-tools parchment-theme openwith monokai-theme moe-theme modus-vivendi-theme modus-operandi-theme lorem-ipsum gruvbox-theme fireplace faff-theme eww-lnum epresent elfeed color-theme-modern cloud-theme ample-zen-theme ample-theme all-the-icons alect-themes))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

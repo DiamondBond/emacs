@@ -42,8 +42,8 @@
 
 ;; Misc
 (setenv "BROWSER" "firefox")t
-;;(set-default-font "Ubuntu Mono-12")
-;;(load-theme 'modus-operandi t)
+(set-default-font "Ubuntu Mono-12")
+(load-theme 'modus-operandi t)
 (ido-mode 1)
 ;;(global-auto-revert-mode 1)
 ;;

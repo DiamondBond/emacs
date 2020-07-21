@@ -2,9 +2,33 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+;; Startup
+(setq inhibit-startup-message t)
+(defun display-startup-echo-area-message ()
+  (message nil))
+(setq initial-scratch-message "")
+
+;; Increases Garbage Collection During Startup
+(setq startup/gc-cons-threshold gc-cons-threshold)
+(setq gc-cons-threshold most-positive-fixnum)
+(defun startup/reset-gc () (setq gc-cons-threshold startup/gc-cons-threshold))
+(add-hook 'emacs-startup-hook 'startup/reset-gc)
+
+;; Defer loading most packages for quicker startup time
+;;(setq use-package-always-defer t)
+
 ;; EVIL
 (require 'evil)
 (evil-mode 1)
+
+;; EXWM
+;;(require 'exwm)
+;;(require 'exwm-config)
+;;(exwm-config-default)
+;;(require 'exwm-systemtray)
+;;(exwm-systemtray-enable)
+;;(global-set-key (kbd "s-k") 'exwm-workspace-delete)
+;;(global-set-key (kbd "s-w") 'exwm-workspace-swap)
 
 ;; Org
 ;;(setq org-startup-with-inline-images t)
@@ -20,16 +44,35 @@
         (shell . t)
     )
 )
-
+(global-set-key (kbd "C-<f1>") (lambda()
+								 (interactive)
+								 (show-all)))
 ;; Org bullets
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
-;; Startup
-(setq inhibit-startup-message t)
-(defun display-startup-echo-area-message ()
-  (message nil))
-(setq initial-scratch-message "")
+;; Centaur tabs
+(use-package centaur-tabs
+  :demand
+  :config
+  (centaur-tabs-mode t)
+;;  :hook
+;;  (dired-mode . centaur-tabs-local-mode)
+;;  (dashboard-mode . centaur-tabs-local-mode)
+;;  (term-mode . centaur-tabs-local-mode)
+;;  (calendar-mode . centaur-tabs-local-mode)
+;;  (org-agenda-mode . centaur-tabs-local-mode)
+;;  (helpful-mode . centaur-tabs-local-mode)
+  :bind
+  (:map evil-normal-state-map
+		("g t" . centaur-tabs-forward)
+		("g T" . centaur-tabs-backward))
+  ("C-<prior>" . centaur-tabs-backward)
+  ("C-<next>" . centaur-tabs-forward))
+(centaur-tabs-headline-match)
+(setq centaur-tabs-cycle-scope 'tabs)
+(setq centaur-tabs-set-close-button nil)
+;;(setq centaur-tabs-show-navigation-buttons t)
 
 ;; Which-key
 (use-package which-key
@@ -48,8 +91,8 @@
 ;;(global-auto-revert-mode 1)
 ;;
 (tool-bar-mode -1)
-(menu-bar-mode -1)
-(toggle-scroll-bar -1)
+;;(menu-bar-mode -1)
+;;(toggle-scroll-bar -1)
 ;;
 ;;(global-hl-line-mode 1)
 ;;(setq-default truncate-lines t) 
@@ -63,6 +106,7 @@
 (global-prettify-symbols-mode t)
 (setq scroll-conservatively 100)
 (transient-mark-mode 1)
+(setq ring-bell-function 'ignore)
 
 ;; Aliases
 (defalias 'open 'find-file-other-window)
@@ -116,13 +160,26 @@
 (global-set-key (kbd "<C-s-return>") 'eshell-other-window)
 
 ;; Split Compilation Buffer
-(setq special-display-buffer-names
-      '("*compilation*"))
-(setq special-display-function
-      (lambda (buffer &optional args)
-        (split-window)
-        (switch-to-buffer buffer)
-        (get-buffer-window buffer 0)))
+;;(setq special-display-buffer-names
+;;      '("*compilation*"))
+;;(setq special-display-function
+;;      (lambda (buffer &optional args)
+;;        (split-window)
+;;        (switch-to-buffer buffer)
+;;        (get-buffer-window buffer 0)))
+
+;; Switch focus when splitting
+(defun split-and-follow-horizontally ()
+  (interactive)
+  (split-window-below)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+(defun split-and-follow-vertically ()
+  (interactive)(split-window-right)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 
 ;; Resize bindings
 (global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
@@ -130,8 +187,14 @@
 (global-set-key (kbd "s-C-<down>") 'shrink-window)
 (global-set-key (kbd "s-C-<up>") 'enlarge-window)
 
+;; Swap windows
+(global-set-key (kbd "C-x x") 'window-swap-states)
+
+
 ;; Line settings
 (setq display-line-numbers-type t)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'text-mode-hook 'display-line-numbers-mode)
 (global-set-key "\C-x\ g" 'toggle-truncate-lines)
 
 ;; Toggles
@@ -248,6 +311,36 @@
 ;; all-the-icons
 (use-package all-the-icons)
 
+;; lsp
+(use-package lsp-mode
+  :ensure t
+  :hook
+  ((c++-mode . lsp)
+  (c-mode . lsp))
+  :commands lsp)
+
+(use-package ccls
+  :after lsp-mode
+  :ensure t
+  :config (setq ccls-executable "/usr/bin/ccls")
+  :hook ((c-mode c++-mode objc-mode) .
+     (lambda () (require 'ccls))))
+
+(use-package company-lsp
+  :ensure t
+  :after (lsp-mode company)
+  :commands company-lsp)
+
+;; company
+(use-package company
+  :ensure t
+  :commands company-mode
+  :init
+  (use-package company-quickhelp
+	:ensure t)
+  :config
+  (company-quickhelp-mode))
+
 ;; pdf-tools
 (use-package pdf-tools
    :pin manual ;; manually update
@@ -299,7 +392,7 @@
 	("https://news.ycombinator.com/rss" "https://www.reddit.com/r/linux.rss" "https://opensource.com/feed" "https://itsfoss.com/feed/" "https://www.phoronix.com/rss.php")))
  '(package-selected-packages
    (quote
-	(olivetti org-bullets htmlize zenburn-theme xkcd wttrin which-key vterm use-package treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil tao-theme speed-type poet-theme plan9-theme perspective pdf-tools parchment-theme openwith monokai-theme moe-theme modus-vivendi-theme modus-operandi-theme lorem-ipsum gruvbox-theme fireplace faff-theme eww-lnum epresent elfeed color-theme-modern cloud-theme ample-zen-theme ample-theme all-the-icons alect-themes))))
+	(centaur-tabs company-quickhelp company-lsp ccls lsp-mode olivetti org-bullets htmlize zenburn-theme xkcd wttrin which-key vterm use-package treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil tao-theme speed-type poet-theme plan9-theme perspective pdf-tools parchment-theme openwith monokai-theme moe-theme modus-vivendi-theme modus-operandi-theme lorem-ipsum gruvbox-theme fireplace faff-theme eww-lnum epresent elfeed color-theme-modern cloud-theme ample-zen-theme ample-theme all-the-icons alect-themes))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

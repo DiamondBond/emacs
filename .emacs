@@ -18,8 +18,12 @@
 ;;(setq use-package-always-defer t)
 
 ;; EVIL
+(setq evil-want-integration t)
+(setq evil-want-keybinding nil)
 (require 'evil)
 (evil-mode 1)
+(when (require 'evil-collection nil t)
+  (evil-collection-init))
 
 ;; EXWM
 ;;(require 'exwm)
@@ -64,9 +68,6 @@
 ;;  (org-agenda-mode . centaur-tabs-local-mode)
 ;;  (helpful-mode . centaur-tabs-local-mode)
   :bind
-  (:map evil-normal-state-map
-		("g t" . centaur-tabs-forward)
-		("g T" . centaur-tabs-backward))
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward))
 (centaur-tabs-headline-match)
@@ -84,7 +85,6 @@
   (windmove-default-keybindings))
 
 ;; Misc
-(setenv "BROWSER" "firefox")t
 (set-default-font "Ubuntu Mono-12")
 (load-theme 'modus-operandi t)
 (ido-mode 1)
@@ -190,7 +190,6 @@
 ;; Swap windows
 (global-set-key (kbd "C-x x") 'window-swap-states)
 
-
 ;; Line settings
 (setq display-line-numbers-type t)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
@@ -213,6 +212,7 @@
 (global-set-key (kbd "C-x w") 'elfeed)
 
 ;; Browser (eww)
+(setenv "BROWSER" "firefox")t
 (setq browse-url-browser-function 'eww-browse-url)
 
 ;; Treemacs
@@ -264,10 +264,7 @@
           treemacs-user-header-line-format       nil
           treemacs-width                         35)
 
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
     ;;(treemacs-resize-icons 16)
-
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode t)
@@ -311,35 +308,51 @@
 ;; all-the-icons
 (use-package all-the-icons)
 
+;; auto-complete
+(require 'auto-complete)
+(require 'auto-complete-config)
+(ac-config-default)
+
+;; yasnippet
+(require 'yasnippet)
+(yas-global-mode 1)
+(defun my:ac-c-header-init ()
+  (require 'auto-complete-c-headers)
+  (add-to-list 'ac-sources 'ac-source-c-headers)
+  (add-hook 'c++-mode-hook 'my:ac-c-header-init)
+  (add-hook 'c-mode-hook 'my:ac-c-header-init)
+  (add-to-list 'achead:include-directories '"/usr/lib/gcc/x86_64-linux-gnu/9/include/")
+ )
+
 ;; lsp
-(use-package lsp-mode
-  :ensure t
-  :hook
-  ((c++-mode . lsp)
-  (c-mode . lsp))
-  :commands lsp)
+;;(use-package lsp-mode
+;;  :ensure t
+;;  :hook
+;;  ((c++-mode . lsp)
+;;  (c-mode . lsp))
+;;  :commands lsp)
 
-(use-package ccls
-  :after lsp-mode
-  :ensure t
-  :config (setq ccls-executable "/usr/bin/ccls")
-  :hook ((c-mode c++-mode objc-mode) .
-     (lambda () (require 'ccls))))
+;;(use-package ccls
+;;  :after lsp-mode
+;;  :ensure t
+;;  :config (setq ccls-executable "/usr/bin/ccls")
+;;  :hook ((c-mode c++-mode objc-mode) .
+;;     (lambda () (require 'ccls))))
 
-(use-package company-lsp
-  :ensure t
-  :after (lsp-mode company)
-  :commands company-lsp)
+;;(use-package company-lsp
+;;  :ensure t
+;;  :after (lsp-mode company)
+;;  :commands company-lsp)
 
 ;; company
-(use-package company
-  :ensure t
-  :commands company-mode
-  :init
-  (use-package company-quickhelp
-	:ensure t)
-  :config
-  (company-quickhelp-mode))
+;;(use-package company
+;;  :ensure t
+;;  :commands company-mode
+;;  :init
+;;  (use-package company-quickhelp
+;;	:ensure t)
+;;  :config
+;;  (company-quickhelp-mode))
 
 ;; pdf-tools
 (use-package pdf-tools
@@ -355,7 +368,7 @@
    (pdf-annot-activate-created-annotations t "automatically annotate highlights"))
 
 ;; openwith
-;;(when (require 'openwith nil 'noerror)
+;(when (require 'openwith nil 'noerror)
 ;;(setq openwith-associations
 ;;    (list
 ;;     (list (openwith-make-extension-regexp
@@ -392,7 +405,7 @@
 	("https://news.ycombinator.com/rss" "https://www.reddit.com/r/linux.rss" "https://opensource.com/feed" "https://itsfoss.com/feed/" "https://www.phoronix.com/rss.php")))
  '(package-selected-packages
    (quote
-	(centaur-tabs company-quickhelp company-lsp ccls lsp-mode olivetti org-bullets htmlize zenburn-theme xkcd wttrin which-key vterm use-package treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil tao-theme speed-type poet-theme plan9-theme perspective pdf-tools parchment-theme openwith monokai-theme moe-theme modus-vivendi-theme modus-operandi-theme lorem-ipsum gruvbox-theme fireplace faff-theme eww-lnum epresent elfeed color-theme-modern cloud-theme ample-zen-theme ample-theme all-the-icons alect-themes))))
+	(evil-collection evil-escape dired-rainbow emmet-mode yasnippet-snippets auto-complete-c-headers yasnippet auto-complete centaur-tabs company-quickhelp company-lsp ccls lsp-mode olivetti org-bullets htmlize zenburn-theme xkcd wttrin which-key vterm use-package treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil tao-theme speed-type poet-theme plan9-theme perspective pdf-tools parchment-theme openwith monokai-theme moe-theme modus-vivendi-theme modus-operandi-theme lorem-ipsum gruvbox-theme fireplace faff-theme eww-lnum epresent elfeed color-theme-modern cloud-theme ample-zen-theme ample-theme all-the-icons alect-themes))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

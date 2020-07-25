@@ -85,7 +85,7 @@
   (windmove-default-keybindings))
 
 ;; Misc
-(set-default-font "Ubuntu Mono-12")
+(set-default-font "Ubuntu Mono-11")
 (load-theme 'modus-operandi t)
 (ido-mode 1)
 ;;(global-auto-revert-mode 1)
@@ -394,6 +394,27 @@
 ;;           '(file))
 ;;     ))
 ;;(openwith-mode 1))
+
+;; Tetris
+(defvar tetris-mode-map
+  (let ((map (make-sparse-keymap 'tetris-mode-map)))
+    (define-key map "n"		'tetris-start-game)
+    (define-key map "q"		'tetris-end-game)
+    (define-key map "p"		'tetris-pause-game)
+
+    (define-key map " "		'tetris-move-bottom)
+    (define-key map [left]	'tetris-move-left)
+    (define-key map [right]	'tetris-move-right)
+    (define-key map [up]	'tetris-rotate-prev)
+    (define-key map [down]	'tetris-move-down)
+    map)
+  "Keymap for Tetris games.")
+(defvar tetris-null-map
+  (let ((map (make-sparse-keymap 'tetris-null-map)))
+    (define-key map "n"		'tetris-start-game)
+    (define-key map "q"         'quit-window)
+    map)
+  "Keymap for finished Tetris games.")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

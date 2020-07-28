@@ -89,6 +89,7 @@
 ;; Misc
 (set-default-font "Ubuntu Mono-11")
 ;;(load-theme 'modus-operandi t)
+(load-theme 'doom-opera-light t)
 (ido-mode 1)
 ;;(global-auto-revert-mode 1)
 ;;

@@ -17,6 +17,28 @@
 ;; Defer loading most packages for quicker startup time
 ;;(setq use-package-always-defer t)
 
+;; Dashboard
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+;; Or if you use use-package
+;;(use-package dashboard
+;;  :ensure t
+;;  :config
+;;  (dashboard-setup-startup-hook))
+
+;; Set the title
+(setq dashboard-banner-logo-title "Welcome to Emacs!")
+;; Set the banner
+(setq dashboard-startup-banner "/home/diamond/Pictures/Misc/Icons/emacs.png")
+;; Content is not centered by default. To center, set
+(setq dashboard-center-content t)
+;; To disable shortcut "jump" indicators for each section, set
+(setq dashboard-show-shortcuts nil)
+;; Items
+(setq dashboard-items '((recents  . 5)
+                        (bookmarks . 5)
+                        (projects . 5)))
+
 ;; EVIL
 (setq evil-want-integration t)
 (setq evil-want-keybinding nil)
@@ -73,8 +95,11 @@
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward))
 (centaur-tabs-headline-match)
+;;
 ;;(setq centaur-tabs-cycle-scope 'tabs)
+;;
 (setq centaur-tabs-set-close-button nil)
+;;
 ;;(setq centaur-tabs-show-navigation-buttons t)
 
 ;; Which-key
@@ -87,9 +112,10 @@
   (windmove-default-keybindings))
 
 ;; Misc
-(set-default-font "Ubuntu Mono-11")
-;;(load-theme 'modus-operandi t)
-(load-theme 'doom-opera-light t)
+;;(set-default-font "Ubuntu Mono-11")
+;;(set-default-font "DejaVu Sans Mono-11")
+(set-default-font "Monaco-11")
+(load-theme 'modus-operandi t)
 (ido-mode 1)
 ;;(global-auto-revert-mode 1)
 ;;
@@ -419,6 +445,15 @@
     map)
   "Keymap for finished Tetris games.")
 
+;; Chan
+;;(add-to-list 'load-path "~/.emacs.d/lisp/chan/")
+;;(use-package chan
+;;  :load-path "lisp/chan")
+;;  (load-file ".emacs.d/lisp/chan/chan.el")
+;;  (load-file ".emacs.d/lisp/chan/chan-autoloads.el")
+;;  (load-file ".emacs.d/lisp/chan/chan-post.el")
+;;  (load-file ".emacs.d/lisp/chan/recaptcha-v2.el"))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -426,10 +461,10 @@
  ;; If there is more than one, they won't work right.
  '(elfeed-feeds
    (quote
-	("https://news.ycombinator.com/rss" "https://www.reddit.com/r/linux.rss" "https://opensource.com/feed" "https://itsfoss.com/feed/" "https://www.phoronix.com/rss.php")))
+	("https://news.ycombinator.com/rss" "https://www.gamingonlinux.com/article_rss.p" "http://lxer.com/module/newswire/headlines.rss" "https://opensource.com/feed" "https://itsfoss.com/feed/" "https://www.phoronix.com/rss.php" "https://forum.manjaro.org/c/announcements/stable-updates" "http://feeds.reuters.com/reuters/topNews" "https://www.schneier.com/blog/atom.xml" "https://www.schneier.com/blog/atom.xml")))
  '(package-selected-packages
    (quote
-	(doom-themes vterm-toggle evil-collection evil-escape dired-rainbow emmet-mode yasnippet-snippets auto-complete-c-headers yasnippet auto-complete centaur-tabs company-quickhelp company-lsp ccls lsp-mode olivetti org-bullets htmlize zenburn-theme xkcd wttrin which-key vterm use-package treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil tao-theme speed-type poet-theme plan9-theme perspective pdf-tools parchment-theme openwith monokai-theme moe-theme modus-vivendi-theme modus-operandi-theme lorem-ipsum gruvbox-theme fireplace faff-theme eww-lnum epresent elfeed color-theme-modern cloud-theme ample-zen-theme ample-theme all-the-icons alect-themes))))
+	(company-go company-ctags flycheck modus-operandi-theme request elquery dashboard page-break-lines doom-themes vterm-toggle evil-collection evil-escape dired-rainbow emmet-mode yasnippet-snippets auto-complete-c-headers yasnippet auto-complete centaur-tabs company-quickhelp company-lsp ccls lsp-mode olivetti org-bullets htmlize zenburn-theme xkcd wttrin which-key vterm use-package treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil tao-theme speed-type poet-theme plan9-theme perspective pdf-tools parchment-theme openwith monokai-theme moe-theme modus-vivendi-theme lorem-ipsum gruvbox-theme fireplace faff-theme eww-lnum epresent elfeed color-theme-modern cloud-theme ample-zen-theme ample-theme all-the-icons alect-themes))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -9,10 +9,10 @@
 (setq initial-scratch-message "")
 
 ;; Increases Garbage Collection During Startup
-(setq startup/gc-cons-threshold gc-cons-threshold)
-(setq gc-cons-threshold most-positive-fixnum)
-(defun startup/reset-gc () (setq gc-cons-threshold startup/gc-cons-threshold))
-(add-hook 'emacs-startup-hook 'startup/reset-gc)
+;;(setq startup/gc-cons-threshold gc-cons-threshold)
+;;(setq gc-cons-threshold most-positive-fixnum)
+;;(defun startup/reset-gc () (setq gc-cons-threshold startup/gc-cons-threshold))
+;;(add-hook 'emacs-startup-hook 'startup/reset-gc)
 
 ;; Defer loading most packages for quicker startup time
 ;;(setq use-package-always-defer t)
@@ -46,7 +46,6 @@
 (evil-mode 1)
 (when (require 'evil-collection nil t)
   (evil-collection-init))
-
 ;; EXWM
 ;;(require 'exwm)
 ;;(require 'exwm-config)
@@ -82,6 +81,7 @@
   :demand
   :config
   (centaur-tabs-mode t)
+  (centaur-tabs-headline-match)
 ;;
 ;;  :hook
 ;;  (dired-mode . centaur-tabs-local-mode)
@@ -94,7 +94,6 @@
   :bind
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward))
-(centaur-tabs-headline-match)
 ;;
 ;;(setq centaur-tabs-cycle-scope 'tabs)
 ;;
@@ -108,13 +107,13 @@
   :config (which-key-mode))
 
 ;; Windmove
-(when (fboundp 'windmove-default-keybindings)
-  (windmove-default-keybindings))
+;;(when (fboundp 'windmove-default-keybindings)
+;;  (windmove-default-keybindings))
 
 ;; Misc
 ;;(set-default-font "Ubuntu Mono-11")
 ;;(set-default-font "DejaVu Sans Mono-11")
-(set-default-font "Monaco-11")
+;;(set-default-font "Monaco-11" t)
 (load-theme 'modus-operandi t)
 (ido-mode 1)
 ;;(global-auto-revert-mode 1)
@@ -337,6 +336,10 @@
 ;; all-the-icons
 (use-package all-the-icons)
 
+;; Jedi
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)                 ; optional
+
 ;; auto-complete
 (require 'auto-complete)
 (require 'auto-complete-config)
@@ -459,12 +462,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ein:output-area-inlined-images t)
  '(elfeed-feeds
    (quote
-	("https://news.ycombinator.com/rss" "https://www.gamingonlinux.com/article_rss.p" "http://lxer.com/module/newswire/headlines.rss" "https://opensource.com/feed" "https://itsfoss.com/feed/" "https://www.phoronix.com/rss.php" "https://forum.manjaro.org/c/announcements/stable-updates" "http://feeds.reuters.com/reuters/topNews" "https://www.schneier.com/blog/atom.xml" "https://www.schneier.com/blog/atom.xml")))
+	("https://news.ycombinator.com/rss" "http://lxer.com/module/newswire/headlines.rss" "https://opensource.com/feed" "https://itsfoss.com/feed/" "https://www.phoronix.com/rss.php")))
  '(package-selected-packages
    (quote
-	(company-go company-ctags flycheck modus-operandi-theme request elquery dashboard page-break-lines doom-themes vterm-toggle evil-collection evil-escape dired-rainbow emmet-mode yasnippet-snippets auto-complete-c-headers yasnippet auto-complete centaur-tabs company-quickhelp company-lsp ccls lsp-mode olivetti org-bullets htmlize zenburn-theme xkcd wttrin which-key vterm use-package treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil tao-theme speed-type poet-theme plan9-theme perspective pdf-tools parchment-theme openwith monokai-theme moe-theme modus-vivendi-theme lorem-ipsum gruvbox-theme fireplace faff-theme eww-lnum epresent elfeed color-theme-modern cloud-theme ample-zen-theme ample-theme all-the-icons alect-themes))))
+	(key-chord ace-jump-mode tldr helm jedi emojify emms ytdl auto-complete-clang-async elpy ein company-go company-ctags flycheck modus-operandi-theme request elquery dashboard page-break-lines doom-themes vterm-toggle evil-collection evil-escape dired-rainbow emmet-mode yasnippet-snippets auto-complete-c-headers yasnippet auto-complete centaur-tabs company-quickhelp company-lsp ccls lsp-mode olivetti org-bullets htmlize zenburn-theme xkcd wttrin which-key vterm use-package treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil tao-theme speed-type poet-theme plan9-theme perspective pdf-tools parchment-theme openwith monokai-theme moe-theme modus-vivendi-theme lorem-ipsum gruvbox-theme fireplace faff-theme eww-lnum epresent elfeed color-theme-modern cloud-theme ample-zen-theme ample-theme all-the-icons alect-themes))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

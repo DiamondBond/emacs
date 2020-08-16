@@ -1,12 +1,12 @@
 #+STARTUP: overview
-#+TITLE: diamond's emacs config
+#+TITLE: emacs configuration
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 
 * Dependencies
 ** System
-=clang= as backend for C and C++ autocompletion
-=llvm= to install irony server
+=clang= as backend for C and C++ autocompletion 
+=llvm= & =libclang-dev= to install irony server
 (optional) =mvn= maven for java project handling through =meghanada=
 *Go Mono* font
 ** Emacs
@@ -17,6 +17,7 @@ M-x package-install RET spacemacs-theme
 M-x package-install RET plan9-theme
 ;; utils
 M-x package-install RET pdf-tools
+M-x irony-install-server
 * QoL section
 Minor quality-of-life modifications for a more pleasant Emacs experience
 ** Enable line numbers

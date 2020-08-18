@@ -684,3 +684,14 @@ I use meghanada to provide very neat autocompletion when editing Java files. I u
     (setq meghanada-java-path "java")
     (setq meghanada-maven-path "mvn"))
 #+END_SRC
+** SLIME
+*** Description
+SBCL
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package slime
+    :ensure t
+    :defer nil
+    :config
+    (setq inferior-lisp-program "sbcl"))
+#+END_SRC

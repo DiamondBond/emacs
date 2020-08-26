@@ -150,7 +150,7 @@ C-x x swaps windows
 (global-set-key (kbd "<f10>") 'compile)
 (global-set-key (kbd "C-x w") 'elfeed)
 #+END_SRC
-** Themes
+** Theme switching
 #+begin_src emacs-lisp
 (global-set-key (kbd "<f1>")
                 (lambda () (interactive)
@@ -692,7 +692,7 @@ I use meghanada to provide very neat autocompletion when editing Java files. I u
 #+END_SRC
 ** SLIME
 *** Description
-SB Common Lisp
+Common Lisp
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package slime

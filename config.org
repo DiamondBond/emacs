@@ -25,6 +25,9 @@
     libm17n-dev
     libotf-dev
     libsystemd-dev
+    libtool-bin
+
+sudo apt install imagemagick libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev 
 #+end_src
 *** configuration
 #+begin_src sh
@@ -62,7 +65,9 @@ M-x package-install RET spacemacs-theme
 M-x package-install RET plan9-theme
 ;; utils
 M-x package-install RET pdf-tools
+M-x pdf-tools-install
 M-x irony-install-server
+M-x vterm
 * QoL section
 Minor quality-of-life modifications for a more pleasant Emacs experience
 ** Enable line numbers
@@ -234,10 +239,6 @@ One of the main selling points of Emacs! no Emacs distribution is complete witho
     :ensure t)
 #+END_SRC
 * Eshell
-** Why Eshell?
-We are using Emacs, so we might as well implement as many tools from our workflow into it as possible
-*** Caveats
-Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi) selecting previous commands does not work (for now). I recommend using eshell for light cli work, and using your external terminal emulator of choice for heavier tasks
 ** Prompt
 #+BEGIN_SRC emacs-lisp
   (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")

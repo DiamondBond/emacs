@@ -61,7 +61,10 @@ Show column number in modeline
 #+END_SRC
 ** Enable conservative scrolling
 #+BEGIN_SRC emacs-lisp
-  (setq scroll-conservatively 100)
+  ;;(setq scroll-conservatively 100)
+	(setq scroll-conservatively 1)
+	(setq mouse-wheel-scroll-amount '(5))
+	(setq mouse-wheel-progressive-speed nil)
 #+END_SRC
 ** Disable ring-bell
 #+BEGIN_SRC emacs-lisp
@@ -144,15 +147,18 @@ C-x x swaps windows
 (global-set-key (kbd "<f8>") 'tool-bar-mode)
 (global-set-key (kbd "<f9>") 'tab-bar-mode)
 (global-set-key (kbd "<f12>") 'linum-mode)
+(global-set-key (kbd "<f10>") 'compile)
+(global-set-key (kbd "C-x w") 'elfeed)
+#+END_SRC
+** Themes
+#+begin_src emacs-lisp
 (global-set-key (kbd "<f1>")
                 (lambda () (interactive)
                   (load-theme 'modus-operandi t)))
 (global-set-key (kbd "<f2>")
                 (lambda () (interactive)
-                  (load-theme 'modus-vivendi t)))
-(global-set-key (kbd "<f10>") 'disable-theme)
-(global-set-key (kbd "C-x w") 'elfeed)
-#+END_SRC
+                  (load-theme 'spacemacs-dark t)))
+#+end_src
 * =Org= mode
 ** Description
 One of the main selling points of Emacs! no Emacs distribution is complete without sensible and well-defined org-mode defaults
@@ -609,7 +615,7 @@ RSS reader for Emacs
   (use-package abbrev
     :diminish abbrev-mode)
 #+END_SRC
-* Programming section
+* Languages
 ** Initialize =company=
 *** Description
 Company is the autocompletion frontend that takes all the backends and gives you possible autocompletions when writing programs
@@ -686,12 +692,28 @@ I use meghanada to provide very neat autocompletion when editing Java files. I u
 #+END_SRC
 ** SLIME
 *** Description
-SBCL
+SB Common Lisp
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package slime
     :ensure t
     :defer nil
     :config
-    (setq inferior-lisp-program "sbcl"))
+    (setq inferior-lisp-program "sbcl")
+    (setq slime-contribs '(slime-fancy)))
 #+END_SRC
+** Geiser
+*** Description
+Scheme Lisp
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package geiser
+    :ensure t
+    :defer nil
+    :config
+    (setq geiser-active-implementations '(mit)))
+
+  (defun geiser-save ()
+    (interactive)
+    (geiser-repl--write-input-ring))
+	#+end_src

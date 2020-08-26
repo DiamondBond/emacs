@@ -4,11 +4,56 @@
 #+OPTIONS: num:nil
 
 * Dependencies
+** compiling emacs 27.1
+*** dependencies (ubuntu)
+#+begin_src sh
+    build-essential
+    imagemagick
+    libxpm-dev
+    libjpeg-dev
+    libgnutls28-dev
+    libgif-dev
+    libtiff-dev
+    libacl1-dev
+    libgtk-3-dev
+    libwebkit2gtk-4.0-dev
+    librsvg2-dev
+    libmagickcore-dev
+    libmagick++-dev
+    libgpm-dev
+    libselinux1-dev
+    libm17n-dev
+    libotf-dev
+    libsystemd-dev
+#+end_src
+*** configuration
+#+begin_src sh
+./configure --disable-silent-rules \
+--with-modules --with-file-notification=inotify --with-mailutils \
+--with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 \
+--with-imagemagick
+#+end_src
+*** default sys-cfg (from ubuntu repos)
+#+begin_src sh
+system-configuration-options
+"--build x86_64-linux-gnu --prefix=/usr --sharedstatedir=/var/lib --libexecdir=/usr/lib --localstatedir=/var/lib --infodir=/usr/share/info --mandir=/usr/share/man --enable-libsystemd --with-pop=yes --enable-locallisppath=/etc/emacs:/usr/local/share/emacs/26.3/site-lisp:/usr/local/share/emacs/site-lisp:/usr/share/emacs/26.3/site-lisp:/usr/share/emacs/site-lisp --with-sound=alsa --without-gconf --with-mailutils --build x86_64-linux-gnu --prefix=/usr --sharedstatedir=/var/lib --libexecdir=/usr/lib --localstatedir=/var/lib --infodir=/usr/share/info --mandir=/usr/share/man --enable-libsystemd --with-pop=yes --enable-locallisppath=/etc/emacs:/usr/local/share/emacs/26.3/site-lisp:/usr/local/share/emacs/site-lisp:/usr/share/emacs/26.3/site-lisp:/usr/share/emacs/site-lisp --with-sound=alsa --without-gconf --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --with-toolkit-scroll-bars 'CFLAGS=-g -O2 -fdebug-prefix-map=/build/emacs-mEZBk7/emacs-26.3+1=. -fstack-protector-strong -Wformat -Werror=format-security -Wall' 'CPPFLAGS=-Wdate-time -D_FORTIFY_SOURCE=2' 'LDFLAGS=-Wl,-Bsymbolic-functions -Wl,-z,relro'"
+
+system-configuration-features
+"XPM JPEG TIFF GIF PNG RSVG IMAGEMAGICK SOUND GPM DBUS GSETTINGS GLIB NOTIFY ACL LIBSELINUX GNUTLS LIBXML2 FREETYPE M17N_FLT LIBOTF XFT ZLIB TOOLKIT_SCROLL_BARS GTK3 X11 XDBE XIM THREADS LIBSYSTEMD LCMS2"
+#+end_src
+*** desired sys-cfg
+#+begin_src sh
+system-configuration-options
+"--disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 --with-imagemagick"
+
+system-configuration-features
+"XPM JPEG TIFF GIF PNG RSVG IMAGEMAGICK SOUND GPM DBUS GSETTINGS GLIB NOTIFY INOTIFY ACL LIBSELINUX GNUTLS LIBXML2 FREETYPE HARFBUZZ M17N_FLT LIBOTF XFT ZLIB TOOLKIT_SCROLL_BARS GTK3 X11 XDBE XIM MODULES THREADS XWIDGETS LIBSYSTEMD PDUMPER LCMS2 GMP"
+#+end_src
 ** System
 =clang= as backend for C and C++ autocompletion 
 =llvm= & =libclang-dev= to install irony server
 (optional) =mvn= maven for java project handling through =meghanada=
-*Go Mono* font
+*Monaco* font
 ** Emacs
 ;; themes
 M-x package-install RET modus-operandi

@@ -26,8 +26,9 @@
     libotf-dev
     libsystemd-dev
     libtool-bin
+    pandoc texlive-extra-utils texlive-latex-extra texlive-latex-recommended
 
-sudo apt install imagemagick libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin
+sudo apt install imagemagick libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex texlive-extra-utils texlive-latex-extra texlive-latex-recommended
 #+end_src
 *** configuration
 #+begin_src sh
@@ -205,14 +206,14 @@ C-x x swaps windows
 	      (frame-char-width)))
         2))))
 
-(center-window-mode 1)
+;;(center-window-mode 1)
 
 ;; Use F9 to toggle centering
-(global-set-key (kbd "<f9>") 'center-window-mode)
+;;(global-set-key (kbd "<f9>") 'center-window-mode)
 #+end_src
 ** Generic keybinds
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<f2>") 'tab-bar-mode)
+(global-set-key (kbd "<f9>") 'tab-bar-mode)
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f6>") 'menu-bar-mode)
 (global-set-key (kbd "<f7>") 'scroll-bar-mode)
@@ -258,6 +259,12 @@ One of the main selling points of Emacs! no Emacs distribution is complete witho
 
   (use-package htmlize
     :ensure t)
+
+(org-babel-do-load-languages 'org-babel-load-languages
+    '(
+        (shell . t)
+    )
+)
 #+END_SRC
 * Eshell
 ** Prompt

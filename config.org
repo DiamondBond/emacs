@@ -189,13 +189,34 @@ C-x x swaps windows
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-x x") 'window-swap-states)
 #+END_SRC
+** Center window
+#+begin_src emacs-lisp
+;; center the window by adding a very wide fringe
+(define-minor-mode center-window-mode
+  "Minor mode to center the window using wide fringes."
+  :init-value nil
+  :global t
+  :group 'editing-basics
+  (if (not center-window-mode)
+      (set-fringe-style nil);; default
+    (set-fringe-mode
+     (/ (- (frame-pixel-width)
+           (* (+ fill-column 4)
+	      (frame-char-width)))
+        2))))
+
+(center-window-mode 1)
+
+;; Use F9 to toggle centering
+(global-set-key (kbd "<f9>") 'center-window-mode)
+#+end_src
 ** Generic keybinds
 #+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<f2>") 'tab-bar-mode)
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f6>") 'menu-bar-mode)
 (global-set-key (kbd "<f7>") 'scroll-bar-mode)
 (global-set-key (kbd "<f8>") 'tool-bar-mode)
-(global-set-key (kbd "<f9>") 'tab-bar-mode)
 (global-set-key (kbd "<f12>") 'linum-mode)
 (global-set-key (kbd "<f10>") 'compile)
 (global-set-key (kbd "C-x w") 'elfeed)
@@ -205,9 +226,9 @@ C-x x swaps windows
 (global-set-key (kbd "<f1>")
                 (lambda () (interactive)
                   (load-theme 'modus-operandi t)))
-(global-set-key (kbd "<f2>")
-                (lambda () (interactive)
-                  (load-theme 'spacemacs-dark t)))
+;;(global-set-key (kbd "<f2>")
+;;                (lambda () (interactive)
+;;                  (load-theme 'spacemacs-dark t)))
 #+end_src
 * =Org= mode
 ** Description

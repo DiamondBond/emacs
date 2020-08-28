@@ -36,7 +36,7 @@ sudo apt install build-essential imagemagick ripgrep libxpm-dev libjpeg-dev libg
 ./configure --disable-silent-rules \
 --with-modules --with-file-notification=inotify --with-mailutils \
 --with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 \
---with-imagemagick
+--with-imagemagick --with-xml2 --with-json CFLAGS='-O3'
 #+end_src
 *** default sys-cfg (from ubuntu repos)
 #+begin_src sh

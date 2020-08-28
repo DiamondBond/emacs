@@ -9,6 +9,7 @@
 #+begin_src sh
     build-essential
     imagemagick
+    ripgrep
     libxpm-dev
     libjpeg-dev
     libgnutls28-dev
@@ -28,7 +29,7 @@
     libtool-bin
     pandoc texlive-extra-utils texlive-latex-extra texlive-latex-recommended
 
-sudo apt install imagemagick libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex texlive-extra-utils texlive-latex-extra texlive-latex-recommended
+sudo apt install build-essential imagemagick ripgrep libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex texlive-extra-utils texlive-latex-extra texlive-latex-recommended cmake cmake-extras html2ps
 #+end_src
 *** configuration
 #+begin_src sh

@@ -31,7 +31,7 @@
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
 ;; Load theme
-(load-theme 'modus-operandi t)
+;;(load-theme 'modus-operandi t)
 ;;(load-theme 'spacemacs-light t)
 
 ;; Start emacs server
@@ -49,5 +49,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-;; )
-'(default ((t (:family "Monaco")))))
+ )
+;;'(default ((t (:family "Monaco")))))

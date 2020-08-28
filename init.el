@@ -31,17 +31,20 @@
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
 ;; Load theme
-;;(load-theme 'modus-operandi t)
+(load-theme 'modus-operandi t)
 ;;(load-theme 'spacemacs-light t)
 
 ;; Start emacs server
-;;(server-start)
+(server-start)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-file-apps
+   '((auto-mode . emacs)
+	 ("\\.pdf\\'" . "zathura")))
  '(package-selected-packages
    '(fireplace pdf-tools spacemacs-theme plan9-theme modus-vivendi-theme modus-operandi-theme meghanada company-irony company-c-headers yasnippet-snippets yasnippet company magit treemacs-icons-dired treemacs-evil treemacs async ido-vertical-mode switch-window avy beacon evil swiper which-key dashboard spaceline diminish auto-package-update htmlize use-package)))
 (custom-set-faces
@@ -49,5 +52,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
-;;'(default ((t (:family "Monaco")))))
+ '(default ((t (:family "Monaco")))))

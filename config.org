@@ -433,7 +433,7 @@ The frontend of Witchmacs; without this there'd be no Marisa in your Emacs start
              (nil
               "Open config.org"
               "Open Emacs configuration file for easy editing"
-              (lambda (&rest _) (find-file "~/.emacs.d/config.org"))
+              (lambda (&rest _) (find-file "~/Dropbox/emacs/config.org"))
               'default)))))
 #+END_SRC
 *** Notes

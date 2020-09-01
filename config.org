@@ -28,7 +28,8 @@
     libsystemd-dev
     libtool-bin
     pandoc texlive-extra-utils texlive-latex-extra texlive-latex-recommended
-sudo apt install build-essential imagemagick ripgrep libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex texlive-extra-utils texlive-latex-extra texlive-latex-recommended cmake cmake-extras html2ps
+
+sudo apt install build-essential imagemagick ripgrep libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra texlive-latex-recommended cmake cmake-extras html2ps groff xhtml2ps
 #+end_src
 *** configuration
 #+begin_src sh
@@ -59,6 +60,7 @@ system-configuration-features
 (optional) =mvn= maven for java project handling through =meghanada=
 *Monaco* font
 ** Emacs
+M-x package-refresh-contents
 ;; themes
 M-x package-install RET modus-operandi
 M-x package-install RET modus-vivendi
@@ -69,6 +71,7 @@ M-x package-install RET pdf-tools
 M-x pdf-tools-install
 M-x irony-install-server
 M-x vterm
+M-x package-install RET restart-emacs
 * QoL section
 Minor quality-of-life modifications for a more pleasant Emacs experience
 ** Enable line numbers
@@ -391,50 +394,50 @@ I prefer powerline over spaceline, but the default powerline themes don't work f
 The frontend of Witchmacs; without this there'd be no Marisa in your Emacs startup screen
 *** Code
 #+BEGIN_SRC emacs-lisp
-  (use-package dashboard
-    :ensure t
-    :defer nil
-    :preface
-    (defun update-config ()
-      "Update Emacs to the latest version."
-      (interactive)
-      (let ((dir (expand-file-name user-emacs-directory)))
-        (if (file-exists-p dir)
-            (progn
-              (message "emacs is updating!")
-              (cd dir)
-              (shell-command "git pull")
-              (message "Update finished. Switch to the messages buffer to see changes and then restart Emacs"))
-          (message "\"%s\" doesn't exist." dir))))
+(use-package dashboard
+  :ensure t
+  :defer nil
+  :preface
+  (defun update-config ()
+    "Update Emacs to the latest version."
+    (interactive)
+    (let ((dir (expand-file-name user-emacs-directory)))
+      (if (file-exists-p dir)
+          (progn
+            (message "emacs is updating!")
+            (cd dir)
+            (shell-command "git pull")
+            (message "Update finished. Switch to the messages buffer to see changes and then restart Emacs"))
+        (message "\"%s\" doesn't exist." dir))))
 
-    (defun create-scratch-buffer ()
-      "Create a scratch buffer"
-      (interactive)
-      (switch-to-buffer (get-buffer-create "*scratch*"))
-      (lisp-interaction-mode))
-    :config
-    (dashboard-setup-startup-hook)
-    (setq dashboard-items '((recents . 5)))
-    (setq dashboard-banner-logo-title "Welcome to Emacs!")
-    (setq dashboard-startup-banner "~/.emacs.d/img/emacs.png")
-    (setq dashboard-center-content t)
-    (setq dashboard-show-shortcuts nil)
-    (setq dashboard-set-init-info t)
-    (setq dashboard-init-info (format "%d packages loaded in %s"
-                                      (length package-activated-list) (emacs-init-time)))
-    (setq dashboard-set-footer nil)
-    (setq dashboard-set-navigator t)
-    (setq dashboard-navigator-buttons
-          `(((,nil
-              "Open scratch buffer"
-              "Switch to the scratch buffer"
-              (lambda (&rest _) (create-scratch-buffer))
-              'default)
-             (nil
-              "Open config.org"
-              "Open Emacs configuration file for easy editing"
-              (lambda (&rest _) (find-file "~/Dropbox/emacs/config.org"))
-              'default)))))
+  (defun create-scratch-buffer ()
+    "Create a scratch buffer"
+    (interactive)
+    (switch-to-buffer (get-buffer-create "*scratch*"))
+    (lisp-interaction-mode))
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-items '((recents . 5)))
+  (setq dashboard-banner-logo-title "Welcome to Emacs!")
+  (setq dashboard-startup-banner "~/.emacs.d/img/emacs.png")
+  (setq dashboard-center-content t)
+  (setq dashboard-show-shortcuts nil)
+  (setq dashboard-set-init-info t)
+  (setq dashboard-init-info (format "%d packages loaded in %s"
+                                    (length package-activated-list) (emacs-init-time)))
+  (setq dashboard-set-footer nil)
+  (setq dashboard-set-navigator t)
+  (setq dashboard-navigator-buttons
+        `(((,nil
+            "Open scratch buffer"
+            "Switch to the scratch buffer"
+            (lambda (&rest _) (create-scratch-buffer))
+            'default)
+           (nil
+            "Open config.org"
+            "Open Emacs configuration file for easy editing"
+            (lambda (&rest _) (find-file "~/Dropbox/emacs/config.org"))
+            'default)))))
 #+END_SRC
 *** Notes
 If you pay close attention to the code in dashboard, you'll  notice that it uses custom functions defined under the :preface use-package block. I wrote all of those functions by looking at other people's Emacs distributions (Mainly [[https://github.com/seagle0128/.emacs.d][Centaur Emacs]]) and then experimenting and adapting them to Witchmacs. If you dig around, you'll find the same things I did - maybe even more!

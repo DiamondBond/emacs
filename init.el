@@ -28,11 +28,12 @@
   (package-install 'use-package))
 
 ;; Load config.org for init.el configuration
-(org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
+;;(org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
+(org-babel-load-file (expand-file-name "~/Dropbox/emacs/config.org"))
 
 ;; Load theme
-(load-theme 'modus-operandi t)
-;;(load-theme 'spacemacs-light t)
+;;(load-theme 'modus-operandi t)
+(load-theme 'spacemacs-light t)
 
 ;; Start emacs server
 (server-start)
@@ -44,9 +45,11 @@
  ;; If there is more than one, they won't work right.
  '(org-file-apps
    '((auto-mode . emacs)
-	 ("\\.pdf\\'" . "zathura %s")))
+     ("\\.mm\\'" . default)
+     ("\\.x?html?\\'" . default)
+     ("\\.pdf\\'" . "zathura %s")))
  '(package-selected-packages
-   '(fireplace pdf-tools spacemacs-theme plan9-theme modus-vivendi-theme modus-operandi-theme meghanada company-irony company-c-headers yasnippet-snippets yasnippet company magit treemacs-icons-dired treemacs-evil treemacs async ido-vertical-mode switch-window avy beacon evil swiper which-key dashboard spaceline diminish auto-package-update htmlize use-package)))
+   '(restart-emacs fireplace pdf-tools spacemacs-theme plan9-theme modus-vivendi-theme modus-operandi-theme meghanada company-irony company-c-headers yasnippet-snippets yasnippet company magit treemacs-icons-dired treemacs-evil treemacs async ido-vertical-mode switch-window avy beacon evil swiper which-key dashboard spaceline diminish auto-package-update htmlize use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

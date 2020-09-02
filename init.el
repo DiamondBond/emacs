@@ -31,9 +31,13 @@
 ;;(org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 (org-babel-load-file (expand-file-name "~/Dropbox/emacs/config.org"))
 
-;; Load theme
-;;(load-theme 'modus-operandi t)
-(load-theme 'spacemacs-light t)
+;; Disable colored bg for terminal
+(defun on-frame-open (&optional frame)
+  "If the frame was created in terminal don't load background color."
+  (unless (display-graphic-p frame)
+    (set-face-background 'default "unspecified-bg" frame))
+)
+(add-hook 'after-make-frame-functions 'on-frame-open)
 
 ;; Start emacs server
 (server-start)
@@ -45,11 +49,11 @@
  ;; If there is more than one, they won't work right.
  '(org-file-apps
    '((auto-mode . emacs)
-     ("\\.mm\\'" . default)
-     ("\\.x?html?\\'" . default)
-     ("\\.pdf\\'" . "zathura %s")))
+	 ("\\.mm\\'" . default)
+	 ("\\.x?html?\\'" . default)
+	 ("\\.pdf\\'" . "zathura %s")))
  '(package-selected-packages
-   '(restart-emacs fireplace pdf-tools spacemacs-theme plan9-theme modus-vivendi-theme modus-operandi-theme meghanada company-irony company-c-headers yasnippet-snippets yasnippet company magit treemacs-icons-dired treemacs-evil treemacs async ido-vertical-mode switch-window avy beacon evil swiper which-key dashboard spaceline diminish auto-package-update htmlize use-package)))
+   '(writeroom-mode restart-emacs fireplace pdf-tools spacemacs-theme plan9-theme modus-vivendi-theme modus-operandi-theme meghanada company-irony company-c-headers yasnippet-snippets yasnippet company magit treemacs-icons-dired treemacs-evil treemacs async ido-vertical-mode switch-window avy beacon evil swiper which-key dashboard spaceline diminish auto-package-update htmlize use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

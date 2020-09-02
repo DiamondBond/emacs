@@ -185,9 +185,24 @@ Super - Control - <arrow>
 #+BEGIN_SRC emacs-lisp
 (setq use-package-always-defer t)
 #+END_SRC
-** Browser (eww)
+** Browser
 #+BEGIN_SRC emacs-lisp
-(setq browse-url-browser-function 'eww-browse-url)
+;;(setq browse-url-browser-function 'eww-browse-url)
+
+;; use browser depending on url
+(setq
+ browse-url-browser-function
+ '(
+  ("wikipedia\\.org" . browse-url-firefox)
+  ("github" . browse-url-chromium)
+  ("khanacademy" . browse-url-chromium)
+  ("thefreedictionary\\.com" . eww-browse-url)
+  ("." . browse-url-default-browser)
+  ))
+#+END_SRC
+** Theme
+#+BEGIN_SRC emacs-lisp
+(load-theme 'spacemacs-light t)
 #+END_SRC
 * Personal Keybinds
 ** Swap windows

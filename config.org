@@ -194,15 +194,25 @@ Super - Control - <arrow>
  browse-url-browser-function
  '(
   ("wikipedia\\.org" . browse-url-firefox)
-  ("github" . browse-url-chromium)
+  ("github" . browse-url-firefox)
   ("khanacademy" . browse-url-chromium)
+  ("reddit" . browse-url-chromium)
   ("thefreedictionary\\.com" . eww-browse-url)
   ("." . browse-url-default-browser)
   ))
 #+END_SRC
+** Mouse Move
+#+begin_src emacs-lisp
+(defun warp-mouse-to-current-window ()
+  (interactive)
+  (destructuring-bind (left top right bottom)
+      (window-edges)
+    (set-mouse-position (selected-frame) left top)))
+#+end_src
 ** Theme
 #+BEGIN_SRC emacs-lisp
-(load-theme 'spacemacs-light t)
+;; Font and frame size
+;;(set-face-font 'default "Monaco")
 #+END_SRC
 * Personal Keybinds
 ** Swap windows
@@ -692,7 +702,25 @@ RSS reader for Emacs
 		  ("https://news.ycombinator.com/rss" ycombinator news)
 		  ("https://www.phoronix.com/rss.php" phoronix))))
 #+END_SRC
+** Initialize =pdf-tools=
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package pdf-tools
+    :defer t
+    :commands (pdf-view-mode pdf-tools-install)
+    :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
+    :magic ("%PDF" . pdf-view-mode)
+    :config
+    (pdf-tools-install)
+    (define-pdf-cache-function pagelabels)
+    :hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
+           (pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
+
+  (use-package org-pdftools
+    :hook (org-load-hook . org-pdftools-setup-link))
+#+END_SRC
 ** Initialize =vterm=
+*** Code
 #+begin_src emacs-lisp
   (use-package vterm
 	  :ensure t)
@@ -717,7 +745,7 @@ Company is the autocompletion frontend that takes all the backends and gives you
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :ensure t
-    :diminish (meghanada-mode company-mode irony-mode)
+    :diminish (company-mode irony-mode)
     :config
     (setq company-idle-delay 0)
     (setq company-minimum-prefix-length 3)
@@ -769,21 +797,6 @@ Irony is the company backend for C and C++
     ((c++-mode c-mode) . irony-mode)
     ('irony-mode-hook) . 'irony-cdb-autosetup-compile-options)
 #+END_SRC
-** Java
-*** Description
-I use meghanada to provide very neat autocompletion when editing Java files. I use it mainly for autocompletion but there's a ton of other things it can do, automatic imports, for example.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package meghanada
-    :ensure t
-    :defer nil
-    :config
-    (add-hook 'java-mode-hook
-              (lambda ()
-                (meghanada-mode t)))
-    (setq meghanada-java-path "java")
-    (setq meghanada-maven-path "mvn"))
-#+END_SRC
 ** SLIME
 *** Description
 Common Lisp
@@ -811,3 +824,4 @@ Scheme Lisp
     (interactive)
     (geiser-repl--write-input-ring))
 	#+end_src
+    

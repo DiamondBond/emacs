@@ -13,7 +13,6 @@
  
 (add-hook 'emacs-startup-hook 'startup/revert-file-name-handler-alist)
 (add-hook 'emacs-startup-hook 'startup/reset-gc)
-;;
 
 ;; Initialize melpa repo
 (require 'package)
@@ -27,19 +26,11 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; Load config.org for init.el configuration
-;;(org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
-(org-babel-load-file (expand-file-name "~/Dropbox/emacs/config.org"))
+;; Load config
+(org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
-;;(load-theme 'spacemacs-light t)
-(load-theme 'acme t)
-;; Disable colored bg for terminal
-(defun on-frame-open (&optional frame)
-  "If the frame was created in terminal don't load background color."
-  (unless (display-graphic-p frame)
-    (set-face-background 'default "unspecified-bg" frame))
-)
-(add-hook 'after-make-frame-functions 'on-frame-open)
+;; Load theme
+;;(load-theme 'acme t)
 
 ;; Start emacs server
 (server-start)
@@ -61,4 +52,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Monaco")))))
+ ;;'(default ((t (:family "Monaco")))))
+)

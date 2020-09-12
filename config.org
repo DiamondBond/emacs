@@ -4,34 +4,23 @@
 #+OPTIONS: num:nil
 
 * Dependencies
-** compiling emacs 27.1
+** System
+=clang= as backend for C and C++ autocompletion 
+=llvm= & =libclang-dev= to install irony server
+*Monaco* font
+
+*Misc*
+#+begin_src sh
+sudo apt install firefox telegram-desktop sxiv zathura zathura-djvu zathura-cb zathura-ps mupdf mupdf-tools mpv hexchat gpick gimp kdenlive inkscape imagemagick kolourpaint xfce4-screenshooter rofi xfce4-appfinder gmrun xdotool slop wmctrl tlp tlp-rdw acpi-call-dkms smartmontools linux-tools-generic cpufrequtils ripgrep gdb flex bison autoconf automake libtool adwaita-icon-theme-full thunderbird obs-studio qutebrowser mousepad xterm torbrowser-launcher bsdgames bsdgames-nonfree meld glew-utils xbacklight light gparted curl wget pavucontrol libnotify-bin gcc libcurl libcurl4-gnutls-dev sl screenfetch neofetch scrot cmatrix tree mlocate dosbox audacity galculator nomacs htop transmission-gtk wordnet
+#+end_src
+** Emacs 27.1
+How to compile and install Emacs 27.1
 *** dependencies (ubuntu)
 #+begin_src sh
-    build-essential
-    imagemagick
-    git
-    ripgrep
-    fd-find
-    libxpm-dev
-    libjpeg-dev
-    libgnutls28-dev
-    libgif-dev
-    libtiff-dev
-    libacl1-dev
-    libgtk-3-dev
-    libwebkit2gtk-4.0-dev
-    librsvg2-dev
-    libmagickcore-dev
-    libmagick++-dev
-    libgpm-dev
-    libselinux1-dev
-    libm17n-dev
-    libotf-dev
-    libsystemd-dev
-    libtool-bin
-    pandoc texlive-extra-utils texlive-latex-extra texlive-latex-recommended
+sudo apt install clang llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps
 
-sudo apt install build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra texlive-latex-recommended cmake cmake-extras html2ps groff xhtml2ps
+sudo apt-get build-dep emacs
+
 #+end_src
 *** configuration
 #+begin_src sh
@@ -40,7 +29,12 @@ sudo apt install build-essential imagemagick ripgrep git fd-find libxpm-dev libj
 --with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 \
 --with-imagemagick --with-xml2 --with-json --with-harfbuzz CFLAGS='-O3'
 #+end_src
-*** default sys-cfg (from ubuntu repos)
+*** building
+#+begin_src sh
+make
+sudo make install
+#+end_src
+*** default sys-cfg from ubuntu emacs 26
 #+begin_src sh
 system-configuration-options
 "--build x86_64-linux-gnu --prefix=/usr --sharedstatedir=/var/lib --libexecdir=/usr/lib --localstatedir=/var/lib --infodir=/usr/share/info --mandir=/usr/share/man --enable-libsystemd --with-pop=yes --enable-locallisppath=/etc/emacs:/usr/local/share/emacs/26.3/site-lisp:/usr/local/share/emacs/site-lisp:/usr/share/emacs/26.3/site-lisp:/usr/share/emacs/site-lisp --with-sound=alsa --without-gconf --with-mailutils --build x86_64-linux-gnu --prefix=/usr --sharedstatedir=/var/lib --libexecdir=/usr/lib --localstatedir=/var/lib --infodir=/usr/share/info --mandir=/usr/share/man --enable-libsystemd --with-pop=yes --enable-locallisppath=/etc/emacs:/usr/local/share/emacs/26.3/site-lisp:/usr/local/share/emacs/site-lisp:/usr/share/emacs/26.3/site-lisp:/usr/share/emacs/site-lisp --with-sound=alsa --without-gconf --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --with-toolkit-scroll-bars 'CFLAGS=-g -O2 -fdebug-prefix-map=/build/emacs-mEZBk7/emacs-26.3+1=. -fstack-protector-strong -Wformat -Werror=format-security -Wall' 'CPPFLAGS=-Wdate-time -D_FORTIFY_SOURCE=2' 'LDFLAGS=-Wl,-Bsymbolic-functions -Wl,-z,relro'"
@@ -48,7 +42,7 @@ system-configuration-options
 system-configuration-features
 "XPM JPEG TIFF GIF PNG RSVG IMAGEMAGICK SOUND GPM DBUS GSETTINGS GLIB NOTIFY ACL LIBSELINUX GNUTLS LIBXML2 FREETYPE M17N_FLT LIBOTF XFT ZLIB TOOLKIT_SCROLL_BARS GTK3 X11 XDBE XIM THREADS LIBSYSTEMD LCMS2"
 #+end_src
-*** desired sys-cfg
+*** desired sys-cfg for emacs 27.1
 #+begin_src sh
 system-configuration-options
 "--disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 --with-imagemagick"
@@ -56,34 +50,30 @@ system-configuration-options
 system-configuration-features
 "XPM JPEG TIFF GIF PNG RSVG IMAGEMAGICK SOUND GPM DBUS GSETTINGS GLIB NOTIFY INOTIFY ACL LIBSELINUX GNUTLS LIBXML2 FREETYPE HARFBUZZ M17N_FLT LIBOTF XFT ZLIB TOOLKIT_SCROLL_BARS GTK3 X11 XDBE XIM MODULES THREADS XWIDGETS LIBSYSTEMD PDUMPER LCMS2 GMP"
 #+end_src
-** System
-=clang= as backend for C and C++ autocompletion 
-=llvm= & =libclang-dev= to install irony server
-(optional) =mvn= maven for java project handling through =meghanada=
-*Monaco* font
-** Emacs
+** Emacs Packages
 M-x package-refresh-contents
 ;; themes
 M-x package-install RET modus-operandi
 M-x package-install RET modus-vivendi
 M-x package-install RET spacemacs-theme
 M-x package-install RET plan9-theme
+M-x package-install RET acme
 ;; utils
 M-x package-install RET pdf-tools
-M-x pdf-tools-install
-M-x irony-install-server
 M-x vterm
 M-x package-install RET restart-emacs
+M-x pdf-tools-install
+M-x irony-install-server
 * QoL section
-Minor quality-of-life modifications for a more pleasant Emacs experience
+Minor quality-of-life modifications for a more pleasant Emacs experience.
 ** Enable line numbers
-Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so I utilize the approach of only enabling it on some major modes rather than globally
+Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (add-hook 'text-mode-hook 'display-line-numbers-mode)
 #+END_SRC
 ** Enable column numbers
-Show column number in modeline
+Show column number in modeline.
 #+BEGIN_SRC emacs-lisp
   (column-number-mode 1)
 #+END_SRC
@@ -215,33 +205,7 @@ Super - Control - <arrow>
 ;;(set-face-font 'default "Monaco")
 #+END_SRC
 * Personal Keybinds
-** Swap windows
-C-x x swaps windows
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-x x") 'window-swap-states)
-#+END_SRC
-** Center window
-#+begin_src emacs-lisp
-;; center the window by adding a very wide fringe
-(define-minor-mode center-window-mode
-  "Minor mode to center the window using wide fringes."
-  :init-value nil
-  :global t
-  :group 'editing-basics
-  (if (not center-window-mode)
-      (set-fringe-style nil);; default
-    (set-fringe-mode
-     (/ (- (frame-pixel-width)
-           (* (+ fill-column 4)
-	      (frame-char-width)))
-        2))))
-
-;;(center-window-mode 1)
-
-;; Use F9 to toggle centering
-;;(global-set-key (kbd "<f9>") 'center-window-mode)
-#+end_src
-** Generic keybinds
+** Keybinds
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<f9>") 'tab-bar-mode)
 (global-set-key (kbd "<f5>") 'revert-buffer)
@@ -252,18 +216,14 @@ C-x x swaps windows
 (global-set-key (kbd "<f10>") 'compile)
 (global-set-key (kbd "C-x w") 'elfeed)
 #+END_SRC
-** Theme switching
-#+begin_src emacs-lisp
-(global-set-key (kbd "<f1>")
-                (lambda () (interactive)
-                  (load-theme 'modus-operandi t)))
-;;(global-set-key (kbd "<f2>")
-;;                (lambda () (interactive)
-;;                  (load-theme 'spacemacs-dark t)))
-#+end_src
+** Swap windows
+C-x x swaps windows
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-x x") 'window-swap-states)
+#+END_SRC
 * =Org= mode
 ** Description
-One of the main selling points of Emacs! no Emacs distribution is complete without sensible and well-defined org-mode defaults
+Sensible and well-defined org-mode defaults.
 ** Code
 #+BEGIN_SRC emacs-lisp
   (use-package org
@@ -297,6 +257,8 @@ One of the main selling points of Emacs! no Emacs distribution is complete witho
 )
 #+END_SRC
 * Eshell
+** Description
+Prettify eshell prompt.
 ** Prompt
 #+BEGIN_SRC emacs-lisp
   (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
@@ -349,7 +311,7 @@ One of the main selling points of Emacs! no Emacs distribution is complete witho
 * Use-package
 ** Initialize =auto-package-update=
 *** Description
-Auto-package-update automatically updates and removes old packages
+Auto-package-update automatically updates and removes old packages.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package auto-package-update
@@ -362,80 +324,52 @@ Auto-package-update automatically updates and removes old packages
 #+END_SRC
 ** Initialize =diminish=
 *** Description
-Diminish hides minor modes to prevent cluttering your mode line
+Diminish hides minor modes to prevent cluttering your mode line.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package diminish
     :ensure t)
 #+END_SRC
-*** Historical
-22/04/2019: This macro was provided by user [[https://gist.github.com/ld34/44d100b79964407e5ddf41035e3cd32f][ld43]] after I couldn’t figure out how to make diminish work by being at the top of the config file.
-
-#+BEGIN_SRC emacs-lisp
-  ;(defmacro diminish-built-in (&rest modes)
-  ;  "Accepts a list MODES of built-in emacs modes and generates `with-eval-after-load` diminish forms based on the file implementing the mode functionality for each mode."
-  ;  (declare (indent defun))
-  ;  (let* ((get-file-names (lambda (pkg) (file-name-base (symbol-file pkg))))
-  ;	 (diminish-files (mapcar get-file-names modes))
-  ;	 (zip-diminish   (-zip modes diminish-files)))
-  ;    `(progn
-  ;       ,@(cl-loop for (mode . file) in zip-diminish
-  ;		  collect `(with-eval-after-load ,file
-  ;			     (diminish (quote ,mode)))))))
-  ; This bit goes in init.el
-  ;(diminish-built-in
-  ;  beacon-mode
-  ;  which-key-mode
-  ;  page-break-lines-mode
-  ;  undo-tree-mode
-  ;  eldoc-mode
-  ;  abbrev-mode
-  ;  irony-mode
-  ;  company-mode
-  ;  meghanada-mode)
-#+END_SRC
-
-27/05/2019: Since the diminish functionality was always built-in in use-package, there was never a point in using a diminish config. lol silly me
 ** Initialize =spaceline=
 *** Description
-I tried spaceline and didn't like it. What I did like was its theme
+Spaceline.
 *** Code
 #+BEGIN_SRC emacs-lisp
- ;; (use-package spaceline
- ;;   :ensure t)
+;;  (use-package spaceline
+;;    :ensure t)
 #+END_SRC
-** Initialize =powerline= and utilize the spaceline theme
+** Initialize =powerline= 
 *** Description
-I prefer powerline over spaceline, but the default powerline themes don't work for me for whatever reason, so I use the spaceline theme
+We utilize the spaceline theme for powerline.
 *** Code
 #+BEGIN_SRC emacs-lisp
-  ;;(use-package powerline
-	;;:ensure t
-	;;:init
-	;;(spaceline-spacemacs-theme)
-	;;:hook
-	;;('after-init-hook) . 'powerline-reset)
+;;  (use-package powerline
+;;	:ensure t
+;;	:init
+;;	(spaceline-spacemacs-theme)
+;;	:hook
+;;	('after-init-hook) . 'powerline-reset)
 #+END_SRC
 ** Initialize =dashboard=
 *** Description
-The frontend of Witchmacs; without this there'd be no Marisa in your Emacs startup screen
+Pretty emacs logo at startup.
 *** Code
 #+BEGIN_SRC emacs-lisp
 (use-package dashboard
   :ensure t
   :defer nil
   :preface
-  (defun update-config ()
-    "Update Emacs to the latest version."
-    (interactive)
-    (let ((dir (expand-file-name user-emacs-directory)))
-      (if (file-exists-p dir)
-          (progn
-            (message "emacs is updating!")
-            (cd dir)
-            (shell-command "git pull")
-            (message "Update finished. Switch to the messages buffer to see changes and then restart Emacs"))
-        (message "\"%s\" doesn't exist." dir))))
+  ;;(defun update-config ()
+  ;;  "Update Emacs to the latest version."
+  ;;  (interactive)
+  ;;  (let ((dir (expand-file-name user-emacs-directory)))
+  ;;    (if (file-exists-p dir)
+  ;;        (progn
+  ;;          (message "emacs is updating!")
+  ;;          (cd dir)
+  ;;          (shell-command "git pull")
+  ;;          (message "Update finished. Switch to the messages buffer to see changes and then restart Emacs"))
+  ;;      (message "\"%s\" doesn't exist." dir))))
 
   (defun create-scratch-buffer ()
     "Create a scratch buffer"
@@ -466,21 +400,9 @@ The frontend of Witchmacs; without this there'd be no Marisa in your Emacs start
             (lambda (&rest _) (find-file "~/Dropbox/emacs/config.org"))
             'default)))))
 #+END_SRC
-*** Notes
-If you pay close attention to the code in dashboard, you'll  notice that it uses custom functions defined under the :preface use-package block. I wrote all of those functions by looking at other people's Emacs distributions (Mainly [[https://github.com/seagle0128/.emacs.d][Centaur Emacs]]) and then experimenting and adapting them to Witchmacs. If you dig around, you'll find the same things I did - maybe even more!
-*** Historical
-22/05/19: On this day, the main maintainers of the dashboard package have added built-in fuinctionality to display init and package load time, thing that I already had implemented much earlier on my own. I have left here my implementation for historical purposes
-#+BEGIN_SRC emacs-lisp
-  ;(insert (concat
-  ;         (propertize (format "%d packages loaded in %s"
-  ;                             (length package-activated-list) (emacs-init-time))
-  ;                     'face 'font-lock-comment-face)))
-  ;
-  ;(dashboard-center-line)
-#+END_SRC
 ** Initialize =which-key=
 *** Description
-Incredibly useful package; if you are in the middle of a command and don't know what to type next, just wait a second and you'll get a nice buffer with all possible completions
+Possible completion framework with 1s delay.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
@@ -491,16 +413,16 @@ Incredibly useful package; if you are in the middle of a command and don't know 
 #+END_SRC
 ** Initialize =swiper=
 *** Description
-When doing C-s to search, you get this very nice and neat mini-buffer that you can traverse with the arrow keys (or C-n and C-p) and then press <RET> to select where you want to go
+C-s to spawn a search minibuffer that can be traversed via C-n and C-p & <RET>.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package swiper
 	:ensure t
 	:bind ("C-s" . 'swiper))
 #+END_SRC
-** Initialize =evil= mode
+** Initialize =evil=
 *** Description
-Vim keybindings in Emacs. Please note that Witchmacs has NO other evil-mode compatibility packages because I like to KISS. This might change in the future
+Heresy; Vim keybindings in Emacs. 
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package evil
@@ -520,7 +442,7 @@ Vim keybindings in Emacs. Please note that Witchmacs has NO other evil-mode comp
 #+END_SRC
 ** Initialize =beacon=
 *** Description
-You might find beacon an unnecesary package but I find it very neat. It briefly highlights the cursor position when switching to a new window or buffer
+Briefly highlight the cursor position when switching to a new window or buffer.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package beacon
@@ -531,7 +453,7 @@ You might find beacon an unnecesary package but I find it very neat. It briefly 
 #+END_SRC
 ** Initialize =avy=
 *** Description
-Avy is a very useful package; instead of having to move your cursor to a line that is very far away, just do M - s and type the character that you want to move to
+M - s to jump to desired character.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package avy
@@ -541,7 +463,7 @@ Avy is a very useful package; instead of having to move your cursor to a line th
 #+END_SRC
 ** Initialize =switch-window=
 *** Description
-Switch window is a neat package because instead of having to painstakingly do C - x o until you're in the window you want  to edit, you can just do C - x o and pick the one you want to move to according to the letter it is assigned to
+C-x o and pick window. (a,s,d...)
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package switch-window
@@ -556,9 +478,9 @@ Switch window is a neat package because instead of having to painstakingly do C 
 	:bind
 	([remap other-window] . switch-window))
 #+END_SRC
-** Initialize =ido= and =ido-vertical=
+** Initialize =ido=
 *** Description
-For the longest time I used the default way of switching and killing buffers in Emacs. Same for finding files. Ido-mode made these three tasks IMMENSELY easier and more intuitive. Please not that I still use the default way M - x works because I believe all you really need for it is which-key
+Better switching & killing buffers in Emacs.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package ido
@@ -569,18 +491,18 @@ For the longest time I used the default way of switching and killing buffers in 
     (setq ido-create-new-buffer 'always)
     (setq ido-everywhere t))
 
-  (use-package ido-vertical-mode
+  (use-package ido-grid-mode
     :ensure t
     :init
-    (ido-vertical-mode 1))
+    (ido-grid-mode 1))
   ; This enables arrow keys to select while in ido mode. If you want to
   ; instead use the default Emacs keybindings, change it to
   ; "'C-n-and-C-p-only"
-  (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
+  (setq ido-grid-define-keys 'C-n-C-p-up-and-down)
 #+END_SRC
 ** Initialize =async=
 *** Description
-Utilize asynchronous processes whenever possible
+Utilize asynchronous processes whenever possible.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package async
@@ -604,7 +526,7 @@ Utilize asynchronous processes whenever possible
 #+END_SRC
 ** Initialize =treemacs=
 *** Description
-Neat side-bar file and project explorer
+Neat side-bar file and project explorer.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package treemacs
@@ -678,7 +600,7 @@ Neat side-bar file and project explorer
 #+END_SRC
 ** Initialize =magit=
 *** Description
-Git porcelain for Emacs
+Git porcelain for Emacs.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package magit
@@ -686,7 +608,7 @@ Git porcelain for Emacs
 #+END_SRC
 ** Initialize =elfeed=
 *** Description
-RSS reader for Emacs
+RSS reader for Emacs.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package elfeed
@@ -703,6 +625,8 @@ RSS reader for Emacs
 		  ("https://www.phoronix.com/rss.php" phoronix))))
 #+END_SRC
 ** Initialize =pdf-tools=
+*** Description
+Better pdf viewing experience.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
@@ -720,12 +644,16 @@ RSS reader for Emacs
     :hook (org-load-hook . org-pdftools-setup-link))
 #+END_SRC
 ** Initialize =vterm=
+*** Description
+Fully fledged terminal.
 *** Code
 #+begin_src emacs-lisp
   (use-package vterm
 	  :ensure t)
 #+end_src
 ** Initialize =saveplace=
+*** Description
+Saves cursor location in buffers.
 *** Code
 #+begin_src emacs-lisp
   (use-package saveplace
@@ -749,7 +677,7 @@ RSS reader for Emacs
 * Languages
 ** Initialize =company=
 *** Description
-Company is the autocompletion frontend that takes all the backends and gives you possible autocompletions when writing programs
+Company is the autocompletion frontend that takes all the backends and gives you possible autocompletions when writing programs.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package company
@@ -764,11 +692,11 @@ Company is the autocompletion frontend that takes all the backends and gives you
     (define-key company-active-map (kbd "C-p") #'company-select-previous)
     (define-key company-active-map (kbd "SPC") #'company-abort)
     :hook
-    ((java-mode c-mode c++-mode) . company-mode))
+    ((c-mode c++-mode) . company-mode))
 #+END_SRC
 ** Initialize =yasnippet=
 *** Description
-Yasnippet provides useful snippets, nothing to do with Company but still useful when used in conjuction with it
+Yasnippet provides useful snippets.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
@@ -806,9 +734,10 @@ Irony is the company backend for C and C++
     ((c++-mode c-mode) . irony-mode)
     ('irony-mode-hook) . 'irony-cdb-autosetup-compile-options)
 #+END_SRC
-** SLIME
+** Common Lisp
 *** Description
-Common Lisp
+SLIME.
+Common Lisp REPL.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package slime
@@ -818,9 +747,10 @@ Common Lisp
     (setq inferior-lisp-program "sbcl")
     (setq slime-contribs '(slime-fancy)))
 #+END_SRC
-** Geiser
+** Scheme Lisp
 *** Description
-Scheme Lisp
+Geiser.
+Scheme Lisp REPL.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package geiser
@@ -833,4 +763,3 @@ Scheme Lisp
     (interactive)
     (geiser-repl--write-input-ring))
 	#+end_src
-    

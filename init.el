@@ -46,7 +46,7 @@
 	 ("\\.x?html?\\'" . default)
 	 ("\\.pdf\\'" . "zathura %s")))
  '(package-selected-packages
-   '(vigenere ivy-rich counsel rainbow-delimiters pdf-view-restore pdf-tools acme-theme nyan-mode synosaurus xah-math-input ivy flycheck swiper-helm writeroom-mode restart-emacs fireplace spacemacs-theme modus-vivendi-theme modus-operandi-theme company-irony company-c-headers yasnippet-snippets yasnippet company magit treemacs-icons-dired treemacs-evil treemacs async ido-vertical-mode switch-window avy beacon evil swiper which-key dashboard spaceline diminish auto-package-update htmlize use-package))
+   '(vigenere ivy-rich rainbow-delimiters pdf-view-restore pdf-tools acme-theme nyan-mode synosaurus xah-math-input ivy flycheck swiper-helm writeroom-mode restart-emacs fireplace spacemacs-theme modus-vivendi-theme modus-operandi-theme company-irony company-c-headers yasnippet-snippets yasnippet company magit treemacs-icons-dired treemacs-evil treemacs async ido-vertical-mode switch-window avy beacon evil swiper which-key dashboard spaceline diminish auto-package-update htmlize use-package))
  '(pdf-view-midnight-colors '("#655370" . "#fbf8ef")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

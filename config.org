@@ -208,9 +208,6 @@ C-x x swaps windows
 * =Org= mode
 ** Description
 Sensible and well-defined org-mode defaults.
-and
-Getting things done via org-capture;
-https://www.labri.fr/perso/nrougier/GTD/index.html
 ** Code
 #+BEGIN_SRC emacs-lisp
   ;; Org init
@@ -255,7 +252,8 @@ https://www.labri.fr/perso/nrougier/GTD/index.html
 
 (setq org-capture-templates
       '(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
-         "* %?\nEntered on %U\n  %i\n  %a")
+         "* %?\n%a\nEntered on %U")
+        ;; "* %?\nEntered on %U\n  %i\n  %a")
         ("j" "Journal" entry (file+datetree "~/org/journal.org")
          "* %?\nEntered on %U\n  %i\n  %a")))
 

@@ -5,19 +5,19 @@
 
 * Dependencies
 ** System
-=clang= as backend for C and C++ autocompletion 
+=clang= & =clangd= as backend for C and C++ autocompletion 
 =llvm= & =libclang-dev= to install irony server
 *Monaco* font
 
-*Misc*
+*Personal*
 #+begin_src sh
-sudo apt install firefox telegram-desktop sxiv zathura zathura-djvu zathura-cb zathura-ps mupdf mupdf-tools mpv hexchat gpick gimp kdenlive inkscape imagemagick kolourpaint xfce4-screenshooter rofi xfce4-appfinder gmrun xdotool slop wmctrl tlp tlp-rdw acpi-call-dkms smartmontools linux-tools-generic cpufrequtils ripgrep gdb flex bison autoconf automake libtool adwaita-icon-theme-full thunderbird obs-studio qutebrowser mousepad xterm torbrowser-launcher bsdgames bsdgames-nonfree meld glew-utils xbacklight light gparted curl wget pavucontrol libnotify-bin gcc libcurl libcurl4-gnutls-dev sl screenfetch neofetch scrot cmatrix tree mlocate dosbox audacity galculator nomacs htop transmission-gtk wordnet
+sudo apt install firefox telegram-desktop sxiv zathura zathura-djvu zathura-cb zathura-ps mupdf mupdf-tools mpv hexchat gpick gimp kdenlive inkscape imagemagick kolourpaint xfce4-screenshooter rofi xfce4-appfinder gmrun xdotool slop wmctrl tlp tlp-rdw acpi-call-dkms smartmontools linux-tools-generic cpufrequtils ripgrep gdb flex bison autoconf automake libtool adwaita-icon-theme-full thunderbird obs-studio qutebrowser mousepad xterm torbrowser-launcher bsdgames bsdgames-nonfree meld glew-utils xbacklight light gparted curl wget pavucontrol libnotify-bin gcc libcurl4-gnutls-dev sl screenfetch neofetch scrot cmatrix tree mlocate dosbox audacity galculator nomacs htop transmission-gtk wordnet ubuntu-restricted-extras ttf-mscorefonts-installer lm-sensors powertop default-jre cowsay fortune cowsay-off fortunes filters libglib2.0-dev wkhtmltopdf mpc mpd ncmpcpp tmux python wildmidi timidity fluid-soundfont-gs fluidsynth pmidi timidity-daemon rtv
 #+end_src
 ** Emacs 27.1
 How to compile and install Emacs 27.1
 *** dependencies (ubuntu)
 #+begin_src sh
-sudo apt install clang llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps
+sudo apt install clang clangd llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps
 
 sudo apt-get build-dep emacs
 
@@ -175,22 +175,6 @@ Super - Control - <arrow>
 #+BEGIN_SRC emacs-lisp
 (setq use-package-always-defer t)
 #+END_SRC
-** Browser
-#+BEGIN_SRC emacs-lisp
-;;(setq browse-url-browser-function 'eww-browse-url)
-
-;; use browser depending on url
-(setq
- browse-url-browser-function
- '(
-  ("wikipedia\\.org" . browse-url-firefox)
-  ("github" . browse-url-firefox)
-  ("khanacademy" . browse-url-chromium)
-  ("reddit" . browse-url-chromium)
-  ("thefreedictionary\\.com" . eww-browse-url)
-  ("." . browse-url-default-browser)
-  ))
-#+END_SRC
 ** Mouse Move
 #+begin_src emacs-lisp
 (defun warp-mouse-to-current-window ()
@@ -224,8 +208,12 @@ C-x x swaps windows
 * =Org= mode
 ** Description
 Sensible and well-defined org-mode defaults.
+and
+Getting things done via org-capture;
+https://www.labri.fr/perso/nrougier/GTD/index.html
 ** Code
 #+BEGIN_SRC emacs-lisp
+  ;; Org init
   (use-package org
     :config
     (add-hook 'org-mode-hook 'org-indent-mode)
@@ -236,10 +224,12 @@ Sensible and well-defined org-mode defaults.
 	(setq org-redisplay-inline-images t)
 	(setq org-startup-with-inline-images "inlineimages")
 	(setq org-directory "~/org")
+    (setq org-agenda-files (list "inbox.org"))
 	(global-set-key (kbd "C-<f1>") (lambda()
 								 (interactive)
 								 (show-all))))
 
+  ;; Misc
   (use-package org-indent
     :diminish org-indent-mode)
 
@@ -255,6 +245,26 @@ Sensible and well-defined org-mode defaults.
         (shell . t)
     )
 )
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+(require 'org)
+
+;;(setq org-directory "~/org")
+(setq org-agenda-files (list "inbox.org"))
+;;(setq org-default-notes-file (concat org-directory "/notes.org"))
+
+(setq org-capture-templates
+      '(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
+         "* %?\nEntered on %U\n  %i\n  %a")
+        ("j" "Journal" entry (file+datetree "~/org/journal.org")
+         "* %?\nEntered on %U\n  %i\n  %a")))
+
+;; Use full window for org-capture
+;;(add-hook 'org-capture-mode-hook 'delete-other-windows)
+
+(define-key global-map (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c l") 'org-store-link)
+;;(global-set-key (kbd "C-c C-l") 'org-insert-link)
 #+END_SRC
 * Eshell
 ** Description
@@ -409,7 +419,9 @@ Possible completion framework with 1s delay.
     :ensure t
     :diminish which-key-mode
     :init
-    (which-key-mode))
+    (which-key-mode)
+    :config
+    (setq which-key-idle-delay 0.3))
 #+END_SRC
 ** Initialize =swiper=
 *** Description
@@ -498,7 +510,7 @@ Better switching & killing buffers in Emacs.
   ; This enables arrow keys to select while in ido mode. If you want to
   ; instead use the default Emacs keybindings, change it to
   ; "'C-n-and-C-p-only"
-  (setq ido-grid-define-keys 'C-n-C-p-up-and-down)
+  ;(setq ido-grid-define-keys 'C-n-C-p-up-and-down)
 #+END_SRC
 ** Initialize =async=
 *** Description
@@ -633,16 +645,26 @@ Better pdf viewing experience.
     :defer t
     :commands (pdf-view-mode pdf-tools-install)
     :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
+    :load-path "site-lisp/pdf-tools/lisp"
     :magic ("%PDF" . pdf-view-mode)
     :config
     (pdf-tools-install)
     (define-pdf-cache-function pagelabels)
     :hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
-           (pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
+    (pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
+
+  (use-package pdf-view-restore
+    :after pdf-tools
+    :config
+    (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
 
   (use-package org-pdftools
     :hook (org-load-hook . org-pdftools-setup-link))
 #+END_SRC
+
+#+RESULTS:
+| org-pdftools-setup-link |
+
 ** Initialize =vterm=
 *** Description
 Fully fledged terminal.
@@ -763,3 +785,51 @@ Scheme Lisp REPL.
     (interactive)
     (geiser-repl--write-input-ring))
 	#+end_src
+* Browser
+#+begin_src emacs-lisp
+  ;; (defun shr-custom-url (&optional external mouse-event)
+  ;;   (interactive (list current-prefix-arg last-nonmenu-event))
+  ;;   (mouse-set-point mouse-event)
+  ;;   (let ((url (get-text-property (point) 'shr-url)))
+  ;;     (if	(not url)
+  ;; 	(message "No link under point")
+  ;;       (fakebrowser url))))
+  ;; (add-hook 'eww-mode-hook
+  ;; 	  '(lambda ()
+  ;; 	     (setq-local mouse-1-click-follows-link nil)
+  ;; 	     (define-key eww-link-keymap [mouse-2] 'shr-custom-url)
+  ;; 	     (define-key eww-link-keymap [mouse-1] 'eww-follow-link)))
+
+  ;; (defun fakebrowser (link &optional new-window)
+  ;;   (interactive)
+  ;;   (pcase link
+  ;;     ((pred (lambda (x) (string-match-p "\\.\\(png\\|jpg\\|jpeg\\|jpe\\)$" x)))
+  ;;      (start-process "feh" nil "feh" "-x" "-." "-Z" link))
+  ;;     ((pred (lambda (x) (string-match-p "i\\.redd\\.it\\|twimg\\.com" x)))
+  ;;      (start-process "feh" nil "feh" "-x" "-." "-Z" link))
+  ;;     ((pred (lambda (x) (string-match-p "\\.\\(mkv\\|mp4\\|gif\\|webm\\|gifv\\)$" x)))
+  ;;      (start-process "mpv" nil "mpv" link))
+  ;;     ((pred (lambda (x) (string-match-p "v\\.redd\\.it\\|gfycat\\.com\\|streamable\\.com" x)))
+  ;;      (start-process "mpv" nil "mpv" link))
+  ;;     ((pred (lambda (x) (string-match-p "youtube\\.com\\|youtu\\.be\\|vimeo\\.com\\|liveleak\\.com" x)))
+  ;;      (mpv-enqueue-play link))
+  ;;     (_ (start-process "firefox" nil "firefox" link))))
+  ;;
+  ;; (setq browse-url-browser-function 'fakebrowser
+  ;;       shr-external-browser 'browse-url-browser-function)
+#+end_src
+#+BEGIN_SRC emacs-lisp
+;;(setq browse-url-browser-function 'eww-browse-url)
+
+;; use browser depending on url
+(setq
+ browse-url-browser-function
+ '(
+  ("wikipedia\\.org" . browse-url-firefox)
+  ("github" . browse-url-firefox)
+  ("khanacademy" . browse-url-chromium)
+  ("reddit" . browse-url-chromium)
+  ("thefreedictionary\\.com" . eww-browse-url)
+  ("." . browse-url-default-browser)
+  ))
+#+END_SRC

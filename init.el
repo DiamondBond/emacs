@@ -27,10 +27,10 @@
   (package-install 'use-package))
 
 ;; Load config
-(org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
+(org-babel-load-file (expand-file-name "~/Dropbox/emacs/config.org"))
 
 ;; Load theme
-;;(load-theme 'acme t)
+(load-theme 'spacemacs-light t)
 
 ;; Start emacs server
 (server-start)
@@ -46,11 +46,11 @@
 	 ("\\.x?html?\\'" . default)
 	 ("\\.pdf\\'" . "zathura %s")))
  '(package-selected-packages
-   '(pdf-view-restore acme-theme nyan-mode org-pdftools synosaurus xah-math-input ivy flycheck swiper-helm writeroom-mode restart-emacs fireplace pdf-tools spacemacs-theme plan9-theme modus-vivendi-theme modus-operandi-theme meghanada company-irony company-c-headers yasnippet-snippets yasnippet company magit treemacs-icons-dired treemacs-evil treemacs async ido-vertical-mode switch-window avy beacon evil swiper which-key dashboard spaceline diminish auto-package-update htmlize use-package)))
+   '(rainbow-delimiters cyberpunk-theme pdf-view-restore pdf-tools acme-theme nyan-mode synosaurus xah-math-input ivy flycheck swiper-helm writeroom-mode restart-emacs fireplace spacemacs-theme plan9-theme modus-vivendi-theme modus-operandi-theme meghanada company-irony company-c-headers yasnippet-snippets yasnippet company magit treemacs-icons-dired treemacs-evil treemacs async ido-vertical-mode switch-window avy beacon evil swiper which-key dashboard spaceline diminish auto-package-update htmlize use-package))
+ '(pdf-view-midnight-colors '("#655370" . "#fbf8ef")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;;'(default ((t (:family "Monaco")))))
-)
+ )

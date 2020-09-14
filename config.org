@@ -380,7 +380,14 @@ Pretty emacs logo at startup.
   ;;          (shell-command "git pull")
   ;;          (message "Update finished. Switch to the messages buffer to see changes and then restart Emacs"))
   ;;      (message "\"%s\" doesn't exist." dir))))
-
+  (defun init-edit ()
+    "Edit initialization file"
+    (interactive)
+    (find-file "~/.emacs.d/init.el"))
+  (defun config-edit ()
+    "Edit configuration file"
+    (interactive)
+    (find-file "~/Dropbox/emacs/config.org"))
   (defun create-scratch-buffer ()
     "Create a scratch buffer"
     (interactive)
@@ -407,7 +414,7 @@ Pretty emacs logo at startup.
            (nil
             "Open config.org"
             "Open Emacs configuration file for easy editing"
-            (lambda (&rest _) (find-file "~/Dropbox/emacs/config.org"))
+            (lambda (&rest _) (config-edit))
             'default)))))
 #+END_SRC
 ** Initialize =which-key=
@@ -428,10 +435,51 @@ Possible completion framework with 1s delay.
 C-s to spawn a search minibuffer that can be traversed via C-n and C-p & <RET>.
 *** Code
 #+BEGIN_SRC emacs-lisp
-  (use-package swiper
-	:ensure t
-	:bind ("C-s" . 'swiper))
+   (use-package swiper
+     :ensure t)
+;;     :bind ("C-s" . 'swiper))
 #+END_SRC
+** Initialize =ivy-swiper-counsel=
+#+begin_src emacs-lisp
+   (use-package ivy
+     :diminish
+     :bind (("C-s" . swiper)
+            :map ivy-minibuffer-map
+            ("TAB" . ivy-alt-done)
+            ("C-l" . ivy-alt-done)
+            ("C-j" . ivy-next-line)
+            ("C-k" . ivy-previous-line)
+            :map ivy-switch-buffer-map
+            ("C-k" . ivy-previous-line)
+            ("C-l" . ivy-done)
+            ("C-d" . ivy-switch-buffer-kill)
+            :map ivy-reverse-i-search-map
+            ("C-k" . ivy-previous-line)
+            ("C-d" . ivy-reverse-i-search-kill))
+     :config
+     (ivy-mode 1))
+
+   (use-package ivy-rich
+     :init
+     (ivy-rich-mode 1))
+
+   (use-package counsel
+     :bind (("M-x" . counsel-M-x)
+            ("C-x b" . counsel-ibuffer)
+            ("C-x C-f" . counsel-find-file)
+            :map minibuffer-local-map
+            ("C-r" . 'counsel-minibuffer-history)))
+
+   (use-package helpful
+     :custom
+     (counsel-describe-function-function #'helpful-callable)
+     (counsel-describe-variable-function #'helpful-variable)
+     :bind
+     ([remap describe-function] . counsel-describe-function)
+     ([remap describe-command] . helpful-command)
+     ([remap describe-variable] . counsel-describe-variable)
+     ([remap describe-key] . helpful-key))
+#+end_src
 ** Initialize =evil=
 *** Description
 Heresy; Vim keybindings in Emacs. 
@@ -688,47 +736,6 @@ Saves cursor location in buffers.
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 ;;(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-#+end_src
-** Initialize =ivy-swiper-counsel=
-#+begin_src emacs-lisp
-(use-package ivy
-  :diminish
-  :bind (("C-s" . swiper)
-         :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)
-         ("C-l" . ivy-alt-done)
-         ("C-j" . ivy-next-line)
-         ("C-k" . ivy-previous-line)
-         :map ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-l" . ivy-done)
-         ("C-d" . ivy-switch-buffer-kill)
-         :map ivy-reverse-i-search-map
-         ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-reverse-i-search-kill))
-  :config
-  (ivy-mode 1))
-
-(use-package ivy-rich
-  :init
-  (ivy-rich-mode 1))
-
-(use-package counsel
-  :bind (("M-x" . counsel-M-x)
-         ("C-x b" . counsel-ibuffer)
-         ("C-x C-f" . counsel-find-file)
-         :map minibuffer-local-map
-         ("C-r" . 'counsel-minibuffer-history)))
-
-(use-package helpful
-  :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
-  :bind
-  ([remap describe-function] . counsel-describe-function)
-  ([remap describe-command] . helpful-command)
-  ([remap describe-variable] . counsel-describe-variable)
-  ([remap describe-key] . helpful-key))
 #+end_src
 ** Built-in entry: =eldoc=
 *** Code

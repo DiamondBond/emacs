@@ -18,7 +18,9 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
-        '("melpa" . "https://melpa.org/packages/"))
+        '(("melpa" . "https://melpa.org/packages/")
+		 ("org" . "https://orgmode.org/elpa/")
+		 ("elpa" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
 ;; Initialize use-package
@@ -46,7 +48,7 @@
 	 ("\\.x?html?\\'" . default)
 	 ("\\.pdf\\'" . "zathura %s")))
  '(package-selected-packages
-   '(vigenere ivy-rich counsel rainbow-delimiters cyberpunk-theme pdf-view-restore pdf-tools acme-theme nyan-mode synosaurus xah-math-input ivy flycheck swiper-helm writeroom-mode restart-emacs fireplace spacemacs-theme plan9-theme modus-vivendi-theme modus-operandi-theme meghanada company-irony company-c-headers yasnippet-snippets yasnippet company magit treemacs-icons-dired treemacs-evil treemacs async ido-vertical-mode switch-window avy beacon evil swiper which-key dashboard spaceline diminish auto-package-update htmlize use-package))
+   '(monokai-alt-theme monokai-pro-theme monokai-theme paper-theme qtcreator-theme eink-theme avk-emacs-themes parchment-theme vigenere ivy-rich counsel rainbow-delimiters cyberpunk-theme pdf-view-restore pdf-tools acme-theme nyan-mode synosaurus xah-math-input ivy flycheck swiper-helm writeroom-mode restart-emacs fireplace spacemacs-theme plan9-theme modus-vivendi-theme modus-operandi-theme meghanada company-irony company-c-headers yasnippet-snippets yasnippet company magit treemacs-icons-dired treemacs-evil treemacs async ido-vertical-mode switch-window avy beacon evil swiper which-key dashboard spaceline diminish auto-package-update htmlize use-package))
  '(pdf-view-midnight-colors '("#655370" . "#fbf8ef")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

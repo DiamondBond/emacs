@@ -1,0 +1,8 @@
+# Emacs
+#alias em="/usr/bin/emacs -nw"
+#alias vim="emacsclient -t"
+alias et="emacsclient -t"
+alias em="emacsclient -c -a 'emacs'"
+alias startemacs="emacs --daemon"
+alias hardkillemacs="emacsclient -e '(kill-emacs)'"
+alias killemacs="emacsclient -e '(save-buffers-kill-emacs)'"

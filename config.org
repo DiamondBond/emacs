@@ -208,12 +208,14 @@ C-x x swaps windows
 * =Org= mode
 ** Description
 Sensible and well-defined org-mode defaults.
+Org-capture & Org-roam.
 ** Code
+*defaults*
 #+BEGIN_SRC emacs-lisp
   ;; Org init
   (use-package org
     :config
-    (add-hook 'org-mode-hook 'org-indent-mode)
+    ;;(add-hook 'org-mode-hook 'org-indent-mode)
     (add-hook 'org-mode-hook
               '(lambda ()
                  (visual-line-mode 1)))
@@ -227,8 +229,8 @@ Sensible and well-defined org-mode defaults.
 								 (show-all))))
 
   ;; Misc
-  (use-package org-indent
-    :diminish org-indent-mode)
+  ;;(use-package org-indent
+  ;;  :diminish org-indent-mode)
 
   (use-package org-bullets
 	:config
@@ -237,12 +239,15 @@ Sensible and well-defined org-mode defaults.
   (use-package htmlize
     :ensure t)
 
-(org-babel-do-load-languages 'org-babel-load-languages
-    '(
-        (shell . t)
-    )
-)
+  ;; src exec
+  (org-babel-do-load-languages 'org-babel-load-languages
+      '(
+          (shell . t)
+      )
+  )
 #+END_SRC
+
+*org-capture*
 #+BEGIN_SRC emacs-lisp
 (require 'org)
 
@@ -255,7 +260,8 @@ Sensible and well-defined org-mode defaults.
          "* %?\n%a\nEntered on %U")
         ;; "* %?\nEntered on %U\n  %i\n  %a")
         ("j" "Journal" entry (file+datetree "~/org/journal.org")
-         "* %?\nEntered on %U\n  %i\n  %a")))
+         "* %?\n%a\nEntered on %U")))
+        ;; "* %?\nEntered on %U\n  %i\n  %a")))
 
 ;; Use full window for org-capture
 ;;(add-hook 'org-capture-mode-hook 'delete-other-windows)
@@ -264,6 +270,61 @@ Sensible and well-defined org-mode defaults.
 (global-set-key (kbd "C-c l") 'org-store-link)
 ;;(global-set-key (kbd "C-c C-l") 'org-insert-link)
 #+END_SRC
+
+*org-roam*
+#+begin_src emacs-lisp
+  ;; (use-package org-roam
+  ;;   :ensure t
+  ;;   :config
+  ;;   (org-roam-mode)
+  ;;   (require 'org-roam-protocol)
+  ;;   :custom
+  ;;   (org-roam-directory "~/org/roam/")
+  ;;   (org-roam-index-file "~/org/roam/index.org")
+  ;;   (org-roam-completion-system 'default)
+  ;;   (org-roam-graph-executable "/usr/bin/neato")
+  ;;   (org-roam-graph-extra-config '(("overlap" . "false")))
+  ;;   (org-roam-graph-))
+
+  ;; (use-package org-roam-server
+  ;;   :ensure t
+  ;;   :config
+  ;;   (setq org-roam-server-host "127.0.0.1"
+  ;;         org-roam-server-port 8080
+  ;;         org-roam-server-export-inline-images t
+  ;;         org-roam-server-authenticate nil
+  ;;         org-roam-server-network-poll t
+  ;;         org-roam-server-network-arrows nil
+  ;;         org-roam-server-network-label-truncate t
+  ;;         org-roam-server-network-label-truncate-length 60
+  ;;         org-roam-server-network-label-wrap-length 20))
+
+  ;; ;; Deft is useful for searching through notes
+  ;; (use-package deft
+  ;;   :ensure t
+  ;;   :bind
+  ;;   :custom
+  ;;   (deft-recursive t)
+  ;;   (deft-use-filter-string-for-filename t)
+  ;;   (deft-default-extension "org")
+  ;;   (deft-directory "~/org/roam/"))
+
+  ;; ;; Templates for creating new notes
+  ;;   (setq org-roam-capture-templates
+  ;;           '(("t" "tagged" plain (function org-roam--capture-get-point)
+  ;;            "#+date:%T\n#+startup: overview\n#+roam_tags: %?\n#+roam_alias:"
+  ;;            :file-name "%<%Y%m%d%H%M%S>-${slug}"
+  ;;            :head "#+title: ${title}\n"
+  ;;            :unnarrowed t)))
+
+  ;; (general-define-key
+  ;;    "C-z C-z" 'org-roam
+  ;;    "C-z C-f" 'org-roam-find-file
+  ;;    "C-z C-l" 'org-roam-insert
+  ;;    "C-z C-c" 'org-roam-random-note
+  ;;    "C-z C-x" 'org-roam-server-mode
+  ;;    "C-z C-s" 'deft)
+#+end_src
 * Eshell
 ** Description
 Prettify eshell prompt.
@@ -744,8 +805,8 @@ Saves cursor location in buffers.
 ** Built-in entry: =abbrev=
 *** Code
 #+BEGIN_SRC emacs-lisp
-  (use-package abbrev
-    :diminish abbrev-mode)
+  ;;(use-package abbrev
+  ;;  :diminish abbrev-mode)
 #+END_SRC
 * Languages
 ** Initialize =company=

@@ -768,10 +768,6 @@ Better pdf viewing experience.
   (use-package org-pdftools
     :hook (org-load-hook . org-pdftools-setup-link))
 #+END_SRC
-
-#+RESULTS:
-| org-pdftools-setup-link |
-
 ** Initialize =vterm=
 *** Description
 Fully fledged terminal.

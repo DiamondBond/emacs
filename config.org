@@ -11,40 +11,28 @@
 
 *Personal*
 #+begin_src sh
-	  sudo apt install firefox telegram-desktop sxiv zathura zathura-djvu zathura-cb zathura-ps mupdf mupdf-tools mpv hexchat gpick gimp kdenlive inkscape imagemagick kolourpaint xfce4-screenshooter rofi xfce4-appfinder gmrun xdotool slop wmctrl tlp tlp-rdw acpi-call-dkms smartmontools linux-tools-generic cpufrequtils ripgrep gdb flex bison autoconf automake libtool adwaita-icon-theme-full thunderbird obs-studio qutebrowser mousepad xterm torbrowser-launcher bsdgames bsdgames-nonfree meld glew-utils xbacklight light gparted curl wget pavucontrol libnotify-bin gcc libcurl4-gnutls-dev sl screenfetch neofetch scrot cmatrix tree mlocate dosbox audacity galculator nomacs htop transmission-gtk wordnet ubuntu-restricted-extras ttf-mscorefonts-installer lm-sensors powertop default-jre cowsay fortune cowsay-off fortunes filters libglib2.0-dev wkhtmltopdf mpc mpd ncmpcpp tmux python wildmidi timidity fluid-soundfont-gs fluidsynth pmidi timidity-daemon rtv xfce4-terminal pavucontrol obs-studio screenkey perl-tk stalonetray zsnes scanmem bcal bitwise fonts-dejavu surf obs-plugins xterm exo-utils hsetroot xbindkeys powertop xosview xaos gsimplecal galculator
-
-  # openbox
-	sudo apt install openbox tint2 obconf xfce4-appfinder lxpolkit lxrandr lxappearance
+sudo apt install firefox telegram-desktop sxiv zathura zathura-djvu zathura-cb zathura-ps mupdf mupdf-tools mpv hexchat gpick gimp kdenlive inkscape imagemagick kolourpaint xfce4-screenshooter rofi xfce4-appfinder gmrun xdotool slop wmctrl tlp tlp-rdw acpi-call-dkms smartmontools linux-tools-generic cpufrequtils ripgrep gdb flex bison autoconf automake libtool adwaita-icon-theme-full thunderbird obs-studio qutebrowser mousepad xterm torbrowser-launcher bsdgames bsdgames-nonfree meld glew-utils xbacklight light gparted curl wget pavucontrol libnotify-bin gcc libcurl4-gnutls-dev sl screenfetch neofetch scrot cmatrix tree mlocate dosbox audacity galculator nomacs htop transmission-gtk wordnet ubuntu-restricted-extras ttf-mscorefonts-installer lm-sensors powertop default-jre cowsay fortune cowsay-off fortunes filters libglib2.0-dev wkhtmltopdf mpc mpd ncmpcpp tmux python wildmidi timidity fluid-soundfont-gs fluidsynth pmidi timidity-daemon rtv
 #+end_src
 ** Emacs 27.1
 How to compile and install Emacs 27.1
 *** dependencies (ubuntu)
 #+begin_src sh
+sudo apt install clang clangd llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps
+
 sudo apt-get build-dep emacs
 
-  sudo apt install clang clangd llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps
-#+end_src
-*** grabbing emacs tarball
-#+begin_src sh
-  mkdir -p ~/src
-  cd ~/src
-
-  wget https://ftp.gnu.org/gnu/emacs/emacs-27.1.tar.gz
-  tar -zxvf emacs-27.1.tar.gz
 #+end_src
 *** configuration
 #+begin_src sh
-  cd ~/src/emacs-27.1
-
-  ./configure --disable-silent-rules \
-  --with-modules --with-file-notification=inotify --with-mailutils \
-  --with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 \
-  --with-imagemagick --with-xml2 --with-json --with-harfbuzz CFLAGS='-O3'
+./configure --disable-silent-rules \
+--with-modules --with-file-notification=inotify --with-mailutils \
+--with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 \
+--with-imagemagick --with-xml2 --with-json --with-harfbuzz CFLAGS='-O3'
 #+end_src
 *** building
 #+begin_src sh
-  make
-  sudo make install
+make
+sudo make install
 #+end_src
 *** default sys-cfg from ubuntu emacs 26
 #+begin_src sh
@@ -186,6 +174,19 @@ Super - Control - <arrow>
 ** Defer loading most packages for quicker startup times
 #+BEGIN_SRC emacs-lisp
 (setq use-package-always-defer t)
+#+END_SRC
+** Mouse Move
+#+begin_src emacs-lisp
+(defun warp-mouse-to-current-window ()
+  (interactive)
+  (destructuring-bind (left top right bottom)
+      (window-edges)
+    (set-mouse-position (selected-frame) left top)))
+#+end_src
+** Theme
+#+BEGIN_SRC emacs-lisp
+;; Font and frame size
+;;(set-face-font 'default "Monaco")
 #+END_SRC
 * Personal Keybinds
 ** Keybinds
@@ -403,20 +404,20 @@ Diminish hides minor modes to prevent cluttering your mode line.
 Spaceline.
 *** Code
 #+BEGIN_SRC emacs-lisp
-   (use-package spaceline
-     :ensure t)
+  ;; (use-package spaceline
+  ;;   :ensure t)
 #+END_SRC
 ** Initialize =powerline= 
 *** Description
 We utilize the spaceline theme for powerline.
 *** Code
 #+BEGIN_SRC emacs-lisp
-   (use-package powerline
-      :ensure t
-      :init
-      (spaceline-spacemacs-theme)
-      :hook
-      ('after-init-hook) . 'powerline-reset)
+  ;; (use-package powerline
+  ;;    :ensure t
+  ;;    :init
+  ;;    (spaceline-spacemacs-theme)
+  ;;    :hook
+  ;;    ('after-init-hook) . 'powerline-reset)
 #+END_SRC
 ** Initialize =dashboard=
 *** Description
@@ -486,7 +487,6 @@ Possible completion framework with 1s delay.
     :init
     (which-key-mode)
     :config
-    (which-key-setup-side-window-bottom)
     (setq which-key-idle-delay 0.3))
 #+END_SRC
 ** Initialize =swiper=
@@ -723,9 +723,7 @@ Git porcelain for Emacs.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package magit
-    :ensure t
-    :config
-    (global-set-key (kbd "C-x g") 'magit-status))
+    :ensure t)
 #+END_SRC
 ** Initialize =elfeed=
 *** Description
@@ -766,7 +764,6 @@ Better pdf viewing experience.
     :after pdf-tools
     :config
     (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
-  (setq pdf-view-restore-filename "~/.emacs.d/.pdf-view-restore")
 
   (use-package org-pdftools
     :hook (org-load-hook . org-pdftools-setup-link))
@@ -794,15 +791,6 @@ Saves cursor location in buffers.
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 ;;(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-#+end_src
-** Initialize =buffer-move=
-#+begin_src emacs-lisp
-  ;; (use-package buffer-move
-  ;;   :config
-  ;;   (global-set-key (kbd "<C-S-up>")     'buf-move-up)
-  ;;   (global-set-key (kbd "<C-S-down>")   'buf-move-down)
-  ;;   (global-set-key (kbd "<C-S-left>")   'buf-move-left)
-  ;;   (global-set-key (kbd "<C-S-right>")  'buf-move-right))
 #+end_src
 ** Built-in entry: =eldoc=
 *** Code
@@ -953,20 +941,3 @@ Scheme Lisp REPL.
   ("." . browse-url-default-browser)
   ))
 #+END_SRC
-
-* Functions
-** Nearest Color
-   #+begin_src emacs-lisp
-(defun find-nearest-color (color &optional use-hsv)
-  "Finds the nearest color by RGB distance to `color'.
-
-If called with a universal argument (or if `use-hsv' is set) use HSV instead of RGB.
-Runs \\[list-colors-display] after setting `list-colors-sort'"
-  (interactive "sColor: \nP")
-  (let ((list-colors-sort `(,(if (or use-hsv current-prefix-arg)
-                                'hsv-dist
-                               'rgb-dist) . ,color)))
-    (if (color-defined-p color)
-        (list-colors-display)
-      (error "The color \"%s\" does not exist." color))))
-   #+end_src

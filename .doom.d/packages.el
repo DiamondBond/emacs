@@ -60,3 +60,4 @@
 (package! xkcd)
 (package! xah-math-input)
 (package! emojify)
+(package! olivetti)

@@ -10,7 +10,7 @@
       user-mail-address "diamondbond1@gmail.com")
 (setq org-directory "~/org/")
 (setq display-line-numbers-type t)
-;;(setq doom-font (font-spec :family "Cascadia Code" :size 14))
+(setq doom-font (font-spec :family "FiraCode" :size 16))
 ;;(setq doom-big-font (font-spec :family "Monaco" :size 20))
 (setq doom-theme 'doom-dracula)
 
@@ -19,6 +19,9 @@
 
 ;; Prevents some cases of Emacs flickering
 ;;(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+
+(display-time-mode 1)
+(display-battery-mode 1)
 
 ;;; :ui doom-dashboard
 (setq fancy-splash-image (concat doom-private-dir "splash.png"))

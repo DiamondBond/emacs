@@ -63,4 +63,4 @@
 (package! olivetti)
 (package! nov)
 (package! hyperbole)
-(package! command-log)
+(package! command-log-mode)

@@ -63,4 +63,4 @@
 (package! olivetti)
 (package! nov)
 (package! hyperbole)
-(package! academic-phrases)
+(package! command-log)

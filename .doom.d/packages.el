@@ -61,3 +61,6 @@
 (package! xah-math-input)
 (package! emojify)
 (package! olivetti)
+(package! nov)
+(package! hyperbole)
+(package! academic-phrases)

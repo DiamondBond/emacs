@@ -10,9 +10,11 @@
       user-mail-address "diamondbond1@gmail.com")
 (setq org-directory "~/org/")
 (setq display-line-numbers-type t)
-(setq doom-font (font-spec :family "FiraCode" :size 16))
+;;(setq doom-font (font-spec :family "Ubuntu Mono" :size 16))
+(setq doom-font (font-spec :family "Ubuntu Mono" :size 18))
 ;;(setq doom-big-font (font-spec :family "Monaco" :size 20))
 (setq doom-theme 'doom-dracula)
+;;(load-theme 'spacemacs-light t)
 
 ;;(setq doom-font (font-spec :family "monospace" :size 14 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "sans" :size 13))
@@ -20,8 +22,8 @@
 ;; Prevents some cases of Emacs flickering
 ;;(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
-(display-time-mode 1)
-(display-battery-mode 1)
+;;(display-time-mode 1)
+;;(display-battery-mode 1)
 
 ;;; :ui doom-dashboard
 (setq fancy-splash-image (concat doom-private-dir "splash.png"))
@@ -32,8 +34,8 @@
 Minor quality-of-life modifications for a more pleasant Emacs experience.
 ** Theme
 #+begin_src emacs-lisp
-;;(load-theme 'spacemacs-light t)
-;;(setq background-color 'white)
+;; (load-theme 'spacemacs-light t)
+;; (setq background-color 'white)
 #+end_src
 ** Switch to new window after splitting
 #+begin_src emacs-lisp
@@ -64,7 +66,7 @@ Super - Control - <arrow>
 #+END_SRC
 ** Highlight current line
 #+BEGIN_SRC emacs-lisp
-(global-hl-line-mode t)
+;;(global-hl-line-mode t)
 #+END_SRC
 * Key binds
 ** Generic
@@ -144,6 +146,16 @@ Diminish hides minor modes to prevent cluttering your mode line.
 #+BEGIN_SRC emacs-lisp
 ;;(use-package! diminish)
 #+END_SRC
+** Initialize =nov=
+*** Description
+epub reader.
+*** Code
+#+BEGIN_SRC emacs-lisp
+(use-package! nov
+  :mode ("\\.epub\\'" . nov-mode)
+  :config
+  (setq nov-save-place-file (concat doom-cache-dir "nov-places")))
+#+END_SRC
 ** Initialize =spaceline=
 *** Description
 Spaceline.
@@ -156,11 +168,11 @@ Spaceline.
 We utilize the spaceline theme for powerline.
 *** Code
 #+BEGIN_SRC emacs-lisp
-;; (use-package! powerline
-;;    :init
-;;    (spaceline-spacemacs-theme)
-;;    :hook
-;;    ('after-init-hook) . 'powerline-reset)
+ ;; (use-package! powerline
+ ;;    :init
+ ;;    (spaceline-spacemacs-theme)
+ ;;    :hook
+ ;;    ('after-init-hook) . 'powerline-reset)
 #+END_SRC
 ** Initialize =dashboard=
 *** Description
@@ -211,15 +223,15 @@ C-x o and pick window. (a,s,d...)
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package! switch-window
-	:config
-	(setq switch-window-input-style 'minibuffer)
-	(setq switch-window-increase 4)
-	(setq switch-window-threshold 2)
-	(setq switch-window-shortcut-style 'qwerty)
-	(setq switch-window-qwerty-shortcuts
-		  '("a" "s" "d" "f" "j" "k" "l"))
-	:bind
-	([remap other-window] . switch-window))
+        :config
+        (setq switch-window-input-style 'minibuffer)
+        (setq switch-window-increase 4)
+        (setq switch-window-threshold 2)
+        (setq switch-window-shortcut-style 'qwerty)
+        (setq switch-window-qwerty-shortcuts
+        	  '("a" "s" "d" "f" "j" "k" "l"))
+        :bind
+        ([remap other-window] . switch-window))
 #+END_SRC
 ** Initialize =elfeed=
 *** Description

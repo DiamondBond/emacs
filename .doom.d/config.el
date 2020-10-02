@@ -3,9 +3,11 @@
       user-mail-address "diamondbond1@gmail.com")
 (setq org-directory "~/org/")
 (setq display-line-numbers-type t)
-(setq doom-font (font-spec :family "FiraCode" :size 16))
+;;(setq doom-font (font-spec :family "Ubuntu Mono" :size 16))
+(setq doom-font (font-spec :family "Ubuntu Mono" :size 18))
 ;;(setq doom-big-font (font-spec :family "Monaco" :size 20))
 (setq doom-theme 'doom-dracula)
+;;(load-theme 'spacemacs-light t)
 
 ;;(setq doom-font (font-spec :family "monospace" :size 14 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "sans" :size 13))
@@ -13,16 +15,16 @@
 ;; Prevents some cases of Emacs flickering
 ;;(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
-(display-time-mode 1)
-(display-battery-mode 1)
+;;(display-time-mode 1)
+;;(display-battery-mode 1)
 
 ;;; :ui doom-dashboard
 (setq fancy-splash-image (concat doom-private-dir "splash.png"))
 ;; Don't need the menu
 ;;(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
-;;(load-theme 'spacemacs-light t)
-;;(setq background-color 'white)
+;; (load-theme 'spacemacs-light t)
+;; (setq background-color 'white)
 
 ;; (setq evil-split-window-below t
 ;;       evil-vsplit-window-right t)
@@ -40,7 +42,7 @@
 
 (setq-default frame-title-format '("%b"))
 
-(global-hl-line-mode t)
+;;(global-hl-line-mode t)
 
 (global-set-key (kbd "<f9>") 'tab-bar-mode)
 (global-set-key (kbd "<f5>") 'revert-buffer)
@@ -95,6 +97,11 @@
 
 ;;(use-package! diminish)
 
+(use-package! nov
+  :mode ("\\.epub\\'" . nov-mode)
+  :config
+  (setq nov-save-place-file (concat doom-cache-dir "nov-places")))
+
 ;;(use-package! spaceline)
 
 ;; (use-package! powerline
@@ -148,7 +155,7 @@
       (setq switch-window-threshold 2)
       (setq switch-window-shortcut-style 'qwerty)
       (setq switch-window-qwerty-shortcuts
-		'("a" "s" "d" "f" "j" "k" "l"))
+        	'("a" "s" "d" "f" "j" "k" "l"))
       :bind
       ([remap other-window] . switch-window))
 

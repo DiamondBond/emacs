@@ -3,11 +3,15 @@
       user-mail-address "diamondbond1@gmail.com")
 (setq org-directory "~/org/")
 (setq display-line-numbers-type t)
-;;(setq doom-font (font-spec :family "Ubuntu Mono" :size 16))
-(setq doom-font (font-spec :family "Ubuntu Mono" :size 18))
+(setq doom-font (font-spec :family "Monaco" :size 12))
 ;;(setq doom-big-font (font-spec :family "Monaco" :size 20))
-(setq doom-theme 'doom-dracula)
+;;(setq doom-theme 'doom-one-light)
 ;;(load-theme 'spacemacs-light t)
+;;(set-face-background 'default "#FFFFFF")
+;; or
+;;(set-face-attribute  'default nil :background "#FFFFFF")
+(load-theme 'modus-operandi t)
+(display-battery-mode 1)
 
 ;;(setq doom-font (font-spec :family "monospace" :size 14 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "sans" :size 13))
@@ -23,8 +27,9 @@
 ;; Don't need the menu
 ;;(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
-;; (load-theme 'spacemacs-light t)
-;; (setq background-color 'white)
+;;(tool-bar-mode 1)
+;;(menu-bar-mode 1)
+;;(scroll-bar-mode 1)
 
 ;; (setq evil-split-window-below t
 ;;       evil-vsplit-window-right t)
@@ -42,7 +47,7 @@
 
 (setq-default frame-title-format '("%b"))
 
-;;(global-hl-line-mode t)
+(global-hl-line-mode t)
 
 (global-set-key (kbd "<f9>") 'tab-bar-mode)
 (global-set-key (kbd "<f5>") 'revert-buffer)
@@ -95,7 +100,7 @@
 
 (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 
-;;(use-package! diminish)
+(use-package! diminish)
 
 (use-package! nov
   :mode ("\\.epub\\'" . nov-mode)
@@ -110,43 +115,43 @@
 ;;    :hook
 ;;    ('after-init-hook) . 'powerline-reset)
 
-;; (use-package! dashboard
-;;   :defer nil
-;;   :preface
-;;   (defun init-edit ()
-;;     "Edit initialization file"
-;;     (interactive)
-;;     (find-file "~/.doom.d/init.el"))
-;;   (defun config-edit ()
-;;     "Edit configuration file"
-;;     (interactive)
-;;     (find-file "~/.doom.d/config.org"))
-;;   (defun create-scratch-buffer ()
-;;     "Create a scratch buffer"
-;;     (interactive)
-;;     (switch-to-buffer (get-buffer-create "*scratch*"))
-;;     (lisp-interaction-mode))
-;;   :config
-;;   (dashboard-setup-startup-hook)
-;;   (setq dashboard-items '((recents . 5)))
-;;   (setq dashboard-banner-logo-title "Welcome to Emacs!")
-;;   (setq dashboard-startup-banner "~/.doom.d/splash.png")
-;;   (setq dashboard-center-content t)
-;;   (setq dashboard-show-shortcuts nil)
-;;   (setq dashboard-set-init-info t)
-;;   (setq dashboard-set-footer nil)
-;;   (setq dashboard-set-navigator t)
-;;   (setq dashboard-navigator-buttons
-;;         `(((,nil
-;;             "Open scratch buffer"
-;;             "Switch to the scratch buffer"
-;;             (lambda (&rest _) (create-scratch-buffer))
-;;             'default)
-;;            (nil
-;;             "Open config.org"
-;;             "Open Emacs configuration file for easy editing"
-;;             (lambda (&rest _) (config-edit))
-;;             'default)))))
+(use-package! dashboard
+  :defer nil
+  :preface
+  (defun init-edit ()
+    "Edit initialization file"
+    (interactive)
+    (find-file "~/.doom.d/init.el"))
+  (defun config-edit ()
+    "Edit configuration file"
+    (interactive)
+    (find-file "~/.doom.d/config.org"))
+  (defun create-scratch-buffer ()
+    "Create a scratch buffer"
+    (interactive)
+    (switch-to-buffer (get-buffer-create "*scratch*"))
+    (lisp-interaction-mode))
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-items '((recents . 5)))
+  (setq dashboard-banner-logo-title "Welcome to Emacs!")
+  (setq dashboard-startup-banner "~/.doom.d/splash.png")
+  (setq dashboard-center-content t)
+  (setq dashboard-show-shortcuts nil)
+  (setq dashboard-set-init-info t)
+  (setq dashboard-set-footer nil)
+  (setq dashboard-set-navigator t)
+  (setq dashboard-navigator-buttons
+        `(((,nil
+            "Scratch Buffer"
+            "Switch to the scratch buffer"
+            (lambda (&rest _) (create-scratch-buffer))
+            'default)
+           (nil
+            "Config.org"
+            "Open Emacs configuration file for easy editing"
+            (lambda (&rest _) (config-edit))
+            'default)))))
 
 (use-package! switch-window
       :config
@@ -155,7 +160,7 @@
       (setq switch-window-threshold 2)
       (setq switch-window-shortcut-style 'qwerty)
       (setq switch-window-qwerty-shortcuts
-        	'("a" "s" "d" "f" "j" "k" "l"))
+		'("a" "s" "d" "f" "j" "k" "l"))
       :bind
       ([remap other-window] . switch-window))
 

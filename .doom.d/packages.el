@@ -66,4 +66,5 @@
 (package! nov)
 (package! hyperbole)
 (package! command-log-mode)
+(package! academic-phrases)
 (package! synosaurus)

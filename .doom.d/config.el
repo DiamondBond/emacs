@@ -3,7 +3,7 @@
       user-mail-address "diamondbond1@gmail.com")
 (setq org-directory "~/org/")
 (setq display-line-numbers-type t)
-(setq doom-font (font-spec :family "Monaco" :size 12))
+(setq doom-font (font-spec :family "Monaco" :size 16))
 ;;(setq doom-big-font (font-spec :family "Monaco" :size 20))
 ;;(setq doom-theme 'doom-one-light)
 ;;(load-theme 'spacemacs-light t)
@@ -11,7 +11,7 @@
 ;; or
 ;;(set-face-attribute  'default nil :background "#FFFFFF")
 (load-theme 'modus-operandi t)
-(display-battery-mode 1)
+;;(display-battery-mode 1)
 
 ;;(setq doom-font (font-spec :family "monospace" :size 14 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "sans" :size 13))
@@ -28,22 +28,23 @@
 ;;(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
 ;;(tool-bar-mode 1)
-;;(menu-bar-mode 1)
-;;(scroll-bar-mode 1)
+(menu-bar-mode 1)
+(scroll-bar-mode 1)
+(setq +modeline-height 22)
 
 ;; (setq evil-split-window-below t
 ;;       evil-vsplit-window-right t)
 
-(setq scroll-conservatively 1)
-(setq mouse-wheel-scroll-amount '(1))
-(setq mouse-wheel-progressive-speed nil)
+  (setq scroll-conservatively 1)
+  (setq mouse-wheel-scroll-amount '(1))
+  (setq mouse-wheel-progressive-speed nil)
 
-(global-prettify-symbols-mode t)
+  (global-prettify-symbols-mode t)
 
-(global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
-(global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "s-C-<down>") 'shrink-window)
-(global-set-key (kbd "s-C-<up>") 'enlarge-window)
+  (global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
+  (global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
+  (global-set-key (kbd "s-C-<down>") 'shrink-window)
+  (global-set-key (kbd "s-C-<up>") 'enlarge-window)
 
 (setq-default frame-title-format '("%b"))
 
@@ -61,46 +62,46 @@
 
 (global-set-key (kbd "C-x x") 'window-swap-states)
 
-(setq org-display-inline-images t)
-      (setq org-redisplay-inline-images t)
-      (setq org-startup-with-inline-images "inlineimages")
-  (setq org-agenda-files (list "inbox.org"))
-      (global-set-key (kbd "C-<f1>") (lambda()
-							       (interactive)
-							       (show-all)))
+	(setq org-display-inline-images t)
+	(setq org-redisplay-inline-images t)
+	(setq org-startup-with-inline-images "inlineimages")
+    (setq org-agenda-files (list "inbox.org"))
+	(global-set-key (kbd "C-<f1>") (lambda()
+								 (interactive)
+								 (show-all)))
 
-;; src exec
-(org-babel-do-load-languages 'org-babel-load-languages
-    '(
-        (shell . t)
-    )
-)
+  ;; src exec
+  (org-babel-do-load-languages 'org-babel-load-languages
+      '(
+          (shell . t)
+      )
+  )
 
-(defalias 'open 'find-file-other-window)
-(defalias 'clean 'eshell/clear-scrollback)
+  (defalias 'open 'find-file-other-window)
+  (defalias 'clean 'eshell/clear-scrollback)
 
-(defun eshell/sudo-open (filename)
-  "Open a file as root in Eshell."
-  (let ((qual-filename (if (string-match "^/" filename)
-                           filename
-                         (concat (expand-file-name (eshell/pwd)) "/" filename))))
-    (switch-to-buffer
-     (find-file-noselect
-      (concat "/sudo::" qual-filename)))))
+  (defun eshell/sudo-open (filename)
+    "Open a file as root in Eshell."
+    (let ((qual-filename (if (string-match "^/" filename)
+                             filename
+                           (concat (expand-file-name (eshell/pwd)) "/" filename))))
+      (switch-to-buffer
+       (find-file-noselect
+        (concat "/sudo::" qual-filename)))))
 
-(defun eshell-other-window ()
-  "Create or visit an eshell buffer."
-  (interactive)
-  (if (not (get-buffer "*eshell*"))
-      (progn
-        (split-window-sensibly (selected-window))
-        (other-window 1)
-        (eshell))
-    (switch-to-buffer-other-window "*eshell*")))
+  (defun eshell-other-window ()
+    "Create or visit an eshell buffer."
+    (interactive)
+    (if (not (get-buffer "*eshell*"))
+        (progn
+          (split-window-sensibly (selected-window))
+          (other-window 1)
+          (eshell))
+      (switch-to-buffer-other-window "*eshell*")))
 
-(global-set-key (kbd "<s-C-return>") 'eshell-other-window)
+  (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 
-(use-package! diminish)
+;;(use-package! diminish)
 
 (use-package! nov
   :mode ("\\.epub\\'" . nov-mode)
@@ -109,11 +110,11 @@
 
 ;;(use-package! spaceline)
 
-;; (use-package! powerline
-;;    :init
-;;    (spaceline-spacemacs-theme)
-;;    :hook
-;;    ('after-init-hook) . 'powerline-reset)
+ ;; (use-package! powerline
+ ;;    :init
+ ;;    (spaceline-spacemacs-theme)
+ ;;    :hook
+ ;;    ('after-init-hook) . 'powerline-reset)
 
 (use-package! dashboard
   :defer nil
@@ -153,25 +154,25 @@
             (lambda (&rest _) (config-edit))
             'default)))))
 
-(use-package! switch-window
-      :config
-      (setq switch-window-input-style 'minibuffer)
-      (setq switch-window-increase 4)
-      (setq switch-window-threshold 2)
-      (setq switch-window-shortcut-style 'qwerty)
-      (setq switch-window-qwerty-shortcuts
-		'("a" "s" "d" "f" "j" "k" "l"))
-      :bind
-      ([remap other-window] . switch-window))
+  (use-package! switch-window
+	:config
+	(setq switch-window-input-style 'minibuffer)
+	(setq switch-window-increase 4)
+	(setq switch-window-threshold 2)
+	(setq switch-window-shortcut-style 'qwerty)
+	(setq switch-window-qwerty-shortcuts
+		  '("a" "s" "d" "f" "j" "k" "l"))
+	:bind
+	([remap other-window] . switch-window))
 
-(setq elfeed-feeds
-    '((("https://www.gnome.org/feed/" gnu de)
-      ("https://planet.emacslife.com/atom.xml" emacs community)
-      ("https://www.ecb.europa.eu/rss/press.html" economics eu)
-		("https://news.ycombinator.com/rss" ycombinator news)
-		("https://www.phoronix.com/rss.php" phoronix))))
+  (setq elfeed-feeds
+      '((("https://www.gnome.org/feed/" gnu de)
+        ("https://planet.emacslife.com/atom.xml" emacs community)
+        ("https://www.ecb.europa.eu/rss/press.html" economics eu)
+		  ("https://news.ycombinator.com/rss" ycombinator news)
+		  ("https://www.phoronix.com/rss.php" phoronix))))
 
-(use-package! saveplace
-	:defer nil
-  :config
-  (save-place-mode))
+  (use-package! saveplace
+	  :defer nil
+    :config
+    (save-place-mode))

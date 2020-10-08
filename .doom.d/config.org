@@ -10,7 +10,7 @@
       user-mail-address "diamondbond1@gmail.com")
 (setq org-directory "~/org/")
 (setq display-line-numbers-type t)
-(setq doom-font (font-spec :family "Monaco" :size 12))
+(setq doom-font (font-spec :family "Monaco" :size 16))
 ;;(setq doom-big-font (font-spec :family "Monaco" :size 20))
 ;;(setq doom-theme 'doom-one-light)
 ;;(load-theme 'spacemacs-light t)
@@ -18,7 +18,7 @@
 ;; or
 ;;(set-face-attribute  'default nil :background "#FFFFFF")
 (load-theme 'modus-operandi t)
-(display-battery-mode 1)
+;;(display-battery-mode 1)
 
 ;;(setq doom-font (font-spec :family "monospace" :size 14 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "sans" :size 13))
@@ -39,8 +39,9 @@ Minor quality-of-life modifications for a more pleasant Emacs experience.
 ** Theme
 #+begin_src emacs-lisp
 ;;(tool-bar-mode 1)
-;;(menu-bar-mode 1)
-;;(scroll-bar-mode 1)
+(menu-bar-mode 1)
+(scroll-bar-mode 1)
+(setq +modeline-height 22)
 #+end_src
 ** Switch to new window after splitting
 #+begin_src emacs-lisp
@@ -149,7 +150,7 @@ Sensible and well-defined org-mode defaults.
 Diminish hides minor modes to prevent cluttering your mode line.
 *** Code
 #+BEGIN_SRC emacs-lisp
-(use-package! diminish)
+;;(use-package! diminish)
 #+END_SRC
 ** Initialize =nov=
 *** Description

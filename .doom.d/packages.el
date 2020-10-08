@@ -52,7 +52,7 @@
 ;;(package! spacemacs-theme)
 (package! modus-operandi-theme)
 ;;(package! modus-vivendi-theme)
-(package! diminish)
+;;(package! diminish)
 ;;(package! spaceline)
 ;;(package! powerline)
 (package! dashboard)

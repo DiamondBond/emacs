@@ -17,7 +17,7 @@
 ;;      doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 ;; Prevents some cases of Emacs flickering
-;;(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
 ;;(display-time-mode 1)
 ;;(display-battery-mode 1)
@@ -30,7 +30,7 @@
 ;;(tool-bar-mode 1)
 (menu-bar-mode 1)
 (scroll-bar-mode 1)
-(setq +modeline-height 22)
+(setq +modeline-height 33)
 
 ;; (setq evil-split-window-below t
 ;;       evil-vsplit-window-right t)
@@ -116,43 +116,43 @@
  ;;    :hook
  ;;    ('after-init-hook) . 'powerline-reset)
 
-(use-package! dashboard
-  :defer nil
-  :preface
-  (defun init-edit ()
-    "Edit initialization file"
-    (interactive)
-    (find-file "~/.doom.d/init.el"))
-  (defun config-edit ()
-    "Edit configuration file"
-    (interactive)
-    (find-file "~/.doom.d/config.org"))
-  (defun create-scratch-buffer ()
-    "Create a scratch buffer"
-    (interactive)
-    (switch-to-buffer (get-buffer-create "*scratch*"))
-    (lisp-interaction-mode))
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-items '((recents . 5)))
-  (setq dashboard-banner-logo-title "Welcome to Emacs!")
-  (setq dashboard-startup-banner "~/.doom.d/splash.png")
-  (setq dashboard-center-content t)
-  (setq dashboard-show-shortcuts nil)
-  (setq dashboard-set-init-info t)
-  (setq dashboard-set-footer nil)
-  (setq dashboard-set-navigator t)
-  (setq dashboard-navigator-buttons
-        `(((,nil
-            "Scratch Buffer"
-            "Switch to the scratch buffer"
-            (lambda (&rest _) (create-scratch-buffer))
-            'default)
-           (nil
-            "Config.org"
-            "Open Emacs configuration file for easy editing"
-            (lambda (&rest _) (config-edit))
-            'default)))))
+;; (use-package! dashboard
+;;   :defer nil
+;;   :preface
+;;   (defun init-edit ()
+;;     "Edit initialization file"
+;;     (interactive)
+;;     (find-file "~/.doom.d/init.el"))
+;;   (defun config-edit ()
+;;     "Edit configuration file"
+;;     (interactive)
+;;     (find-file "~/.doom.d/config.org"))
+;;   (defun create-scratch-buffer ()
+;;     "Create a scratch buffer"
+;;     (interactive)
+;;     (switch-to-buffer (get-buffer-create "*scratch*"))
+;;     (lisp-interaction-mode))
+;;   :config
+;;   (dashboard-setup-startup-hook)
+;;   (setq dashboard-items '((recents . 5)))
+;;   (setq dashboard-banner-logo-title "Welcome to Emacs!")
+;;   (setq dashboard-startup-banner "~/.doom.d/splash.png")
+;;   (setq dashboard-center-content t)
+;;   (setq dashboard-show-shortcuts nil)
+;;   (setq dashboard-set-init-info t)
+;;   (setq dashboard-set-footer nil)
+;;   (setq dashboard-set-navigator t)
+;;   (setq dashboard-navigator-buttons
+;;         `(((,nil
+;;             "Scratch Buffer"
+;;             "Switch to the scratch buffer"
+;;             (lambda (&rest _) (create-scratch-buffer))
+;;             'default)
+;;            (nil
+;;             "Config.org"
+;;             "Open Emacs configuration file for easy editing"
+;;             (lambda (&rest _) (config-edit))
+;;             'default)))))
 
   (use-package! switch-window
 	:config

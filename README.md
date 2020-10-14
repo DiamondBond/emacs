@@ -1,6 +1,6 @@
 ![Dashboard](img/preview.png)
 
-*Simple emacs configuration based on [witchmacs](https://github.com/snackon/Witchmacs).*
+*Simple evil emacs configuration based on [witchmacs](https://github.com/snackon/Witchmacs).*
 
 # Install
 ``` sh

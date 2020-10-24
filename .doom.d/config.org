@@ -10,7 +10,7 @@
       user-mail-address "diamondbond1@gmail.com")
 (setq org-directory "~/org/")
 (setq display-line-numbers-type t)
-(setq doom-font (font-spec :family "Monaco" :size 16))
+(setq doom-font (font-spec :family "Monaco" :size 14))
 ;;(setq doom-big-font (font-spec :family "Monaco" :size 20))
 ;;(setq doom-theme 'doom-one-light)
 ;;(load-theme 'spacemacs-light t)
@@ -35,13 +35,16 @@
 ;;(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 #+end_src
 * QoL section
-Minor quality-of-life modifications for a more pleasant Emacs experience.
+Minor quality-of-life modifications for a more pleasant experience.
 ** Theme
 #+begin_src emacs-lisp
-;;(tool-bar-mode 1)
+(tool-bar-mode 1)
 (menu-bar-mode 1)
 (scroll-bar-mode 1)
-(setq +modeline-height 33)
+;;(setq +modeline-height 22)
+;;(setq doom-fallback-buffer-name "emacs"
+;;      +doom-dashboard-name "emacs")
+;;(setq-default frame-title-format '("%b"))
 #+end_src
 ** Switch to new window after splitting
 #+begin_src emacs-lisp
@@ -75,6 +78,40 @@ Super - Control - <arrow>
 (global-hl-line-mode t)
 #+END_SRC
 * Key binds
+** Map
+#+begin_src emacs-lisp
+;; set up my own map
+(define-prefix-command 'z-map)
+(global-set-key (kbd "C-1") 'z-map) ;; was C-1
+(define-key z-map (kbd "f") 'find-file-other-frame)
+(define-key z-map (kbd "g") '+default/search-cwd)
+(define-key z-map (kbd "2") 'make-frame-command)
+(define-key z-map (kbd "0") 'delete-frame)
+(define-key z-map (kbd "o") 'other-frame)
+
+(define-key z-map (kbd "*") 'calc)
+(define-key z-map (kbd "r") 'synosaurus-choose-and-replace)
+(define-key z-map (kbd "s") 'ispell-word)
+(define-key z-map (kbd "w") 'elfeed)
+
+(define-key z-map (kbd "h") 'hyperbole)
+(define-key z-map (kbd "k") 'compile)
+(define-key z-map (kbd "e") 'eval-region)
+
+
+(define-key z-map (kbd "I") (lambda () (interactive) (find-file-other-window "~/org/index.org")))
+(define-key z-map (kbd "N") (lambda () (interactive) (find-file-other-window "~/org/notes.org")))
+(define-key z-map (kbd "C") (lambda () (interactive) (find-file-other-window "~/.doom.d/config.org")))
+
+(define-key z-map (kbd "i") (lambda () (interactive) (find-file "~/org/index.org")))
+(define-key z-map (kbd "n") (lambda () (interactive) (find-file "~/org/notes.org")))
+(define-key z-map (kbd "c") (lambda () (interactive) (find-file "~/.doom.d/config.org")))
+
+(define-key z-map (kbd "K") 'keycast-mode)
+(define-key z-map (kbd "R") 'gif-screencast-start-or-stop)
+
+;;---------------------------------------------------------------------
+#+end_src
 ** Generic
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<f9>") 'tab-bar-mode)
@@ -84,7 +121,8 @@ Super - Control - <arrow>
 (global-set-key (kbd "<f8>") 'tool-bar-mode)
 (global-set-key (kbd "<f12>") 'linum-mode)
 ;;(global-set-key (kbd "<f10>") 'compile)
-(global-set-key (kbd "C-x w") 'elfeed)
+;;(global-set-key (kbd "C-x w") 'elfeed)
+;;(global-set-key (kbd "SPC h h") 'hyperbole)
 (global-set-key (kbd "M-s") 'avy-goto-char)
 #+END_SRC
 ** Swap windows
@@ -150,7 +188,7 @@ Sensible and well-defined org-mode defaults.
 Diminish hides minor modes to prevent cluttering your mode line.
 *** Code
 #+BEGIN_SRC emacs-lisp
-;;(use-package! diminish)
+(use-package! diminish)
 #+END_SRC
 ** Initialize =nov=
 *** Description
@@ -185,43 +223,45 @@ We utilize the spaceline theme for powerline.
 Pretty emacs logo at startup.
 *** Code
 #+BEGIN_SRC emacs-lisp
-;; (use-package! dashboard
-;;   :defer nil
-;;   :preface
-;;   (defun init-edit ()
-;;     "Edit initialization file"
-;;     (interactive)
-;;     (find-file "~/.doom.d/init.el"))
-;;   (defun config-edit ()
-;;     "Edit configuration file"
-;;     (interactive)
-;;     (find-file "~/.doom.d/config.org"))
-;;   (defun create-scratch-buffer ()
-;;     "Create a scratch buffer"
-;;     (interactive)
-;;     (switch-to-buffer (get-buffer-create "*scratch*"))
-;;     (lisp-interaction-mode))
-;;   :config
-;;   (dashboard-setup-startup-hook)
-;;   (setq dashboard-items '((recents . 5)))
-;;   (setq dashboard-banner-logo-title "Welcome to Emacs!")
-;;   (setq dashboard-startup-banner "~/.doom.d/splash.png")
-;;   (setq dashboard-center-content t)
-;;   (setq dashboard-show-shortcuts nil)
-;;   (setq dashboard-set-init-info t)
-;;   (setq dashboard-set-footer nil)
-;;   (setq dashboard-set-navigator t)
-;;   (setq dashboard-navigator-buttons
-;;         `(((,nil
-;;             "Scratch Buffer"
-;;             "Switch to the scratch buffer"
-;;             (lambda (&rest _) (create-scratch-buffer))
-;;             'default)
-;;            (nil
-;;             "Config.org"
-;;             "Open Emacs configuration file for easy editing"
-;;             (lambda (&rest _) (config-edit))
-;;             'default)))))
+(use-package! dashboard
+  :defer nil
+  :preface
+  (defun init-edit ()
+    "Edit initialization file"
+    (interactive)
+    (find-file "~/.doom.d/init.el"))
+  (defun config-edit ()
+    "Edit configuration file"
+    (interactive)
+    (find-file "~/.doom.d/config.org"))
+  (defun create-scratch-buffer ()
+    "Create a scratch buffer"
+    (interactive)
+    (switch-to-buffer (get-buffer-create "*scratch*"))
+    (lisp-interaction-mode))
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-items '((recents . 5)))
+  (setq dashboard-banner-logo-title "Welcome to Emacs!")
+  (setq dashboard-startup-banner "~/.doom.d/splash.png")
+  (setq dashboard-center-content t)
+  (setq dashboard-show-shortcuts nil)
+  (setq dashboard-set-init-info t)
+  (setq dashboard-set-footer nil)
+  (setq dashboard-set-navigator t)
+  (setq dashboard-navigator-buttons
+        `(((,nil
+            "Scratch Buffer"
+            "Switch to the scratch buffer"
+            (lambda (&rest _) (create-scratch-buffer))
+            'default)
+           (nil
+            "Config.org"
+            "Open Emacs configuration file for easy editing"
+            (lambda (&rest _) (config-edit))
+            'default)))))
+
+(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 #+END_SRC
 ** Initialize =switch-window=
 *** Description

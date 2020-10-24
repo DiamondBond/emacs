@@ -10,7 +10,7 @@
       user-mail-address "diamondbond1@gmail.com")
 (setq org-directory "~/org/")
 (setq display-line-numbers-type t)
-;;(setq doom-font (font-spec :family "Monaco" :size 14))
+(setq doom-font (font-spec :family "Monaco" :size 16))
 ;;(setq doom-big-font (font-spec :family "Monaco" :size 20))
 ;;(setq doom-theme 'doom-one-light)
 ;;(load-theme 'spacemacs-light t)
@@ -39,8 +39,8 @@ Minor quality-of-life modifications for a more pleasant experience.
 ** Theme
 #+begin_src emacs-lisp
 ;;(tool-bar-mode 1)
-;;(menu-bar-mode 1)
-;;(scroll-bar-mode 1)
+(menu-bar-mode 1)
+(scroll-bar-mode 1)
 ;;(setq +modeline-height 22)
 ;;(setq doom-fallback-buffer-name "emacs"
 ;;      +doom-dashboard-name "emacs")

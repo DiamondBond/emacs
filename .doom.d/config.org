@@ -13,7 +13,7 @@
 ;;(setq doom-font (font-spec :family "Iosevka Comfy" :size 18))
 
 ;; Main typeface
-(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 160)
+(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 140)
 
 ;; Proportionately spaced typeface
 (set-face-attribute 'variable-pitch nil :family "DejaVu Serif" :height 1.0)

@@ -10,7 +10,18 @@
       user-mail-address "diamondbond1@gmail.com")
 (setq org-directory "~/org/")
 (setq display-line-numbers-type t)
-(setq doom-font (font-spec :family "Monaco" :size 14))
+;;(setq doom-font (font-spec :family "Iosevka Comfy" :size 18))
+
+;; Main typeface
+(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 160)
+
+;; Proportionately spaced typeface
+(set-face-attribute 'variable-pitch nil :family "DejaVu Serif" :height 1.0)
+
+;; Monospaced typeface
+(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
+
+;;(setq doom-font (font-spec :family "Iosevka Comfy" :size 18))
 ;;(setq doom-big-font (font-spec :family "Monaco" :size 20))
 ;;(setq doom-theme 'doom-one-light)
 ;;(load-theme 'spacemacs-light t)

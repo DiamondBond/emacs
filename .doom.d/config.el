@@ -1,9 +1,9 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 (setq user-full-name "Diamond Bond"
       user-mail-address "diamondbond1@gmail.com")
-(setq org-directory "~/org/")
+;;(setq org-directory "~/org/")
 (setq display-line-numbers-type t)
-;;(setq doom-font (font-spec :family "Iosevka Comfy" :size 18))
+;;(setq doom-font (font-spec :family "DejaVu Sans Mono"))
 
 ;; Main typeface
 (set-face-attribute 'default nil :family "DejaVu Sans Mono")
@@ -42,6 +42,22 @@
 (setq fancy-splash-image (concat doom-private-dir "splash.png"))
 ;; Don't need the menu
 ;;(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+
+(setq-default
+ uniquify-buffer-name-style 'forward              ; Uniquify buffer names
+ window-combination-resize t                      ; take new window space from all other windows (not just current)
+ x-stretch-cursor t)                              ; Stretch cursor to the glyph width
+
+(setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
+      evil-want-fine-undo t                       ; By default while in insert all changes are one big blob. Be more granular
+      ;; auto-save-default t                         ; Nobody likes to loose work, I certainly don't
+      inhibit-compacting-font-caches t)           ; When there are lots of glyphs, keep them in memory
+
+(delete-selection-mode 1)                         ; Replace selection when inserting text
+;; (global-subword-mode 1)                           ; Iterate through CamelCase words
+
+(setq evil-split-window-below t
+      evil-vsplit-window-right t)
 
 ;;(tool-bar-mode -1)
 (menu-bar-mode 1)
@@ -121,6 +137,7 @@
 (define-key z-map (kbd "s") 'ispell-word)
 (define-key z-map (kbd "W") 'elfeed)
 (define-key z-map (kbd "w") 'eww)
+(define-key z-map (kbd "p") #'+popup/raise)
 (define-key z-map (kbd "F") 'browse-url-firefox)
 
 (define-key z-map (kbd "h") 'hyperbole)
@@ -168,6 +185,15 @@
           (shell . t)
       )
   )
+
+(setq org-directory "~/org"
+      org-image-actual-width nil
+      +org-export-directory "~/org/export"
+      org-default-notes-file "~/org/inbox.org"
+      org-id-locations-file "~/org/.orgids"
+      org-agenda-files (directory-files-recursively "~/Dropbox/org/" "\\.org$")
+      ;; org-export-in-background t
+      org-catch-invisible-edits 'smart)
 
   (defalias 'open 'find-file-other-window)
   (defalias 'clean 'eshell/clear-scrollback)
@@ -270,3 +296,19 @@
 	  :defer nil
     :config
     (save-place-mode))
+
+(after! which-key
+    (setq which-key-idle-delay 0.5))
+
+(after! magit
+  ;; (magit-wip-mode)
+  (setq magit-repository-directories '(("~/git" . 2))
+        magit-save-repository-buffers nil
+        ;; Don't restore the wconf after quitting magit
+        magit-inhibit-save-previous-winconf t
+        magit-log-arguments '("--graph" "--decorate" "--color")
+        ;; magit-delete-by-moving-to-trash nil
+        git-commit-summary-max-length 120))
+
+(after! latex
+    (setq org-latex-compiler "xelatex"))

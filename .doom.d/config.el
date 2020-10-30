@@ -144,6 +144,7 @@
 (define-key z-map (kbd "k") 'compile)
 (define-key z-map (kbd "e") 'eval-region)
 
+(define-key z-map (kbd "a") '(lambda () (interactive) (find-file-other-window "~/org/agenda.org")))
 (define-key z-map (kbd "C-c") 'calendar)
 (define-key z-map (kbd ".") 'org-date-from-calendar)
 

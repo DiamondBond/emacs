@@ -73,3 +73,4 @@
 (package! gif-screencast)
 (package! burly
   :recipe (:host github :repo "alphapapa/burly.el"))
+(package! chess)

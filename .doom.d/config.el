@@ -61,6 +61,8 @@
 
 ;;(tool-bar-mode -1)
 (menu-bar-mode 1)
+;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
+(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode 1)
 ;;(setq +modeline-height 22)
 ;;(setq doom-fallback-buffer-name "emacs"
@@ -175,13 +177,13 @@
 
 (global-set-key (kbd "C-x x") 'window-swap-states)
 
-	(setq org-display-inline-images t)
-	(setq org-redisplay-inline-images t)
-	(setq org-startup-with-inline-images "inlineimages")
-    (setq org-agenda-files (list "inbox.org"))
-	(global-set-key (kbd "C-<f1>") (lambda()
-								 (interactive)
-								 (show-all)))
+(setq org-display-inline-images t)
+(setq org-redisplay-inline-images t)
+(setq org-startup-with-inline-images "inlineimages")
+(setq org-agenda-files (list "inbox.org"))
+(global-set-key (kbd "C-<f1>") (lambda()
+                                 (interactive)
+                                 (show-all)))
 
   ;; src exec
   (org-babel-do-load-languages 'org-babel-load-languages
@@ -201,6 +203,15 @@
 
 ;; (setq org-todo-keywords
 ;;       '((sequence "TODO" "WIP" "WAIT" "DONE")))
+
+(setq org-roam-directory "~/org/roam")
+
+(setq deft-directory "~/org/"
+   deft-recursive t
+   ;; I don't like any summary, hence catch-all regexp. need to see if
+   ;; an option to hide summary is there instead of this one.
+   deft-strip-summary-regexp ".*$"
+)
 
   (defalias 'open 'find-file-other-window)
   (defalias 'clean 'eshell/clear-scrollback)

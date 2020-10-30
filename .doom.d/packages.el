@@ -71,5 +71,5 @@
 (package! synosaurus)
 (package! keycast)
 (package! gif-screencast)
-;;(package! burly
-;;  :recipe (:host github :repo "alphapapa/burly.el"))
+(package! burly
+  :recipe (:host github :repo "alphapapa/burly.el"))

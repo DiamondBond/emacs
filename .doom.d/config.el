@@ -144,6 +144,8 @@
 (define-key z-map (kbd "k") 'compile)
 (define-key z-map (kbd "e") 'eval-region)
 
+(define-key z-map (kbd "C-c") 'calendar)
+(define-key z-map (kbd ".") 'org-date-from-calendar)
 
 (define-key z-map (kbd "I") (lambda () (interactive) (find-file-other-window "~/org/index.org")))
 (define-key z-map (kbd "N") (lambda () (interactive) (find-file-other-window "~/org/notes.org")))
@@ -194,6 +196,9 @@
       org-agenda-files (directory-files-recursively "~/Dropbox/org/" "\\.org$")
       ;; org-export-in-background t
       org-catch-invisible-edits 'smart)
+
+;; (setq org-todo-keywords
+;;       '((sequence "TODO" "WIP" "WAIT" "DONE")))
 
   (defalias 'open 'find-file-other-window)
   (defalias 'clean 'eshell/clear-scrollback)

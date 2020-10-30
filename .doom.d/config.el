@@ -6,7 +6,9 @@
 ;;(setq doom-font (font-spec :family "Iosevka Comfy" :size 18))
 
 ;; Main typeface
-(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 140)
+(set-face-attribute 'default nil :family "DejaVu Sans Mono")
+
+(set-face-attribute 'default nil :height (if (string-equal system-name "phoenix") 140 110))
 
 ;; Proportionately spaced typeface
 (set-face-attribute 'variable-pitch nil :family "DejaVu Serif" :height 1.0)
@@ -21,6 +23,9 @@
 ;;(set-face-background 'default "#FFFFFF")
 ;; or
 ;;(set-face-attribute  'default nil :background "#FFFFFF")
+;;(if (display-graphic-p)
+;;    (load-theme 'modus-operandi t)
+;;  (load-theme 'doom-dracula t))
 (load-theme 'modus-operandi t)
 ;;(display-battery-mode 1)
 
@@ -40,7 +45,7 @@
 
 ;;(tool-bar-mode -1)
 (menu-bar-mode 1)
-(scroll-bar-mode 1)
+;;(scroll-bar-mode 1)
 ;;(setq +modeline-height 22)
 ;;(setq doom-fallback-buffer-name "emacs"
 ;;      +doom-dashboard-name "emacs")
@@ -68,6 +73,7 @@
 (define-prefix-command 'z-map)
 (global-set-key (kbd "C-1") 'z-map) ;; was C-1
 (define-key z-map (kbd "f") 'find-file-other-frame)
+(define-key z-map (kbd "d") 'dired-other-frame)
 (define-key z-map (kbd "g") '+default/search-cwd)
 (define-key z-map (kbd "2") 'make-frame-command)
 (define-key z-map (kbd "0") 'delete-frame)
@@ -75,6 +81,7 @@
 
 (define-key z-map (kbd "*") 'calc)
 (define-key z-map (kbd "r") 'synosaurus-choose-and-replace)
+(define-key z-map (kbd "R") 'rainbow-mode)
 (define-key z-map (kbd "O") 'org-redisplay-inline-images)
 (define-key z-map (kbd "s") 'ispell-word)
 (define-key z-map (kbd "W") 'elfeed)

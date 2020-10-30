@@ -126,6 +126,7 @@
 (define-key z-map (kbd "f") 'find-file-other-frame)
 (define-key z-map (kbd "d") 'dired-other-frame)
 (define-key z-map (kbd "g") '+default/search-cwd)
+(define-key z-map (kbd "G") 'org-mark-ring-goto)
 (define-key z-map (kbd "2") 'make-frame-command)
 (define-key z-map (kbd "0") 'delete-frame)
 (define-key z-map (kbd "o") 'other-frame)

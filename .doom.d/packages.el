@@ -56,7 +56,7 @@
 ;;(package! spaceline)
 ;;(package! powerline)
 (package! dashboard)
-(package! beacon)
+;;(package! beacon)
 (package! switch-window)
 (package! saveplace)
 (package! xkcd)

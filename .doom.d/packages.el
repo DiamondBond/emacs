@@ -65,6 +65,7 @@
 ;;(package! olivetti)
 (package! writeroom-mode)
 (package! nov)
+(package! crux)
 (package! hyperbole)
 (package! command-log-mode)
 (package! academic-phrases)

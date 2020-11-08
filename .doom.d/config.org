@@ -16,20 +16,20 @@
 ;;(setq doom-font (font-spec :family "DejaVu Sans Mono"))
 
 ;; Main typeface
-(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 110)
+;;(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 140)
 
 ;;(set-face-attribute 'default nil :height (if (string-equal system-name "phoenix") 140 110))
 
 ;; Proportionately spaced typeface
-(set-face-attribute 'variable-pitch nil :family "DejaVu Serif" :height 1.0)
+;;(set-face-attribute 'variable-pitch nil :family "DejaVu Serif" :height 1.0)
 
 ;; Monospaced typeface
-(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
+;;(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
 
-;;(setq doom-font (font-spec :family "JetBrains Mono" :size 16))
-;;(setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
-;;(setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
-;;(setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 16))
+(setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
+(setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
+(setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 ;; Main typeface
 ;;(set-face-attribute 'default nil :family "DejaVu Sans Mono")
 
@@ -53,8 +53,8 @@
 ;;(if (display-graphic-p)
 ;;    (load-theme 'modus-operandi t)
 ;;  (load-theme 'doom-dracula t))
-(load-theme 'modus-operandi t)
 ;;(load-theme 'modus-operandi t)
+(load-theme 'doom-dracula t)
 ;;(display-battery-mode 1)
 
 ;;(setq doom-font (font-spec :family "monospace" :size 14 :weight 'semi-light)
@@ -98,7 +98,7 @@ Minor quality-of-life modifications for a more pleasant experience.
 (menu-bar-mode 1)
 ;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
-(scroll-bar-mode 1)
+;;(scroll-bar-mode 1)
 ;;(setq +modeline-height 22)
 ;;(setq doom-fallback-buffer-name "emacs"
 ;;      +doom-dashboard-name "emacs")
@@ -377,7 +377,7 @@ Pretty emacs logo at startup.
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents . 5)))
   (setq dashboard-banner-logo-title "Welcome to Emacs!")
-  (setq dashboard-startup-banner 'official)
+  (setq dashboard-startup-banner "~/.doom.d/splash.png")
   (setq dashboard-center-content t)
   (setq dashboard-show-shortcuts nil)
   (setq dashboard-set-init-info t)
@@ -472,6 +472,6 @@ Saves cursor location in buffers.
 #+end_src
 
 #+begin_src emacs-lisp
-(setq rm-blacklist "")
-(rich-minority-mode)
+;;(setq rm-blacklist "")
+;;(rich-minority-mode)
 #+end_src

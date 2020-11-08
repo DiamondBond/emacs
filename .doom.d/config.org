@@ -16,20 +16,20 @@
 ;;(setq doom-font (font-spec :family "DejaVu Sans Mono"))
 
 ;; Main typeface
-;;(set-face-attribute 'default nil :family "DejaVu Sans Mono")
+(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 110)
 
 ;;(set-face-attribute 'default nil :height (if (string-equal system-name "phoenix") 140 110))
 
 ;; Proportionately spaced typeface
-;;(set-face-attribute 'variable-pitch nil :family "DejaVu Serif" :height 1.0)
+(set-face-attribute 'variable-pitch nil :family "DejaVu Serif" :height 1.0)
 
 ;; Monospaced typeface
-;;(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
+(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
 
-(setq doom-font (font-spec :family "JetBrains Mono" :size 16))
-(setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
-(setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
-(setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
+;;(setq doom-font (font-spec :family "JetBrains Mono" :size 16))
+;;(setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
+;;(setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
+;;(setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 ;; Main typeface
 ;;(set-face-attribute 'default nil :family "DejaVu Sans Mono")
 
@@ -67,7 +67,7 @@
 ;;(display-battery-mode 1)
 
 ;;; :ui doom-dashboard
-(setq fancy-splash-image (concat doom-private-dir "splash.png"))
+;;(setq fancy-splash-image (concat doom-private-dir "splash.png"))
 ;; Don't need the menu
 ;;(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 #+end_src

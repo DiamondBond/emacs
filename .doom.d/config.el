@@ -296,7 +296,7 @@
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents . 5)))
   (setq dashboard-banner-logo-title "Welcome to Emacs!")
-  (setq dashboard-startup-banner "~/.doom.d/splash.png")
+  (setq dashboard-startup-banner 'official)
   (setq dashboard-center-content t)
   (setq dashboard-show-shortcuts nil)
   (setq dashboard-set-init-info t)

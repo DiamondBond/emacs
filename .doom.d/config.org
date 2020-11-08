@@ -48,6 +48,8 @@
 ;;(set-face-background 'default "#FFFFFF")
 ;; or
 ;;(set-face-attribute  'default nil :background "#FFFFFF")
+
+(setq custom-safe-themes t)
 ;;(if (display-graphic-p)
 ;;    (load-theme 'modus-operandi t)
 ;;  (load-theme 'doom-dracula t))
@@ -457,4 +459,19 @@ Saves cursor location in buffers.
 #+begin_src emacs-lisp
 (after! latex
     (setq org-latex-compiler "xelatex"))
+#+end_src
+** Initialize =rich-minority=
+*** Code
+#+begin_src emacs-lisp
+;; (rich-minority-mode 1)
+;; (setq rm-blacklist
+;;       (format "^ \\(%s\\)$"
+;;               (mapconcat #'identity
+;;                          '("Fly.*" "Projectile.*" "PgLn" "traces" "snipe" "WK" "better-jumper" "company" "ivy" "EG" "GCMH" "SP" "EvilOrg" "~" "$" "jk" "wb" "ws" "Outl" "ElDoc" "yas" "Ind" "FmtAll" "Wrap" "GitGutter" "dtrt-indent" "Abbrev")
+;;                          "\\|")))
+#+end_src
+
+#+begin_src emacs-lisp
+(setq rm-blacklist "")
+(rich-minority-mode)
 #+end_src

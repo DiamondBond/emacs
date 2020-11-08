@@ -52,6 +52,7 @@
 (package! spacemacs-theme)
 (package! modus-operandi-theme)
 (package! modus-vivendi-theme)
+(package! rich-minority)
 ;;(package! diminish)
 ;;(package! spaceline)
 ;;(package! powerline)
@@ -72,6 +73,6 @@
 (package! synosaurus)
 (package! keycast)
 (package! gif-screencast)
-(package! burly
-  :recipe (:host github :repo "alphapapa/burly.el"))
+;;(package! burly
+;;  :recipe (:host github :repo "alphapapa/burly.el"))
 (package! chess)

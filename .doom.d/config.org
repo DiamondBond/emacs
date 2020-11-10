@@ -53,8 +53,8 @@
 ;;(if (display-graphic-p)
 ;;    (load-theme 'modus-operandi t)
 ;;  (load-theme 'doom-dracula t))
-;;(load-theme 'modus-operandi t)
-(load-theme 'doom-dracula t)
+(load-theme 'modus-operandi t)
+;;(load-theme 'doom-dracula t)
 ;;(display-battery-mode 1)
 
 ;;(setq doom-font (font-spec :family "monospace" :size 14 :weight 'semi-light)
@@ -98,7 +98,7 @@ Minor quality-of-life modifications for a more pleasant experience.
 (menu-bar-mode 1)
 ;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
-;;(scroll-bar-mode 1)
+(scroll-bar-mode 1)
 ;;(setq +modeline-height 22)
 ;;(setq doom-fallback-buffer-name "emacs"
 ;;      +doom-dashboard-name "emacs")
@@ -472,6 +472,6 @@ Saves cursor location in buffers.
 #+end_src
 
 #+begin_src emacs-lisp
-;;(setq rm-blacklist "")
-;;(rich-minority-mode)
+(setq rm-blacklist "")
+(rich-minority-mode)
 #+end_src

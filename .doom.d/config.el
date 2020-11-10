@@ -46,8 +46,8 @@
 ;;(if (display-graphic-p)
 ;;    (load-theme 'modus-operandi t)
 ;;  (load-theme 'doom-dracula t))
-;;(load-theme 'modus-operandi t)
-(load-theme 'doom-dracula t)
+(load-theme 'modus-operandi t)
+;;(load-theme 'doom-dracula t)
 ;;(display-battery-mode 1)
 
 ;;(setq doom-font (font-spec :family "monospace" :size 14 :weight 'semi-light)
@@ -84,7 +84,7 @@
 (menu-bar-mode 1)
 ;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
-;;(scroll-bar-mode 1)
+(scroll-bar-mode 1)
 ;;(setq +modeline-height 22)
 ;;(setq doom-fallback-buffer-name "emacs"
 ;;      +doom-dashboard-name "emacs")
@@ -362,5 +362,5 @@
 ;;                          '("Fly.*" "Projectile.*" "PgLn" "traces" "snipe" "WK" "better-jumper" "company" "ivy" "EG" "GCMH" "SP" "EvilOrg" "~" "$" "jk" "wb" "ws" "Outl" "ElDoc" "yas" "Ind" "FmtAll" "Wrap" "GitGutter" "dtrt-indent" "Abbrev")
 ;;                          "\\|")))
 
-;;(setq rm-blacklist "")
-;;(rich-minority-mode)
+(setq rm-blacklist "")
+(rich-minority-mode)

@@ -9,20 +9,20 @@
 ;;(setq doom-font (font-spec :family "DejaVu Sans Mono"))
 
 ;; Main typeface
-(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 110)
+;;(set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 110)
 
 ;;(set-face-attribute 'default nil :height (if (string-equal system-name "phoenix") 140 110))
 
 ;; Proportionately spaced typeface
-(set-face-attribute 'variable-pitch nil :family "DejaVu Serif" :height 1.0)
+;;(set-face-attribute 'variable-pitch nil :family "DejaVu Serif" :height 1.0)
 
 ;; Monospaced typeface
-(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
+;(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
 
-;; (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
-;; (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
-;; (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
-;; (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
+ ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
+ ;; (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
+ ;; (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
+ ;; (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 
 ;;(load-theme 'spacemacs-light t)
 ;;(set-face-background 'default "#FFFFFF")
@@ -38,8 +38,8 @@
 ;;(load-theme 'doom-dracula t)
 ;;(display-battery-mode 1)
 
-;;(setq doom-font (font-spec :family "monospace" :size 14 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "sans" :size 13))
+(setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "sans" :size 14))
 
 ;; Prevents some cases of Emacs flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))

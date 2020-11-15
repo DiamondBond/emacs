@@ -153,6 +153,8 @@
 (define-key z-map (kbd "F") 'browse-url-firefox)
 
 (define-key z-map (kbd "h") 'hyperbole)
+(define-key z-map (kbd "X") 'xah-math-input-mode)
+(define-key z-map (kbd "x") 'switch-to-buffer-other-frame)
 (define-key z-map (kbd "k") 'compile)
 (define-key z-map (kbd "e") 'eval-region)
 

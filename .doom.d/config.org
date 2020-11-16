@@ -1,5 +1,6 @@
 #+STARTUP: overview
 #+TITLE: emacs configuration
+#+AUTHOR: Diamond Bond
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 
@@ -26,10 +27,10 @@
 ;; Monospaced typeface
 ;(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
 
- ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
- ;; (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
- ;; (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
- ;; (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
+  ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
+  ;; (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
+  ;; (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
+  ;; (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 
 ;;(load-theme 'spacemacs-light t)
 ;;(set-face-background 'default "#FFFFFF")
@@ -45,8 +46,8 @@
 ;;(load-theme 'doom-dracula t)
 ;;(display-battery-mode 1)
 
-(setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "sans" :size 14))
+ (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+       doom-variable-pitch-font (font-spec :family "sans" :size 14))
 
 ;; Prevents some cases of Emacs flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
@@ -87,7 +88,7 @@ Minor quality-of-life modifications for a more pleasant experience.
 ;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
 (scroll-bar-mode 1)
-;;(setq +modeline-height 22)
+;;(setq +modeline-height 36)
 ;;(setq doom-fallback-buffer-name "emacs"
 ;;      +doom-dashboard-name "emacs")
 ;;(setq-default frame-title-format '("%b"))
@@ -199,6 +200,7 @@ https://github.com/fuxialexander/doom-emacs-private-xfu/blob/master/%2Bpopup.el
 (define-key z-map (kbd "a") '(lambda () (interactive) (find-file-other-window "~/org/agenda.org")))
 (define-key z-map (kbd "C-c") 'calendar)
 (define-key z-map (kbd ".") 'org-date-from-calendar)
+(define-key z-map (kbd "C-o") 'olivetti-mode)
 
 (define-key z-map (kbd "I") (lambda () (interactive) (find-file-other-window "~/org/index.org")))
 (define-key z-map (kbd "N") (lambda () (interactive) (find-file-other-window "~/org/notes.org")))
@@ -462,8 +464,8 @@ Saves cursor location in buffers.
 #+end_src
 
 #+begin_src emacs-lisp
-(setq rm-blacklist "")
-(rich-minority-mode)
+ (setq rm-blacklist "")
+ (rich-minority-mode)
 #+end_src
 
 ** Initialize =modus-themes=

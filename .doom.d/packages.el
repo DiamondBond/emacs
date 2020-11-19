@@ -76,3 +76,6 @@
 ;;(package! burly
 ;;  :recipe (:host github :repo "alphapapa/burly.el"))
 (package! chess)
+(package! org-tree-slide)
+(package! command-log-mode)
+(package! beacon)

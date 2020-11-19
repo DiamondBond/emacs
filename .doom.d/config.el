@@ -200,12 +200,12 @@
                                  (interactive)
                                  (show-all)))
 
-  ;; src exec
-  (org-babel-do-load-languages 'org-babel-load-languages
-      '(
-          (shell . t)
-      )
-  )
+;; src exec
+(org-babel-do-load-languages 'org-babel-load-languages
+                             '(
+                               (shell . t)
+                               )
+                             )
 
 (setq org-directory "~/org"
       org-image-actual-width nil
@@ -222,11 +222,14 @@
 (setq org-roam-directory "~/org/roam")
 
 (setq deft-directory "~/org/"
-   deft-recursive t
-   ;; I don't like any summary, hence catch-all regexp. need to see if
-   ;; an option to hide summary is there instead of this one.
-   deft-strip-summary-regexp ".*$"
-)
+      deft-recursive t
+      ;; I don't like any summary, hence catch-all regexp. need to see if
+      ;; an option to hide summary is there instead of this one.
+      deft-strip-summary-regexp ".*$"
+      )
+
+;; scratch is now org
+(setq initial-major-mode 'org-mode)
 
 (defalias 'open 'find-file-other-window)
 (defalias 'clean 'eshell/clear-scrollback)
@@ -287,7 +290,8 @@
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents . 5)))
   (setq dashboard-banner-logo-title "Welcome to Emacs!")
-  (setq dashboard-startup-banner "~/.doom.d/splash.png")
+;;  (setq dashboard-startup-banner "~/.doom.d/splash.png")
+  (setq dashboard-startup-banner 'official)
   (setq dashboard-center-content t)
   (setq dashboard-show-shortcuts nil)
   (setq dashboard-set-init-info t)
@@ -424,3 +428,7 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
   :bind ("<S-f5>" . modus-themes-toggle))
 
 (modus-themes-toggle)
+
+(use-package org-tree-slide
+  :custom
+  (org-image-actual-width nil))

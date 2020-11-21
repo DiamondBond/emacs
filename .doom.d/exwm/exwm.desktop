@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=EXWM
+Comment=Emacs Window Managr
+Exec=/home/diamond/.doom.d/exwm/start.sh
+Icon=
+Type=Application
+X-LightDM-DesktopName=exwm
+DesktopNames=exwm

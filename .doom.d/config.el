@@ -17,12 +17,12 @@
 ;;(set-face-attribute 'variable-pitch nil :family "DejaVu Serif" :height 1.0)
 
 ;; Monospaced typeface
-;(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
+                                        ;(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
 
-  ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
-  ;; (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
-  ;; (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
-  ;; (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
+;; (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
+;; (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
+;; (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
+;; (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 
 ;;(load-theme 'spacemacs-light t)
 ;;(set-face-background 'default "#FFFFFF")
@@ -34,12 +34,13 @@
 ;;    (load-theme 'modus-operandi t)
 ;;  (load-theme 'doom-dracula t))
 
+;;(load-theme 'acme t)
 ;;(load-theme 'modus-operandi t)
 ;;(load-theme 'doom-dracula t)
 ;;(display-battery-mode 1)
 
- (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
-       doom-variable-pitch-font (font-spec :family "sans" :size 14))
+(setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "sans" :size 14))
 
 ;; Prevents some cases of Emacs flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
@@ -257,6 +258,16 @@
 
 ;;(use-package! diminish)
 
+;; (rich-minority-mode 1)
+;; (setq rm-blacklist
+;;       (format "^ \\(%s\\)$"
+;;               (mapconcat #'identity
+;;                          '("Fly.*" "Projectile.*" "PgLn" "traces" "snipe" "WK" "better-jumper" "company" "ivy" "EG" "GCMH" "SP" "EvilOrg" "~" "$" "jk" "wb" "ws" "Outl" "ElDoc" "yas" "Ind" "FmtAll" "Wrap" "GitGutter" "dtrt-indent" "Abbrev")
+;;                          "\\|")))
+
+(setq rm-blacklist "")
+(rich-minority-mode)
+
 (use-package! nov
   :mode ("\\.epub\\'" . nov-mode)
   :config
@@ -350,27 +361,11 @@
 (after! latex
     (setq org-latex-compiler "xelatex"))
 
-;; (rich-minority-mode 1)
-;; (setq rm-blacklist
-;;       (format "^ \\(%s\\)$"
-;;               (mapconcat #'identity
-;;                          '("Fly.*" "Projectile.*" "PgLn" "traces" "snipe" "WK" "better-jumper" "company" "ivy" "EG" "GCMH" "SP" "EvilOrg" "~" "$" "jk" "wb" "ws" "Outl" "ElDoc" "yas" "Ind" "FmtAll" "Wrap" "GitGutter" "dtrt-indent" "Abbrev")
-;;                          "\\|")))
-
-(setq rm-blacklist "")
-(rich-minority-mode)
-
 (use-package emacs
   :config
-  (setq custom-safe-themes t)           ; Due to my dev needs
+  (setq custom-safe-themes t)
 
-  ;;(use-package modus-operandi-theme
-  ;;  :load-path "~/.emacs.d/themes/")    ; Custom path due to my dev needs
-
-  ;;(use-package modus-vivendi-theme
-  ;;  :load-path "~/.emacs.d/themes/")
-
-  ;; TODO simplify this to avoid formating a string, then read and eval.
+  ;; TODO simplify this to avoid formatting a string, then read and eval.
   (defmacro modus-themes-format-sexp (sexp &rest objects)
     `(eval (read (format ,(format "%S" sexp) ,@objects))))
 
@@ -432,3 +427,165 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 (use-package org-tree-slide
   :custom
   (org-image-actual-width nil))
+
+;; (require 'exwm)
+;; (require 'exwm-config)
+;; (require 'exwm-systemtray)
+;; (exwm-systemtray-enable)
+;; (require 'exwm-randr)
+;; (exwm-randr-enable)
+;; (add-hook 'exwm-randr-screen-change-hook
+;;           (lambda ()
+;;             (start-process-shell-command
+;;              "xrandr" nil "xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal")))
+;; (setq exwm-workspace-number 10
+;;       exwm-randr-workspace-output-plist '(0 "eDP-1")
+;;       exwm-input-prefix-keys '(?\M-x
+;;                                ?\M-:)
+;;       exwm-input-simulation-keys '(([?\s-F] . [?\C-f])
+;;                                    )
+;;       exwm-input-global-keys '(([?\s-&] . (lambda (command)
+;;                                             (interactive (list (read-shell-command "$ ")))
+;;                                             (start-process-shell-command command nil command)))
+;;                                ;; splits
+;;                                ([?\s-v] . evil-window-vsplit)
+;;                                ([?\s-z] . evil-window-split)
+;;                                ;; managing workspaces
+;;                                ([?\s-w] . exwm-workspace-switch)
+;;                                ([?\s-W] . exwm-workspace-swap)
+;;                                ([?\s-\C-w] . exwm-workspace-move)
+;;                                ;; essential programs
+;;                                ([?\s-d] . dired)
+;;                                ([s-return] . vterm)
+;;                                ([s-S-return] . dmenu)
+;;                                ;; killing buffers and windows
+;;                                ([?\s-b] . ibuffer)
+;;                                ([?\s-B] . kill-current-buffer)
+;;                                ([?\s-C] . +workspace/close-window-or-workspace)
+;;                                ;; change window focus with super+h,j,k,l
+;;                                ([?\s-h] . evil-window-left)
+;;                                ([?\s-j] . evil-window-next)
+;;                                ([?\s-k] . evil-window-prev)
+;;                                ([?\s-l] . evil-window-right)
+;;                                ;; move windows around using SUPER+SHIFT+h,j,k,l
+;;                                ([?\s-H] . +evil/window-move-left)
+;;                                ([?\s-J] . +evil/window-move-down)
+;;                                ([?\s-K] . +evil/window-move-up)
+;;                                ([?\s-L] . +evil/window-move-right)
+;;                                ;; move window to far left or far right with SUPER+CTRL+h,l
+;;                                ([?\s-\C-h] . side-left-window)
+;;                                ([?\s-\C-j] . side-bottom-window)
+;;                                ([?\s-\C-l] . side-right-window)
+;;                                ([?\s-\C-d] . side-window-delete-all)
+;;                                ([?\s-\C-r] . resize-window)
+;;                                ;; switch workspace with SUPER+{0-9}
+;;                                ([?\s-0] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+;;                                ([?\s-1] . (lambda () (interactive) (exwm-workspace-switch-create 1)))
+;;                                ([?\s-2] . (lambda () (interactive) (exwm-workspace-switch-create 2)))
+;;                                ([?\s-3] . (lambda () (interactive) (exwm-workspace-switch-create 3)))
+;;                                ([?\s-4] . (lambda () (interactive) (exwm-workspace-switch-create 4)))
+;;                                ([?\s-5] . (lambda () (interactive) (exwm-workspace-switch-create 5)))
+;;                                ([?\s-6] . (lambda () (interactive) (exwm-workspace-switch-create 6)))
+;;                                ([?\s-7] . (lambda () (interactive) (exwm-workspace-switch-create 7)))
+;;                                ([?\s-8] . (lambda () (interactive) (exwm-workspace-switch-create 8)))
+;;                                ([?\s-9] . (lambda () (interactive) (exwm-workspace-switch-create 9)))
+;;                                ;; move window workspace with SUPER+SHIFT+{0-9}
+;;                                ([?\s-\)] . (lambda () (interactive) (exwm-workspace-move-window 0)))
+;;                                ([?\s-!] . (lambda () (interactive) (exwm-workspace-move-window 1)))
+;;                                ([?\s-@] . (lambda () (interactive) (exwm-workspace-move-window 2)))
+;;                                ([?\s-#] . (lambda () (interactive) (exwm-workspace-move-window 3)))
+;;                                ([?\s-$] . (lambda () (interactive) (exwm-workspace-move-window 4)))
+;;                                ([?\s-%] . (lambda () (interactive) (exwm-workspace-move-window 5)))
+;;                                ([?\s-^] . (lambda () (interactive) (exwm-workspace-move-window 6)))
+;;                                ([?\s-&] . (lambda () (interactive) (exwm-workspace-move-window 7)))
+;;                                ([?\s-*] . (lambda () (interactive) (exwm-workspace-move-window 8)))
+;;                                ([?\s-\(] . (lambda () (interactive) (exwm-workspace-move-window 9)))
+;;                                ;; setting some toggle commands
+;;                                ([?\s-f] . exwm-floating-toggle-floating)
+;;                                ([?\s-m] . exwm-layout-toggle-mode-line)
+;;                                ([f11] . exwm-layout-toggle-fullscreen)))
+
+(map! :leader
+      :desc "Dired"
+      "d d" #'dired
+      :leader
+      :desc "Dired jump to current"
+      "d j" #'dired-jump
+      (:after dired
+        (:map dired-mode-map
+         :leader
+         :desc "Peep-dired image previews"
+         "d p" #'peep-dired
+         :leader
+         :desc "Dired view file"
+         "d v" #'dired-view-file)))
+;; Make 'h' and 'l' go back and forward in dired. Much faster to navigate the directory structure!
+(evil-define-key 'normal dired-mode-map
+  (kbd "h") 'dired-up-directory
+  (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
+;; If peep-dired is enabled, you will get image previews as you go up/down with 'j' and 'k'
+(evil-define-key 'normal peep-dired-mode-map
+  (kbd "j") 'peep-dired-next-file
+  (kbd "k") 'peep-dired-prev-file)
+(add-hook 'peep-dired-hook 'evil-normalize-keymaps)
+;; Get file icons in dired
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+;; With dired-open plugin, you can launch external programs for certain extensions
+;; For example, I set all .png files to open in 'sxiv' and all .mp4 files to open in 'mpv'
+(setq dired-open-extensions '(("gif" . "sxiv")
+                              ("jpg" . "sxiv")
+                              ("png" . "sxiv")
+                              ("mkv" . "mpv")
+                              ("mp4" . "mpv")))
+
+(require 'emms-setup)
+(require 'emms-info)
+(require 'emms-cue)
+(require 'emms-mode-line)
+(require 'emms-playing-time)
+(emms-all)
+(emms-default-players)
+(emms-mode-line 1)
+(emms-playing-time 1)
+(setq emms-source-file-default-directory "~/Music/Non-Classical/70s-80s/"
+      emms-playlist-buffer-name "*Music*"
+      emms-info-asynchronously t
+      emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
+(map! :leader
+      :desc "Go to emms playlist"
+      "a a" #'emms-playlist-mode-go
+      :leader
+      :desc "Emms pause track"
+      "a x" #'emms-pause
+      :leader
+      :desc "Emms stop track"
+      "a s" #'emms-stop
+      :leader
+      :desc "Emms play previous track"
+      "a p" #'emms-previous
+      :leader
+      :desc "Emms play next track"
+      "a n" #'emms-next)
+
+;;(require 'ivy-posframe)
+
+;; display at `ivy-posframe-style'
+;;(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+;;(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-center)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-bottom-left)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-bottom-left)))
+
+;;(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
+;;(ivy-posframe-mode 1)
+
+;; (setq ivy-posframe-parameters
+;;       '((left-fringe . 8)
+;;         (right-fringe . 8)))
+
+;; (map! :leader
+;;       :desc "Ivy push view"
+;;       "v p" #'ivy-push-view
+;;       :leader
+;;       :desc "Ivy switch view"
+;;       "v s" #'ivy-switch-view)

@@ -39,8 +39,8 @@
 ;;(load-theme 'doom-dracula t)
 ;;(display-battery-mode 1)
 
-(setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "sans" :size 14))
+(setq doom-font (font-spec :family "monospace" :size 14 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "sans" :size 12))
 
 ;; Prevents some cases of Emacs flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))

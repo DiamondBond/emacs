@@ -47,8 +47,8 @@
 ;;(load-theme 'doom-dracula t)
 ;;(display-battery-mode 1)
 
-(setq doom-font (font-spec :family "monospace" :size 14 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "sans" :size 12))
+(setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "sans" :size 14))
 
 ;; Prevents some cases of Emacs flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
@@ -85,7 +85,7 @@ Minor quality-of-life modifications for a more pleasant experience.
 ** Theme
 #+begin_src emacs-lisp
 ;;(tool-bar-mode 1)
-(menu-bar-mode 1)
+;;(menu-bar-mode 1)
 ;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
 (scroll-bar-mode 1)
@@ -717,4 +717,10 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 ;;       :leader
 ;;       :desc "Ivy switch view"
 ;;       "v s" #'ivy-switch-view)
+#+end_src
+** Initialize =go=
+*** Code
+#+begin_src emasc-lisp
+(add-to-list 'load-path "/home/diamond/.doom.d/el-go")
+(require 'go)
 #+end_src

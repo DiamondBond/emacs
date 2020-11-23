@@ -720,7 +720,7 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 #+end_src
 ** Initialize =go=
 *** Code
-#+begin_src emasc-lisp
-(add-to-list 'load-path "/home/diamond/.doom.d/el-go")
-(require 'go)
+#+begin_src emacs-lisp
+;; (add-to-list 'load-path "/home/diamond/.doom.d/el-go")
+;; (require 'go)
 #+end_src

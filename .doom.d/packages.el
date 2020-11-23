@@ -75,7 +75,6 @@
 (package! gif-screencast)
 ;;(package! burly
 ;;  :recipe (:host github :repo "alphapapa/burly.el"))
-(package! chess)
 (package! org-tree-slide)
 (package! command-log-mode)
 (package! beacon)
@@ -96,3 +95,7 @@
 ;;(package! emacs-acme-theme)
 ;;(package! acme-emacs-theme)
 ;;(package! nofrils)
+
+(package! chess)
+(package! example
+  :recipe (:host github :repo "eschulte/el-go"))

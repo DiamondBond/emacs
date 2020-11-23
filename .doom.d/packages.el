@@ -91,11 +91,11 @@
 
 (package! plan9-theme)
 (package! acme-theme)
-(package! minimal-theme)
+;;(package! minimal-theme)
 ;;(package! emacs-acme-theme)
 ;;(package! acme-emacs-theme)
 ;;(package! nofrils)
 
 (package! chess)
-(package! example
+(package! el-go
   :recipe (:host github :repo "eschulte/el-go"))

@@ -19,10 +19,10 @@
 ;; Monospaced typeface
                                         ;(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
 
-;; (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
-;; (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
-;; (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
-;; (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
+ (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
+ (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
+ (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
+ (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 
 ;;(load-theme 'spacemacs-light t)
 ;;(set-face-background 'default "#FFFFFF")
@@ -39,8 +39,8 @@
 ;;(load-theme 'doom-dracula t)
 ;;(display-battery-mode 1)
 
-(setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "sans" :size 14))
+;; (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "sans" :size 14))
 
 ;; Prevents some cases of Emacs flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
@@ -70,7 +70,7 @@
       evil-vsplit-window-right t)
 
 ;;(tool-bar-mode 1)
-;;(menu-bar-mode 1)
+(menu-bar-mode 1)
 ;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
 (scroll-bar-mode 1)
@@ -97,7 +97,7 @@
 
 (global-hl-line-mode t)
 
-(set-popup-rule! "^\\*eww.*" :size 82 :side 'right :select t :quit t)
+;;(set-popup-rule! "^\\*eww.*" :size 82 :side 'right :select t :quit t)
 
 ;; (set-popup-rule! "^\\*Customize.*" :slot 2 :side 'right :modeline nil :select t :quit t)
 ;; (set-popup-rule! " \\*undo-tree\\*" :slot 2 :side 'left :size 20 :modeline nil :select t :quit t)

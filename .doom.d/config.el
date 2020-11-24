@@ -19,10 +19,10 @@
 ;; Monospaced typeface
                                         ;(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
 
- (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
- (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
- (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
- (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
+;; (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
+;; (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
+;; (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
+;; (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 
 ;;(load-theme 'spacemacs-light t)
 ;;(set-face-background 'default "#FFFFFF")
@@ -39,8 +39,8 @@
 ;;(load-theme 'doom-dracula t)
 ;;(display-battery-mode 1)
 
-;; (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 14))
+(setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "sans" :size 14))
 
 ;; Prevents some cases of Emacs flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
@@ -136,6 +136,7 @@
 (define-prefix-command 'z-map)
 (global-set-key (kbd "C-1") 'z-map) ;; was C-1
 (define-key z-map (kbd "f") 'find-file-other-frame)
+(define-key z-map (kbd "D") 'dashboard-refresh-buffer)
 (define-key z-map (kbd "d") 'dired-other-frame)
 (define-key z-map (kbd "g") '+default/search-cwd)
 (define-key z-map (kbd "G") 'org-mark-ring-goto)
@@ -158,6 +159,9 @@
 (define-key z-map (kbd "x") 'switch-to-buffer-other-frame)
 (define-key z-map (kbd "k") 'compile)
 (define-key z-map (kbd "e") 'eval-region)
+
+(define-key z-map (kbd "U") 'go-board-undo)
+(define-key z-map (kbd "P") 'go-board-next)
 
 ;;(define-key z-map (kbd "b") 'burly-open-bookmark)
 ;;(define-key z-map (kbd "B") 'burly-bookmark-frames)
@@ -590,5 +594,5 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 ;;       :desc "Ivy switch view"
 ;;       "v s" #'ivy-switch-view)
 
-;; (add-to-list 'load-path "/home/diamond/.doom.d/el-go")
-;; (require 'go)
+ (add-to-list 'load-path "/home/diamond/.doom.d/el-go")
+ (require 'go)

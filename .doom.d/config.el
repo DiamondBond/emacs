@@ -134,7 +134,10 @@
 
 ;; my own map
 (define-prefix-command 'z-map)
-(global-set-key (kbd "C-1") 'z-map) ;; was C-1
+(global-set-key (kbd "C-1") 'z-map) ;; Ctrl-1
+
+
+(define-key z-map (kbd "j") (lambda () (interactive) (find-file-other-frame "~/org/diary.org")))
 (define-key z-map (kbd "f") 'find-file-other-frame)
 (define-key z-map (kbd "D") 'dashboard-refresh-buffer)
 (define-key z-map (kbd "d") 'dired-other-frame)

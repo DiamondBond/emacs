@@ -70,7 +70,7 @@
       evil-vsplit-window-right t)
 
 ;;(tool-bar-mode 1)
-(menu-bar-mode 1)
+;;(menu-bar-mode 1)
 ;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
 (scroll-bar-mode 1)
@@ -596,3 +596,6 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 
  (add-to-list 'load-path "/home/diamond/.doom.d/el-go")
  (require 'go)
+(setq gnugo-option-history (list "--komi 5.5 --boardsize 13"))
+(setq gnugo-xpms 'gnugo-imgen-create-xpms)
+(add-hook 'gnugo-start-game-hook 'gnugo-image-display-mode)

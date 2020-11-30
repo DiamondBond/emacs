@@ -318,18 +318,18 @@
   (setq dashboard-set-navigator t)
   (setq dashboard-navigator-buttons
         `(((,nil
-            "Scratch Buffer"
+            "Scratch"
             "Switch to the scratch buffer"
             (lambda (&rest _) (create-scratch-buffer))
             'default)
            (nil
-            "Config.org"
-            "Emacs configuration"
-            (lambda (&rest _) (config-edit))
+            "Notes"
+            "Open personal notes"
+            (lambda (&rest _) (notes-edit))
             'default)
            (nil
-            "Notes.org"
-            "Open notes"
+            "Config"
+            "Open Emacs configuration"
             (lambda (&rest _) (config-edit))
             'default)
            ))))

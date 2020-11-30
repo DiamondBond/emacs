@@ -296,6 +296,10 @@
     "Edit configuration file"
     (interactive)
     (find-file "~/.doom.d/config.org"))
+  (defun notes-edit ()
+    "Edit configuration file"
+    (interactive)
+    (find-file "~/org/notes.org"))
   (defun create-scratch-buffer ()
     "Create a scratch buffer"
     (interactive)
@@ -305,7 +309,7 @@
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents . 5)))
   (setq dashboard-banner-logo-title "Welcome to Emacs!")
-;;  (setq dashboard-startup-banner "~/.doom.d/splash.png")
+  ;;  (setq dashboard-startup-banner "~/.doom.d/splash.png")
   (setq dashboard-startup-banner 'official)
   (setq dashboard-center-content t)
   (setq dashboard-show-shortcuts nil)
@@ -320,9 +324,15 @@
             'default)
            (nil
             "Config.org"
-            "Open Emacs configuration file for easy editing"
+            "Emacs configuration"
             (lambda (&rest _) (config-edit))
-            'default)))))
+            'default)
+           (nil
+            "Notes.org"
+            "Open notes"
+            (lambda (&rest _) (config-edit))
+            'default)
+           ))))
 
 (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 

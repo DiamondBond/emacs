@@ -19,10 +19,10 @@
 ;; Monospaced typeface
                                         ;(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
 
-;; (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
-;; (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
-;; (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
-;; (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 16))
+(setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
+(setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
+(setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 
 ;;(load-theme 'spacemacs-light t)
 ;;(set-face-background 'default "#FFFFFF")
@@ -39,8 +39,8 @@
 ;;(load-theme 'doom-dracula t)
 ;;(display-battery-mode 1)
 
-(setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "sans" :size 14))
+;;(setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+;;      doom-variable-pitch-font (font-spec :family "sans" :size 14))
 
 ;; Prevents some cases of Emacs flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
@@ -70,7 +70,7 @@
       evil-vsplit-window-right t)
 
 ;;(tool-bar-mode 1)
-;;(menu-bar-mode 1)
+(menu-bar-mode 1)
 ;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
 (scroll-bar-mode 1)
@@ -82,16 +82,16 @@
 ;; (setq evil-split-window-below t
 ;;       evil-vsplit-window-right t)
 
-  (setq scroll-conservatively 1)
-  (setq mouse-wheel-scroll-amount '(1))
-  (setq mouse-wheel-progressive-speed nil)
+(setq scroll-conservatively 1)
+(setq mouse-wheel-scroll-amount '(1))
+(setq mouse-wheel-progressive-speed nil)
 
-  (global-prettify-symbols-mode t)
+(global-prettify-symbols-mode t)
 
-  (global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
-  (global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
-  (global-set-key (kbd "s-C-<down>") 'shrink-window)
-  (global-set-key (kbd "s-C-<up>") 'enlarge-window)
+(global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "s-C-<down>") 'shrink-window)
+(global-set-key (kbd "s-C-<up>") 'enlarge-window)
 
 (setq-default frame-title-format '("%b"))
 
@@ -239,29 +239,29 @@
 ;; scratch is now org
 (setq initial-major-mode 'org-mode)
 
-  (defalias 'open 'find-file-other-window)
-  (defalias 'clean 'eshell/clear-scrollback)
+(defalias 'open 'find-file-other-window)
+(defalias 'clean 'eshell/clear-scrollback)
 
-  (defun eshell/sudo-open (filename)
-    "Open a file as root in Eshell."
-    (let ((qual-filename (if (string-match "^/" filename)
-                             filename
-                           (concat (expand-file-name (eshell/pwd)) "/" filename))))
-      (switch-to-buffer
-       (find-file-noselect
-        (concat "/sudo::" qual-filename)))))
+(defun eshell/sudo-open (filename)
+  "Open a file as root in Eshell."
+  (let ((qual-filename (if (string-match "^/" filename)
+                           filename
+                         (concat (expand-file-name (eshell/pwd)) "/" filename))))
+    (switch-to-buffer
+     (find-file-noselect
+      (concat "/sudo::" qual-filename)))))
 
-  (defun eshell-other-window ()
-    "Create or visit an eshell buffer."
-    (interactive)
-    (if (not (get-buffer "*eshell*"))
-        (progn
-          (split-window-sensibly (selected-window))
-          (other-window 1)
-          (eshell))
-      (switch-to-buffer-other-window "*eshell*")))
+(defun eshell-other-window ()
+  "Create or visit an eshell buffer."
+  (interactive)
+  (if (not (get-buffer "*eshell*"))
+      (progn
+        (split-window-sensibly (selected-window))
+        (other-window 1)
+        (eshell))
+    (switch-to-buffer-other-window "*eshell*")))
 
-  (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
+(global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 
 ;;(use-package! diminish)
 
@@ -272,8 +272,8 @@
 ;;                          '("Fly.*" "Projectile.*" "PgLn" "traces" "snipe" "WK" "better-jumper" "company" "ivy" "EG" "GCMH" "SP" "EvilOrg" "~" "$" "jk" "wb" "ws" "Outl" "ElDoc" "yas" "Ind" "FmtAll" "Wrap" "GitGutter" "dtrt-indent" "Abbrev")
 ;;                          "\\|")))
 
- (setq rm-blacklist "")
- (rich-minority-mode)
+(setq rm-blacklist "")
+(rich-minority-mode)
 
 (use-package! nov
   :mode ("\\.epub\\'" . nov-mode)
@@ -282,11 +282,11 @@
 
 ;;(use-package! spaceline)
 
- ;; (use-package! powerline
- ;;    :init
- ;;    (spaceline-spacemacs-theme)
- ;;    :hook
- ;;    ('after-init-hook) . 'powerline-reset)
+;; (use-package! powerline
+;;    :init
+;;    (spaceline-spacemacs-theme)
+;;    :hook
+;;    ('after-init-hook) . 'powerline-reset)
 
 (use-package! dashboard
   :defer nil
@@ -339,28 +339,28 @@
 
 (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 
-  (use-package! switch-window
-	:config
-	(setq switch-window-input-style 'minibuffer)
-	(setq switch-window-increase 4)
-	(setq switch-window-threshold 2)
-	(setq switch-window-shortcut-style 'qwerty)
-	(setq switch-window-qwerty-shortcuts
-		  '("a" "s" "d" "f" "j" "k" "l"))
-	:bind
-	([remap other-window] . switch-window))
+(use-package! switch-window
+      :config
+      (setq switch-window-input-style 'minibuffer)
+      (setq switch-window-increase 4)
+      (setq switch-window-threshold 2)
+      (setq switch-window-shortcut-style 'qwerty)
+      (setq switch-window-qwerty-shortcuts
+		'("a" "s" "d" "f" "j" "k" "l"))
+      :bind
+      ([remap other-window] . switch-window))
 
-  (setq elfeed-feeds
-      '((("https://www.gnome.org/feed/" gnu de)
-        ("https://planet.emacslife.com/atom.xml" emacs community)
-        ("https://www.ecb.europa.eu/rss/press.html" economics eu)
-		  ("https://news.ycombinator.com/rss" ycombinator news)
-		  ("https://www.phoronix.com/rss.php" phoronix))))
+(setq elfeed-feeds
+    '((("https://www.gnome.org/feed/" gnu de)
+      ("https://planet.emacslife.com/atom.xml" emacs community)
+      ("https://www.ecb.europa.eu/rss/press.html" economics eu)
+		("https://news.ycombinator.com/rss" ycombinator news)
+		("https://www.phoronix.com/rss.php" phoronix))))
 
-  (use-package! saveplace
-	  :defer nil
-    :config
-    (save-place-mode))
+(use-package! saveplace
+	:defer nil
+  :config
+  (save-place-mode))
 
 (after! which-key
     (setq which-key-idle-delay 0.5))
@@ -439,7 +439,7 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
   :hook (after-init-hook . modus-operandi-theme-load)
   :bind ("<S-f5>" . modus-themes-toggle))
 
-(modus-themes-toggle)
+(modus-themes-light)
 
 (use-package org-tree-slide
   :custom
@@ -607,7 +607,7 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 ;;       :desc "Ivy switch view"
 ;;       "v s" #'ivy-switch-view)
 
- (add-to-list 'load-path "/home/diamond/.doom.d/el-go")
+(add-to-list 'load-path "/home/diamond/.doom.d/el-go")
  (require 'go)
 (setq gnugo-option-history (list "--komi 5.5 --boardsize 13"))
 (setq gnugo-xpms 'gnugo-imgen-create-xpms)

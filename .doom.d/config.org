@@ -201,6 +201,7 @@ https://github.com/fuxialexander/doom-emacs-private-xfu/blob/master/%2Bpopup.el
 
 (define-key z-map (kbd "U") 'go-board-undo)
 (define-key z-map (kbd "P") 'go-board-next)
+(define-key z-map (kbd "S") 'speedbar-frame-mode)
 
 ;;(define-key z-map (kbd "b") 'burly-open-bookmark)
 ;;(define-key z-map (kbd "B") 'burly-bookmark-frames)

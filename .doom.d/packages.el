@@ -99,3 +99,4 @@
 (package! chess)
 ;; (package! el-go
 ;;   :recipe (:host github :repo "eschulte/el-go"))
+(package! kaolin-themes)

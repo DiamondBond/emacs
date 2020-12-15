@@ -73,7 +73,7 @@
 (menu-bar-mode 1)
 ;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
-(scroll-bar-mode 1)
+;;(scroll-bar-mode 1)
 ;;(setq +modeline-height 36)
 ;;(setq doom-fallback-buffer-name "emacs"
 ;;      +doom-dashboard-name "emacs")
@@ -237,7 +237,7 @@
       deft-strip-summary-regexp ".*$"
       )
 
-;; scratch is now org
+;; scratch is now in org-mode
 (setq initial-major-mode 'org-mode)
 
 (defalias 'open 'find-file-other-window)

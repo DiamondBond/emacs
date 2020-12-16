@@ -682,34 +682,34 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 ** Initialize =emms=
 *** Code
 #+begin_src emacs-lisp
-(require 'emms-setup)
-(require 'emms-info)
-(require 'emms-cue)
-(require 'emms-mode-line)
-(require 'emms-playing-time)
-(emms-all)
-(emms-default-players)
-(emms-mode-line 1)
-(emms-playing-time 1)
-(setq emms-source-file-default-directory "~/Music/Non-Classical/70s-80s/"
-      emms-playlist-buffer-name "*Music*"
-      emms-info-asynchronously t
-      emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
-(map! :leader
-      :desc "Go to emms playlist"
-      "a a" #'emms-playlist-mode-go
-      :leader
-      :desc "Emms pause track"
-      "a x" #'emms-pause
-      :leader
-      :desc "Emms stop track"
-      "a s" #'emms-stop
-      :leader
-      :desc "Emms play previous track"
-      "a p" #'emms-previous
-      :leader
-      :desc "Emms play next track"
-      "a n" #'emms-next)
+;;(require 'emms-setup)
+;;(require 'emms-info)
+;;(require 'emms-cue)
+;;(require 'emms-mode-line)
+;;(require 'emms-playing-time)
+;;(emms-all)
+;;(emms-default-players)
+;;(emms-mode-line 1)
+;;(emms-playing-time 1)
+;;(setq emms-source-file-default-directory "~/Music/Non-Classical/70s-80s/"
+;;      emms-playlist-buffer-name "*Music*"
+;;      emms-info-asynchronously t
+;;      emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
+;;(map! :leader
+;;      :desc "Go to emms playlist"
+;;      "a a" #'emms-playlist-mode-go
+;;      :leader
+;;      :desc "Emms pause track"
+;;      "a x" #'emms-pause
+;;      :leader
+;;      :desc "Emms stop track"
+;;      "a s" #'emms-stop
+;;      :leader
+;;      :desc "Emms play previous track"
+;;      "a p" #'emms-previous
+;;      :leader
+;;      :desc "Emms play next track"
+;;      "a n" #'emms-next)
 #+end_src
 ** Initialize =ivy-posframe=
 *** Code

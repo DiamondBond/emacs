@@ -148,7 +148,7 @@
 (define-key z-map (kbd "o") 'other-frame)
 
 (define-key z-map (kbd "*") 'calc)
-(define-key z-map (kbd "r") 'synosaurus-choose-and-replace)
+;;(define-key z-map (kbd "r") 'synosaurus-choose-and-replace)
 (define-key z-map (kbd "R") 'rainbow-mode)
 (define-key z-map (kbd "O") 'org-redisplay-inline-images)
 (define-key z-map (kbd "s") 'ispell-word)

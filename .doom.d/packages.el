@@ -63,7 +63,7 @@
 (package! hyperbole)
 (package! command-log-mode)
 (package! academic-phrases)
-(package! synosaurus)
+;;(package! synosaurus)
 (package! keycast)
 (package! gif-screencast)
 (package! command-log-mode)

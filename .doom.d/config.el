@@ -278,6 +278,7 @@
 (rich-minority-mode)
 
 (use-package! nov
+  :defer nil
   :mode ("\\.epub\\'" . nov-mode)
   :config
   (setq nov-save-place-file (concat doom-cache-dir "nov-places")))
@@ -342,6 +343,7 @@
 (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 
 (use-package! switch-window
+:defer nil
       :config
       (setq switch-window-input-style 'minibuffer)
       (setq switch-window-increase 4)
@@ -381,6 +383,7 @@
     (setq org-latex-compiler "xelatex"))
 
 (use-package emacs
+  :defer nil
   :config
   (setq custom-safe-themes t)
 
@@ -444,6 +447,7 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 (modus-themes-light)
 
 (use-package org-tree-slide
+  :defer nil
   :custom
   (org-image-actual-width nil))
 
@@ -609,8 +613,8 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 ;;       :desc "Ivy switch view"
 ;;       "v s" #'ivy-switch-view)
 
-(add-to-list 'load-path "/home/diamond/git/el-go")
-(require 'go)
-(setq gnugo-option-history (list "--komi 5.5 --boardsize 13"))
-(setq gnugo-xpms 'gnugo-imgen-create-xpms)
-(add-hook 'gnugo-start-game-hook 'gnugo-image-display-mode)
+;; (add-to-list 'load-path "/home/diamond/git/el-go")
+;; (require 'go)
+;; (setq gnugo-option-history (list "--komi 5.5 --boardsize 13"))
+;; (setq gnugo-xpms 'gnugo-imgen-create-xpms)
+;; (add-hook 'gnugo-start-game-hook 'gnugo-image-display-mode)

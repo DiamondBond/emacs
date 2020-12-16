@@ -349,6 +349,7 @@ epub reader.
 *** Code
 #+BEGIN_SRC emacs-lisp
 (use-package! nov
+  :defer nil
   :mode ("\\.epub\\'" . nov-mode)
   :config
   (setq nov-save-place-file (concat doom-cache-dir "nov-places")))
@@ -433,6 +434,7 @@ C-x o and pick window. (a,s,d...)
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package! switch-window
+  :defer nil
 	:config
 	(setq switch-window-input-style 'minibuffer)
 	(setq switch-window-increase 4)
@@ -494,6 +496,7 @@ Saves cursor location in buffers.
 *** Code
 #+begin_src emacs-lisp
 (use-package emacs
+  :defer nil
   :config
   (setq custom-safe-themes t)
 
@@ -560,6 +563,7 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 *** Code
 #+begin_src emacs-lisp
 (use-package org-tree-slide
+  :defer nil
   :custom
   (org-image-actual-width nil))
 #+end_src
@@ -740,9 +744,9 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 ** Initialize =go=
 *** Code
 #+begin_src emacs-lisp
-(add-to-list 'load-path "/home/diamond/git/el-go")
-(require 'go)
-(setq gnugo-option-history (list "--komi 5.5 --boardsize 13"))
-(setq gnugo-xpms 'gnugo-imgen-create-xpms)
-(add-hook 'gnugo-start-game-hook 'gnugo-image-display-mode)
+;; (add-to-list 'load-path "/home/diamond/git/el-go")
+;; (require 'go)
+;; (setq gnugo-option-history (list "--komi 5.5 --boardsize 13"))
+;; (setq gnugo-xpms 'gnugo-imgen-create-xpms)
+;; (add-hook 'gnugo-start-game-hook 'gnugo-image-display-mode)
 #+end_src

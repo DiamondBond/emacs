@@ -495,7 +495,7 @@ Saves cursor location in buffers.
 ** Initialize =modus-themes=
 *** Code
 #+begin_src emacs-lisp
-(use-package emacs
+(use-package! emacs
   :defer nil
   :config
   (setq custom-safe-themes t)
@@ -562,7 +562,7 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 ** Initialize =org-tree-slide=
 *** Code
 #+begin_src emacs-lisp
-(use-package org-tree-slide
+(use-package! org-tree-slide
   :defer nil
   :custom
   (org-image-actual-width nil))

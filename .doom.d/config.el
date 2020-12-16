@@ -17,7 +17,7 @@
 ;;(set-face-attribute 'variable-pitch nil :family "DejaVu Serif" :height 1.0)
 
 ;; Monospaced typeface
-                                        ;(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
+;;(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
 
 (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
 (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
@@ -69,11 +69,11 @@
 (setq evil-split-window-below t
       evil-vsplit-window-right t)
 
-;;(tool-bar-mode 1)
+(tool-bar-mode 1)
 (menu-bar-mode 1)
+(scroll-bar-mode 1)
 ;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
-;;(scroll-bar-mode 1)
 ;;(setq +modeline-height 36)
 ;;(setq doom-fallback-buffer-name "emacs"
 ;;      +doom-dashboard-name "emacs")
@@ -191,6 +191,7 @@
 (global-set-key (kbd "<f9>") 'tab-bar-mode)
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f6>") 'menu-bar-mode)
+(global-set-key (kbd "S-<f7>") 'scroll-bar-mode)
 (global-set-key (kbd "<f7>") 'toggle-scroll-bar)
 (global-set-key (kbd "<f8>") 'tool-bar-mode)
 (global-set-key (kbd "<f12>") 'linum-mode)
@@ -608,8 +609,8 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 ;;       :desc "Ivy switch view"
 ;;       "v s" #'ivy-switch-view)
 
-(add-to-list 'load-path "/home/diamond/.doom.d/el-go")
- (require 'go)
+(add-to-list 'load-path "/home/diamond/git/el-go")
+(require 'go)
 (setq gnugo-option-history (list "--komi 5.5 --boardsize 13"))
 (setq gnugo-xpms 'gnugo-imgen-create-xpms)
 (add-hook 'gnugo-start-game-hook 'gnugo-image-display-mode)

@@ -355,11 +355,8 @@
       ([remap other-window] . switch-window))
 
 (setq elfeed-feeds
-    '((("https://www.gnome.org/feed/" gnu de)
-      ("https://planet.emacslife.com/atom.xml" emacs community)
-      ("https://www.ecb.europa.eu/rss/press.html" economics eu)
-		("https://news.ycombinator.com/rss" ycombinator news)
-		("https://www.phoronix.com/rss.php" phoronix))))
+      '("https://www.archlinux.org/feeds/news"
+        "https://planet.emacslife.com/atom.xml"))
 
 (use-package! saveplace
 	:defer nil

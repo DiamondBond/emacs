@@ -9,8 +9,13 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 (setq user-full-name "Diamond Bond"
       user-mail-address "diamondbond1@gmail.com")
-;;(setq org-directory "~/org/")
 (setq display-line-numbers-type t)
+
+;;;; FONTS ;;;;
+
+;; (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "sans" :size 14))
+
 ;;(setq doom-font (font-spec :family "Ubuntu Mono" :size 14))
 ;;(setq doom-big-font (font-spec :family "Ubuntu Mono" :size 24))
 
@@ -32,7 +37,13 @@
 (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
 (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 
+;;;; THEMES ;;;;
+
 ;;(load-theme 'spacemacs-light t)
+;;(load-theme 'acme t)
+;;(load-theme 'modus-operandi t)
+;;(load-theme 'doom-dracula t)
+
 ;;(set-face-background 'default "#FFFFFF")
 ;; or
 ;;(set-face-attribute  'default nil :background "#FFFFFF")
@@ -42,24 +53,19 @@
 ;;    (load-theme 'modus-operandi t)
 ;;  (load-theme 'doom-dracula t))
 
-;;(load-theme 'acme t)
-;;(load-theme 'modus-operandi t)
-;;(load-theme 'doom-dracula t)
 ;;(display-battery-mode 1)
-
-;; (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 14))
+;;(display-time-mode 1)
+;;(display-battery-mode 1)
 
 ;; Prevents some cases of Emacs flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
-
-;;(display-time-mode 1)
-;;(display-battery-mode 1)
 
 ;;; :ui doom-dashboard
 ;;(setq fancy-splash-image (concat doom-private-dir "splash.png"))
 ;; Don't need the menu
 ;;(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+
+;;(setq +modeline-height 36)
 #+end_src
 
 *Better defaults*
@@ -87,27 +93,24 @@ Minor quality-of-life modifications for a more pleasant experience.
 ;; (tool-bar-mode 1)
 ;; (menu-bar-mode 1)
 ;; (scroll-bar-mode 1)
+
 ;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
+
 ;;(setq +modeline-height 36)
 ;;(setq doom-fallback-buffer-name "emacs"
 ;;      +doom-dashboard-name "emacs")
 ;;(setq-default frame-title-format '("%b"))
 #+end_src
-** Switch to new window after splitting
-#+begin_src emacs-lisp
-;; (setq evil-split-window-below t
-;;       evil-vsplit-window-right t)
-#+end_src
+** Window title
+#+BEGIN_SRC emacs-lisp
+(setq-default frame-title-format '("%b"))
+#+END_SRC
 ** Enable conservative scrolling
 #+BEGIN_SRC emacs-lisp
   (setq scroll-conservatively 1)
   (setq mouse-wheel-scroll-amount '(1))
   (setq mouse-wheel-progressive-speed nil)
-#+END_SRC
-** Enable prettify symbols mode
-#+BEGIN_SRC emacs-lisp
-  (global-prettify-symbols-mode t)
 #+END_SRC
 ** Easier resize bindings
 Super - Control - <arrow>
@@ -117,9 +120,9 @@ Super - Control - <arrow>
   (global-set-key (kbd "s-C-<down>") 'shrink-window)
   (global-set-key (kbd "s-C-<up>") 'enlarge-window)
 #+END_SRC
-** Window title
+** Enable prettify symbols mode
 #+BEGIN_SRC emacs-lisp
-(setq-default frame-title-format '("%b"))
+  (global-prettify-symbols-mode t)
 #+END_SRC
 ** Highlight current line
 #+BEGIN_SRC emacs-lisp
@@ -224,7 +227,6 @@ https://github.com/fuxialexander/doom-emacs-private-xfu/blob/master/%2Bpopup.el
 
 ;;---------------------------------------------------------------------
 #+end_src
-
 ** Generic
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<f9>") 'tab-bar-mode)
@@ -250,7 +252,7 @@ Sensible and well-defined org-mode defaults.
 ** Code
 #+BEGIN_SRC emacs-lisp
 (setq org-display-inline-images t)
-(setq org-redisplay-inline-images t)
+;;(setq org-redisplay-inline-images t)
 (setq org-startup-with-inline-images "inlineimages")
 (setq org-agenda-files (list "inbox.org"))
 (global-set-key (kbd "C-<f1>") (lambda()
@@ -276,14 +278,14 @@ Sensible and well-defined org-mode defaults.
 ;; (setq org-todo-keywords
 ;;       '((sequence "TODO" "WIP" "WAIT" "DONE")))
 
-(setq org-roam-directory "~/org/roam")
+;;(setq org-roam-directory "~/org/roam")
 
-(setq deft-directory "~/org/"
-      deft-recursive t
-      ;; I don't like any summary, hence catch-all regexp. need to see if
-      ;; an option to hide summary is there instead of this one.
-      deft-strip-summary-regexp ".*$"
-      )
+;; (setq deft-directory "~/org/"
+;;       deft-recursive t
+;;       ;; I don't like any summary, hence catch-all regexp. need to see if
+;;       ;; an option to hide summary is there instead of this one.
+;;       deft-strip-summary-regexp ".*$"
+;;       )
 
 ;; scratch is now in org-mode
 (setq initial-major-mode 'org-mode)
@@ -321,57 +323,6 @@ Sensible and well-defined org-mode defaults.
   (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 #+END_SRC
 * Use-package!
-** Initialize =diminish=
-*** Description
-Diminish hides minor modes to prevent cluttering your mode line.
-*** Code
-#+BEGIN_SRC emacs-lisp
-;;(use-package! diminish)
-#+END_SRC
-** Initialize =rich-minority=
-*** Code
-#+begin_src emacs-lisp
-;; (rich-minority-mode 1)
-;; (setq rm-blacklist
-;;       (format "^ \\(%s\\)$"
-;;               (mapconcat #'identity
-;;                          '("Fly.*" "Projectile.*" "PgLn" "traces" "snipe" "WK" "better-jumper" "company" "ivy" "EG" "GCMH" "SP" "EvilOrg" "~" "$" "jk" "wb" "ws" "Outl" "ElDoc" "yas" "Ind" "FmtAll" "Wrap" "GitGutter" "dtrt-indent" "Abbrev")
-;;                          "\\|")))
-#+end_src
-
-#+begin_src emacs-lisp
- (setq rm-blacklist "")
- (rich-minority-mode)
-#+end_src
-** Initialize =nov=
-*** Description
-epub reader.
-*** Code
-#+BEGIN_SRC emacs-lisp
-(use-package! nov
-  :defer nil
-  :mode ("\\.epub\\'" . nov-mode)
-  :config
-  (setq nov-save-place-file (concat doom-cache-dir "nov-places")))
-#+END_SRC
-** Initialize =spaceline=
-*** Description
-Spaceline.
-*** Code
-#+BEGIN_SRC emacs-lisp
-;;(use-package! spaceline)
-#+END_SRC
-** Initialize =powerline=
-*** Description
-We utilize the spaceline theme for powerline.
-*** Code
-#+BEGIN_SRC emacs-lisp
- ;; (use-package! powerline
- ;;    :init
- ;;    (spaceline-spacemacs-theme)
- ;;    :hook
- ;;    ('after-init-hook) . 'powerline-reset)
-#+END_SRC
 ** Initialize =dashboard=
 *** Description
 Pretty emacs logo at startup.
@@ -400,7 +351,7 @@ Pretty emacs logo at startup.
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents . 5)))
-  (setq dashboard-banner-logo-title "Welcome to Emacs!")
+  (setq dashboard-banner-logo-title "Welcome to Diamond's Emacs!")
   ;;  (setq dashboard-startup-banner "~/.doom.d/splash.png")
   (setq dashboard-startup-banner 'official)
   (setq dashboard-center-content t)
@@ -428,66 +379,27 @@ Pretty emacs logo at startup.
 
 (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 #+END_SRC
-** Initialize =switch-window=
+** Initialize =diminish=
 *** Description
-C-x o and pick window. (a,s,d...)
+Diminish hides minor modes to prevent cluttering your mode line.
 *** Code
 #+BEGIN_SRC emacs-lisp
-  (use-package! switch-window
-  :defer nil
-	:config
-	(setq switch-window-input-style 'minibuffer)
-	(setq switch-window-increase 4)
-	(setq switch-window-threshold 2)
-	(setq switch-window-shortcut-style 'qwerty)
-	(setq switch-window-qwerty-shortcuts
-		  '("a" "s" "d" "f" "j" "k" "l"))
-	:bind
-	([remap other-window] . switch-window))
+;;(use-package! diminish)
 #+END_SRC
-** Initialize =elfeed=
-*** Description
-RSS reader for Emacs.
-*** Code
-#+BEGIN_SRC emacs-lisp
-(setq elfeed-feeds
-      '("https://www.archlinux.org/feeds/news"
-        "https://planet.emacslife.com/atom.xml"))
-#+END_SRC
-** Initialize =saveplace=
-*** Description
-Saves cursor location in buffers.
+** Initialize =rich-minority=
 *** Code
 #+begin_src emacs-lisp
-  (use-package! saveplace
-	  :defer nil
-    :config
-    (save-place-mode))
+;; (rich-minority-mode 1)
+;; (setq rm-blacklist
+;;       (format "^ \\(%s\\)$"
+;;               (mapconcat #'identity
+;;                          '("Fly.*" "Projectile.*" "PgLn" "traces" "snipe" "WK" "better-jumper" "company" "ivy" "EG" "GCMH" "SP" "EvilOrg" "~" "$" "jk" "wb" "ws" "Outl" "ElDoc" "yas" "Ind" "FmtAll" "Wrap" "GitGutter" "dtrt-indent" "Abbrev")
+;;                          "\\|")))
 #+end_src
-** Initialize =which-key=
-*** Code
+
 #+begin_src emacs-lisp
-(after! which-key
-    (setq which-key-idle-delay 0.5))
-#+end_src
-** Initialize =magit=
-*** Code
-#+begin_src emacs-lisp
-(after! magit
-  ;; (magit-wip-mode)
-  (setq magit-repository-directories '(("~/git" . 2))
-        magit-save-repository-buffers nil
-        ;; Don't restore the wconf after quitting magit
-        magit-inhibit-save-previous-winconf t
-        magit-log-arguments '("--graph" "--decorate" "--color")
-        ;; magit-delete-by-moving-to-trash nil
-        git-commit-summary-max-length 120))
-#+end_src
-** Initialize =xelatex=
-*** Code
-#+begin_src emacs-lisp
-(after! latex
-    (setq org-latex-compiler "xelatex"))
+ (setq rm-blacklist "")
+ (rich-minority-mode)
 #+end_src
 ** Initialize =modus-themes=
 *** Code
@@ -555,6 +467,96 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
   :bind ("<S-f5>" . modus-themes-toggle))
 
 (modus-themes-light)
+#+end_src
+** Initialize =spaceline=
+*** Description
+Spaceline.
+*** Code
+#+BEGIN_SRC emacs-lisp
+;;(use-package! spaceline)
+#+END_SRC
+** Initialize =powerline=
+*** Description
+We utilize the spaceline theme for powerline.
+*** Code
+#+BEGIN_SRC emacs-lisp
+ ;; (use-package! powerline
+ ;;    :init
+ ;;    (spaceline-spacemacs-theme)
+ ;;    :hook
+ ;;    ('after-init-hook) . 'powerline-reset)
+#+END_SRC
+** Initialize =elfeed=
+*** Description
+RSS reader for Emacs.
+*** Code
+#+BEGIN_SRC emacs-lisp
+(setq elfeed-feeds
+      '("https://www.archlinux.org/feeds/news"
+        "https://planet.emacslife.com/atom.xml"))
+#+END_SRC
+** Initialize =switch-window=
+*** Description
+C-x o and pick window. (a,s,d...)
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package! switch-window
+  :defer nil
+	:config
+	(setq switch-window-input-style 'minibuffer)
+	(setq switch-window-increase 4)
+	(setq switch-window-threshold 2)
+	(setq switch-window-shortcut-style 'qwerty)
+	(setq switch-window-qwerty-shortcuts
+		  '("a" "s" "d" "f" "j" "k" "l"))
+	:bind
+	([remap other-window] . switch-window))
+#+END_SRC
+** Initialize =saveplace=
+*** Description
+Saves cursor location in buffers.
+*** Code
+#+begin_src emacs-lisp
+  (use-package! saveplace
+    :defer nil
+    :config
+    (save-place-mode))
+#+end_src
+** Initialize =nov=
+*** Description
+epub reader.
+*** Code
+#+BEGIN_SRC emacs-lisp
+(use-package! nov
+  :defer nil
+  :mode ("\\.epub\\'" . nov-mode)
+  :config
+  (setq nov-save-place-file (concat doom-cache-dir "nov-places")))
+#+END_SRC
+** Initialize =which-key=
+*** Code
+#+begin_src emacs-lisp
+(after! which-key
+    (setq which-key-idle-delay 0.5))
+#+end_src
+** Initialize =magit=
+*** Code
+#+begin_src emacs-lisp
+(after! magit
+  ;; (magit-wip-mode)
+  (setq magit-repository-directories '(("~/git" . 2))
+        magit-save-repository-buffers nil
+        ;; Don't restore the wconf after quitting magit
+        magit-inhibit-save-previous-winconf t
+        magit-log-arguments '("--graph" "--decorate" "--color")
+        ;; magit-delete-by-moving-to-trash nil
+        git-commit-summary-max-length 120))
+#+end_src
+** Initialize =xelatex=
+*** Code
+#+begin_src emacs-lisp
+(after! latex
+    (setq org-latex-compiler "xelatex"))
 #+end_src
 ** Initialize =org-tree-slide=
 *** Code

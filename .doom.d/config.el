@@ -1,8 +1,13 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 (setq user-full-name "Diamond Bond"
       user-mail-address "diamondbond1@gmail.com")
-;;(setq org-directory "~/org/")
 (setq display-line-numbers-type t)
+
+;;;; FONTS ;;;;
+
+;; (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "sans" :size 14))
+
 ;;(setq doom-font (font-spec :family "Ubuntu Mono" :size 14))
 ;;(setq doom-big-font (font-spec :family "Ubuntu Mono" :size 24))
 
@@ -24,7 +29,13 @@
 (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
 (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 
+;;;; THEMES ;;;;
+
 ;;(load-theme 'spacemacs-light t)
+;;(load-theme 'acme t)
+;;(load-theme 'modus-operandi t)
+;;(load-theme 'doom-dracula t)
+
 ;;(set-face-background 'default "#FFFFFF")
 ;; or
 ;;(set-face-attribute  'default nil :background "#FFFFFF")
@@ -34,24 +45,19 @@
 ;;    (load-theme 'modus-operandi t)
 ;;  (load-theme 'doom-dracula t))
 
-;;(load-theme 'acme t)
-;;(load-theme 'modus-operandi t)
-;;(load-theme 'doom-dracula t)
 ;;(display-battery-mode 1)
-
-;; (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 14))
+;;(display-time-mode 1)
+;;(display-battery-mode 1)
 
 ;; Prevents some cases of Emacs flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
-
-;;(display-time-mode 1)
-;;(display-battery-mode 1)
 
 ;;; :ui doom-dashboard
 ;;(setq fancy-splash-image (concat doom-private-dir "splash.png"))
 ;; Don't need the menu
 ;;(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+
+;;(setq +modeline-height 36)
 
 (setq-default
  uniquify-buffer-name-style 'forward              ; Uniquify buffer names
@@ -72,28 +78,27 @@
 ;; (tool-bar-mode 1)
 ;; (menu-bar-mode 1)
 ;; (scroll-bar-mode 1)
+
 ;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
+
 ;;(setq +modeline-height 36)
 ;;(setq doom-fallback-buffer-name "emacs"
 ;;      +doom-dashboard-name "emacs")
 ;;(setq-default frame-title-format '("%b"))
 
-;; (setq evil-split-window-below t
-;;       evil-vsplit-window-right t)
-
-(setq scroll-conservatively 1)
-(setq mouse-wheel-scroll-amount '(1))
-(setq mouse-wheel-progressive-speed nil)
-
-(global-prettify-symbols-mode t)
-
-(global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
-(global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "s-C-<down>") 'shrink-window)
-(global-set-key (kbd "s-C-<up>") 'enlarge-window)
-
 (setq-default frame-title-format '("%b"))
+
+  (setq scroll-conservatively 1)
+  (setq mouse-wheel-scroll-amount '(1))
+  (setq mouse-wheel-progressive-speed nil)
+
+  (global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
+  (global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
+  (global-set-key (kbd "s-C-<down>") 'shrink-window)
+  (global-set-key (kbd "s-C-<up>") 'enlarge-window)
+
+  (global-prettify-symbols-mode t)
 
 (global-hl-line-mode t)
 
@@ -203,7 +208,7 @@
 (global-set-key (kbd "C-x x") 'window-swap-states)
 
 (setq org-display-inline-images t)
-(setq org-redisplay-inline-images t)
+;;(setq org-redisplay-inline-images t)
 (setq org-startup-with-inline-images "inlineimages")
 (setq org-agenda-files (list "inbox.org"))
 (global-set-key (kbd "C-<f1>") (lambda()
@@ -229,67 +234,41 @@
 ;; (setq org-todo-keywords
 ;;       '((sequence "TODO" "WIP" "WAIT" "DONE")))
 
-(setq org-roam-directory "~/org/roam")
+;;(setq org-roam-directory "~/org/roam")
 
-(setq deft-directory "~/org/"
-      deft-recursive t
-      ;; I don't like any summary, hence catch-all regexp. need to see if
-      ;; an option to hide summary is there instead of this one.
-      deft-strip-summary-regexp ".*$"
-      )
+;; (setq deft-directory "~/org/"
+;;       deft-recursive t
+;;       ;; I don't like any summary, hence catch-all regexp. need to see if
+;;       ;; an option to hide summary is there instead of this one.
+;;       deft-strip-summary-regexp ".*$"
+;;       )
 
 ;; scratch is now in org-mode
 (setq initial-major-mode 'org-mode)
 
-(defalias 'open 'find-file-other-window)
-(defalias 'clean 'eshell/clear-scrollback)
+  (defalias 'open 'find-file-other-window)
+  (defalias 'clean 'eshell/clear-scrollback)
 
-(defun eshell/sudo-open (filename)
-  "Open a file as root in Eshell."
-  (let ((qual-filename (if (string-match "^/" filename)
-                           filename
-                         (concat (expand-file-name (eshell/pwd)) "/" filename))))
-    (switch-to-buffer
-     (find-file-noselect
-      (concat "/sudo::" qual-filename)))))
+  (defun eshell/sudo-open (filename)
+    "Open a file as root in Eshell."
+    (let ((qual-filename (if (string-match "^/" filename)
+                             filename
+                           (concat (expand-file-name (eshell/pwd)) "/" filename))))
+      (switch-to-buffer
+       (find-file-noselect
+        (concat "/sudo::" qual-filename)))))
 
-(defun eshell-other-window ()
-  "Create or visit an eshell buffer."
-  (interactive)
-  (if (not (get-buffer "*eshell*"))
-      (progn
-        (split-window-sensibly (selected-window))
-        (other-window 1)
-        (eshell))
-    (switch-to-buffer-other-window "*eshell*")))
+  (defun eshell-other-window ()
+    "Create or visit an eshell buffer."
+    (interactive)
+    (if (not (get-buffer "*eshell*"))
+        (progn
+          (split-window-sensibly (selected-window))
+          (other-window 1)
+          (eshell))
+      (switch-to-buffer-other-window "*eshell*")))
 
-(global-set-key (kbd "<s-C-return>") 'eshell-other-window)
-
-;;(use-package! diminish)
-
-;; (rich-minority-mode 1)
-;; (setq rm-blacklist
-;;       (format "^ \\(%s\\)$"
-;;               (mapconcat #'identity
-;;                          '("Fly.*" "Projectile.*" "PgLn" "traces" "snipe" "WK" "better-jumper" "company" "ivy" "EG" "GCMH" "SP" "EvilOrg" "~" "$" "jk" "wb" "ws" "Outl" "ElDoc" "yas" "Ind" "FmtAll" "Wrap" "GitGutter" "dtrt-indent" "Abbrev")
-;;                          "\\|")))
-
-(setq rm-blacklist "")
-(rich-minority-mode)
-
-(use-package! nov
-  :defer nil
-  :mode ("\\.epub\\'" . nov-mode)
-  :config
-  (setq nov-save-place-file (concat doom-cache-dir "nov-places")))
-
-;;(use-package! spaceline)
-
-;; (use-package! powerline
-;;    :init
-;;    (spaceline-spacemacs-theme)
-;;    :hook
-;;    ('after-init-hook) . 'powerline-reset)
+  (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 
 (use-package! dashboard
   :defer nil
@@ -314,7 +293,7 @@
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents . 5)))
-  (setq dashboard-banner-logo-title "Welcome to Emacs!")
+  (setq dashboard-banner-logo-title "Welcome to Diamond's Emacs!")
   ;;  (setq dashboard-startup-banner "~/.doom.d/splash.png")
   (setq dashboard-startup-banner 'official)
   (setq dashboard-center-content t)
@@ -342,42 +321,17 @@
 
 (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 
-(use-package! switch-window
-:defer nil
-      :config
-      (setq switch-window-input-style 'minibuffer)
-      (setq switch-window-increase 4)
-      (setq switch-window-threshold 2)
-      (setq switch-window-shortcut-style 'qwerty)
-      (setq switch-window-qwerty-shortcuts
-		'("a" "s" "d" "f" "j" "k" "l"))
-      :bind
-      ([remap other-window] . switch-window))
+;;(use-package! diminish)
 
-(setq elfeed-feeds
-      '("https://www.archlinux.org/feeds/news"
-        "https://planet.emacslife.com/atom.xml"))
+;; (rich-minority-mode 1)
+;; (setq rm-blacklist
+;;       (format "^ \\(%s\\)$"
+;;               (mapconcat #'identity
+;;                          '("Fly.*" "Projectile.*" "PgLn" "traces" "snipe" "WK" "better-jumper" "company" "ivy" "EG" "GCMH" "SP" "EvilOrg" "~" "$" "jk" "wb" "ws" "Outl" "ElDoc" "yas" "Ind" "FmtAll" "Wrap" "GitGutter" "dtrt-indent" "Abbrev")
+;;                          "\\|")))
 
-(use-package! saveplace
-	:defer nil
-  :config
-  (save-place-mode))
-
-(after! which-key
-    (setq which-key-idle-delay 0.5))
-
-(after! magit
-  ;; (magit-wip-mode)
-  (setq magit-repository-directories '(("~/git" . 2))
-        magit-save-repository-buffers nil
-        ;; Don't restore the wconf after quitting magit
-        magit-inhibit-save-previous-winconf t
-        magit-log-arguments '("--graph" "--decorate" "--color")
-        ;; magit-delete-by-moving-to-trash nil
-        git-commit-summary-max-length 120))
-
-(after! latex
-    (setq org-latex-compiler "xelatex"))
+ (setq rm-blacklist "")
+ (rich-minority-mode)
 
 (use-package! emacs
   :defer nil
@@ -442,6 +396,57 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
   :bind ("<S-f5>" . modus-themes-toggle))
 
 (modus-themes-light)
+
+;;(use-package! spaceline)
+
+ ;; (use-package! powerline
+ ;;    :init
+ ;;    (spaceline-spacemacs-theme)
+ ;;    :hook
+ ;;    ('after-init-hook) . 'powerline-reset)
+
+(setq elfeed-feeds
+      '("https://www.archlinux.org/feeds/news"
+        "https://planet.emacslife.com/atom.xml"))
+
+  (use-package! switch-window
+  :defer nil
+	:config
+	(setq switch-window-input-style 'minibuffer)
+	(setq switch-window-increase 4)
+	(setq switch-window-threshold 2)
+	(setq switch-window-shortcut-style 'qwerty)
+	(setq switch-window-qwerty-shortcuts
+		  '("a" "s" "d" "f" "j" "k" "l"))
+	:bind
+	([remap other-window] . switch-window))
+
+  (use-package! saveplace
+    :defer nil
+    :config
+    (save-place-mode))
+
+(use-package! nov
+  :defer nil
+  :mode ("\\.epub\\'" . nov-mode)
+  :config
+  (setq nov-save-place-file (concat doom-cache-dir "nov-places")))
+
+(after! which-key
+    (setq which-key-idle-delay 0.5))
+
+(after! magit
+  ;; (magit-wip-mode)
+  (setq magit-repository-directories '(("~/git" . 2))
+        magit-save-repository-buffers nil
+        ;; Don't restore the wconf after quitting magit
+        magit-inhibit-save-previous-winconf t
+        magit-log-arguments '("--graph" "--decorate" "--color")
+        ;; magit-delete-by-moving-to-trash nil
+        git-commit-summary-max-length 120))
+
+(after! latex
+    (setq org-latex-compiler "xelatex"))
 
 (use-package! org-tree-slide
   :defer nil

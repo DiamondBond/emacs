@@ -13,8 +13,8 @@
 
 ;;;; FONTS ;;;;
 
-;; (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 14))
+(setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "sans" :size 14))
 
 ;;(setq doom-font (font-spec :family "Ubuntu Mono" :size 14))
 ;;(setq doom-big-font (font-spec :family "Ubuntu Mono" :size 24))
@@ -32,10 +32,10 @@
 ;; Monospaced typeface
 ;;(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
 
-(setq doom-font (font-spec :family "JetBrains Mono" :size 16))
-(setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
-(setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
-(setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
+;; (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
+;; (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
+;; (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
+;; (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 
 ;;;; THEMES ;;;;
 
@@ -58,7 +58,7 @@
 ;;(display-battery-mode 1)
 
 ;; Prevents some cases of Emacs flickering
-(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+;;(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
 ;;; :ui doom-dashboard
 ;;(setq fancy-splash-image (concat doom-private-dir "splash.png"))
@@ -90,9 +90,9 @@
 Minor quality-of-life modifications for a more pleasant experience.
 ** Theme
 #+begin_src emacs-lisp
+ (scroll-bar-mode 1)
+ (menu-bar-mode 1)
 ;; (tool-bar-mode 1)
-;; (menu-bar-mode 1)
-;; (scroll-bar-mode 1)
 
 ;;(menu-bar-mode (if (string-equal system-name "x220") 1 0))
 ;;(scroll-bar-mode (if (string-equal system-name "x220") 1 0))
@@ -351,7 +351,7 @@ Pretty emacs logo at startup.
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents . 5)))
-  (setq dashboard-banner-logo-title "Welcome to Diamond's Emacs!")
+  (setq dashboard-banner-logo-title "Welcome to Emacs!")
   ;;  (setq dashboard-startup-banner "~/.doom.d/splash.png")
   (setq dashboard-startup-banner 'official)
   (setq dashboard-center-content t)
@@ -423,16 +423,18 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
        (setq modus-%1$s-theme-slanted-constructs t
              modus-%1$s-theme-bold-constructs nil
              modus-%1$s-theme-fringes nil ; {nil,'subtle,'intense}
-             modus-%1$s-theme-mode-line nil ; {nil,'3d,'moody}
-             modus-%1$s-theme-syntax nil ; {nil,faint,'yellow-comments,'green-strings,'yellow-comments-green-strings,'alt-syntax,'alt-syntax-yellow-comments}
+             modus-%1$s-theme-mode-line nil ; {nil '3d,'moody}
+             modus-%1$s-theme-syntax 'faint ; {nil,faint,'yellow-comments,'green-strings,'yellow-comments-green-strings,'alt-syntax,'alt-syntax-yellow-comments}
              modus-%1$s-theme-intense-hl-line nil
-             modus-%1$s-theme-intense-paren-match nil
+             modus-%1$s-theme-intense-paren-match 'intense-bold
              modus-%1$s-theme-links 'neutral-underline ; {nil,'faint,'neutral-underline,'faint-neutral-underline,'no-underline}
              modus-%1$s-theme-no-mixed-fonts nil
              modus-%1$s-theme-prompts nil ; {nil,'subtle,'intense}
              modus-%1$s-theme-completions 'moderate ; {nil,'moderate,'opinionated}
+             ;; modus-themes-region 'bg-only-no-extend
              modus-%1$s-theme-diffs nil ; {nil,'desaturated,'fg-only}
              modus-%1$s-theme-org-blocks 'grayscale ; {nil,'grayscale,'rainbow}
+             ;; modus-themes-org-habit 'traffic-light ; {nil,'simplified,'traffic-light}
              modus-%1$s-theme-headings  ; Read the manual for this one
              '((t . nil))
              modus-%1$s-theme-variable-pitch-headings t

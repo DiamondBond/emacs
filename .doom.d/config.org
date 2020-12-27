@@ -81,10 +81,10 @@
       inhibit-compacting-font-caches t)           ; When there are lots of glyphs, keep them in memory
 
 (delete-selection-mode 1)                         ; Replace selection when inserting text
-;; (global-subword-mode 1)                           ; Iterate through CamelCase words
+(global-subword-mode 1)                           ; Iterate through CamelCase words
 
-(setq evil-split-window-below t
-      evil-vsplit-window-right t)
+;;(setq evil-split-window-below t
+;;      evil-vsplit-window-right t)
 #+end_src
 * QoL section
 Minor quality-of-life modifications for a more pleasant experience.
@@ -100,12 +100,22 @@ Minor quality-of-life modifications for a more pleasant experience.
 ;;(setq +modeline-height 36)
 ;;(setq doom-fallback-buffer-name "emacs"
 ;;      +doom-dashboard-name "emacs")
-;;(setq-default frame-title-format '("%b"))
 #+end_src
 ** Window title
 #+BEGIN_SRC emacs-lisp
-(setq-default frame-title-format '("%b"))
+;;(setq-default frame-title-format '("" "%b - Emacs " emacs-version))
+(setq-default frame-title-format '("%b - Emacs"))
+;; (setq my-hostname
+;;       (replace-regexp-in-string "\\(^[[:space:]\n]*\\|[[:space:]\n]*$\\)" "" ;; like perl chomp()
+;;                                 (with-output-to-string
+;;                                   (call-process "/home/diamond/bin/gethostname" nil standard-output nil))))
+;; (setq my-username (getenv "USERNAME"))
+;; (setq frame-title-format '("%b - Emacs @ " my-hostname))
 #+END_SRC
+
+#+RESULTS:
+| %b - Emacs |
+
 ** Enable conservative scrolling
 #+BEGIN_SRC emacs-lisp
   (setq scroll-conservatively 1)
@@ -185,6 +195,9 @@ https://github.com/fuxialexander/doom-emacs-private-xfu/blob/master/%2Bpopup.el
 (define-key z-map (kbd "2") 'make-frame-command)
 (define-key z-map (kbd "0") 'delete-frame)
 (define-key z-map (kbd "o") 'other-frame)
+
+(define-key z-map (kbd "b") 'display-battery-mode)
+(define-key z-map (kbd "t") 'display-time-mode)
 
 (define-key z-map (kbd "*") 'calc)
 ;;(define-key z-map (kbd "r") 'synosaurus-choose-and-replace)

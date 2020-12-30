@@ -113,9 +113,6 @@ Minor quality-of-life modifications for a more pleasant experience.
 ;; (setq frame-title-format '("%b - Emacs @ " my-hostname))
 #+END_SRC
 
-#+RESULTS:
-| %b - Emacs |
-
 ** Enable conservative scrolling
 #+BEGIN_SRC emacs-lisp
   (setq scroll-conservatively 1)

@@ -72,6 +72,7 @@
 ;;  :recipe (:host github :repo "alphapapa/burly.el"))
 ;;(package! beacon)
 
+(package! deft)
 (package! dmenu)
 (package! dired-open)
 ;;(package! ivy-posframe)

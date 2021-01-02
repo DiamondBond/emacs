@@ -408,8 +408,9 @@ Diminish hides minor modes to prevent cluttering your mode line.
 #+end_src
 
 #+begin_src emacs-lisp
- (setq rm-blacklist "")
- (rich-minority-mode)
+(unless rich-minority-mode
+  (rich-minority-mode 1))
+(setq rm-blacklist "")
 #+end_src
 ** Initialize =modus-themes=
 *** Code

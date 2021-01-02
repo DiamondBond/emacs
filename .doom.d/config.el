@@ -339,8 +339,9 @@
 ;;                          '("Fly.*" "Projectile.*" "PgLn" "traces" "snipe" "WK" "better-jumper" "company" "ivy" "EG" "GCMH" "SP" "EvilOrg" "~" "$" "jk" "wb" "ws" "Outl" "ElDoc" "yas" "Ind" "FmtAll" "Wrap" "GitGutter" "dtrt-indent" "Abbrev")
 ;;                          "\\|")))
 
+(unless rich-minority-mode
+  (rich-minority-mode 1))
 (setq rm-blacklist "")
-(rich-minority-mode)
 
 (use-package! emacs
   :defer nil

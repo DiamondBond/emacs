@@ -87,7 +87,8 @@
 ;;      +doom-dashboard-name "emacs")
 
 ;;(setq-default frame-title-format '("" "%b - Emacs " emacs-version))
-(setq-default frame-title-format '("%b - Emacs"))
+;;(add-hook 'after-make-frame-functions (lambda) (setq-default frame-title-format '("%b - Emacs")))
+(add-hook 'after-make-frame-functions (lambda (frame) (setq-default frame-title-format '("%b"))))
 ;; (setq my-hostname
 ;;       (replace-regexp-in-string "\\(^[[:space:]\n]*\\|[[:space:]\n]*$\\)" "" ;; like perl chomp()
 ;;                                 (with-output-to-string
@@ -245,12 +246,12 @@
 
 ;;(setq org-roam-directory "~/org/roam")
 
-;; (setq deft-directory "~/org/"
-;;       deft-recursive t
+ (setq deft-directory "~/org"
+       deft-recursive t
 ;;       ;; I don't like any summary, hence catch-all regexp. need to see if
 ;;       ;; an option to hide summary is there instead of this one.
 ;;       deft-strip-summary-regexp ".*$"
-;;       )
+       )
 
 ;; scratch is now in org-mode
 (setq initial-major-mode 'org-mode)

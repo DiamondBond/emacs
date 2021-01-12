@@ -104,8 +104,9 @@ Minor quality-of-life modifications for a more pleasant experience.
 ** Window title
 #+BEGIN_SRC emacs-lisp
 ;;(setq-default frame-title-format '("" "%b - Emacs " emacs-version))
+(setq-default frame-title-format '("" "%b"))
 ;;(add-hook 'after-make-frame-functions (lambda) (setq-default frame-title-format '("%b - Emacs")))
-(add-hook 'after-make-frame-functions (lambda (frame) (setq-default frame-title-format '("%b"))))
+;;(add-hook 'after-make-frame-functions (lambda (frame) (setq-default frame-title-format '("%b"))))
 ;; (setq my-hostname
 ;;       (replace-regexp-in-string "\\(^[[:space:]\n]*\\|[[:space:]\n]*$\\)" "" ;; like perl chomp()
 ;;                                 (with-output-to-string
@@ -225,11 +226,11 @@ https://github.com/fuxialexander/doom-emacs-private-xfu/blob/master/%2Bpopup.el
 (define-key z-map (kbd ".") 'org-date-from-calendar)
 (define-key z-map (kbd "C-o") 'olivetti-mode)
 
-(define-key z-map (kbd "I") (lambda () (interactive) (find-file-other-window "~/org/index.org")))
+(define-key z-map (kbd "I") (lambda () (interactive) (find-file-other-window "~/org/dex.org")))
 (define-key z-map (kbd "N") (lambda () (interactive) (find-file-other-window "~/org/notes.org")))
 (define-key z-map (kbd "C") (lambda () (interactive) (find-file-other-window "~/.doom.d/config.org")))
 
-(define-key z-map (kbd "i") (lambda () (interactive) (find-file "~/org/index.org")))
+(define-key z-map (kbd "i") (lambda () (interactive) (find-file "~/org/dex.org")))
 (define-key z-map (kbd "n") (lambda () (interactive) (find-file "~/org/notes.org")))
 (define-key z-map (kbd "c") (lambda () (interactive) (find-file "~/.doom.d/config.org")))
 
@@ -482,6 +483,9 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 
 (modus-themes-light)
 #+end_src
+
+#+RESULTS:
+
 ** Initialize =spaceline=
 *** Description
 Spaceline.

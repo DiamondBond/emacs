@@ -66,6 +66,10 @@
 ;;(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
 ;;(setq +modeline-height 36)
+
+
+(unless (display-graphic-p)
+  (setq doom-theme 'doom-solarized-dark))
 #+end_src
 
 *Better defaults*
@@ -292,15 +296,29 @@ Sensible and well-defined org-mode defaults.
 
 ;;(setq org-roam-directory "~/org/roam")
 
- (setq deft-directory "~/org"
-       deft-recursive t
-;;       ;; I don't like any summary, hence catch-all regexp. need to see if
-;;       ;; an option to hide summary is there instead of this one.
-;;       deft-strip-summary-regexp ".*$"
-       )
+(setq deft-directory "~/org"
+      deft-recursive t
+      ;;       ;; I don't like any summary, hence catch-all regexp. need to see if
+      ;;       ;; an option to hide summary is there instead of this one.
+      ;;       deft-strip-summary-regexp ".*$"
+      )
 
 ;; scratch is now in org-mode
 (setq initial-major-mode 'org-mode)
+
+(require 'org-download)
+
+;; Drag-and-drop to `dired`
+(add-hook 'dired-mode-hook 'org-download-enable)
+
+;; (use-package! org-download
+;;   :after org
+;;   :bind
+;;   (:map org-mode-map
+;;    (("s-Y" . org-download-screenshot)
+;;     ("s-y" . org-download-yank))))
+;; (setq org-download-screenshot-method "convert clipboard: %s")
+;; (setq org-download-method '+org/org-download-method)
 #+END_SRC
 * Eshell
 ** Aliases

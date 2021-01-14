@@ -67,6 +67,7 @@
 (package! keycast)
 (package! gif-screencast)
 (package! command-log-mode)
+(package! org-download)
 (package! org-tree-slide)
 ;;(package! burly
 ;;  :recipe (:host github :repo "alphapapa/burly.el"))

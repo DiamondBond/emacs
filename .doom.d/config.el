@@ -5,8 +5,8 @@
 
 ;;;; FONTS ;;;;
 
-(setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "sans" :size 14))
+;;(setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+;;      doom-variable-pitch-font (font-spec :family "sans" :size 14))
 
 ;;(setq doom-font (font-spec :family "Ubuntu Mono" :size 14))
 ;;(setq doom-big-font (font-spec :family "Ubuntu Mono" :size 24))
@@ -24,10 +24,10 @@
 ;; Monospaced typeface
 ;;(set-face-attribute 'fixed-pitch nil :family "DejaVu Sans Mono" :height 1.0)
 
-;; (setq doom-font (font-spec :family "JetBrains Mono" :size 16))
-;; (setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
-;; (setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
-;; (setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 16))
+(setq doom-big-font (font-spec :family "JetBrains Mono" :size 24))
+(setq doom-variable-pitch-font (font-spec :family "Overpass" :size 16))
+(setq doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 
 ;;;; THEMES ;;;;
 
@@ -60,8 +60,8 @@
 ;;(setq +modeline-height 36)
 
 
-(unless (display-graphic-p)
-  (setq doom-theme 'doom-solarized-dark))
+;; (unless (display-graphic-p)
+;;   (setq doom-theme 'doom-solarized-dark))
 
 (setq-default
  uniquify-buffer-name-style 'forward              ; Uniquify buffer names

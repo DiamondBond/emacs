@@ -102,3 +102,11 @@
 (package! chess)
 ;; (package! el-go
 ;;   :recipe (:host github :repo "eschulte/el-go"))
+
+
+;; org related
+(package! visual-fill-column)
+(package! org-page)
+;;(package! org-roam-server)
+(package! dired-narrow)
+(package! valign)

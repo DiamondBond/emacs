@@ -41,8 +41,8 @@
 
 ;;(load-theme 'spacemacs-light t)
 ;;(load-theme 'acme t)
-;;(load-theme 'modus-operandi t)
-(load-theme 'doom-palenight t)
+(load-theme 'modus-operandi t)
+;;(load-theme 'doom-palenight t)
 
 ;;(set-face-background 'default "#FFFFFF")
 ;; or

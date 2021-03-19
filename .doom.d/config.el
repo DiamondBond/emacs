@@ -31,7 +31,7 @@
 
 ;;;; THEMES ;;;;
 
-;;(load-theme 'spacemacs-light t)
+;;(load-theme 'spacemacs-dark t)
 ;;(load-theme 'acme t)
 (load-theme 'modus-operandi t)
 ;;(load-theme 'doom-palenight t)
@@ -152,7 +152,6 @@
 ;; my own map
 (define-prefix-command 'z-map)
 (global-set-key (kbd "C-1") 'z-map) ;; Ctrl-1
-
 
 (define-key z-map (kbd "j") (lambda () (interactive) (find-file-other-frame "~/org/diary.org")))
 (define-key z-map (kbd "f") 'find-file-other-frame)
@@ -432,10 +431,10 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 ;;(use-package! spaceline)
 
 ;; (use-package! powerline
-;;    :init
-;;    (spaceline-spacemacs-theme)
-;;    :hook
-;;    ('after-init-hook) . 'powerline-reset)
+;;   :init
+;;   (spaceline-spacemacs-theme)
+;;   :hook
+;;   ('after-init-hook) . 'powerline-reset)
 
 (setq elfeed-feeds
       '("https://www.archlinux.org/feeds/news"

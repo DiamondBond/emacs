@@ -39,7 +39,7 @@
 
 ;;;; THEMES ;;;;
 
-;;(load-theme 'spacemacs-light t)
+;;(load-theme 'spacemacs-dark t)
 ;;(load-theme 'acme t)
 (load-theme 'modus-operandi t)
 ;;(load-theme 'doom-palenight t)
@@ -187,7 +187,6 @@ https://github.com/fuxialexander/doom-emacs-private-xfu/blob/master/%2Bpopup.el
 ;; my own map
 (define-prefix-command 'z-map)
 (global-set-key (kbd "C-1") 'z-map) ;; Ctrl-1
-
 
 (define-key z-map (kbd "j") (lambda () (interactive) (find-file-other-frame "~/org/diary.org")))
 (define-key z-map (kbd "f") 'find-file-other-frame)
@@ -514,10 +513,10 @@ We utilize the spaceline theme for powerline.
 *** Code
 #+BEGIN_SRC emacs-lisp
  ;; (use-package! powerline
- ;;    :init
- ;;    (spaceline-spacemacs-theme)
- ;;    :hook
- ;;    ('after-init-hook) . 'powerline-reset)
+ ;;   :init
+ ;;   (spaceline-spacemacs-theme)
+ ;;   :hook
+ ;;   ('after-init-hook) . 'powerline-reset)
 #+END_SRC
 ** Initialize =elfeed=
 *** Description

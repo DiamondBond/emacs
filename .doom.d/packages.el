@@ -87,17 +87,16 @@
 (package! spacemacs-theme)
 (package! modus-operandi-theme)
 (package! modus-vivendi-theme)
-;;(package! plan9-theme)
+(package! parchment-theme)
 (package! acme-theme)
 ;;(package! kaolin-themes)
 ;;(package! minimal-theme)
 ;;(package! emacs-acme-theme)
-;;(package! acme-emacs-theme)
 ;;(package! nofrils)
 
 ;;(package! diminish)
-;;(package! spaceline)
-;;(package! powerline)
+;; (package! spaceline)
+;; (package! powerline)
 
 (package! chess)
 ;; (package! el-go

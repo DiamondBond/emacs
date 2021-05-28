@@ -5,11 +5,11 @@
 
 ;;;; FONTS ;;;;
 
-(setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "sans" :size 14))
+;; (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "sans" :size 14))
 
-;;(setq doom-font (font-spec :family "Ubuntu Mono" :size 14))
-;;(setq doom-big-font (font-spec :family "Ubuntu Mono" :size 24))
+(setq doom-font (font-spec :family "Ubuntu Mono" :size 18))
+(setq doom-big-font (font-spec :family "Ubuntu Mono" :size 28))
 
 ;;(setq doom-font (font-spec :family "DejaVu Sans Mono"))
 
@@ -31,9 +31,10 @@
 
 ;;;; THEMES ;;;;
 
-;;(load-theme 'spacemacs-dark t)
+;;(load-theme 'spacemacs-light t)
 ;;(load-theme 'acme t)
-(load-theme 'modus-operandi t)
+;;(load-theme 'modus-vivendi t)
+;;(load-theme 'modus-vivendi t)
 ;;(load-theme 'doom-palenight t)
 
 ;;(set-face-background 'default "#FFFFFF")
@@ -59,7 +60,6 @@
 
 ;;(setq +modeline-height 36)
 
-
 ;; (unless (display-graphic-p)
 ;;   (setq doom-theme 'doom-solarized-dark))
 
@@ -79,7 +79,7 @@
 ;;(setq evil-split-window-below t
 ;;      evil-vsplit-window-right t)
 
-(scroll-bar-mode 1)
+;; (scroll-bar-mode 1)
  (menu-bar-mode 1)
 ;; (tool-bar-mode 1)
 
@@ -149,7 +149,7 @@
 ;; (after! org
 ;;   (set-popup-rule! "^\\*Org Src" :side 'bottom :slot -2 :height 0.6 :width 0.5 :select t :autosave t :ttl nil :quit nil :select t))
 
-;; my own map
+;; personal map
 (define-prefix-command 'z-map)
 (global-set-key (kbd "C-1") 'z-map) ;; Ctrl-1
 
@@ -322,8 +322,8 @@
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents . 5)))
   (setq dashboard-banner-logo-title "Welcome to Emacs!")
-  ;;  (setq dashboard-startup-banner "~/.doom.d/splash.png")
-  (setq dashboard-startup-banner 'official)
+  (setq dashboard-startup-banner "~/.doom.d/splash.png")
+  (setq dashboard-startup-banner 'logo)
   (setq dashboard-center-content t)
   (setq dashboard-show-shortcuts nil)
   (setq dashboard-set-init-info t)
@@ -651,3 +651,36 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 ;; (setq gnugo-option-history (list "--komi 5.5 --boardsize 13"))
 ;; (setq gnugo-xpms 'gnugo-imgen-create-xpms)
 ;; (add-hook 'gnugo-start-game-hook 'gnugo-image-display-mode)
+
+;; (use-package! typescript-mode
+;;   :hook (typescript-mode . rainbow-delimiters-mode)
+;;   :config
+;;   (set-electric! 'typescript-mode
+;;     :chars '(?\} ?\)) :words '("||" "&&"))
+;;   (set-ligatures! 'typescript-mode
+;;     ;; Functional
+;;     :def "function"
+;;     :lambda "() =>"
+;;     :composition "compose"
+;;     ;; Types
+;;     :null "null"
+;;     :true "true" :false "false"
+;;     :int "number"
+;;     :str "string"
+;;     :bool "boolean"
+;;     ;; Flow
+;;     :not "!"
+;;     :and "&&" :or "||"
+;;     :for "for"
+;;     :return "return" :yield "import")
+;;   ;; HACK Fixes comment continuation on newline
+;;   (setq-hook! 'typescript-mode-hook
+;;     comment-line-break-function #'js2-line-break))
+
+
+(after! projectile (setq projectile-project-root-files-bottom-up (remove
+            ".git" projectile-project-root-files-bottom-up)))
+
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+;;(load-theme 'modus-operandi t)

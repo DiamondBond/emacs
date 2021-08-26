@@ -94,7 +94,7 @@
 Minor quality-of-life modifications for a more pleasant experience.
 ** Theme
 #+begin_src emacs-lisp
-;; (scroll-bar-mode 1)
+ (scroll-bar-mode 1)
  (menu-bar-mode 1)
 ;; (tool-bar-mode 1)
 
@@ -108,7 +108,10 @@ Minor quality-of-life modifications for a more pleasant experience.
 ** Window title
 #+BEGIN_SRC emacs-lisp
 ;;(setq-default frame-title-format '("" "%b - Emacs " emacs-version))
+
+;; \/ regular
 (setq-default frame-title-format '("" "%b"))
+
 ;;(add-hook 'after-make-frame-functions (lambda) (setq-default frame-title-format '("%b - Emacs")))
 ;;(add-hook 'after-make-frame-functions (lambda (frame) (setq-default frame-title-format '("%b"))))
 ;; (setq my-hostname
@@ -184,7 +187,10 @@ https://github.com/fuxialexander/doom-emacs-private-xfu/blob/master/%2Bpopup.el
 * Key binds
 ** z-map
 #+begin_src emacs-lisp
+;;---------------------------------------------------------------------
 ;; personal map
+;;---------------------------------------------------------------------
+
 (define-prefix-command 'z-map)
 (global-set-key (kbd "C-1") 'z-map) ;; Ctrl-1
 
@@ -242,7 +248,7 @@ https://github.com/fuxialexander/doom-emacs-private-xfu/blob/master/%2Bpopup.el
 
 ;;---------------------------------------------------------------------
 #+end_src
-** Generic
+** Generics
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<f9>") 'tab-bar-mode)
 (global-set-key (kbd "<f5>") 'revert-buffer)
@@ -418,7 +424,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 ** Initialize =rich-minority=
 *** Code
 #+begin_src emacs-lisp
-;; (rich-minority-mode 1)
+;;(rich-minority-mode 1)
 ;; (setq rm-blacklist
 ;;       (format "^ \\(%s\\)$"
 ;;               (mapconcat #'identity
@@ -493,7 +499,8 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
     (interactive)
     (if (eq (car custom-enabled-themes) 'modus-operandi)
         (modus-themes-dark)
-      (modus-themes-light)))
+      (modus-themes-light))
+    (dashboard-refresh-buffer))
 
   :hook (after-init-hook . modus-operandi-theme-load)
   :bind ("<S-f5>" . modus-themes-toggle))
@@ -815,5 +822,7 @@ epub reader.
 
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+
+;;(load-theme 'modus-vivendi t)
 ;;(load-theme 'modus-operandi t)
 #+end_src

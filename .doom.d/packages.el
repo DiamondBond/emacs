@@ -85,8 +85,7 @@
 
 ;; themes
 (package! spacemacs-theme)
-(package! modus-operandi-theme)
-(package! modus-vivendi-theme)
+(package! modus-themes)
 (package! parchment-theme)
 (package! acme-theme)
 ;;(package! kaolin-themes)
@@ -109,3 +108,8 @@
 ;;(package! org-roam-server)
 (package! dired-narrow)
 (package! valign)
+
+(package! nano-theme
+  :recipe (:host github :repo "rougier/nano-theme"))
+
+(package! prettier-js)

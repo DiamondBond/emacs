@@ -79,7 +79,7 @@
 ;;(setq evil-split-window-below t
 ;;      evil-vsplit-window-right t)
 
-;; (scroll-bar-mode 1)
+(scroll-bar-mode 1)
  (menu-bar-mode 1)
 ;; (tool-bar-mode 1)
 
@@ -91,7 +91,10 @@
 ;;      +doom-dashboard-name "emacs")
 
 ;;(setq-default frame-title-format '("" "%b - Emacs " emacs-version))
+
+;; \/ regular
 (setq-default frame-title-format '("" "%b"))
+
 ;;(add-hook 'after-make-frame-functions (lambda) (setq-default frame-title-format '("%b - Emacs")))
 ;;(add-hook 'after-make-frame-functions (lambda (frame) (setq-default frame-title-format '("%b"))))
 ;; (setq my-hostname
@@ -149,7 +152,10 @@
 ;; (after! org
 ;;   (set-popup-rule! "^\\*Org Src" :side 'bottom :slot -2 :height 0.6 :width 0.5 :select t :autosave t :ttl nil :quit nil :select t))
 
+;;---------------------------------------------------------------------
 ;; personal map
+;;---------------------------------------------------------------------
+
 (define-prefix-command 'z-map)
 (global-set-key (kbd "C-1") 'z-map) ;; Ctrl-1
 
@@ -351,7 +357,7 @@
 
 ;;(use-package! diminish)
 
-;; (rich-minority-mode 1)
+;;(rich-minority-mode 1)
 ;; (setq rm-blacklist
 ;;       (format "^ \\(%s\\)$"
 ;;               (mapconcat #'identity
@@ -421,7 +427,8 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
     (interactive)
     (if (eq (car custom-enabled-themes) 'modus-operandi)
         (modus-themes-dark)
-      (modus-themes-light)))
+      (modus-themes-light))
+    (dashboard-refresh-buffer))
 
   :hook (after-init-hook . modus-operandi-theme-load)
   :bind ("<S-f5>" . modus-themes-toggle))
@@ -683,4 +690,6 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+
+;;(load-theme 'modus-vivendi t)
 ;;(load-theme 'modus-operandi t)

@@ -5,11 +5,11 @@
 
 ;;;; FONTS ;;;;
 
-;; (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 14))
+ (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+       doom-variable-pitch-font (font-spec :family "sans" :size 14))
 
-(setq doom-font (font-spec :family "Ubuntu Mono" :size 18))
-(setq doom-big-font (font-spec :family "Ubuntu Mono" :size 28))
+;;(setq doom-font (font-spec :family "Ubuntu Mono" :size 18))
+;;(setq doom-big-font (font-spec :family "Ubuntu Mono" :size 28))
 
 ;;(setq doom-font (font-spec :family "DejaVu Sans Mono"))
 
@@ -693,3 +693,4 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 
 ;;(load-theme 'modus-vivendi t)
 ;;(load-theme 'modus-operandi t)
+;; (load-theme 'doom-dracula t)

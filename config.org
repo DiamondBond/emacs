@@ -5,59 +5,39 @@
 
 * Dependencies
 ** System
-=clang= & =clangd= as backend for C and C++ autocompletion 
+=clang= & =clangd= as backend for C and C++ autocompletion
 =llvm= & =libclang-dev= to install irony server
-*Monaco* font
-
-*Personal*
-#+begin_src sh
-sudo apt install firefox telegram-desktop sxiv zathura zathura-djvu zathura-cb zathura-ps mupdf mupdf-tools mpv hexchat gpick gimp kdenlive inkscape imagemagick kolourpaint xfce4-screenshooter rofi xfce4-appfinder gmrun xdotool slop wmctrl tlp tlp-rdw acpi-call-dkms smartmontools linux-tools-generic cpufrequtils ripgrep gdb flex bison autoconf automake libtool adwaita-icon-theme-full thunderbird obs-studio qutebrowser mousepad xterm torbrowser-launcher bsdgames bsdgames-nonfree meld glew-utils xbacklight light gparted curl wget pavucontrol libnotify-bin gcc libcurl4-gnutls-dev sl screenfetch neofetch scrot cmatrix tree mlocate dosbox audacity galculator nomacs htop transmission-gtk wordnet ubuntu-restricted-extras ttf-mscorefonts-installer lm-sensors powertop default-jre cowsay fortune cowsay-off fortunes filters libglib2.0-dev wkhtmltopdf mpc mpd ncmpcpp tmux python wildmidi timidity fluid-soundfont-gs fluidsynth pmidi timidity-daemon rtv
-#+end_src
-** Emacs 27.1
-How to compile and install Emacs 27.1
 *** dependencies (ubuntu)
 #+begin_src sh
 sudo apt install clang clangd llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps
 
 sudo apt-get build-dep emacs
-
+#+end_src
+** Emacs 28
+How to compile and install Emacs
+*** grabbing sources
+#+begin_src sh
+cd ~/git
+git clone git://git.savannah.gnu.org/emacs.git emacs-head
 #+end_src
 *** configuration
 #+begin_src sh
-./configure --disable-silent-rules \
---with-modules --with-file-notification=inotify --with-mailutils \
---with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 \
---with-imagemagick --with-xml2 --with-json --with-harfbuzz CFLAGS='-O3'
+# autogen
+./autogen.sh
+#+end_src
+#+begin_src sh
+./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
 #+end_src
 *** building
 #+begin_src sh
-make
+#make
+make NATIVE_FULL_AOT=1 -j$(nproc)
 sudo make install
-#+end_src
-*** default sys-cfg from ubuntu emacs 26
-#+begin_src sh
-system-configuration-options
-"--build x86_64-linux-gnu --prefix=/usr --sharedstatedir=/var/lib --libexecdir=/usr/lib --localstatedir=/var/lib --infodir=/usr/share/info --mandir=/usr/share/man --enable-libsystemd --with-pop=yes --enable-locallisppath=/etc/emacs:/usr/local/share/emacs/26.3/site-lisp:/usr/local/share/emacs/site-lisp:/usr/share/emacs/26.3/site-lisp:/usr/share/emacs/site-lisp --with-sound=alsa --without-gconf --with-mailutils --build x86_64-linux-gnu --prefix=/usr --sharedstatedir=/var/lib --libexecdir=/usr/lib --localstatedir=/var/lib --infodir=/usr/share/info --mandir=/usr/share/man --enable-libsystemd --with-pop=yes --enable-locallisppath=/etc/emacs:/usr/local/share/emacs/26.3/site-lisp:/usr/local/share/emacs/site-lisp:/usr/share/emacs/26.3/site-lisp:/usr/share/emacs/site-lisp --with-sound=alsa --without-gconf --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --with-toolkit-scroll-bars 'CFLAGS=-g -O2 -fdebug-prefix-map=/build/emacs-mEZBk7/emacs-26.3+1=. -fstack-protector-strong -Wformat -Werror=format-security -Wall' 'CPPFLAGS=-Wdate-time -D_FORTIFY_SOURCE=2' 'LDFLAGS=-Wl,-Bsymbolic-functions -Wl,-z,relro'"
-
-system-configuration-features
-"XPM JPEG TIFF GIF PNG RSVG IMAGEMAGICK SOUND GPM DBUS GSETTINGS GLIB NOTIFY ACL LIBSELINUX GNUTLS LIBXML2 FREETYPE M17N_FLT LIBOTF XFT ZLIB TOOLKIT_SCROLL_BARS GTK3 X11 XDBE XIM THREADS LIBSYSTEMD LCMS2"
-#+end_src
-*** desired sys-cfg for emacs 27.1
-#+begin_src sh
-system-configuration-options
-"--disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 --with-imagemagick"
-
-system-configuration-features
-"XPM JPEG TIFF GIF PNG RSVG IMAGEMAGICK SOUND GPM DBUS GSETTINGS GLIB NOTIFY INOTIFY ACL LIBSELINUX GNUTLS LIBXML2 FREETYPE HARFBUZZ M17N_FLT LIBOTF XFT ZLIB TOOLKIT_SCROLL_BARS GTK3 X11 XDBE XIM MODULES THREADS XWIDGETS LIBSYSTEMD PDUMPER LCMS2 GMP"
 #+end_src
 ** Emacs Packages
 M-x package-refresh-contents
 ;; themes
-M-x package-install RET modus-operandi
-M-x package-install RET modus-vivendi
-M-x package-install RET spacemacs-theme
-M-x package-install RET plan9-theme
-M-x package-install RET acme
+M-x package-install RET modus-themes
 ;; utils
 M-x package-install RET pdf-tools
 M-x vterm
@@ -89,8 +69,8 @@ Show column number in modeline.
 ** Disable most gui elements
 #+BEGIN_SRC emacs-lisp
   (tool-bar-mode -1)
-  (menu-bar-mode -1)
-  (scroll-bar-mode -1)
+  (menu-bar-mode 1)
+  (scroll-bar-mode 1)
 #+END_SRC
 ** Enable tabs
 #+BEGIN_SRC emacs-lisp
@@ -183,12 +163,87 @@ Super - Control - <arrow>
       (window-edges)
     (set-mouse-position (selected-frame) left top)))
 #+end_src
-** Theme
+** Window title
 #+BEGIN_SRC emacs-lisp
-;; Font and frame size
-;;(set-face-font 'default "Monaco")
+;;(setq-default frame-title-format '("" "%b - Emacs " emacs-version))
+
+;; \/ regular
+(setq-default frame-title-format '("" "%b"))
+
+;;(add-hook 'after-make-frame-functions (lambda) (setq-default frame-title-format '("%b - Emacs")))
+;;(add-hook 'after-make-frame-functions (lambda (frame) (setq-default frame-title-format '("%b"))))
+;; (setq my-hostname
+;;       (replace-regexp-in-string "\\(^[[:space:]\n]*\\|[[:space:]\n]*$\\)" "" ;; like perl chomp()
+;;                                 (with-output-to-string
+;;                                   (call-process "/home/diamond/bin/gethostname" nil standard-output nil))))
+;; (setq my-username (getenv "USERNAME"))
+;; (setq frame-title-format '("%b - Emacs @ " my-hostname))
 #+END_SRC
+
 * Personal Keybinds
+** z-map
+#+begin_src emacs-lisp
+  ;;---------------------------------------------------------------------
+  ;; personal map
+  ;;---------------------------------------------------------------------
+
+  (define-prefix-command 'z-map)
+  (global-set-key (kbd "C-1") 'z-map) ;; Ctrl-1
+
+  (define-key z-map (kbd "j") (lambda () (interactive) (find-file-other-frame "~/org/diary.org")))
+  (define-key z-map (kbd "f") 'find-file-other-frame)
+  (define-key z-map (kbd "D") 'dashboard-refresh-buffer)
+  (define-key z-map (kbd "d") 'dired-other-frame)
+  (define-key z-map (kbd "g") '+default/search-cwd)
+  (define-key z-map (kbd "G") 'org-mark-ring-goto)
+  (define-key z-map (kbd "2") 'make-frame-command)
+  (define-key z-map (kbd "0") 'delete-frame)
+  (define-key z-map (kbd "o") 'other-frame)
+
+  (define-key z-map (kbd "b") 'display-battery-mode)
+  (define-key z-map (kbd "t") 'display-time-mode)
+
+  (define-key z-map (kbd "*") 'calc)
+  ;;(define-key z-map (kbd "r") 'synosaurus-choose-and-replace)
+  (define-key z-map (kbd "R") 'rainbow-mode)
+  (define-key z-map (kbd "O") 'org-redisplay-inline-images)
+  (define-key z-map (kbd "s") 'ispell-word)
+  (define-key z-map (kbd "W") 'elfeed)
+  (define-key z-map (kbd "w") 'eww)
+  (define-key z-map (kbd "p") #'+popup/raise)
+  (define-key z-map (kbd "F") 'browse-url-firefox)
+
+  ;; (define-key z-map (kbd "h") 'hyperbole)
+  (define-key z-map (kbd "X") 'xah-math-input-mode)
+  (define-key z-map (kbd "x") 'switch-to-buffer-other-frame)
+  (define-key z-map (kbd "k") 'compile)
+  (define-key z-map (kbd "e") 'eval-region)
+
+  (define-key z-map (kbd "U") 'go-board-undo)
+  (define-key z-map (kbd "P") 'go-board-next)
+  (define-key z-map (kbd "S") 'speedbar-frame-mode)
+
+  ;;(define-key z-map (kbd "b") 'burly-open-bookmark)
+  ;;(define-key z-map (kbd "B") 'burly-bookmark-frames)
+
+  (define-key z-map (kbd "a") '(lambda () (interactive) (find-file-other-window "~/org/agenda.org")))
+  (define-key z-map (kbd "C-c") 'calendar)
+  (define-key z-map (kbd ".") 'org-date-from-calendar)
+  ;; (define-key z-map (kbd "C-o") 'olivetti-mode)
+
+  (define-key z-map (kbd "I") (lambda () (interactive) (find-file-other-window "~/org/dex.org")))
+  (define-key z-map (kbd "N") (lambda () (interactive) (find-file-other-window "~/org/notes.org")))
+  (define-key z-map (kbd "C") (lambda () (interactive) (find-file-other-window "~/.emacs.d/config.org")))
+
+  (define-key z-map (kbd "i") (lambda () (interactive) (find-file "~/org/dex.org")))
+  (define-key z-map (kbd "n") (lambda () (interactive) (find-file "~/org/notes.org")))
+  (define-key z-map (kbd "c") (lambda () (interactive) (find-file "~/.emacs.d/config.org")))
+
+  ;; (define-key z-map (kbd "K") 'keycast-mode)
+  ;; (define-key z-map (kbd "R") 'gif-screencast-start-or-stop)
+
+  ;;---------------------------------------------------------------------
+#+end_src
 ** Keybinds
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<f9>") 'tab-bar-mode)
@@ -214,16 +269,17 @@ Org-capture & Org-roam.
 #+BEGIN_SRC emacs-lisp
   ;; Org init
   (use-package org
-    :config
-    ;;(add-hook 'org-mode-hook 'org-indent-mode)
-    (add-hook 'org-mode-hook
-              '(lambda ()
-                 (visual-line-mode 1)))
+	:config
+	;;(add-hook 'org-mode-hook 'org-indent-mode)
+	(add-hook 'org-mode-hook
+			  '(lambda ()
+				 (visual-line-mode 1)))
 	(setq org-display-inline-images t)
 	(setq org-redisplay-inline-images t)
 	(setq org-startup-with-inline-images "inlineimages")
 	(setq org-directory "~/org")
-    (setq org-agenda-files (list "inbox.org"))
+	(setq org-agenda-files (list "inbox.org"))
+	(setq initial-major-mode 'org-mode)
 	(global-set-key (kbd "C-<f1>") (lambda()
 								 (interactive)
 								 (show-all))))
@@ -237,14 +293,24 @@ Org-capture & Org-roam.
 	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
   (use-package htmlize
-    :ensure t)
+	:ensure t)
 
   ;; src exec
   (org-babel-do-load-languages 'org-babel-load-languages
-      '(
-          (shell . t)
-      )
+	  '(
+		  (shell . t)
+	  )
   )
+
+  (setq org-directory "~/org"
+      org-image-actual-width nil
+      +org-export-directory "~/org/export"
+      org-default-notes-file "~/org/inbox.org"
+      org-id-locations-file "~/org/.orgids"
+      org-agenda-files (directory-files-recursively "~/Dropbox/org/" "\\.org$")
+      ;; org-export-in-background t
+      org-catch-invisible-edits 'smart)
+
 #+END_SRC
 
 *org-capture*
@@ -407,7 +473,7 @@ Spaceline.
   ;; (use-package spaceline
   ;;   :ensure t)
 #+END_SRC
-** Initialize =powerline= 
+** Initialize =powerline=
 *** Description
 We utilize the spaceline theme for powerline.
 *** Code
@@ -424,57 +490,60 @@ We utilize the spaceline theme for powerline.
 Pretty emacs logo at startup.
 *** Code
 #+BEGIN_SRC emacs-lisp
-(use-package dashboard
-  :ensure t
-  :defer nil
-  :preface
-  ;;(defun update-config ()
-  ;;  "Update Emacs to the latest version."
-  ;;  (interactive)
-  ;;  (let ((dir (expand-file-name user-emacs-directory)))
-  ;;    (if (file-exists-p dir)
-  ;;        (progn
-  ;;          (message "emacs is updating!")
-  ;;          (cd dir)
-  ;;          (shell-command "git pull")
-  ;;          (message "Update finished. Switch to the messages buffer to see changes and then restart Emacs"))
-  ;;      (message "\"%s\" doesn't exist." dir))))
-  (defun init-edit ()
-    "Edit initialization file"
-    (interactive)
-    (find-file "~/.emacs.d/init.el"))
-  (defun config-edit ()
-    "Edit configuration file"
-    (interactive)
-    (find-file "~/Dropbox/emacs/config.org"))
-  (defun create-scratch-buffer ()
-    "Create a scratch buffer"
-    (interactive)
-    (switch-to-buffer (get-buffer-create "*scratch*"))
-    (lisp-interaction-mode))
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-items '((recents . 5)))
-  (setq dashboard-banner-logo-title "Welcome to Emacs!")
-  (setq dashboard-startup-banner "~/.emacs.d/img/emacs.png")
-  (setq dashboard-center-content t)
-  (setq dashboard-show-shortcuts nil)
-  (setq dashboard-set-init-info t)
-  (setq dashboard-init-info (format "%d packages loaded in %s"
-                                    (length package-activated-list) (emacs-init-time)))
-  (setq dashboard-set-footer nil)
-  (setq dashboard-set-navigator t)
-  (setq dashboard-navigator-buttons
-        `(((,nil
-            "Open scratch buffer"
-            "Switch to the scratch buffer"
-            (lambda (&rest _) (create-scratch-buffer))
-            'default)
-           (nil
-            "Open config.org"
-            "Open Emacs configuration file for easy editing"
-            (lambda (&rest _) (config-edit))
-            'default)))))
+  (use-package dashboard
+	:ensure t
+	:defer nil
+	:preface
+	(defun init-edit ()
+	  "Edit initialization file"
+	  (interactive)
+	  (find-file "~/.emacs.d/init.el"))
+	(defun notes-edit ()
+	  "Edit notes file"
+	  (interactive)
+	  (find-file "~/org/notes.org"))
+	(defun config-edit ()
+	  "Edit configuration file"
+	  (interactive)
+	  (find-file "~/.emacs.d/config.org"))
+	(defun create-scratch-buffer ()
+	  "Create a scratch buffer"
+	  (interactive)
+	  (switch-to-buffer (get-buffer-create "*scratch*"))
+	  (lisp-interaction-mode))
+	:config
+	(dashboard-setup-startup-hook)
+	(setq dashboard-items '((recents . 5)))
+	(setq dashboard-banner-logo-title "Welcome to Emacs!")
+	;;(setq dashboard-startup-banner "~/.emacs.d/img/emacs.png")
+  (setq dashboard-startup-banner 'logo)
+	(setq dashboard-center-content t)
+	(setq dashboard-show-shortcuts nil)
+	(setq dashboard-set-init-info t)
+	(setq dashboard-init-info (format "%d packages loaded in %s"
+									  (length package-activated-list) (emacs-init-time)))
+	(setq dashboard-set-footer nil)
+	(setq dashboard-set-navigator t)
+	(setq dashboard-navigator-buttons
+		`(((,nil
+			"Scratch"
+			"Switch to the scratch buffer"
+			(lambda (&rest _) (create-scratch-buffer))
+			'default)
+		   (nil
+			"Notes"
+			"Open personal notes"
+			(lambda (&rest _) (notes-edit))
+			'default)
+		   (nil
+			"Config"
+			"Open Emacs configuration"
+			(lambda (&rest _) (config-edit))
+			'default)
+		   ))))
+
+
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 #+END_SRC
 ** Initialize =which-key=
 *** Description
@@ -541,34 +610,37 @@ C-s to spawn a search minibuffer that can be traversed via C-n and C-p & <RET>.
 #+end_src
 ** Initialize =evil=
 *** Description
-Heresy; Vim keybindings in Emacs. 
+Heresy; Vim keybindings in Emacs.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package evil
-    :ensure t
-    :defer nil
-    :init
-    (setq evil-want-keybinding nil)
-    (setq evil-want-C-u-scroll t)
-    :config
-    (evil-mode 1))
+	:ensure t
+	:defer nil
+	:init
+	(setq evil-want-keybinding nil)
+	(setq evil-want-C-u-scroll t)
+	:config
+	(evil-mode 1))
 
-  ;(use-package evil-collection
-  ;  :after evil
-  ;  :ensure t
-  ;  :config
-  ;  (evil-collection-init))
+(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
+
+  (use-package evil-collection
+	:after evil
+	:ensure t
+	:config
+	(evil-collection-init))
+
 #+END_SRC
 ** Initialize =beacon=
 *** Description
 Briefly highlight the cursor position when switching to a new window or buffer.
 *** Code
 #+BEGIN_SRC emacs-lisp
-  (use-package beacon
-    :ensure t
-    :diminish beacon-mode
-    :init
-    (beacon-mode 1))
+  ;; (use-package beacon
+  ;;   :ensure t
+  ;;   :diminish beacon-mode
+  ;;   :init
+  ;;   (beacon-mode 1))
 #+END_SRC
 ** Initialize =avy=
 *** Description
@@ -689,7 +761,7 @@ Neat side-bar file and project explorer.
             treemacs-tag-follow-delay              1.5
             treemacs-width                         30)
       (treemacs-resize-icons 11)
-	
+
       (treemacs-follow-mode t)
       (treemacs-filewatch-mode t)
       (treemacs-fringe-indicator-mode t)
@@ -734,14 +806,14 @@ RSS reader for Emacs.
     :ensure t
 
     :config
-		(setq elfeed-feeds
-      '(("https://www.archlinux.org/feeds/news/" linux distro)
-        ("https://www.gnome.org/feed/" gnu de)
+    (setq elfeed-feeds
+      '(("https://www.archlinux.org/feeds/news/" archlinux)
+        ("https://www.gnome.org/feed/" gnome)
+        ("http://nullprogram.com/feed/" nullprog)
         ("https://planet.emacslife.com/atom.xml" emacs community)
         ("https://www.ecb.europa.eu/rss/press.html" economics eu)
-        ("http://feed.pippa.io/public/shows/teamhuman" podcast culture)
-		  ("https://news.ycombinator.com/rss" ycombinator news)
-		  ("https://www.phoronix.com/rss.php" phoronix))))
+        ("https://drewdevault.com/blog/index.xml" drew devault)
+        ("https://news.ycombinator.com/rss" ycombinator news) ("https://www.phoronix.com/rss.php" phoronix))))
 #+END_SRC
 ** Initialize =pdf-tools=
 *** Description
@@ -791,6 +863,76 @@ Saves cursor location in buffers.
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 ;;(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+#+end_src
+** Initialize =modus-themes=
+*** Code
+#+begin_src emacs-lisp
+(use-package emacs
+  :defer nil
+  :config
+  (setq custom-safe-themes t)
+
+  ;; TODO simplify this to avoid formatting a string, then read and eval.
+  (defmacro modus-themes-format-sexp (sexp &rest objects)
+    `(eval (read (format ,(format "%S" sexp) ,@objects))))
+
+  (defvar modus-themes-after-load-hook nil
+    "Hook that runs after loading a Modus theme.
+See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
+
+  (dolist (theme '("operandi" "vivendi"))
+    (modus-themes-format-sexp
+     (defun modus-%1$s-theme-load ()
+       (setq modus-%1$s-theme-slanted-constructs t
+             modus-%1$s-theme-bold-constructs nil
+             modus-%1$s-theme-fringes nil ; {nil,'subtle,'intense}
+             modus-%1$s-theme-mode-line nil ; {nil '3d,'moody}
+             modus-%1$s-theme-syntax 'faint ; {nil,faint,'yellow-comments,'green-strings,'yellow-comments-green-strings,'alt-syntax,'alt-syntax-yellow-comments}
+             modus-%1$s-theme-intense-hl-line nil
+             modus-%1$s-theme-intense-paren-match 'intense-bold
+             modus-%1$s-theme-links 'neutral-underline ; {nil,'faint,'neutral-underline,'faint-neutral-underline,'no-underline}
+             modus-%1$s-theme-no-mixed-fonts nil
+             modus-%1$s-theme-prompts nil ; {nil,'subtle,'intense}
+             modus-%1$s-theme-completions 'moderate ; {nil,'moderate,'opinionated}
+             ;; modus-themes-region 'bg-only-no-extend
+             modus-%1$s-theme-diffs nil ; {nil,'desaturated,'fg-only}
+             modus-%1$s-theme-org-blocks 'grayscale ; {nil,'grayscale,'rainbow}
+             ;; modus-themes-org-habit 'traffic-light ; {nil,'simplified,'traffic-light}
+             modus-%1$s-theme-headings  ; Read the manual for this one
+             '((t . nil))
+             modus-%1$s-theme-variable-pitch-headings t
+             modus-%1$s-theme-scale-headings nil
+             modus-%1$s-theme-scale-1 1.1
+             modus-%1$s-theme-scale-2 1.15
+             modus-%1$s-theme-scale-3 1.21
+             modus-%1$s-theme-scale-4 1.27
+             modus-%1$s-theme-scale-5 1.33)
+       (load-theme 'modus-%1$s t)
+       (run-hooks 'modus-themes-after-load-hook))
+     theme))
+
+  (defun modus-themes-light ()
+    "Load `modus-operandi' and disable `modus-vivendi'."
+    (disable-theme 'modus-vivendi)
+    (modus-operandi-theme-load))
+
+  (defun modus-themes-dark ()
+    "Load `modus-vivendi' and disable `modus-operandi'."
+    (disable-theme 'modus-operandi)
+    (modus-vivendi-theme-load))
+
+  (defun modus-themes-toggle ()
+    "Toggle between `modus-operandi' and `modus-vivendi' themes."
+    (interactive)
+    (if (eq (car custom-enabled-themes) 'modus-operandi)
+        (modus-themes-dark)
+      (modus-themes-light))
+    (dashboard-refresh-buffer))
+
+  :hook (after-init-hook . modus-operandi-theme-load)
+  :bind ("<S-f5>" . modus-themes-toggle))
+
+(modus-themes-light)
 #+end_src
 ** Built-in entry: =eldoc=
 *** Code

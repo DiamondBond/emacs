@@ -5,11 +5,17 @@
 
 ;;;; FONTS ;;;;
 
- (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
-       doom-variable-pitch-font (font-spec :family "sans" :size 14))
+ (setq doom-font (font-spec :family "hack" :size 16 :weight 'regular)
+       doom-variable-pitch-font (font-spec :family "hack" :size 14))
 
-;;(setq doom-font (font-spec :family "Ubuntu Mono" :size 18))
-;;(setq doom-big-font (font-spec :family "Ubuntu Mono" :size 28))
+ ;; (setq doom-font (font-spec :family "monospace" :size 16 :weight 'semi-light)
+ ;;       doom-variable-pitch-font (font-spec :family "sans" :size 14))
+
+ ;; (setq doom-font (font-spec :family "Go Mono" :size 16 :weight 'semi-light)
+ ;;       doom-variable-pitch-font (font-spec :family "Go" :size 14))
+
+;; (setq doom-font (font-spec :family "Ubuntu Mono" :size 18))
+;; (setq doom-big-font (font-spec :family "Ubuntu Mono" :size 28))
 
 ;;(setq doom-font (font-spec :family "DejaVu Sans Mono"))
 
@@ -36,6 +42,7 @@
 ;;(load-theme 'modus-vivendi t)
 ;;(load-theme 'modus-vivendi t)
 ;;(load-theme 'doom-palenight t)
+;; (load-theme 'doom-1337 t)
 
 ;;(set-face-background 'default "#FFFFFF")
 ;; or
@@ -444,8 +451,30 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 ;;   ('after-init-hook) . 'powerline-reset)
 
 (setq elfeed-feeds
-      '("https://www.archlinux.org/feeds/news"
-        "https://planet.emacslife.com/atom.xml"))
+      '(
+        ;; programming
+        ("https://www.archlinux.org/feeds/news" archlinux)
+        ("http://nullprogram.com/feed/" nullprog)
+        ("https://news.ycombinator.com/rss" hn)
+        ;;("https://www.reddit.com/r/programming.rss" programming)
+        ("https://www.reddit.com/r/emacs.rss" emacs)
+        ("https://www.reddit.com/r/linux.rss" linux)
+        ("https://planet.emacslife.com/atom.xml" emacslife)
+
+        ;; df
+        ;;("https://www.reddit.com/r/dwarffortress.rss" df)
+
+        ;; unix
+        ;;("https://www.reddit.com/r/unixporn.rss" up)
+        ;;("https://www.reddit.com/r/usabilityporn.rss" usap)
+        ;;("https://www.reddit.com/r/unixart.rss" ua)
+        ("https://drewdevault.com/blog/index.xml" drew devault)
+
+        ;; world news
+        ;;("https://feeds.bbci.co.uk/news/world/rss.xml" bbc)
+        ("https://www.ecb.europa.eu/rss/press.html" economics eu)
+        ("https://feeds2.feedburner.com/typepad/krisdedecker/lowtechmagazineenglish" lowtech)
+))
 
 (use-package! switch-window
 :defer nil
@@ -595,11 +624,20 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 ;; With dired-open plugin, you can launch external programs for certain extensions
 ;; For example, I set all .png files to open in 'sxiv' and all .mp4 files to open in 'mpv'
-(setq dired-open-extensions '(("gif" . "sxiv")
-                              ("jpg" . "sxiv")
-                              ("png" . "sxiv")
+(setq dired-open-extensions '(("gif" . "nomacs")
+                              ("jpg" . "nomacs")
+                              ("png" . "nomacs")
+                              ("pdf" . "zathura")
                               ("mkv" . "mpv")
                               ("mp4" . "mpv")))
+
+;;https://emacs.stackexchange.com/questions/2123/how-can-i-make-dired-buffer-names-include-the-full-path
+;; (add-hook 'dired-after-readin-hook
+;;       (lambda ()
+;;         ;; Set name of dired buffers to absolute directory name.
+;;         ;; Use `generate-new-buffer-name' for vc-directory
+;;         ;; which creates duplicate buffers.
+;;         (rename-buffer (generate-new-buffer-name dired-directory))))
 
 ;;(require 'emms-setup)
 ;;(require 'emms-info)
@@ -683,7 +721,6 @@ See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 ;;   ;; HACK Fixes comment continuation on newline
 ;;   (setq-hook! 'typescript-mode-hook
 ;;     comment-line-break-function #'js2-line-break))
-
 
 (after! projectile (setq projectile-project-root-files-bottom-up (remove
             ".git" projectile-project-root-files-bottom-up)))

@@ -867,72 +867,73 @@ Saves cursor location in buffers.
 ** Initialize =modus-themes=
 *** Code
 #+begin_src emacs-lisp
-(use-package emacs
-  :defer nil
-  :config
-  (setq custom-safe-themes t)
+   (use-package emacs
+	 :defer nil
+	 :config
+	 (setq custom-safe-themes t)
 
-  ;; TODO simplify this to avoid formatting a string, then read and eval.
-  (defmacro modus-themes-format-sexp (sexp &rest objects)
-    `(eval (read (format ,(format "%S" sexp) ,@objects))))
+	 ;; TODO simplify this to avoid formatting a string, then read and eval.
+	 (defmacro modus-themes-format-sexp (sexp &rest objects)
+	   `(eval (read (format ,(format "%S" sexp) ,@objects))))
 
-  (defvar modus-themes-after-load-hook nil
-    "Hook that runs after loading a Modus theme.
-See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
+	 (defvar modus-themes-after-load-hook nil
+	   "Hook that runs after loading a Modus theme.
+   See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 
-  (dolist (theme '("operandi" "vivendi"))
-    (modus-themes-format-sexp
-     (defun modus-%1$s-theme-load ()
-       (setq modus-%1$s-theme-slanted-constructs t
-             modus-%1$s-theme-bold-constructs nil
-             modus-%1$s-theme-fringes nil ; {nil,'subtle,'intense}
-             modus-%1$s-theme-mode-line nil ; {nil '3d,'moody}
-             modus-%1$s-theme-syntax 'faint ; {nil,faint,'yellow-comments,'green-strings,'yellow-comments-green-strings,'alt-syntax,'alt-syntax-yellow-comments}
-             modus-%1$s-theme-intense-hl-line nil
-             modus-%1$s-theme-intense-paren-match 'intense-bold
-             modus-%1$s-theme-links 'neutral-underline ; {nil,'faint,'neutral-underline,'faint-neutral-underline,'no-underline}
-             modus-%1$s-theme-no-mixed-fonts nil
-             modus-%1$s-theme-prompts nil ; {nil,'subtle,'intense}
-             modus-%1$s-theme-completions 'moderate ; {nil,'moderate,'opinionated}
-             ;; modus-themes-region 'bg-only-no-extend
-             modus-%1$s-theme-diffs nil ; {nil,'desaturated,'fg-only}
-             modus-%1$s-theme-org-blocks 'grayscale ; {nil,'grayscale,'rainbow}
-             ;; modus-themes-org-habit 'traffic-light ; {nil,'simplified,'traffic-light}
-             modus-%1$s-theme-headings  ; Read the manual for this one
-             '((t . nil))
-             modus-%1$s-theme-variable-pitch-headings t
-             modus-%1$s-theme-scale-headings nil
-             modus-%1$s-theme-scale-1 1.1
-             modus-%1$s-theme-scale-2 1.15
-             modus-%1$s-theme-scale-3 1.21
-             modus-%1$s-theme-scale-4 1.27
-             modus-%1$s-theme-scale-5 1.33)
-       (load-theme 'modus-%1$s t)
-       (run-hooks 'modus-themes-after-load-hook))
-     theme))
+	 (dolist (theme '("operandi" "vivendi"))
+	   (modus-themes-format-sexp
+		(defun modus-%1$s-theme-load ()
+		  (setq modus-%1$s-theme-slanted-constructs t
+				modus-%1$s-theme-bold-constructs nil
+				modus-%1$s-theme-fringes nil ; {nil,'subtle,'intense}
+				modus-%1$s-theme-mode-line nil ; {nil '3d,'moody}
+				modus-%1$s-theme-syntax 'faint ; {nil,faint,'yellow-comments,'green-strings,'yellow-comments-green-strings,'alt-syntax,'alt-syntax-yellow-comments}
+				modus-%1$s-theme-intense-hl-line nil
+				modus-%1$s-theme-intense-paren-match 'intense-bold
+				modus-%1$s-theme-links 'neutral-underline ; {nil,'faint,'neutral-underline,'faint-neutral-underline,'no-underline}
+				modus-%1$s-theme-no-mixed-fonts nil
+				modus-%1$s-theme-prompts nil ; {nil,'subtle,'intense}
+				modus-%1$s-theme-completions 'moderate ; {nil,'moderate,'opinionated}
+				;; modus-themes-region 'bg-only-no-extend
+				modus-%1$s-theme-diffs nil ; {nil,'desaturated,'fg-only}
+				modus-%1$s-theme-org-blocks 'grayscale ; {nil,'grayscale,'rainbow}
+				;; modus-themes-org-habit 'traffic-light ; {nil,'simplified,'traffic-light}
+				modus-%1$s-theme-headings  ; Read the manual for this one
+				'((t . nil))
+				modus-%1$s-theme-variable-pitch-headings t
+				modus-%1$s-theme-scale-headings nil
+				modus-%1$s-theme-scale-1 1.1
+				modus-%1$s-theme-scale-2 1.15
+				modus-%1$s-theme-scale-3 1.21
+				modus-%1$s-theme-scale-4 1.27
+				modus-%1$s-theme-scale-5 1.33)
+		  (load-theme 'modus-%1$s t)
+		  (run-hooks 'modus-themes-after-load-hook))
+		theme))
 
-  (defun modus-themes-light ()
-    "Load `modus-operandi' and disable `modus-vivendi'."
-    (disable-theme 'modus-vivendi)
-    (modus-operandi-theme-load))
+	 (defun modus-themes-light ()
+	   "Load `modus-operandi' and disable `modus-vivendi'."
+	   (disable-theme 'modus-vivendi)
+	   (modus-operandi-theme-load))
 
-  (defun modus-themes-dark ()
-    "Load `modus-vivendi' and disable `modus-operandi'."
-    (disable-theme 'modus-operandi)
-    (modus-vivendi-theme-load))
+	 (defun modus-themes-dark ()
+	   "Load `modus-vivendi' and disable `modus-operandi'."
+	   (disable-theme 'modus-operandi)
+	   (modus-vivendi-theme-load))
 
-  (defun modus-themes-toggle ()
-    "Toggle between `modus-operandi' and `modus-vivendi' themes."
-    (interactive)
-    (if (eq (car custom-enabled-themes) 'modus-operandi)
-        (modus-themes-dark)
-      (modus-themes-light))
-    (dashboard-refresh-buffer))
+	 (defun modus-themes-toggle ()
+	   "Toggle between `modus-operandi' and `modus-vivendi' themes."
+	   (interactive)
+	   (if (eq (car custom-enabled-themes) 'modus-operandi)
+		   (modus-themes-dark)
+		 (modus-themes-light))
+	   (dashboard-refresh-buffer))
 
-  :hook (after-init-hook . modus-operandi-theme-load)
-  :bind ("<S-f5>" . modus-themes-toggle))
+	 :hook (after-init-hook . modus-operandi-theme-load)
+	 :bind ("<S-f5>" . modus-themes-toggle))
 
-(modus-themes-light)
+   (modus-themes-light)
+  (set-face-attribute 'default nil :height 120)
 #+end_src
 ** Built-in entry: =eldoc=
 *** Code
@@ -1073,11 +1074,10 @@ Scheme Lisp REPL.
 
 ;; use browser depending on url
 (setq
- browse-url-browser-function
+ browse-url-handlers
  '(
   ("wikipedia\\.org" . browse-url-firefox)
   ("github" . browse-url-firefox)
-  ("khanacademy" . browse-url-chromium)
   ("reddit" . browse-url-chromium)
   ("thefreedictionary\\.com" . eww-browse-url)
   ("." . browse-url-default-browser)

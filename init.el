@@ -13,7 +13,7 @@
  
 (add-hook 'emacs-startup-hook 'startup/revert-file-name-handler-alist)
 (add-hook 'emacs-startup-hook 'startup/reset-gc)
-;;
+;;;;
 
 ;; Initialize melpa repo
 (require 'package)
@@ -30,14 +30,10 @@
 (setq use-package-always-ensure t)
 
 ;; Load config
-;;(org-babel-load-file (expand-file-name "~/Dropbox/emacs/config.org"))
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
 ;; Supress cl warnings
 (setq byte-compile-warnings '(cl-functions))
-
-;; Load theme
-;;(load-theme 'modus-operandi t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -48,9 +44,9 @@
    '((auto-mode . emacs)
 	 ("\\.mm\\'" . default)
 	 ("\\.x?html?\\'" . default)
-	 ("\\.pdf\\'" . "zathura %s")))
+	 ("\\.pdf\\'" . emacs)))
  '(package-selected-packages
-   '(nov doom-themes crux deft org-roam-server org-roam vigenere ivy-rich rainbow-delimiters lorem-ipsum pdf-view-restore acme-theme nyan-mode org-pdftools synosaurus xah-math-input ivy flycheck swiper-helm writeroom-mode restart-emacs fireplace pdf-tools spacemacs-theme plan9-theme modus-themes company-irony company-c-headers yasnippet-snippets yasnippet company magit treemacs-icons-dired treemacs-evil treemacs async ido-vertical-mode switch-window avy beacon evil swiper which-key dashboard spaceline diminish auto-package-update htmlize use-package))
+   '(geiser-mit nov doom-themes crux deft org-roam-server org-roam vigenere ivy-rich rainbow-delimiters lorem-ipsum pdf-view-restore acme-theme nyan-mode org-pdftools synosaurus xah-math-input ivy flycheck swiper-helm writeroom-mode restart-emacs fireplace pdf-tools spacemacs-theme plan9-theme modus-themes company-irony company-c-headers yasnippet-snippets yasnippet company magit treemacs-icons-dired treemacs-evil treemacs async ido-vertical-mode switch-window avy beacon evil swiper which-key dashboard spaceline diminish auto-package-update htmlize use-package))
  '(warning-suppress-log-types '((use-package) (browse-url) (comp)))
  '(warning-suppress-types '((use-package) (browse-url) (comp))))
 (custom-set-faces

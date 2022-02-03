@@ -864,15 +864,12 @@ Saves cursor location in buffers.
 #+end_src
 ** Initialize =notmuch=
 #+begin_src emacs-lisp
-  ;; Notmuch
-  ;;	(require 'notmuch)
   (use-package notmuch
 	:ensure nil
 	:commands (notmuch)
 	:config
 	(add-hook 'notmuch-hello-mode-hook
-			  (lambda () (display-line-numbers-mode 0))
-			  ((add-hook 'notmuch-show-hook 'replace-unicode-no-break-space)))
+			  (lambda () (display-line-numbers-mode 0)))
 
 	;; setup the mail address and use name
 	(setq mail-user-agent 'message-user-agent)
@@ -905,8 +902,7 @@ Saves cursor location in buffers.
 		   (notmuch-refresh-all-buffers)
 		   (let ((w (get-buffer-window "*offlineimap*")))
 			 (when w
-			   (with-selected-window w (recenter (window-end)))))))
-	  (display-buffer "*offlineimap*")))
+			   (with-selected-window w (recenter (window-end)))))))))
 #+end_src
 ** Initialize =modus-themes=
 *** Code

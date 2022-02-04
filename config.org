@@ -954,6 +954,16 @@ Irony is the company backend for C and C++
 	((c++-mode c-mode) . irony-mode)
 	('irony-mode-hook) . 'irony-cdb-autosetup-compile-options)
 #+END_SRC
+** Go
+*** Description
+Go-mode covers it all.
+*** Code
+#+begin_src emacs-lisp
+  (use-package go-mode
+	:ensure t
+	:mode "\\.go\\'"
+	:hook ((go-mode . subword-mode)))
+#+end_src
 ** Python
 *** Description
 Elpy for basics.
@@ -1003,6 +1013,15 @@ Syntax highlighting for json files. Hopefully lighter weight than javascript mod
   (use-package json-mode
 	:ensure t
 	:mode ("\\.json\\'" . json-mode))
+#+end_src
+** Markdown
+*** Description
+Markdown-mode & enable auto fill.
+*** Code
+#+begin_src emacs-lisp
+  (use-package markdown-mode
+	:mode "\\.md\\'"
+	:hook ((markdown-mode . auto-fill-mode)))
 #+end_src
 ** Common Lisp
 *** Description

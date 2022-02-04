@@ -3,6 +3,17 @@
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 
+-----
+#+begin_src 
+_\/_                 |                _\/_
+/o\\             \       /            //o\
+ |                 .---.                |
+_|_______     --  /     \  --     ______|__
+         `~^~^~^~^~^~^~^~^~^~^~^~`
+           diamond's emacs cfg 💫
+#+end_src
+-----
+
 * Dependencies
 ** Packages
 =clang= & =clangd= as backend for C and C++ autocompletion

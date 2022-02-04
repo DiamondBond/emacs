@@ -1,5 +1,5 @@
 #+STARTUP: overview
-#+TITLE: Diamond's Emacs Configuration
+#+TITLE: Emacs Configuration
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 
@@ -14,6 +14,8 @@ _|_______     --  /     \  --     ______|__
 #+end_src
 -----
 
+* Preamble
+This is an emacs configuration based upon witchmacs
 * Dependencies
 ** Packages
 =clang= & =clangd= as backend for C and C++ autocompletion
@@ -34,7 +36,7 @@ _|_______     --  /     \  --     ______|__
   pip3 install black pyflakes isort nose pytest pygifsicle pyls pyls-black nose2 simple-server httpserver future python-lsp-server autopep8 jedi jedi-language-server
 #+end_src
 ** Files
-Certain files must exist for correct operation of this emacs config.
+Certain files & folders must exist for correct operation of this emacs config.
 
 *org-mode*
 #+begin_quote
@@ -62,11 +64,12 @@ Certain files must exist for correct operation of this emacs config.
 ~/.config/offlineimap
 ~/.config/offlineimap/postsync.sh (included within this repo, must be set with correct permissions; chmod +x postsync.sh)
 #+end_quote
-** Folders
+
+*folders*
 This emacs configuration also depends on a few folders to exist, most notably:
 #+begin_quote
+~/.emacs.d		# This houses the emacs configuration (this repo)
 ~/Dropbox/org	# This is where I sync my working org-mode files to
-~/.emacs.d		# This houses my emacs configuration (this repo)
 #+end_quote
 ** Emacs
 How to compile and install.

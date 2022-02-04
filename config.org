@@ -728,6 +728,14 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	:ensure t
 	:hook (org-load-hook . org-pdftools-setup-link))
 #+END_SRC
+** Initialize =nov=
+*** Description
+Major mode for reading EPUBs.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package nov
+	:mode ("\\.epub\\'" . nov-mode))
+#+END_SRC
 ** Initialize =vterm=
 *** Description
 Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.

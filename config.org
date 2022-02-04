@@ -1,5 +1,4 @@
 #+STARTUP: overview
-#+TITLE: Emacs Configuration
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 
@@ -15,8 +14,7 @@ _|_______     --  /     \  --     ______|__
 -----
 
 * Preamble
-This is a simple emacs configuration.
-It is a WIP.
+This is a simple WIP emacs configuration.
 * Dependencies
 ** Packages
 =clang= & =clangd= as backend for C and C++ autocompletion

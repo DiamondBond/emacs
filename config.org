@@ -20,7 +20,7 @@
 
 *Python*
 #+begin_src bash
-pip3 install black pyflakes isort nose pytest pygifsicle pyls pyls-black nose2 simple-server httpserver future python-lsp-server autopep8 jedi jedi-language-server
+  pip3 install black pyflakes isort nose pytest pygifsicle pyls pyls-black nose2 simple-server httpserver future python-lsp-server autopep8 jedi jedi-language-server
 #+end_src
 ** Files
 Certain files must exist for correct operation of this emacs config.
@@ -54,8 +54,8 @@ Certain files must exist for correct operation of this emacs config.
 ** Folders
 This emacs configuration also depends on a few folders to exist, most notably:
 #+begin_quote
- ~/Dropbox/org	# This is where I sync my working org-mode files to
- ~/.emacs.d		# This houses my emacs configuration (this repo)
+~/Dropbox/org	# This is where I sync my working org-mode files to
+~/.emacs.d		# This houses my emacs configuration (this repo)
 #+end_quote
 ** Emacs
 How to compile and install.
@@ -552,7 +552,7 @@ Better buffer management.
 #+begin_quote
 This enables arrow keys to select while in ido mode. If you want to
 instead use the default Emacs keybindings, change it to
- "'C-n-and-C-p-only"
+"'C-n-and-C-p-only"
 (setq ido-grid-define-keys 'C-n-C-p-up-and-down)
 #+end_quote
 *** Code

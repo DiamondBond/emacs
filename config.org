@@ -15,7 +15,8 @@ _|_______     --  /     \  --     ______|__
 -----
 
 * Preamble
-This is an emacs configuration based upon witchmacs
+This is a simple emacs configuration.
+It is a WIP.
 * Dependencies
 ** Packages
 =clang= & =clangd= as backend for C and C++ autocompletion

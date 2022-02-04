@@ -224,7 +224,7 @@ https://github.com/fuxialexander/doom-emacs-private-xfu/blob/master/%2Bpopup.el
 (define-key z-map (kbd "p") #'+popup/raise)
 (define-key z-map (kbd "F") 'browse-url-firefox)
 
-(define-key z-map (kbd "h") 'hyperbole)
+;;(define-key z-map (kbd "h") 'hyperbole)
 (define-key z-map (kbd "X") 'xah-math-input-mode)
 (define-key z-map (kbd "x") 'switch-to-buffer-other-frame)
 (define-key z-map (kbd "k") 'compile)
@@ -863,4 +863,5 @@ epub reader.
 ;;(load-theme 'modus-vivendi t)
 ;;(load-theme 'modus-operandi t)
 ;; (load-theme 'doom-dracula t)
+(modus-themes-light)
 #+end_src

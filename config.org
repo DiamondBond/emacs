@@ -919,10 +919,9 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 	  (dashboard-refresh-buffer))
 
 	;; Load light theme 
-	;;(modus-themes-light) ;; OR (modus-themes-load-vivendi)
+	(modus-themes-light) ;; OR (modus-themes-load-vivendi)
 	(set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
 
-	;; :hook (after-init-hook . modus-themes-light)
 	:bind ("<S-f5>" . modus-themes-toggle))
 #+end_src
 ** Built-in entry: =eldoc=

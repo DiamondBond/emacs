@@ -35,40 +35,22 @@ This is a simple WIP emacs configuration.
   pip3 install black pyflakes isort nose pytest pygifsicle pyls pyls-black nose2 simple-server httpserver future python-lsp-server autopep8 jedi jedi-language-server
 #+end_src
 ** Files
-Certain files & folders must exist for correct operation of this emacs config.
+Certain files & folders must exist.
 
-*org-mode*
 #+begin_quote
-~/org/export exists
-~/org/inbox.org exists and is readable
-~/org/.orgids can be written to
-~/Dropbox/org exists
-~/org/inbox.org exists
-~/org/journal.org exists
-#+end_quote
+~/.emacs.d
 
-*dashboard*
-#+begin_quote
-~/org exists
-~/pdfs exists
-~/org/notes.org exists
-~/.emacs.d/init.el exists and contains no errors.
-~/.emacs.d/config.org exists and contains no errors.
-#+end_quote
+~/org => ~/Dropbox/org
 
-*notmuch*
-#+begin_quote
+~/pdfs
+
 ~/mail
-~/.offlineimaprc (included within this repo, make sure to update email and passwd references within this file)
-~/.config/offlineimap
-~/.config/offlineimap/postsync.sh (included within this repo, must be set with correct permissions; chmod +x postsync.sh)
-#+end_quote
 
-*folders*
-This emacs configuration also depends on a few folders to exist, most notably:
-#+begin_quote
-~/.emacs.d		# This houses the emacs configuration (this repo)
-~/Dropbox/org	# This is where I sync my working org-mode files to
+~/.offlineimaprc
+
+~/.config/offlineimap
+
+~/.config/offlineimap/postsync.sh
 #+end_quote
 ** Emacs
 How to compile and install.

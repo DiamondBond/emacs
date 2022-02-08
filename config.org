@@ -301,7 +301,6 @@ Also enables org-bullets & htmlize.
 #+BEGIN_SRC emacs-lisp
   (use-package org
 	:config
-	;;(add-hook 'org-mode-hook 'org-indent-mode)
 	(add-hook 'org-mode-hook
 			  #'(lambda ()
 				  (visual-line-mode 1)))
@@ -330,9 +329,6 @@ Also enables org-bullets & htmlize.
 								   )
 								 )
 
-
-	(setq org-agenda-files (list "inbox.org"))
-
 	(setq org-capture-templates
 		  '(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
 			 "* %?\n%a\nEntered on %U")
@@ -341,11 +337,7 @@ Also enables org-bullets & htmlize.
 			 "* %?\n%a\nEntered on %U")))
 	(define-key global-map (kbd "C-c c") 'org-capture)
 	(global-set-key (kbd "C-c l") 'org-store-link)
-	;;(global-set-key (kbd "C-c C-l") 'org-insert-link)
 	)
-
-  ;;(use-package org-indent
-  ;;  :diminish org-indent-mode)
 
   (use-package org-bullets
 	:ensure t
@@ -728,6 +720,7 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	:config
 	(pdf-tools-install)
 	(define-pdf-cache-function pagelabels)
+	;; (evil-set-initial-state 'pdf-view-mode 'normal)
 	:hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
 		   (pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
 
@@ -927,8 +920,9 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 
 	;; Load light theme 
 	(modus-themes-light) ;; OR (modus-themes-load-vivendi)
-	;;(setq default-frame-alist '((font . "Source Code Pro-14")))
+	;;(setq default-frame-alist '((font . "DejaVu Sans Mono-12")))
 	(set-face-attribute 'default nil :height 120)
+	;;(set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
 
 	;; :hook (after-init-hook . modus-themes-light)
 	:bind ("<S-f5>" . modus-themes-toggle))

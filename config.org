@@ -564,7 +564,6 @@ Vertico & friends (Orderless, Marginalia, Consult, Embark) provides a performant
 #+begin_src emacs-lisp
   ;; Enable vertico
   (use-package vertico
-	:ensure t
 	:init
 	(vertico-mode)
 
@@ -575,7 +574,6 @@ Vertico & friends (Orderless, Marginalia, Consult, Embark) provides a performant
 	(setq vertico-cycle t))
 
   (use-package orderless
-	:ensure t
 	:init
 	(setq completion-styles '(orderless)
 		  completion-category-defaults nil
@@ -583,26 +581,22 @@ Vertico & friends (Orderless, Marginalia, Consult, Embark) provides a performant
 
   ;; Persist history over Emacs restarts. Vertico sorts by history position.
   (use-package savehist
-	:ensure t
 	:init
 	(savehist-mode))
 
   ;; Information in the margins
   (use-package marginalia
-	:ensure t
 	:init
 	(marginalia-mode))
 
   ;; Consult provides practical commands based on the Emacs completion function completing-read.
   (use-package consult
-	:ensure t
 	:general
 	("M-y" 'consult-yank-from-kill-ring
 	 "C-x b" 'consult-buffer))
 
   ;; Emacs Mini-Buffer Actions Rooted in Keymaps
   (use-package embark
-	:ensure t
 	:bind
 	(("C-." . embark-act)         ;; pick some comfortable binding
 	 ("C-;" . embark-dwim)        ;; good alternative: M-.
@@ -619,7 +613,6 @@ Vertico & friends (Orderless, Marginalia, Consult, Embark) provides a performant
 
   ;; Consult users will also want the embark-consult package.
   (use-package embark-consult
-	:ensure t
 	:after (embark consult)
 	:demand t ; only necessary if you have the hook below
 	;; if you want to have consult previews as you move around an
@@ -629,7 +622,6 @@ Vertico & friends (Orderless, Marginalia, Consult, Embark) provides a performant
 
   ;; A few more useful configurations...
   (use-package emacs
-	:ensure t
 	:init
 	;; Add prompt indicator to `completing-read-multiple'.
 	;; Alternatively try `consult-completing-read-multiple'.

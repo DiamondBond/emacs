@@ -479,6 +479,31 @@ I have hardcoded in three buffers that I frequently visit along with helper func
 			  'default)
 			 ))))
 #+END_SRC
+** Initialize =dired=
+*** Description
+Add icons and subtree's to dired.
+*** Code
+#+begin_src emacs-lisp
+  (use-package
+	:ensure t
+	all-the-icons)
+
+  (use-package all-the-icons-dired
+	:ensure t
+	:config
+	:hook (dired-mode . (lambda ()
+						  (interactive)
+						  (unless (file-remote-p default-directory)
+							(all-the-icons-dired-mode)))))
+
+  (use-package dired-subtree
+	:ensure t
+	:config
+	(advice-add 'dired-subtree-toggle :after (lambda ()
+											   (interactive)
+											   (when all-the-icons-dired-mode
+												 (revert-buffer)))))
+#+end_src
 ** Initialize =which-key=
 *** Description
 Possible completion framework with 1s delay.

@@ -443,6 +443,112 @@ I have hardcoded in three buffers that I frequently visit along with helper func
 			  'default)
 			 ))))
 #+END_SRC
+** Initialize =completion=
+*** Description
+Vertico & friends (orderless, marginalia, consult & embark)
+*** Code
+#+begin_src emacs-lisp
+  ;; (use-package ido
+  ;;   :init
+  ;;   (ido-mode 1)
+  ;;   :config
+  ;;   (setq ido-enable-flex-matching nil)
+  ;;   (setq ido-create-new-buffer 'always)
+  ;;   (setq ido-everywhere t))
+
+  ;; (use-package ido-grid-mode
+  ;;   :ensure t
+  ;;   :init
+  ;;   (ido-grid-mode 1))
+  ;; (setq ido-grid-define-keys 'C-n-C-p-up-and-dow
+  n)
+
+  ;; Enable vertico
+  (use-package vertico
+	:init
+	(vertico-mode)
+
+	;; Grow and shrink the Vertico minibuffer
+	(setq vertico-resize t)
+
+	;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
+	(setq vertico-cycle t))
+
+  (use-package orderless
+	:init
+	(setq completion-styles '(orderless)
+		  completion-category-defaults nil
+		  completion-category-overrides '((file (styles partial-completion)))))
+
+  ;; Persist history over Emacs restarts. Vertico sorts by history position.
+  (use-package savehist
+	:init
+	(savehist-mode))
+
+  ;; Information in the margins
+  (use-package marginalia
+	:init
+	(marginalia-mode))
+
+  ;; Consult provides practical commands based on the Emacs completion function completing-read.
+  (use-package consult
+	:general
+	("M-y" 'consult-yank-from-kill-ring
+	 "C-x b" 'consult-buffer))
+
+  ;; Emacs Mini-Buffer Actions Rooted in Keymaps
+  (use-package embark
+	:ensure t
+	:bind
+	(("C-." . embark-act)         ;; pick some comfortable binding
+	 ("C-;" . embark-dwim)        ;; good alternative: M-.
+	 ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+	:init
+	;; Optionally replace the key help with a completing-read interface
+	(setq prefix-help-command #'embark-prefix-help-command)
+	:config
+	;; Hide the mode line of the Embark live/completions buffers
+	(add-to-list 'display-buffer-alist
+				 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+				   nil
+				   (window-parameters (mode-line-format . none)))))
+
+  ;; Consult users will also want the embark-consult package.
+  (use-package embark-consult
+	:ensure t
+	:after (embark consult)
+	:demand t ; only necessary if you have the hook below
+	;; if you want to have consult previews as you move around an
+	;; auto-updating embark collect buffer
+	:hook
+	(embark-collect-mode . consult-preview-at-point-mode))
+
+  ;; A few more useful configurations...
+  (use-package emacs
+	:init
+	;; Add prompt indicator to `completing-read-multiple'.
+	;; Alternatively try `consult-completing-read-multiple'.
+	(defun crm-indicator (args)
+	  (cons (concat "[CRM] " (car args)) (cdr args)))
+	(advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+	;; Do not allow the cursor in the minibuffer prompt
+	(setq minibuffer-prompt-properties
+		  '(read-only t cursor-intangible t face minibuffer-prompt))
+	(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+	;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+	;; Vertico commands are hidden in normal buffers.
+	(setq read-extended-command-predicate
+		  #'command-completion-default-include-p)
+
+	;; Enable recursive minibuffers
+	(setq enable-recursive-minibuffers t)
+
+	;; Completion ignores case
+	(setq completion-ignore-case t)
+	(setq read-file-name-completion-ignore-case t))
+#+end_src
 ** Initialize =which-key=
 *** Description
 Possible completion framework with 1s delay.
@@ -455,6 +561,23 @@ Possible completion framework with 1s delay.
 	(which-key-mode)
 	:config
 	(setq which-key-idle-delay 0.3))
+#+END_SRC
+** Initialize =switch-window=
+*** Description
+C-x o and pick window (a,s,d...)
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package switch-window
+	:ensure t
+	:config
+	(setq switch-window-input-style 'minibuffer)
+	(setq switch-window-increase 4)
+	(setq switch-window-threshold 2)
+	(setq switch-window-shortcut-style 'qwerty)
+	(setq switch-window-qwerty-shortcuts
+		  '("a" "s" "d" "f" "j" "k" "l"))
+	:bind
+	([remap other-window] . switch-window))
 #+END_SRC
 ** Initialize =dired=
 *** Description
@@ -496,15 +619,6 @@ Add icons and subtree's to dired.
 		(otherwise (error "Dired-sort: unknown option %s" otherwise)))
 	  (dired-sort-other arg)))
 #+end_src
-** Initialize =swiper=
-*** Description
-C-s to spawn a search minibuffer that can be traversed via C-n and C-p & <RET>.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package swiper
-	:ensure t
-	:bind ("C-s" . 'swiper))
-#+END_SRC
 ** Initialize =evil=
 *** Description
 Heresy; Vim keybindings in Emacs.
@@ -529,6 +643,15 @@ Heresy; Vim keybindings in Emacs.
 	:config
 	(evil-collection-init))
 #+END_SRC
+** Initialize =swiper=
+*** Description
+C-s to spawn a search minibuffer that can be traversed via C-n and C-p & <RET>.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package swiper
+	:ensure t
+	:bind ("C-s" . 'swiper))
+#+END_SRC
 ** Initialize =avy=
 *** Description
 M-s to jump to desired character.
@@ -539,113 +662,6 @@ M-s to jump to desired character.
 	:bind
 	("M-s" . avy-goto-char))
 #+END_SRC
-** Initialize =switch-window=
-*** Description
-C-x o and pick window (a,s,d...)
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package switch-window
-	:ensure t
-	:config
-	(setq switch-window-input-style 'minibuffer)
-	(setq switch-window-increase 4)
-	(setq switch-window-threshold 2)
-	(setq switch-window-shortcut-style 'qwerty)
-	(setq switch-window-qwerty-shortcuts
-		  '("a" "s" "d" "f" "j" "k" "l"))
-	:bind
-	([remap other-window] . switch-window))
-#+END_SRC
-
-** Initialize =vertico=
-*** Description
-Vertico & friends (Orderless, Marginalia, Consult, Embark) provides a performant and minimalistic vertical completion UI based on the default completion system.
-*** Code
-#+begin_src emacs-lisp
-  ;; Enable vertico
-  (use-package vertico
-	:init
-	(vertico-mode)
-
-	;; Grow and shrink the Vertico minibuffer
-	(setq vertico-resize t)
-
-	;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-	(setq vertico-cycle t))
-
-  (use-package orderless
-	:init
-	(setq completion-styles '(orderless)
-		  completion-category-defaults nil
-		  completion-category-overrides '((file (styles partial-completion)))))
-
-  ;; Persist history over Emacs restarts. Vertico sorts by history position.
-  (use-package savehist
-	:init
-	(savehist-mode))
-
-  ;; Information in the margins
-  (use-package marginalia
-	:init
-	(marginalia-mode))
-
-  ;; Consult provides practical commands based on the Emacs completion function completing-read.
-  (use-package consult
-	:general
-	("M-y" 'consult-yank-from-kill-ring
-	 "C-x b" 'consult-buffer))
-
-  ;; Emacs Mini-Buffer Actions Rooted in Keymaps
-  (use-package embark
-	:bind
-	(("C-." . embark-act)         ;; pick some comfortable binding
-	 ("C-;" . embark-dwim)        ;; good alternative: M-.
-	 ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
-	:init
-	;; Optionally replace the key help with a completing-read interface
-	(setq prefix-help-command #'embark-prefix-help-command)
-	:config
-	;; Hide the mode line of the Embark live/completions buffers
-	(add-to-list 'display-buffer-alist
-				 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-				   nil
-				   (window-parameters (mode-line-format . none)))))
-
-  ;; Consult users will also want the embark-consult package.
-  (use-package embark-consult
-	:after (embark consult)
-	:demand t ; only necessary if you have the hook below
-	;; if you want to have consult previews as you move around an
-	;; auto-updating embark collect buffer
-	:hook
-	(embark-collect-mode . consult-preview-at-point-mode))
-
-  ;; A few more useful configurations...
-  (use-package emacs
-	:init
-	;; Add prompt indicator to `completing-read-multiple'.
-	;; Alternatively try `consult-completing-read-multiple'.
-	(defun crm-indicator (args)
-	  (cons (concat "[CRM] " (car args)) (cdr args)))
-	(advice-add #'completing-read-multiple :filter-args #'crm-indicator)
-
-	;; Do not allow the cursor in the minibuffer prompt
-	(setq minibuffer-prompt-properties
-		  '(read-only t cursor-intangible t face minibuffer-prompt))
-	(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
-
-	;; Emacs 28: Hide commands in M-x which do not work in the current mode.
-	;; Vertico commands are hidden in normal buffers.
-	(setq read-extended-command-predicate
-		  #'command-completion-default-include-p)
-
-	;; Enable recursive minibuffers
-	(setq enable-recursive-minibuffers t)
-
-	;; Completion ignores case
-	(setq completion-ignore-case t)
-	(setq read-file-name-completion-ignore-case t))
-#+end_src
 ** Initialize =async=
 *** Description
 Utilize asynchronous processes whenever possible.

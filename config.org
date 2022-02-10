@@ -1,20 +1,13 @@
 #+STARTUP: overview
-#+TITLE: Emacs Configuration
-#+AUTHOR: Diamond Bond
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 
-* Preamble
-#+begin_quote
-Everything should be made as simple as possible, \\
-but not any simpler
-#+end_quote
 * Dependencies
 ** Packages
 *Ubuntu*
 #+begin_src sh
   #sudo apt-get build-dep emacs
-  sudo apt install bash-completion clang clangd llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps notmuch offlineimap msmtp clang clang-tools clangd ccls llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps emacs-common-non-dfsg libjansson-dev editorconfig glslang-dev glslang-tools sbcl slime shellcheck rustc cargo pipenv wordnet gcc g++ make libsdl2-dev gnutls-bin libxml2-utils python3-pip gnugo gnuchess xboard libgccjit0 htop ffmpeg wget curl xdotool wmctrl slop wkhtmltopdf mupdf mupdf-tools appmenu-gtk2-module mediainfo unoconv exiftool unrar rar unace ace p7zip-full wordnet w3m-el xsel xclip xpdf
+  sudo apt install bash-completion clang clangd llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps notmuch offlineimap msmtp clang clang-tools clangd ccls llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps emacs-common-non-dfsg libjansson-dev editorconfig glslang-dev glslang-tools sbcl slime shellcheck rustc cargo pipenv wordnet gcc g++ make libsdl2-dev gnutls-bin libxml2-utils python3-pip gnugo gnuchess xboard libgccjit0 htop ffmpeg wget curl xdotool wmctrl slop wkhtmltopdf mupdf mupdf-tools appmenu-gtk2-module mediainfo unoconv exiftool unrar rar unace ace p7zip-full wordnet w3m-el xsel xclip xpdf mpd mpc ncmpcpp
 #+end_src
 
 *Python*
@@ -25,19 +18,9 @@ but not any simpler
 Certain files & folders must exist.
 
 #+begin_quote
-~/.emacs.d
+~/Dropbox/org => ~/org
 
-~/org => ~/Dropbox/org
-
-~/pdfs
-
-~/mail
-
-~/.offlineimaprc
-
-~/.config/offlineimap
-
-~/.config/offlineimap/postsync.sh
+~/Dropbox/pdfs => ~/pdfs
 #+end_quote
 ** Emacs
 How to compile and install.

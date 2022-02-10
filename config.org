@@ -11,13 +11,6 @@ but not any simpler
 #+end_quote
 * Dependencies
 ** Packages
-=clang= & =clangd= as backend for C and C++ autocompletion
-=llvm= & =libclang-dev= to install irony server
-=ripgrep= & =fd=find= for file navigation
-=imagemagick= for images
-=texlive-latex-extra= for exporting to LaTeX & PDF
-=notmuch= , =offlineimap= & =msmtp= for email support
-
 *Ubuntu*
 #+begin_src sh
   #sudo apt-get build-dep emacs

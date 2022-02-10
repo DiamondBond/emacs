@@ -80,15 +80,17 @@ Show column number in modeline.
   (column-number-mode 1)
 #+END_SRC
 ** Set font
-DejaVu Sans Mono 12
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
 #+end_src
 ** Set background
-Honeydew
 #+begin_src emacs-lisp
-  (set-background-color "honeydew")
+  (add-to-list 'default-frame-alist '(background-color . "honeydew"))
 #+end_src
+** Highlight current line
+#+BEGIN_SRC emacs-lisp
+  (global-hl-line-mode t)
+#+END_SRC
 ** Show parent parentheses
 #+BEGIN_SRC emacs-lisp
   (show-paren-mode 1)
@@ -174,10 +176,6 @@ Super - Control - <arrow>
   (global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
   (global-set-key (kbd "s-C-<down>") 'shrink-window)
   (global-set-key (kbd "s-C-<up>") 'enlarge-window)
-#+END_SRC
-** Highlight current line
-#+BEGIN_SRC emacs-lisp
-  (global-hl-line-mode t)
 #+END_SRC
 ** Defer loading most packages for quicker startup times
 #+BEGIN_SRC emacs-lisp

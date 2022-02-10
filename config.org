@@ -91,6 +91,12 @@ Show column number in modeline.
   (setq make-backup-files nil)
   (setq auto-save-default nil)
 #+END_SRC
+** Do not litter init.el
+#+begin_src emacs-lisp
+  (setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
+  (when (file-exists-p custom-file) ; Don’t forget to load it, we still need it
+	(load custom-file))
+#+end_src
 ** Enable conservative scrolling
 #+BEGIN_SRC emacs-lisp
   (setq scroll-conservatively 1)
@@ -188,6 +194,40 @@ Super - Control - <arrow>
 	 ("." . browse-url-default-browser)
 	 ))
 #+END_SRC
+** Custom Elisp Functions
+#+begin_src emacs-lisp
+  (defun xah/open-in-external-app (&optional file)
+	"Open FILE or dired marked FILE in external app.
+	The app is chosen from the user’s OS preference."
+	(interactive)
+	(let ((file-list (if file
+						 (list file)
+					   (if (equal major-mode "dired-mode")
+						   (dired-get-marked-files)
+						 (list (buffer-file-name)))))
+		  (do-it-p   (if (<= (length file-list) 5)
+						 t
+					   (y-or-n-p "Open more than 5 files? "))))
+	  (when do-it-p
+		(mapc (lambda (file-path)
+				(let ((process-connection-type nil))
+				  (start-process "" nil "xdg-open" file-path)))
+			  file-list))))
+
+  (defun xah/dired-sort ()
+	"Sort dired dir listing in different ways.
+  Prompt for a choice."
+	(interactive)
+	(let (sort-by arg)
+	  (setq sort-by (completing-read "Sort by:" '("name" "size" "date" "extension")))
+	  (pcase sort-by
+		("name" (setq arg "-ahl --group-directories-first"))
+		("date" (setq arg "-ahl -t --group-directories-first"))
+		("size" (setq arg "-ahl -S --group-directories-first"))
+		("extension" (setq arg "ahlD -X --group-directories-first"))
+		(otherwise (error "Dired-sort: unknown option %s" otherwise)))
+	  (dired-sort-other arg)))
+#+end_src
 * Keybinds
 ** Description
 Personal & global key maps.
@@ -474,6 +514,9 @@ Heresy; Vim keybindings in Emacs.
 	(setq evil-want-C-u-scroll t)
 	:config
 	(evil-mode 1)
+	(setq evil-want-fine-undo t) ; more granular undo with evil
+	(evil-set-initial-state 'messages-buffer-mode 'normal)
+	(evil-set-initial-state 'dashboard-mode 'normal)
 	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle))
 
   (use-package evil-collection
@@ -563,7 +606,43 @@ The `undo-tree-mode' provided by this package replaces Emacs' undo system with a
 #+BEGIN_SRC emacs-lisp
   (use-package undo-tree
 	:ensure t
+	:init
+	(global-undo-tree-mode)
 	:diminish undo-tree-mode)
+#+END_SRC
+** Initialize =undo-tree=
+*** Description
+Hydra is a simple menu creator for keybindings.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package hydra
+	:ensure t)
+
+  (defhydra hydra-zoom ()
+	"
+	^Zoom^                 ^Other
+	^^^^^^^--------------------------
+	[_t_/_s_] zoom in/out  [_q_] quit
+	[_0_]^^   reset zoom
+	"
+	("t" text-scale-increase "zoom in")
+	("s" text-scale-decrease "zoom out")
+	("0" text-scale-adjust "reset")
+	("q" nil "finished" :exit t))
+
+  (defhydra windows-adjust-size ()
+	"
+  ^Zoom^                                ^Other
+  ^^^^^^^-----------------------------------------
+  [_t_/_s_] shrink/enlarge vertically   [_q_] quit
+  [_c_/_r_] shrink/enlarge horizontally
+  "
+	("q" nil :exit t)
+	("c" shrink-window-horizontally)
+	("t" enlarge-window)
+	("s" shrink-window)
+	("r" enlarge-window-horizontally))
+
 #+END_SRC
 ** Initialize =treemacs=
 *** Description
@@ -645,6 +724,14 @@ Git porcelain for Emacs.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package magit
+	:ensure t)
+#+END_SRC
+** Initialize =forge=
+*** Description
+Work with Git forges, such as Github and Gitlab, from the comfort of Magit and the rest of Emacs.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package forge
 	:ensure t)
 #+END_SRC
 ** Initialize =elfeed=

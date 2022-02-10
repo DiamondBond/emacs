@@ -479,6 +479,19 @@ I have hardcoded in three buffers that I frequently visit along with helper func
 			  'default)
 			 ))))
 #+END_SRC
+** Initialize =which-key=
+*** Description
+Possible completion framework with 1s delay.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+	:ensure t
+	:diminish which-key-mode
+	:init
+	(which-key-mode)
+	:config
+	(setq which-key-idle-delay 0.3))
+#+END_SRC
 ** Initialize =dired=
 *** Description
 Add icons and subtree's to dired.
@@ -504,19 +517,6 @@ Add icons and subtree's to dired.
 											   (when all-the-icons-dired-mode
 												 (revert-buffer)))))
 #+end_src
-** Initialize =which-key=
-*** Description
-Possible completion framework with 1s delay.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package which-key
-	:ensure t
-	:diminish which-key-mode
-	:init
-	(which-key-mode)
-	:config
-	(setq which-key-idle-delay 0.3))
-#+END_SRC
 ** Initialize =swiper=
 *** Description
 C-s to spawn a search minibuffer that can be traversed via C-n and C-p & <RET>.

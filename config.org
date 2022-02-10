@@ -1,17 +1,8 @@
 #+STARTUP: overview
+#+TITLE: Emacs Configuration
+#+AUTHOR: Diamond Bond
 #+LANGUAGE: en
 #+OPTIONS: num:nil
-
------
-#+begin_src 
-_\/_                 |                _\/_
-/o\\             \       /            //o\
- |                 .---.                |
-_|_______     --  /     \  --     ______|__
-         `~^~^~^~^~^~^~^~^~^~^~^~`
-           diamond's emacs cfg 💫
-#+end_src
------
 
 * Preamble
 This is a simple WIP emacs configuration.
@@ -87,6 +78,16 @@ Show column number in modeline.
 #+BEGIN_SRC emacs-lisp
   (column-number-mode 1)
 #+END_SRC
+** Set font
+DejaVu Sans Mono 12
+#+begin_src emacs-lisp
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
+#+end_src
+** Set background
+Honeydew
+#+begin_src emacs-lisp
+  (set-background-color "honeydew")
+#+end_src
 ** Show parent parentheses
 #+BEGIN_SRC emacs-lisp
   (show-paren-mode 1)
@@ -901,8 +902,7 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 	  (dashboard-refresh-buffer))
 
 	;; Load light theme 
-	(modus-themes-light) ;; OR (modus-themes-load-vivendi)
-	(set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
+	;;(modus-themes-light) ;; OR (modus-themes-load-vivendi)
 
 	:bind ("<S-f5>" . modus-themes-toggle))
 #+end_src

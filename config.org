@@ -491,7 +491,7 @@ Vertico & friends (orderless, marginalia, consult & embark)
 
   ;; Consult provides practical commands based on the Emacs completion function completing-read.
   (use-package consult
-	:general
+	:bind
 	("M-y" 'consult-yank-from-kill-ring
 	 "C-x b" 'consult-buffer))
 
@@ -567,7 +567,6 @@ C-x o and pick window (a,s,d...)
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package switch-window
-	:ensure t
 	:config
 	(setq switch-window-input-style 'minibuffer)
 	(setq switch-window-increase 4)
@@ -583,9 +582,8 @@ C-x o and pick window (a,s,d...)
 Add icons and subtree's to dired.
 *** Code
 #+begin_src emacs-lisp
-  (use-package
-	:ensure t
-	all-the-icons)
+  (use-package all-the-icons
+	:ensure t)
 
   (use-package all-the-icons-dired
 	:ensure t

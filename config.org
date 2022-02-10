@@ -1,4 +1,6 @@
 #+STARTUP: overview
+#+TITLE: Emacs Configuration 1.0
+#+AUTHOR: Diamond Bond
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 

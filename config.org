@@ -589,6 +589,7 @@ Add icons and subtree's to dired.
 
   (use-package all-the-icons-dired
 	:ensure t
+	:diminish all-the-icons-dired-mode
 	:config
 	:hook (dired-mode . (lambda ()
 						  (interactive)

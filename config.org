@@ -1129,6 +1129,18 @@ Language Server Protocol
 	:hook (python-mode . (lambda () (require 'lsp-pyright)))
 	:init (when (executable-find "python3")
 			(setq lsp-pyright-python-executable-cmd "python3")))
+
+  (use-package format-all
+	:preface
+	(defun ian/format-code ()
+	  "Auto-format whole buffer."
+	  (interactive)
+	  (if (derived-mode-p 'prolog-mode)
+		  (prolog-indent-buffer)
+		(format-all-buffer)))
+	:config
+	(global-set-key (kbd "M-F") #'ian/format-code)
+	(add-hook 'prog-mode-hook #'format-all-ensure-formatter))
 #+end_src
 ** C & C++
 *** Description
@@ -1213,6 +1225,16 @@ Syntax highlighting for json files. Hopefully lighter weight than javascript mod
   (use-package json-mode
 	:ensure t
 	:mode ("\\.json\\'" . json-mode))
+#+end_src
+** TypeScript
+*** Description
+Self-contained, lightweight and minimalist major-mode focused on providing basic font-lock/syntax-highlighting and indentation for Typescript syntax, without any external dependencies.
+*** Code
+#+begin_src emacs-lisp
+  (use-package typescript-mode
+	:mode ("\\.tsx?\\'" . typescript-mode)
+	:config
+	(setq typescript-indent-level 2))
 #+end_src
 ** Markdown
 *** Description

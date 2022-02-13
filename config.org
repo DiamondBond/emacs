@@ -220,6 +220,8 @@ Personal & global key maps.
   (define-key z-map (kbd "0") 'delete-frame)
   (define-key z-map (kbd "o") 'other-frame)
   (define-key z-map (kbd "m") 'olivetti-mode)
+  (define-key z-map (kbd "h") 'hyperbole)
+  (define-key z-map (kbd "v") 'vterm)
 
   (define-key z-map (kbd "b") 'display-battery-mode)
   (define-key z-map (kbd "t") 'display-time-mode)
@@ -316,6 +318,31 @@ Also enables org-bullets & htmlize.
 
   (use-package htmlize
 	:ensure t)
+
+  (use-package ox-publish
+	:ensure t
+	:config
+	(setq org-publish-project-alist
+		  '(("posts"
+			 :base-directory "posts/"
+			 :base-extension "org"
+			 :publishing-directory "public/"
+			 :recursive t
+			 :publishing-function org-html-publish-to-html
+			 :auto-sitemap t
+			 :sitemap-title "Index"
+			 :sitemap-filename "index.org"
+			 :sitemap-style list
+			 :author "Diamond Bond"
+			 :email "diamondbond1@gmail.com"
+			 :with-creator t)
+			("css"
+			 :base-directory "css/"
+			 :base-extension "css"
+			 :publishing-directory "public/css"
+			 :publishing-function org-publish-attachment
+			 :recursive t)
+			("all" :components ("posts" "css")))))
 #+END_SRC
 * Eshell
 ** Description
@@ -1065,8 +1092,16 @@ Emacs minor mode for a nice writing environment.
 #+begin_src emacs-lisp
   (use-package olivetti
 	:ensure t
-	:defer nil
-	:config)
+	:defer nil)
+#+end_src
+** Initialize =hyperbole=
+*** Description
+Efficient and programmable hypertextual information management system.
+*** Code
+#+begin_src emacs-lisp
+  (use-package hyperbole
+	:ensure t
+	:defer nil)
 #+end_src
 ** Built-in entry: =eldoc=
 *** Description

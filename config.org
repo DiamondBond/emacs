@@ -1090,6 +1090,13 @@ Supress eldoc from modeline.
 	:ensure t
 	:diminish eldoc-mode)
 #+END_SRC
+* Functions
+** Sync email
+#+begin_src emacs-lisp
+  (defun sync-email ()
+	(interactive)
+	(async-shell-command "offlineimap"))
+#+end_src
 * Languages
 ** LSP
 *** Description

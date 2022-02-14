@@ -51,6 +51,11 @@ We build with all cores and natively compile everything ahead of time. This will
 #+end_src
 * QoL section
 Quality-of-life modifications for a more pleasant Emacs experience.
+** User details
+#+begin_src emacs-lisp
+  (setq user-mail-address "diamondbond1@gmail.com"
+		user-full-name "Diamond")
+#+end_src
 ** Enable line numbers
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
 #+BEGIN_SRC emacs-lisp
@@ -993,8 +998,7 @@ Notmuch email configuration.
 
 	;; setup the mail address and use name
 	(setq mail-user-agent 'message-user-agent)
-	(setq user-mail-address "diamondbond1@gmail.com"
-		  user-full-name "Diamond")
+
 	;; smtp config
 	(setq smtpmail-smtp-server "smtp.gmail.com"
 		  message-send-mail-function 'message-smtpmail-send-it)

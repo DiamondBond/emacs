@@ -1091,9 +1091,22 @@ Supress eldoc from modeline.
 	:diminish eldoc-mode)
 #+END_SRC
 * Functions
+** Supress *Async Shell Command* output
+#+begin_src emacs-lisp
+  ;; (setq async-shell-command-display-buffer nil)
+  (add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil)))
+#+end_src
+** Update emacs git
+#+begin_src emacs-lisp
+  (defun update-emacs-git ()
+	"Copy ~/.emacs.d/config.org to ~/git/emacs/config.org"
+	(interactive)
+	(async-shell-command "cp ~/.emacs.d/config.org ~/git/emacs/config.org"))
+#+end_src
 ** Sync email
 #+begin_src emacs-lisp
   (defun sync-email ()
+	"Sync email to local database."
 	(interactive)
 	(async-shell-command "offlineimap"))
 #+end_src

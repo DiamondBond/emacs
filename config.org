@@ -274,6 +274,7 @@ Personal & global key maps.
   (global-set-key (kbd "<f10>") 'compile)
   (global-set-key (kbd "C-x w") 'elfeed)
   (global-set-key (kbd "C-x x") 'window-swap-states)
+  (global-set-key (kbd "C-c o") #'crux-open-with)
 #+END_SRC
 * =Org= mode
 ** Description
@@ -327,6 +328,15 @@ Also enables org-bullets & htmlize.
 
   (use-package ox-publish
 	:ensure t)
+
+  (use-package deft
+	:config
+	(setq deft-directory org-directory
+		  deft-recursive t
+		  deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
+		  deft-use-filename-as-title t)
+	:bind
+	("C-c n d" . deft))
 
   ;; (use-package auto-complete
   ;;   :ensure t
@@ -1112,6 +1122,15 @@ Efficient and programmable hypertextual information management system.
 *** Code
 #+begin_src emacs-lisp
   (use-package hyperbole
+	:ensure t
+	:defer nil)
+#+end_src
+** Initialize =crux=
+*** Description
+A Collection of Ridiculously Useful eXtensions.
+*** Code
+#+begin_src emacs-lisp
+  (use-package crux
 	:ensure t
 	:defer nil)
 #+end_src

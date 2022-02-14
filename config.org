@@ -64,8 +64,6 @@ Show column number in modeline.
 #+END_SRC
 ** Set font
 #+begin_src emacs-lisp
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
-
   ;; Set default, fixed and variable pitch fonts
   ;; Use M-x menu-set-font to view available fonts
   ;; (use-package mixed-pitch
@@ -75,6 +73,8 @@ Show column number in modeline.
   ;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
   ;;   (set-face-attribute 'fixed-pitch nil :font "DejaVu Sans Mono")
   ;;   (set-face-attribute 'variable-pitch nil :font "DejaVu Sans"))
+
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
 #+end_src
 ** Set background
 #+begin_src emacs-lisp

@@ -497,6 +497,18 @@ Vertico & friends (orderless, marginalia, consult & embark)
 	;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
 	(setq vertico-cycle t))
 
+  ;; Configure directory extension.
+  (use-package vertico-directory
+	:after vertico
+	:ensure nil
+	;; More convenient directory navigation commands
+	:bind (:map vertico-map
+				("RET" . vertico-directory-enter)
+				("DEL" . vertico-directory-delete-char)
+				("M-DEL" . vertico-directory-delete-word))
+	;; Tidy shadowed file names
+	:hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
   (use-package orderless
 	:init
 	(setq completion-styles '(orderless)
@@ -580,9 +592,12 @@ Company is the autocompletion frontend that takes all the backends and gives you
   (use-package company
 	:ensure t
 	:config
-	(setq company-idle-delay 0)
+	(setq company-idle-delay 0.15)
 	(setq company-minimum-prefix-length 3)
-	(global-company-mode t))
+	(setq company-selection-wrap-around t)
+	(setq company-files-exclusions '(".git/" ".DS_Store"))
+
+	:hook (after-init . global-company-mode))
 
   (use-package company-posframe
 	:config

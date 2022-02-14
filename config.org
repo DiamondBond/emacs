@@ -65,6 +65,16 @@ Show column number in modeline.
 ** Set font
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
+
+  ;; Set default, fixed and variable pitch fonts
+  ;; Use M-x menu-set-font to view available fonts
+  ;; (use-package mixed-pitch
+  ;;   :hook
+  ;;   (text-mode . mixed-pitch-mode)
+  ;;   :config
+  ;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
+  ;;   (set-face-attribute 'fixed-pitch nil :font "DejaVu Sans Mono")
+  ;;   (set-face-attribute 'variable-pitch nil :font "DejaVu Sans"))
 #+end_src
 ** Set background
 #+begin_src emacs-lisp
@@ -273,43 +283,39 @@ Also enables org-bullets & htmlize.
 #+BEGIN_SRC emacs-lisp
   (use-package org
 	:config
-	(add-hook 'org-mode-hook
-			  #'(lambda ()
-				  (visual-line-mode 1)))
-	(setq org-display-inline-images t)
-	(setq org-redisplay-inline-images t)
-	(setq org-startup-with-inline-images "inlineimages")
-	(setq org-directory "~/org")
-	(setq org-agenda-files (list "inbox.org"))
-	(setq initial-major-mode 'org-mode)
-	(global-set-key (kbd "C-<f1>") (lambda()
-									 (interactive)
-									 (show-all)))
 	(setq org-directory "~/org"
+		  initial-major-mode 'org-mode
+		  org-display-inline-images t
+		  org-redisplay-inline-images t
+		  org-startup-with-inline-images "inlineimages"
+		  org-pretty-entitles t
+		  org-agenda-files (list "inbox.org")
 		  org-image-actual-width nil
 		  +org-export-directory "~/org/export"
 		  org-default-notes-file "~/org/inbox.org"
 		  org-id-locations-file "~/org/.orgids"
-		  org-agenda-files (directory-files-recursively "~/Dropbox/org/" "\\.org$")
-		  ;; org-export-in-background t
 		  org-catch-invisible-edits 'smart)
 
 	;; src exec
 	(org-babel-do-load-languages 'org-babel-load-languages
-								 '(
-								   (shell . t)
-								   )
-								 )
+								 '((shell . t)))
 
+	;; org templates
 	(setq org-capture-templates
 		  '(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
 			 "* %?\n%a\nEntered on %U")
-			;; "* %?\nEntered on %U\n  %i\n  %a")
 			("j" "Journal" entry (file+datetree "~/org/journal.org")
 			 "* %?\n%a\nEntered on %U")))
-	(define-key global-map (kbd "C-c c") 'org-capture)
-	(global-set-key (kbd "C-c l") 'org-store-link)
-	)
+
+	;; hook
+	(add-hook 'org-mode-hook
+			  #'(lambda ()
+				  (visual-line-mode 1)))
+
+	:bind
+	("C-c c" . 'org-capture)
+	("C-c l" . 'org-store-link)
+	("C-<f1>" . (lambda()(interactive)(show-all))))
 
   (use-package org-bullets
 	:ensure t
@@ -560,6 +566,31 @@ Vertico & friends (orderless, marginalia, consult & embark)
 	(setq completion-ignore-case t)
 	(setq read-file-name-completion-ignore-case t))
 #+end_src
+** Initialize =company=
+*** Description
+Company is the autocompletion frontend that takes all the backends and gives you possible autocompletions when writing programs. We use it here for C/C++.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+	:ensure t
+	:config
+	(setq company-idle-delay 0)
+	(setq company-minimum-prefix-length 3)
+	(global-company-mode t))
+
+  (use-package company-posframe
+	:config
+	(company-posframe-mode 1))
+
+  (use-package company-fuzzy
+	:after company
+	:commands company-fuzzy-mode
+	:config
+	(setq company-fuzzy-sorting-backend 'alphabetic)
+	(setq company-fuzzy-prefix-ontop t)
+	(setq company-fuzzy-show-annotation t)
+	(add-to-list 'company-fuzzy--no-prefix-backends 'company-yasnippet))
+#+END_SRC
 ** Initialize =which-key=
 *** Description
 Possible completion framework with 1s delay.
@@ -572,6 +603,22 @@ Possible completion framework with 1s delay.
 	(which-key-mode)
 	:config
 	(setq which-key-idle-delay 0.3))
+#+END_SRC
+** Initialize =yasnippet=
+*** Description
+Yasnippet provides useful snippets.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+	:ensure t
+	:diminish yas-minor-mode
+	:hook
+	((c-mode c++-mode) . yas-minor-mode)
+	:config
+	(yas-reload-all))
+
+  (use-package yasnippet-snippets
+	:ensure t)
 #+END_SRC
 ** Initialize =switch-window=
 *** Description
@@ -882,42 +929,6 @@ Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based
   (use-package vterm
 	:ensure t)
 #+end_src
-** Initialize =company=
-*** Description
-Company is the autocompletion frontend that takes all the backends and gives you possible autocompletions when writing programs. We use it here for C/C++.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package company
-	:ensure t
-	:diminish (company-mode irony-mode)
-	:config
-	(setq company-idle-delay 0)
-	(setq company-minimum-prefix-length 3)
-	(define-key company-active-map (kbd "M-n") nil)
-	(define-key company-active-map (kbd "M-p") nil)
-	(define-key company-active-map (kbd "C-n") #'company-select-next)
-	(define-key company-active-map (kbd "C-p") #'company-select-previous)
-	(define-key company-active-map (kbd "SPC") #'company-abort)
-	(global-company-mode t)
-	:hook
-	((c-mode c++-mode) . company-mode))
-#+END_SRC
-** Initialize =yasnippet=
-*** Description
-Yasnippet provides useful snippets.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package yasnippet
-	:ensure t
-	:diminish yas-minor-mode
-	:hook
-	((c-mode c++-mode) . yas-minor-mode)
-	:config
-	(yas-reload-all))
-
-  (use-package yasnippet-snippets
-	:ensure t)
-#+END_SRC
 ** Initialize =saveplace=
 *** Description
 Saves cursor location in buffers.
@@ -1070,7 +1081,9 @@ Emacs minor mode for a nice writing environment.
 #+begin_src emacs-lisp
   (use-package olivetti
 	:ensure t
-	:defer nil)
+	:defer nil
+	:init
+	(setq olivetti-body-width .67))
 #+end_src
 ** Initialize =hyperbole=
 *** Description
@@ -1123,6 +1136,31 @@ Supress eldoc from modeline.
 	"Stops recording screen."
 	(interactive)
 	(shell-command "killall -9 ffmpeg"))
+#+end_src
+** MPV
+#+begin_src emacs-lisp
+  (defun start-mpv (path &optional playlist-p)
+	"Start mpv with specified arguments"
+	(let* ((default-cmd "mpv --force-window")
+		   (cmd (if playlist-p
+					(s-append " --loop-playlist --playlist=" default-cmd)
+				  (s-append " --loop " default-cmd))))
+	  (call-process-shell-command (s-concat cmd (shell-quote-argument path)) nil 0)))
+
+  (defun mpv ()
+	"Play a file in current line"
+	(interactive)
+	(start-mpv (dired-get-filename)))
+
+  (defun mpv-dir ()
+	"Play all multimedia files in current directory"
+	(interactive)
+	(start-mpv default-directory))
+
+  (defun mpv-playlist ()
+	"Play a playlist in current line"
+	(interactive)
+	(start-mpv (dired-get-filename) t))
 #+end_src
 * Languages
 ** LSP
@@ -1205,6 +1243,7 @@ Irony is the company backend for C and C++
 	(setq company-backends '((company-c-headers
 							  company-dabbrev-code
 							  company-irony))))
+
   (use-package irony
 	:defer nil
 	:ensure t
@@ -1252,7 +1291,6 @@ Autopep8 which automatically applies proper python coding standards on save, if 
   (use-package company-jedi
 	:ensure t
 	:config
-	;; (setq jedi:environment-virtualenv (list (expand-file-name "~/.virtualenvs")))
 	(add-hook 'python-mode-hook 'jedi:setup)
 	(setq jedi:complete-on-dot t)
 	(setq jedi:use-shortcuts t)

@@ -51,7 +51,7 @@ We build with all cores and natively compile everything ahead of time. This will
 #+end_src
 * QoL section
 Quality-of-life modifications for a more pleasant Emacs experience.
-** User details
+** Identity
 #+begin_src emacs-lisp
   (setq user-mail-address "diamondbond1@gmail.com"
 		user-full-name "Diamond")

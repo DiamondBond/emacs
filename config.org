@@ -996,7 +996,7 @@ Notmuch email configuration.
 	(add-hook 'notmuch-hello-mode-hook
 			  (lambda () (display-line-numbers-mode 0)))
 
-	;; setup the mail address and use name
+	;; setup the mail address
 	(setq mail-user-agent 'message-user-agent)
 
 	;; smtp config

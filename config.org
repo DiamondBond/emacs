@@ -209,7 +209,8 @@ Super - Control - <arrow>
    '(
 	 ("wikipedia\\.org" . browse-url-firefox)
 	 ("github" . browse-url-firefox)
-	 ("reddit" . browse-url-chromium)
+	 ("reddit" . browse-url-firefox)
+	 ("youtube" . browse-url-chromium)
 	 ("thefreedictionary\\.com" . eww-browse-url)
 	 ("." . browse-url-default-browser)
 	 ))
@@ -1260,7 +1261,7 @@ Supress eldoc from modeline.
 #+end_src
 ** ncmpcpp
 #+begin_src emacs-lisp
-  (defun music ()
+  (defun ncmpcpp ()
 	"ncmpcpp"
 	(interactive)
 	(run-in-vterm "ncmpcpp"))

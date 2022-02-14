@@ -1010,10 +1010,16 @@ Notmuch email configuration.
 	(setq message-directory "~/mail/")
 	;; show newest emails on top
 	;;(setq notmuch-search-oldest-first nil)
-	;;  (setq notmuch-saved-search-sort-function ')
+
+	;; Function to prune tag:deleted
+	(defun prune-emails ()
+	  "Delete old emails."
+	  (interactive)
+	  (async-shell-command "notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm"))
+
 	;; Function to refresh local mail box from within emacs
 	(defun notmuch-exec-offlineimap ()
-	  "execute offlineimap"
+	  "Execute offlineimap."
 	  (interactive)
 	  (set-process-sentinel
 	   (start-process-shell-command "offlineimap"
@@ -1024,9 +1030,10 @@ Notmuch email configuration.
 		   (let ((w (get-buffer-window "*offlineimap*")))
 			 (when w
 			   (with-selected-window w (recenter (window-end))))))))
+
 	(setq-default notmuch-saved-searches
 				  (quote
-				   ((:name "inbox" :query "(tag:inbox OR tag:unread)" :sort-order newest-first :key "1")
+				   ((:name "inbox" :query "(tag:inbox)" :sort-order newest-first :key "1")
 					(:name "unread" :query "(tag:unread)" :sort-order newest-first :key "n")
 					(:name "starred" :query "tag:flagged" :sort-order newest-first :key "f")
 					(:name "sent" :query "(tag:sent OR tag:replied)" :sort-order newest-first :key "s")))))

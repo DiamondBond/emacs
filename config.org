@@ -1264,6 +1264,11 @@ Supress eldoc from modeline.
 	"btop"
 	(interactive)
 	(run-in-vterm "btop"))
+
+  (defun gotop ()
+	"gotop"
+	(interactive)
+	(run-in-vterm "gotop"))
 #+end_src
 * Languages
 ** LSP

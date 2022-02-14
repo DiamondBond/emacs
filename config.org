@@ -1113,7 +1113,7 @@ Supress eldoc from modeline.
 ** Record screen
 #+begin_src emacs-lisp
   (defun record-screen-start ()
-	"Records screen to specified output file (.mkv recommended)"
+	"Record screen to .mkv"
 	(interactive)
 	(let ((input (read-file-name "Output file: ")))
 	  (async-shell-command

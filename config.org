@@ -1253,6 +1253,18 @@ Supress eldoc from modeline.
 	(interactive)
 	(run-in-vterm "ncmpcpp"))
 #+end_src
+** top
+#+begin_src emacs-lisp
+  (defun htop ()
+	"htop"
+	(interactive)
+	(run-in-vterm "htop"))
+
+  (defun btop ()
+	"btop"
+	(interactive)
+	(run-in-vterm "btop"))
+#+end_src
 * Languages
 ** LSP
 *** Description

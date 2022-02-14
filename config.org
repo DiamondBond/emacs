@@ -327,6 +327,12 @@ Also enables org-bullets & htmlize.
 
   (use-package ox-publish
 	:ensure t)
+
+  ;; (use-package auto-complete
+  ;;   :ensure t
+  ;;   :config
+  ;;   (add-to-list 'ac-modes 'org-mode)
+  ;;   (ac-set-trigger-key "TAB"))
 #+END_SRC
 * Eshell
 ** Description
@@ -1264,11 +1270,13 @@ Go-mode covers it all.
 #+end_src
 ** Python
 *** Description
-Elpy for basics.
-Jedi for better autocomplete and static code analysis, also integrates with company.
-Autopep8 which automatically applies proper python coding standards on save, if not already.
+Elpy for basics & Jedi for better autocomplete and static code analysis, also integrates with company. Autopep8 automatically applies proper python coding standards on save, if not already.
 *** Code
 #+BEGIN_SRC emacs-lisp
+  ;; Set python3
+  (setq py-python-command "python3")
+  (setq python-shell-interpreter "python3")
+
   (use-package elpy
 	:ensure t
 	:config

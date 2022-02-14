@@ -542,8 +542,8 @@ Vertico & friends (orderless, marginalia, consult & embark)
   ;; Consult provides practical commands based on the Emacs completion function completing-read.
   (use-package consult
 	:bind
-	("M-y" 'consult-yank-from-kill-ring
-	 "C-x b" 'consult-buffer))
+	(("M-y" . consult-yank-from-kill-ring)
+	 ("C-x b" . consult-buffer)))
 
   ;; Emacs Mini-Buffer Actions Rooted in Keymaps
   (use-package embark
@@ -613,9 +613,9 @@ Company is the autocompletion frontend that takes all the backends and gives you
 
 	:hook (after-init . global-company-mode))
 
-  (use-package company-posframe
-	:config
-	(company-posframe-mode 1))
+  ;; (use-package company-posframe
+  ;;   :config
+  ;;   (company-posframe-mode 1))
 
   (use-package company-fuzzy
 	:after company
@@ -695,7 +695,6 @@ Add icons and subtree's to dired.
 											   (interactive)
 											   (when all-the-icons-dired-mode
 												 (revert-buffer)))))
-
 
   (defun xah/dired-sort ()
 	"Sort dired dir listing in different ways.
@@ -1144,6 +1143,21 @@ A Collection of Ridiculously Useful eXtensions.
 	:ensure t
 	:defer nil)
 #+end_src
+** Initialize =flyspell=
+*** Description
+Spell checking, requires Hunspell.
+*** Code
+#+begin_src emacs-lisp
+  ;; (use-package flyspell
+  ;;   :config
+  ;;   (setq ispell-program-name "hunspell"
+  ;; 		ispell-default-dictionary "en_US")
+  ;;   :hook (text-mode . flyspell-mode)
+  ;;   :bind (("M-<f7>" . flyspell-word)
+  ;; 		 ;;("<f7>" . flyspell-buffer)
+  ;; 		 ;;("C-;" . flyspell-auto-correct-previous-word)
+  ;; 		 ))
+#+end_src
 ** Built-in entry: =eldoc=
 *** Description
 Supress eldoc from modeline.
@@ -1187,7 +1201,7 @@ Supress eldoc from modeline.
 	(interactive)
 	(shell-command "killall -9 ffmpeg"))
 #+end_src
-** MPV
+** mpv
 #+begin_src emacs-lisp
   (defun start-mpv (path &optional playlist-p)
 	"Start mpv with specified arguments"
@@ -1269,6 +1283,21 @@ Supress eldoc from modeline.
 	"gotop"
 	(interactive)
 	(run-in-vterm "gotop"))
+#+end_src
+** skips
+#+begin_src emacs-lisp
+  (defun next-15-lines ()
+	"Move to the next 15 lines."
+	(interactive)
+	(forward-line 15))
+
+  (defun previous-15-lines ()
+	"Move to the previous 15 lines."
+	(interactive)
+	(forward-line -15))
+
+  (define-key global-map (kbd "C-S-n") #'next-15-lines)
+  (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 #+end_src
 * Languages
 ** LSP

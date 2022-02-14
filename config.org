@@ -274,7 +274,6 @@ Personal & global key maps.
   (global-set-key (kbd "<f10>") 'compile)
   (global-set-key (kbd "C-x w") 'elfeed)
   (global-set-key (kbd "C-x x") 'window-swap-states)
-  (global-set-key (kbd "C-c o") #'crux-open-with)
 #+END_SRC
 * =Org= mode
 ** Description

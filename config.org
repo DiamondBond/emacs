@@ -13,7 +13,7 @@
 #+end_src
 *Termux*
 #+begin_src sh
-  pkg install openssh notmuch net-tools clang python git vim emacs zip fzf hunspell hunspell-en-us imagemagick build-essential texlive-bin llvm bash-completion ripgrep libjansson libvterm
+  pkg install openssh notmuch net-tools clang python git vim emacs zip fzf hunspell hunspell-en-us imagemagick build-essential texlive-bin llvm bash-completion ripgrep libjansson libvterm gnuchess
   termux-install-tl
 #+end_src
 *Python*

@@ -26,9 +26,9 @@
 #+end_src
 ** Files
 Certain files & folders must exist.
-#+begin_quote
-mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
-#+end_quote
+#+begin_src sh
+  mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
+#+end_src
 ** Emacs
 How to compile and install.
 *** Grabbing sources

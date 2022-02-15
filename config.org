@@ -218,6 +218,8 @@ Super - Control - <arrow>
 	 ("thefreedictionary\\.com" . eww-browse-url)
 	 ("." . browse-url-default-browser)
 	 ))
+
+  
 #+END_SRC
 * Keybinds
 ** Description
@@ -1224,31 +1226,6 @@ Supress eldoc from modeline.
 	(interactive)
 	(shell-command "killall -9 ffmpeg"))
 #+end_src
-** mpv
-#+begin_src emacs-lisp
-  (defun start-mpv (path &optional playlist-p)
-	"Start mpv with specified arguments"
-	(let* ((default-cmd "mpv --force-window")
-		   (cmd (if playlist-p
-					(s-append " --loop-playlist --playlist=" default-cmd)
-				  (s-append " --loop " default-cmd))))
-	  (call-process-shell-command (s-concat cmd (shell-quote-argument path)) nil 0)))
-
-  (defun mpv ()
-	"Play a file in current line"
-	(interactive)
-	(start-mpv (dired-get-filename)))
-
-  (defun mpv-dir ()
-	"Play all multimedia files in current directory"
-	(interactive)
-	(start-mpv default-directory))
-
-  (defun mpv-playlist ()
-	"Play a playlist in current line"
-	(interactive)
-	(start-mpv (dired-get-filename) t))
-#+end_src
 ** Run in vterm
 #+begin_src emacs-lisp
   (defun run-in-vterm-kill (process event)
@@ -1306,6 +1283,22 @@ Supress eldoc from modeline.
 	"gotop"
 	(interactive)
 	(run-in-vterm "gotop"))
+#+end_src
+** splits
+#+begin_src emacs-lisp
+  (defun split-and-follow-horizontally ()
+	(interactive)
+	(split-window-below)
+	(balance-windows)
+	(other-window 1))
+  (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+
+  (defun split-and-follow-vertically ()
+	(interactive)
+	(split-window-right)
+	(balance-windows)
+	(other-window 1))
+  (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 #+end_src
 ** skips
 #+begin_src emacs-lisp

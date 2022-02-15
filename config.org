@@ -615,8 +615,10 @@ Company is the autocompletion frontend that takes all the backends and gives you
 	(setq company-selection-wrap-around t)
 	(setq company-files-exclusions '(".git/" ".DS_Store"))
 
-	:hook (after-init . global-company-mode))
+	:hook (after-init . global-company-mode)
+	:diminish company-mode)
 
+  ;; Use in conjunction with mixed-pitch-mode (QoL section - Set font)
   ;; (use-package company-posframe
   ;;   :config
   ;;   (company-posframe-mode 1))
@@ -1183,6 +1185,23 @@ Useful for when running in termux.
   ;;   ;; Corrects (and improves) org-mode's native fontification.
   ;;   (doom-themes-org-config))
 #+end_src
+** Initialize =clm=
+*** Description
+Show event history and command history of some or all buffers.
+*** Code
+#+begin_src emacs-lisp
+	(use-package command-log-mode
+	:ensure t)
+#+end_src
+** Initialize =exec-path-from-shell=
+*** Description
+Library to ensure environment variables inside Emacs look the same as in the user's shell.
+*** Code
+#+begin_src emacs-lisp
+  (use-package exec-path-from-shell
+	:ensure t
+	:init (exec-path-from-shell-initialize))  
+#+end_src
 ** Built-in entry: =eldoc=
 *** Description
 Supress eldoc from modeline.
@@ -1475,6 +1494,9 @@ Self-contained, lightweight and minimalist major-mode focused on providing basic
 	:mode ("\\.tsx?\\'" . typescript-mode)
 	:config
 	(setq typescript-indent-level 2))
+
+  (use-package prettier-js
+	:ensure t)
 #+end_src
 ** Markdown
 *** Description

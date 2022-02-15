@@ -64,6 +64,22 @@ Start the emacs daemon and get a cup of tea/coffee as use-package will begin ins
 #+begin_src sh
   emacs --daemon;
 #+end_src
+
+#+begin_quote
+Starting Emacs daemon.
+#+end_quote
+Once emacs has started, its time to connect to the server via emacsclient and setup some internal things.
+
+Connecting to the emacs daemon:
+#+begin_src sh
+  emacsclient -c -n -a 'emacs'
+#+end_src
+
+*Compile pdf-tools & vterm*
+#+begin_quote
+M-x pdf-tools-install
+M-x vterm
+#+end_quote
 * QoL section
 Quality-of-life modifications for a more pleasant Emacs experience.
 ** Identity

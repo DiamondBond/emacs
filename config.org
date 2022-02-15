@@ -27,10 +27,7 @@
 ** Files
 Certain files & folders must exist.
 #+begin_quote
-mkdir -p ~/Dropbox/org
-mkdir -p ~/Dropbox/pdfs
-ln -s ~/Dropbox/org ~/org
-ln -s ~/Dropbox/pdfs ~/pdfs
+mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
 #+end_quote
 ** Emacs
 How to compile and install.
@@ -51,6 +48,21 @@ We build with all cores and natively compile everything ahead of time. This will
 #+begin_src sh
   make NATIVE_FULL_AOT=1 -j$(nproc)
   sudo make install
+#+end_src
+* Setup
+Clone the emacs configuration
+#+begin_src sh
+  mkdir -p ~/git; git clone https://github.com/diamondbond/emacs ~/git/emacs
+#+end_src
+
+Copy the configuration files over to your local ~/.emacs.d
+#+begin_src sh
+  mkdir -p ~/.emacs.d/; cp -r ~/git/emacs/{early-init.el,init.el,config.org,snippets} ~/.emacs.d/
+#+end_src
+
+Start the emacs daemon and get a cup of tea/coffee as use-package will begin installing all the required packages, this will take some time.
+#+begin_src sh
+  emacs --daemon;
 #+end_src
 * QoL section
 Quality-of-life modifications for a more pleasant Emacs experience.
@@ -435,6 +447,7 @@ I have hardcoded in three buffers that I frequently visit along with helper func
   (use-package dashboard
 	:ensure t
 	:defer nil
+	:diminish dashboard-mode
 	:preface
 	(defun init-edit ()
 	  "Edit initialization file"

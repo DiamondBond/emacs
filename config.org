@@ -231,7 +231,7 @@ Super - Control - <arrow>
 	 ("." . browse-url-default-browser)
 	 ))
 
-  
+
 #+END_SRC
 * Keybinds
 ** Description
@@ -1203,7 +1203,7 @@ Useful for when running in termux.
 Show event history and command history of some or all buffers.
 *** Code
 #+begin_src emacs-lisp
-	(use-package command-log-mode
+  (use-package command-log-mode
 	:ensure t)
 #+end_src
 ** Initialize =exec-path-from-shell=

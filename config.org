@@ -104,11 +104,14 @@ Connecting to the emacs daemon:
   emacsclient -c -n -a 'emacs'
 #+end_src
 
-*Compile pdf-tools & vterm*
+*Post Setup*
+Compile pdf-tools & vterm
+Install all-the-icons font
 #+begin_quote
 M-x pdf-tools-install
 M-x vterm
 M-x all-the-icons-install-fonts
+M-x kill-emacs #restart emacs
 #+end_quote
 * QoL section
 Quality-of-life modifications for a more pleasant Emacs experience.

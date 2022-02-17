@@ -69,8 +69,16 @@ Clone the latest emacs sources:
 *** Configuration
 We configure emacs to compile with various flags.
 #+begin_src sh
+  # if using the ubuntu 20.04 repo
+  export CC=/usr/bin/gcc-10 CXX=/usr/bin/gcc-10
+
   ./autogen.sh
+
+  # for nativecomp
   ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
+
+  # for pgtk & nativecomp
+  ./configure --with-dbus --with-pgtk --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --without-xwidgets --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
 #+end_src
 *** Building
 We build with all cores and natively compile everything ahead of time. This will take some time.

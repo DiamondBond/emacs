@@ -475,6 +475,8 @@ Auto-package-update automatically updates and removes old packages.
 	:defer nil
 	:ensure t
 	:config
+	(setq auto-package-update-prompt-before-update t)
+	(setq auto-package-update-show-preview t)
 	(setq auto-package-update-delete-old-versions t)
 	(setq auto-package-update-hide-results t)
 	(auto-package-update-maybe))

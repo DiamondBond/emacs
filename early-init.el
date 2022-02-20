@@ -24,16 +24,6 @@
 ;; to skip the mtime checks on every *.elc file.
 (setq load-prefer-newer noninteractive)
 
-;; Premature redisplays can substantially affect startup times and produce
-;; ugly flashes of unstyled Emacs.
-(setq-default inhibit-redisplay t
-			  inhibit-message t)
-(add-hook 'window-setup-hook
-		  (lambda ()
-			(setq-default inhibit-redisplay nil
-						  inhibit-message nil)
-			(redisplay)))
-
 ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 (setq tool-bar-mode nil
 	  menu-bar-mode nil)

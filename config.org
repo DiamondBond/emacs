@@ -1674,12 +1674,3 @@ Geiser - Scheme Lisp REPL.
 	(interactive)
 	(geiser-repl--write-input-ring))
 #+end_src
-* Emacs loaded
-#+begin_src emacs-lisp
-  (defun notify-user-emacs-has-loaded ()
-	"Notifies the user that the emacs daemon has loaded."
-	(interactive)
-	(async-shell-command "notify-send 'Emacs is ready.'"))
-
-  (notify-user-emacs-has-loaded)
-#+end_src

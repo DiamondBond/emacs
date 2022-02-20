@@ -8,7 +8,7 @@
 ** Packages
 *Ubuntu*
 #+begin_src sh
-  sudo apt install bash-completion clang clangd llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps offlineimap msmtp clang clang-tools clangd ccls llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps emacs-common-non-dfsg libjansson-dev editorconfig glslang-dev glslang-tools sbcl slime shellcheck rustc cargo pipenv wordnet gcc g++ make libsdl2-dev gnutls-bin libxml2-utils python3-pip gnugo gnuchess xboard libgccjit0 htop ffmpeg wget curl xdotool wmctrl slop wkhtmltopdf mupdf mupdf-tools appmenu-gtk2-module mediainfo exiftool unrar rar unace ace p7zip-full wordnet w3m-el xsel xclip mpd mpc ncmpcpp hunspell python3 python3-pip  libxpm-dev libgif-dev libjpeg-dev libpng-dev libtiff-dev libx11-dev libncurses5-dev automake autoconf texinfo libgtk2.0-dev nodejs ncdu exiftool libvterm-bin libvterm-dev libvterm0 libxapian-dev libgmime-3.0-dev libtalloc-dev zlib1g-dev fuse-overlayfs texlive-science zathura ghostscript default-jre rust-all cargo nodejs npm libjansson4 libjansson-dev golang-go python3-pip
+  sudo apt install bash-completion clang clangd llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps offlineimap msmtp clang clang-tools clangd ccls llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps emacs-common-non-dfsg libjansson-dev editorconfig glslang-dev glslang-tools sbcl slime shellcheck rustc cargo pipenv wordnet gcc g++ make libsdl2-dev gnutls-bin libxml2-utils python3-pip gnugo gnuchess xboard libgccjit0 htop ffmpeg wget curl xdotool wmctrl slop wkhtmltopdf mupdf mupdf-tools appmenu-gtk2-module mediainfo exiftool unrar rar unace ace p7zip-full wordnet w3m-el xsel xclip mpd mpc ncmpcpp hunspell python3 python3-pip  libxpm-dev libgif-dev libjpeg-dev libpng-dev libtiff-dev libx11-dev libncurses5-dev automake autoconf texinfo libgtk2.0-dev nodejs ncdu exiftool libvterm-bin libvterm-dev libvterm0 libxapian-dev libgmime-3.0-dev libtalloc-dev zlib1g-dev fuse-overlayfs texlive-science zathura ghostscript default-jre rust-all cargo nodejs npm libjansson4 libjansson-dev golang-go python3-pip ca-certificates curl gnupg-agent software-properties-common
 
   # optional
   sudo apt install ncmpcpp mpd mpc pavucontrol mpv rofi hexchat appmenu-gtk2-module appmenu-gtk3-module intel-media-va-driver vainfo ubuntu-restricted-extras build-essential git vim ubuntu-restricted-addons python3-pip bleachbit linux-tools-generic wildmidi timidity suckless-tools dmenu cmake libtool libtool-bin powertop tlp tlp-rdw transmission-gtk ncdu gimp kdenlive inkscape obs-studio kolourpaint gpick nomacs adwaita-icon-theme-full pm-utils hibernate acpi acpi-call-dkms
@@ -143,6 +143,22 @@ Quality-of-life modifications for a more pleasant Emacs experience.
   (setq user-mail-address "diamondbond1@gmail.com"
 		user-full-name "Diamond")
 #+end_src
+** Performance
+#+begin_src emacs-lisp
+  ;; https://emacs-lsp.github.io/lsp-mode/page/performance
+  (setq read-process-output-max (* 1024 1024))
+
+  ;; https://www.masteringemacs.org/article/speed-up-emacs-libjansson-native-elisp-compilation
+  ;; (setq comp-deferred-compilation t
+  ;; 	  package-native-compile t)
+
+  ;; do not steal focus while doing async compilations
+  (setq warning-suppress-types '((comp)))
+#+end_src
+** Fill whatever space the window manager has given us.
+#+begin_src emacs-lisp
+  (setq frame-resize-pixelwise t)
+#+end_src
 ** Enable line numbers
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
 #+BEGIN_SRC emacs-lisp
@@ -210,8 +226,8 @@ Comment out this whole block if you're using termux.
 ** Enable conservative scrolling
 #+BEGIN_SRC emacs-lisp
   (setq scroll-conservatively 1)
-  (setq mouse-wheel-scroll-amount '(1))
-  (setq mouse-wheel-progressive-speed nil)
+  ;; (setq mouse-wheel-scroll-amount '(1))
+  ;; (setq mouse-wheel-progressive-speed nil)
 #+END_SRC
 ** Disable ring-bell
 #+BEGIN_SRC emacs-lisp
@@ -572,6 +588,39 @@ I have hardcoded in three buffers that I frequently visit along with helper func
 			  'default)
 			 ))))
 #+END_SRC
+** Initialize =gcmh=
+*** Description
+Garbage Collector Magic Hack
+*** Code
+#+begin_src emacs-lisp
+  (use-package gcmh
+	:ensure t
+	:demand t
+	:diminish gcmh-mode
+	:config
+	(gcmh-mode 1))
+#+end_src
+** Initialize =mwheel=
+*** Description
+Mouse wheel scrolling
+*** Code
+#+begin_src emacs-lisp
+  (use-package mwheel
+	:custom
+	(mouse-wheel-scroll-amount '(1
+								 ((shift) . 5)
+								 ((control))))
+	(mouse-wheel-progressive-speed nil))
+#+end_src
+** Initialize =pixel-scroll=
+*** Description
+Pixel scrolling
+*** Code
+#+begin_src emacs-lisp
+  (use-package pixel-scroll
+	:config
+	(pixel-scroll-mode))
+#+end_src
 ** Initialize =completion=
 *** Description
 Vertico & friends (orderless, marginalia, consult & embark)
@@ -1370,9 +1419,9 @@ Supress eldoc from modeline.
 	  (vterm-send-string command)
 	  (vterm-send-return)))
 #+end_src
-** ncmpcpp
+** Music
 #+begin_src emacs-lisp
-  (defun ncmpcpp ()
+  (defun music ()
 	"ncmpcpp"
 	(interactive)
 	(run-in-vterm "ncmpcpp"))
@@ -1625,7 +1674,7 @@ Geiser - Scheme Lisp REPL.
 	(interactive)
 	(geiser-repl--write-input-ring))
 #+end_src
-* Emacs has loaded
+* Emacs loaded
 #+begin_src emacs-lisp
   (defun notify-user-emacs-has-loaded ()
 	"Notifies the user that the emacs daemon has loaded."

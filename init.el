@@ -6,23 +6,10 @@
 
 (add-hook 'emacs-startup-hook 'startup/revert-file-name-handler-alist)
 
-;; Initialize repos
+;; Initialize mela repo
 (require 'package)
-(setq package-archives nil)
-
-(defvar org-archive '("org" . "https://orgmode.org/elpa/"))
-(defvar gnu-archive '("elpa" . "https://elpa.gnu.org/packages/"))
-(defvar melpa-archive '("melpa" . "https://melpa.org/packages/"))
-(defvar nelpa-archive '("nelpa" . "https://elpa.nongnu.org/nongnu/"))
-(defvar marmalade-archive '("marmalade" . "https://marmalade-repo.org/packages/"))
-
-(add-to-list 'package-archives org-archive)
-(add-to-list 'package-archives gnu-archive)
-(add-to-list 'package-archives nelpa-archive)
-(add-to-list 'package-archives melpa-archive)
-;;(add-to-list 'package-archives marmalade-archive)
-
-(setq package-archives (nreverse package-archives))
+(add-to-list 'package-archives
+			 '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
 ;; Initialize use-package

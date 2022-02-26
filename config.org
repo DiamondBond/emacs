@@ -180,9 +180,7 @@ Show column number in modeline.
   ;;   :config
   ;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
   ;;   (set-face-attribute 'fixed-pitch nil :font "DejaVu Sans Mono")
-  ;;   (set-face-attribute 'variable-pitch nil :font "DejaVu Sans"))
-
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
+  ;;(set-face-attribute 'default nil :font "dejavu sans mono" :height 120)
 #+end_src
 ** Set background
 #+begin_src emacs-lisp
@@ -204,7 +202,7 @@ Show column number in modeline.
 ** Disable most gui elements
 Comment out this whole block if you're using termux.
 #+BEGIN_SRC emacs-lisp
-  (tool-bar-mode -1)
+  (tool-bar-mode 1)
   (menu-bar-mode 1)
   (scroll-bar-mode 1)
 #+END_SRC
@@ -1338,9 +1336,9 @@ Show event history and command history of some or all buffers.
 Library to ensure environment variables inside Emacs look the same as in the user's shell.
 *** Code
 #+begin_src emacs-lisp
-  (use-package exec-path-from-shell
-	:ensure t
-	:init (exec-path-from-shell-initialize))  
+  ;; (use-package exec-path-from-shell
+  ;;   :ensure t
+  ;;   :init (exec-path-from-shell-initialize))  
 #+end_src
 ** Built-in entry: =eldoc=
 *** Description
@@ -1473,6 +1471,13 @@ Supress eldoc from modeline.
 
   (define-key global-map (kbd "C-S-n") #'next-15-lines)
   (define-key global-map (kbd "C-S-p") #'previous-15-lines)
+#+end_src
+** fix-font
+#+begin_src emacs-lisp
+  (defun fix-fonts ()
+	"Set Dejavu Sans Mono as the font."
+	(interactive)
+	(set-face-attribute 'default nil :font "dejavu sans mono" :height 120))
 #+end_src
 * Languages
 ** LSP
@@ -1673,4 +1678,14 @@ Geiser - Scheme Lisp REPL.
   (defun geiser-save ()
 	(interactive)
 	(geiser-repl--write-input-ring))
+#+end_src
+
+* Done
+#+begin_src emacs-lisp
+  ;; (defun notify-user-emacs-has-loaded ()
+  ;;   "Notify the user that the emacs daemon has loaded successfully."
+  ;;   (interactive)
+  ;;   (async-shell-command "notify-send 'Emacs is ready.'"))
+
+  ;; (notify-user-emacs-has-loaded)
 #+end_src

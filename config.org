@@ -181,6 +181,9 @@ Show column number in modeline.
   ;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
   ;;   (set-face-attribute 'fixed-pitch nil :font "DejaVu Sans Mono")
   ;;(set-face-attribute 'default nil :font "dejavu sans mono" :height 120)
+  ;;(set-frame-font "DejaVu Sans Mono 12")
+  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
+  ;;(set-frame-font "DejaVu Sans Mono-12" nil t)
 #+end_src
 ** Set background
 #+begin_src emacs-lisp
@@ -1474,13 +1477,6 @@ Supress eldoc from modeline.
   (define-key global-map (kbd "C-S-n") #'next-15-lines)
   (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 #+end_src
-** fix-font
-#+begin_src emacs-lisp
-  (defun fix-fonts ()
-	"Set Dejavu Sans Mono as the font."
-	(interactive)
-	(set-face-attribute 'default nil :font "dejavu sans mono" :height 120))
-#+end_src
 * Languages
 ** LSP
 *** Description
@@ -1682,12 +1678,3 @@ Geiser - Scheme Lisp REPL.
 	(geiser-repl--write-input-ring))
 #+end_src
 
-* Done
-#+begin_src emacs-lisp
-  ;; (defun notify-user-emacs-has-loaded ()
-  ;;   "Notify the user that the emacs daemon has loaded successfully."
-  ;;   (interactive)
-  ;;   (async-shell-command "notify-send 'Emacs is ready.'"))
-
-  ;; (notify-user-emacs-has-loaded)
-#+end_src

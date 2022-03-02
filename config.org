@@ -609,7 +609,7 @@ Mouse wheel scrolling
   ;; 							   ((shift) . 5)
   ;; 							   ((control))))
   ;;   (mouse-wheel-progressive-speed nil
-								   ))
+  ;;								   ))
 #+end_src
 ** Initialize =pixel-scroll=
 *** Description

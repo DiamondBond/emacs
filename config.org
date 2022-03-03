@@ -205,7 +205,7 @@ Show column number in modeline.
 ** Disable most gui elements
 Comment out this whole block if you're using termux.
 #+BEGIN_SRC emacs-lisp
-  (tool-bar-mode -1)
+  (tool-bar-mode 1)
   (menu-bar-mode 1)
   (scroll-bar-mode 1)
 #+END_SRC

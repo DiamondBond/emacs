@@ -205,7 +205,7 @@ Show column number in modeline.
 ** Disable most gui elements
 Comment out this whole block if you're using termux.
 #+BEGIN_SRC emacs-lisp
-  (tool-bar-mode 1)
+  (tool-bar-mode -1)
   (menu-bar-mode 1)
   (scroll-bar-mode 1)
 #+END_SRC
@@ -1627,6 +1627,33 @@ Syntax highlighting for json files. Hopefully lighter weight than javascript mod
   (use-package json-mode
 	:ensure t
 	:mode ("\\.json\\'" . json-mode))
+#+end_src
+** JavaScript
+*** Description
+Self-contained, lightweight and minimalist major-mode focused on providing basic font-lock/syntax-highlighting and indentation for Javascript syntax, without any external dependencies.
+*** Code
+#+begin_src emacs-lisp
+  (use-package js2-mode :ensure t ;;:defer 20
+	:mode
+	(("\\.js\\'" . js2-mode))
+	:custom
+	(js2-include-node-externs t)
+	(js2-global-externs '("customElements"))
+	(js2-highlight-level 3)
+	(js2r-prefer-let-over-var t)
+	(js2r-prefered-quote-type 2)
+	(js-indent-align-list-continuation t)
+	(global-auto-highlight-symbol-mode t)
+	:config
+	(setq js-indent-level 2)
+	;; patch in basic private field support
+	(advice-add #'js2-identifier-start-p
+				:after-until
+				(lambda (c) (eq c ?#)))
+	(add-hook 'js2-mode-hook (lambda () (company-mode))))
+
+  (use-package prettier-js
+	:ensure t)
 #+end_src
 ** TypeScript
 *** Description

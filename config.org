@@ -1477,6 +1477,13 @@ Supress eldoc from modeline.
   (define-key global-map (kbd "C-S-n") #'next-15-lines)
   (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 #+end_src
+** make-dwm
+#+begin_src emacs-lisp
+  (defun make-dwm ()
+	"Compile dwm."
+	(interactive)
+	(async-shell-command "cd /home/diamond/src/suckless/; ./make_dwm.sh"))
+#+end_src
 * Languages
 ** LSP
 *** Description

@@ -741,6 +741,17 @@ Vertico & friends (orderless, marginalia, consult & embark)
 	(setq completion-ignore-case t)
 	(setq read-file-name-completion-ignore-case t))
 #+end_src
+** Initialize =all-the-icons=
+#+begin_src emacs-lisp
+  (use-package all-the-icons
+	:ensure t)
+
+  ;; (use-package all-the-icons-completion
+  ;;   :after (marginalia all-the-icons)
+  ;;   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
+  ;;   :init
+  ;;   (all-the-icons-completion-mode))
+#+end_src
 ** Initialize =company=
 *** Description
 Company is the autocompletion frontend that takes all the backends and gives you possible autocompletions when writing programs. We use it here for C/C++.
@@ -821,9 +832,6 @@ C-x o and pick window (a,s,d...)
 Add icons and subtree's to dired.
 *** Code
 #+begin_src emacs-lisp
-  (use-package all-the-icons
-	:ensure t)
-
   (use-package all-the-icons-dired
 	:ensure t
 	:diminish all-the-icons-dired-mode
@@ -924,13 +932,13 @@ This Emacs library provides a global mode which displays ugly form feed characte
 The `undo-tree-mode' provided by this package replaces Emacs' undo system with a system that treats undo history as what it is: a branching tree of changes.
 *** Code
 #+BEGIN_SRC emacs-lisp
-  (use-package undo-tree
-	:ensure t
-	:init
-	(global-undo-tree-mode)
-	:diminish undo-tree-mode)
+  ;; (use-package undo-tree
+  ;;   :ensure t
+  ;;   :init
+  ;;   (global-undo-tree-mode)
+  ;;   :diminish undo-tree-mode)
 #+END_SRC
-** Initialize =undo-tree=
+** Initialize =hydra=
 *** Description
 Hydra is a simple menu creator for keybindings.
 *** Code
@@ -962,7 +970,6 @@ Hydra is a simple menu creator for keybindings.
 	("t" enlarge-window)
 	("s" shrink-window)
 	("r" enlarge-window-horizontally))
-
 #+END_SRC
 ** Initialize =treemacs=
 *** Description
@@ -1045,6 +1052,10 @@ Git porcelain for Emacs.
 #+BEGIN_SRC emacs-lisp
   (use-package magit
 	:ensure t)
+
+  (use-package forge
+	:commands forge-pull
+	:config (setq auth-sources '("~/.authinfo")))
 #+END_SRC
 ** Initialize =elfeed=
 *** Description
@@ -1345,6 +1356,29 @@ Library to ensure environment variables inside Emacs look the same as in the use
   ;; (use-package exec-path-from-shell
   ;;   :ensure t
   ;;   :init (exec-path-from-shell-initialize))  
+#+end_src
+** Initialize =search=
+#+begin_src emacs-lisp
+  (use-package deadgrep
+	:commands deadgrep)
+
+  ;; the silver searcher
+  (use-package ag
+	:defer t)
+
+  ;; - anzu search and replace
+  (use-package anzu
+	:hook (after-init . anzu-mode))
+
+  ;; Quickly query whole source tree
+  (use-package ctrlf
+	:hook (after-init . ctrlf-mode))
+#+end_src
+** Initialize =restart-emacs=
+#+begin_src emacs-lisp
+  ;; Restart emacs
+  (use-package restart-emacs
+	:commands restart-emacs)
 #+end_src
 ** Built-in entry: =eldoc=
 *** Description

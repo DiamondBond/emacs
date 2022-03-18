@@ -146,7 +146,7 @@ Quality-of-life modifications for a more pleasant Emacs experience.
 ** Performance
 #+begin_src emacs-lisp
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance
-  (setq read-process-output-max (* 1024 1024))
+  (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
   ;; https://www.masteringemacs.org/article/speed-up-emacs-libjansson-native-elisp-compilation
   ;; (setq comp-deferred-compilation t
@@ -750,36 +750,59 @@ Vertico & friends (orderless, marginalia, consult & embark)
   ;;   :init
   ;;   (all-the-icons-completion-mode))
 #+end_src
-** Initialize =company=
+** Initialize =corfu=
 *** Description
-Company is the autocompletion frontend that takes all the backends and gives you possible autocompletions when writing programs. We use it here for C/C++.
+Completion Overlay Region FUnction - Corfu enhances completion at point with a small completion popup. The current candidates are shown in a popup below or above the point. Corfu is the minimalistic completion-in-region counterpart of the Vertico minibuffer UI.
 *** Code
 #+BEGIN_SRC emacs-lisp
-  (use-package company
-	:ensure t
-	:config
-	(setq company-idle-delay 0.15)
-	(setq company-minimum-prefix-length 3)
-	(setq company-selection-wrap-around t)
-	(setq company-files-exclusions '(".git/" ".DS_Store"))
+  (use-package corfu
+	;; Optional customizations
+	:custom
+	;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+	(corfu-auto t)                 ;; Enable auto completion
+	(corfu-auto-prefix 3)
+	(corfu-auto-delay 0)
+	(corfu-echo-documentation 0)
+	(corfu-quit-no-match 'separator)
+	(corfu-preview-current nil)
+	;; (corfu-separator ?\s)          ;; Orderless field separator
+	;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+	;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+	;; (corfu-preview-current nil)    ;; Disable current candidate preview
+	;; (corfu-preselect-first nil)    ;; Disable candidate preselection
+	;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+	;; (corfu-echo-documentation nil) ;; Disable documentation in the echo area
+	;; (corfu-scroll-margin 5)        ;; Use scroll margin
+	(define-key corfu-map (kbd "<escape>") #'corfu-quit)
+	(define-key corfu-map (kbd "C-h") #'corfu-show-documentation)
+	(define-key corfu-map (kbd "RET") nil)
 
-	:hook (after-init . global-company-mode)
-	:diminish company-mode)
+	;; You may want to enable Corfu only for certain modes.
+	:hook ((text-mode . corfu-mode)
+		   (prog-mode . corfu-mode)
+		   (shell-mode . corfu-mode)
+		   (eshell-mode . corfu-mode)
+		   (inferior-python-mode . corfu-mode))
 
-  ;; Use in conjunction with mixed-pitch-mode (QoL section - Set font)
-  ;; (use-package company-posframe
-  ;;   :config
-  ;;   (company-posframe-mode 1))
-
-  (use-package company-fuzzy
-	:after company
-	:commands company-fuzzy-mode
-	:config
-	(setq company-fuzzy-sorting-backend 'alphabetic)
-	(setq company-fuzzy-prefix-ontop t)
-	(setq company-fuzzy-show-annotation t)
-	(add-to-list 'company-fuzzy--no-prefix-backends 'company-yasnippet))
+	:init
+	(add-hook 'minibuffer-setup-hook (lambda ()
+									   (unless (bound-and-true-p vertico--input)
+										 (corfu-mode 1))))
+	;; Recommended: Enable Corfu globally.
+	(corfu-global-mode))
 #+END_SRC
+** Initialize =dabbrev=
+*** Description
+Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
+*** Code
+#+begin_src emacs-lisp
+  ;; Use dabbrev with Corfu!
+  (use-package dabbrev
+	;; Swap M-/ and C-M-/
+	:bind (("M-/" . dabbrev-completion)
+		   ("C-M-/" . dabbrev-expand))
+	:diminish abbrev-mode)
+#+end_src
 ** Initialize =which-key=
 *** Description
 Possible completion framework with 1s delay.
@@ -1584,28 +1607,21 @@ Language Server Protocol
 #+end_src
 ** C & C++
 *** Description
-Irony is the company backend for C and C++
+Lsp-mode is the backend for C and C++
 *** Code
 #+BEGIN_SRC emacs-lisp
-  (use-package company-c-headers
-	:defer nil
-	:ensure t)
+  (use-package lsp-mode
+	:init
+	;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+	(setq lsp-keymap-prefix "C-c l")
+	:hook ((c-mode . lsp)
+		   (python-mode . lsp)
+		   ;; if you want which-key integration
+		   (lsp-mode . lsp-enable-which-key-integration))
+	:commands lsp)
 
-  (use-package company-irony
-	:defer nil
-	:ensure t
-	:config
-	(setq company-backends '((company-c-headers
-							  company-dabbrev-code
-							  company-irony))))
-
-  (use-package irony
-	:defer nil
-	:ensure t
-	:config
-	:hook
-	((c++-mode c-mode) . irony-mode)
-	('irony-mode-hook) . 'irony-cdb-autosetup-compile-options)
+  ;; optionally
+  (use-package lsp-ui :commands lsp-ui-mode)
 #+END_SRC
 ** Go
 *** Description
@@ -1619,41 +1635,15 @@ Go-mode covers it all.
 #+end_src
 ** Python
 *** Description
-Elpy for basics & Jedi for better autocomplete and static code analysis, also integrates with company. Autopep8 automatically applies proper python coding standards on save, if not already.
+Elpy for basics & Jedi for better autocomplete and static code analysis. Autopep8 automatically applies proper python coding standards on save, if not already.
 *** Code
 #+BEGIN_SRC emacs-lisp
   ;; Set python3
   (setq py-python-command "python3")
   (setq python-shell-interpreter "python3")
 
-  (use-package elpy
-	:ensure t
-	:config
-	(elpy-enable)
-	(setq python-shell-interpreter "ipython"
-		  python-shell-interpreter-args "-i --simple-prompt"
-		  elpy-rpc-backend "jedi")
-	(pyvenv-workon "+")
-	(setq elpy-modules
-		  '(elpy-module-sane-defaults
-			elpy-module-company
-			elpy-module-eldoc
-			elpy-module-pyvenv
-			elpy-module-yasnippet
-			elpy-module-django)))
-
   (use-package jedi-core
 	:ensure t)
-
-  (use-package company-jedi
-	:ensure t
-	:config
-	(add-hook 'python-mode-hook 'jedi:setup)
-	(setq jedi:complete-on-dot t)
-	(setq jedi:use-shortcuts t)
-	(defun config/enable-company-jedi ()
-	  (add-to-list 'company-backends 'company-jedi))
-	(add-hook 'python-mode-hook 'config/enable-company-jedi))
 
   (use-package py-autopep8
 	:ensure t
@@ -1673,27 +1663,27 @@ Syntax highlighting for json files. Hopefully lighter weight than javascript mod
 Self-contained, lightweight and minimalist major-mode focused on providing basic font-lock/syntax-highlighting and indentation for Javascript syntax, without any external dependencies.
 *** Code
 #+begin_src emacs-lisp
-  (use-package js2-mode :ensure t ;;:defer 20
-	:mode
-	(("\\.js\\'" . js2-mode))
-	:custom
-	(js2-include-node-externs t)
-	(js2-global-externs '("customElements"))
-	(js2-highlight-level 3)
-	(js2r-prefer-let-over-var t)
-	(js2r-prefered-quote-type 2)
-	(js-indent-align-list-continuation t)
-	(global-auto-highlight-symbol-mode t)
-	:config
-	(setq js-indent-level 2)
-	;; patch in basic private field support
-	(advice-add #'js2-identifier-start-p
-				:after-until
-				(lambda (c) (eq c ?#)))
-	(add-hook 'js2-mode-hook (lambda () (company-mode))))
+	(use-package js2-mode :ensure t ;;:defer 20
+	  :mode
+	  (("\\.js\\'" . js2-mode))
+	  :custom
+	  (js2-include-node-externs t)
+	  (js2-global-externs '("customElements"))
+	  (js2-highlight-level 3)
+	  (js2r-prefer-let-over-var t)
+	  (js2r-prefered-quote-type 2)
+	  (js-indent-align-list-continuation t)
+	  (global-auto-highlight-symbol-mode t)
+	  :config
+	  (setq js-indent-level 2)
+	  ;; patch in basic private field support
+	  (advice-add #'js2-identifier-start-p
+				  :after-until
+				  (lambda (c) (eq c ?#))))
+  ;; 	(add-hook 'js2-mode-hook (lambda () (company-mode))))
 
-  (use-package prettier-js
-	:ensure t)
+	(use-package prettier-js
+	  :ensure t)
 #+end_src
 ** TypeScript
 *** Description

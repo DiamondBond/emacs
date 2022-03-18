@@ -319,8 +319,6 @@ Super - Control - <arrow>
 	 ("thefreedictionary\\.com" . eww-browse-url)
 	 ("." . browse-url-default-browser)
 	 ))
-
-
 #+END_SRC
 * Keybinds
 ** Description

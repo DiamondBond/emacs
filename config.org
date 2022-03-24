@@ -519,6 +519,12 @@ Auto-package-update automatically updates and removes old packages.
 	(setq auto-package-update-hide-results t)
 	(auto-package-update-maybe))
 #+END_SRC
+** Initialize =site-lisp=
+	#+begin_src emacs-lisp
+	;; (add-to-list 'load-path "~/.emacs.d/site-lisp")
+	;; (setq custom-theme-directory
+	;; 	  (expand-file-name "site-lisp" user-emacs-directory))
+	#+end_src
 ** Initialize =diminish=
 *** Description
 Diminish hides minor modes to prevent cluttering your mode line.
@@ -791,6 +797,37 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 	;; Recommended: Enable Corfu globally.
 	(corfu-global-mode))
 #+END_SRC
+** Initialize =kind-icon=
+*** Description
+*** Code
+#+begin_src emacs-lisp
+  (use-package kind-icon
+	:ensure t
+	:after corfu
+	:custom
+	(kind-icon-use-icons t)
+	(kind-icon-default-face 'corfu-default) ; Have background color be the same as `corfu' face background
+	(kind-icon-blend-background nil)  ; Use midpoint color between foreground and background colors ("blended")?
+	(kind-icon-blend-frac 0.08)
+
+	;; NOTE 2022-02-05: `kind-icon' depends `svg-lib' which creates a cache
+	;; directory that defaults to the `user-emacs-directory'. Here, I change that
+	;; directory to a location appropriate to `no-littering' conventions, a
+	;; package which moves directories of other packages to sane locations.
+	(svg-lib-icons-dir (no-littering-expand-var-file-name "svg-lib/cache/")) ; Change cache dir
+	:config
+	(add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter) ; Enable `kind-icon'
+
+	;; Add hook to reset cache so the icon colors match my theme
+	;; NOTE 2022-02-05: This is a hook which resets the cache whenever I switch
+	;; the theme using my custom defined command for switching themes. If I don't
+	;; do this, then the backgound color will remain the same, meaning it will not
+	;; match the background color corresponding to the current theme. Important
+	;; since I have a light theme and dark theme I switch between. This has no
+	;; function unless you use something similar
+	;; 	(add-hook 'kb/themes-hooks #'(lambda () (interactive) (kind-icon-reset-cache)))
+	)
+#+end_src
 ** Initialize =dabbrev=
 *** Description
 Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
@@ -1105,197 +1142,197 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	:defer t
 	:commands (pdf-view-mode pdf-tools-install)
 	:mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
-	:load-path "site-lisp/pdf-tools/lisp"
-	:magic ("%PDF" . pdf-view-mode)
-	:config
-	(pdf-tools-install 'no-query)
-	(define-pdf-cache-function pagelabels)
-	;; (evil-set-initial-state 'pdf-view-mode 'normal)
-	:hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
-		   (pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
+		:load-path "site-lisp/pdf-tools/lisp"
+		:magic ("%PDF" . pdf-view-mode)
+		:config
+		(pdf-tools-install 'no-query)
+		(define-pdf-cache-function pagelabels)
+		;; (evil-set-initial-state 'pdf-view-mode 'normal)
+		:hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
+			(pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
 
-  (use-package pdf-view-restore
-	:after pdf-tools
-	:ensure t
-	:config
-	(add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
+	(use-package pdf-view-restore
+		:after pdf-tools
+		:ensure t
+		:config
+		(add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
 
-  (use-package org-pdftools
-	:ensure t
-	:hook (org-load-hook . org-pdftools-setup-link))
-#+END_SRC
-** Initialize =nov=
-*** Description
-Major mode for reading EPUBs.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package nov
-	:mode ("\\.epub\\'" . nov-mode))
-#+END_SRC
-** Initialize =vterm=
-*** Description
-Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
-*** Code
-#+begin_src emacs-lisp
-  (use-package vterm
-	:ensure t
-	:config
-	;;(setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")
-	;;(setq vterm-shell "zsh")
-	(setq vterm-max-scrollback 10000))
-#+end_src
-** Initialize =saveplace=
-*** Description
-Saves cursor location in buffers.
-*** Code
-#+begin_src emacs-lisp
-  (use-package saveplace
-	:ensure t
-	:defer nil
-	:config
-	(save-place-mode))
-#+end_src
-** Initialize =rainbow-delimiters=
-*** Description
-Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimiters such as parentheses, brackets or braces according to their depth.
-*** Code
-#+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-	:ensure t
-	:hook (prog-mode . rainbow-delimiters-mode))
-#+end_src
-** Initialize =notmuch=
-*** Description
-Notmuch email configuration.
-*** Code
-#+begin_src emacs-lisp
-  (use-package notmuch
-	:ensure t
-	:commands (notmuch)
-	:config
-	(add-hook 'notmuch-hello-mode-hook
-			  (lambda () (display-line-numbers-mode 0)))
+	(use-package org-pdftools
+		:ensure t
+		:hook (org-load-hook . org-pdftools-setup-link))
+	#+END_SRC
+	** Initialize =nov=
+	*** Description
+	Major mode for reading EPUBs.
+	*** Code
+	#+BEGIN_SRC emacs-lisp
+	(use-package nov
+		:mode ("\\.epub\\'" . nov-mode))
+	#+END_SRC
+	** Initialize =vterm=
+	*** Description
+	Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
+	*** Code
+	#+begin_src emacs-lisp
+	(use-package vterm
+		:ensure t
+		:config
+		;;(setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")
+		;;(setq vterm-shell "zsh")
+		(setq vterm-max-scrollback 10000))
+	#+end_src
+	** Initialize =saveplace=
+	*** Description
+	Saves cursor location in buffers.
+	*** Code
+	#+begin_src emacs-lisp
+	(use-package saveplace
+		:ensure t
+		:defer nil
+		:config
+		(save-place-mode))
+	#+end_src
+	** Initialize =rainbow-delimiters=
+	*** Description
+	Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimiters such as parentheses, brackets or braces according to their depth.
+	*** Code
+	#+begin_src emacs-lisp
+	(use-package rainbow-delimiters
+		:ensure t
+		:hook (prog-mode . rainbow-delimiters-mode))
+	#+end_src
+	** Initialize =notmuch=
+	*** Description
+	Notmuch email configuration.
+	*** Code
+	#+begin_src emacs-lisp
+	(use-package notmuch
+		:ensure t
+		:commands (notmuch)
+		:config
+		(add-hook 'notmuch-hello-mode-hook
+				(lambda () (display-line-numbers-mode 0)))
 
-	;; setup the mail address
-	(setq mail-user-agent 'message-user-agent)
+		;; setup the mail address
+		(setq mail-user-agent 'message-user-agent)
 
-	;; smtp config
-	(setq smtpmail-smtp-server "smtp.gmail.com"
-		  message-send-mail-function 'message-smtpmail-send-it)
+		;; smtp config
+		(setq smtpmail-smtp-server "smtp.gmail.com"
+			message-send-mail-function 'message-smtpmail-send-it)
 
-	;; report problems with the smtp server
-	(setq smtpmail-debug-info t)
-	;; add Cc and Bcc headers to the message buffer
-	(setq message-default-mail-headers "Cc: \nBcc: \n")
-	;; postponed message is put in the following draft directory
-	(setq message-auto-save-directory "~/mail/draft")
-	(setq message-kill-buffer-on-exit t)
-	;; change the directory to store the sent mail
-	(setq message-directory "~/mail/")
-	;; show newest emails on top
-	;;(setq notmuch-search-oldest-first nil)
+		;; report problems with the smtp server
+		(setq smtpmail-debug-info t)
+		;; add Cc and Bcc headers to the message buffer
+		(setq message-default-mail-headers "Cc: \nBcc: \n")
+		;; postponed message is put in the following draft directory
+		(setq message-auto-save-directory "~/mail/draft")
+		(setq message-kill-buffer-on-exit t)
+		;; change the directory to store the sent mail
+		(setq message-directory "~/mail/")
+		;; show newest emails on top
+		;;(setq notmuch-search-oldest-first nil)
 
-	;; Function to prune tag:deleted
-	(defun prune-emails ()
-	  "Delete old emails."
-	  (interactive)
-	  (async-shell-command "notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm"))
+		;; Function to prune tag:deleted
+		(defun prune-emails ()
+		"Delete old emails."
+		(interactive)
+		(async-shell-command "notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm"))
 
-	;; Function to refresh local mail box from within emacs
-	(defun notmuch-exec-offlineimap ()
-	  "Execute offlineimap."
-	  (interactive)
-	  (set-process-sentinel
-	   (start-process-shell-command "offlineimap"
-									"*offlineimap*"
-									"offlineimap -o")
-	   #'(lambda (process event)
-		   (notmuch-refresh-all-buffers)
-		   (let ((w (get-buffer-window "*offlineimap*")))
-			 (when w
-			   (with-selected-window w (recenter (window-end))))))))
+		;; Function to refresh local mail box from within emacs
+		(defun notmuch-exec-offlineimap ()
+		"Execute offlineimap."
+		(interactive)
+		(set-process-sentinel
+		(start-process-shell-command "offlineimap"
+										"*offlineimap*"
+										"offlineimap -o")
+		#'(lambda (process event)
+			(notmuch-refresh-all-buffers)
+			(let ((w (get-buffer-window "*offlineimap*")))
+				(when w
+				(with-selected-window w (recenter (window-end))))))))
 
-	(setq-default notmuch-saved-searches
-				  (quote
-				   ((:name "inbox" :query "(tag:inbox)" :sort-order newest-first :key "1")
-					(:name "unread" :query "(tag:unread)" :sort-order newest-first :key "n")
-					(:name "starred" :query "tag:flagged" :sort-order newest-first :key "f")
-					(:name "sent" :query "(tag:sent OR tag:replied)" :sort-order newest-first :key "s")))))
-#+end_src
-** Initialize =modus-themes=
-*** Description
-Accessible themes for GNU Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
-*** Code
-#+begin_src emacs-lisp
-  (use-package emacs
-	:ensure t
-	:defer nil
-	:config
-	(setq custom-safe-themes t)
+		(setq-default notmuch-saved-searches
+					(quote
+					((:name "inbox" :query "(tag:inbox)" :sort-order newest-first :key "1")
+						(:name "unread" :query "(tag:unread)" :sort-order newest-first :key "n")
+						(:name "starred" :query "tag:flagged" :sort-order newest-first :key "f")
+						(:name "sent" :query "(tag:sent OR tag:replied)" :sort-order newest-first :key "s")))))
+	#+end_src
+	** Initialize =modus-themes=
+	*** Description
+	Accessible themes for GNU Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
+	*** Code
+	#+begin_src emacs-lisp
+	(use-package emacs
+		:ensure t
+		:defer nil
+		:config
+		(setq custom-safe-themes t)
 
-	;; TODO simplify this to avoid formatting a string, then read and eval.
-	(defmacro modus-themes-format-sexp (sexp &rest objects)
-	  `(eval (read (format ,(format "%S" sexp) ,@objects))))
+		;; TODO simplify this to avoid formatting a string, then read and eval.
+		(defmacro modus-themes-format-sexp (sexp &rest objects)
+		`(eval (read (format ,(format "%S" sexp) ,@objects))))
 
-	(defvar modus-themes-after-load-hook nil
-	  "Hook that runs after loading a Modus theme.
-			 See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
+		(defvar modus-themes-after-load-hook nil
+		"Hook that runs after loading a Modus theme.
+				See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 
-	(dolist (theme '("operandi" "vivendi"))
-	  (modus-themes-format-sexp
-	   (defun modus-%1$s-theme-load ()
-		 (setq modus-%1$s-theme-slanted-constructs t
-			   modus-%1$s-theme-bold-constructs nil
-			   modus-%1$s-theme-fringes nil ; {nil,'subtle,'intense}
-			   modus-%1$s-theme-mode-line nil ; {nil '3d,'moody}
-			   modus-%1$s-theme-syntax 'faint ; {nil,faint,'yellow-comments,'green-strings,'yellow-comments-green-strings,'alt-syntax,'alt-syntax-yellow-comments}
-			   modus-%1$s-theme-intense-hl-line nil
-			   modus-%1$s-theme-intense-paren-match 'intense-bold
-			   modus-%1$s-theme-links 'neutral-underline ; {nil,'faint,'neutral-underline,'faint-neutral-underline,'no-underline}
-			   modus-%1$s-theme-no-mixed-fonts nil
-			   modus-%1$s-theme-prompts nil ; {nil,'subtle,'intense}
-			   modus-%1$s-theme-completions 'moderate ; {nil,'moderate,'opinionated}
-			   ;; modus-themes-region 'bg-only-no-extend
-			   modus-%1$s-theme-diffs nil ; {nil,'desaturated,'fg-only}
-			   modus-%1$s-theme-org-blocks 'grayscale ; {nil,'grayscale,'rainbow}
-			   ;; modus-themes-org-habit 'traffic-light ; {nil,'simplified,'traffic-light}
-			   modus-%1$s-theme-headings  ; Read the manual for this one
-			   '((t . nil))
-			   modus-%1$s-theme-variable-pitch-headings t
-			   modus-%1$s-theme-scale-headings nil
-			   modus-%1$s-theme-scale-1 1.1
-			   modus-%1$s-theme-scale-2 1.15
-			   modus-%1$s-theme-scale-3 1.21
-			   modus-%1$s-theme-scale-4 1.27
-			   modus-%1$s-theme-scale-5 1.33)
-		 (load-theme 'modus-%1$s t)
-		 (run-hooks 'modus-themes-after-load-hook))
-	   theme))
+		(dolist (theme '("operandi" "vivendi"))
+		(modus-themes-format-sexp
+		(defun modus-%1$s-theme-load ()
+			(setq modus-%1$s-theme-slanted-constructs t
+				modus-%1$s-theme-bold-constructs nil
+				modus-%1$s-theme-fringes nil ; {nil,'subtle,'intense}
+				modus-%1$s-theme-mode-line nil ; {nil '3d,'moody}
+				modus-%1$s-theme-syntax 'faint ; {nil,faint,'yellow-comments,'green-strings,'yellow-comments-green-strings,'alt-syntax,'alt-syntax-yellow-comments}
+				modus-%1$s-theme-intense-hl-line nil
+				modus-%1$s-theme-intense-paren-match 'intense-bold
+				modus-%1$s-theme-links 'neutral-underline ; {nil,'faint,'neutral-underline,'faint-neutral-underline,'no-underline}
+				modus-%1$s-theme-no-mixed-fonts nil
+				modus-%1$s-theme-prompts nil ; {nil,'subtle,'intense}
+				modus-%1$s-theme-completions 'moderate ; {nil,'moderate,'opinionated}
+				;; modus-themes-region 'bg-only-no-extend
+				modus-%1$s-theme-diffs nil ; {nil,'desaturated,'fg-only}
+				modus-%1$s-theme-org-blocks 'grayscale ; {nil,'grayscale,'rainbow}
+				;; modus-themes-org-habit 'traffic-light ; {nil,'simplified,'traffic-light}
+				modus-%1$s-theme-headings  ; Read the manual for this one
+				'((t . nil))
+				modus-%1$s-theme-variable-pitch-headings t
+				modus-%1$s-theme-scale-headings nil
+				modus-%1$s-theme-scale-1 1.1
+				modus-%1$s-theme-scale-2 1.15
+				modus-%1$s-theme-scale-3 1.21
+				modus-%1$s-theme-scale-4 1.27
+				modus-%1$s-theme-scale-5 1.33)
+			(load-theme 'modus-%1$s t)
+			(run-hooks 'modus-themes-after-load-hook))
+		theme))
 
-	(defun modus-themes-light ()
-	  "Load `modus-operandi' and disable `modus-vivendi'."
-	  (disable-theme 'modus-vivendi)
-	  (modus-operandi-theme-load))
+		(defun modus-themes-light ()
+		"Load `modus-operandi' and disable `modus-vivendi'."
+		(disable-theme 'modus-vivendi)
+		(modus-operandi-theme-load))
 
-	(defun modus-themes-dark ()
-	  "Load `modus-vivendi' and disable `modus-operandi'."
-	  (disable-theme 'modus-operandi)
-	  (modus-vivendi-theme-load))
+		(defun modus-themes-dark ()
+		"Load `modus-vivendi' and disable `modus-operandi'."
+		(disable-theme 'modus-operandi)
+		(modus-vivendi-theme-load))
 
-	(defun modus-themes-toggle ()
-	  "Toggle between `modus-operandi' and `modus-vivendi' themes."
-	  (interactive)
-	  (if (eq (car custom-enabled-themes) 'modus-operandi)
-		  (modus-themes-dark)
-		(modus-themes-light))
-	  (dashboard-refresh-buffer))
+		(defun modus-themes-toggle ()
+		"Toggle between `modus-operandi' and `modus-vivendi' themes."
+		(interactive)
+		(if (eq (car custom-enabled-themes) 'modus-operandi)
+			(modus-themes-dark)
+			(modus-themes-light))
+		(dashboard-refresh-buffer))
 
-	;; Load light theme 
-	(modus-themes-light)
-	;;(modus-themes-dark)
+		;; Load light theme 
+		(modus-themes-light)
+		;;(modus-themes-dark)
 
-	:bind ("<S-f5>" . modus-themes-toggle))
-#+end_src
+		:bind ("<S-f5>" . modus-themes-toggle))
+	#+end_src
 ** Initialize =olivetti=
 *** Description
 Emacs minor mode for a nice writing environment.

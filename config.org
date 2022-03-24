@@ -1,6 +1,7 @@
 #+STARTUP: overview
 #+TITLE: Emacs Configuration
 #+AUTHOR: Diamond Bond
+#+DESCRIPTION: Eight Megabytes And Constantly Swapping
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 
@@ -519,12 +520,6 @@ Auto-package-update automatically updates and removes old packages.
 	(setq auto-package-update-hide-results t)
 	(auto-package-update-maybe))
 #+END_SRC
-** Initialize =site-lisp=
-	#+begin_src emacs-lisp
-	;; (add-to-list 'load-path "~/.emacs.d/site-lisp")
-	;; (setq custom-theme-directory
-	;; 	  (expand-file-name "site-lisp" user-emacs-directory))
-	#+end_src
 ** Initialize =diminish=
 *** Description
 Diminish hides minor modes to prevent cluttering your mode line.
@@ -1576,6 +1571,24 @@ Supress eldoc from modeline.
 	"Compile dwm."
 	(interactive)
 	(async-shell-command "cd /home/diamond/src/dwm-flexipatch/; sudo make clean install"))
+#+end_src
+** clean-exit
+#+begin_src emacs-lisp
+  (defun clean-exit ()
+	"Exit Emacs cleanly.
+  If there are unsaved buffer, pop up a list for them to be saved
+  before existing. Replaces ‘save-buffers-kill-terminal’."
+	(interactive)
+	(if (frame-parameter nil 'client)
+		(server-save-buffers-kill-terminal arg)
+	  (if-let ((buf-list (seq-filter (lambda (buf)
+									   (and (buffer-modified-p buf)
+											(buffer-file-name buf)))
+									 (buffer-list))))
+		  (progn
+			(pop-to-buffer (list-buffers-noselect t buf-list))
+			(message "s to save, C-k to kill, x to execute"))
+		(save-buffers-kill-emacs))))
 #+end_src
 * Languages
 ** LSP

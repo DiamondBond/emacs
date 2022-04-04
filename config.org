@@ -1,13 +1,13 @@
 #+STARTUP: overview
-#+TITLE: OED
+#+TITLE: Opinionated Emacs Distribution
 #+AUTHOR: Diamond Bond
-#+DESCRIPTION: Opinionated Emacs Distribution
+#+DESCRIPTION: Eight Megabytes And Constantly Swapping
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 
 [[./img/emacs.png]]
 
-Eight Megabytes And Constantly Swapping
+Opinionated Emacs Distribution
 
 * Introduction
 This Emacs distribution is a very featureful and performant configuration for Emacs. 
@@ -28,12 +28,17 @@ To get autocompletion on C, C++, JS/TS & Python files, you'll need to install th
 
 *Post Setup*
 Compile pdf-tools & vterm
+
 Install all-the-icons font
 #+begin_quote
 M-x pdf-tools-install
+
 M-x vterm
+
 M-x all-the-icons-install-fonts
+
 M-x all-the-icons-completion-mode #add icons to completion candidates
+
 M-x kill-emacs #restart emacs
 #+end_quote
 * Dependencies

@@ -1,5 +1,5 @@
 #+STARTUP: overview
-#+TITLE: Opinionated Emacs Distribution
+#+TITLE: Emacs Configuration
 #+AUTHOR: Diamond Bond
 #+DESCRIPTION: Eight Megabytes And Constantly Swapping
 #+LANGUAGE: en

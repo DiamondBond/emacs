@@ -219,6 +219,15 @@ Comment out this whole block if you're using termux.
   (setq make-backup-files nil)
   (setq auto-save-default nil)
 #+END_SRC
+** no-littering
+#+begin_src emacs-lisp
+  (use-package no-littering               ; Keep .emacs.d clean
+	:ensure t
+	:config
+	(require 'recentf)
+	(add-to-list 'recentf-exclude no-littering-var-directory)
+	(add-to-list 'recentf-exclude no-littering-etc-directory))
+#+end_src
 ** Do not litter init.el
 #+begin_src emacs-lisp
   (setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
@@ -259,22 +268,6 @@ Set tabs & indents to 4sp.
 							  ))
   (electric-pair-mode t)
 #+END_SRC
-** Creating a new window switches your cursor to it
-#+BEGIN_SRC emacs-lisp
-  (defun split-and-follow-horizontally ()
-	(interactive)
-	(split-window-below)
-	(balance-windows)
-	(other-window 1))
-  (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
-
-  (defun split-and-follow-vertically ()
-	(interactive)
-	(split-window-right)
-	(balance-windows)
-	(other-window 1))
-  (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
-#+END_SRC
 ** Transform yes-or-no questions into y-or-n
 #+BEGIN_SRC emacs-lisp
   (defalias 'yes-or-no-p 'y-or-n-p)
@@ -291,13 +284,10 @@ Super - Control - <arrow>
 #+BEGIN_SRC emacs-lisp
   (setq use-package-always-defer t)
 #+END_SRC
-** Mouse Move
+** Supress *Async Shell Command* output
 #+begin_src emacs-lisp
-  (defun warp-mouse-to-current-window ()
-	(interactive)
-	(destructuring-bind (left top right bottom)
-						(window-edges)
-						(set-mouse-position (selected-frame) left top)))
+  ;; (setq async-shell-command-display-buffer nil)
+  (add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil)))
 #+end_src
 ** Window title
 #+BEGIN_SRC emacs-lisp
@@ -445,12 +435,6 @@ Also enables org-bullets & htmlize.
 		  deft-use-filename-as-title t)
 	:bind
 	("C-c n d" . deft))
-
-  ;; (use-package auto-complete
-  ;;   :ensure t
-  ;;   :config
-  ;;   (add-to-list 'ac-modes 'org-mode)
-  ;;   (ac-set-trigger-key "TAB"))
 #+END_SRC
 * Eshell
 ** Description
@@ -623,25 +607,52 @@ Precision pixel scrolling (Emacs 29+)
   ;;   (pixel-scroll-mode))
   (pixel-scroll-precision-mode)
 #+end_src
+** Initialize =corfu=
+*** Description
+Completion Overlay Region FUnction - Corfu enhances completion at point with a small completion popup. The current candidates are shown in a popup below or above the point. Corfu is the minimalistic completion-in-region counterpart of the Vertico minibuffer UI.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package corfu
+	;; Optional customizations
+	:custom
+	;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+	(corfu-auto t)                 ;; Enable auto completion
+	(corfu-auto-prefix 3)
+	(corfu-auto-delay 0)
+	(corfu-echo-documentation 0)
+	(corfu-quit-no-match 'separator)
+	(corfu-preview-current nil)
+	;; (corfu-separator ?\s)          ;; Orderless field separator
+	;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+	;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+	;; (corfu-preview-current nil)    ;; Disable current candidate preview
+	;; (corfu-preselect-first nil)    ;; Disable candidate preselection
+	;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+	;; (corfu-echo-documentation nil) ;; Disable documentation in the echo area
+	;; (corfu-scroll-margin 5)        ;; Use scroll margin
+	(define-key corfu-map (kbd "<escape>") #'corfu-quit)
+	(define-key corfu-map (kbd "C-h") #'corfu-show-documentation)
+	(define-key corfu-map (kbd "RET") nil)
+
+	;; You may want to enable Corfu only for certain modes.
+	:hook ((text-mode . corfu-mode)
+		   (prog-mode . corfu-mode)
+		   (shell-mode . corfu-mode)
+		   (eshell-mode . corfu-mode)
+		   (inferior-python-mode . corfu-mode))
+
+	:init
+	;; (add-hook 'minibuffer-setup-hook (lambda ()
+	;; 									 (unless (bound-and-true-p vertico--input)
+	;; 									   (corfu-mode 1))))
+	;; Recommended: Enable Corfu globally.
+	(corfu-global-mode))
+#+END_SRC
 ** Initialize =completion=
 *** Description
 Vertico & friends (orderless, marginalia, consult & embark)
 *** Code
 #+begin_src emacs-lisp
-  ;; (use-package ido
-  ;;   :init
-  ;;   (ido-mode 1)
-  ;;   :config
-  ;;   (setq ido-enable-flex-matching nil)
-  ;;   (setq ido-create-new-buffer 'always)
-  ;;   (setq ido-everywhere t))
-
-  ;; (use-package ido-grid-mode
-  ;;   :ensure t
-  ;;   :init
-  ;;   (ido-grid-mode 1))
-  ;; (setq ido-grid-define-keys 'C-n-C-p-up-and-down)
-
   ;; Enable vertico
   (use-package vertico
 	:init
@@ -751,47 +762,6 @@ Vertico & friends (orderless, marginalia, consult & embark)
   ;;   :init
   ;;   (all-the-icons-completion-mode))
 #+end_src
-** Initialize =corfu=
-*** Description
-Completion Overlay Region FUnction - Corfu enhances completion at point with a small completion popup. The current candidates are shown in a popup below or above the point. Corfu is the minimalistic completion-in-region counterpart of the Vertico minibuffer UI.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package corfu
-	;; Optional customizations
-	:custom
-	;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-	(corfu-auto t)                 ;; Enable auto completion
-	(corfu-auto-prefix 3)
-	(corfu-auto-delay 0)
-	(corfu-echo-documentation 0)
-	(corfu-quit-no-match 'separator)
-	(corfu-preview-current nil)
-	;; (corfu-separator ?\s)          ;; Orderless field separator
-	;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-	;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-	;; (corfu-preview-current nil)    ;; Disable current candidate preview
-	;; (corfu-preselect-first nil)    ;; Disable candidate preselection
-	;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-	;; (corfu-echo-documentation nil) ;; Disable documentation in the echo area
-	;; (corfu-scroll-margin 5)        ;; Use scroll margin
-	(define-key corfu-map (kbd "<escape>") #'corfu-quit)
-	(define-key corfu-map (kbd "C-h") #'corfu-show-documentation)
-	(define-key corfu-map (kbd "RET") nil)
-
-	;; You may want to enable Corfu only for certain modes.
-	:hook ((text-mode . corfu-mode)
-		   (prog-mode . corfu-mode)
-		   (shell-mode . corfu-mode)
-		   (eshell-mode . corfu-mode)
-		   (inferior-python-mode . corfu-mode))
-
-	:init
-	(add-hook 'minibuffer-setup-hook (lambda ()
-									   (unless (bound-and-true-p vertico--input)
-										 (corfu-mode 1))))
-	;; Recommended: Enable Corfu globally.
-	(corfu-global-mode))
-#+END_SRC
 ** Initialize =kind-icon=
 *** Description
 *** Code
@@ -978,17 +948,6 @@ This Emacs library provides a global mode which displays ugly form feed characte
   (use-package page-break-lines
 	:ensure t
 	:diminish (page-break-lines-mode visual-line-mode))
-#+END_SRC
-** Initialize =undo-tree=
-*** Description
-The `undo-tree-mode' provided by this package replaces Emacs' undo system with a system that treats undo history as what it is: a branching tree of changes.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package undo-tree
-  ;;   :ensure t
-  ;;   :init
-  ;;   (global-undo-tree-mode)
-  ;;   :diminish undo-tree-mode)
 #+END_SRC
 ** Initialize =hydra=
 *** Description
@@ -1368,29 +1327,6 @@ Enable on the fly with M-x flyspell-mode.
 	;;:hook (text-mode . flyspell-mode)
 	:bind (("M-<f7>" . flyspell-buffer)))
 #+end_src
-** Initialize =doom-themes=
-*** Description
-Useful for when running in termux.
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package doom-themes
-  ;;   :ensure t
-  ;;   :config
-  ;;   ;; Global settings (defaults)
-  ;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-  ;; 		doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  ;;   (load-theme 'doom-one t)
-
-  ;;   ;; Enable flashing mode-line on errors
-  ;;   (doom-themes-visual-bell-config)
-  ;;   ;; Enable custom neotree theme (all-the-icons must be installed!)
-  ;;   (doom-themes-neotree-config)
-  ;;   ;; or for treemacs users
-  ;;   (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  ;;   (doom-themes-treemacs-config)
-  ;;   ;; Corrects (and improves) org-mode's native fontification.
-  ;;   (doom-themes-org-config))
-#+end_src
 ** Initialize =clm=
 *** Description
 Show event history and command history of some or all buffers.
@@ -1398,15 +1334,6 @@ Show event history and command history of some or all buffers.
 #+begin_src emacs-lisp
   (use-package command-log-mode
 	:ensure t)
-#+end_src
-** Initialize =exec-path-from-shell=
-*** Description
-Library to ensure environment variables inside Emacs look the same as in the user's shell.
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package exec-path-from-shell
-  ;;   :ensure t
-  ;;   :init (exec-path-from-shell-initialize))  
 #+end_src
 ** Initialize =search=
 #+begin_src emacs-lisp
@@ -1418,12 +1345,12 @@ Library to ensure environment variables inside Emacs look the same as in the use
 	:defer t)
 
   ;; - anzu search and replace
-  (use-package anzu
-	:hook (after-init . anzu-mode))
+  (use-package anzu)
+	;; :hook (after-init . anzu-mode))
 
   ;; Quickly query whole source tree
-  (use-package ctrlf
-	:hook (after-init . ctrlf-mode))
+  (use-package ctrlf)
+	;; :hook (after-init . ctrlf-mode))
 #+end_src
 ** Initialize =restart-emacs=
 #+begin_src emacs-lisp
@@ -1514,18 +1441,18 @@ Language Server Protocol
 Lsp-mode is the backend for C and C++
 *** Code
 #+BEGIN_SRC emacs-lisp
-  (use-package lsp-mode
-	:init
-	;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-	(setq lsp-keymap-prefix "C-c l")
-	:hook ((c-mode . lsp)
-		   (python-mode . lsp)
-		   ;; if you want which-key integration
-		   (lsp-mode . lsp-enable-which-key-integration))
-	:commands lsp)
+  ;; (use-package lsp-mode
+  ;;   :init
+  ;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  ;;   (setq lsp-keymap-prefix "C-c l")
+  ;;   :hook ((c-mode . lsp)
+  ;; 		 (python-mode . lsp)
+  ;; 		 ;; if you want which-key integration
+  ;; 		 (lsp-mode . lsp-enable-which-key-integration))
+  ;;   :commands lsp)
 
-  ;; optionally
-  (use-package lsp-ui :commands lsp-ui-mode)
+  ;; ;; optionally
+  ;; (use-package lsp-ui :commands lsp-ui-mode)
 #+END_SRC
 ** Go
 *** Description
@@ -1542,16 +1469,16 @@ Go-mode covers it all.
 Elpy for basics & Jedi for better autocomplete and static code analysis. Autopep8 automatically applies proper python coding standards on save, if not already.
 *** Code
 #+BEGIN_SRC emacs-lisp
-  ;; Set python3
-  (setq py-python-command "python3")
-  (setq python-shell-interpreter "python3")
+  ;; ;; Set python3
+  ;; (setq py-python-command "python3")
+  ;; (setq python-shell-interpreter "python3")
 
-  (use-package jedi-core
-	:ensure t)
+  ;; (use-package jedi-core
+  ;;   :ensure t)
 
-  (use-package py-autopep8
-	:ensure t
-	:hook (python-mode . py-autopep8-enable-on-save))
+  ;; (use-package py-autopep8
+  ;;   :ensure t
+  ;;   :hook (python-mode . py-autopep8-enable-on-save))
 #+END_SRC
 ** JSON
 *** Description
@@ -1562,42 +1489,15 @@ Syntax highlighting for json files. Hopefully lighter weight than javascript mod
 	:ensure t
 	:mode ("\\.json\\'" . json-mode))
 #+end_src
-** JavaScript
-*** Description
-Self-contained, lightweight and minimalist major-mode focused on providing basic font-lock/syntax-highlighting and indentation for Javascript syntax, without any external dependencies.
-*** Code
-#+begin_src emacs-lisp
-	(use-package js2-mode :ensure t ;;:defer 20
-	  :mode
-	  (("\\.js\\'" . js2-mode))
-	  :custom
-	  (js2-include-node-externs t)
-	  (js2-global-externs '("customElements"))
-	  (js2-highlight-level 3)
-	  (js2r-prefer-let-over-var t)
-	  (js2r-prefered-quote-type 2)
-	  (js-indent-align-list-continuation t)
-	  (global-auto-highlight-symbol-mode t)
-	  :config
-	  (setq js-indent-level 2)
-	  ;; patch in basic private field support
-	  (advice-add #'js2-identifier-start-p
-				  :after-until
-				  (lambda (c) (eq c ?#))))
-  ;; 	(add-hook 'js2-mode-hook (lambda () (company-mode))))
-
-	(use-package prettier-js
-	  :ensure t)
-#+end_src
 ** TypeScript
 *** Description
 Self-contained, lightweight and minimalist major-mode focused on providing basic font-lock/syntax-highlighting and indentation for Typescript syntax, without any external dependencies.
 *** Code
 #+begin_src emacs-lisp
-  (use-package typescript-mode
-	:mode ("\\.tsx?\\'" . typescript-mode)
-	:config
-	(setq typescript-indent-level 2))
+  ;; (use-package typescript-mode
+  ;;   :mode ("\\.tsx?\\'" . typescript-mode)
+  ;;   :config
+  ;;   (setq typescript-indent-level 2))
 
   (use-package prettier-js
 	:ensure t)
@@ -1638,13 +1538,23 @@ Geiser - Scheme Lisp REPL.
 	(interactive)
 	(geiser-repl--write-input-ring))
 #+end_src
-
 * Functions
-** Supress *Async Shell Command* output
-#+begin_src emacs-lisp
-  ;; (setq async-shell-command-display-buffer nil)
-  (add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil)))
-#+end_src
+** Creating a new window switches your cursor to it
+#+BEGIN_SRC emacs-lisp
+  (defun split-and-follow-horizontally ()
+	(interactive)
+	(split-window-below)
+	(balance-windows)
+	(other-window 1))
+  (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+
+  (defun split-and-follow-vertically ()
+	(interactive)
+	(split-window-right)
+	(balance-windows)
+	(other-window 1))
+  (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+#+END_SRC
 ** Update emacs git
 #+begin_src emacs-lisp
   (defun update-emacs-git ()
@@ -1731,22 +1641,6 @@ Geiser - Scheme Lisp REPL.
 	(interactive)
 	(run-in-vterm "gotop"))
 #+end_src
-** splits
-#+begin_src emacs-lisp
-  (defun split-and-follow-horizontally ()
-	(interactive)
-	(split-window-below)
-	(balance-windows)
-	(other-window 1))
-  (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
-
-  (defun split-and-follow-vertically ()
-	(interactive)
-	(split-window-right)
-	(balance-windows)
-	(other-window 1))
-  (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
-#+end_src
 ** skips
 #+begin_src emacs-lisp
   (defun next-15-lines ()
@@ -1792,7 +1686,14 @@ Geiser - Scheme Lisp REPL.
   (defun open-in-terminal ()
 	"Opens terminal in cwd"
 	(interactive)
-	(call-process-shell-command "gnome-terminal" nil 0))
+	(call-process-shell-command "xfce4-terminal" nil 0))
+#+end_src
+** open-files
+#+begin_src emacs-lisp
+  (defun open-in-files ()
+	"Opens file manager"
+	(interactive)
+	(call-process-shell-command "thunar" nil 0))
 #+end_src
 ** open-vscode
 #+begin_src emacs-lisp

@@ -156,6 +156,26 @@ Quality-of-life modifications for a more pleasant Emacs experience.
   ;; do not steal focus while doing async compilations
   (setq warning-suppress-types '((comp)))
 #+end_src
+** No-littering
+#+begin_src emacs-lisp
+  (use-package no-littering
+	:ensure t)
+  ;;   :config
+  ;;   (require 'recentf)
+  ;;   (add-to-list 'recentf-exclude no-littering-var-directory)
+  ;;   (add-to-list 'recentf-exclude no-littering-etc-directory))
+#+end_src
+** Disable automatic creation of backup files
+#+BEGIN_SRC emacs-lisp
+  (setq make-backup-files nil)
+  (setq auto-save-default nil)
+#+END_SRC
+** Do not litter init.el
+#+begin_src emacs-lisp
+  (setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
+  (when (file-exists-p custom-file) ; Don’t forget to load it, we still need it
+	(load custom-file))
+#+end_src
 ** Fill whatever space the window manager has given us.
 #+begin_src emacs-lisp
   (setq frame-resize-pixelwise t)
@@ -214,26 +234,6 @@ Comment out this whole block if you're using termux.
 #+BEGIN_SRC emacs-lisp
   (setq x-select-enable-clipboard t)
 #+END_SRC
-** Disable automatic creation of backup files
-#+BEGIN_SRC emacs-lisp
-  (setq make-backup-files nil)
-  (setq auto-save-default nil)
-#+END_SRC
-** no-littering
-#+begin_src emacs-lisp
-  (use-package no-littering
-	:ensure t)
-  ;;   :config
-  ;;   (require 'recentf)
-  ;;   (add-to-list 'recentf-exclude no-littering-var-directory)
-  ;;   (add-to-list 'recentf-exclude no-littering-etc-directory))
-#+end_src
-** Do not litter init.el
-#+begin_src emacs-lisp
-  (setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
-  (when (file-exists-p custom-file) ; Don’t forget to load it, we still need it
-	(load custom-file))
-#+end_src
 ** Enable conservative scrolling
 #+BEGIN_SRC emacs-lisp
   (setq scroll-conservatively 1)
@@ -296,6 +296,11 @@ Super - Control - <arrow>
   ;;(setq my-username (getenv "USERNAME"))
   ;;(setq frame-title-format '("%b - Emacs @ " my-hostname))
 #+END_SRC
+** setenv
+Essential for using shells in Emacs.
+#+begin_src emacs-lisp
+  (setenv "PAGER" "cat")
+#+end_src
 ** Browser
 #+BEGIN_SRC emacs-lisp
   ;; use browser depending on url

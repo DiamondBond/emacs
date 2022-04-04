@@ -221,12 +221,12 @@ Comment out this whole block if you're using termux.
 #+END_SRC
 ** no-littering
 #+begin_src emacs-lisp
-  (use-package no-littering               ; Keep .emacs.d clean
-	:ensure t
-	:config
-	(require 'recentf)
-	(add-to-list 'recentf-exclude no-littering-var-directory)
-	(add-to-list 'recentf-exclude no-littering-etc-directory))
+  (use-package no-littering
+	:ensure t)
+  ;;   :config
+  ;;   (require 'recentf)
+  ;;   (add-to-list 'recentf-exclude no-littering-var-directory)
+  ;;   (add-to-list 'recentf-exclude no-littering-etc-directory))
 #+end_src
 ** Do not litter init.el
 #+begin_src emacs-lisp

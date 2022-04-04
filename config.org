@@ -1,13 +1,45 @@
 #+STARTUP: overview
-#+TITLE: Emacs Configuration
+#+TITLE: OED
 #+AUTHOR: Diamond Bond
-#+DESCRIPTION: Eight Megabytes And Constantly Swapping Configuration
+#+DESCRIPTION: Opinionated Emacs Distribution
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 
+[[./img/emacs.png]]
+
+Eight Megabytes And Constantly Swapping
+
+* Introduction
+This Emacs distribution is a very featureful and performant configuration for Emacs. 
+* Why would I use this?
+Currently, the appeal of this Emacs distribution is a balance of features, performance & usability.
+
+Utilizes Emacs defaults when possible and sticks to lightweight alternatives when needed.
+* Setup
+Clone the emacs configuration
+#+begin_src sh
+  mkdir -p ~/git; git clone https://github.com/diamondbond/emacs ~/git/emacs
+
+  emacs --daemon;
+#+end_src
+After running this command, the first time you run Emacs, it will download all of the specified packages in the config.org file, please be patient.
+
+To get autocompletion on C, C++, JS/TS & Python files, you'll need to install the corresponding lsp backend servers first (you'll be automatically prompted to do so the first time you open a relevant file).
+
+*Post Setup*
+Compile pdf-tools & vterm
+Install all-the-icons font
+#+begin_quote
+M-x pdf-tools-install
+M-x vterm
+M-x all-the-icons-install-fonts
+M-x all-the-icons-completion-mode #add icons to completion candidates
+M-x kill-emacs #restart emacs
+#+end_quote
 * Dependencies
 ** Packages
-*Ubuntu*
+This section is just a raw dump of packages that I have needed in the past to comfortably run this Emacs distribution on Ubuntu 20.04, not everything here is required.
+*** Ubuntu 20.04
 #+begin_src sh
   sudo apt install bash-completion clang clangd llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps offlineimap msmtp clang clang-tools clangd ccls llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps emacs-common-non-dfsg libjansson-dev editorconfig glslang-dev glslang-tools sbcl slime shellcheck rustc cargo pipenv wordnet gcc g++ make libsdl2-dev gnutls-bin libxml2-utils python3-pip gnugo gnuchess xboard libgccjit0 htop ffmpeg wget curl xdotool wmctrl slop wkhtmltopdf mupdf mupdf-tools appmenu-gtk2-module mediainfo exiftool unrar rar unace ace p7zip-full wordnet w3m-el xsel xclip mpd mpc ncmpcpp hunspell python3 python3-pip  libxpm-dev libgif-dev libjpeg-dev libpng-dev libtiff-dev libx11-dev libncurses5-dev automake autoconf texinfo libgtk2.0-dev nodejs ncdu exiftool libvterm-bin libvterm-dev libvterm0 libxapian-dev libgmime-3.0-dev libtalloc-dev zlib1g-dev fuse-overlayfs texlive-science zathura ghostscript default-jre rust-all cargo nodejs npm libjansson4 libjansson-dev golang-go python3-pip ca-certificates curl gnupg-agent software-properties-common fzf
 
@@ -47,16 +79,11 @@
   gcc --version
   sudo apt install libgccjit0 libgccjit-9-dev
 #+end_src
-*Termux*
-#+begin_src sh
-  pkg install openssh notmuch net-tools clang python git vim emacs zip fzf hunspell hunspell-en-us imagemagick build-essential texlive-bin llvm bash-completion ripgrep libjansson libvterm gnuchess
-  termux-install-tl
-#+end_src
-*Python*
+*** Python
 #+begin_src bash
   pip3 install black pyflakes isort nose pytest pygifsicle pyls pyls-black nose2 simple-server httpserver future python-lsp-server autopep8 jedi jedi-language-server
 #+end_src
-*NPM*
+*** NPM
 #+begin_src bash
   sudo npm install -g typescript-language-server
 #+end_src
@@ -84,7 +111,7 @@ We configure emacs to compile with various flags.
   # for nativecomp
   ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
 
-  # for pgtk & nativecomp
+  # for pgtk & nativecomp [PREFERRED]
   ./configure --with-dbus --with-pgtk --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --without-xwidgets --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
 #+end_src
 *** Building
@@ -102,41 +129,6 @@ Unzip to ~/src/
   make
   sudo make install
 #+end_src
-* Setup
-Clone the emacs configuration
-#+begin_src sh
-  mkdir -p ~/git; git clone https://github.com/diamondbond/emacs ~/git/emacs
-#+end_src
-
-Copy the configuration files over to your local ~/.emacs.d
-#+begin_src sh
-  mkdir -p ~/.emacs.d/; cp -r ~/git/emacs/{early-init.el,init.el,config.org,snippets} ~/.emacs.d/
-#+end_src
-
-Start the emacs daemon and get a cup of tea/coffee as use-package will begin installing all the required packages, this will take some time.
-#+begin_src sh
-  emacs --daemon;
-#+end_src
-
-#+begin_quote
-Starting Emacs daemon.
-#+end_quote
-Once emacs has started, its time to connect to the server via emacsclient and setup some internal things.
-
-Connecting to the emacs daemon:
-#+begin_src sh
-  emacsclient -c -n -a 'emacs'
-#+end_src
-
-*Post Setup*
-Compile pdf-tools & vterm
-Install all-the-icons font
-#+begin_quote
-M-x pdf-tools-install
-M-x vterm
-M-x all-the-icons-install-fonts
-M-x kill-emacs #restart emacs
-#+end_quote
 * QoL section
 Quality-of-life modifications for a more pleasant Emacs experience.
 ** Identity
@@ -364,7 +356,6 @@ Personal & global key maps.
   (define-key z-map (kbd "C-c") 'calendar)
   (define-key z-map (kbd ".") 'org-date-from-calendar)
 
-  (define-key z-map (kbd "i") (lambda () (interactive) (find-file "~/org/dex.org")))
   (define-key z-map (kbd "n") (lambda () (interactive) (find-file "~/org/notes.org")))
   (define-key z-map (kbd "c") (lambda () (interactive) (find-file "~/.emacs.d/config.org")))
 
@@ -589,27 +580,11 @@ Garbage Collector Magic Hack
 	:config
 	(gcmh-mode 1))
 #+end_src
-** Initialize =mwheel=
-*** Description
-Mouse wheel scrolling
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package mwheel
-  ;;   :custom
-  ;;   (mouse-wheel-scroll-amount '(1
-  ;; 							   ((shift) . 5)
-  ;; 							   ((control))))
-  ;;   (mouse-wheel-progressive-speed nil
-  ;;								   ))
-#+end_src
-** Initialize =pixel-scroll=
+** Initialize =pixel-scroll-precision=
 *** Description
 Precision pixel scrolling (Emacs 29+)
 *** Code
 #+begin_src emacs-lisp
-  ;; (use-package pixel-scroll
-  ;;   :config
-  ;;   (pixel-scroll-mode))
   (pixel-scroll-precision-mode)
 #+end_src
 ** Initialize =corfu=
@@ -761,11 +736,11 @@ Vertico & friends (orderless, marginalia, consult & embark)
   (use-package all-the-icons
 	:ensure t)
 
-  ;; (use-package all-the-icons-completion
-  ;;   :after (marginalia all-the-icons)
-  ;;   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
-  ;;   :init
-  ;;   (all-the-icons-completion-mode))
+  (use-package all-the-icons-completion
+	:after (marginalia all-the-icons)
+	:hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
+	:init
+	(all-the-icons-completion-mode))
 #+end_src
 ** Initialize =kind-icon=
 *** Description
@@ -1100,196 +1075,196 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	:defer t
 	:commands (pdf-view-mode pdf-tools-install)
 	:mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
-		:load-path "site-lisp/pdf-tools/lisp"
-		:magic ("%PDF" . pdf-view-mode)
-		:config
-		(pdf-tools-install 'no-query)
-		(define-pdf-cache-function pagelabels)
-		;; (evil-set-initial-state 'pdf-view-mode 'normal)
-		:hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
-			(pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
+	:load-path "site-lisp/pdf-tools/lisp"
+	:magic ("%PDF" . pdf-view-mode)
+	:config
+	(pdf-tools-install 'no-query)
+	(define-pdf-cache-function pagelabels)
+	;; (evil-set-initial-state 'pdf-view-mode 'normal)
+	:hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
+		   (pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
 
-	(use-package pdf-view-restore
-		:after pdf-tools
-		:ensure t
-		:config
-		(add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
+  (use-package pdf-view-restore
+	:after pdf-tools
+	:ensure t
+	:config
+	(add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
 
-	(use-package org-pdftools
-		:ensure t
-		:hook (org-load-hook . org-pdftools-setup-link))
-	#+END_SRC
-	** Initialize =nov=
-	*** Description
-	Major mode for reading EPUBs.
-	*** Code
-	#+BEGIN_SRC emacs-lisp
-	(use-package nov
-		:mode ("\\.epub\\'" . nov-mode))
-	#+END_SRC
-	** Initialize =vterm=
-	*** Description
-	Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
-	*** Code
-	#+begin_src emacs-lisp
-	(use-package vterm
-		:ensure t
-		:config
-		;;(setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")
-		;;(setq vterm-shell "zsh")
-		(setq vterm-max-scrollback 10000))
-	#+end_src
-	** Initialize =saveplace=
-	*** Description
-	Saves cursor location in buffers.
-	*** Code
-	#+begin_src emacs-lisp
-	(use-package saveplace
-		:ensure t
-		:defer nil
-		:config
-		(save-place-mode))
-	#+end_src
-	** Initialize =rainbow-delimiters=
-	*** Description
-	Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimiters such as parentheses, brackets or braces according to their depth.
-	*** Code
-	#+begin_src emacs-lisp
-	(use-package rainbow-delimiters
-		:ensure t
-		:hook (prog-mode . rainbow-delimiters-mode))
-	#+end_src
-	** Initialize =notmuch=
-	*** Description
-	Notmuch email configuration.
-	*** Code
-	#+begin_src emacs-lisp
-	(use-package notmuch
-		:ensure t
-		:commands (notmuch)
-		:config
-		(add-hook 'notmuch-hello-mode-hook
-				(lambda () (display-line-numbers-mode 0)))
+  (use-package org-pdftools
+	:ensure t
+	:hook (org-load-hook . org-pdftools-setup-link))
+#+END_SRC
+** Initialize =nov=
+*** Description
+Major mode for reading EPUBs.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package nov
+	:mode ("\\.epub\\'" . nov-mode))
+#+END_SRC
+** Initialize =vterm=
+*** Description
+Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
+*** Code
+#+begin_src emacs-lisp
+  (use-package vterm
+	:ensure t
+	:config
+	;;(setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")
+	;;(setq vterm-shell "zsh")
+	(setq vterm-max-scrollback 10000))
+#+end_src
+** Initialize =saveplace=
+*** Description
+Saves cursor location in buffers.
+*** Code
+#+begin_src emacs-lisp
+  (use-package saveplace
+	:ensure t
+	:defer nil
+	:config
+	(save-place-mode))
+#+end_src
+** Initialize =rainbow-delimiters=
+*** Description
+Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimiters such as parentheses, brackets or braces according to their depth.
+*** Code
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+	:ensure t
+	:hook (prog-mode . rainbow-delimiters-mode))
+#+end_src
+** Initialize =notmuch=
+*** Description
+Notmuch email configuration.
+*** Code
+#+begin_src emacs-lisp
+  (use-package notmuch
+	:ensure t
+	:commands (notmuch)
+	:config
+	(add-hook 'notmuch-hello-mode-hook
+			  (lambda () (display-line-numbers-mode 0)))
 
-		;; setup the mail address
-		(setq mail-user-agent 'message-user-agent)
+	;; setup the mail address
+	(setq mail-user-agent 'message-user-agent)
 
-		;; smtp config
-		(setq smtpmail-smtp-server "smtp.gmail.com"
-			message-send-mail-function 'message-smtpmail-send-it)
+	;; smtp config
+	(setq smtpmail-smtp-server "smtp.gmail.com"
+		  message-send-mail-function 'message-smtpmail-send-it)
 
-		;; report problems with the smtp server
-		(setq smtpmail-debug-info t)
-		;; add Cc and Bcc headers to the message buffer
-		(setq message-default-mail-headers "Cc: \nBcc: \n")
-		;; postponed message is put in the following draft directory
-		(setq message-auto-save-directory "~/mail/draft")
-		(setq message-kill-buffer-on-exit t)
-		;; change the directory to store the sent mail
-		(setq message-directory "~/mail/")
-		;; show newest emails on top
-		;;(setq notmuch-search-oldest-first nil)
+	;; report problems with the smtp server
+	(setq smtpmail-debug-info t)
+	;; add Cc and Bcc headers to the message buffer
+	(setq message-default-mail-headers "Cc: \nBcc: \n")
+	;; postponed message is put in the following draft directory
+	(setq message-auto-save-directory "~/mail/draft")
+	(setq message-kill-buffer-on-exit t)
+	;; change the directory to store the sent mail
+	(setq message-directory "~/mail/")
+	;; show newest emails on top
+	;;(setq notmuch-search-oldest-first nil)
 
-		;; Function to prune tag:deleted
-		(defun prune-emails ()
-		"Delete old emails."
-		(interactive)
-		(async-shell-command "notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm"))
+	;; Function to prune tag:deleted
+	(defun prune-emails ()
+	  "Delete old emails."
+	  (interactive)
+	  (async-shell-command "notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm"))
 
-		;; Function to refresh local mail box from within emacs
-		(defun notmuch-exec-offlineimap ()
-		"Execute offlineimap."
-		(interactive)
-		(set-process-sentinel
-		(start-process-shell-command "offlineimap"
-										"*offlineimap*"
-										"offlineimap -o")
-		#'(lambda (process event)
-			(notmuch-refresh-all-buffers)
-			(let ((w (get-buffer-window "*offlineimap*")))
-				(when w
-				(with-selected-window w (recenter (window-end))))))))
+	;; Function to refresh local mail box from within emacs
+	(defun notmuch-exec-offlineimap ()
+	  "Execute offlineimap."
+	  (interactive)
+	  (set-process-sentinel
+	   (start-process-shell-command "offlineimap"
+									"*offlineimap*"
+									"offlineimap -o")
+	   #'(lambda (process event)
+		   (notmuch-refresh-all-buffers)
+		   (let ((w (get-buffer-window "*offlineimap*")))
+			 (when w
+			   (with-selected-window w (recenter (window-end))))))))
 
-		(setq-default notmuch-saved-searches
-					(quote
-					((:name "inbox" :query "(tag:inbox)" :sort-order newest-first :key "1")
-						(:name "unread" :query "(tag:unread)" :sort-order newest-first :key "n")
-						(:name "starred" :query "tag:flagged" :sort-order newest-first :key "f")
-						(:name "sent" :query "(tag:sent OR tag:replied)" :sort-order newest-first :key "s")))))
-	#+end_src
-	** Initialize =modus-themes=
-	*** Description
-	Accessible themes for GNU Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
-	*** Code
-	#+begin_src emacs-lisp
-	(use-package emacs
-		:ensure t
-		:defer nil
-		:config
-		(setq custom-safe-themes t)
+	(setq-default notmuch-saved-searches
+				  (quote
+				   ((:name "inbox" :query "(tag:inbox)" :sort-order newest-first :key "1")
+					(:name "unread" :query "(tag:unread)" :sort-order newest-first :key "n")
+					(:name "starred" :query "tag:flagged" :sort-order newest-first :key "f")
+					(:name "sent" :query "(tag:sent OR tag:replied)" :sort-order newest-first :key "s")))))
+#+end_src
+** Initialize =modus-themes=
+*** Description
+Accessible themes for GNU Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
+*** Code
+#+begin_src emacs-lisp
+  (use-package emacs
+	:ensure t
+	:defer nil
+	:config
+	(setq custom-safe-themes t)
 
-		;; TODO simplify this to avoid formatting a string, then read and eval.
-		(defmacro modus-themes-format-sexp (sexp &rest objects)
-		`(eval (read (format ,(format "%S" sexp) ,@objects))))
+	;; TODO simplify this to avoid formatting a string, then read and eval.
+	(defmacro modus-themes-format-sexp (sexp &rest objects)
+	  `(eval (read (format ,(format "%S" sexp) ,@objects))))
 
-		(defvar modus-themes-after-load-hook nil
-		"Hook that runs after loading a Modus theme.
-				See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
+	(defvar modus-themes-after-load-hook nil
+	  "Hook that runs after loading a Modus theme.
+			  See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
 
-		(dolist (theme '("operandi" "vivendi"))
-		(modus-themes-format-sexp
-		(defun modus-%1$s-theme-load ()
-			(setq modus-%1$s-theme-slanted-constructs t
-				modus-%1$s-theme-bold-constructs nil
-				modus-%1$s-theme-fringes nil ; {nil,'subtle,'intense}
-				modus-%1$s-theme-mode-line nil ; {nil '3d,'moody}
-				modus-%1$s-theme-syntax 'faint ; {nil,faint,'yellow-comments,'green-strings,'yellow-comments-green-strings,'alt-syntax,'alt-syntax-yellow-comments}
-				modus-%1$s-theme-intense-hl-line nil
-				modus-%1$s-theme-intense-paren-match 'intense-bold
-				modus-%1$s-theme-links 'neutral-underline ; {nil,'faint,'neutral-underline,'faint-neutral-underline,'no-underline}
-				modus-%1$s-theme-no-mixed-fonts nil
-				modus-%1$s-theme-prompts nil ; {nil,'subtle,'intense}
-				modus-%1$s-theme-completions 'moderate ; {nil,'moderate,'opinionated}
-				;; modus-themes-region 'bg-only-no-extend
-				modus-%1$s-theme-diffs nil ; {nil,'desaturated,'fg-only}
-				modus-%1$s-theme-org-blocks 'grayscale ; {nil,'grayscale,'rainbow}
-				;; modus-themes-org-habit 'traffic-light ; {nil,'simplified,'traffic-light}
-				modus-%1$s-theme-headings  ; Read the manual for this one
-				'((t . nil))
-				modus-%1$s-theme-variable-pitch-headings t
-				modus-%1$s-theme-scale-headings nil
-				modus-%1$s-theme-scale-1 1.1
-				modus-%1$s-theme-scale-2 1.15
-				modus-%1$s-theme-scale-3 1.21
-				modus-%1$s-theme-scale-4 1.27
-				modus-%1$s-theme-scale-5 1.33)
-			(load-theme 'modus-%1$s t)
-			(run-hooks 'modus-themes-after-load-hook))
-		theme))
+	(dolist (theme '("operandi" "vivendi"))
+	  (modus-themes-format-sexp
+	   (defun modus-%1$s-theme-load ()
+		 (setq modus-%1$s-theme-slanted-constructs t
+			   modus-%1$s-theme-bold-constructs nil
+			   modus-%1$s-theme-fringes nil ; {nil,'subtle,'intense}
+			   modus-%1$s-theme-mode-line nil ; {nil '3d,'moody}
+			   modus-%1$s-theme-syntax 'faint ; {nil,faint,'yellow-comments,'green-strings,'yellow-comments-green-strings,'alt-syntax,'alt-syntax-yellow-comments}
+			   modus-%1$s-theme-intense-hl-line nil
+			   modus-%1$s-theme-intense-paren-match 'intense-bold
+			   modus-%1$s-theme-links 'neutral-underline ; {nil,'faint,'neutral-underline,'faint-neutral-underline,'no-underline}
+			   modus-%1$s-theme-no-mixed-fonts nil
+			   modus-%1$s-theme-prompts nil ; {nil,'subtle,'intense}
+			   modus-%1$s-theme-completions 'moderate ; {nil,'moderate,'opinionated}
+			   ;; modus-themes-region 'bg-only-no-extend
+			   modus-%1$s-theme-diffs nil ; {nil,'desaturated,'fg-only}
+			   modus-%1$s-theme-org-blocks 'grayscale ; {nil,'grayscale,'rainbow}
+			   ;; modus-themes-org-habit 'traffic-light ; {nil,'simplified,'traffic-light}
+			   modus-%1$s-theme-headings  ; Read the manual for this one
+			   '((t . nil))
+			   modus-%1$s-theme-variable-pitch-headings t
+			   modus-%1$s-theme-scale-headings nil
+			   modus-%1$s-theme-scale-1 1.1
+			   modus-%1$s-theme-scale-2 1.15
+			   modus-%1$s-theme-scale-3 1.21
+			   modus-%1$s-theme-scale-4 1.27
+			   modus-%1$s-theme-scale-5 1.33)
+		 (load-theme 'modus-%1$s t)
+		 (run-hooks 'modus-themes-after-load-hook))
+	   theme))
 
-		(defun modus-themes-light ()
-		"Load `modus-operandi' and disable `modus-vivendi'."
-		(disable-theme 'modus-vivendi)
-		(modus-operandi-theme-load))
+	(defun modus-themes-light ()
+	  "Load `modus-operandi' and disable `modus-vivendi'."
+	  (disable-theme 'modus-vivendi)
+	  (modus-operandi-theme-load))
 
-		(defun modus-themes-dark ()
-		"Load `modus-vivendi' and disable `modus-operandi'."
-		(disable-theme 'modus-operandi)
-		(modus-vivendi-theme-load))
+	(defun modus-themes-dark ()
+	  "Load `modus-vivendi' and disable `modus-operandi'."
+	  (disable-theme 'modus-operandi)
+	  (modus-vivendi-theme-load))
 
-		(defun modus-themes-toggle ()
-		"Toggle between `modus-operandi' and `modus-vivendi' themes."
-		(interactive)
-		(if (eq (car custom-enabled-themes) 'modus-operandi)
-			(modus-themes-dark)
-			(modus-themes-light))
-		(dashboard-refresh-buffer))
+	(defun modus-themes-toggle ()
+	  "Toggle between `modus-operandi' and `modus-vivendi' themes."
+	  (interactive)
+	  (if (eq (car custom-enabled-themes) 'modus-operandi)
+		  (modus-themes-dark)
+		(modus-themes-light))
+	  (dashboard-refresh-buffer))
 
-		;; Load theme 
-		(modus-themes-light)
+	;; Load theme 
+	(modus-themes-light)
 
-		:bind ("<S-f5>" . modus-themes-toggle))
-	#+end_src
+	:bind ("<S-f5>" . modus-themes-toggle))
+#+end_src
 ** Initialize =olivetti=
 *** Description
 Emacs minor mode for a nice writing environment.
@@ -1351,17 +1326,9 @@ Show event history and command history of some or all buffers.
 
   ;; - anzu search and replace
   (use-package anzu)
-	;; :hook (after-init . anzu-mode))
 
   ;; Quickly query whole source tree
   (use-package ctrlf)
-	;; :hook (after-init . ctrlf-mode))
-#+end_src
-** Initialize =restart-emacs=
-#+begin_src emacs-lisp
-  ;; Restart emacs
-  (use-package restart-emacs
-	:commands restart-emacs)
 #+end_src
 ** Built-in entry: =eldoc=
 *** Description
@@ -1383,6 +1350,9 @@ Language Server Protocol
 *** Code
 #+begin_src emacs-lisp
   (use-package lsp-mode
+	:init
+	;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+	(setq lsp-keymap-prefix "C-c l")
 	:hook ((c-mode          ; clangd
 			c++-mode        ; clangd
 			c-or-c++-mode   ; clangd
@@ -1428,37 +1398,7 @@ Language Server Protocol
 	:hook (python-mode . (lambda () (require 'lsp-pyright)))
 	:init (when (executable-find "python3")
 			(setq lsp-pyright-python-executable-cmd "python3")))
-
-  (use-package format-all
-	:preface
-	(defun ian/format-code ()
-	  "Auto-format whole buffer."
-	  (interactive)
-	  (if (derived-mode-p 'prolog-mode)
-		  (prolog-indent-buffer)
-		(format-all-buffer)))
-	:config
-	(global-set-key (kbd "M-F") #'ian/format-code)
-	(add-hook 'prog-mode-hook #'format-all-ensure-formatter))
 #+end_src
-** C & C++
-*** Description
-Lsp-mode is the backend for C and C++
-*** Code
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package lsp-mode
-  ;;   :init
-  ;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  ;;   (setq lsp-keymap-prefix "C-c l")
-  ;;   :hook ((c-mode . lsp)
-  ;; 		 (python-mode . lsp)
-  ;; 		 ;; if you want which-key integration
-  ;; 		 (lsp-mode . lsp-enable-which-key-integration))
-  ;;   :commands lsp)
-
-  ;; ;; optionally
-  ;; (use-package lsp-ui :commands lsp-ui-mode)
-#+END_SRC
 ** Go
 *** Description
 Go-mode covers it all.
@@ -1469,22 +1409,6 @@ Go-mode covers it all.
 	:mode "\\.go\\'"
 	:hook ((go-mode . subword-mode)))
 #+end_src
-** Python
-*** Description
-Elpy for basics & Jedi for better autocomplete and static code analysis. Autopep8 automatically applies proper python coding standards on save, if not already.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  ;; ;; Set python3
-  ;; (setq py-python-command "python3")
-  ;; (setq python-shell-interpreter "python3")
-
-  ;; (use-package jedi-core
-  ;;   :ensure t)
-
-  ;; (use-package py-autopep8
-  ;;   :ensure t
-  ;;   :hook (python-mode . py-autopep8-enable-on-save))
-#+END_SRC
 ** JSON
 *** Description
 Syntax highlighting for json files. Hopefully lighter weight than javascript mode.
@@ -1494,16 +1418,11 @@ Syntax highlighting for json files. Hopefully lighter weight than javascript mod
 	:ensure t
 	:mode ("\\.json\\'" . json-mode))
 #+end_src
-** TypeScript
+** Prettier JS
 *** Description
-Self-contained, lightweight and minimalist major-mode focused on providing basic font-lock/syntax-highlighting and indentation for Typescript syntax, without any external dependencies.
+Prettier JS support.
 *** Code
 #+begin_src emacs-lisp
-  ;; (use-package typescript-mode
-  ;;   :mode ("\\.tsx?\\'" . typescript-mode)
-  ;;   :config
-  ;;   (setq typescript-indent-level 2))
-
   (use-package prettier-js
 	:ensure t)
 #+end_src
@@ -1599,17 +1518,17 @@ Geiser - Scheme Lisp REPL.
   (defun run-in-vterm (command)
 	"Execute string COMMAND in a new vterm.
 
-			Interactively, prompt for COMMAND with the current buffer's file
-			name supplied. When called from Dired, supply the name of the
-			file at point.
+	Interactively, prompt for COMMAND with the current buffer's file
+	name supplied. When called from Dired, supply the name of the
+	file at point.
 
-			Like `async-shell-command`, but run in a vterm for full terminal features.
+	Like `async-shell-command`, but run in a vterm for full terminal features.
 
-			The new vterm buffer is named in the form `*foo bar.baz*`, the
-			command and its arguments in earmuffs.
+	The new vterm buffer is named in the form `*foo bar.baz*`, the
+	command and its arguments in earmuffs.
 
-			When the command terminates, the shell remains open, but when the
-			shell exits, the buffer is killed."
+	When the command terminates, the shell remains open, but when the
+	shell exits, the buffer is killed."
 	(interactive
 	 (list
 	  (let* ((f (cond (buffer-file-name)
@@ -1691,14 +1610,14 @@ Geiser - Scheme Lisp REPL.
   (defun open-in-terminal ()
 	"Opens terminal in cwd"
 	(interactive)
-	(call-process-shell-command "xfce4-terminal" nil 0))
+	(call-process-shell-command "gnome-terminal" nil 0))
 #+end_src
 ** open-files
 #+begin_src emacs-lisp
   (defun open-in-files ()
 	"Opens file manager"
 	(interactive)
-	(call-process-shell-command "thunar" nil 0))
+	(call-process-shell-command "nautilus" nil 0))
 #+end_src
 ** open-vscode
 #+begin_src emacs-lisp
@@ -1712,7 +1631,7 @@ Geiser - Scheme Lisp REPL.
   (defun open-in-mousepad ()
 	"Opens in mousepad"
 	(interactive)
-	(call-process-shell-command "mousepad" nil 0))
+	(call-process-shell-command "gedit" nil 0))
 #+end_src
 ** light-theme
 #+begin_src emacs-lisp

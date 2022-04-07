@@ -308,7 +308,7 @@ Essential for using shells in Emacs.
 	 ("wikipedia\\.org" . browse-url-firefox)
 	 ("github" . browse-url-firefox)
 	 ("reddit" . browse-url-firefox)
-	 ("youtube" . browse-url-chromium)
+	 ("youtube" . browse-url-firefox)
 	 ("thefreedictionary\\.com" . eww-browse-url)
 	 ("." . browse-url-default-browser)
 	 ))
@@ -1087,6 +1087,8 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	(define-pdf-cache-function pagelabels)
 	;; (evil-set-initial-state 'pdf-view-mode 'normal)
 	:hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
+
+		   (pdf-view-mode.hook . (lambda () (blink-cursor-mode -1)))
 		   (pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
 
   (use-package pdf-view-restore
@@ -1196,6 +1198,48 @@ Notmuch email configuration.
 					(:name "unread" :query "(tag:unread)" :sort-order newest-first :key "n")
 					(:name "starred" :query "tag:flagged" :sort-order newest-first :key "f")
 					(:name "sent" :query "(tag:sent OR tag:replied)" :sort-order newest-first :key "s")))))
+#+end_src
+** Initialize =erc=
+*** Description
+ERC is a powerful, modular, and extensible IRC client for Emacs.
+*** Code
+#+begin_src emacs-lisp
+  (use-package erc
+	:custom
+	(erc-autojoin-timing 'ident)
+	(erc-autojoin-channels-alist '(("irc.rizon.net" "#rice")))
+	(erc-fill-function 'erc-fill-static)
+	(erc-fill-static-center 22)
+	(erc-hide-list '("JOIN" "PART" "QUIT"))
+	(erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+	(erc-lurker-threshold-time 43200)
+	;;(erc-prompt-for-nickserv-password nil)
+	;;(erc-prompt-for-password nil)
+	(erc-server-reconnect-attempts 5)
+	(erc-server-reconnect-timeout 3)
+	(erc-quit-reason 'erc-quit-reason-normal)
+	(erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
+							   "324" "329" "332" "333" "353" "477"))
+	:config
+	;; login
+	(setq erc-nickserv-identify-mode 'autodetect)
+	;; Interpret mIRC-style color commands in IRC chats
+	(setq erc-interpret-mirc-color t)
+	;; Kill buffers for channels after /part
+	(setq erc-kill-buffer-on-part t)
+	;; Kill buffers for private queries after quitting the server
+	(setq erc-kill-queries-on-quit t)
+	;; Kill buffers for server messages after quitting the server
+	(setq erc-kill-server-buffer-on-quit t)
+	;; open query buffers in the current window
+	(setq erc-query-display 'buffer)
+	;; misc stuff
+	(setq erc-prompt ">"
+		  erc-nick '("diamondbond" "diamondbond_"))
+	(add-to-list 'erc-modules 'notifications)
+	(add-to-list 'erc-modules 'spelling)
+	(erc-services-mode 1)
+	(erc-update-modules))
 #+end_src
 ** Initialize =modus-themes=
 *** Description
@@ -1625,16 +1669,17 @@ Geiser - Scheme Lisp REPL.
 	(call-process-shell-command "nautilus" nil 0))
 #+end_src
 ** open-vscode
+Heresy.
 #+begin_src emacs-lisp
   (defun open-in-vscode ()
 	"Opens in vscode"
 	(interactive)
 	(call-process-shell-command "code" nil 0))
 #+end_src
-** open-mousepad
+** open-notepad
 #+begin_src emacs-lisp
-  (defun open-in-mousepad ()
-	"Opens in mousepad"
+  (defun open-in-notepad ()
+	"Opens in notepad"
 	(interactive)
 	(call-process-shell-command "gedit" nil 0))
 #+end_src
@@ -1651,4 +1696,25 @@ Geiser - Scheme Lisp REPL.
 	"Apply system-wide dark theme"
 	(interactive)
 	(call-process-shell-command "~/bin/apply_dark" nil 0))
+#+end_src
+** open-thunderbird
+#+begin_src emacs-lisp
+  (defun open-thunderbird ()
+	"Opens thunderbird"
+	(interactive)
+	(async-shell-command "thunderbird"))
+#+end_src
+
+** erc
+#+begin_src emacs-lisp
+  (defun erc-start ()
+	"Start ERC and connect to Rizon"
+	(interactive)
+	(save-current-buffer
+	  (erc :server "irc.rizon.net" :port "6667" :nick "diamondbond")))
+
+  (defun erc-quit ()
+	"Quit ERC"
+	(interactive)
+	(erc-quit-server nil))
 #+end_src

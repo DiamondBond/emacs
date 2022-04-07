@@ -10,7 +10,7 @@
 Opinionated Emacs Distribution
 
 * Introduction
-This Emacs distribution is a very featureful and performant configuration for Emacs. 
+This is a very featureful and performant configuration for Emacs.
 * Why would I use this?
 Currently, the appeal of this Emacs distribution is a balance of features, performance & usability.
 
@@ -1234,7 +1234,7 @@ ERC is a powerful, modular, and extensible IRC client for Emacs.
 	;; open query buffers in the current window
 	(setq erc-query-display 'buffer)
 	;; misc stuff
-	(setq erc-prompt ">"
+	(setq erc-prompt " >"
 		  erc-nick '("diamondbond" "diamondbond_"))
 	(add-to-list 'erc-modules 'notifications)
 	(add-to-list 'erc-modules 'spelling)
@@ -1391,6 +1391,8 @@ Supress eldoc from modeline.
 ** Built-in entry: =diminish-decl=
 #+begin_src emacs-lisp
   (diminish 'abbrev-mode "")
+  (diminish 'flymake-mode "")
+  (diminish 'c-mode "")
 #+end_src
 * Languages
 ** LSP

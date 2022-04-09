@@ -1308,7 +1308,7 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 	  (dashboard-refresh-buffer))
 
 	;; Load theme 
-	(modus-themes-dark)
+	(modus-themes-light)
 
 	:bind ("<S-f5>" . modus-themes-toggle))
 #+end_src
@@ -1679,14 +1679,14 @@ Geiser - Scheme Lisp REPL.
   (defun open-in-terminal ()
 	"Opens terminal in cwd"
 	(interactive)
-	(call-process-shell-command "gnome-terminal" nil 0))
+	(call-process-shell-command "konsole" nil 0))
 #+end_src
 ** open-files
 #+begin_src emacs-lisp
   (defun open-in-files ()
 	"Opens file manager"
 	(interactive)
-	(call-process-shell-command "nautilus" nil 0))
+	(call-process-shell-command "dolphin" nil 0))
 #+end_src
 ** open-vscode
 Heresy.
@@ -1701,7 +1701,7 @@ Heresy.
   (defun open-in-notepad ()
 	"Opens in notepad"
 	(interactive)
-	(call-process-shell-command "gedit" nil 0))
+	(call-process-shell-command "kwrite" nil 0))
 #+end_src
 ** light-theme
 #+begin_src emacs-lisp

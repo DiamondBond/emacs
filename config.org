@@ -7,14 +7,12 @@
 
 [[./img/emacs.png]]
 
-Opinionated Emacs Distribution
-
 * Introduction
-This is a very featureful and performant configuration for Emacs.
-* Why would I use this?
+Featureful and performant.
+* Why use this?
 Currently, the appeal of this Emacs distribution is a balance of features, performance & usability.
 
-Utilizes Emacs defaults when possible and sticks to lightweight alternatives when needed.
+Utilizes Emacs defaults where possible and sticks to lightweight alternatives when needed.
 * Setup
 Clone the emacs configuration
 #+begin_src sh
@@ -134,7 +132,7 @@ Unzip to ~/src/
   make
   sudo make install
 #+end_src
-* QoL section
+* QoL
 Quality-of-life modifications for a more pleasant Emacs experience.
 ** Identity
 #+begin_src emacs-lisp
@@ -1310,9 +1308,29 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 	  (dashboard-refresh-buffer))
 
 	;; Load theme 
-	(modus-themes-light)
+	(modus-themes-dark)
 
 	:bind ("<S-f5>" . modus-themes-toggle))
+#+end_src
+** Initialize =doom-themes=
+#+begin_src emacs-lisp
+  ;; (use-package doom-themes
+  ;;   :ensure t
+  ;;   :config
+  ;;   ;; Global settings (defaults)
+  ;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+  ;; 		doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  ;;   (load-theme 'doom-one t)
+
+  ;;   ;; Enable flashing mode-line on errors
+  ;;   (doom-themes-visual-bell-config)
+  ;;   ;; Enable custom neotree theme (all-the-icons must be installed!)
+  ;;   ;;(doom-themes-neotree-config)
+  ;;   ;; or for treemacs users
+  ;;   (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  ;;   (doom-themes-treemacs-config)
+  ;;   ;; Corrects (and improves) org-mode's native fontification.
+  ;;   (doom-themes-org-config))
 #+end_src
 ** Initialize =olivetti=
 *** Description

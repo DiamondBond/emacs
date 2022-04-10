@@ -1679,14 +1679,14 @@ Geiser - Scheme Lisp REPL.
   (defun open-in-terminal ()
 	"Opens terminal in cwd"
 	(interactive)
-	(call-process-shell-command "konsole" nil 0))
+	(call-process-shell-command "xfce4-terminal" nil 0))
 #+end_src
 ** open-files
 #+begin_src emacs-lisp
   (defun open-in-files ()
 	"Opens file manager"
 	(interactive)
-	(call-process-shell-command "dolphin" nil 0))
+	(call-process-shell-command "thunar" nil 0))
 #+end_src
 ** open-vscode
 Heresy.
@@ -1701,7 +1701,7 @@ Heresy.
   (defun open-in-notepad ()
 	"Opens in notepad"
 	(interactive)
-	(call-process-shell-command "kwrite" nil 0))
+	(call-process-shell-command "mousepad" nil 0))
 #+end_src
 ** light-theme
 #+begin_src emacs-lisp
@@ -1724,7 +1724,6 @@ Heresy.
 	(interactive)
 	(async-shell-command "thunderbird"))
 #+end_src
-
 ** erc
 #+begin_src emacs-lisp
   (defun erc-start ()

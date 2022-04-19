@@ -224,6 +224,7 @@ Comment out this whole block if you're using termux.
   (tool-bar-mode -1)
   (menu-bar-mode 1)
   (scroll-bar-mode 1)
+  (set-scroll-bar-mode 'right)
 #+END_SRC
 ** Enable copy-pasting outside of Emacs
 #+BEGIN_SRC emacs-lisp
@@ -1361,6 +1362,18 @@ A Collection of Ridiculously Useful eXtensions.
 	:ensure t
 	:defer nil)
 #+end_src
+** Initialize =ecb=
+*** Description
+Emacs Code Browser
+*** Code
+#+begin_src emacs-lisp
+  ;; (use-package ecb
+  ;;   :init (setf ecb-fix-window-size 'width
+  ;; 			  ;; ecb-minor-mode-text "Ecb"
+  ;; 			  ecb-windows-width 0.18)
+  ;;   :commands (ecb-activate)
+  ;;   :config (message "ECB loaded."))
+#+end_src
 ** Initialize =flyspell=
 *** Description
 Spell checking, requires Hunspell.
@@ -1432,6 +1445,7 @@ Language Server Protocol
 			python-mode     ; pyright
 			web-mode        ; ts-ls/HTML/CSS
 			;; haskell-mode    ; haskell-language-server
+			;; corfu-lsp-setup
 			) . lsp-deferred)
 	:commands lsp
 	:config
@@ -1450,7 +1464,10 @@ Language Server Protocol
 	(setq lsp-enable-folding nil)
 	(setq lsp-enable-imenu nil)
 	(setq lsp-enable-snippet nil)
+	(setq lsp-completion-provider :none)
 	(setq read-process-output-max (* 1024 1024)) ;; 1MB
+	(setq completion-styles '(orderless)
+		  completion-category-defaults nil)
 	(setq lsp-idle-delay 0.5))
 
   (use-package lsp-ui

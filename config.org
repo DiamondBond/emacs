@@ -819,6 +819,11 @@ Yasnippet provides useful snippets.
 
   (use-package yasnippet-snippets
 	:ensure t)
+
+  (use-package auto-yasnippet
+	:ensure t)
+  ;; :init
+  ;; (yas-global-mode 1))
 #+END_SRC
 ** Initialize =switch-window=
 *** Description

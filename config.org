@@ -324,7 +324,7 @@ Super - Control - <arrow>
 ** setenv
 Essential for using shells in Emacs.
 #+begin_src emacs-lisp
-  (setq default-directory (getenv "HOME"))
+  ;; (setq default-directory (getenv "HOME"))
   (setenv "PAGER" "cat")
 #+end_src
 ** Browser
@@ -1937,4 +1937,8 @@ Heresy.
 		  (kill-buffer buffer)
 		  (message "File '%s' successfully removed" filename)))))
 #+end_src
-
+* ~
+#+begin_src emacs-lisp
+  (setq default-directory "~/")
+  (cd "~/")
+#+end_src

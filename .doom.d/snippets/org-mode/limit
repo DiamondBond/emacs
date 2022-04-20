@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: limit
-# key: lim
-# --
-$\lim_{x\to} f(x)$

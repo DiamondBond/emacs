@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: double_integral
-# key: dint
-# --
-$\iint_D  \,dx\,dy$

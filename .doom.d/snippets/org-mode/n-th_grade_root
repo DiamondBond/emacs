@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: n-th_grade_root
-# key: nroot
-# --
-$\sqrt[n]{}$

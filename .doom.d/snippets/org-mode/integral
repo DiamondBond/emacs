@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: integral
-# key: int
-# --
-$\int_{}^{} \,dx$

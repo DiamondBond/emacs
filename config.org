@@ -5,8 +5,6 @@
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 
-[[./img/emacs.png]]
-
 * QoL
 Quality-of-life modifications for a more pleasant Emacs experience.
 ** Identity
@@ -29,15 +27,6 @@ Quality-of-life modifications for a more pleasant Emacs experience.
 
   ;; do not steal focus while doing async compilations
   (setq warning-suppress-types '((comp)))
-#+end_src
-** No-littering
-#+begin_src emacs-lisp
-  (use-package no-littering
-	:ensure t
-	:config
-	(require 'recentf)
-	(add-to-list 'recentf-exclude no-littering-var-directory)
-	(add-to-list 'recentf-exclude no-littering-etc-directory))
 #+end_src
 ** Disable automatic creation of backup files
 #+BEGIN_SRC emacs-lisp
@@ -499,6 +488,12 @@ Garbage Collector Magic Hack
 	:diminish gcmh-mode
 	:config
 	(gcmh-mode 1))
+#+end_src
+** Initialize =no-littering=
+#+begin_src emacs-lisp
+  (use-package no-littering
+	:ensure t
+	:defer nil)
 #+end_src
 ** Initialize =pixel-scroll-precision=
 *** Description

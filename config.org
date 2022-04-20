@@ -312,7 +312,10 @@ Super - Control - <arrow>
 #+END_SRC
 ** Window frame
 #+begin_src emacs-lisp
-  (set-frame-parameter (selected-frame) 'internal-border-width 0)
+  ;; set the default frame parameters
+  (setq initial-frame-alist '((internal-border-width . 0)))
+  (setq default-frame-alist '((internal-border-width . 0)))
+  ;; (set-frame-parameter (selected-frame) 'internal-border-width 0)
 #+end_src
 ** setenv
 Essential for using shells in Emacs.
@@ -1462,6 +1465,8 @@ Enable on the fly with M-x flyspell-mode.
 		  ispell-default-dictionary "en_US")
 	;;:hook (text-mode . flyspell-mode)
 	:bind (("M-<f7>" . flyspell-buffer)))
+
+  (defalias 'word-count 'count-words)
 #+end_src
 ** Initialize =clm=
 *** Description

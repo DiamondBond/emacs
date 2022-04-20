@@ -146,7 +146,11 @@ Quality-of-life modifications for a more pleasant Emacs experience.
 ** Performance
 #+begin_src emacs-lisp
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance
-  (setq read-process-output-max (* 1024 1024)) ;; 1mb
+  ;; Increase garbage collector threshold
+  ;; (setq gc-cons-threshold 100000000) ;; 100 MB
+
+  ;; Increase amount of data read from a process
+  (setq read-process-output-max (* 1024 1024)) ;; 1 MB
 
   ;; https://www.masteringemacs.org/article/speed-up-emacs-libjansson-native-elisp-compilation
   ;; (setq comp-deferred-compilation t
@@ -1453,6 +1457,18 @@ Emacs Code Browser
   ;;   :commands (ecb-activate)
   ;;   :config (message "ECB loaded."))
 #+end_src
+** Initialize =flymake=
+#+begin_src emacs-lisp
+  (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake)
+#+end_src
+** Initialize =flycheck=
+#+begin_src emacs-lisp
+  ;; (use-package flycheck
+  ;;   :ensure t
+  ;;   :diminish flycheck-mode
+  ;;   :config
+  ;;   (add-hook 'after-init-hook #'global-flycheck-mode))
+#+end_src
 ** Initialize =flyspell=
 *** Description
 Spell checking, requires Hunspell.
@@ -1565,6 +1581,21 @@ Language Server Protocol
 	:hook (python-mode . (lambda () (require 'lsp-pyright)))
 	:init (when (executable-find "python3")
 			(setq lsp-pyright-python-executable-cmd "python3")))
+#+end_src
+** C/C++
+*** Description
+*deprecated in favor of clangd*
+ccls; a C/C++/Objective-C language server.
+*** Code
+#+begin_src emacs-lisp
+  ;; (use-package ccls
+  ;;   :ensure t
+  ;;   :config
+  ;;   (setq ccls-executable "ccls")
+  ;;   (setq lsp-prefer-flymake nil)
+  ;;   (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+  ;;   :hook ((c-mode c++-mode objc-mode) .
+  ;; 		 (lambda () (require 'ccls) (lsp))))
 #+end_src
 ** Go
 *** Description

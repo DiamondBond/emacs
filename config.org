@@ -7,135 +7,6 @@
 
 [[./img/emacs.png]]
 
-* Introduction
-Featureful and performant.
-* Why use this?
-Currently, the appeal of this Emacs distribution is a balance of features, performance & usability.
-
-Utilizing Emacs defaults where possible and sticking to lightweight alternatives when needed.
-* Setup
-Clone the emacs configuration
-#+begin_src sh
-  mkdir -p ~/git; git clone https://github.com/diamondbond/emacs ~/git/emacs
-
-  emacs --daemon;
-#+end_src
-After running this command, the first time you run Emacs, it will download all of the specified packages in the config.org file, please be patient.
-
-To get autocompletion on C, C++, JS/TS & Python files, you'll need to install the corresponding lsp backend servers first (you'll be automatically prompted to do so the first time you open a relevant file).
-
-*Post Setup*
-Compile pdf-tools & vterm
-
-Install all-the-icons font
-#+begin_quote
-M-x pdf-tools-install
-
-M-x vterm
-
-M-x all-the-icons-install-fonts
-
-M-x all-the-icons-completion-mode #add icons to completion candidates
-
-M-x kill-emacs #restart-emacs
-#+end_quote
-* Dependencies
-** Packages
-This section is just a raw dump of packages that I have needed in the past to comfortably run this Emacs distribution on Ubuntu 20.04, not everything here is required.
-*** Ubuntu 20.04
-#+begin_src sh
-  sudo apt install bash-completion clang clangd llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps offlineimap msmtp clang clang-tools clangd ccls llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps emacs-common-non-dfsg libjansson-dev editorconfig glslang-dev glslang-tools sbcl slime shellcheck rustc cargo pipenv wordnet gcc g++ make libsdl2-dev gnutls-bin libxml2-utils python3-pip gnugo gnuchess xboard libgccjit0 htop ffmpeg wget curl xdotool wmctrl slop wkhtmltopdf mupdf mupdf-tools appmenu-gtk2-module mediainfo exiftool unrar rar unace ace p7zip-full wordnet w3m-el xsel xclip mpd mpc ncmpcpp hunspell python3 python3-pip  libxpm-dev libgif-dev libjpeg-dev libpng-dev libtiff-dev libx11-dev libncurses5-dev automake autoconf texinfo libgtk2.0-dev nodejs ncdu exiftool libvterm-bin libvterm-dev libvterm0 libxapian-dev libgmime-3.0-dev libtalloc-dev zlib1g-dev fuse-overlayfs texlive-science zathura ghostscript default-jre rust-all cargo nodejs npm libjansson4 libjansson-dev golang-go python3-pip ca-certificates curl gnupg-agent software-properties-common fzf
-
-  # optional
-  sudo apt install ncmpcpp mpd mpc pavucontrol mpv rofi hexchat appmenu-gtk2-module appmenu-gtk3-module intel-media-va-driver vainfo ubuntu-restricted-extras build-essential git vim ubuntu-restricted-addons python3-pip bleachbit linux-tools-generic wildmidi timidity suckless-tools dmenu cmake libtool libtool-bin powertop tlp tlp-rdw transmission-gtk ncdu gimp kdenlive inkscape obs-studio kolourpaint gpick nomacs adwaita-icon-theme-full pm-utils hibernate acpi acpi-call-dkms
-
-  #sudo apt-get build-dep emacs
-  sudo apt install -y autoconf automake bsd-mailx dbus-x11 debhelper dpkg-dev \
-	   libacl1-dev libasound2-dev libdbus-1-dev libgif-dev libgnutls28-dev libgpm-dev \
-	   libgtk-3-dev libjansson-dev libjpeg-dev liblcms2-dev liblockfile-dev libm17n-dev \
-	   libncurses5-dev liboss4-salsa2 libotf-dev libpng-dev librsvg2-dev \
-	   libselinux1-dev libsystemd-dev libtiff-dev libxml2-dev libxpm-dev procps quilt \
-	   sharutils texinfo zlib1g-dev gvfs language-pack-en-base libasound2 libaspell15 \
-	   libasyncns0 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libbrotli1 \
-	   libcairo-gobject2 libcairo2 libcanberra-gtk3-0 libcanberra-gtk3-module \
-	   libcanberra0 libcroco3 libdatrie1 libdb5.3 libdrm2 libegl1 libenchant1c2a \
-	   libepoxy0 libflac8 libfontconfig1 libfreetype6 libgbm1 libgdk-pixbuf2.0-0 \
-	   libgif7 libgl1 libglvnd0 libglx0 libgpm2 libgraphite2-3 libgstreamer-gl1.0-0 \
-	   libgstreamer-plugins-base1.0-0 libgstreamer1.0-0 libgtk-3-0 libgudev-1.0-0 \
-	   libharfbuzz-icu0 libharfbuzz0b libhyphen0 libice6 libicu66 libjansson4 \
-	   libjavascriptcoregtk-4.0-18 libjbig0 libjpeg-turbo8 liblcms2-2 liblockfile1 \
-	   libltdl7 libm17n-0 libnotify4 libnss-mdns libnss-myhostname libnss-systemd \
-	   libogg0 liborc-0.4-0 libotf0 libpango-1.0-0 libpangocairo-1.0-0 \
-	   libpangoft2-1.0-0 libpixman-1-0 libpng16-16 libpulse0 librsvg2-2 libsasl2-2 \
-	   libsecret-1-0 libsm6 libsndfile1 libsoup2.4-1 libssl1.1 libstdc++6 libtdb1 \
-	   libthai0 libtiff5 libvorbis0a libvorbisenc2 libvorbisfile3 libwayland-client0 \
-	   libwayland-cursor0 libwayland-egl1 libwayland-server0 libwebp6 libwebpdemux2 \
-	   libwoff1 libx11-6 libx11-xcb1 libxau6 libxcb-render0 libxcb-shm0 libxcb1 \
-	   libxcomposite1 libxcursor1 libxdamage1 libxdmcp6 libxext6 libxfixes3 libxi6 \
-	   libxinerama1 libxkbcommon0 libxml2 libxpm4 libxrandr2 libxrender1 libxslt1.1 \
-	   libyajl2
-
-  # if running ubuntu 20.04:
-  sudo add-apt-repository ppa:ubuntu-toolchain-r/ppa
-  sudo apt install gcc-10 g++-10 libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev
-  # or just match up your libgccjit version to your installed gcc version
-  gcc --version
-  sudo apt install libgccjit0 libgccjit-9-dev
-#+end_src
-*** Python
-#+begin_src bash
-  pip3 install black pyflakes isort nose pytest pygifsicle pyls pyls-black nose2 simple-server httpserver future python-lsp-server autopep8 jedi jedi-language-server
-#+end_src
-*** NPM
-#+begin_src bash
-  sudo npm install -g typescript-language-server
-#+end_src
-** Files
-Certain files & folders must exist.
-#+begin_src sh
-  mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
-#+end_src
-** Emacs
-How to compile and install.
-*** Grabbing sources
-Clone the latest emacs sources:
-#+begin_src sh
-  cd ~/git
-  git clone -b master git://git.sv.gnu.org/emacs.git
-#+end_src
-*** Configuration
-We configure emacs to compile with various flags.
-#+begin_src sh
-  # if using the ubuntu 20.04 repo
-  export CC=/usr/bin/gcc-10 CXX=/usr/bin/gcc-10
-
-  ./autogen.sh
-
-  # for athena & nativecomp [X11]
-  # make sure xaw3d lib is installed
-  ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --without-compress-install --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
-
-  # for pgtk & nativecomp [WAYLAND]
-  ./configure --with-dbus --with-pgtk --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --without-xwidgets --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
-
-  # for nativecomp & toolkit=gtk [X11/XWayland DEPRECATED]
-  ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
-#+end_src
-*** Building
-We build with all cores and natively compile everything ahead of time. This will take some time.
-#+begin_src sh
-  make NATIVE_FULL_AOT=1 -j$(nproc)
-  sudo make install
-#+end_src
-** Notmuch
-Download the latest release from https://notmuchmail.org/releases
-Unzip to ~/src/
-#+begin_src sh
-  cd ~/src/notmuch
-  ./configure
-  make
-  sudo make install
-#+end_src
 * QoL
 Quality-of-life modifications for a more pleasant Emacs experience.
 ** Identity
@@ -162,11 +33,11 @@ Quality-of-life modifications for a more pleasant Emacs experience.
 ** No-littering
 #+begin_src emacs-lisp
   (use-package no-littering
-	:ensure t)
-  ;;   :config
-  ;;   (require 'recentf)
-  ;;   (add-to-list 'recentf-exclude no-littering-var-directory)
-  ;;   (add-to-list 'recentf-exclude no-littering-etc-directory))
+	:ensure t
+	:config
+	(require 'recentf)
+	(add-to-list 'recentf-exclude no-littering-var-directory)
+	(add-to-list 'recentf-exclude no-littering-etc-directory))
 #+end_src
 ** Disable automatic creation of backup files
 #+BEGIN_SRC emacs-lisp
@@ -179,6 +50,10 @@ Quality-of-life modifications for a more pleasant Emacs experience.
   (when (file-exists-p custom-file) ; Don’t forget to load it, we still need it
 	(load custom-file))
 #+end_src
+** Defer loading most packages for quicker startup times
+#+BEGIN_SRC emacs-lisp
+  (setq use-package-always-defer t)
+#+END_SRC
 ** UTF-8
 #+begin_src emacs-lisp
   ;; UTF-8 please
@@ -188,6 +63,18 @@ Quality-of-life modifications for a more pleasant Emacs experience.
   (set-selection-coding-system 'utf-8)
   (prefer-coding-system 'utf-8)
 #+end_src
+** Indentation
+Set tabs & indents to 4sp.
+#+BEGIN_SRC emacs-lisp
+  (setq-default tab-width 4)
+  (setq-default standard-indent 4)
+  (setq c-basic-offset tab-width)
+  (setq-default electric-indent-inhibit t)
+  (setq-default indent-tabs-mode t)
+  (setq backward-delete-char-untabify-method 'nil)
+  ;; (setq c-default-style "linux")
+  ;; (setq c-default-style "bsd" c-basic-offset 4) 
+#+END_SRC
 ** Fill whatever space the window manager has given us.
 #+begin_src emacs-lisp
   (setq window-resize-pixelwise t)
@@ -201,6 +88,22 @@ Quality-of-life modifications for a more pleasant Emacs experience.
   (setq-default indicate-empty-lines nil)
   (setq-default overflow-newline-into-fringe t)
 #+end_src
+** Window title
+#+BEGIN_SRC emacs-lisp
+  ;;(setq-default frame-title-format '("" "%b - Emacs " emacs-version))
+  (setq-default frame-title-format '("" "%b"))
+  ;;(setq my-username (getenv "USERNAME"))
+  ;;(setq frame-title-format '("%b - Emacs @ " my-hostname))
+#+END_SRC
+** Window frame
+#+begin_src emacs-lisp
+  ;; (set-frame-parameter (selected-frame) 'internal-border-width 0)
+  (add-to-list 'default-frame-alist '(internal-border-width . 0))
+#+end_src
+** Highlight current line
+#+BEGIN_SRC emacs-lisp
+  (global-hl-line-mode t)
+#+END_SRC
 ** Enable line numbers
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
 #+BEGIN_SRC emacs-lisp
@@ -236,14 +139,6 @@ Show column number in modeline.
 #+begin_src emacs-lisp
   ;; (add-to-list 'default-frame-alist '(background-color . "honeydew"))
 #+end_src
-** Highlight current line
-#+BEGIN_SRC emacs-lisp
-  (global-hl-line-mode t)
-#+END_SRC
-** Show parent parentheses
-#+BEGIN_SRC emacs-lisp
-  (show-paren-mode 1)
-#+END_SRC
 ** Disable the default startup screen
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-message t)
@@ -264,28 +159,18 @@ Comment out this whole block if you're using termux.
 ** Enable conservative scrolling
 #+BEGIN_SRC emacs-lisp
   (setq scroll-conservatively 1)
-  ;; (setq mouse-wheel-scroll-amount '(1))
-  ;; (setq mouse-wheel-progressive-speed nil)
 #+END_SRC
 ** Disable ring-bell
 #+BEGIN_SRC emacs-lisp
   (setq ring-bell-function 'ignore)
 #+END_SRC
-** Indentation
-Set tabs & indents to 4sp.
-#+BEGIN_SRC emacs-lisp
-  (setq-default tab-width 4)
-  (setq-default standard-indent 4)
-  (setq c-basic-offset tab-width)
-  (setq-default electric-indent-inhibit t)
-  (setq-default indent-tabs-mode t)
-  (setq backward-delete-char-untabify-method 'nil)
-  ;; (setq c-default-style "linux")
-  ;; (setq c-default-style "bsd" c-basic-offset 4) 
-#+END_SRC
 ** Enable prettify symbols mode
 #+BEGIN_SRC emacs-lisp
   (global-prettify-symbols-mode t)
+#+END_SRC
+** Show parent parentheses
+#+BEGIN_SRC emacs-lisp
+  (show-paren-mode 1)
 #+END_SRC
 ** Enable bracket pair-matching
 #+BEGIN_SRC emacs-lisp
@@ -309,31 +194,17 @@ Super - Control - <arrow>
   (global-set-key (kbd "s-C-<down>") 'shrink-window)
   (global-set-key (kbd "s-C-<up>") 'enlarge-window)
 #+END_SRC
-** Defer loading most packages for quicker startup times
-#+BEGIN_SRC emacs-lisp
-  (setq use-package-always-defer t)
-#+END_SRC
 ** Supress *Async Shell Command* output
 #+begin_src emacs-lisp
   ;; (setq async-shell-command-display-buffer nil)
   (add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil)))
 #+end_src
-** Window title
-#+BEGIN_SRC emacs-lisp
-  ;;(setq-default frame-title-format '("" "%b - Emacs " emacs-version))
-  (setq-default frame-title-format '("" "%b"))
-  ;;(setq my-username (getenv "USERNAME"))
-  ;;(setq frame-title-format '("%b - Emacs @ " my-hostname))
-#+END_SRC
-** Window frame
+** Proced
 #+begin_src emacs-lisp
-  ;; (set-frame-parameter (selected-frame) 'internal-border-width 0)
-  (add-to-list 'default-frame-alist '(internal-border-width . 0))
-#+end_src
-** Set environment
-Essential for using shells in Emacs.
-#+begin_src emacs-lisp
-  (setenv "PAGER" "cat")
+  (setq proced-auto-update-flag t)
+  (setq proced-auto-update-interval 5)
+  (setq proced-descend t)
+  (setq proced-filter 'user)
 #+end_src
 ** Browser
 #+BEGIN_SRC emacs-lisp
@@ -351,20 +222,18 @@ Essential for using shells in Emacs.
 	 ("." . browse-url-default-browser)
 	 ))
 #+END_SRC
-** Proced
+** Set environment
+Essential for using shells in Emacs.
 #+begin_src emacs-lisp
-  (setq proced-auto-update-flag t)
-  (setq proced-auto-update-interval 5)
-  (setq proced-descend t)
-  (setq proced-filter 'user)
+  (setenv "PAGER" "cat")
 #+end_src
 * Keybinds
 ** Description
-Personal & global key maps.
+Private & global key maps.
 ** Code
 #+begin_src emacs-lisp
   ;;---------------------------------------------------------------------
-  ;; personal map
+  ;; private map
   ;;---------------------------------------------------------------------
 
   (define-prefix-command 'z-map)
@@ -398,14 +267,12 @@ Personal & global key maps.
   (define-key z-map (kbd "k") 'compile)
   (define-key z-map (kbd "e") 'eval-region)
 
-  (define-key z-map (kbd "U") 'go-board-undo)
-  (define-key z-map (kbd "P") 'go-board-next)
   (define-key z-map (kbd "S") 'speedbar-frame-mode)
 
-  (define-key z-map (kbd "a") #'(lambda () (interactive) (find-file-other-window "~/org/agenda.org")))
   (define-key z-map (kbd "C-c") 'calendar)
   (define-key z-map (kbd ".") 'org-date-from-calendar)
 
+  (define-key z-map (kbd "a") #'(lambda () (interactive) (find-file-other-window "~/org/agenda.org")))
   (define-key z-map (kbd "n") (lambda () (interactive) (find-file "~/org/notes.org")))
   (define-key z-map (kbd "c") (lambda () (interactive) (find-file "~/.emacs.d/config.org")))
 
@@ -544,22 +411,14 @@ Auto-package-update automatically updates and removes old packages.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package auto-package-update
-	:defer nil
 	:ensure t
+	:defer nil
 	:config
 	(setq auto-package-update-prompt-before-update t)
 	(setq auto-package-update-show-preview t)
 	(setq auto-package-update-delete-old-versions t)
 	(setq auto-package-update-hide-results t)
 	(auto-package-update-maybe))
-#+END_SRC
-** Initialize =diminish=
-*** Description
-Diminish hides minor modes to prevent cluttering your mode line.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package diminish
-	:ensure t)
 #+END_SRC
 ** Initialize =dashboard=
 *** Description
@@ -620,6 +479,14 @@ I have hardcoded in three buffers that I frequently visit along with helper func
 			  (lambda (&rest _) (config-edit))
 			  'default)
 			 ))))
+#+END_SRC
+** Initialize =diminish=
+*** Description
+Diminish hides minor modes to prevent cluttering your mode line.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package diminish
+	:ensure t)
 #+END_SRC
 ** Initialize =gcmh=
 *** Description
@@ -868,8 +735,6 @@ Yasnippet provides useful snippets.
 
   (use-package auto-yasnippet
 	:ensure t)
-  ;; :init
-  ;; (yas-global-mode 1))
 #+END_SRC
 ** Initialize =switch-window=
 *** Description
@@ -1215,6 +1080,11 @@ Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimit
 	:ensure t
 	:hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
+** Initialize =emojify=
+#+begin_src emacs-lisp
+  (use-package emojify
+	:defer t)
+#+end_src
 ** Initialize =notmuch=
 *** Description
 Notmuch email configuration.
@@ -1388,42 +1258,13 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 
 	:bind ("<S-f5>" . modus-themes-toggle))
 #+end_src
-** Initialize =doom-themes=
-#+begin_src emacs-lisp
-  (use-package doom-themes
-	:ensure t)
-
-  ;; (use-package doom-themes
-  ;;   :ensure t
-  ;;   :config
-  ;;   ;; Global settings (defaults)
-  ;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-  ;; 		doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  ;;   (load-theme 'doom-one t)
-
-  ;;   ;; Enable flashing mode-line on errors
-  ;;   (doom-themes-visual-bell-config)
-  ;;   ;; Enable custom neotree theme (all-the-icons must be installed!)
-  ;;   ;;(doom-themes-neotree-config)
-  ;;   ;; or for treemacs users
-  ;;   (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  ;;   (doom-themes-treemacs-config)
-  ;;   ;; Corrects (and improves) org-mode's native fontification.
-  ;;   (doom-themes-org-config))
-#+end_src
-** Initialize =spacemacs-theme=
-#+begin_src emacs-lisp
-  (use-package spacemacs-theme
-	:ensure t)
-#+end_src
 ** Initialize =olivetti=
 *** Description
 Emacs minor mode for a nice writing environment.
 *** Code
 #+begin_src emacs-lisp
   (use-package olivetti
-	:ensure t
-	:defer nil
+	:defer t
 	:init
 	(setq olivetti-body-width .67))
 #+end_src
@@ -1433,8 +1274,7 @@ Efficient and programmable hypertextual information management system.
 *** Code
 #+begin_src emacs-lisp
   (use-package hyperbole
-	:ensure t
-	:defer nil)
+	:defer t)
 #+end_src
 ** Initialize =crux=
 *** Description
@@ -1442,32 +1282,19 @@ A Collection of Ridiculously Useful eXtensions.
 *** Code
 #+begin_src emacs-lisp
   (use-package crux
-	:ensure t
-	:defer nil)
+	:ensure t)
 #+end_src
-** Initialize =ecb=
+** Initialize =0x0=
 *** Description
-Emacs Code Browser
+Upload sharing to 0x0.st
 *** Code
 #+begin_src emacs-lisp
-  ;; (use-package ecb
-  ;;   :init (setf ecb-fix-window-size 'width
-  ;; 			  ;; ecb-minor-mode-text "Ecb"
-  ;; 			  ecb-windows-width 0.18)
-  ;;   :commands (ecb-activate)
-  ;;   :config (message "ECB loaded."))
+  (use-package 0x0
+	:defer t)
 #+end_src
 ** Initialize =flymake=
 #+begin_src emacs-lisp
   (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake)
-#+end_src
-** Initialize =flycheck=
-#+begin_src emacs-lisp
-  ;; (use-package flycheck
-  ;;   :ensure t
-  ;;   :diminish flycheck-mode
-  ;;   :config
-  ;;   (add-hook 'after-init-hook #'global-flycheck-mode))
 #+end_src
 ** Initialize =flyspell=
 *** Description
@@ -1516,7 +1343,7 @@ Supress eldoc from modeline.
 	:ensure t
 	:diminish eldoc-mode)
 #+END_SRC
-** Built-in entry: =diminish-decl=
+** Built-in entry: =diminish=
 #+begin_src emacs-lisp
   (diminish 'abbrev-mode "")
   (diminish 'flymake-mode "")
@@ -1582,21 +1409,6 @@ Language Server Protocol
 	:init (when (executable-find "python3")
 			(setq lsp-pyright-python-executable-cmd "python3")))
 #+end_src
-** C/C++
-*** Description
-*deprecated in favor of clangd*
-ccls; a C/C++/Objective-C language server.
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package ccls
-  ;;   :ensure t
-  ;;   :config
-  ;;   (setq ccls-executable "ccls")
-  ;;   (setq lsp-prefer-flymake nil)
-  ;;   (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
-  ;;   :hook ((c-mode c++-mode objc-mode) .
-  ;; 		 (lambda () (require 'ccls) (lsp))))
-#+end_src
 ** Go
 *** Description
 Go-mode covers it all.
@@ -1624,6 +1436,19 @@ Rust-mode covers it all.
 	:mode "\\.rs\\'"
 	:hook ((go-mode . subword-mode)))
 #+end_src
+** HTML
+#+begin_src emacs-lisp
+  (use-package web-mode
+	:defer t
+	:mode ("\\.html\\'"))
+
+  (use-package web-beautify
+	:defer t
+	:bind (:map web-mode-map
+				("C-c b" . web-beautify-html)
+				:map js2-mode-map
+				("C-c b" . web-beautify-js)))
+#+end_src
 ** JSON
 *** Description
 Syntax highlighting for json files. Hopefully lighter weight than javascript mode.
@@ -1639,7 +1464,36 @@ JS support.
 *** Code
 #+begin_src emacs-lisp
   (use-package js2-mode
-	:ensure t)
+	:mode ("\\.js\\'")
+	:defer t
+	:config
+	(setq-default js2-ignored-warnings '("msg.extra.trailing.comma")))
+
+  (use-package js2-refactor
+	:defer t
+	:config
+	(js2r-add-keybindings-with-prefix "C-c C-m")
+	(add-hook 'js2-mode-hook 'js2-refactor-mode))
+
+  (use-package js-doc
+	:defer t
+	:bind (:map js2-mode-map
+				("C-c i" . js-doc-insert-function-doc)
+				("@" . js-doc-insert-tag))
+	:config
+	(setq js-doc-mail-address "diamondbond1@gmail.com"
+		  js-doc-author (format "Diamond Bond <%s>" js-doc-mail-address)
+		  js-doc-url "diamondbond.neocities.org"
+		  js-doc-license "MIT License"))
+#+end_src
+** ReactJS
+#+begin_src emacs-lisp
+  (use-package rjsx-mode
+	:defer t
+	:mode ("\\.jsx\\'")
+	:config
+	(setq js2-mode-show-parse-errors nil
+		  js2-mode-show-strict-warnings nil))
 #+end_src
 ** Typescript
 *** Description
@@ -1647,15 +1501,20 @@ TSX support.
 *** Code
 #+begin_src emacs-lisp
   (use-package typescript-mode
+	:defer t
+	:mode ("\\.tsx\\'")
 	:ensure t)
 #+end_src
-** Prettier JS
+** Prettier
 *** Description
 Prettier JS support.
 *** Code
 #+begin_src emacs-lisp
   (use-package prettier-js
-	:ensure t)
+	:defer t
+	:after js2-mode
+	:diminish prettier-js-mode
+	:hook (((js2-mode web-mode) . prettier-js-mode)))
 #+end_src
 ** LaTeX
 Auctex.
@@ -1679,14 +1538,31 @@ Markdown-mode & enable auto fill.
 	:mode "\\.md\\'"
 	:hook ((markdown-mode . auto-fill-mode)))
 #+end_src
+** Haskell
+#+begin_src emacs-lisp
+  (use-package haskell-mode
+	:defer t)
+
+  (use-package hindent
+	:defer t)
+#+end_src
+** Python
+#+begin_src emacs-lisp
+  (use-package pyvenv
+	:defer t)
+
+  (use-package blacken
+	:defer t
+	:config
+	(add-hook 'python-mode-hook 'blacken-mode))
+#+end_src
 ** Common Lisp
 *** Description
 SLIME - Common Lisp REPL.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package slime
-	:ensure t
-	:defer nil
+	:defer t
 	:config
 	(setq inferior-lisp-program "sbcl")
 	(setq slime-contribs '(slime-fancy)))
@@ -1697,8 +1573,7 @@ Geiser - Scheme Lisp REPL.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package geiser
-	:ensure t
-	:defer nil
+	:defer t
 	:config
 	(setq geiser-active-implementations '(mit)))
 

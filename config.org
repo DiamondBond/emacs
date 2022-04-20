@@ -297,23 +297,18 @@ Also enables org-bullets & htmlize.
 			("j" "Journal" entry (file+datetree "~/org/journal.org")
 			 "* %?\n%a\nEntered on %U")))
 
-	;; hook
-	(add-hook 'org-mode-hook
-			  #'(lambda ()
-				  (visual-line-mode 1)))
-
 	:bind
 	("C-c c" . 'org-capture)
 	("C-c l" . 'org-store-link)
-	("C-<f1>" . (lambda()(interactive)(show-all))))
+	("C-<f1>" . (lambda()(interactive)(show-all)))
+	:hook (org-mode . visual-line-mode))
 
   (use-package org-contrib
 	:ensure t)
 
   (use-package org-bullets
 	:ensure t
-	:config
-	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+	:hook (org-mode . org-bullets-mode))
 
   (use-package htmlize
 	:ensure t)
@@ -523,9 +518,6 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 		   (inferior-python-mode . corfu-mode))
 
 	:init
-	;; (add-hook 'minibuffer-setup-hook (lambda ()
-	;; 									 (unless (bound-and-true-p vertico--input)
-	;; 									   (corfu-mode 1))))
 	;; Recommended: Enable Corfu globally.
 	(corfu-global-mode))
 #+END_SRC
@@ -553,9 +545,7 @@ Vertico & friends (orderless, marginalia, consult & embark)
 	:bind (:map vertico-map
 				("RET" . vertico-directory-enter)
 				("DEL" . vertico-directory-delete-char)
-				("M-DEL" . vertico-directory-delete-word))
-	;; Tidy shadowed file names
-	:hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+				("M-DEL" . vertico-directory-delete-word)))
 
   (use-package orderless
 	:init
@@ -993,7 +983,7 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	:after pdf-tools
 	:ensure t
 	:config
-	(add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
+	:hook (pdf-view-mode . pdf-view-restore-mode))
 
   (use-package org-pdftools
 	:ensure t
@@ -1068,7 +1058,6 @@ Notmuch email configuration.
 	:config
 	(add-hook 'notmuch-hello-mode-hook
 			  (lambda () (display-line-numbers-mode 0)))
-
 	;; setup the mail address
 	(setq mail-user-agent 'message-user-agent)
 
@@ -1444,7 +1433,7 @@ JS support.
 	:defer t
 	:config
 	(js2r-add-keybindings-with-prefix "C-c C-m")
-	(add-hook 'js2-mode-hook 'js2-refactor-mode))
+	:hook (js2-mode . js2-refactor-mode))
 
   (use-package js-doc
 	:defer t
@@ -1516,8 +1505,8 @@ Markdown-mode & enable auto fill.
 
   (use-package blacken
 	:defer t
-	:config
-	(add-hook 'python-mode-hook 'blacken-mode))
+	:hook
+	(python-mode . blacken-mode))
 #+end_src
 ** Common Lisp
 *** Description

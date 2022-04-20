@@ -113,7 +113,7 @@ We configure emacs to compile with various flags.
 
   # for athena & nativecomp [X11]
   # make sure xaw3d lib is installed
-  ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
+  ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --without-compress-install --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
 
   # for pgtk & nativecomp [WAYLAND]
   ./configure --with-dbus --with-pgtk --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --without-xwidgets --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
@@ -179,6 +179,14 @@ Quality-of-life modifications for a more pleasant Emacs experience.
 #+begin_src emacs-lisp
   (setq window-resize-pixelwise t)
   (setq frame-resize-pixelwise t)
+#+end_src
+** Fringe mode
+#+begin_src emacs-lisp
+  (fringe-mode nil)
+  (setq-default fringes-outside-margins nil)
+  (setq-default indicate-buffer-boundaries nil)
+  (setq-default indicate-empty-lines nil)
+  (setq-default overflow-newline-into-fringe t)
 #+end_src
 ** Enable line numbers
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
@@ -321,6 +329,13 @@ Essential for using shells in Emacs.
 	 ("." . browse-url-default-browser)
 	 ))
 #+END_SRC
+** Proced
+#+begin_src emacs-lisp
+  (setq proced-auto-update-flag t)
+  (setq proced-auto-update-interval 5)
+  (setq proced-descend t)
+  (setq proced-filter 'user)
+#+end_src
 * Keybinds
 ** Description
 Personal & global key maps.
@@ -1154,7 +1169,10 @@ Colorize color names in buffers
 *** Code
 #+begin_src emacs-lisp
   (use-package rainbow-mode
-	:ensure t)
+	:ensure t
+	:config
+	(setq rainbow-ansi-colors nil)
+	(setq rainbow-x-colors nil))
 #+end_src
 ** Initialize =rainbow-delimiters=
 *** Description
@@ -1340,6 +1358,9 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 #+end_src
 ** Initialize =doom-themes=
 #+begin_src emacs-lisp
+  (use-package doom-themes
+	:ensure t)
+
   ;; (use-package doom-themes
   ;;   :ensure t
   ;;   :config
@@ -1357,6 +1378,11 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
   ;;   (doom-themes-treemacs-config)
   ;;   ;; Corrects (and improves) org-mode's native fontification.
   ;;   (doom-themes-org-config))
+#+end_src
+** Initialize =spacemacs-theme=
+#+begin_src emacs-lisp
+  (use-package spacemacs-theme
+	:ensure t)
 #+end_src
 ** Initialize =olivetti=
 *** Description

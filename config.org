@@ -267,6 +267,8 @@ Set tabs & indents to 4sp.
   (setq-default electric-indent-inhibit t)
   (setq-default indent-tabs-mode t)
   (setq backward-delete-char-untabify-method 'nil)
+  ;; (setq c-default-style "linux")
+  ;; (setq c-default-style "bsd" c-basic-offset 4) 
 #+END_SRC
 ** Enable prettify symbols mode
 #+BEGIN_SRC emacs-lisp
@@ -313,18 +315,17 @@ Super - Control - <arrow>
 ** Window frame
 #+begin_src emacs-lisp
   ;; set the default frame parameters
-  (setq initial-frame-alist '((internal-border-width . 0)))
-  (setq default-frame-alist '((internal-border-width . 0)))
+  ;; (setq initial-frame-alist '((internal-border-width . 0)))
+  ;; (setq default-frame-alist '((internal-border-width . 0)))
   ;; (set-frame-parameter (selected-frame) 'internal-border-width 0)
+  ;;(add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
+  (add-to-list 'default-frame-alist '(internal-border-width . 0))
 #+end_src
 ** setenv
 Essential for using shells in Emacs.
 #+begin_src emacs-lisp
+  (setq default-directory (getenv "HOME"))
   (setenv "PAGER" "cat")
-#+end_src
-** Set ~/ as default-dir
-#+begin_src emacs-lisp
-  (setq default-directory "~/")
 #+end_src
 ** Browser
 #+BEGIN_SRC emacs-lisp
@@ -1141,10 +1142,13 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	:magic ("%PDF" . pdf-view-mode)
 	:config
 	(pdf-tools-install 'no-query)
+	;; open pdfs scaled to fit page
+	(setq-default pdf-view-display-size 'fit-page)
+	;; automatically annotate highlights
+	(setq pdf-annot-activate-created-annotations t)
 	(define-pdf-cache-function pagelabels)
 	;; (evil-set-initial-state 'pdf-view-mode 'normal)
 	:hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
-
 		   (pdf-view-mode.hook . (lambda () (blink-cursor-mode -1)))
 		   (pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
 
@@ -1933,3 +1937,4 @@ Heresy.
 		  (kill-buffer buffer)
 		  (message "File '%s' successfully removed" filename)))))
 #+end_src
+

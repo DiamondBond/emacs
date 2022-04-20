@@ -306,9 +306,9 @@ Also enables org-bullets & htmlize.
   (use-package org-contrib
 	:ensure t)
 
-  (use-package org-bullets
-	:ensure t
-	:hook (org-mode . org-bullets-mode))
+  ;; (use-package org-bullets
+  ;;   :ensure t
+  ;;   :hook (org-mode . org-bullets-mode))
 
   (use-package htmlize
 	:ensure t)

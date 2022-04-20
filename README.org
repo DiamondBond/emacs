@@ -17,11 +17,22 @@ Utilizing Emacs defaults where possible and sticking to lightweight alternatives
 * Setup
 Please refer to the dependencies section below first to make sure Emacs and your env have the required packages and configuration setup correctly, then proceed to clone and install this distribution.
 
-Clone the configuration
 #+begin_src sh
+  # Clone new cfg to ~/git/emacs
   mkdir -p ~/git; git clone https://github.com/diamondbond/emacs ~/git/emacs
 
+  # Backup old emacs cfg if it exists
+  mv ~/.emacs.d ~/.emacs.d.old
+
+  # Copy new cfg to ~/.emacs.d
+  mkdir -p ~/.emacs.d
+  cp -r ~/git/emacs/{early-init.el,init.el,config.org,snippets} ~/.emacs.d/
+
+  # Start Emacs daemon
   emacs --daemon;
+
+  # Start Emacs client
+  emacsclient -c -n -a 'emacs'
 #+end_src
 After running this command, the first time you run Emacs, it will download all of the specified packages in the config.org file, please be patient.
 

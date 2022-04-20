@@ -111,22 +111,7 @@ Show column number in modeline.
 #+end_src
 ** Set font
 #+begin_src emacs-lisp
-  ;; Set default, fixed and variable pitch fonts
-  ;; Use M-x menu-set-font to view available fonts
-  ;; (use-package mixed-pitch
-  ;;   :hook
-  ;;   (text-mode . mixed-pitch-mode)
-  ;;   :config
-  ;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 120)
-  ;;   (set-face-attribute 'fixed-pitch nil :font "DejaVu Sans Mono")
-  ;;(set-face-attribute 'default nil :font "dejavu sans mono" :height 120)
-  ;;(set-frame-font "DejaVu Sans Mono 12")
   (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
-  ;;(set-frame-font "DejaVu Sans Mono-12" nil t)
-#+end_src
-** Set background
-#+begin_src emacs-lisp
-  ;; (add-to-list 'default-frame-alist '(background-color . "honeydew"))
 #+end_src
 ** Disable the default startup screen
 #+BEGIN_SRC emacs-lisp
@@ -957,7 +942,6 @@ Git porcelain for Emacs.
 
   (use-package forge
 	:commands forge-pull)
-  ;; :config (setq auth-sources '("~/.authinfo")))
 
   (use-package git-link
 	:ensure t
@@ -1316,7 +1300,7 @@ Show event history and command history of some or all buffers.
   (use-package ag
 	:defer t)
 
-  ;; - anzu search and replace
+  ;; anzu search and replace
   (use-package anzu)
 
   ;; Quickly query whole source tree

@@ -37,7 +37,7 @@ M-x all-the-icons-install-fonts
 
 M-x all-the-icons-completion-mode #add icons to completion candidates
 
-M-x kill-emacs #restart emacs
+M-x kill-emacs #restart-emacs
 #+end_quote
 * Dependencies
 ** Packages
@@ -318,6 +318,10 @@ Super - Control - <arrow>
 Essential for using shells in Emacs.
 #+begin_src emacs-lisp
   (setenv "PAGER" "cat")
+#+end_src
+** Set ~/ as default-dir
+#+begin_src emacs-lisp
+  (setq default-directory "~/")
 #+end_src
 ** Browser
 #+BEGIN_SRC emacs-lisp

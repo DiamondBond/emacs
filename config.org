@@ -12,7 +12,7 @@ Featureful and performant.
 * Why use this?
 Currently, the appeal of this Emacs distribution is a balance of features, performance & usability.
 
-Utilizes Emacs defaults where possible and sticks to lightweight alternatives when needed.
+Utilizing Emacs defaults where possible and sticking to lightweight alternatives when needed.
 * Setup
 Clone the emacs configuration
 #+begin_src sh
@@ -175,6 +175,15 @@ Quality-of-life modifications for a more pleasant Emacs experience.
   (when (file-exists-p custom-file) ; Don’t forget to load it, we still need it
 	(load custom-file))
 #+end_src
+** UTF-8
+#+begin_src emacs-lisp
+  ;; UTF-8 please
+  (setq locale-coding-system 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+  (set-selection-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
+#+end_src
 ** Fill whatever space the window manager has given us.
 #+begin_src emacs-lisp
   (setq window-resize-pixelwise t)
@@ -314,23 +323,20 @@ Super - Control - <arrow>
 #+END_SRC
 ** Window frame
 #+begin_src emacs-lisp
-  ;; set the default frame parameters
-  ;; (setq initial-frame-alist '((internal-border-width . 0)))
-  ;; (setq default-frame-alist '((internal-border-width . 0)))
   ;; (set-frame-parameter (selected-frame) 'internal-border-width 0)
-  ;;(add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
   (add-to-list 'default-frame-alist '(internal-border-width . 0))
 #+end_src
-** setenv
+** Set environment
 Essential for using shells in Emacs.
 #+begin_src emacs-lisp
-  ;; (setq default-directory (getenv "HOME"))
   (setenv "PAGER" "cat")
 #+end_src
 ** Browser
 #+BEGIN_SRC emacs-lisp
-  ;; use browser depending on url
+  ;; always use eww
   ;;(setq browse-url-browser-function 'eww-browse-url)
+
+  ;; use browser depending on url
   (setq
    browse-url-handlers
    '(
@@ -338,7 +344,6 @@ Essential for using shells in Emacs.
 	 ("github" . browse-url-firefox)
 	 ("reddit" . browse-url-firefox)
 	 ("youtube" . browse-url-firefox)
-	 ("thefreedictionary\\.com" . eww-browse-url)
 	 ("." . browse-url-default-browser)
 	 ))
 #+END_SRC
@@ -348,15 +353,6 @@ Essential for using shells in Emacs.
   (setq proced-auto-update-interval 5)
   (setq proced-descend t)
   (setq proced-filter 'user)
-#+end_src
-** UTF-8
-#+begin_src emacs-lisp
-  ;; UTF-8 please
-  ;; (setq locale-coding-system 'utf-8)
-  ;; (set-terminal-coding-system 'utf-8)
-  ;; (set-keyboard-coding-system 'utf-8)
-  ;; (set-selection-coding-system 'utf-8)
-  ;; (prefer-coding-system 'utf-8)
 #+end_src
 * Keybinds
 ** Description
@@ -1680,7 +1676,7 @@ Geiser - Scheme Lisp REPL.
 	(geiser-repl--write-input-ring))
 #+end_src
 * Functions
-** Creating a new window switches your cursor to it
+** Split and follow
 #+BEGIN_SRC emacs-lisp
   (defun split-and-follow-horizontally ()
 	(interactive)
@@ -1804,74 +1800,6 @@ Geiser - Scheme Lisp REPL.
 	(interactive)
 	(async-shell-command "cd /home/diamond/src/dwm-flexipatch/; sudo make clean install"))
 #+end_src
-** clean-exit
-#+begin_src emacs-lisp
-  (defun clean-exit ()
-	"Exit Emacs cleanly.
-  If there are unsaved buffer, pop up a list for them to be saved
-  before existing. Replaces ‘save-buffers-kill-terminal’."
-	(interactive)
-	(if (frame-parameter nil 'client)
-		(server-save-buffers-kill-terminal arg)
-	  (if-let ((buf-list (seq-filter (lambda (buf)
-									   (and (buffer-modified-p buf)
-											(buffer-file-name buf)))
-									 (buffer-list))))
-		  (progn
-			(pop-to-buffer (list-buffers-noselect t buf-list))
-			(message "s to save, C-k to kill, x to execute"))
-		(save-buffers-kill-emacs))))
-#+end_src
-** open-terminal
-#+begin_src emacs-lisp
-  (defun open-in-terminal ()
-	"Opens terminal in cwd"
-	(interactive)
-	(call-process-shell-command "xfce4-terminal" nil 0))
-#+end_src
-** open-files
-#+begin_src emacs-lisp
-  (defun open-in-files ()
-	"Opens file manager"
-	(interactive)
-	(call-process-shell-command "thunar" nil 0))
-#+end_src
-** open-vscode
-Heresy.
-#+begin_src emacs-lisp
-  (defun open-in-vscode ()
-	"Opens in vscode"
-	(interactive)
-	(call-process-shell-command "code" nil 0))
-#+end_src
-** open-notepad
-#+begin_src emacs-lisp
-  (defun open-in-notepad ()
-	"Opens in notepad"
-	(interactive)
-	(call-process-shell-command "mousepad" nil 0))
-#+end_src
-** light-theme
-#+begin_src emacs-lisp
-  (defun light-theme ()
-	"Apply system-wide light theme "
-	(interactive)
-	(call-process-shell-command "~/bin/apply_light") nil 0)
-#+end_src
-** dark-theme
-#+begin_src emacs-lisp
-  (defun dark-theme ()
-	"Apply system-wide dark theme"
-	(interactive)
-	(call-process-shell-command "~/bin/apply_dark" nil 0))
-#+end_src
-** open-thunderbird
-#+begin_src emacs-lisp
-  (defun open-thunderbird ()
-	"Opens thunderbird"
-	(interactive)
-	(async-shell-command "thunderbird"))
-#+end_src
 ** erc
 #+begin_src emacs-lisp
   (defun erc-start ()
@@ -1884,24 +1812,6 @@ Heresy.
 	"Quit ERC"
 	(interactive)
 	(erc-quit-server nil))
-#+end_src
-** cleanup buffer
-#+begin_src emacs-lisp
-  (defun my/untabify-buffer ()
-	(interactive)
-	(untabify (point-min) (point-max)))
-
-  (defun my/indent-buffer ()
-	(interactive)
-	(indent-region (point-min) (point-max)))
-
-  (defun my/cleanup-buffer ()
-	"Perform a bunch of operations on the whitespace content of a buffer.
-  Including indent-buffer, which should not be called automatically on save."
-	(interactive)
-	;;(my/untabify-buffer)
-	(delete-trailing-whitespace)
-	(my/indent-buffer))
 #+end_src
 ** Rename Buffer & File
 #+begin_src emacs-lisp
@@ -1937,7 +1847,7 @@ Heresy.
 		  (kill-buffer buffer)
 		  (message "File '%s' successfully removed" filename)))))
 #+end_src
-* ~
+* Last call
 #+begin_src emacs-lisp
   (setq default-directory "~/")
   (cd "~/")

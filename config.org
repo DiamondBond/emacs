@@ -724,13 +724,13 @@ Yasnippet provides useful snippets.
 	;; ((c-mode c++-mode) . yas-minor-mode)
 	:config
 	(setq yas-snippet-dirs '("~/emacs.d/snippets")
-		  (yas-reload-all))
+		  (yas-reload-all)))
 
-	(use-package yasnippet-snippets
-	  :ensure t)
+  (use-package yasnippet-snippets
+	:ensure t)
 
-	(use-package auto-yasnippet
-	  :ensure t)
+  (use-package auto-yasnippet
+	:ensure t)
 #+END_SRC
 ** Initialize =switch-window=
 *** Description

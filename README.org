@@ -1,18 +1,19 @@
 #+STARTUP: overview
-#+TITLE: Emacs Configuration
-#+AUTHOR: Diamond Bond
-#+DESCRIPTION: Eight Megabytes And Constantly Swapping
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 
 [[./img/emacs.png]]
 
 * Introduction
-Featureful and performant.
-* Why use this?
+This is an Emacs distribution that aims to enhance the default Emacs experience. It alters a lot of the default settings and bundles a plethora of additional useful packages. The final product offers an easy to use Emacs configuration for Emacs newcomers and lots of additional power for Emacs power users.
+
+This Emacs distribution is compatible ONLY with GNU Emacs 28.1+. In general you're advised to always run this distribution with the latest Emacs HEAD.
+
+** Why use this?
 Currently, the appeal of this Emacs distribution is a balance of features, performance & usability.
 
 Utilizing Emacs defaults where possible and sticking to lightweight alternatives when needed.
+
 * Setup
 Please refer to the dependencies section below first to make sure Emacs and your env have the required packages and configuration setup correctly, then proceed to clone and install this distribution.
 
@@ -41,6 +42,7 @@ M-x all-the-icons-completion-mode #add icons to completion candidates
 
 M-x kill-emacs #restart-emacs
 #+end_quote
+
 * Dependencies
 ** Packages
 This section is just a raw dump of packages that I have needed in the past to comfortably run this Emacs distribution, not everything here is required, this is just a rough guideline.

@@ -199,6 +199,11 @@ Show column number in modeline.
 #+BEGIN_SRC emacs-lisp
   (column-number-mode 1)
 #+END_SRC
+** Set fill column width
+#+begin_src emacs-lisp
+  ;; Wrap lines at 80 characters wide, not 70
+  ;; (setq fill-column 80)
+#+end_src
 ** Set font
 #+begin_src emacs-lisp
   ;; Set default, fixed and variable pitch fonts
@@ -335,6 +340,15 @@ Essential for using shells in Emacs.
   (setq proced-auto-update-interval 5)
   (setq proced-descend t)
   (setq proced-filter 'user)
+#+end_src
+** UTF-8
+#+begin_src emacs-lisp
+  ;; UTF-8 please
+  ;; (setq locale-coding-system 'utf-8)
+  ;; (set-terminal-coding-system 'utf-8)
+  ;; (set-keyboard-coding-system 'utf-8)
+  ;; (set-selection-coding-system 'utf-8)
+  ;; (prefer-coding-system 'utf-8)
 #+end_src
 * Keybinds
 ** Description
@@ -1081,8 +1095,13 @@ Git porcelain for Emacs.
 	:ensure t)
 
   (use-package forge
-	:commands forge-pull
-	:config (setq auth-sources '("~/.authinfo")))
+	:commands forge-pull)
+  ;; :config (setq auth-sources '("~/.authinfo")))
+
+  (use-package git-link
+	:ensure t
+	:config
+	(setq git-link-open-in-browser t))
 #+END_SRC
 ** Initialize =elfeed=
 *** Description
@@ -1172,7 +1191,9 @@ Colorize color names in buffers
 	:ensure t
 	:config
 	(setq rainbow-ansi-colors nil)
-	(setq rainbow-x-colors nil))
+	(setq rainbow-x-colors nil)
+	:hook ((web-mode . rainbow-mode)
+		   (css-mode . rainbow-mode)))
 #+end_src
 ** Initialize =rainbow-delimiters=
 *** Description
@@ -1544,7 +1565,14 @@ Go-mode covers it all.
   (use-package go-mode
 	:ensure t
 	:mode "\\.go\\'"
-	:hook ((go-mode . subword-mode)))
+	:config
+	(defun my/go-mode-hook()
+	  ;;(setq-default tab-width 2)
+	  (add-hook 'before-save-hook 'gofmt-before-save)
+	  (set (make-local-variable 'compile-command)
+		   "go test"))
+	;;(eglot-ensure))
+	:hook ((go-mode . my/go-mode-hook)))
 #+end_src
 ** Rust
 *** Description
@@ -1843,4 +1871,56 @@ Heresy.
 	"Quit ERC"
 	(interactive)
 	(erc-quit-server nil))
+#+end_src
+** cleanup buffer
+#+begin_src emacs-lisp
+  (defun my/untabify-buffer ()
+	(interactive)
+	(untabify (point-min) (point-max)))
+
+  (defun my/indent-buffer ()
+	(interactive)
+	(indent-region (point-min) (point-max)))
+
+  (defun my/cleanup-buffer ()
+	"Perform a bunch of operations on the whitespace content of a buffer.
+  Including indent-buffer, which should not be called automatically on save."
+	(interactive)
+	;;(my/untabify-buffer)
+	(delete-trailing-whitespace)
+	(my/indent-buffer))
+#+end_src
+** Rename Buffer & File
+#+begin_src emacs-lisp
+  (defun my/rename-current-buffer-file ()
+	"Renames current buffer and file it is visiting."
+	(interactive)
+	(let ((name (buffer-name))
+		  (filename (buffer-file-name)))
+	  (if (not (and filename (file-exists-p filename)))
+		  (error "Buffer '%s' is not visiting a file!" name)
+		(let ((new-name (read-file-name "New name: " filename)))
+		  (if (get-buffer new-name)
+			  (error "A buffer named '%s' already exists!" new-name)
+			(rename-file filename new-name 1)
+			(rename-buffer new-name)
+			(set-visited-file-name new-name)
+			(set-buffer-modified-p nil)
+			(message "File '%s' successfully renamed to '%s'"
+					 name (file-name-nondirectory new-name)))))))
+#+end_src
+** Delete Buffer & File
+#+begin_src emacs-lisp
+  (defun my/delete-current-buffer-file ()
+	"Removes file connected to current buffer and kills buffer."
+	(interactive)
+	(let ((filename (buffer-file-name))
+		  (buffer (current-buffer))
+		  (name (buffer-name)))
+	  (if (not (and filename (file-exists-p filename)))
+		  (ido-kill-buffer)
+		(when (yes-or-no-p "Are you sure you want to remove this file? ")
+		  (delete-file filename)
+		  (kill-buffer buffer)
+		  (message "File '%s' successfully removed" filename)))))
 #+end_src

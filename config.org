@@ -176,6 +176,7 @@ Quality-of-life modifications for a more pleasant Emacs experience.
 #+end_src
 ** Fill whatever space the window manager has given us.
 #+begin_src emacs-lisp
+  (setq window-resize-pixelwise t)
   (setq frame-resize-pixelwise t)
 #+end_src
 ** Enable line numbers
@@ -295,6 +296,10 @@ Super - Control - <arrow>
   ;;(setq my-username (getenv "USERNAME"))
   ;;(setq frame-title-format '("%b - Emacs @ " my-hostname))
 #+END_SRC
+** Window frame
+#+begin_src emacs-lisp
+  (set-frame-parameter (selected-frame) 'internal-border-width 0)
+#+end_src
 ** setenv
 Essential for using shells in Emacs.
 #+begin_src emacs-lisp
@@ -330,7 +335,7 @@ Personal & global key maps.
   (define-key z-map (kbd "f") 'find-file-other-frame)
   (define-key z-map (kbd "D") 'dashboard-refresh-buffer)
   (define-key z-map (kbd "d") 'dired-other-frame)
-  (define-key z-map (kbd "g") '+default/search-cwd)
+  (define-key z-map (kbd "g") 'org-mark-ring-goto)
   (define-key z-map (kbd "G") 'org-mark-ring-goto)
   (define-key z-map (kbd "2") 'make-frame-command)
   (define-key z-map (kbd "0") 'delete-frame)
@@ -342,7 +347,7 @@ Personal & global key maps.
   (define-key z-map (kbd "b") 'display-battery-mode)
   (define-key z-map (kbd "t") 'display-time-mode)
 
-  (define-key z-map (kbd "*") 'calc)
+  (define-key z-map (kbd "*") 'quick-calc)
   (define-key z-map (kbd "R") 'rainbow-mode)
   (define-key z-map (kbd "O") 'org-redisplay-inline-images)
   (define-key z-map (kbd "s") 'ispell-word)
@@ -421,6 +426,9 @@ Also enables org-bullets & htmlize.
 	("C-c c" . 'org-capture)
 	("C-c l" . 'org-store-link)
 	("C-<f1>" . (lambda()(interactive)(show-all))))
+
+  (use-package org-contrib
+	:ensure t)
 
   (use-package org-bullets
 	:ensure t
@@ -1139,6 +1147,14 @@ Saves cursor location in buffers.
 	:config
 	(save-place-mode))
 #+end_src
+** Initialize =rainbow-mode=
+*** Description
+Colorize color names in buffers
+*** Code
+#+begin_src emacs-lisp
+  (use-package rainbow-mode
+	:ensure t)
+#+end_src
 ** Initialize =rainbow-delimiters=
 *** Description
 Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimiters such as parentheses, brackets or braces according to their depth.
@@ -1448,7 +1464,7 @@ Language Server Protocol
 			c-or-c++-mode   ; clangd
 			;; java-mode       ; eclipse-jdtls
 			js-mode         ; ts-ls (tsserver wrapper)
-			js-jsx-mode     ; ts-ls (tsserver wrapper)
+			;; js-jsx-mode     ; ts-ls (tsserver wrapper)
 			typescript-mode ; ts-ls (tsserver wrapper)
 			python-mode     ; pyright
 			web-mode        ; ts-ls/HTML/CSS
@@ -1503,6 +1519,16 @@ Go-mode covers it all.
 	:mode "\\.go\\'"
 	:hook ((go-mode . subword-mode)))
 #+end_src
+** Rust
+*** Description
+Rust-mode covers it all.
+*** Code
+#+begin_src emacs-lisp
+  (use-package rust-mode
+	:ensure t
+	:mode "\\.rs\\'"
+	:hook ((go-mode . subword-mode)))
+#+end_src
 ** JSON
 *** Description
 Syntax highlighting for json files. Hopefully lighter weight than javascript mode.
@@ -1512,6 +1538,22 @@ Syntax highlighting for json files. Hopefully lighter weight than javascript mod
 	:ensure t
 	:mode ("\\.json\\'" . json-mode))
 #+end_src
+** Javascript
+*** Description
+JS support.
+*** Code
+#+begin_src emacs-lisp
+  (use-package js2-mode
+	:ensure t)
+#+end_src
+** Typescript
+*** Description
+TSX support.
+*** Code
+#+begin_src emacs-lisp
+  (use-package typescript-mode
+	:ensure t)
+#+end_src
 ** Prettier JS
 *** Description
 Prettier JS support.
@@ -1519,6 +1561,19 @@ Prettier JS support.
 #+begin_src emacs-lisp
   (use-package prettier-js
 	:ensure t)
+#+end_src
+** LaTeX
+Auctex.
+#+begin_src emacs-lisp
+  (use-package auctex
+	:ensure t
+	:config
+	(setq TeX-auto-save t)
+	(setq TeX-parse-self t)
+	(setq-default TeX-master nil))
+
+  ;; Enable LaTeX math support
+  ;;(add-hook 'LaTeX-mode-map #'LaTeX-math-mode)
 #+end_src
 ** Markdown
 *** Description

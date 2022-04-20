@@ -1358,7 +1358,6 @@ Language Server Protocol
 			python-mode     ; pyright
 			web-mode        ; ts-ls/HTML/CSS
 			;; haskell-mode    ; haskell-language-server
-			;; corfu-lsp-setup
 			) . lsp-deferred)
 	:commands lsp
 	:config

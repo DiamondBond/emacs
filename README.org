@@ -39,7 +39,7 @@ After running this command, the first time you run Emacs, it will download all o
 To get autocompletion on JS/TS & Python files, you'll need to install the corresponding lsp backend servers first (you'll be automatically prompted to do so the first time you open a relevant file).
 
 *Post Setup*
-Compile pdf-tools & vterm
+Compile pdf-tools & setup vterm.
 
 Install all-the-icons font
 #+begin_quote

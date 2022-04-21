@@ -119,12 +119,16 @@ Show column number in modeline.
   (setq initial-scratch-message "")
 #+END_SRC
 ** Disable most gui elements
-Comment out this whole block if you're using termux.
 #+BEGIN_SRC emacs-lisp
-  (tool-bar-mode -1)
-  (menu-bar-mode 1)
-  (scroll-bar-mode 1)
+  ;; Comment out this block if you're using termux
+  ;; or if x-toolkit=athena/lucid/motif.
+  ;;(tool-bar-mode 1)
+  ;;(menu-bar-mode 1)
+  ;;(scroll-bar-mode 1)
+
+  ;; For x-toolkit=athena
   (set-scroll-bar-mode 'right)
+  (add-to-list 'default-frame-alist '(tool-bar-lines . 1))
 #+END_SRC
 ** Enable copy-pasting outside of Emacs
 #+BEGIN_SRC emacs-lisp

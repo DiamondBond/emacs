@@ -48,18 +48,23 @@
 ;; cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
 
-;; MISC OPTIMIZATIONS ----
 ;; Emacs "updates" its ui more often than it needs to, so we slow it down
 ;; slightly from 0.5s:
 					 ;;; optimizations (from Doom's core.el). See that file for descriptions.
 (setq idle-update-delay 1.0)
 
-;; Disabling bidi (bidirectional editing stuff)
-;; Disables bi-directional editing (like if I wrote in both Hebrew and English)
-(setq-default bidi-display-reordering 'left-to-right 
+;; Disable bidirectional text scanning for a modest performance boost. I've set
+;; this to `nil' in the past, but the `bidi-display-reordering's docs say that
+;; is an undefined state and suggest this to be just as good:
+(setq-default bidi-display-reordering 'left-to-right
 			  bidi-paragraph-direction 'left-to-right)
-(setq bidi-inhibit-bpa t)  ; emacs 27 only - disables bidirectional parenthesis
 
+;; Disabling the BPA makes redisplay faster, but might produce incorrect display
+;; reordering of bidirectional text with embedded parentheses and other bracket
+;; characters whose 'paired-bracket' Unicode property is non-nil.
+(setq bidi-inhibit-bpa t)  ; Emacs 27 only
+
+;; MISC OPTIMIZATIONS ----
 (setq-default cursor-in-non-selected-windows nil)
 (setq highlight-nonselected-windows nil)
 (setq fast-but-imprecise-scrolling t)

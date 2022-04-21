@@ -121,14 +121,12 @@ Show column number in modeline.
 ** Disable most gui elements
 #+BEGIN_SRC emacs-lisp
   ;; Comment out this block if you're using termux
-  ;; or if x-toolkit=athena/lucid/motif.
-  ;;(tool-bar-mode 1)
-  ;;(menu-bar-mode 1)
-  ;;(scroll-bar-mode 1)
+  (tool-bar-mode 1)
+  (menu-bar-mode 1)
+  (scroll-bar-mode 1)
 
   ;; For x-toolkit=athena
   (set-scroll-bar-mode 'right)
-  (add-to-list 'default-frame-alist '(tool-bar-lines . 1))
 #+END_SRC
 ** Enable copy-pasting outside of Emacs
 #+BEGIN_SRC emacs-lisp
@@ -1708,4 +1706,9 @@ Geiser - Scheme Lisp REPL.
 		  (delete-file filename)
 		  (kill-buffer buffer)
 		  (message "File '%s' successfully removed" filename)))))
+#+end_src
+
+* Enable toolbar
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist '(tool-bar-lines . 1))
 #+end_src

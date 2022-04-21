@@ -1564,7 +1564,7 @@ Geiser - Scheme Lisp REPL.
   (defun sync-email ()
 	"Sync email to local database."
 	(interactive)
-	(async-shell-command "offlineimap"))
+	(async-shell-command "~/bin/syncemail.sh"))
 #+end_src
 ** Record screen
 #+begin_src emacs-lisp
@@ -1707,8 +1707,7 @@ Geiser - Scheme Lisp REPL.
 		  (kill-buffer buffer)
 		  (message "File '%s' successfully removed" filename)))))
 #+end_src
-
-* Enable toolbar
+** Enable toolbar
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(tool-bar-lines . 1))
 #+end_src

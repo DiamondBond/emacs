@@ -16,10 +16,10 @@ Quality-of-life modifications for a more pleasant Emacs experience.
 #+begin_src emacs-lisp
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance
   ;; Increase garbage collector threshold
-  ;; (setq gc-cons-threshold 100000000) ;; 100 MB
+  ;;(setq gc-cons-threshold 100000000) ;; 100 MB
 
   ;; Increase amount of data read from a process
-  (setq read-process-output-max (* 1024 1024)) ;; 1 MB
+  ;;(setq read-process-output-max (* 1024 1024)) ;; 1 MB
 
   ;; https://www.masteringemacs.org/article/speed-up-emacs-libjansson-native-elisp-compilation
   ;; (setq comp-deferred-compilation t
@@ -27,6 +27,21 @@ Quality-of-life modifications for a more pleasant Emacs experience.
 
   ;; do not steal focus while doing async compilations
   (setq warning-suppress-types '((comp)))
+
+  ;; While the minibuffer is open, garbage collection will never occur,
+  ;; but once we make a selection, or cancel,
+  ;; garbage collection will kick off immediately
+  ;; and then revert back to the default, sensible behavior.
+  (defun my-minibuffer-setup-hook ()
+	(setq gc-cons-threshold most-positive-fixnum))
+
+  (defun my-minibuffer-exit-hook ()
+	(setq gc-cons-threshold 800000))
+
+  (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
+  (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
+
+  ;; (setq garbage-collection-messages t)
 #+end_src
 ** Disable automatic creation of backup files
 #+BEGIN_SRC emacs-lisp
@@ -465,12 +480,12 @@ Diminish hides minor modes to prevent cluttering your mode line.
 Garbage Collector Magic Hack
 *** Code
 #+begin_src emacs-lisp
-  (use-package gcmh
-	:ensure t
-	:demand t
-	:diminish gcmh-mode
-	:config
-	(gcmh-mode 1))
+  ;; (use-package gcmh
+  ;;   :ensure t
+  ;;   :demand t
+  ;;   :diminish gcmh-mode
+  ;;   :config
+  ;;   (gcmh-mode 1))
 #+end_src
 ** Initialize =no-littering=
 #+begin_src emacs-lisp

@@ -1317,6 +1317,13 @@ Show event history and command history of some or all buffers.
   ;; Quickly query whole source tree
   (use-package ctrlf)
 #+end_src
+** Initialize =imenu-list=
+#+begin_src emacs-lisp
+  (use-package imenu-list
+	:defer t
+	:config
+	(setq imenu-list-auto-resize t))
+#+end_src
 ** Built-in entry: =eldoc=
 *** Description
 Supress eldoc from modeline.

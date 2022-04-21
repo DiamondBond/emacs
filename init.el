@@ -1,4 +1,4 @@
-;; -*- lexical-binding: t; -*-
+;;; init.el -*- lexical-binding: t; -*-
 ;;; 
 ;;; Diamond Bond's Emacs Configuration
 ;;;
@@ -33,11 +33,11 @@
 ;; Load config
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
-;; Restore gc
+;; Restore garbage collection
 (add-hook 'emacs-startup-hook
 		  (lambda ()
 			(setq gc-cons-threshold gc-cons-threshold-original)
-			(setq gc-cons-percentage 0.1))) ;; Default value for `gc-cons-percentage'
+			(setq gc-cons-percentage gc-cons-percentage-original)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

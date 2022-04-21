@@ -41,6 +41,7 @@ Quality-of-life modifications for a more pleasant Emacs experience.
   (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
   (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 
+  ;; Echo in message area when gc is active
   ;; (setq garbage-collection-messages t)
 #+end_src
 ** Disable automatic creation of backup files

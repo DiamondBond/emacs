@@ -1,3 +1,14 @@
+;; -*- lexical-binding: t; -*-
+;;; 
+;;; Diamond Bond's Emacs Configuration
+;;;
+
+;; Copyright (C) Diamond Bond
+;; Author: Jake B <diamondbond1@gmail.com>
+;; URL: https://github.com/diamondbond/emacs
+;; This file is not part of GNU Emacs.
+;; This file is free software.
+
 ;; Make emacs startup faster
 (defvar startup/file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
@@ -6,7 +17,7 @@
 
 (add-hook 'emacs-startup-hook 'startup/revert-file-name-handler-alist)
 
-;; Initialize mela repo
+;; Initialize melpa repo
 (require 'package)
 (add-to-list 'package-archives
 			 '("melpa" . "https://melpa.org/packages/"))
@@ -22,8 +33,11 @@
 ;; Load config
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
-;; Supress cl warnings
-(setq byte-compile-warnings '(cl-functions))
+;; Restore gc
+(add-hook 'emacs-startup-hook
+		  (lambda ()
+			(setq gc-cons-threshold gc-cons-threshold-original)
+			(setq gc-cons-percentage 0.1))) ;; Default value for `gc-cons-percentage'
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

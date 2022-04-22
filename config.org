@@ -261,6 +261,8 @@ Private & global key maps.
 
   (define-key z-map (kbd "S") 'speedbar-frame-mode)
   (define-key z-map (kbd "y") 'yas-minor-mode)
+  (define-key z-map (kbd "i") 'consult-imenu)
+  (define-key z-map (kbd "I") 'imenu-list)
 
   (define-key z-map (kbd "C-c") 'calendar)
   (define-key z-map (kbd ".") 'org-date-from-calendar)
@@ -1591,7 +1593,8 @@ Geiser - Scheme Lisp REPL.
   (defun sync-email ()
 	"Sync email to local database."
 	(interactive)
-	(async-shell-command "~/bin/syncemail.sh"))
+	(async-shell-command "offlineimap"))
+  ;;(async-shell-command "~/bin/syncemail.sh"))
 #+end_src
 ** Record screen
 #+begin_src emacs-lisp

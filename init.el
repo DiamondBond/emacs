@@ -33,7 +33,7 @@
 ;; Load config
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
-;; Restore garbage collection
+;; Restore original GC
 (add-hook 'emacs-startup-hook
 		  (lambda ()
 			(setq gc-cons-threshold gc-cons-threshold-original)

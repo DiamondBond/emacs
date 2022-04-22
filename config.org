@@ -1549,7 +1549,7 @@ SLIME - Common Lisp REPL.
 	:defer t
 	:config
 	(setq inferior-lisp-program "sbcl")
-	(setq slime-contribs '(slime-fancy)))
+	(setq slime-contribs '(slime-fancy slime-quicklisp)))
 #+END_SRC
 ** Scheme Lisp
 *** Description

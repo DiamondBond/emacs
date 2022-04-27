@@ -124,7 +124,7 @@ Show column number in modeline.
 ** Set fill column width
 Wrap lines at 80 characters wide, not 70.
 #+begin_src emacs-lisp
-  (setq fill-column 80)
+  ;;(setq fill-column 80)
 #+end_src
 ** Set font
 #+begin_src emacs-lisp

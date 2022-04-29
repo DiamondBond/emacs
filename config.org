@@ -202,18 +202,19 @@ Super - Control - <arrow>
 ** Browser
 #+BEGIN_SRC emacs-lisp
   ;; always use eww
-  ;;(setq browse-url-browser-function 'eww-browse-url)
+  (setq browse-url-default-browser 'eww-browse-url)
+  (setq browse-url-browser-function 'eww-browse-url)
 
   ;; use browser depending on url
-  (setq
-   browse-url-handlers
-   '(
-	 ("wikipedia\\.org" . browse-url-firefox)
-	 ("github" . browse-url-firefox)
-	 ("reddit" . browse-url-firefox)
-	 ("youtube" . browse-url-firefox)
-	 ("." . browse-url-default-browser)
-	 ))
+  ;; (setq
+  ;;  browse-url-handlers
+  ;;  '(
+  ;;    ("wikipedia\\.org" . browse-url-firefox)
+  ;;    ("github" . browse-url-firefox)
+  ;;    ("reddit" . browse-url-firefox)
+  ;;    ("youtube" . browse-url-firefox)
+  ;;    ("." . browse-url-default-browser)
+  ;;    ))
 #+END_SRC
 ** Set environment
 Essential for using shells in Emacs.
@@ -308,8 +309,29 @@ Also enables org-bullets & htmlize.
 		  org-catch-invisible-edits 'smart)
 
 	;; src exec
-	(org-babel-do-load-languages 'org-babel-load-languages
-								 '((shell . t)))
+	;;   (org-babel-do-load-languages 'org-babel-load-languages
+	;; 								   '((shell . t))
+	;; 								   '((lisp . t))
+	;; 								   '((C . t))
+	;; '((js . t))
+
+	(setq org-babel-load-languages
+		  '((awk        . t)
+			(calc       . t)
+			(css        . t)
+			(ditaa      . t)
+			(emacs-lisp . t)
+			(gnuplot    . t)
+			(haskell    . t)
+			(js         . t)
+			(lisp       . t)
+			(org        . t)
+			(plantuml   . t)
+			(python     . t)
+			(scheme     . t)
+			(shell      . t)
+			(sql        . t)))
+
 
 	;; org templates
 	(setq org-capture-templates
@@ -1548,7 +1570,7 @@ SLIME - Common Lisp REPL.
   (use-package slime
 	:defer t
 	:config
-	(setq inferior-lisp-program "sbcl")
+	(setq inferior-lisp-program "/usr/bin/sbcl")
 	(setq slime-contribs '(slime-fancy slime-quicklisp)))
 #+END_SRC
 ** Scheme Lisp
@@ -1706,7 +1728,7 @@ Geiser - Scheme Lisp REPL.
 #+end_src
 ** Rename Buffer & File
 #+begin_src emacs-lisp
-  (defun my/rename-current-buffer-file ()
+  (defun third-party/rename-current-buffer-file ()
 	"Renames current buffer and file it is visiting."
 	(interactive)
 	(let ((name (buffer-name))
@@ -1725,7 +1747,7 @@ Geiser - Scheme Lisp REPL.
 #+end_src
 ** Delete Buffer & File
 #+begin_src emacs-lisp
-  (defun my/delete-current-buffer-file ()
+  (defun third-party/delete-current-buffer-file ()
 	"Removes file connected to current buffer and kills buffer."
 	(interactive)
 	(let ((filename (buffer-file-name))
@@ -1738,7 +1760,16 @@ Geiser - Scheme Lisp REPL.
 		  (kill-buffer buffer)
 		  (message "File '%s' successfully removed" filename)))))
 #+end_src
-** Enable toolbar
+** Yank Whole Buffer
+#+begin_src emacs-lisp
+  (defun yank-whole-buffer ()
+	"Yanks whole buffer."
+	(interactive)
+	(mark-whole-buffer)
+	(call-interactively 'evil-yank))
+#+end_src
+* Last Call
+** Enable toolbar for Athena Emacs daemons
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(tool-bar-lines . 1))
 #+end_src

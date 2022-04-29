@@ -1768,6 +1768,15 @@ Geiser - Scheme Lisp REPL.
 	(mark-whole-buffer)
 	(call-interactively 'evil-yank))
 #+end_src
+** Switch to QEMU & Paste
+#+begin_src emacs-lisp
+  (defun switch-to-qemu-and-paste ()
+	"Switches to QEMU & pastes clipboard."
+	(interactive)
+	(mark-whole-buffer)
+	(call-interactively 'evil-yank)
+	(async-shell-command "sh -c ~/bin/stqap.sh"))
+#+end_src
 * Last Call
 ** Enable toolbar for Athena Emacs daemons
 #+begin_src emacs-lisp

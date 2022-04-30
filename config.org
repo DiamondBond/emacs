@@ -1778,6 +1778,11 @@ Geiser - Scheme Lisp REPL.
 	(async-shell-command "sh -c ~/bin/stqap.sh"))
 #+end_src
 * Last Call
+** Leuven
+#+begin_src emacs-lisp
+  ;; (use-package leuven-theme)
+  ;; (load-theme 'leuven t)
+#+end_src
 ** Enable toolbar for Athena Emacs daemons
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(tool-bar-lines . 1))

@@ -129,6 +129,7 @@ Wrap lines at 80 characters wide, not 72
 ** Set font
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
+  ;; (add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14"))
 #+end_src
 ** Disable the default startup screen
 #+BEGIN_SRC emacs-lisp
@@ -331,6 +332,7 @@ Sensible and well-defined org-mode configuration with org-capture support.
 			(python     . t)
 			(scheme     . t)
 			(shell      . t)
+			(C          . t)
 			(ein        . t)
 			(sql        . t)))
 
@@ -417,6 +419,15 @@ Improve eshell prompt and assign aliases & custom helper functions for easier us
   (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 #+END_SRC
 * Use-package
+** Initialize =exec-path-from-shell=
+*** Description
+Ensure the PATH variable is set according to the users shell, solves some issues on macos
+*** Code
+#+begin_src emacs-lisp
+  ;; (use-package exec-path-from-shell
+  ;;   :config
+  ;;   (exec-path-from-shell-initialize))
+#+end_src
 ** Initialize =auto-package-update=
 *** Description
 Auto-package-update automatically updates and removes old packages.
@@ -608,6 +619,8 @@ Vertico & friends (orderless, marginalia, consult & embark)
   (use-package marginalia
 	:init
 	(marginalia-mode))
+  ;; :config
+  ;; (setq marginalia-max-relative-age 0)
 
   ;; Consult provides practical commands based on the Emacs completion function completing-read.
   (use-package consult
@@ -666,7 +679,10 @@ Vertico & friends (orderless, marginalia, consult & embark)
 
 	;; Completion ignores case
 	(setq completion-ignore-case t)
-	(setq read-file-name-completion-ignore-case t))
+	(setq read-file-name-completion-ignore-case t)
+
+	;; Allow Emacs to resize mini windows
+	(setq resize-mini-windows t))
 #+end_src
 ** Initialize =all-the-icons=
 #+begin_src emacs-lisp
@@ -820,6 +836,8 @@ Heresy; Vim keybindings in Emacs.
 	:ensure t
 	:config
 	(evil-collection-init))
+
+  (use-package evil-org)
 #+END_SRC
 ** Initialize =swiper=
 *** Description
@@ -1359,6 +1377,23 @@ Emacs IPython Notebook (EIN); jupyter client for all languages.
   (use-package ob-ein
 	:ensure t)
 #+end_src
+** Initialize =so-long=
+*** Description
+When you visit a file with very long lines, Emacs will have trouble fontifying everything properly and performance will suffer as a result. We can prevent Emacs from even attempting to deal with such longs lines by enabling the built-in global-so-long-mode (for Emacs versions >= 27).
+*** Code
+#+begin_src emacs-lisp
+  (use-package so-long
+	:ensure t)
+  ;; :init
+  ;; (global-so-long-mode 1))
+#+end_src
+** Initialize =requests=
+*** Description
+ Help making http requests.
+*** Code
+#+begin_src emacs-lisp
+  (use-package request)
+#+end_src
 ** Built-in entry: =eldoc=
 *** Description
 Supress eldoc from modeline.
@@ -1564,6 +1599,12 @@ Markdown-mode & enable auto fill.
   (use-package markdown-mode
 	:mode "\\.md\\'"
 	:hook ((markdown-mode . auto-fill-mode)))
+#+end_src
+** Lua
+#+begin_src emacs-lisp
+  (use-package lua-mode)
+  ;; :config
+  ;; (setq lua-indent-level 2))
 #+end_src
 ** Python
 #+begin_src emacs-lisp

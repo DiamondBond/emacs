@@ -240,7 +240,7 @@ Private & global key maps.
   (define-key z-map (kbd "g") 'org-mark-ring-goto)
   (define-key z-map (kbd "G") 'org-mark-ring-goto)
   (define-key z-map (kbd "2") 'make-frame-command)
-  (define-key z-map (kbd "0") 'delete-frame)
+  ;;(define-key z-map (kbd "0") 'delete-frame)
   (define-key z-map (kbd "o") 'olivetti-mode)
   (define-key z-map (kbd "m") 'magit-status)
   (define-key z-map (kbd "h") 'hyperbole)
@@ -265,6 +265,7 @@ Private & global key maps.
   (define-key z-map (kbd "y") 'yas-minor-mode)
   (define-key z-map (kbd "i") 'consult-imenu)
   (define-key z-map (kbd "I") 'imenu-list)
+  (define-key z-map (kbd "9") 'switch-to-qemu-and-paste)
 
   (define-key z-map (kbd "C-c") 'calendar)
   (define-key z-map (kbd ".") 'org-date-from-calendar)
@@ -277,7 +278,8 @@ Private & global key maps.
   ;; global-map
   ;;---------------------------------------------------------------------
 
-  (global-set-key (kbd "<f9>") 'toggle-frame-tab-bar)
+  (global-set-key (kbd "<f9>") 'tab-bar-mode)
+  (global-set-key (kbd "S-<f9>") 'tab-line-mode)
   (global-set-key (kbd "<f5>") 'revert-buffer)
   (global-set-key (kbd "<f6>") 'menu-bar-mode)
   (global-set-key (kbd "<f7>") 'scroll-bar-mode)
@@ -290,7 +292,6 @@ Private & global key maps.
 * =Org= mode
 ** Description
 Sensible and well-defined org-mode configuration with org-capture support.
-Also enables org-bullets & htmlize.
 ** Code
 #+BEGIN_SRC emacs-lisp
   (use-package org
@@ -330,6 +331,7 @@ Also enables org-bullets & htmlize.
 			(python     . t)
 			(scheme     . t)
 			(shell      . t)
+			(ein        . t)
 			(sql        . t)))
 
 
@@ -352,9 +354,6 @@ Also enables org-bullets & htmlize.
   ;; (use-package org-bullets
   ;;   :ensure t
   ;;   :hook (org-mode . org-bullets-mode))
-
-  (use-package htmlize
-	:ensure t)
 
   (use-package deft
 	:config
@@ -1349,6 +1348,17 @@ Show event history and command history of some or all buffers.
 	:config
 	(setq imenu-list-auto-resize t))
 #+end_src
+** Initialize =ein=
+*** Description
+Emacs IPython Notebook (EIN); jupyter client for all languages.
+*** Code
+#+begin_src emacs-lisp
+  (use-package ein
+	:ensure t)
+
+  (use-package ob-ein
+	:ensure t)
+#+end_src
 ** Built-in entry: =eldoc=
 *** Description
 Supress eldoc from modeline.
@@ -1462,6 +1472,9 @@ Rust-mode covers it all.
 				("C-c b" . web-beautify-html)
 				:map js2-mode-map
 				("C-c b" . web-beautify-js)))
+
+  (use-package htmlize
+	:ensure t)
 #+end_src
 ** JSON
 *** Description

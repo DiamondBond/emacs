@@ -265,7 +265,7 @@ Private & global key maps.
   (define-key z-map (kbd "y") 'yas-minor-mode)
   (define-key z-map (kbd "i") 'consult-imenu)
   (define-key z-map (kbd "I") 'imenu-list)
-  (define-key z-map (kbd "9") 'switch-to-qemu-and-paste)
+  (define-key z-map (kbd "0") 'switch-to-qemu-and-paste)
 
   (define-key z-map (kbd "C-c") 'calendar)
   (define-key z-map (kbd ".") 'org-date-from-calendar)

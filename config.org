@@ -576,8 +576,27 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 
 	:init
 	;; Recommended: Enable Corfu globally.
-	(corfu-global-mode))
+	(corfu-global-mode)
+
+	:config
+	;; Adapted from Corfu's manual.
+	(defun contrib/corfu-enable-always-in-minibuffer ()
+	  "Enable Corfu in the minibuffer if Vertico is not active.
+  Useful for prompts such as `eval-expression' and `shell-command'."
+	  (unless (bound-and-true-p vertico--input)
+		(corfu-mode 1)))
+
+	(add-hook 'minibuffer-setup-hook #'contrib/corfu-enable-always-in-minibuffer 1))
 #+END_SRC
+** Initialize =cape=
+*** Description
+*** Code
+#+begin_src emacs-lisp
+  (use-package cape
+	(setq cape-dabbrev-min-length 3)
+	(dolist (backend '( cape-symbol cape-keyword cape-file cape-dabbrev))
+	  (add-to-list 'completion-at-point-functions backend)))
+#+end_src
 ** Initialize =completion=
 *** Description
 Vertico & friends (orderless, marginalia, consult & embark)

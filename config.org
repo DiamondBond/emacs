@@ -267,6 +267,7 @@ Private & global key maps.
   (define-key z-map (kbd "y") 'yas-minor-mode)
   (define-key z-map (kbd "i") 'consult-imenu)
   (define-key z-map (kbd "I") 'imenu-list)
+  (define-key z-map (kbd "9") 'switch-to-qemu-and-run)
   (define-key z-map (kbd "0") 'switch-to-qemu-and-paste)
 
   (define-key z-map (kbd "C-c") 'calendar)
@@ -1842,7 +1843,7 @@ Geiser - Scheme Lisp REPL.
 	(mark-whole-buffer)
 	(call-interactively 'evil-yank))
 #+end_src
-** Switch to QEMU & Paste
+** Switch to QEMU & Paste + Compile
 #+begin_src emacs-lisp
   (defun switch-to-qemu-and-paste ()
 	"Switches to QEMU & pastes clipboard."
@@ -1850,6 +1851,15 @@ Geiser - Scheme Lisp REPL.
 	(mark-whole-buffer)
 	(call-interactively 'evil-yank)
 	(async-shell-command "sh -c ~/bin/stqap.sh"))
+#+end_src
+** Switch to QEMU & Paste + Run
+#+begin_src emacs-lisp
+  (defun switch-to-qemu-and-run ()
+	"Switches to QEMU & pastes clipboard + runs executable."
+	(interactive)
+	(mark-whole-buffer)
+	(call-interactively 'evil-yank)
+	(async-shell-command "sh -c ~/bin/run_bugzilla_exe.sh"))
 #+end_src
 * Last Call
 ** Leuven

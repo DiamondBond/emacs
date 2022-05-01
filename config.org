@@ -256,7 +256,8 @@ Private & global key maps.
   (define-key z-map (kbd "s") 'ispell-word)
   (define-key z-map (kbd "W") 'elfeed)
   (define-key z-map (kbd "w") 'eww)
-  (define-key z-map (kbd "F") 'browse-url-firefox)
+  (define-key z-map (kbd "F") 'follow-mode)
+  ;;(define-key z-map (kbd "F") 'browse-url-firefox)
 
   (define-key z-map (kbd "x") 'switch-to-buffer-other-frame)
   (define-key z-map (kbd "k") 'compile)

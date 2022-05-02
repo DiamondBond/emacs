@@ -1039,8 +1039,7 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 	:init
 	;; Add all your customizations prior to loading the themes
 	(setq modus-themes-italic-constructs t
-		  modus-themes-bold-constructs t
-		  modus-themes-region '(accented bg-only no-extend))
+		  modus-themes-bold-constructs t)
 
 	;; Load the theme files before enabling a theme
 	(modus-themes-load-themes)
@@ -1126,22 +1125,10 @@ Auto-package-update automatically updates and removes old packages.
 ** Initialize =diminish=
 #+begin_src emacs-lisp
   (diminish 'visual-line-mode "")
-  (diminish 'so-long-mode "")
   (diminish 'abbrev-mode "")
   (diminish 'flymake-mode "")
   (diminish 'c-mode "")
   (diminish 'yas "")
-#+end_src
-** Built-in entry =so-long=
-*** Description
-When you visit a file with very long lines, Emacs will have trouble fontifying everything properly and performance will suffer as a result. We can prevent Emacs from even attempting to deal with such longs lines by enabling the built-in global-so-long-mode (for Emacs versions >= 27).
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package so-long
-  ;;   :diminish so-long-mode
-  ;;   :ensure t
-  ;;   :init
-  ;;   (global-so-long-mode 1))
 #+end_src
 ** Built-in entry: =eldoc=
 *** Description

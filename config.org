@@ -14,17 +14,6 @@ Quality-of-life modifications for a more pleasant Emacs experience.
 #+end_src
 ** Performance
 #+begin_src emacs-lisp
-  ;; https://emacs-lsp.github.io/lsp-mode/page/performance
-  ;; Increase garbage collector threshold
-  ;;(setq gc-cons-threshold 100000000) ;; 100 MB
-
-  ;; Increase amount of data read from a process
-  ;;(setq read-process-output-max (* 1024 1024)) ;; 1 MB
-
-  ;; https://www.masteringemacs.org/article/speed-up-emacs-libjansson-native-elisp-compilation
-  ;; (setq comp-deferred-compilation t
-  ;; 	  package-native-compile t)
-
   ;; do not steal focus while doing async compilations
   (setq warning-suppress-types '((comp)))
 
@@ -37,13 +26,9 @@ Quality-of-life modifications for a more pleasant Emacs experience.
 
   (defun my-minibuffer-exit-hook ()
 	(setq gc-cons-threshold gc-cons-threshold-original))
-  ;;(setq gc-cons-threshold 800000))
 
   (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
   (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
-
-  ;; Echo in message area when gc is active
-  ;; (setq garbage-collection-messages t)
 #+end_src
 ** Disable automatic creation of backup files
 #+BEGIN_SRC emacs-lisp
@@ -78,8 +63,6 @@ Set tabs & indents to 4sp.
   (setq-default electric-indent-inhibit t)
   (setq-default indent-tabs-mode t)
   (setq backward-delete-char-untabify-method 'nil)
-  ;; (setq c-default-style "linux")
-  ;; (setq c-default-style "bsd" c-basic-offset 4) 
 #+END_SRC
 ** Fill whatever space the window manager has given us.
 #+begin_src emacs-lisp
@@ -96,14 +79,10 @@ Set tabs & indents to 4sp.
 #+end_src
 ** Window title
 #+BEGIN_SRC emacs-lisp
-  ;;(setq-default frame-title-format '("" "%b - Emacs " emacs-version))
   (setq-default frame-title-format '("" "%b"))
-  ;;(setq my-username (getenv "USERNAME"))
-  ;;(setq frame-title-format '("%b - Emacs @ " my-hostname))
 #+END_SRC
 ** Window frame
 #+begin_src emacs-lisp
-  ;; (set-frame-parameter (selected-frame) 'internal-border-width 0)
   (add-to-list 'default-frame-alist '(internal-border-width . 0))
 #+end_src
 ** Highlight current line
@@ -121,15 +100,9 @@ Show column number in modeline.
 #+BEGIN_SRC emacs-lisp
   (column-number-mode 1)
 #+END_SRC
-** Set fill column width
-Wrap lines at 80 characters wide, not 72
-#+begin_src emacs-lisp
-  ;;(setq fill-column 80)
-#+end_src
 ** Set font
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
-  ;; (add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14"))
 #+end_src
 ** Disable the default startup screen
 #+BEGIN_SRC emacs-lisp
@@ -138,13 +111,10 @@ Wrap lines at 80 characters wide, not 72
 #+END_SRC
 ** Disable most gui elements
 #+BEGIN_SRC emacs-lisp
-  ;; Comment out this block if you're using termux
   (tool-bar-mode 1)
   (menu-bar-mode 1)
   (scroll-bar-mode 1)
-
-  ;; For x-toolkit=athena
-  (set-scroll-bar-mode 'right)
+  (set-scroll-bar-mode 'right) ;; For x-toolkit=athena
 #+END_SRC
 ** Enable copy-pasting outside of Emacs
 #+BEGIN_SRC emacs-lisp
@@ -168,12 +138,10 @@ Wrap lines at 80 characters wide, not 72
 #+END_SRC
 ** Enable bracket pair-matching
 #+BEGIN_SRC emacs-lisp
-  (setq electric-pair-pairs '(
-							  (?\{ . ?\})
+  (setq electric-pair-pairs '((?\{ . ?\})
 							  (?\( . ?\))
 							  (?\[ . ?\])
-							  (?\" . ?\")
-							  ))
+							  (?\" . ?\")))
   (electric-pair-mode t)
 #+END_SRC
 ** Transform yes-or-no questions into y-or-n
@@ -190,7 +158,6 @@ Super - Control - <arrow>
 #+END_SRC
 ** Supress *Async Shell Command* output
 #+begin_src emacs-lisp
-  ;; (setq async-shell-command-display-buffer nil)
   (add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil)))
 #+end_src
 ** Proced
@@ -205,17 +172,6 @@ Super - Control - <arrow>
   ;; always use eww
   (setq browse-url-default-browser 'eww-browse-url)
   (setq browse-url-browser-function 'eww-browse-url)
-
-  ;; use browser depending on url
-  ;; (setq
-  ;;  browse-url-handlers
-  ;;  '(
-  ;;    ("wikipedia\\.org" . browse-url-firefox)
-  ;;    ("github" . browse-url-firefox)
-  ;;    ("reddit" . browse-url-firefox)
-  ;;    ("youtube" . browse-url-firefox)
-  ;;    ("." . browse-url-default-browser)
-  ;;    ))
 #+END_SRC
 ** Set environment
 Essential for using shells in Emacs.
@@ -241,23 +197,19 @@ Private & global key maps.
   (define-key z-map (kbd "g") 'org-mark-ring-goto)
   (define-key z-map (kbd "G") 'org-mark-ring-goto)
   (define-key z-map (kbd "2") 'make-frame-command)
-  ;;(define-key z-map (kbd "0") 'delete-frame)
   (define-key z-map (kbd "o") 'olivetti-mode)
   (define-key z-map (kbd "m") 'magit-status)
-  (define-key z-map (kbd "h") 'hyperbole)
   (define-key z-map (kbd "v") 'vterm)
 
   (define-key z-map (kbd "b") 'display-battery-mode)
   (define-key z-map (kbd "t") 'display-time-mode)
 
   (define-key z-map (kbd "*") 'quick-calc)
-  (define-key z-map (kbd "R") 'rainbow-mode)
   (define-key z-map (kbd "O") 'org-redisplay-inline-images)
   (define-key z-map (kbd "s") 'ispell-word)
   (define-key z-map (kbd "W") 'elfeed)
   (define-key z-map (kbd "w") 'eww)
   (define-key z-map (kbd "F") 'follow-mode)
-  ;;(define-key z-map (kbd "F") 'browse-url-firefox)
 
   (define-key z-map (kbd "x") 'switch-to-buffer-other-frame)
   (define-key z-map (kbd "k") 'compile)
@@ -273,7 +225,6 @@ Private & global key maps.
   (define-key z-map (kbd "C-c") 'calendar)
   (define-key z-map (kbd ".") 'org-date-from-calendar)
 
-  (define-key z-map (kbd "a") #'(lambda () (interactive) (find-file-other-window "~/org/agenda.org")))
   (define-key z-map (kbd "n") (lambda () (interactive) (find-file "~/org/notes.org")))
   (define-key z-map (kbd "c") (lambda () (interactive) (find-file "~/.emacs.d/config.org")))
 
@@ -312,13 +263,6 @@ Sensible and well-defined org-mode configuration with org-capture support.
 		  org-id-locations-file "~/org/.orgids"
 		  org-catch-invisible-edits 'smart)
 
-	;; src exec
-	;;   (org-babel-do-load-languages 'org-babel-load-languages
-	;; 								   '((shell . t))
-	;; 								   '((lisp . t))
-	;; 								   '((C . t))
-	;; '((js . t))
-
 	(setq org-babel-load-languages
 		  '((awk        . t)
 			(calc       . t)
@@ -351,13 +295,6 @@ Sensible and well-defined org-mode configuration with org-capture support.
 	("C-c l" . 'org-store-link)
 	("C-<f1>" . (lambda()(interactive)(show-all)))
 	:hook (org-mode . visual-line-mode))
-
-  ;; (use-package org-contrib
-  ;;   :ensure t)
-
-  ;; (use-package org-bullets
-  ;;   :ensure t
-  ;;   :hook (org-mode . org-bullets-mode))
 
   (use-package deft
 	:config
@@ -394,57 +331,7 @@ Improve eshell prompt and assign aliases & custom helper functions for easier us
   (defalias 'open 'find-file-other-window)
   (defalias 'clean 'eshell/clear-scrollback)
 #+END_SRC
-** Functions
-*** Open files as root
-#+BEGIN_SRC emacs-lisp
-  (defun eshell/sudo-open (filename)
-	"Open a file as root in Eshell."
-	(let ((qual-filename (if (string-match "^/" filename)
-							 filename
-						   (concat (expand-file-name (eshell/pwd)) "/" filename))))
-	  (switch-to-buffer
-	   (find-file-noselect
-		(concat "/sudo::" qual-filename)))))
-#+END_SRC
-*** Super - Control - RET to open eshell
-#+BEGIN_SRC emacs-lisp
-  (defun eshell-other-window ()
-	"Create or visit an eshell buffer."
-	(interactive)
-	(if (not (get-buffer "*eshell*"))
-		(progn
-		  (split-window-sensibly (selected-window))
-		  (other-window 1)
-		  (eshell))
-	  (switch-to-buffer-other-window "*eshell*")))
-
-  (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
-#+END_SRC
 * Use-package
-** Initialize =exec-path-from-shell=
-*** Description
-Ensure the PATH variable is set according to the users shell, solves some issues on macos
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package exec-path-from-shell
-  ;;   :config
-  ;;   (exec-path-from-shell-initialize))
-#+end_src
-** Initialize =auto-package-update=
-*** Description
-Auto-package-update automatically updates and removes old packages.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package auto-package-update
-	:ensure t
-	:defer nil
-	:config
-	(setq auto-package-update-prompt-before-update t)
-	(setq auto-package-update-show-preview t)
-	(setq auto-package-update-delete-old-versions t)
-	(setq auto-package-update-hide-results t)
-	(auto-package-update-maybe))
-#+END_SRC
 ** Initialize =dashboard=
 *** Description
 An extensible emacs startup screen.
@@ -502,8 +389,7 @@ I have hardcoded in three buffers that I frequently visit along with helper func
 			  "Config"
 			  "Open Emacs configuration"
 			  (lambda (&rest _) (config-edit))
-			  'default)
-			 ))))
+			  'default)))))
 #+END_SRC
 ** Initialize =diminish=
 *** Description
@@ -513,18 +399,6 @@ Diminish hides minor modes to prevent cluttering your mode line.
   (use-package diminish
 	:ensure t)
 #+END_SRC
-** Initialize =gcmh=
-*** Description
-Garbage Collector Magic Hack
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package gcmh
-  ;;   :ensure t
-  ;;   :demand t
-  ;;   :diminish gcmh-mode
-  ;;   :config
-  ;;   (gcmh-mode 1))
-#+end_src
 ** Initialize =pixel-scroll-precision=
 *** Description
 Precision pixel scrolling (Emacs 29+)
@@ -538,38 +412,17 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package corfu
-	;; Optional customizations
 	:custom
-	;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-	(corfu-auto t)                 ;; Enable auto completion
+	(corfu-auto t)
 	(corfu-auto-prefix 3)
 	(corfu-auto-delay 0)
 	(corfu-echo-documentation 0)
 	(corfu-quit-no-match 'separator)
 	(corfu-preview-current nil)
-	;; (corfu-separator ?\s)          ;; Orderless field separator
-	;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-	;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-	;; (corfu-preview-current nil)    ;; Disable current candidate preview
-	;; (corfu-preselect-first nil)    ;; Disable candidate preselection
-	;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-	;; (corfu-echo-documentation nil) ;; Disable documentation in the echo area
-	;; (corfu-scroll-margin 5)        ;; Use scroll margin
 	(define-key corfu-map (kbd "<escape>") #'corfu-quit)
 	(define-key corfu-map (kbd "C-h") #'corfu-show-documentation)
 	(define-key corfu-map (kbd "RET") nil)
-
-	;; You may want to enable Corfu only for certain modes.
-	:hook ((text-mode . corfu-mode)
-		   (prog-mode . corfu-mode)
-		   (shell-mode . corfu-mode)
-		   (eshell-mode . corfu-mode)
-		   (inferior-python-mode . corfu-mode))
-
-	:init
-	;; Recommended: Enable Corfu globally.
-	(corfu-global-mode)
-
+	:init (corfu-global-mode)
 	:config
 	;; Adapted from Corfu's manual.
 	(defun contrib/corfu-enable-always-in-minibuffer ()
@@ -589,19 +442,17 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 	(dolist (backend '( cape-symbol cape-keyword cape-file cape-dabbrev))
 	  (add-to-list 'completion-at-point-functions backend)))
 #+end_src
-** Initialize =completion=
+** Initialize =vertico-&-friends=
 *** Description
-Vertico & friends (orderless, marginalia, consult & embark)
+vertico, orderless, marginalia, consult & embark
 *** Code
 #+begin_src emacs-lisp
   ;; Enable vertico
   (use-package vertico
 	:init
 	(vertico-mode)
-
 	;; Grow and shrink the Vertico minibuffer
 	(setq vertico-resize t)
-
 	;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
 	(setq vertico-cycle t))
 
@@ -609,7 +460,6 @@ Vertico & friends (orderless, marginalia, consult & embark)
   (use-package vertico-directory
 	:after vertico
 	:ensure nil
-	;; More convenient directory navigation commands
 	:bind (:map vertico-map
 				("RET" . vertico-directory-enter)
 				("DEL" . vertico-directory-delete-char)
@@ -630,8 +480,6 @@ Vertico & friends (orderless, marginalia, consult & embark)
   (use-package marginalia
 	:init
 	(marginalia-mode))
-  ;; :config
-  ;; (setq marginalia-max-relative-age 0)
 
   ;; Consult provides practical commands based on the Emacs completion function completing-read.
   (use-package consult
@@ -655,7 +503,7 @@ Vertico & friends (orderless, marginalia, consult & embark)
 				 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
 				   nil
 				   (window-parameters (mode-line-format . none)))))
-
+  
   ;; Consult users will also want the embark-consult package.
   (use-package embark-consult
 	:ensure t
@@ -695,6 +543,17 @@ Vertico & friends (orderless, marginalia, consult & embark)
 	;; Allow Emacs to resize mini windows
 	(setq resize-mini-windows t))
 #+end_src
+** Initialize =dabbrev=
+*** Description
+Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
+*** Code
+#+begin_src emacs-lisp
+  ;; Use dabbrev with Corfu!
+  (use-package dabbrev
+	;; Swap M-/ and C-M-/
+	:bind (("M-/" . dabbrev-completion)
+		   ("C-M-/" . dabbrev-expand)))
+#+end_src
 ** Initialize =all-the-icons=
 #+begin_src emacs-lisp
   (use-package all-the-icons
@@ -721,17 +580,6 @@ Vertico & friends (orderless, marginalia, consult & embark)
 	:config
 	(add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+end_src
-** Initialize =dabbrev=
-*** Description
-Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
-*** Code
-#+begin_src emacs-lisp
-  ;; Use dabbrev with Corfu!
-  (use-package dabbrev
-	;; Swap M-/ and C-M-/
-	:bind (("M-/" . dabbrev-completion)
-		   ("C-M-/" . dabbrev-expand)))
-#+end_src
 ** Initialize =which-key=
 *** Description
 Possible completion framework with 1s delay.
@@ -753,8 +601,6 @@ Yasnippet provides useful snippets.
   (use-package yasnippet
 	:defer t
 	:diminish yas-minor-mode
-	;; :hook
-	;; ((c-mode c++-mode) . yas-minor-mode)
 	:config
 	(setq yas-snippet-dirs '("~/emacs.d/snippets")
 		  (yas-reload-all)))
@@ -840,8 +686,6 @@ Heresy; Vim keybindings in Emacs.
 	:ensure t
 	:config
 	(evil-collection-init))
-
-  ;; (use-package evil-org)
 #+END_SRC
 ** Initialize =swiper=
 *** Description
@@ -1000,11 +844,6 @@ Git porcelain for Emacs.
 
   (use-package forge
 	:commands forge-pull)
-
-  ;; (use-package git-link
-  ;;   :ensure t
-  ;;   :config
-  ;;   (setq git-link-open-in-browser t))
 #+END_SRC
 ** Initialize =elfeed=
 *** Description
@@ -1021,7 +860,8 @@ RSS reader for Emacs.
 			("https://planet.emacslife.com/atom.xml" emacs community)
 			("https://www.ecb.europa.eu/rss/press.html" economics eu)
 			("https://drewdevault.com/blog/index.xml" drew devault)
-			("https://news.ycombinator.com/rss" ycombinator news) ("https://www.phoronix.com/rss.php" phoronix))))
+			("https://news.ycombinator.com/rss" ycombinator news)
+			("https://www.phoronix.com/rss.php" phoronix))))
 #+END_SRC
 ** Initialize =pdf-tools=
 *** Description
@@ -1042,7 +882,6 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	;; automatically annotate highlights
 	(setq pdf-annot-activate-created-annotations t)
 	(define-pdf-cache-function pagelabels)
-	;; (evil-set-initial-state 'pdf-view-mode 'normal)
 	:hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
 		   (pdf-view-mode.hook . (lambda () (blink-cursor-mode -1)))
 		   (pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
@@ -1073,8 +912,6 @@ Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based
   (use-package vterm
 	:ensure t
 	:config
-	;;(setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")
-	;;(setq vterm-shell "zsh")
 	(setq vterm-max-scrollback 10000))
 #+end_src
 ** Initialize =saveplace=
@@ -1088,19 +925,6 @@ Saves cursor location in buffers.
 	:config
 	(save-place-mode))
 #+end_src
-** Initialize =rainbow-mode=
-*** Description
-Colorize color names in buffers
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package rainbow-mode
-  ;;   :ensure t
-  ;;   :config
-  ;;   (setq rainbow-ansi-colors nil)
-  ;;   (setq rainbow-x-colors nil)
-  ;;   :hook ((web-mode . rainbow-mode)
-  ;; 		 (css-mode . rainbow-mode)))
-#+end_src
 ** Initialize =rainbow-delimiters=
 *** Description
 Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimiters such as parentheses, brackets or braces according to their depth.
@@ -1109,11 +933,6 @@ Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimit
   (use-package rainbow-delimiters
 	:ensure t
 	:hook (prog-mode . rainbow-delimiters-mode))
-#+end_src
-** Initialize =emojify=
-#+begin_src emacs-lisp
-  ;; (use-package emojify
-  ;;   :defer t)
 #+end_src
 ** Initialize =notmuch=
 *** Description
@@ -1142,8 +961,6 @@ Notmuch email configuration.
 	(setq message-kill-buffer-on-exit t)
 	;; change the directory to store the sent mail
 	(setq message-directory "~/mail/")
-	;; show newest emails on top
-	;;(setq notmuch-search-oldest-first nil)
 
 	;; Function to prune tag:deleted
 	(defun prune-emails ()
@@ -1186,8 +1003,6 @@ ERC is a powerful, modular, and extensible IRC client for Emacs.
 	(erc-hide-list '("JOIN" "PART" "QUIT"))
 	(erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
 	(erc-lurker-threshold-time 43200)
-	;;(erc-prompt-for-nickserv-password nil)
-	;;(erc-prompt-for-password nil)
 	(erc-server-reconnect-attempts 5)
 	(erc-server-reconnect-timeout 3)
 	(erc-quit-reason 'erc-quit-reason-normal)
@@ -1219,73 +1034,19 @@ ERC is a powerful, modular, and extensible IRC client for Emacs.
 Accessible themes for GNU Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
 *** Code
 #+begin_src emacs-lisp
-  (use-package emacs
-	:ensure t
-	:defer nil
+  (use-package modus-themes
+	:ensure
+	:init
+	;; Add all your customizations prior to loading the themes
+	(setq modus-themes-italic-constructs t
+		  modus-themes-bold-constructs t
+		  modus-themes-region '(accented bg-only no-extend))
+
+	;; Load the theme files before enabling a theme
+	(modus-themes-load-themes)
 	:config
-	(setq custom-safe-themes t)
-
-	;; TODO simplify this to avoid formatting a string, then read and eval.
-	(defmacro modus-themes-format-sexp (sexp &rest objects)
-	  `(eval (read (format ,(format "%S" sexp) ,@objects))))
-
-	(defvar modus-themes-after-load-hook nil
-	  "Hook that runs after loading a Modus theme.
-			  See `modus-operandi-theme-load' or `modus-vivendi-theme-load'.")
-
-	(dolist (theme '("operandi" "vivendi"))
-	  (modus-themes-format-sexp
-	   (defun modus-%1$s-theme-load ()
-		 (setq modus-%1$s-theme-slanted-constructs t
-			   modus-%1$s-theme-bold-constructs nil
-			   modus-%1$s-theme-fringes nil ; {nil,'subtle,'intense}
-			   modus-%1$s-theme-mode-line nil ; {nil '3d,'moody}
-			   modus-%1$s-theme-syntax 'faint ; {nil,faint,'yellow-comments,'green-strings,'yellow-comments-green-strings,'alt-syntax,'alt-syntax-yellow-comments}
-			   modus-%1$s-theme-intense-hl-line nil
-			   modus-%1$s-theme-intense-paren-match 'intense-bold
-			   modus-%1$s-theme-links 'neutral-underline ; {nil,'faint,'neutral-underline,'faint-neutral-underline,'no-underline}
-			   modus-%1$s-theme-no-mixed-fonts nil
-			   modus-%1$s-theme-prompts nil ; {nil,'subtle,'intense}
-			   modus-%1$s-theme-completions 'moderate ; {nil,'moderate,'opinionated}
-			   ;; modus-themes-region 'bg-only-no-extend
-			   modus-%1$s-theme-diffs nil ; {nil,'desaturated,'fg-only}
-			   modus-%1$s-theme-org-blocks 'grayscale ; {nil,'grayscale,'rainbow}
-			   ;; modus-themes-org-habit 'traffic-light ; {nil,'simplified,'traffic-light}
-			   modus-%1$s-theme-headings  ; Read the manual for this one
-			   '((t . nil))
-			   modus-%1$s-theme-variable-pitch-headings t
-			   modus-%1$s-theme-scale-headings nil
-			   modus-%1$s-theme-scale-1 1.1
-			   modus-%1$s-theme-scale-2 1.15
-			   modus-%1$s-theme-scale-3 1.21
-			   modus-%1$s-theme-scale-4 1.27
-			   modus-%1$s-theme-scale-5 1.33)
-		 (load-theme 'modus-%1$s t)
-		 (run-hooks 'modus-themes-after-load-hook))
-	   theme))
-
-	(defun modus-themes-light ()
-	  "Load `modus-operandi' and disable `modus-vivendi'."
-	  (disable-theme 'modus-vivendi)
-	  (modus-operandi-theme-load))
-
-	(defun modus-themes-dark ()
-	  "Load `modus-vivendi' and disable `modus-operandi'."
-	  (disable-theme 'modus-operandi)
-	  (modus-vivendi-theme-load))
-
-	(defun modus-themes-toggle ()
-	  "Toggle between `modus-operandi' and `modus-vivendi' themes."
-	  (interactive)
-	  (if (eq (car custom-enabled-themes) 'modus-operandi)
-		  (modus-themes-dark)
-		(modus-themes-light))
-	  (dashboard-refresh-buffer))
-
-	;; Load theme 
-	(modus-themes-light)
-
-	:bind ("<S-f5>" . modus-themes-toggle))
+	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 ** Initialize =olivetti=
 *** Description
@@ -1297,14 +1058,6 @@ Emacs minor mode for a nice writing environment.
 	:init
 	(setq olivetti-body-width .67))
 #+end_src
-** Initialize =hyperbole=
-*** Description
-Efficient and programmable hypertextual information management system.
-*** Code
-#+begin_src emacs-lisp
-  (use-package hyperbole
-	:defer t)
-#+end_src
 ** Initialize =crux=
 *** Description
 A Collection of Ridiculously Useful eXtensions.
@@ -1312,14 +1065,6 @@ A Collection of Ridiculously Useful eXtensions.
 #+begin_src emacs-lisp
   (use-package crux
 	:ensure t)
-#+end_src
-** Initialize =0x0=
-*** Description
-Upload sharing to 0x0.st
-*** Code
-#+begin_src emacs-lisp
-  (use-package 0x0
-	:defer t)
 #+end_src
 ** Initialize =flymake=
 #+begin_src emacs-lisp
@@ -1335,7 +1080,6 @@ Enable on the fly with M-x flyspell-mode.
 	:config
 	(setq ispell-program-name "hunspell"
 		  ispell-default-dictionary "en_US")
-	;;:hook (text-mode . flyspell-mode)
 	:bind (("M-<f7>" . flyspell-buffer)))
 
   (defalias 'word-count 'count-words)
@@ -1356,12 +1100,6 @@ Show event history and command history of some or all buffers.
   ;; the silver searcher
   (use-package ag
 	:defer t)
-
-  ;; anzu search and replace
-  (use-package anzu)
-
-  ;; Quickly query whole source tree
-  (use-package ctrlf)
 #+end_src
 ** Initialize =imenu-list=
 #+begin_src emacs-lisp
@@ -1370,66 +1108,40 @@ Show event history and command history of some or all buffers.
 	:config
 	(setq imenu-list-auto-resize t))
 #+end_src
-** Initialize =ein=
+** Initialize =auto-package-update=
 *** Description
-Emacs IPython Notebook (EIN); jupyter client for all languages.
+Auto-package-update automatically updates and removes old packages.
 *** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package auto-package-update
+	:ensure t
+	:defer nil
+	:config
+	(setq auto-package-update-prompt-before-update t)
+	(setq auto-package-update-show-preview t)
+	(setq auto-package-update-delete-old-versions t)
+	(setq auto-package-update-hide-results t)
+	(auto-package-update-maybe))
+#+END_SRC
+** Initialize =diminish=
 #+begin_src emacs-lisp
-  ;; (use-package ein
-  ;;   :defer t
-  ;;   :after evil
-  ;;   :ensure t
-  ;;   :commands (ein:run ein:login)
-  ;;   :init
-  ;;   (progn
-  ;; 	(defun set-ein-key-map ()
-  ;; 	  ;; (define-key ein:notebook-mode-map (kbd "C-c C-c") nil)
-  ;; 	  ;; (define-key ein:notebook-mode-map (kbd "C-c C-c") 'ein:worksheet-execute-cell))
-
-  ;; 	  (add-hook 'ein:notebooklist-mode-hook #'set-ein-key-map)
-  ;; 	  (add-hook 'ein:ipdb-mode-hook 'evil-mode)
-  ;; 	  (add-hook 'ein:$kernel-after-execute-hook 'evil-mode)
-  ;; 	  (add-hook 'ein:$kernel-after-start-hook 'evil-mode)
-  ;; 	  (add-hook 'ein:ipdb-mode-hook 'evil-mode)
-  ;; 	  (add-hook 'ein:markdown-mode-hook 'evil-mode)
-  ;; 	  (add-hook 'ein:notebook-after-rename-hook 'evil-mode)
-  ;; 	  (add-hook 'ein:notebook-mode-hook 'evil-mode)
-  ;; 	  (add-hook 'ein:notebooklist-first-open-hook 'evil-mode)
-  ;; 	  (add-hook 'ein:notebooklist-mode-hook 'evil-mode)
-  ;; 	  (add-hook 'ein:pager-mode-hook 'evil-mode)
-  ;; 	  (add-hook 'ein:shared-output-mode-hook 'evil-mode)
-  ;; 	  (add-hook 'ein:traceback-mode-hook 'evil-mode)
-  ;; 	  (add-hook 'ein:worksheet--which-cell-hook 'evil-mode)
-  ;; 	  (add-hook 'ein:worksheet-reinstall-undo-hooks 'evil-mode)
-  ;; 	  )
-  ;; 	:config
-  ;; 	(with-eval-after-load 'racket-mode
-  ;; 	  (define-key ein:notebook-mode-map (kbd "<C-return>") 'ein:worksheet-execute-cell-km)
-  ;; 	  (define-key ein:notebook-mode-map (kbd "<S-return>") 'ein:worksheet-execute-cell-and-goto-next-km)
-  ;; 	  )
-  ;; 	)
-  ;;   )
-
-  ;; (use-package ob-ein
-  ;; :ensure t)
+  (diminish 'visual-line-mode "")
+  (diminish 'so-long-mode "")
+  (diminish 'abbrev-mode "")
+  (diminish 'flymake-mode "")
+  (diminish 'c-mode "")
+  (diminish 'yas "")
 #+end_src
-** Initialize =so-long=
+** Built-in entry =so-long=
 *** Description
 When you visit a file with very long lines, Emacs will have trouble fontifying everything properly and performance will suffer as a result. We can prevent Emacs from even attempting to deal with such longs lines by enabling the built-in global-so-long-mode (for Emacs versions >= 27).
 *** Code
 #+begin_src emacs-lisp
-  (use-package so-long
-	:ensure t)
-  ;; :init
-  ;; (global-so-long-mode 1))
-#+end_src
-** Initialize =requests=
-*** Description
- Help making http requests.
-*** Code
-#+begin_src emacs-lisp
-  (use-package request
-	:defer t)
+  ;; (use-package so-long
+  ;;   :diminish so-long-mode
+  ;;   :ensure t
+  ;;   :init
+  ;;   (global-so-long-mode 1))
 #+end_src
 ** Built-in entry: =eldoc=
 *** Description
@@ -1440,14 +1152,6 @@ Supress eldoc from modeline.
 	:ensure t
 	:diminish eldoc-mode)
 #+END_SRC
-** Built-in entry: =diminish=
-#+begin_src emacs-lisp
-  (diminish 'abbrev-mode "")
-  (diminish 'flymake-mode "")
-  (diminish 'c-mode "")
-  (diminish 'yas "")
-  (diminish 'so-long-mode "")
-#+end_src
 * Languages
 ** LSP
 *** Description
@@ -1465,13 +1169,13 @@ This handles the following languages:
 	:hook ((c-mode          ; clangd
 			c++-mode        ; clangd
 			c-or-c++-mode   ; clangd
-			;; java-mode       ; eclipse-jdtls
+			java-mode       ; eclipse-jdtls
 			js-mode         ; ts-ls (tsserver wrapper)
 			js-jsx-mode     ; ts-ls (tsserver wrapper)
 			typescript-mode ; ts-ls (tsserver wrapper)
 			python-mode     ; pyright
 			web-mode        ; ts-ls/HTML/CSS
-			;; haskell-mode    ; haskell-language-server
+			haskell-mode    ; haskell-language-server
 			) . lsp-deferred)
 	:commands lsp
 	:config
@@ -1537,36 +1241,11 @@ Rust-mode covers it all.
 	:mode "\\.rs\\'"
 	:hook ((go-mode . subword-mode)))
 #+end_src
-** Python
-*** Description
-Blacken & PyVenv [Deprecated] OR elpy [Recommended if not using lsp].
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package pyvenv
-  ;;   :defer t)
-
-  ;; (use-package blacken
-  ;;   :defer t
-  ;;   :hook
-  ;;   (python-mode . blacken-mode))
-
-  ;; (use-package elpy
-  ;;   :ensure t
-  ;;   :init
-  ;;   (elpy-enable))
-#+end_src
-** Lua
-*** Description
-Lua mode.
-#+begin_src emacs-lisp
-  (use-package lua-mode
-	:config
-	(setq lua-indent-level 2))
-#+end_src
-** Common Lisp
-*** Description
+** Lisp
+*** Common Lisp
+**** Description
 SLIME - Common Lisp REPL.
-*** Code
+**** Code
 #+BEGIN_SRC emacs-lisp
   (use-package slime
 	:defer t
@@ -1574,10 +1253,10 @@ SLIME - Common Lisp REPL.
 	(setq inferior-lisp-program "/usr/bin/sbcl")
 	(setq slime-contribs '(slime-fancy slime-quicklisp)))
 #+END_SRC
-** Scheme Lisp
-*** Description
+*** Scheme Lisp
+**** Description
 Geiser - Scheme Lisp REPL.
-*** Code
+**** Code
 #+BEGIN_SRC emacs-lisp
   (use-package geiser
 	:defer t
@@ -1587,6 +1266,32 @@ Geiser - Scheme Lisp REPL.
   (defun geiser-save ()
 	(interactive)
 	(geiser-repl--write-input-ring))
+#+end_src
+** Lua
+*** Description
+Lua mode.
+#+begin_src emacs-lisp
+  (use-package lua-mode
+	:config
+	(setq lua-indent-level 2))
+#+end_src
+** JSON
+*** Description
+Syntax highlighting for json files.
+*** Code
+#+begin_src emacs-lisp
+  (use-package json-mode
+	:ensure t
+	:mode ("\\.json\\'" . json-mode))
+#+end_src
+** Markdown
+*** Description
+Markdown-mode & enable auto fill.
+*** Code
+#+begin_src emacs-lisp
+  (use-package markdown-mode
+	:mode "\\.md\\'"
+	:hook ((markdown-mode . auto-fill-mode)))
 #+end_src
 ** LaTeX
 *** Description
@@ -1599,113 +1304,22 @@ Auctex.
 	(setq TeX-auto-save t)
 	(setq TeX-parse-self t)
 	(setq-default TeX-master nil))
-
-  ;; Enable LaTeX math support
-  ;;(add-hook 'LaTeX-mode-map #'LaTeX-math-mode)
-#+end_src
-** Markdown
-*** Description
-Markdown-mode & enable auto fill.
-*** Code
-#+begin_src emacs-lisp
-  (use-package markdown-mode
-	:mode "\\.md\\'"
-	:hook ((markdown-mode . auto-fill-mode)))
-#+end_src
-** Web & HTML
-*** Description
-Web mode. [Deprecated in favor of lsp]
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package web-mode
-  ;;   :defer t
-  ;;   :after js2-mode
-  ;;   :mode ("\\.html\\'"))
-
-  ;; (use-package web-beautify
-  ;;   :defer t
-  ;;   :after js2-mode
-  ;;   :bind (:map web-mode-map
-  ;; 			  ("C-c b" . web-beautify-html)
-  ;; 			  :map js2-mode-map
-  ;; 			  ("C-c b" . web-beautify-js)))
-
-  (use-package htmlize
-	:ensure t)
-#+end_src
-** JSON
-*** Description
-Syntax highlighting for json files.
-*** Code
-#+begin_src emacs-lisp
-  (use-package json-mode
-	:ensure t
-	:mode ("\\.json\\'" . json-mode))
-#+end_src
-** Javascript
-*** Description
-JS support. [Deprecated in favor of lsp]
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package js2-mode
-  ;;   :mode ("\\.js\\'")
-  ;;   :defer t
-  ;;   :config
-  ;;   (setq-default js2-ignored-warnings '("msg.extra.trailing.comma")))
-
-  ;; (use-package js2-refactor
-  ;;   :defer t
-  ;;   :config
-  ;;   (js2r-add-keybindings-with-prefix "C-c C-m")
-  ;;   :hook (js2-mode . js2-refactor-mode))
-
-  ;; (use-package js-doc
-  ;;   :defer t
-  ;;   :bind (:map js2-mode-map
-  ;; 			  ("C-c i" . js-doc-insert-function-doc)
-  ;; 			  ("@" . js-doc-insert-tag))
-  ;;   :config
-  ;;   (setq js-doc-mail-address "diamondbond1@gmail.com"
-  ;; 		js-doc-author (format "Diamond Bond <%s>" js-doc-mail-address)
-  ;; 		js-doc-url "diamondbond.neocities.org"
-  ;; 		js-doc-license "MIT License"))
-#+end_src
-** ReactJS
-*** Description
-ReactJS mode. [Deprecated in favor of lsp]
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package rjsx-mode
-  ;;   :defer t
-  ;;   :after js2-mode
-  ;;   :mode ("\\.jsx\\'")
-  ;;   :config
-  ;;   (setq js2-mode-show-parse-errors nil
-  ;; 		js2-mode-show-strict-warnings nil))
-#+end_src
-** Typescript
-*** Description
-TSX support. [Deprecated in favor of lsp]
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package typescript-mode
-  ;;   :defer t
-  ;;   :after js2-mode
-  ;;   :mode ("\\.tsx\\'")
-  ;;   :ensure t)
-#+end_src
-** Prettier
-*** Description
-Prettier JS support. [Deprecated in favor of lsp]
-*** Code
-#+begin_src emacs-lisp
-  ;; (use-package prettier-js
-  ;;   :defer t
-  ;;   :after js2-mode
-  ;;   :diminish prettier-js-mode
-  ;;   :hook (((js2-mode web-mode) . prettier-js-mode)))
 #+end_src
 * Functions
+** Open eshell in other window
+#+BEGIN_SRC emacs-lisp
+  (defun eshell-other-window ()
+	"Create or visit an eshell buffer."
+	(interactive)
+	(if (not (get-buffer "*eshell*"))
+		(progn
+		  (split-window-sensibly (selected-window))
+		  (other-window 1)
+		  (eshell))
+	  (switch-to-buffer-other-window "*eshell*")))
+
+  (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
+#+END_SRC
 ** Split and follow
 #+BEGIN_SRC emacs-lisp
   (defun split-and-follow-horizontally ()
@@ -1792,40 +1406,6 @@ Prettier JS support. [Deprecated in favor of lsp]
 	(interactive)
 	(run-in-vterm "ncmpcpp"))
 #+end_src
-** Rename Buffer & File
-#+begin_src emacs-lisp
-  (defun third-party/rename-current-buffer-file ()
-	"Renames current buffer and file it is visiting."
-	(interactive)
-	(let ((name (buffer-name))
-		  (filename (buffer-file-name)))
-	  (if (not (and filename (file-exists-p filename)))
-		  (error "Buffer '%s' is not visiting a file!" name)
-		(let ((new-name (read-file-name "New name: " filename)))
-		  (if (get-buffer new-name)
-			  (error "A buffer named '%s' already exists!" new-name)
-			(rename-file filename new-name 1)
-			(rename-buffer new-name)
-			(set-visited-file-name new-name)
-			(set-buffer-modified-p nil)
-			(message "File '%s' successfully renamed to '%s'"
-					 name (file-name-nondirectory new-name)))))))
-#+end_src
-** Delete Buffer & File
-#+begin_src emacs-lisp
-  (defun third-party/delete-current-buffer-file ()
-	"Removes file connected to current buffer and kills buffer."
-	(interactive)
-	(let ((filename (buffer-file-name))
-		  (buffer (current-buffer))
-		  (name (buffer-name)))
-	  (if (not (and filename (file-exists-p filename)))
-		  (ido-kill-buffer)
-		(when (yes-or-no-p "Are you sure you want to remove this file? ")
-		  (delete-file filename)
-		  (kill-buffer buffer)
-		  (message "File '%s' successfully removed" filename)))))
-#+end_src
 ** Yank Whole Buffer
 #+begin_src emacs-lisp
   (defun yank-whole-buffer ()
@@ -1865,23 +1445,6 @@ Prettier JS support. [Deprecated in favor of lsp]
 	(interactive)
 	(erc-quit-server nil))
 #+end_src
-** top
-#+begin_src emacs-lisp
-  (defun htop ()
-	"htop"
-	(interactive)
-	(run-in-vterm "htop"))
-
-  (defun btop ()
-	"btop"
-	(interactive)
-	(run-in-vterm "btop"))
-
-  (defun gotop ()
-	"gotop"
-	(interactive)
-	(run-in-vterm "gotop"))
-#+end_src
 ** next/prev 15-lines
 #+begin_src emacs-lisp
   (defun next-15-lines ()
@@ -1904,13 +1467,7 @@ Prettier JS support. [Deprecated in favor of lsp]
 	(interactive)
 	(async-shell-command "cd /home/diamond/src/dwm-flexipatch/; sudo make clean install"))
 #+end_src
-* Last Call
-** Leuven
-#+begin_src emacs-lisp
-  ;; (use-package leuven-theme)
-  ;; (load-theme 'leuven t)
-#+end_src
-** Enable toolbar for Athena Emacs daemons
+** Enable toolbar
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(tool-bar-lines . 1))
 #+end_src

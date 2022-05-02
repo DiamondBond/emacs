@@ -352,8 +352,8 @@ Sensible and well-defined org-mode configuration with org-capture support.
 	("C-<f1>" . (lambda()(interactive)(show-all)))
 	:hook (org-mode . visual-line-mode))
 
-  (use-package org-contrib
-	:ensure t)
+  ;; (use-package org-contrib
+  ;;   :ensure t)
 
   ;; (use-package org-bullets
   ;;   :ensure t
@@ -524,16 +524,6 @@ Garbage Collector Magic Hack
   ;;   :diminish gcmh-mode
   ;;   :config
   ;;   (gcmh-mode 1))
-#+end_src
-** Initialize =no-littering=
-#+begin_src emacs-lisp
-  (use-package no-littering
-	:ensure t
-	:defer nil
-	:config
-	(require 'recentf)
-	(add-to-list 'recentf-exclude no-littering-var-directory)
-	(add-to-list 'recentf-exclude no-littering-etc-directory))
 #+end_src
 ** Initialize =pixel-scroll-precision=
 *** Description
@@ -728,15 +718,8 @@ Vertico & friends (orderless, marginalia, consult & embark)
 	(kind-icon-default-face 'corfu-default) ; Have background color be the same as `corfu' face background
 	(kind-icon-blend-background nil)  ; Use midpoint color between foreground and background colors ("blended")?
 	(kind-icon-blend-frac 0.08)
-
-	;; NOTE 2022-02-05: `kind-icon' depends `svg-lib' which creates a cache
-	;; directory that defaults to the `user-emacs-directory'. Here, I change that
-	;; directory to a location appropriate to `no-littering' conventions, a
-	;; package which moves directories of other packages to sane locations.
-	(svg-lib-icons-dir (no-littering-expand-var-file-name "svg-lib/cache/")) ; Change cache dir
 	:config
-	(add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter) ; Enable `kind-icon'
-	)
+	(add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+end_src
 ** Initialize =dabbrev=
 *** Description
@@ -858,7 +841,7 @@ Heresy; Vim keybindings in Emacs.
 	:config
 	(evil-collection-init))
 
-  (use-package evil-org)
+  ;; (use-package evil-org)
 #+END_SRC
 ** Initialize =swiper=
 *** Description
@@ -1018,10 +1001,10 @@ Git porcelain for Emacs.
   (use-package forge
 	:commands forge-pull)
 
-  (use-package git-link
-	:ensure t
-	:config
-	(setq git-link-open-in-browser t))
+  ;; (use-package git-link
+  ;;   :ensure t
+  ;;   :config
+  ;;   (setq git-link-open-in-browser t))
 #+END_SRC
 ** Initialize =elfeed=
 *** Description
@@ -1110,13 +1093,13 @@ Saves cursor location in buffers.
 Colorize color names in buffers
 *** Code
 #+begin_src emacs-lisp
-  (use-package rainbow-mode
-	:ensure t
-	:config
-	(setq rainbow-ansi-colors nil)
-	(setq rainbow-x-colors nil)
-	:hook ((web-mode . rainbow-mode)
-		   (css-mode . rainbow-mode)))
+  ;; (use-package rainbow-mode
+  ;;   :ensure t
+  ;;   :config
+  ;;   (setq rainbow-ansi-colors nil)
+  ;;   (setq rainbow-x-colors nil)
+  ;;   :hook ((web-mode . rainbow-mode)
+  ;; 		 (css-mode . rainbow-mode)))
 #+end_src
 ** Initialize =rainbow-delimiters=
 *** Description
@@ -1129,8 +1112,8 @@ Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimit
 #+end_src
 ** Initialize =emojify=
 #+begin_src emacs-lisp
-  (use-package emojify
-	:defer t)
+  ;; (use-package emojify
+  ;;   :defer t)
 #+end_src
 ** Initialize =notmuch=
 *** Description
@@ -1392,11 +1375,43 @@ Show event history and command history of some or all buffers.
 Emacs IPython Notebook (EIN); jupyter client for all languages.
 *** Code
 #+begin_src emacs-lisp
-  (use-package ein
-	:ensure t)
+  ;; (use-package ein
+  ;;   :defer t
+  ;;   :after evil
+  ;;   :ensure t
+  ;;   :commands (ein:run ein:login)
+  ;;   :init
+  ;;   (progn
+  ;; 	(defun set-ein-key-map ()
+  ;; 	  ;; (define-key ein:notebook-mode-map (kbd "C-c C-c") nil)
+  ;; 	  ;; (define-key ein:notebook-mode-map (kbd "C-c C-c") 'ein:worksheet-execute-cell))
 
-  (use-package ob-ein
-	:ensure t)
+  ;; 	  (add-hook 'ein:notebooklist-mode-hook #'set-ein-key-map)
+  ;; 	  (add-hook 'ein:ipdb-mode-hook 'evil-mode)
+  ;; 	  (add-hook 'ein:$kernel-after-execute-hook 'evil-mode)
+  ;; 	  (add-hook 'ein:$kernel-after-start-hook 'evil-mode)
+  ;; 	  (add-hook 'ein:ipdb-mode-hook 'evil-mode)
+  ;; 	  (add-hook 'ein:markdown-mode-hook 'evil-mode)
+  ;; 	  (add-hook 'ein:notebook-after-rename-hook 'evil-mode)
+  ;; 	  (add-hook 'ein:notebook-mode-hook 'evil-mode)
+  ;; 	  (add-hook 'ein:notebooklist-first-open-hook 'evil-mode)
+  ;; 	  (add-hook 'ein:notebooklist-mode-hook 'evil-mode)
+  ;; 	  (add-hook 'ein:pager-mode-hook 'evil-mode)
+  ;; 	  (add-hook 'ein:shared-output-mode-hook 'evil-mode)
+  ;; 	  (add-hook 'ein:traceback-mode-hook 'evil-mode)
+  ;; 	  (add-hook 'ein:worksheet--which-cell-hook 'evil-mode)
+  ;; 	  (add-hook 'ein:worksheet-reinstall-undo-hooks 'evil-mode)
+  ;; 	  )
+  ;; 	:config
+  ;; 	(with-eval-after-load 'racket-mode
+  ;; 	  (define-key ein:notebook-mode-map (kbd "<C-return>") 'ein:worksheet-execute-cell-km)
+  ;; 	  (define-key ein:notebook-mode-map (kbd "<S-return>") 'ein:worksheet-execute-cell-and-goto-next-km)
+  ;; 	  )
+  ;; 	)
+  ;;   )
+
+  ;; (use-package ob-ein
+  ;; :ensure t)
 #+end_src
 ** Initialize =so-long=
 *** Description
@@ -1413,7 +1428,8 @@ When you visit a file with very long lines, Emacs will have trouble fontifying e
  Help making http requests.
 *** Code
 #+begin_src emacs-lisp
-  (use-package request)
+  (use-package request
+	:defer t)
 #+end_src
 ** Built-in entry: =eldoc=
 *** Description
@@ -1430,11 +1446,16 @@ Supress eldoc from modeline.
   (diminish 'flymake-mode "")
   (diminish 'c-mode "")
   (diminish 'yas "")
+  (diminish 'so-long-mode "")
 #+end_src
 * Languages
 ** LSP
 *** Description
-Language Server Protocol
+Language Server Protocol.
+This handles the following languages:
+- C/C++
+- JS/JSX/TSX/HTML
+- Python
 *** Code
 #+begin_src emacs-lisp
   (use-package lsp-mode
@@ -1446,7 +1467,7 @@ Language Server Protocol
 			c-or-c++-mode   ; clangd
 			;; java-mode       ; eclipse-jdtls
 			js-mode         ; ts-ls (tsserver wrapper)
-			;; js-jsx-mode     ; ts-ls (tsserver wrapper)
+			js-jsx-mode     ; ts-ls (tsserver wrapper)
 			typescript-mode ; ts-ls (tsserver wrapper)
 			python-mode     ; pyright
 			web-mode        ; ts-ls/HTML/CSS
@@ -1516,126 +1537,31 @@ Rust-mode covers it all.
 	:mode "\\.rs\\'"
 	:hook ((go-mode . subword-mode)))
 #+end_src
-** Web
-#+begin_src emacs-lisp
-  (use-package web-mode
-	:defer t
-	:mode ("\\.html\\'"))
-
-  (use-package web-beautify
-	:defer t
-	:bind (:map web-mode-map
-				("C-c b" . web-beautify-html)
-				:map js2-mode-map
-				("C-c b" . web-beautify-js)))
-
-  (use-package htmlize
-	:ensure t)
-#+end_src
-** JSON
+** Python
 *** Description
-Syntax highlighting for json files. Hopefully lighter weight than javascript mode.
+Blacken & PyVenv [Deprecated] OR elpy [Recommended if not using lsp].
 *** Code
 #+begin_src emacs-lisp
-  (use-package json-mode
-	:ensure t
-	:mode ("\\.json\\'" . json-mode))
-#+end_src
-** Javascript
-*** Description
-JS support.
-*** Code
-#+begin_src emacs-lisp
-  (use-package js2-mode
-	:mode ("\\.js\\'")
-	:defer t
-	:config
-	(setq-default js2-ignored-warnings '("msg.extra.trailing.comma")))
+  ;; (use-package pyvenv
+  ;;   :defer t)
 
-  (use-package js2-refactor
-	:defer t
-	:config
-	(js2r-add-keybindings-with-prefix "C-c C-m")
-	:hook (js2-mode . js2-refactor-mode))
+  ;; (use-package blacken
+  ;;   :defer t
+  ;;   :hook
+  ;;   (python-mode . blacken-mode))
 
-  (use-package js-doc
-	:defer t
-	:bind (:map js2-mode-map
-				("C-c i" . js-doc-insert-function-doc)
-				("@" . js-doc-insert-tag))
-	:config
-	(setq js-doc-mail-address "diamondbond1@gmail.com"
-		  js-doc-author (format "Diamond Bond <%s>" js-doc-mail-address)
-		  js-doc-url "diamondbond.neocities.org"
-		  js-doc-license "MIT License"))
-#+end_src
-** ReactJS
-#+begin_src emacs-lisp
-  (use-package rjsx-mode
-	:defer t
-	:mode ("\\.jsx\\'")
-	:config
-	(setq js2-mode-show-parse-errors nil
-		  js2-mode-show-strict-warnings nil))
-#+end_src
-** Typescript
-*** Description
-TSX support.
-*** Code
-#+begin_src emacs-lisp
-  (use-package typescript-mode
-	:defer t
-	:mode ("\\.tsx\\'")
-	:ensure t)
-#+end_src
-** Prettier
-*** Description
-Prettier JS support.
-*** Code
-#+begin_src emacs-lisp
-  (use-package prettier-js
-	:defer t
-	:after js2-mode
-	:diminish prettier-js-mode
-	:hook (((js2-mode web-mode) . prettier-js-mode)))
-#+end_src
-** LaTeX
-Auctex.
-#+begin_src emacs-lisp
-  (use-package auctex
-	:ensure t
-	:config
-	(setq TeX-auto-save t)
-	(setq TeX-parse-self t)
-	(setq-default TeX-master nil))
-
-  ;; Enable LaTeX math support
-  ;;(add-hook 'LaTeX-mode-map #'LaTeX-math-mode)
-#+end_src
-** Markdown
-*** Description
-Markdown-mode & enable auto fill.
-*** Code
-#+begin_src emacs-lisp
-  (use-package markdown-mode
-	:mode "\\.md\\'"
-	:hook ((markdown-mode . auto-fill-mode)))
+  ;; (use-package elpy
+  ;;   :ensure t
+  ;;   :init
+  ;;   (elpy-enable))
 #+end_src
 ** Lua
+*** Description
+Lua mode.
 #+begin_src emacs-lisp
-  (use-package lua-mode)
-  ;; :config
-  ;; (setq lua-indent-level 2))
-#+end_src
-** Python
-#+begin_src emacs-lisp
-  (use-package pyvenv
-	:defer t)
-
-  (use-package blacken
-	:defer t
-	:hook
-	(python-mode . blacken-mode))
+  (use-package lua-mode
+	:config
+	(setq lua-indent-level 2))
 #+end_src
 ** Common Lisp
 *** Description
@@ -1661,6 +1587,123 @@ Geiser - Scheme Lisp REPL.
   (defun geiser-save ()
 	(interactive)
 	(geiser-repl--write-input-ring))
+#+end_src
+** LaTeX
+*** Description
+Auctex.
+*** Code
+#+begin_src emacs-lisp
+  (use-package auctex
+	:ensure t
+	:config
+	(setq TeX-auto-save t)
+	(setq TeX-parse-self t)
+	(setq-default TeX-master nil))
+
+  ;; Enable LaTeX math support
+  ;;(add-hook 'LaTeX-mode-map #'LaTeX-math-mode)
+#+end_src
+** Markdown
+*** Description
+Markdown-mode & enable auto fill.
+*** Code
+#+begin_src emacs-lisp
+  (use-package markdown-mode
+	:mode "\\.md\\'"
+	:hook ((markdown-mode . auto-fill-mode)))
+#+end_src
+** Web & HTML
+*** Description
+Web mode. [Deprecated in favor of lsp]
+*** Code
+#+begin_src emacs-lisp
+  ;; (use-package web-mode
+  ;;   :defer t
+  ;;   :after js2-mode
+  ;;   :mode ("\\.html\\'"))
+
+  ;; (use-package web-beautify
+  ;;   :defer t
+  ;;   :after js2-mode
+  ;;   :bind (:map web-mode-map
+  ;; 			  ("C-c b" . web-beautify-html)
+  ;; 			  :map js2-mode-map
+  ;; 			  ("C-c b" . web-beautify-js)))
+
+  (use-package htmlize
+	:ensure t)
+#+end_src
+** JSON
+*** Description
+Syntax highlighting for json files.
+*** Code
+#+begin_src emacs-lisp
+  (use-package json-mode
+	:ensure t
+	:mode ("\\.json\\'" . json-mode))
+#+end_src
+** Javascript
+*** Description
+JS support. [Deprecated in favor of lsp]
+*** Code
+#+begin_src emacs-lisp
+  ;; (use-package js2-mode
+  ;;   :mode ("\\.js\\'")
+  ;;   :defer t
+  ;;   :config
+  ;;   (setq-default js2-ignored-warnings '("msg.extra.trailing.comma")))
+
+  ;; (use-package js2-refactor
+  ;;   :defer t
+  ;;   :config
+  ;;   (js2r-add-keybindings-with-prefix "C-c C-m")
+  ;;   :hook (js2-mode . js2-refactor-mode))
+
+  ;; (use-package js-doc
+  ;;   :defer t
+  ;;   :bind (:map js2-mode-map
+  ;; 			  ("C-c i" . js-doc-insert-function-doc)
+  ;; 			  ("@" . js-doc-insert-tag))
+  ;;   :config
+  ;;   (setq js-doc-mail-address "diamondbond1@gmail.com"
+  ;; 		js-doc-author (format "Diamond Bond <%s>" js-doc-mail-address)
+  ;; 		js-doc-url "diamondbond.neocities.org"
+  ;; 		js-doc-license "MIT License"))
+#+end_src
+** ReactJS
+*** Description
+ReactJS mode. [Deprecated in favor of lsp]
+*** Code
+#+begin_src emacs-lisp
+  ;; (use-package rjsx-mode
+  ;;   :defer t
+  ;;   :after js2-mode
+  ;;   :mode ("\\.jsx\\'")
+  ;;   :config
+  ;;   (setq js2-mode-show-parse-errors nil
+  ;; 		js2-mode-show-strict-warnings nil))
+#+end_src
+** Typescript
+*** Description
+TSX support. [Deprecated in favor of lsp]
+*** Code
+#+begin_src emacs-lisp
+  ;; (use-package typescript-mode
+  ;;   :defer t
+  ;;   :after js2-mode
+  ;;   :mode ("\\.tsx\\'")
+  ;;   :ensure t)
+#+end_src
+** Prettier
+*** Description
+Prettier JS support. [Deprecated in favor of lsp]
+*** Code
+#+begin_src emacs-lisp
+  ;; (use-package prettier-js
+  ;;   :defer t
+  ;;   :after js2-mode
+  ;;   :diminish prettier-js-mode
+  ;;   :hook (((js2-mode web-mode) . prettier-js-mode)))
 #+end_src
 * Functions
 ** Split and follow
@@ -1749,58 +1792,6 @@ Geiser - Scheme Lisp REPL.
 	(interactive)
 	(run-in-vterm "ncmpcpp"))
 #+end_src
-** top
-#+begin_src emacs-lisp
-  (defun htop ()
-	"htop"
-	(interactive)
-	(run-in-vterm "htop"))
-
-  (defun btop ()
-	"btop"
-	(interactive)
-	(run-in-vterm "btop"))
-
-  (defun gotop ()
-	"gotop"
-	(interactive)
-	(run-in-vterm "gotop"))
-#+end_src
-** skips
-#+begin_src emacs-lisp
-  (defun next-15-lines ()
-	"Move to the next 15 lines."
-	(interactive)
-	(forward-line 15))
-
-  (defun previous-15-lines ()
-	"Move to the previous 15 lines."
-	(interactive)
-	(forward-line -15))
-
-  (define-key global-map (kbd "C-S-n") #'next-15-lines)
-  (define-key global-map (kbd "C-S-p") #'previous-15-lines)
-#+end_src
-** make-dwm
-#+begin_src emacs-lisp
-  (defun make-dwm ()
-	"Compile dwm."
-	(interactive)
-	(async-shell-command "cd /home/diamond/src/dwm-flexipatch/; sudo make clean install"))
-#+end_src
-** erc
-#+begin_src emacs-lisp
-  (defun erc-start ()
-	"Start ERC and connect to Rizon"
-	(interactive)
-	(save-current-buffer
-	  (erc :server "irc.rizon.net" :port "6667" :nick "diamondbond")))
-
-  (defun erc-quit ()
-	"Quit ERC"
-	(interactive)
-	(erc-quit-server nil))
-#+end_src
 ** Rename Buffer & File
 #+begin_src emacs-lisp
   (defun third-party/rename-current-buffer-file ()
@@ -1860,6 +1851,58 @@ Geiser - Scheme Lisp REPL.
 	(mark-whole-buffer)
 	(call-interactively 'evil-yank)
 	(async-shell-command "sh -c ~/bin/run_bugzilla_exe.sh"))
+#+end_src
+** Erc handlers
+#+begin_src emacs-lisp
+  (defun erc-start ()
+	"Start ERC and connect to Rizon"
+	(interactive)
+	(save-current-buffer
+	  (erc :server "irc.rizon.net" :port "6667" :nick "diamondbond")))
+
+  (defun erc-quit ()
+	"Quit ERC"
+	(interactive)
+	(erc-quit-server nil))
+#+end_src
+** top
+#+begin_src emacs-lisp
+  (defun htop ()
+	"htop"
+	(interactive)
+	(run-in-vterm "htop"))
+
+  (defun btop ()
+	"btop"
+	(interactive)
+	(run-in-vterm "btop"))
+
+  (defun gotop ()
+	"gotop"
+	(interactive)
+	(run-in-vterm "gotop"))
+#+end_src
+** next/prev 15-lines
+#+begin_src emacs-lisp
+  (defun next-15-lines ()
+	"Move to the next 15 lines."
+	(interactive)
+	(forward-line 15))
+
+  (defun previous-15-lines ()
+	"Move to the previous 15 lines."
+	(interactive)
+	(forward-line -15))
+
+  (define-key global-map (kbd "C-S-n") #'next-15-lines)
+  (define-key global-map (kbd "C-S-p") #'previous-15-lines)
+#+end_src
+** make-dwm
+#+begin_src emacs-lisp
+  (defun make-dwm ()
+	"Compile dwm."
+	(interactive)
+	(async-shell-command "cd /home/diamond/src/dwm-flexipatch/; sudo make clean install"))
 #+end_src
 * Last Call
 ** Leuven

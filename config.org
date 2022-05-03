@@ -1039,7 +1039,8 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 	:init
 	;; Add all your customizations prior to loading the themes
 	(setq modus-themes-italic-constructs t
-		  modus-themes-bold-constructs t)
+		  modus-themes-bold-constructs t
+		  modus-themes-region '(accented bg-only no-extend))
 
 	;; Load the theme files before enabling a theme
 	(modus-themes-load-themes)

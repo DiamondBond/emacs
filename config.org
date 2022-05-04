@@ -406,14 +406,6 @@ I have hardcoded in three buffers that I frequently visit along with helper func
 			  (lambda (&rest _) (config-edit))
 			  'default)))))
 #+END_SRC
-** Initialize =diminish=
-*** Description
-Diminish hides minor modes to prevent cluttering your mode line.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package diminish
-	:ensure t)
-#+END_SRC
 ** Initialize =pixel-scroll-precision=
 *** Description
 Precision pixel scrolling (Emacs 29+)
@@ -1140,15 +1132,23 @@ Auto-package-update automatically updates and removes old packages.
 	(auto-package-update-maybe))
 #+END_SRC
 ** Initialize =diminish=
+*** Description
+Diminish hides minor modes to prevent cluttering your mode line.
+*** Code
 #+begin_src emacs-lisp
+  (use-package diminish
+	:ensure t)
+
+  ;; Diminish as mode is already loaded
   (diminish 'visual-line-mode "")
   (diminish 'abbrev-mode "")
-  (diminish 'flymake-mode "")
   (diminish 'c-mode "")
   (diminish 'yas "")
-  (diminish 'org-beamer-mode "")
-  (diminish 'auto-revert-mode "")
-  (diminish 'ARV "")
+
+  ;; Diminish after mode is loaded
+  (eval-after-load "flymake" '(diminish 'flymake-mode))
+  (eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
+  (eval-after-load "auto-revert" '(diminish 'auto-revert-mode))
 #+end_src
 ** Built-in entry: =eldoc=
 *** Description

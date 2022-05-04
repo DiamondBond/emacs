@@ -1130,6 +1130,7 @@ Auto-package-update automatically updates and removes old packages.
   (diminish 'flymake-mode "")
   (diminish 'c-mode "")
   (diminish 'yas "")
+  (diminish 'auto-revert-mode "")
 #+end_src
 ** Built-in entry: =eldoc=
 *** Description
@@ -1146,7 +1147,7 @@ Supress eldoc from modeline.
 Language Server Protocol.
 This handles the following languages:
 - C/C++
-- [WEB] JS/JSX/TSX/HTML
+- [WEB] JS/JSX/HTML/CSS
 - Python
 *** Code
 #+begin_src emacs-lisp
@@ -1292,6 +1293,33 @@ Auctex.
 	(setq TeX-auto-save t)
 	(setq TeX-parse-self t)
 	(setq-default TeX-master nil))
+#+end_src
+** Web
+*** Description
+Web mode for JS/JSX/TS/TSX/HTML files
+*** Code
+#+begin_src emacs-lisp
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (use-package web-mode
+	:ensure t
+	:mode (("\\.js\\'" . web-mode)
+		   ("\\.jsx\\'" .  web-mode)
+		   ("\\.ts\\'" . web-mode)
+		   ("\\.tsx\\'" . web-mode)
+		   ("\\.html\\'" . web-mode))
+	:commands web-mode)
+#+end_src
+** Prettier
+*** Description
+Prettier formatter for JSX & TSX.
+*** Code
+#+begin_src emacs-lisp
+  ;; (use-package prettier-js
+  ;;   :ensure t
+  ;;   :mode(("\\.jsx?\\'" . prettier-js-mode)
+  ;; 		("\\.tsx?\\'" . prettier-js-mode)))
 #+end_src
 * Functions
 ** Open eshell in other window

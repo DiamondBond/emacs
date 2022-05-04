@@ -1145,10 +1145,13 @@ Supress eldoc from modeline.
 ** LSP
 *** Description
 Language Server Protocol.
-This handles the following languages:
+
+Handles the following languages:
 - C/C++
 - [WEB] JS/JSX/HTML/CSS
 - Python
+
+Please install typescript-language-server.
 *** Code
 #+begin_src emacs-lisp
   (use-package lsp-mode
@@ -1187,7 +1190,9 @@ This handles the following languages:
 	(setq read-process-output-max (* 1024 1024)) ;; 1MB
 	(setq completion-styles '(orderless)
 		  completion-category-defaults nil)
-	(setq lsp-idle-delay 0.5))
+	(setq lsp-idle-delay 0.5)
+	(setq lsp-clients-typescript-server "typescript-language-server"
+		  lsp-clients-typescript-server-args '("--stdio")))
 
   (use-package lsp-ui
 	:commands lsp-ui-mode

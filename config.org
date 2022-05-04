@@ -1146,7 +1146,7 @@ Supress eldoc from modeline.
 Language Server Protocol.
 This handles the following languages:
 - C/C++
-- JS/JSX/TSX/HTML
+- [WEB] JS/JSX/TSX/HTML
 - Python
 *** Code
 #+begin_src emacs-lisp
@@ -1157,13 +1157,13 @@ This handles the following languages:
 	:hook ((c-mode          ; clangd
 			c++-mode        ; clangd
 			c-or-c++-mode   ; clangd
-			java-mode       ; eclipse-jdtls
+			;;java-mode       ; eclipse-jdtls
 			js-mode         ; ts-ls (tsserver wrapper)
 			js-jsx-mode     ; ts-ls (tsserver wrapper)
 			typescript-mode ; ts-ls (tsserver wrapper)
 			python-mode     ; pyright
 			web-mode        ; ts-ls/HTML/CSS
-			haskell-mode    ; haskell-language-server
+			;;haskell-mode    ; haskell-language-server
 			) . lsp-deferred)
 	:commands lsp
 	:config

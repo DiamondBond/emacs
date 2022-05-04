@@ -1208,7 +1208,8 @@ Handles the following languages:
 		  completion-category-defaults nil)
 	(setq lsp-idle-delay 0.5)
 	(setq lsp-clients-typescript-server "typescript-language-server"
-		  lsp-clients-typescript-server-args '("--stdio")))
+		  lsp-clients-typescript-server-args '("--stdio"))
+	(setq lsp-disabled-clients '(eslint)))
 
   (use-package lsp-ui
 	:commands lsp-ui-mode

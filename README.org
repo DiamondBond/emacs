@@ -104,8 +104,9 @@ https://raw.githubusercontent.com/DiamondBond/dotfiles/master/pacman.txt
   pip3 install black pyflakes isort nose pytest pygifsicle pyls pyls-black nose2 simple-server httpserver future python-lsp-server autopep8 jedi jedi-language-server
 #+end_src
 *** NPM
+Please install deno & typescript-language-server for Typescript (TS/TSX) support.
 #+begin_src bash
-  sudo npm install -g typescript-language-server
+  sudo npm install -g deno typescript-language-server
 #+end_src
 ** Files
 Certain files & folders must exist.

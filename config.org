@@ -34,6 +34,8 @@ Quality-of-life modifications for a more pleasant Emacs experience.
 #+BEGIN_SRC emacs-lisp
   (setq make-backup-files nil)
   (setq auto-save-default nil)
+  (setq make-backup-files nil)
+  (setq create-lockfiles nil)
 #+END_SRC
 ** Do not litter init.el
 #+begin_src emacs-lisp
@@ -246,6 +248,8 @@ Private & global key maps.
 * =Org= mode
 ** Description
 Sensible and well-defined org-mode configuration with org-capture support.
+Org-tree-slider and hide-modeline included for presentation support although org-beamer-export-to-pdf is usually the preferred way for presentations.
+Deft is included for quicksearch of entire ~/org directory.
 ** Code
 #+BEGIN_SRC emacs-lisp
   (use-package org
@@ -296,6 +300,17 @@ Sensible and well-defined org-mode configuration with org-capture support.
 	("C-<f1>" . (lambda()(interactive)(show-all)))
 	:hook (org-mode . visual-line-mode))
 
+  (use-package org-tree-slide
+	:custom
+	(org-tree-slide-slide-in-effect t)
+	(org-tree-slide-activate-message "Presentation started!")
+	(org-tree-slide-deactivate-message "Presentation finished!")
+	(org-tree-slide-header t)
+	(org-tree-slide-breadcrumbs " > ")
+	(org-image-actual-width nil))
+
+  (use-package hide-mode-line)
+
   (use-package deft
 	:config
 	(setq deft-directory org-directory
@@ -304,7 +319,7 @@ Sensible and well-defined org-mode configuration with org-capture support.
 		  deft-use-filename-as-title t)
 	:bind
 	("C-c n d" . deft))
-#+END_SRC
+#+end_src
 * Eshell
 ** Description
 Improve eshell prompt and assign aliases & custom helper functions for easier use.
@@ -1035,7 +1050,8 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 *** Code
 #+begin_src emacs-lisp
   (use-package modus-themes
-	:ensure
+	:ensure t
+	:defer nil
 	:init
 	;; Add all your customizations prior to loading the themes
 	(setq modus-themes-italic-constructs t
@@ -1131,6 +1147,7 @@ Auto-package-update automatically updates and removes old packages.
   (diminish 'c-mode "")
   (diminish 'yas "")
   (diminish 'auto-revert-mode "")
+  (diminish 'ARV "")
 #+end_src
 ** Built-in entry: =eldoc=
 *** Description
@@ -1150,8 +1167,6 @@ Handles the following languages:
 - C/C++
 - [WEB] JS/JSX/HTML/CSS
 - Python
-
-Please install typescript-language-server.
 *** Code
 #+begin_src emacs-lisp
   (use-package lsp-mode
@@ -1330,7 +1345,7 @@ Prettier formatter for JSX & TSX.
 								'("\\.tsx?\\'" . prettier-js-mode))))
 #+end_src
 * Functions
-** Minor mode
+** Enable Minor mode
 #+begin_src emacs-lisp
   (defun enable-minor-mode (my-pair)
 	"Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."

@@ -1146,6 +1146,7 @@ Auto-package-update automatically updates and removes old packages.
   (diminish 'flymake-mode "")
   (diminish 'c-mode "")
   (diminish 'yas "")
+  (diminish 'org-beamer-mode "")
   (diminish 'auto-revert-mode "")
   (diminish 'ARV "")
 #+end_src

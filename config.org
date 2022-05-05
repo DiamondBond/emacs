@@ -443,6 +443,14 @@ vertico, orderless, marginalia, consult & embark
 #+begin_src emacs-lisp
   ;; Enable vertico
   (use-package vertico
+	:bind (:map vertico-map
+				("C-j" . vertico-next)
+				("C-k" . vertico-previous)
+  				("M-j" . vertico-next)
+				("M-k" . vertico-previous)
+				("C-f" . vertico-exit)
+				:map minibuffer-local-map
+				("M-h" . backward-kill-word))
 	:init
 	(vertico-mode)
 	;; Grow and shrink the Vertico minibuffer
@@ -497,7 +505,7 @@ vertico, orderless, marginalia, consult & embark
 				 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
 				   nil
 				   (window-parameters (mode-line-format . none)))))
-  
+
   ;; Consult users will also want the embark-consult package.
   (use-package embark-consult
 	:ensure t

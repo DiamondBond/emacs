@@ -34,8 +34,7 @@ Please refer to the dependencies section below first to make sure Emacs and your
   mv ~/.emacs.d ~/.emacs.d.old
 
   # Copy new cfg to ~/.emacs.d
-  mkdir -p ~/.emacs.d
-  cp -r ~/git/emacs/{early-init.el,init.el,config.org,snippets,img} ~/.emacs.d/
+  mkdir -p ~/.emacs.d; cp -r ~/git/emacs/{early-init.el,init.el,config.org,snippets,img} ~/.emacs.d/
 
   # Start Emacs daemon
   emacs --daemon;
@@ -56,8 +55,6 @@ M-x pdf-tools-install
 M-x vterm
 
 M-x all-the-icons-install-fonts
-
-M-x all-the-icons-completion-mode # add icons to completion candidates
 
 M-x kill-emacs # restart emacs
 #+end_quote

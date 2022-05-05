@@ -4,8 +4,7 @@
 #+OPTIONS: num:nil
 
 #+html: <a href="https://www.gnu.org/software/emacs/"><img alt="GNU Emacs" src="https://github.com/minad/corfu/blob/screenshots/emacs.svg?raw=true"/></a>
-#+html: <a href="https://camo.githubusercontent.com/58b426916cdeb4f0553578a48cb7deec3171d9ae82dbe1975b0f9e2e1e7c1e19/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f537570706f7274732d456d6163735f32372e312d2d32382e312d626c756576696f6c65742e7376673f7374796c653d666c61742d737175617265266c6f676f3d474e55253230456d616373266c6f676f436f6c6f723d7768697465"></a>
-#+html: <img src="https://raw.githubusercontent.com/DiamondBond/emacs/master/img/gnusstorm-2.gif" align="right" width="30%">
+#+html: <img src="https://raw.githubusercontent.com/DiamondBond/emacs/master/img/gnusstorm-2.gif" align="right" width="42%">
 
 * Introduction
 This Emacs distro aims to enhance the default Emacs experience.

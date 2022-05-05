@@ -77,7 +77,7 @@ nodejs npm
 #+end_quote
 *** Python
 #+begin_src bash
-  pip3 install black pyflakes isort nose pytest pygifsicle pyls pyls-black nose2 simple-server httpserver future python-lsp-server autopep8 jedi jedi-language-server
+  pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib 
 #+end_src
 *** NPM
 Please install deno & typescript-language-server for Typescript (TS/TSX) support.

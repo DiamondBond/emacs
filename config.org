@@ -910,7 +910,8 @@ Major mode for reading EPUBs.
 	:config
 	(defun nov-font-setup ()
 	  (face-remap-add-relative 'variable-pitch :family "Liberation Serif"
-							   :height 1.0))
+							   :height 1.0)
+	  (text-scale-increase 2))
 	:mode ("\\.epub\\'" . nov-mode)
 	:hook (nov-mode . nov-font-setup))
 #+END_SRC

@@ -57,15 +57,15 @@ M-x vterm
 
 M-x all-the-icons-install-fonts
 
-M-x all-the-icons-completion-mode #add icons to completion candidates
+M-x all-the-icons-completion-mode # add icons to completion candidates
 
-M-x kill-emacs #restart-emacs
+M-x kill-emacs # restart emacs
 #+end_quote
 
 * Dependencies
 ** Packages
-This section is just a raw dump of packages that I have needed in the past to comfortably run this Emacs distribution, not everything here is required, this is just a rough guideline.
-*** Ubuntu 20.04
+This section is just a raw dump of packages that I have needed in the past to comfortably run this Emacs distribution under Ubuntu 20.04, not everything here is required, this is just a rough guideline.
+*** [DEPRECATED] Ubuntu 20.04
 #+begin_src sh
   sudo apt install bash-completion clang clangd llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps offlineimap msmtp clang clang-tools clangd ccls llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps emacs-common-non-dfsg libjansson-dev editorconfig glslang-dev glslang-tools sbcl slime shellcheck rustc cargo pipenv wordnet gcc g++ make libsdl2-dev gnutls-bin libxml2-utils python3-pip gnugo gnuchess xboard libgccjit0 htop ffmpeg wget curl xdotool wmctrl slop wkhtmltopdf mupdf mupdf-tools appmenu-gtk2-module mediainfo exiftool unrar rar unace ace p7zip-full wordnet w3m-el xsel xclip mpd mpc ncmpcpp hunspell python3 python3-pip  libxpm-dev libgif-dev libjpeg-dev libpng-dev libtiff-dev libx11-dev libncurses5-dev automake autoconf texinfo libgtk2.0-dev nodejs ncdu exiftool libvterm-bin libvterm-dev libvterm0 libxapian-dev libgmime-3.0-dev libtalloc-dev zlib1g-dev fuse-overlayfs texlive-science zathura ghostscript default-jre rust-all cargo nodejs npm libjansson4 libjansson-dev golang-go python3-pip ca-certificates curl gnupg-agent software-properties-common fzf
 
@@ -120,7 +120,7 @@ Certain files & folders must exist for some hooks to work.
   mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
 #+end_src
 ** Emacs
-How to compile and install.
+How to compile and install the latest GNU Emacs from HEAD.
 *** Grabbing sources
 Clone the latest emacs sources:
 #+begin_src sh
@@ -129,31 +129,30 @@ Clone the latest emacs sources:
 #+end_src
 *** Configuration
 We configure emacs to compile with various flags.
+My preferred toolkit of choice currently is Athena (xaw3d is required).
 #+begin_src sh
-  # if using the ubuntu 20.04 repo
-  export CC=/usr/bin/gcc-10 CXX=/usr/bin/gcc-10
+  # only if using the ubuntu 20.04 repo
+  # export CC=/usr/bin/gcc-10 CXX=/usr/bin/gcc-10
 
   ./autogen.sh
 
   # for athena & nativecomp [X11]
-  # make sure xaw3d lib is installed
   ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --without-compress-install --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
 
   # for pgtk & nativecomp [WAYLAND]
   ./configure --with-dbus --with-pgtk --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --without-xwidgets --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
 
-  # for nativecomp & toolkit=gtk [X11/XWayland DEPRECATED]
+  # for nativecomp & toolkit=gtk [DEFAULTS + OPTIMIZATIONS]
   ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
 #+end_src
-*** Building
-We build with all cores and natively compile everything ahead of time. This will take some time.
+*** Compiling
+We build with all cores and natively compile everything ahead of time, this will take a while.
 #+begin_src sh
   make NATIVE_FULL_AOT=1 -j$(nproc)
   sudo make install
 #+end_src
 ** Notmuch
-Download the latest release from https://notmuchmail.org/releases
-Unzip to ~/src/
+Download the latest release from https://notmuchmail.org/releases & unzip to ~/src/
 #+begin_src sh
   cd ~/src/notmuch
   ./configure

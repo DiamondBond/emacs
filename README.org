@@ -27,15 +27,15 @@ Utilizing Emacs defaults where possible and sticking to lightweight alternatives
 Please refer to the dependencies section below first to make sure Emacs and your env have the required packages and configuration setup correctly, then proceed to clone and install this distribution.
 
 #+begin_src sh
-  # Clone new cfg to ~/git/emacs
+  # Clone to ~/git/emacs
   mkdir -p ~/git; git clone https://github.com/diamondbond/emacs ~/git/emacs
 
-  # Backup old emacs cfg if it exists
+  # Backup old emacs cfg
   mv ~/.emacs.d ~/.emacs.d.old
 
   # Copy new cfg to ~/.emacs.d
   mkdir -p ~/.emacs.d
-  cp -r ~/git/emacs/{early-init.el,init.el,config.org,snippets} ~/.emacs.d/
+  cp -r ~/git/emacs/{early-init.el,init.el,config.org,snippets,img} ~/.emacs.d/
 
   # Start Emacs daemon
   emacs --daemon;
@@ -43,14 +43,13 @@ Please refer to the dependencies section below first to make sure Emacs and your
   # Start Emacs client
   emacsclient -c -n -a 'emacs'
 #+end_src
-After running this command, the first time you run Emacs, it will download all of the specified packages in the config.org file, please be patient.
+The first time you run Emacs, it will download all the declared packages in the config.org file, please be patient.
 
 To get autocompletion on JS/TS & Python files, you'll need to install the corresponding lsp backend servers first (you'll be automatically prompted to do so the first time you open a relevant file).
 
 *Post Setup*
-Compile pdf-tools & setup vterm.
+Compile pdf-tools, setup vterm & install all-the-icons font
 
-Install all-the-icons font
 #+begin_quote
 M-x pdf-tools-install
 

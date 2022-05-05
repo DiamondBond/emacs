@@ -7,10 +7,12 @@
 * Introduction
 This Emacs distro aims to enhance the default Emacs experience.
 
-It is recommend to run this distribution with the latest Emacs [[git.sv.gnu.org/emacs.git][HEAD]] compiled from source with these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]], but it should be compatible with GNU Emacs 27+
+It is recommend to run this distribution with the latest Emacs [[https://savannah.gnu.org/git/?group=emacs][HEAD]] compiled from source with these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]], but it should be compatible with GNU Emacs 27+
 
 [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][Packages]]
+
 [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][Keybinds]]
+
 [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][Functions]]
 
 [[https://github.com/DiamondBond/emacs/blob/master/img/ss.png][Screenshot]]

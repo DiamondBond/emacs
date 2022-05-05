@@ -254,7 +254,6 @@ Private & global key maps.
 ** Description
 Sensible and well-defined org-mode configuration with org-capture support.
 Org-tree-slider and hide-modeline included for presentation support although org-beamer-export-to-pdf is usually the preferred way for presentations.
-Deft is included for quicksearch of entire ~/org directory.
 ** Code
 #+BEGIN_SRC emacs-lisp
   (use-package org
@@ -305,6 +304,7 @@ Deft is included for quicksearch of entire ~/org directory.
 	("C-<f1>" . (lambda()(interactive)(show-all)))
 	:hook (org-mode . visual-line-mode))
 
+  ;; for presentations
   (use-package org-tree-slide
 	:custom
 	(org-tree-slide-slide-in-effect t)
@@ -313,17 +313,6 @@ Deft is included for quicksearch of entire ~/org directory.
 	(org-tree-slide-header t)
 	(org-tree-slide-breadcrumbs " > ")
 	(org-image-actual-width nil))
-
-  (use-package hide-mode-line)
-
-  (use-package deft
-	:config
-	(setq deft-directory org-directory
-		  deft-recursive t
-		  deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
-		  deft-use-filename-as-title t)
-	:bind
-	("C-c n d" . deft))
 #+end_src
 * Eshell
 ** Description
@@ -1079,6 +1068,19 @@ A Collection of Ridiculously Useful eXtensions.
 #+begin_src emacs-lisp
   (use-package crux
 	:ensure t)
+#+end_src
+** Initialize =deft=
+*** Description
+Deft is included for quicksearch of entire ~/org directory.
+#+begin_src emacs-lisp
+  (use-package deft
+	:config
+	(setq deft-directory org-directory
+		  deft-recursive t
+		  deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
+		  deft-use-filename-as-title t)
+	:bind
+	("C-c n d" . deft))
 #+end_src
 ** Initialize =flymake=
 #+begin_src emacs-lisp

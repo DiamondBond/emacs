@@ -5,15 +5,20 @@
 [[./img/gnusstorm-2.gif]]
 
 * Introduction
-This is an Emacs distribution that aims to enhance the default Emacs experience. It builds upon defaults where possible and bundles that which is considered necessasry as additional [[file:config.org::*Use-package][use-package]] declarations.
+This Emacs distro aims to enhance the default Emacs experience.
 
-This Emacs distribution is compatible with GNU Emacs 27+. In general though, I recommend running this distribution with the latest Emacs HEAD.
+It is recommend to run this distribution with the latest Emacs [[git.sv.gnu.org/emacs.git][HEAD]] compiled from source with these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]], but it should be compatible with GNU Emacs 27+
+
+[[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][Packages]]
+[[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][Keybinds]]
+[[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][Functions]]
+
+[[https://github.com/DiamondBond/emacs/blob/master/img/ss.png][Screenshot]]
 
 ** Why use this?
 Currently, the appeal of this Emacs distribution is a balance of features, performance & usability.
 
 Utilizing Emacs defaults where possible and sticking to lightweight alternatives when needed.
-
 * Setup
 Please refer to the dependencies section below first to make sure Emacs and your env have the required packages and configuration setup correctly, then proceed to clone and install this distribution.
 

@@ -2,7 +2,7 @@
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 
-[[./img/emacs.png]]
+[[./img/gnusstorm-2.gif]]
 
 * Introduction
 This is an Emacs distribution that aims to enhance the default Emacs experience. It alters a lot of the default settings and bundles a plethora of additional useful packages. The final product offers an easy to use Emacs configuration for Emacs newcomers and lots of additional power for Emacs power users.

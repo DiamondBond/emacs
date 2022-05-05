@@ -30,6 +30,11 @@ Quality-of-life modifications for a more pleasant Emacs experience.
   (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
   (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 #+end_src
+** pixel-scroll-precision
+#+begin_src emacs-lisp
+  ;; Precision pixel scrolling (DEPENDS: Emacs@HEAD (29+))
+  (pixel-scroll-precision-mode)
+#+end_src
 ** Disable automatic creation of backup files
 #+BEGIN_SRC emacs-lisp
   (setq make-backup-files nil)
@@ -379,9 +384,9 @@ I have hardcoded in three buffers that I frequently visit along with helper func
 	(dashboard-setup-startup-hook)
 	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
-	(setq dashboard-banner-logo-title "Welcome to Emacs!")
-	;;(setq dashboard-startup-banner "~/.emacs.d/img/emacs.png")
-	(setq dashboard-startup-banner 'logo)
+	;;(setq dashboard-banner-logo-title "Welcome to Emacs!")
+	;;(setq dashboard-startup-banner 'logo)
+	(setq dashboard-startup-banner "~/.emacs.d/img/gnusstorm-2.gif")
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)
@@ -406,13 +411,6 @@ I have hardcoded in three buffers that I frequently visit along with helper func
 			  (lambda (&rest _) (config-edit))
 			  'default)))))
 #+END_SRC
-** Initialize =pixel-scroll-precision=
-*** Description
-Precision pixel scrolling (Emacs 29+)
-*** Code
-#+begin_src emacs-lisp
-  (pixel-scroll-precision-mode)
-#+end_src
 ** Initialize =corfu=
 *** Description
 Completion Overlay Region FUnction - Corfu enhances completion at point with a small completion popup. The current candidates are shown in a popup below or above the point. Corfu is the minimalistic completion-in-region counterpart of the Vertico minibuffer UI.
@@ -877,7 +875,7 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
 	:ensure t
-	:defer t
+	:defer nil
 	:commands (pdf-view-mode pdf-tools-install)
 	:mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
 	:load-path "site-lisp/pdf-tools/lisp"
@@ -900,6 +898,7 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	:hook (pdf-view-mode . pdf-view-restore-mode))
 
   (use-package org-pdftools
+	:after pdf-view-restore
 	:ensure t
 	:hook (org-load-hook . org-pdftools-setup-link))
 #+END_SRC
@@ -909,7 +908,14 @@ Major mode for reading EPUBs.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package nov
-	:mode ("\\.epub\\'" . nov-mode))
+	:ensure t
+	:defer nil
+	:config
+	(defun nov-font-setup ()
+	  (face-remap-add-relative 'variable-pitch :family "Liberation Serif"
+							   :height 1.0))
+	:mode ("\\.epub\\'" . nov-mode)
+	:hook (nov-mode . nov-font-setup))
 #+END_SRC
 ** Initialize =vterm=
 *** Description

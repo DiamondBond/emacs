@@ -61,14 +61,13 @@ M-x all-the-icons-completion-mode # add icons to completion candidates
 
 M-x kill-emacs # restart emacs
 #+end_quote
-
 * Dependencies
 ** Packages
 This section is just packages that I have needed in the past to comfortably run this Emacs distribution, not everything here is required, this is just a rough guideline.
 *** System
 #+begin_quote
-fzf/ripgrep/ag
-clang/clangd & llvm
+fzf ripgrep ag
+clang clangd llvm
 texlive-latex-recommended
 imagemagick
 editorconfig

@@ -871,6 +871,7 @@ The definitive Git porcelain for Emacs.
 	:ensure t)
 
   (use-package forge
+	:defer t
 	:commands forge-pull)
 #+END_SRC
 ** Initialize =autorevert=

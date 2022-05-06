@@ -6,7 +6,7 @@
 #+OPTIONS: num:nil
 
 * QoL
-Quality-of-life modifications for a more pleasant Emacs experience.
+Minor quality-of-life modifications for a more pleasant Emacs experience
 ** Identity
 #+begin_src emacs-lisp
   (setq user-mail-address "diamondbond1@gmail.com"

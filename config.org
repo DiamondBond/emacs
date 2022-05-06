@@ -306,6 +306,7 @@ Org-tree-slider and hide-modeline included for presentation support although org
 
   ;; for presentations
   (use-package org-tree-slide
+	:ensure t
 	:custom
 	(org-tree-slide-slide-in-effect t)
 	(org-tree-slide-activate-message "Presentation started!")
@@ -313,6 +314,9 @@ Org-tree-slider and hide-modeline included for presentation support although org
 	(org-tree-slide-header t)
 	(org-tree-slide-breadcrumbs " > ")
 	(org-image-actual-width nil))
+
+  (use-package ox-beamer
+	:ensure t)
 #+end_src
 * Eshell
 ** Description
@@ -1120,6 +1124,7 @@ Show event history and command history of some or all buffers.
 ** Initialize =search=
 #+begin_src emacs-lisp
   (use-package deadgrep
+	:defer t
 	:commands deadgrep)
 
   ;; the silver searcher
@@ -1142,11 +1147,11 @@ Auto-package-update automatically updates and removes old packages.
 	:ensure t
 	:defer nil
 	:config
+	;;(auto-package-update-maybe)
 	(setq auto-package-update-prompt-before-update t)
 	(setq auto-package-update-show-preview t)
 	(setq auto-package-update-delete-old-versions t)
-	(setq auto-package-update-hide-results t)
-	(auto-package-update-maybe))
+	(setq auto-package-update-hide-results t))
 #+END_SRC
 ** Initialize =diminish=
 *** Description
@@ -1154,18 +1159,18 @@ Diminish hides minor modes to prevent cluttering your mode line.
 *** Code
 #+begin_src emacs-lisp
   (use-package diminish
-	:ensure t)
-
-  ;; Diminish as mode is already loaded
-  (diminish 'visual-line-mode "")
-  (diminish 'abbrev-mode "")
-  (diminish 'c-mode "")
-  (diminish 'yas "")
-
-  ;; Diminish after mode is loaded
-  (eval-after-load "flymake" '(diminish 'flymake-mode))
-  (eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
-  (eval-after-load "auto-revert" '(diminish 'auto-revert-mode))
+	:ensure t
+	:init
+	;; Diminish as mode is already loaded
+	(diminish 'visual-line-mode "")
+	(diminish 'abbrev-mode "")
+	(diminish 'c-mode "")
+	(diminish 'yas "")
+	:config
+	;; Diminish after mode is loaded
+	(eval-after-load "flymake" '(diminish 'flymake-mode))
+	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
+	(eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode)))
 #+end_src
 ** Built-in entry: =eldoc=
 *** Description

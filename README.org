@@ -71,6 +71,7 @@ editorconfig
 libjansson
 rust-all cargo
 nodejs npm
+libxml2
 #+end_quote
 *** Python
 #+begin_src bash

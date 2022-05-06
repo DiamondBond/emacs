@@ -873,6 +873,15 @@ The definitive Git porcelain for Emacs.
   (use-package forge
 	:commands forge-pull)
 #+END_SRC
+** Initialize =autorevert=
+*** Description
+Diminish ARV from modeline.
+*** Code
+#+begin_src emacs-lisp
+  (use-package autorevert
+	:after magit
+	:diminish auto-revert-mode)
+#+end_src
 ** Initialize =elfeed=
 *** Description
 RSS reader for Emacs.
@@ -1186,8 +1195,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	;; Diminish after mode is loaded
 	(eval-after-load "flymake" '(diminish 'flymake-mode))
 	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
-	(eval-after-load "eldoc-mode" '(diminish 'eldoc-mode))
-	(eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode)))
+	(eval-after-load "eldoc-mode" '(diminish 'eldoc-mode)))
 #+end_src
 * Languages
 ** LSP

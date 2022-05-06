@@ -1402,6 +1402,19 @@ Prettier formatter for JSX & TSX.
 	(other-window 1))
   (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 #+END_SRC
+** Erc handlers
+#+begin_src emacs-lisp
+  (defun erc-start ()
+	"Start ERC and connect to Rizon"
+	(interactive)
+	(save-current-buffer
+	  (erc :server "irc.rizon.net" :port "6667" :nick "diamondbond")))
+
+  (defun erc-quit ()
+	"Quit ERC"
+	(interactive)
+	(erc-quit-server nil))
+#+end_src
 ** Update emacs git
 #+begin_src emacs-lisp
   (defun update-emacs-git ()
@@ -1477,41 +1490,19 @@ Prettier formatter for JSX & TSX.
   (defun yank-whole-buffer ()
 	"Yanks whole buffer."
 	(interactive)
-	(mark-whole-buffer)
-	(call-interactively 'evil-yank))
+	(save-excursion
+	  (mark-whole-buffer)
+	  (call-interactively 'evil-yank)))
 #+end_src
-** Switch to QEMU & Paste + Compile
+** Dev-C++ Compile & Run
 #+begin_src emacs-lisp
-  (defun switch-to-qemu-and-paste ()
-	"Switches to QEMU & pastes clipboard."
+  (defun devcpp/compile-and-run ()
+	"Yanks Current Buffer, switches to QEMU & pastes clipboard."
 	(interactive)
-	(mark-whole-buffer)
-	(call-interactively 'evil-yank)
+	(yank-whole-buffer)
 	(async-shell-command "sh -c ~/bin/stqap.sh"))
 #+end_src
-** Switch to QEMU & Paste + Run
-#+begin_src emacs-lisp
-  (defun switch-to-qemu-and-run ()
-	"Switches to QEMU & pastes clipboard + runs executable."
-	(interactive)
-	(mark-whole-buffer)
-	(call-interactively 'evil-yank)
-	(async-shell-command "sh -c ~/bin/run_bugzilla_exe.sh"))
-#+end_src
-** Erc handlers
-#+begin_src emacs-lisp
-  (defun erc-start ()
-	"Start ERC and connect to Rizon"
-	(interactive)
-	(save-current-buffer
-	  (erc :server "irc.rizon.net" :port "6667" :nick "diamondbond")))
-
-  (defun erc-quit ()
-	"Quit ERC"
-	(interactive)
-	(erc-quit-server nil))
-#+end_src
-** next/prev 15-lines
+** Next/Prev 15-lines
 #+begin_src emacs-lisp
   (defun next-15-lines ()
 	"Move to the next 15 lines."
@@ -1525,13 +1516,6 @@ Prettier formatter for JSX & TSX.
 
   (define-key global-map (kbd "C-S-n") #'next-15-lines)
   (define-key global-map (kbd "C-S-p") #'previous-15-lines)
-#+end_src
-** make-dwm
-#+begin_src emacs-lisp
-  (defun make-dwm ()
-	"Compile dwm."
-	(interactive)
-	(async-shell-command "cd /home/diamond/src/dwm-flexipatch/; sudo make clean install"))
 #+end_src
 ** Enable toolbar
 #+begin_src emacs-lisp

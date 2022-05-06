@@ -188,7 +188,7 @@ Essential for using shells in Emacs.
 #+end_src
 * Keybinds
 ** Description
-Private & global key maps.
+Global & private key maps.
 ** Code
 #+begin_src emacs-lisp
   ;;---------------------------------------------------------------------
@@ -249,11 +249,14 @@ Private & global key maps.
   (global-set-key (kbd "<f10>") 'compile)
   (global-set-key (kbd "C-x w") 'elfeed)
   (global-set-key (kbd "C-x x") 'window-swap-states)
+  (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
+  (define-key global-map (kbd "C-S-n") #'next-15-lines)
+  (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 #+END_SRC
 * =Org= mode
 ** Description
 Sensible and well-defined org-mode configuration with org-capture support.
-Org-tree-slider and hide-modeline included for presentation support although org-beamer-export-to-pdf is usually the preferred way for presentations.
+Org-tree-slider and ox-beamer included for presentation support.
 ** Code
 #+BEGIN_SRC emacs-lisp
   (use-package org
@@ -345,10 +348,25 @@ Improve eshell prompt and assign aliases & custom helper functions for easier us
   (defalias 'clean 'eshell/clear-scrollback)
 #+END_SRC
 * Use-package
+** Initialize =auto-package-update=
+*** Description
+Auto-package-update automatically updates and removes old packages.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package auto-package-update
+	:ensure t
+	:defer nil
+	:config
+	;;(auto-package-update-maybe)
+	(setq auto-package-update-prompt-before-update t)
+	(setq auto-package-update-show-preview t)
+	(setq auto-package-update-delete-old-versions t)
+	(setq auto-package-update-hide-results t))
+#+END_SRC
 ** Initialize =dashboard=
 *** Description
 An extensible emacs startup screen.
-I have hardcoded in three buffers that I frequently visit along with helper functions.
+Hardcoded in three buffers that I frequently visit along with helper functions.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
@@ -433,6 +451,7 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 #+END_SRC
 ** Initialize =cape=
 *** Description
+Completio at point extensions.
 *** Code
 #+begin_src emacs-lisp
   (use-package cape
@@ -442,7 +461,7 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 #+end_src
 ** Initialize =vertico-&-friends=
 *** Description
-vertico, orderless, marginalia, consult & embark
+Vertico, orderless, marginalia, consult & embark.
 *** Code
 #+begin_src emacs-lisp
   ;; Enable vertico
@@ -561,6 +580,8 @@ Expand the word in the buffer before point as a dynamic abbrev, by searching for
 		   ("C-M-/" . dabbrev-expand)))
 #+end_src
 ** Initialize =all-the-icons=
+*** Description
+All the icons!
 #+begin_src emacs-lisp
   (use-package all-the-icons
 	:ensure t)
@@ -573,6 +594,7 @@ Expand the word in the buffer before point as a dynamic abbrev, by searching for
 #+end_src
 ** Initialize =kind-icon=
 *** Description
+Kind icons.
 *** Code
 #+begin_src emacs-lisp
   (use-package kind-icon
@@ -588,7 +610,7 @@ Expand the word in the buffer before point as a dynamic abbrev, by searching for
 #+end_src
 ** Initialize =which-key=
 *** Description
-Possible completion framework with 1s delay.
+Possible completion framework with 0.3s delay.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
@@ -601,7 +623,7 @@ Possible completion framework with 1s delay.
 #+END_SRC
 ** Initialize =yasnippet=
 *** Description
-Yasnippet provides useful snippets.
+Useful snippets.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
@@ -726,7 +748,7 @@ Utilize asynchronous processes whenever possible.
 #+END_SRC
 ** Initialize =page-break-lines=
 *** Description
-This Emacs library provides a global mode which displays ugly form feed characters as tidy horizontal rules.
+Global mode which displays form feed characters as tidy horizontal rules.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package page-break-lines
@@ -842,7 +864,7 @@ Tree layout file explorer.
 #+END_SRC
 ** Initialize =magit=
 *** Description
-Git porcelain for Emacs.
+The definitive Git porcelain for Emacs.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package magit
@@ -951,7 +973,7 @@ Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimit
 #+end_src
 ** Initialize =notmuch=
 *** Description
-Notmuch email configuration.
+Email via notmuch and offlineimap as a sync backend.
 *** Code
 #+begin_src emacs-lisp
   (use-package notmuch
@@ -1085,6 +1107,7 @@ A Collection of Ridiculously Useful eXtensions.
 ** Initialize =deft=
 *** Description
 Deft is included for quicksearch of entire ~/org directory.
+*** Code
 #+begin_src emacs-lisp
   (use-package deft
 	:config
@@ -1096,6 +1119,9 @@ Deft is included for quicksearch of entire ~/org directory.
 	("C-c n d" . deft))
 #+end_src
 ** Initialize =flymake=
+*** Description
+FlyMake performs on-the-fly syntax checks on the files being edited using the external syntax check tool (usually the compiler).
+*** Code
 #+begin_src emacs-lisp
   (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake)
 #+end_src
@@ -1122,37 +1148,27 @@ Show event history and command history of some or all buffers.
 	:ensure t)
 #+end_src
 ** Initialize =search=
+*** Description
+Deadgrep and ag - the_silver_searcher.
+*** Code
 #+begin_src emacs-lisp
   (use-package deadgrep
 	:defer t
 	:commands deadgrep)
 
-  ;; the silver searcher
   (use-package ag
 	:defer t)
 #+end_src
 ** Initialize =imenu-list=
+*** Description
+Popup contents mini-buffer.
+*** Code
 #+begin_src emacs-lisp
   (use-package imenu-list
 	:defer t
 	:config
 	(setq imenu-list-auto-resize t))
 #+end_src
-** Initialize =auto-package-update=
-*** Description
-Auto-package-update automatically updates and removes old packages.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package auto-package-update
-	:ensure t
-	:defer nil
-	:config
-	;;(auto-package-update-maybe)
-	(setq auto-package-update-prompt-before-update t)
-	(setq auto-package-update-show-preview t)
-	(setq auto-package-update-delete-old-versions t)
-	(setq auto-package-update-hide-results t))
-#+END_SRC
 ** Initialize =diminish=
 *** Description
 Diminish hides minor modes to prevent cluttering your mode line.
@@ -1170,22 +1186,13 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	;; Diminish after mode is loaded
 	(eval-after-load "flymake" '(diminish 'flymake-mode))
 	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
+	(eval-after-load "eldoc-mode" '(diminish 'eldoc-mode))
 	(eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode)))
 #+end_src
-** Built-in entry: =eldoc=
-*** Description
-Supress eldoc from modeline.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package eldoc
-	:ensure t
-	:diminish eldoc-mode)
-#+END_SRC
 * Languages
 ** LSP
 *** Description
 Language Server Protocol.
-
 Handles the following languages:
 - C/C++
 - [WEB] JS/JSX/HTML/CSS
@@ -1250,7 +1257,7 @@ Handles the following languages:
 #+end_src
 ** Go
 *** Description
-Go-mode covers it all.
+Go-mode.
 *** Code
 #+begin_src emacs-lisp
   (use-package go-mode
@@ -1266,7 +1273,7 @@ Go-mode covers it all.
 #+end_src
 ** Rust
 *** Description
-Rust-mode covers it all.
+Rust-mode.
 *** Code
 #+begin_src emacs-lisp
   (use-package rust-mode
@@ -1303,6 +1310,7 @@ Geiser - Scheme Lisp REPL.
 ** Lua
 *** Description
 Lua mode.
+*** Code
 #+begin_src emacs-lisp
   (use-package lua-mode
 	:config
@@ -1328,7 +1336,7 @@ Markdown-mode & enable auto fill.
 #+end_src
 ** LaTeX
 *** Description
-Auctex.
+Auctex for LaTeX.
 *** Code
 #+begin_src emacs-lisp
   (use-package auctex
@@ -1388,12 +1396,11 @@ Prettier formatter for JSX & TSX.
 		  (other-window 1)
 		  (eshell))
 	  (switch-to-buffer-other-window "*eshell*")))
-
-  (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 #+END_SRC
 ** Split and follow
 #+BEGIN_SRC emacs-lisp
   (defun split-and-follow-horizontally ()
+	"Split and follow horizontally."
 	(interactive)
 	(split-window-below)
 	(balance-windows)
@@ -1401,6 +1408,7 @@ Prettier formatter for JSX & TSX.
   (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
 
   (defun split-and-follow-vertically ()
+	"Split and follow vertically."
 	(interactive)
 	(split-window-right)
 	(balance-windows)
@@ -1423,7 +1431,7 @@ Prettier formatter for JSX & TSX.
 ** Update emacs git
 #+begin_src emacs-lisp
   (defun update-emacs-git ()
-	"Copy ~/.emacs.d/config.org to ~/git/emacs/config.org"
+	"Backup config.org to git"
 	(interactive)
 	(async-shell-command "cp ~/.emacs.d/config.org ~/git/emacs/config.org"))
 #+end_src
@@ -1433,7 +1441,6 @@ Prettier formatter for JSX & TSX.
 	"Sync email to local database."
 	(interactive)
 	(async-shell-command "offlineimap"))
-  ;;(async-shell-command "~/bin/syncemail.sh"))
 #+end_src
 ** Record screen
 #+begin_src emacs-lisp
@@ -1486,7 +1493,7 @@ Prettier formatter for JSX & TSX.
 ** Music
 #+begin_src emacs-lisp
   (defun music ()
-	"ncmpcpp"
+	"Play music with ncmpcpp."
 	(interactive)
 	(run-in-vterm "ncmpcpp"))
 #+end_src
@@ -1518,9 +1525,6 @@ Prettier formatter for JSX & TSX.
 	"Move to the previous 15 lines."
 	(interactive)
 	(forward-line -15))
-
-  (define-key global-map (kbd "C-S-n") #'next-15-lines)
-  (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 #+end_src
 ** Enable toolbar
 #+begin_src emacs-lisp

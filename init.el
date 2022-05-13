@@ -4,7 +4,7 @@
 ;;;
 
 ;; Copyright (C) Diamond Bond
-;; Author: Jake B <diamondbond1@gmail.com>
+;; Author: Diamond B <diamondbond1@gmail.com>
 ;; URL: https://github.com/diamondbond/emacs
 ;; This file is not part of GNU Emacs.
 ;; This file is free software.
@@ -27,8 +27,6 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-(require 'use-package-ensure)
-(setq use-package-always-ensure t)
 
 ;; Load config
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))

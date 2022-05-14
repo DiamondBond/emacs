@@ -209,6 +209,7 @@ Global & private key maps.
   (define-key z-map (kbd "v") 'vterm)
 
   (define-key z-map (kbd "b") 'display-battery-mode)
+  (define-key z-map (kbd "B") 'gnus-group-browse-foreign-server)
   (define-key z-map (kbd "t") 'display-time-mode)
 
   (define-key z-map (kbd "*") 'quick-calc)
@@ -1308,9 +1309,20 @@ Geiser - Scheme Lisp REPL.
 **** Code
 #+BEGIN_SRC emacs-lisp
   (use-package geiser
-	:defer t
+	:ensure t
 	:config
-	(setq geiser-active-implementations '(mit)))
+	(setq geiser-active-implementations '(chez guile mit))
+	(setq geiser-chez-binary "chez")
+	(add-hook 'scheme-mode-hook 'geiser-mode)
+	(setq geiser-default-implementation 'chez))
+
+  (use-package geiser-chez
+	:ensure t
+	:after geiser
+	:config
+	(add-to-list 'auto-mode-alist
+				 '("\\.sls\\'" . scheme-mode)
+				 '("\\.sc\\'" . scheme-mode)))
 
   (defun geiser-save ()
 	(interactive)

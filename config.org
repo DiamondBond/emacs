@@ -469,7 +469,7 @@ Vertico, orderless, marginalia, consult & embark.
 	:bind (:map vertico-map
 				("C-j" . vertico-next)
 				("C-k" . vertico-previous)
-  				("M-j" . vertico-next)
+				("M-j" . vertico-next)
 				("M-k" . vertico-previous)
 				("C-f" . vertico-exit)
 				:map minibuffer-local-map
@@ -492,9 +492,9 @@ Vertico, orderless, marginalia, consult & embark.
 
   (use-package orderless
 	:init
-	(setq completion-styles '(orderless)
+	(setq completion-styles '(orderless basic)
 		  completion-category-defaults nil
-		  completion-category-overrides '((file (styles partial-completion)))))
+		  completion-category-overrides '((file (styles basic partial-completion)))))
 
   ;; Persist history over Emacs restarts. Vertico sorts by history position.
   (use-package savehist

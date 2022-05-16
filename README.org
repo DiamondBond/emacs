@@ -145,8 +145,11 @@ My preferred toolkit of choice currently is Athena (xaw3d is required).
 
   ./autogen.sh
 
-  # for athena & nativecomp [PERFORMANT X11 + OPTIMIZATIONS] tag:29+
+  # for athena & nativecomp [X11 + OPTIMIZATIONS] tag:29+
   ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --without-compress-install --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
+
+  # for athena & nativecomp [X11 + OPTIMIZATIONS] tag:rc-28.1
+  ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --without-compress-install --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
 
   # for pgtk & nativecomp [PGTK WAYLAND + OPTIMIZATIONS]
   ./configure --with-dbus --with-pgtk --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --without-xwidgets --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"

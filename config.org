@@ -30,16 +30,15 @@ Minor quality-of-life modifications for a more pleasant Emacs experience
   (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
   (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 #+end_src
-** Enable pixel-scroll-precision
+** Configure Scrolling
 DEPENDS: Emacs@HEAD (29+)
 #+begin_src emacs-lisp
-  ;; Precision pixel scrolling (DEPENDS: Emacs@HEAD (29+))
-  ;;(pixel-scroll-precision-mode)
-#+end_src
-** Enable conservative scrolling
-#+BEGIN_SRC emacs-lisp
+  ;; Precision pixel scrolling
+  ;; (pixel-scroll-precision-mode)
+
+  ;; Enable conservative scrolling
   (setq scroll-conservatively 1)
-#+END_SRC
+#+end_src
 ** Disable automatic creation of backup files
 #+BEGIN_SRC emacs-lisp
   (setq make-backup-files nil)
@@ -1546,6 +1545,16 @@ Prettier formatter for JSX & TSX.
 	"Play music with ncmpcpp."
 	(interactive)
 	(run-in-vterm "ncmpcpp"))
+#+end_src
+** Upcase last word
+#+begin_src emacs-lisp
+  (defun upcase-last-word ()
+	(interactive)
+	(move-end-of-line 1)
+	(backward-word 1)
+	(upcase-word 1)
+	(move-beginning-of-line 1)
+	(next-line 1 1))
 #+end_src
 ** Yank Whole Buffer
 #+begin_src emacs-lisp

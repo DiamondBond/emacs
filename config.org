@@ -1608,8 +1608,3 @@ Prettier formatter for JSX & TSX.
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(tool-bar-lines . 1))
 #+end_src
-** Shrink wrapping frames
-#+begin_src emacs-lisp
-  ;; https://www.emacswiki.org/emacs/Shrink-Wrapping_Frames
-  (add-hook 'after-make-frame-functions 'fit-frame)
-#+end_src

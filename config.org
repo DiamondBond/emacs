@@ -429,6 +429,7 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package corfu
+	:ensure t
 	:custom
 	(corfu-auto t)
 	(corfu-auto-prefix 3)
@@ -456,6 +457,8 @@ Completio at point extensions.
 *** Code
 #+begin_src emacs-lisp
   (use-package cape
+	:ensure t
+	:config
 	(setq cape-dabbrev-min-length 3)
 	(dolist (backend '( cape-symbol cape-keyword cape-file cape-dabbrev))
 	  (add-to-list 'completion-at-point-functions backend)))
@@ -467,6 +470,7 @@ Vertico, orderless, marginalia, consult & embark.
 #+begin_src emacs-lisp
   ;; Enable vertico
   (use-package vertico
+	:ensure t
 	:bind (:map vertico-map
 				("C-j" . vertico-next)
 				("C-k" . vertico-previous)
@@ -492,6 +496,7 @@ Vertico, orderless, marginalia, consult & embark.
 				("M-DEL" . vertico-directory-delete-word)))
 
   (use-package orderless
+	:ensure t
 	:init
 	(setq completion-styles '(orderless basic)
 		  completion-category-defaults nil
@@ -499,16 +504,19 @@ Vertico, orderless, marginalia, consult & embark.
 
   ;; Persist history over Emacs restarts. Vertico sorts by history position.
   (use-package savehist
+	:ensure t
 	:init
 	(savehist-mode))
 
   ;; Information in the margins
   (use-package marginalia
+	:ensure t
 	:init
 	(marginalia-mode))
 
   ;; Consult provides practical commands based on the Emacs completion function completing-read.
   (use-package consult
+	:ensure t
 	:bind
 	(("M-y" . consult-yank-from-kill-ring)
 	 ("C-x b" . consult-buffer)))
@@ -576,6 +584,7 @@ Expand the word in the buffer before point as a dynamic abbrev, by searching for
 #+begin_src emacs-lisp
   ;; Use dabbrev with Corfu!
   (use-package dabbrev
+	:ensure t
 	;; Swap M-/ and C-M-/
 	:bind (("M-/" . dabbrev-completion)
 		   ("C-M-/" . dabbrev-expand)))
@@ -646,6 +655,7 @@ C-x o and pick window (a,s,d...)
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package switch-window
+	:ensure t
 	:config
 	(setq switch-window-input-style 'minibuffer)
 	(setq switch-window-increase 4)
@@ -1043,6 +1053,7 @@ ERC is a powerful, modular, and extensible IRC client for Emacs.
 *** Code
 #+begin_src emacs-lisp
   (use-package erc
+	:ensure t
 	:custom
 	(erc-autojoin-timing 'ident)
 	(erc-autojoin-channels-alist '(("irc.rizon.net" "#rice")))
@@ -1103,7 +1114,8 @@ Emacs minor mode for a nice writing environment.
 *** Code
 #+begin_src emacs-lisp
   (use-package olivetti
-	:defer t
+	:ensure t
+	:defer nil
 	:init
 	(setq olivetti-body-width .67))
 #+end_src
@@ -1121,6 +1133,7 @@ Deft is included for quicksearch of entire ~/org directory.
 *** Code
 #+begin_src emacs-lisp
   (use-package deft
+	:ensure t
 	:config
 	(setq deft-directory org-directory
 		  deft-recursive t
@@ -1132,6 +1145,8 @@ Deft is included for quicksearch of entire ~/org directory.
 ** Initialize =flymake=
 *** Description
 FlyMake performs on-the-fly syntax checks on the files being edited using the external syntax check tool (usually the compiler).
+
+This snippet removes flymake diagnostic functions with proc-legacy-flymake mode.
 *** Code
 #+begin_src emacs-lisp
   (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake)
@@ -1143,12 +1158,13 @@ Enable on the fly with M-x flyspell-mode.
 *** Code
 #+begin_src emacs-lisp
   (use-package flyspell
+	:ensure t
 	:config
 	(setq ispell-program-name "hunspell"
 		  ispell-default-dictionary "en_US")
+	:custom
+	(defalias 'word-count 'count-words)
 	:bind (("M-<f7>" . flyspell-buffer)))
-
-  (defalias 'word-count 'count-words)
 #+end_src
 ** Initialize =clm=
 *** Description
@@ -1168,7 +1184,8 @@ Deadgrep and ag - the_silver_searcher.
 	:commands deadgrep)
 
   (use-package ag
-	:defer t)
+	:ensure t
+	:defer nil)
 #+end_src
 ** Initialize =imenu-list=
 *** Description
@@ -1176,7 +1193,7 @@ Popup contents mini-buffer.
 *** Code
 #+begin_src emacs-lisp
   (use-package imenu-list
-	:defer t
+	:ensure t
 	:config
 	(setq imenu-list-auto-resize t))
 #+end_src
@@ -1210,6 +1227,7 @@ Handles the following languages:
 *** Code
 #+begin_src emacs-lisp
   (use-package lsp-mode
+	:ensure t
 	:init
 	;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
 	(setq lsp-keymap-prefix "C-c l")
@@ -1251,6 +1269,8 @@ Handles the following languages:
 	(setq lsp-disabled-clients '(eslint)))
 
   (use-package lsp-ui
+	:ensure t
+	:after lsp
 	:commands lsp-ui-mode
 	:config
 	(setq lsp-ui-doc-enable nil)
@@ -1261,6 +1281,8 @@ Handles the following languages:
 	(setq lsp-ui-sideline-delay 0.05))
 
   (use-package lsp-pyright
+	:ensure t
+	:after lsp
 	:hook (python-mode . (lambda () (require 'lsp-pyright)))
 	:init (when (executable-find "python3")
 			(setq lsp-pyright-python-executable-cmd "python3")))
@@ -1298,7 +1320,7 @@ SLIME - Common Lisp REPL.
 **** Code
 #+BEGIN_SRC emacs-lisp
   (use-package slime
-	:defer t
+	:ensure t
 	:config
 	(setq inferior-lisp-program "/usr/bin/sbcl")
 	(setq slime-contribs '(slime-fancy slime-quicklisp)))
@@ -1334,6 +1356,7 @@ Lua mode.
 *** Code
 #+begin_src emacs-lisp
   (use-package lua-mode
+	:ensure t
 	:config
 	(setq lua-indent-level 2))
 #+end_src
@@ -1352,6 +1375,7 @@ Markdown-mode & enable auto fill.
 *** Code
 #+begin_src emacs-lisp
   (use-package markdown-mode
+	:ensure t
 	:mode "\\.md\\'"
 	:hook ((markdown-mode . auto-fill-mode)))
 #+end_src
@@ -1372,11 +1396,12 @@ Auctex for LaTeX.
 Web mode for JS/JSX/TS/TSX/HTML files
 *** Code
 #+begin_src emacs-lisp
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
   (use-package web-mode
 	:ensure t
+	:custom
+	(setq web-mode-markup-indent-offset 2)
+	(setq web-mode-code-indent-offset 2)
+	(setq web-mode-css-indent-offset 2)
 	:mode (("\\.js\\'" . web-mode)
 		   ("\\.jsx\\'" .  web-mode)
 		   ("\\.ts\\'" . web-mode)
@@ -1391,6 +1416,7 @@ Prettier formatter for JSX & TSX.
 #+begin_src emacs-lisp
   (use-package prettier-js
 	:ensure t)
+
   (add-hook 'web-mode-hook #'(lambda ()
 							   (enable-minor-mode
 								'("\\.jsx?\\'" . prettier-js-mode))

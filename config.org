@@ -68,6 +68,7 @@ DEPENDS: Emacs@HEAD (29+)
 ** Defer loading most packages for quicker startup times
 #+BEGIN_SRC emacs-lisp
   (setq use-package-always-defer t)
+  ;;(setq use-package-always-ensure t)
 #+END_SRC
 ** Load newer .elc or .el
 #+begin_src emacs-lisp
@@ -283,7 +284,7 @@ Auto-package-update automatically updates and removes old packages.
 	:ensure t
 	:defer nil
 	:config
-	;;(auto-package-update-maybe)
+	(auto-package-update-maybe)
 	(setq auto-package-update-prompt-before-update t)
 	(setq auto-package-update-show-preview t)
 	(setq auto-package-update-delete-old-versions t)

@@ -273,102 +273,6 @@ Global & private key maps.
   (define-key global-map (kbd "C-S-n") #'next-15-lines)
   (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 #+END_SRC
-* =Org= mode
-** Description
-Sensible and well-defined org-mode configuration with org-capture support.
-Org-tree-slider and ox-beamer included for presentation support.
-** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package org
-	:ensure t
-	:config
-	(setq org-directory "~/org"
-		  initial-major-mode 'org-mode
-		  org-display-inline-images t
-		  org-redisplay-inline-images t
-		  org-startup-with-inline-images "inlineimages"
-		  org-pretty-entitles t
-		  org-agenda-files (list "inbox.org")
-		  org-image-actual-width nil
-		  +org-export-directory "~/org/export"
-		  org-default-notes-file "~/org/inbox.org"
-		  org-id-locations-file "~/org/.orgids"
-		  org-catch-invisible-edits 'smart)
-
-	(setq org-babel-load-languages
-		  '((awk        . t)
-			(calc       . t)
-			(css        . t)
-			(ditaa      . t)
-			(emacs-lisp . t)
-			(gnuplot    . t)
-			(haskell    . t)
-			(js         . t)
-			(lisp       . t)
-			(org        . t)
-			(plantuml   . t)
-			(python     . t)
-			(scheme     . t)
-			(shell      . t)
-			(C          . t)
-			(ein        . t)
-			(sql        . t)))
-
-
-	;; org templates
-	(setq org-capture-templates
-		  '(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
-			 "* %?\n%a\nEntered on %U")
-			("j" "Journal" entry (file+datetree "~/org/journal.org")
-			 "* %?\n%a\nEntered on %U")))
-
-	:bind
-	("C-c c" . 'org-capture)
-	("C-c l" . 'org-store-link)
-	("C-<f1>" . (lambda()(interactive)(show-all)))
-	:hook (org-mode . visual-line-mode))
-
-  ;; for presentations
-  (use-package org-tree-slide
-	:ensure t
-	:custom
-	(org-tree-slide-slide-in-effect t)
-	(org-tree-slide-activate-message "Presentation started!")
-	(org-tree-slide-deactivate-message "Presentation finished!")
-	(org-tree-slide-header t)
-	(org-tree-slide-breadcrumbs " > ")
-	(org-image-actual-width nil))
-
-  (use-package ox-beamer
-	:after org
-	:ensure t)
-#+end_src
-* Eshell
-** Description
-Improve eshell prompt and assign aliases & custom helper functions for easier use.
-** Prompt
-#+BEGIN_SRC emacs-lisp
-  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
-  (setq eshell-prompt-function
-		(lambda nil
-		  (concat
-		   (if (string= (eshell/pwd) (getenv "HOME"))
-			   (propertize "~" 'face `(:foreground "#99CCFF"))
-			 (replace-regexp-in-string
-			  (getenv "HOME")
-			  (propertize "~" 'face `(:foreground "#99CCFF"))
-			  (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
-		   (if (= (user-uid) 0)
-			   (propertize " α " 'face `(:foreground "#FF6666"))
-			 (propertize " λ " 'face `(:foreground "#A6E22E"))))))
-
-  (setq eshell-highlight-prompt nil)
-#+END_SRC
-** Aliases
-#+BEGIN_SRC emacs-lisp
-  (defalias 'open 'find-file-other-window)
-  (defalias 'clean 'eshell/clear-scrollback)
-#+END_SRC
 * Use-package
 ** Initialize =auto-package-update=
 *** Description
@@ -747,6 +651,76 @@ Heresy; Vim keybindings in Emacs.
 	:config
 	(evil-collection-init))
 #+END_SRC
+** Initialize =org=
+*** Description
+Sensible and well-defined org-mode configuration with org-capture support.
+Org-tree-slider and ox-beamer included for presentation support.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package org
+	:ensure t
+	:config
+	(setq org-directory "~/org"
+		  initial-major-mode 'org-mode
+		  org-display-inline-images t
+		  org-redisplay-inline-images t
+		  org-startup-with-inline-images "inlineimages"
+		  org-pretty-entitles t
+		  org-agenda-files (list "inbox.org")
+		  org-image-actual-width nil
+		  +org-export-directory "~/org/export"
+		  org-default-notes-file "~/org/inbox.org"
+		  org-id-locations-file "~/org/.orgids"
+		  org-catch-invisible-edits 'smart)
+
+	(setq org-babel-load-languages
+		  '((awk        . t)
+			(calc       . t)
+			(css        . t)
+			(ditaa      . t)
+			(emacs-lisp . t)
+			(gnuplot    . t)
+			(haskell    . t)
+			(js         . t)
+			(lisp       . t)
+			(org        . t)
+			(plantuml   . t)
+			(python     . t)
+			(scheme     . t)
+			(shell      . t)
+			(C          . t)
+			(ein        . t)
+			(sql        . t)))
+
+
+	;; org templates
+	(setq org-capture-templates
+		  '(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
+			 "* %?\n%a\nEntered on %U")
+			("j" "Journal" entry (file+datetree "~/org/journal.org")
+			 "* %?\n%a\nEntered on %U")))
+
+	:bind
+	("C-c c" . 'org-capture)
+	("C-c l" . 'org-store-link)
+	("C-<f1>" . (lambda()(interactive)(show-all)))
+	:hook (org-mode . visual-line-mode))
+
+  ;; for presentations
+  (use-package org-tree-slide
+	:ensure t
+	:custom
+	(org-tree-slide-slide-in-effect t)
+	(org-tree-slide-activate-message "Presentation started!")
+	(org-tree-slide-deactivate-message "Presentation finished!")
+	(org-tree-slide-header t)
+	(org-tree-slide-breadcrumbs " > ")
+	(org-image-actual-width nil))
+
+  (use-package ox-beamer
+	:after org
+	:ensure t)
+#+end_src
 ** Initialize =swiper=
 *** Description
 C-s to spawn a search minibuffer that can be traversed via C-n and C-p & <RET>.
@@ -1445,15 +1419,40 @@ Prettier formatter for JSX & TSX.
 								'("\\.tsx?\\'" . prettier-js-mode))))
 #+end_src
 * Functions
-** Enable Minor mode
+** Eshell
+*** Description
+Improve eshell prompt and assign aliases, also setup some custom helper functions for easier use.
+*** Prompt
+#+BEGIN_SRC emacs-lisp
+  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
+  (setq eshell-prompt-function
+		(lambda nil
+		  (concat
+		   (if (string= (eshell/pwd) (getenv "HOME"))
+			   (propertize "~" 'face `(:foreground "#99CCFF"))
+			 (replace-regexp-in-string
+			  (getenv "HOME")
+			  (propertize "~" 'face `(:foreground "#99CCFF"))
+			  (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
+		   (if (= (user-uid) 0)
+			   (propertize " α " 'face `(:foreground "#FF6666"))
+			 (propertize " λ " 'face `(:foreground "#A6E22E"))))))
+
+  (setq eshell-highlight-prompt nil)
+#+END_SRC
+*** Clear
 #+begin_src emacs-lisp
-  (defun enable-minor-mode (my-pair)
-	"Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
-	(if (buffer-file-name)
-		(if (string-match (car my-pair) buffer-file-name)
-			(funcall (cdr my-pair)))))
+  (defun eshell/clear-scrollback ()
+	"Clear the scrollback content of the eshell window."
+	(let ((inhibit-read-only t))
+	  (erase-buffer)))
 #+end_src
-** Open eshell in other window
+*** Aliases
+#+BEGIN_SRC emacs-lisp
+  (defalias 'open 'find-file-other-window)
+  (defalias 'clean 'eshell/clear-scrollback)
+#+END_SRC
+*** Open eshell in other window
 #+BEGIN_SRC emacs-lisp
   (defun eshell-other-window ()
 	"Create or visit an eshell buffer."
@@ -1465,6 +1464,14 @@ Prettier formatter for JSX & TSX.
 		  (eshell))
 	  (switch-to-buffer-other-window "*eshell*")))
 #+END_SRC
+** Enable Minor mode
+#+begin_src emacs-lisp
+  (defun enable-minor-mode (my-pair)
+	"Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
+	(if (buffer-file-name)
+		(if (string-match (car my-pair) buffer-file-name)
+			(funcall (cdr my-pair)))))
+#+end_src
 ** Split and follow
 #+BEGIN_SRC emacs-lisp
   (defun split-and-follow-horizontally ()
@@ -1565,16 +1572,6 @@ Prettier formatter for JSX & TSX.
 	(interactive)
 	(run-in-vterm "ncmpcpp"))
 #+end_src
-** Upcase last word
-#+begin_src emacs-lisp
-  (defun upcase-last-word ()
-	(interactive)
-	(move-end-of-line 1)
-	(backward-word 1)
-	(upcase-word 1)
-	(move-beginning-of-line 1)
-	(next-line 1 1))
-#+end_src
 ** Yank Whole Buffer
 #+begin_src emacs-lisp
   (defun yank-whole-buffer ()
@@ -1591,6 +1588,16 @@ Prettier formatter for JSX & TSX.
 	(interactive)
 	(yank-whole-buffer)
 	(async-shell-command "sh -c ~/bin/stqap.sh"))
+#+end_src
+** Upcase last word
+#+begin_src emacs-lisp
+  (defun upcase-last-word ()
+	(interactive)
+	(move-end-of-line 1)
+	(backward-word 1)
+	(upcase-word 1)
+	(move-beginning-of-line 1)
+	(next-line 1 1))
 #+end_src
 ** Next/Prev 15-lines
 #+begin_src emacs-lisp

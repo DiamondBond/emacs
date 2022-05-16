@@ -5,8 +5,8 @@
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 
-* QoL
-Minor quality-of-life modifications for a more pleasant Emacs experience
+* Core
+Minor quality-of-life modifications for a more pleasant Emacs experience.
 ** Identity
 #+begin_src emacs-lisp
   (setq user-mail-address "diamondbond1@gmail.com"
@@ -14,9 +14,15 @@ Minor quality-of-life modifications for a more pleasant Emacs experience
 #+end_src
 ** Performance
 #+begin_src emacs-lisp
-  ;; do not steal focus while doing async compilations
+  ;; Do not steal focus while doing async compilations
   (setq warning-suppress-types '((comp)))
 
+  ;; Potentially speed up cursor operations
+  ;; https://emacs.stackexchange.com/questions/28736
+  (setq auto-window-vscroll nil)
+#+end_src
+** Garbage collection in minibuffer
+#+begin_src emacs-lisp
   ;; While the minibuffer is open, garbage collection will never occur,
   ;; but once we make a selection, or cancel,
   ;; garbage collection will kick off immediately
@@ -36,8 +42,10 @@ DEPENDS: Emacs@HEAD (29+)
   ;; Precision pixel scrolling
   ;; (pixel-scroll-precision-mode)
 
-  ;; Enable conservative scrolling
-  (setq scroll-conservatively 1)
+  ;; Enables nice scrolling
+  (setq scroll-margin 0)
+  (setq scroll-conservatively 100000)
+  (setq scroll-preserve-screen-position 1)
 #+end_src
 ** Disable automatic creation of backup files
 #+BEGIN_SRC emacs-lisp
@@ -45,7 +53,12 @@ DEPENDS: Emacs@HEAD (29+)
   (setq auto-save-default nil)
   (setq make-backup-files nil)
   (setq create-lockfiles nil)
+  (setq vc-make-backup-files nil)
 #+END_SRC
+** Don't ask for confirmation when opening symlinked file
+#+begin_src emacs-lisp
+  (setq vc-follow-symlinks t)
+#+end_src
 ** Do not litter init.el
 #+begin_src emacs-lisp
   (setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
@@ -56,6 +69,11 @@ DEPENDS: Emacs@HEAD (29+)
 #+BEGIN_SRC emacs-lisp
   (setq use-package-always-defer t)
 #+END_SRC
+** Load newer .elc or .el
+#+begin_src emacs-lisp
+  ;; Load the newer .elc or .el file, rather than stopping at .elc.
+  (setq load-prefer-newer t)
+#+end_src
 ** UTF-8
 #+begin_src emacs-lisp
   ;; UTF-8 please
@@ -130,6 +148,7 @@ Show column number in modeline.
 ** Enable copy-pasting outside of Emacs
 #+BEGIN_SRC emacs-lisp
   (setq x-select-enable-clipboard t)
+  (setq save-interprogram-paste-before-kill t)
 #+END_SRC
 ** Disable ring-bell
 #+BEGIN_SRC emacs-lisp
@@ -1588,4 +1607,9 @@ Prettier formatter for JSX & TSX.
 ** Enable toolbar
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(tool-bar-lines . 1))
+#+end_src
+** Shrink wrapping frames
+#+begin_src emacs-lisp
+  ;; https://www.emacswiki.org/emacs/Shrink-Wrapping_Frames
+  (add-hook 'after-make-frame-functions 'fit-frame)
 #+end_src

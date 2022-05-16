@@ -33,7 +33,7 @@ Minor quality-of-life modifications for a more pleasant Emacs experience
 ** pixel-scroll-precision
 #+begin_src emacs-lisp
   ;; Precision pixel scrolling (DEPENDS: Emacs@HEAD (29+))
-  (pixel-scroll-precision-mode)
+  ;;(pixel-scroll-precision-mode)
 #+end_src
 ** Disable automatic creation of backup files
 #+BEGIN_SRC emacs-lisp

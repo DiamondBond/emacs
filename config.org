@@ -281,10 +281,11 @@ Auto-package-update automatically updates and removes old packages.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package auto-package-update
+	:disabled t
 	:ensure t
 	:defer nil
 	:config
-	(auto-package-update-maybe)
+	;;(auto-package-update-maybe)
 	(setq auto-package-update-prompt-before-update t)
 	(setq auto-package-update-show-preview t)
 	(setq auto-package-update-delete-old-versions t)

@@ -30,11 +30,16 @@ Minor quality-of-life modifications for a more pleasant Emacs experience
   (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
   (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 #+end_src
-** pixel-scroll-precision
+** Enable pixel-scroll-precision
+DEPENDS: Emacs@HEAD (29+)
 #+begin_src emacs-lisp
   ;; Precision pixel scrolling (DEPENDS: Emacs@HEAD (29+))
   ;;(pixel-scroll-precision-mode)
 #+end_src
+** Enable conservative scrolling
+#+BEGIN_SRC emacs-lisp
+  (setq scroll-conservatively 1)
+#+END_SRC
 ** Disable automatic creation of backup files
 #+BEGIN_SRC emacs-lisp
   (setq make-backup-files nil)
@@ -127,10 +132,6 @@ Show column number in modeline.
 #+BEGIN_SRC emacs-lisp
   (setq x-select-enable-clipboard t)
 #+END_SRC
-** Enable conservative scrolling
-#+BEGIN_SRC emacs-lisp
-  (setq scroll-conservatively 1)
-#+END_SRC
 ** Disable ring-bell
 #+BEGIN_SRC emacs-lisp
   (setq ring-bell-function 'ignore)
@@ -209,8 +210,8 @@ Global & private key maps.
   (define-key z-map (kbd "v") 'vterm)
 
   (define-key z-map (kbd "b") 'display-battery-mode)
-  (define-key z-map (kbd "B") 'gnus-group-browse-foreign-server)
   (define-key z-map (kbd "t") 'display-time-mode)
+  (define-key z-map (kbd "B") 'gnus-group-browse-foreign-server)
 
   (define-key z-map (kbd "*") 'quick-calc)
   (define-key z-map (kbd "O") 'org-redisplay-inline-images)
@@ -261,6 +262,7 @@ Org-tree-slider and ox-beamer included for presentation support.
 ** Code
 #+BEGIN_SRC emacs-lisp
   (use-package org
+	:ensure t
 	:config
 	(setq org-directory "~/org"
 		  initial-major-mode 'org-mode
@@ -320,6 +322,7 @@ Org-tree-slider and ox-beamer included for presentation support.
 	(org-image-actual-width nil))
 
   (use-package ox-beamer
+	:after org
 	:ensure t)
 #+end_src
 * Eshell

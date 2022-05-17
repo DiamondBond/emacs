@@ -38,6 +38,7 @@
 
 ;; Install use-package with straight.el
 (straight-use-package 'use-package)
+(use-package git) ;; ensure we can install from git sources
 
 ;; Configure use-package & straight.el
 (use-package straight
@@ -48,7 +49,7 @@
   (straight-check-for-modifications nil)
   (use-package-always-defer t))
 
-;; Load built-in org
+;; Load org
 (straight-use-package 'org)
 
 ;; Tangle config

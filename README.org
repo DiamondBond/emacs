@@ -9,26 +9,28 @@
 * Introduction
 This Emacs distro aims to enhance the default Emacs experience.
 
-It is recommend to run this distribution with the latest Emacs [[https://savannah.gnu.org/git/?group=emacs][HEAD]] compiled from source with these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]], but it should be compatible with GNU Emacs 27+
+It is recommend to run this distribution with the latest [[https://ftp.gnu.org/gnu/emacs/emacs-28.1.tar.xz][Emacs 28.1 Release]] compiled from source with these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]].
 
-[[https://github.com/DiamondBond/emacs/blob/master/config.org][Main (config.org)]]
+[[https://github.com/DiamondBond/emacs/blob/master/config.org][Main Configuration]]
 
-[[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][Packages]]
+[[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][Package Declarations]]
 
-[[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][Keybinds]]
+[[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][Keybind Maps]]
 
-[[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][Functions]]
+[[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][Functions Definitions]]
+
 ** Summary
 This Emacs distribution attempts to achieve the following goals:
 
-*** performance over all else
+*** Performance over all else
 Function-over-form.
-*** aggressively use best practices
+*** Aggressively use best practices
 We utilize use-package & straight.el for reproducibility.
-*** extensively document and comment all code
+*** Extensively document and comment all code
 The main configuration is literate and has comments / docstrings wherever possible.
-*** remain as simple as possible whilst maximizing usability
+*** Remain as simple as possible whilst maximizing usability
 e.g: Vertico/Corfu & friends instead of Helm/Ivy/Company.
+
 * Setup
 Please refer to the dependencies section below first to make sure Emacs and your environment have the required packages and configurations setup correctly, then proceed to clone and install this distribution.
 

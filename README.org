@@ -9,7 +9,7 @@
 * Introduction
 This Emacs distro aims to enhance the default Emacs experience.
 
-It is recommend to run this distribution with the latest [[https://ftp.gnu.org/gnu/emacs/emacs-28.1.tar.xz][Emacs 28.1 Release]] compiled from source with these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]].
+It is recommend to run this distribution with the latest [[https://ftp.gnu.org/gnu/emacs/emacs-28.1.tar.xz][Emacs 28.1]] compiled from source with these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]].
 
 [[https://github.com/DiamondBond/emacs/blob/master/config.org][Main Configuration]]
 

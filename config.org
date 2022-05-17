@@ -26,6 +26,9 @@ Minor quality-of-life modifications for a more pleasant Emacs experience.
   ;; Do not steal focus while doing async compilations
   (setq warning-suppress-types '((comp)))
 
+  ;; Turn off ad-redef warnings
+  (setq ad-redefinition-action 'accept)
+
   ;; Potentially speed up cursor operations
   ;; https://emacs.stackexchange.com/questions/28736
   (setq auto-window-vscroll nil)
@@ -136,8 +139,7 @@ Show column number in modeline.
 #+END_SRC
 ** Set font
 #+begin_src emacs-lisp
-  ;;(add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
-  (add-to-list 'default-frame-alist '(font . "Go Mono-12"))
+  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
 #+end_src
 ** Disable the default startup screen
 #+BEGIN_SRC emacs-lisp
@@ -641,7 +643,7 @@ Useful snippets.
 	:defer t
 	:diminish yas-minor-mode
 	:config
-	(setq yas-snippet-dirs '("~/emacs.d/snippets")
+	(setq yas-snippet-dirs '("~/emacs.d/snippets/")
 		  (yas-reload-all)))
 
   (use-package yasnippet-snippets
@@ -1215,20 +1217,20 @@ Popup contents mini-buffer.
 Diminish hides minor modes to prevent cluttering your mode line.
 *** Code
 #+begin_src emacs-lisp
-  (use-package diminish
-	:ensure t
-	:init
-	;; Diminish as mode is already loaded
-	(diminish 'visual-line-mode "")
-	(diminish 'abbrev-mode "")
-	(diminish 'c-mode "")
-	(diminish 'yas "")
-	:config
-	;; Diminish after mode is loaded
-	(eval-after-load "flymake" '(diminish 'flymake-mode))
-	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
-	(eval-after-load "which-key" '(diminish 'which-key-mode))
-	(eval-after-load "eldoc-mode" '(diminish 'eldoc-mode)))
+	(use-package diminish
+	  :ensure t
+	  :init
+	  ;; Diminish as mode is already loaded
+	  (diminish 'visual-line-mode "")
+	  (diminish 'abbrev-mode "")
+	  (diminish 'c-mode "")
+	  (diminish 'yas "")
+	  :config
+	  ;; Diminish after mode is loaded
+	  (eval-after-load "flymake" '(diminish 'flymake-mode))
+	  (eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
+	  (eval-after-load "which-key" '(diminish 'which-key-mode))
+	  (eval-after-load "eldoc" '(diminish 'eldoc-mode)))
 #+end_src
 * Languages
 ** LSP

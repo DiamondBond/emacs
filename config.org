@@ -30,7 +30,7 @@ Minor quality-of-life modifications for a more pleasant Emacs experience.
   ;; https://emacs.stackexchange.com/questions/28736
   (setq auto-window-vscroll nil)
 #+end_src
-** Garbage collection in minibuffer
+** Garbage collect when in minibuffer
 #+begin_src emacs-lisp
   ;; While the minibuffer is open, garbage collection will never occur,
   ;; but once we make a selection, or cancel,
@@ -46,12 +46,12 @@ Minor quality-of-life modifications for a more pleasant Emacs experience.
   (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 #+end_src
 ** Configure Scrolling
-DEPENDS: Emacs@HEAD (29+)
 #+begin_src emacs-lisp
   ;; Precision pixel scrolling
+  ;; (DEPENDS: Emacs@HEAD=29+)
   ;; (pixel-scroll-precision-mode)
 
-  ;; Enables nice scrolling
+  ;; Enables nice scrolling for Emacs<=28.1
   (setq scroll-margin 0)
   (setq scroll-conservatively 100000)
   (setq scroll-preserve-screen-position 1)
@@ -393,9 +393,7 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 	(dashboard-setup-startup-hook)
 	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
-	;;(setq dashboard-banner-logo-title "Welcome to Emacs!")
-	;;(setq dashboard-startup-banner 'logo)
-	(setq dashboard-startup-banner (expand-file-name "~/.emacs.d/img/gnusstorm-2.gif"))
+	(setq dashboard-startup-banner (expand-file-name "img/gnusstorm-2.gif" user-emacs-directory))
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)

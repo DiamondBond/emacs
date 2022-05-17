@@ -14,7 +14,6 @@
 (setq file-name-handler-alist nil)
 (defun startup/revert-file-name-handler-alist ()
   (setq file-name-handler-alist startup/file-name-handler-alist))
-
 (add-hook 'emacs-startup-hook 'startup/revert-file-name-handler-alist)
 
 ;; Initialize melpa repo
@@ -22,11 +21,6 @@
 (add-to-list 'package-archives
 			 '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
-
-;; Initialize use-package [DEPRECATED]
-;; (unless (package-installed-p 'use-package)
-;;   (package-refresh-contents)
-;;   (package-install 'use-package))
 
 ;; Initialize straight.el
 (defvar bootstrap-version)
@@ -45,11 +39,19 @@
 ;; Install use-package with straight.el
 (straight-use-package 'use-package)
 
-;; Configure use-package to use straight.el by default
+;; Configure use-package & straight.el
 (use-package straight
-  :custom (straight-use-package-by-default t))
+  :custom
+  (straight-use-package-by-default t)
+  (straight-vc-git-default-clone-depth 1)
+  (straight-recipes-gnu-elpa-use-mirror t)
+  (straight-check-for-modifications nil)
+  (use-package-always-defer t))
 
-;; Load config
+;; Load built-in org
+(straight-use-package 'org)
+
+;; Tangle config
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
 
 ;; Restore original GC

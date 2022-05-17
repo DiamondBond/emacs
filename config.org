@@ -1191,6 +1191,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	;; Diminish after mode is loaded
 	(eval-after-load "flymake" '(diminish 'flymake-mode))
 	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
+	(eval-after-load "which-key" '(diminish 'which-key-mode))
 	(eval-after-load "eldoc-mode" '(diminish 'eldoc-mode)))
 #+end_src
 * Languages

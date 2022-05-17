@@ -13,8 +13,8 @@
 (setq gc-cons-percentage 0.6)
 
 ;; Compile warnings
-;;  (setq byte-compile-warnings t)
-;;  (setq warning-minimum-level :emergency)
+(setq warning-minimum-level :emergency)
+(setq warning-suppress-types '((comp)))
 (setq comp-async-report-warnings-errors nil) ;; native-comp warning
 (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local cl-functions))
 

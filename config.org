@@ -7,10 +7,19 @@
 
 * Core
 Minor quality-of-life modifications for a more pleasant Emacs experience.
+** Rudimentary
+#+begin_src emacs-lisp
+  ;;; config.el -*- lexical-binding: t; -*-
+#+end_src
 ** Identity
 #+begin_src emacs-lisp
-  (setq user-mail-address "diamondbond1@gmail.com"
-		user-full-name "Diamond")
+  (setq user-full-name "Diamond"
+		user-mail-address "diamondbond1@gmail.com")
+#+end_src
+** Auth
+#+begin_src emacs-lisp
+  (setq auth-sources '("~/.authinfo.gpg")
+		auth-source-cache-expiry nil)
 #+end_src
 ** Performance
 #+begin_src emacs-lisp
@@ -65,11 +74,6 @@ DEPENDS: Emacs@HEAD (29+)
   (when (file-exists-p custom-file) ; Don’t forget to load it, we still need it
 	(load custom-file))
 #+end_src
-** Defer loading most packages for quicker startup times
-#+BEGIN_SRC emacs-lisp
-  (setq use-package-always-defer t)
-  ;;(setq use-package-always-ensure t)
-#+END_SRC
 ** Load newer .elc or .el
 #+begin_src emacs-lisp
   ;; Load the newer .elc or .el file, rather than stopping at .elc.
@@ -291,6 +295,72 @@ Auto-package-update automatically updates and removes old packages.
 	(setq auto-package-update-delete-old-versions t)
 	(setq auto-package-update-hide-results t))
 #+END_SRC
+** Initialize =org=
+*** Description
+Sensible and well-defined org-mode configuration with org-capture support.
+Org-tree-slider included for presentation support.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package org
+	:ensure t
+	:config
+	(setq org-directory "~/org"
+		  initial-major-mode 'org-mode
+		  org-display-inline-images t
+		  org-redisplay-inline-images t
+		  org-startup-with-inline-images "inlineimages"
+		  org-pretty-entitles t
+		  org-agenda-files (list "inbox.org")
+		  org-image-actual-width nil
+		  +org-export-directory "~/org/export"
+		  org-default-notes-file "~/org/inbox.org"
+		  org-id-locations-file "~/org/.orgids"
+		  org-catch-invisible-edits 'smart)
+
+	(setq org-babel-load-languages
+		  '((awk        . t)
+			(calc       . t)
+			(css        . t)
+			(ditaa      . t)
+			(emacs-lisp . t)
+			(gnuplot    . t)
+			(haskell    . t)
+			(js         . t)
+			(lisp       . t)
+			(org        . t)
+			(plantuml   . t)
+			(python     . t)
+			(scheme     . t)
+			(shell      . t)
+			(C          . t)
+			(ein        . t)
+			(sql        . t)))
+
+
+	;; org templates
+	(setq org-capture-templates
+		  '(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
+			 "* %?\n%a\nEntered on %U")
+			("j" "Journal" entry (file+datetree "~/org/journal.org")
+			 "* %?\n%a\nEntered on %U")))
+
+	:bind
+	("C-c c" . 'org-capture)
+	("C-c l" . 'org-store-link)
+	("C-<f1>" . (lambda()(interactive)(show-all)))
+	:hook (org-mode . visual-line-mode))
+
+  ;; for presentations
+  (use-package org-tree-slide
+	:ensure t
+	:custom
+	(org-tree-slide-slide-in-effect t)
+	(org-tree-slide-activate-message "Presentation started!")
+	(org-tree-slide-deactivate-message "Presentation finished!")
+	(org-tree-slide-header t)
+	(org-tree-slide-breadcrumbs " > ")
+	(org-image-actual-width nil))
+#+end_src
 ** Initialize =dashboard=
 *** Description
 An extensible emacs startup screen.
@@ -325,12 +395,10 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 	(setq dashboard-items '((recents . 5)))
 	;;(setq dashboard-banner-logo-title "Welcome to Emacs!")
 	;;(setq dashboard-startup-banner 'logo)
-	(setq dashboard-startup-banner "~/.emacs.d/img/gnusstorm-2.gif")
+	(setq dashboard-startup-banner (expand-file-name "~/.emacs.d/img/gnusstorm-2.gif"))
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)
-	(setq dashboard-init-info (format "%d packages loaded in %s"
-									  (length package-activated-list) (emacs-init-time)))
 	(setq dashboard-set-footer nil)
 	(setq dashboard-set-navigator t)
 	(setq dashboard-navigator-buttons
@@ -356,6 +424,7 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package corfu
+	:straight t
 	:ensure t
 	:custom
 	(corfu-auto t)
@@ -367,7 +436,7 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 	(define-key corfu-map (kbd "<escape>") #'corfu-quit)
 	(define-key corfu-map (kbd "C-h") #'corfu-show-documentation)
 	(define-key corfu-map (kbd "RET") nil)
-	:init (corfu-global-mode)
+	;;:init (corfu-global-mode)
 	:config
 	;; Adapted from Corfu's manual.
 	(defun contrib/corfu-enable-always-in-minibuffer ()
@@ -397,6 +466,7 @@ Vertico, orderless, marginalia, consult & embark.
 #+begin_src emacs-lisp
   ;; Enable vertico
   (use-package vertico
+	:straight t
 	:ensure t
 	:bind (:map vertico-map
 				("C-j" . vertico-next)
@@ -415,6 +485,8 @@ Vertico, orderless, marginalia, consult & embark.
 
   ;; Configure directory extension.
   (use-package vertico-directory
+	:straight nil
+	:load-path "straight/repos/vertico/extensions"
 	:after vertico
 	:ensure nil
 	:bind (:map vertico-map
@@ -653,76 +725,6 @@ Heresy; Vim keybindings in Emacs.
 	:config
 	(evil-collection-init))
 #+END_SRC
-** Initialize =org=
-*** Description
-Sensible and well-defined org-mode configuration with org-capture support.
-Org-tree-slider and ox-beamer included for presentation support.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package org
-	:ensure t
-	:config
-	(setq org-directory "~/org"
-		  initial-major-mode 'org-mode
-		  org-display-inline-images t
-		  org-redisplay-inline-images t
-		  org-startup-with-inline-images "inlineimages"
-		  org-pretty-entitles t
-		  org-agenda-files (list "inbox.org")
-		  org-image-actual-width nil
-		  +org-export-directory "~/org/export"
-		  org-default-notes-file "~/org/inbox.org"
-		  org-id-locations-file "~/org/.orgids"
-		  org-catch-invisible-edits 'smart)
-
-	(setq org-babel-load-languages
-		  '((awk        . t)
-			(calc       . t)
-			(css        . t)
-			(ditaa      . t)
-			(emacs-lisp . t)
-			(gnuplot    . t)
-			(haskell    . t)
-			(js         . t)
-			(lisp       . t)
-			(org        . t)
-			(plantuml   . t)
-			(python     . t)
-			(scheme     . t)
-			(shell      . t)
-			(C          . t)
-			(ein        . t)
-			(sql        . t)))
-
-
-	;; org templates
-	(setq org-capture-templates
-		  '(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
-			 "* %?\n%a\nEntered on %U")
-			("j" "Journal" entry (file+datetree "~/org/journal.org")
-			 "* %?\n%a\nEntered on %U")))
-
-	:bind
-	("C-c c" . 'org-capture)
-	("C-c l" . 'org-store-link)
-	("C-<f1>" . (lambda()(interactive)(show-all)))
-	:hook (org-mode . visual-line-mode))
-
-  ;; for presentations
-  (use-package org-tree-slide
-	:ensure t
-	:custom
-	(org-tree-slide-slide-in-effect t)
-	(org-tree-slide-activate-message "Presentation started!")
-	(org-tree-slide-deactivate-message "Presentation finished!")
-	(org-tree-slide-header t)
-	(org-tree-slide-breadcrumbs " > ")
-	(org-image-actual-width nil))
-
-  (use-package ox-beamer
-	:after org
-	:ensure t)
-#+end_src
 ** Initialize =swiper=
 *** Description
 C-s to spawn a search minibuffer that can be traversed via C-n and C-p & <RET>.

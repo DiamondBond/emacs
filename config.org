@@ -244,7 +244,6 @@ Global & private key maps.
 
   (define-key z-map (kbd "b") 'display-battery-mode)
   (define-key z-map (kbd "t") 'display-time-mode)
-  (define-key z-map (kbd "B") 'gnus-group-browse-foreign-server)
 
   (define-key z-map (kbd "*") 'quick-calc)
   (define-key z-map (kbd "O") 'org-redisplay-inline-images)
@@ -327,6 +326,9 @@ Org-tree-slider included for presentation support.
 			(C          . t)
 			(ein        . t)
 			(sql        . t)))
+
+	(org-babel-do-load-languages 'org-babel-load-languages
+								 '((shell . t)))
 
 	;; org templates
 	(setq org-capture-templates

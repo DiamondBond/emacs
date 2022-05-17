@@ -1130,18 +1130,9 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 
 	;; Load the theme files before enabling a theme
 	(modus-themes-load-themes)
-	;; :config
-	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	:config
+	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
-#+end_src
-** Initialize =spacemacs-themes=
-*** Description
-Spacemacs theme is an Emacs color theme that started as a theme for spacemacs. The theme comes with dark and light variants and it should work well with 256 color terminals.
-*** Code
-#+begin_src emacs-lisp
-  (use-package spacemacs-theme
-	:defer t
-	:init (load-theme 'spacemacs-light t))
 #+end_src
 ** Initialize =crux=
 *** Description

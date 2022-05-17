@@ -87,6 +87,7 @@
  ("vertico" . "43cd76b0894819f5b73c88eb391452f52b30427b")
  ("web-mode" . "efa853e5cfff8e0bcacbda9d1c6696b33da91b03")
  ("with-editor" . "4ab8c6148bb2698ff793d4a8acdbd8d0d642e133")
+ ("writegood-mode" . "d54eadeedb8bf3aa0e0a584c0a7373c69644f4b8")
  ("xref" . "2ca3069ba71d8ff9b833c0da771b9bd8c6ea1a68")
  ("yasnippet" . "5cbdbf0d2015540c59ed8ee0fcf4788effdf75b6")
  ("yasnippet-snippets" . "c5bf4c4085aa61b9c07563de89f7aacc2a357db5"))

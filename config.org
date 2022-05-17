@@ -204,6 +204,13 @@ Super - Control - <arrow>
   (setq browse-url-default-browser 'eww-browse-url)
   (setq browse-url-browser-function 'eww-browse-url)
 #+END_SRC
+** Define aliases
+#+begin_src emacs-lisp
+  (defalias 'first 'car)
+  (defalias 'second 'cadr)
+  (defalias 'third 'caddr)
+  (defalias 'when-not 'unless)
+#+end_src
 ** Set environment
 Essential for using shells in Emacs.
 #+begin_src emacs-lisp
@@ -305,21 +312,18 @@ Org-tree-slider included for presentation support.
 		  '((awk        . t)
 			(calc       . t)
 			(css        . t)
-			(ditaa      . t)
 			(emacs-lisp . t)
 			(gnuplot    . t)
 			(haskell    . t)
 			(js         . t)
 			(lisp       . t)
 			(org        . t)
-			(plantuml   . t)
 			(python     . t)
 			(scheme     . t)
 			(shell      . t)
 			(C          . t)
 			(ein        . t)
 			(sql        . t)))
-
 
 	;; org templates
 	(setq org-capture-templates
@@ -400,6 +404,24 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 			  (lambda (&rest _) (config-edit))
 			  'default)))))
 #+END_SRC
+** Initialize =elisp-enhancers=
+*** Description
+Elisp sweetening.
+*** Code
+#+begin_src emacs-lisp
+  (use-package fn)      ; function
+  (use-package s)       ; string
+  (use-package f)       ; file
+  (use-package ht)      ; hash table
+  (use-package dash)    ; list
+  (use-package a)       ; assoc lists
+  (use-package async)   ; async
+  (use-package ts)      ; timestamps
+  (use-package pcre2el) ; sane regex
+
+  (use-package ct)
+  (use-package helpful)
+#+end_src
 ** Initialize =corfu=
 *** Description
 Completion Overlay Region FUnction - Corfu enhances completion at point with a small completion popup. The current candidates are shown in a popup below or above the point. Corfu is the minimalistic completion-in-region counterpart of the Vertico minibuffer UI.

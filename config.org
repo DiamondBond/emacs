@@ -1227,13 +1227,11 @@ Handles the following languages:
 	:hook ((c-mode          ; clangd
 			c++-mode        ; clangd
 			c-or-c++-mode   ; clangd
-			;;java-mode       ; eclipse-jdtls
 			js-mode         ; ts-ls (tsserver wrapper)
 			js-jsx-mode     ; ts-ls (tsserver wrapper)
 			typescript-mode ; ts-ls (tsserver wrapper)
 			python-mode     ; pyright
 			web-mode        ; ts-ls/HTML/CSS
-			;;haskell-mode    ; haskell-language-server
 			) . lsp-deferred)
 	:commands lsp
 	:config
@@ -1276,7 +1274,7 @@ Handles the following languages:
   (use-package lsp-pyright
 	:ensure t
 	:after lsp
-	:hook (python-mode . (lambda () (require 'lsp-pyright)))
+	:hook (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred)))
 	:init (when (executable-find "python3")
 			(setq lsp-pyright-python-executable-cmd "python3")))
 #+end_src

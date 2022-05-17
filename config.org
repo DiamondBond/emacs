@@ -939,15 +939,33 @@ Major mode for reading EPUBs.
 	:mode ("\\.epub\\'" . nov-mode)
 	:hook (nov-mode . nov-font-setup))
 #+END_SRC
+** Initialize =writegood=
+*** Description
+Minor mode to aid in finding common writing problems. Highlights text based on a set of weasel-words, passive-voice and duplicate words.
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package writegood-mode
+	:ensure t)
+#+END_SRC
 ** Initialize =synosaurus=
 *** Description
 Synosaurus is a thesaurus frontend for Emacs with pluggable backends.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package synosaurus
-	:ensure t
-	:defer nil)
+	:ensure t)
 #+END_SRC
+** Initialize =olivetti=
+*** Description
+Emacs minor mode for a nice writing environment.
+*** Code
+#+begin_src emacs-lisp
+  (use-package olivetti
+	:ensure t
+	:defer nil
+	:init
+	(setq olivetti-body-width .75))
+#+end_src
 ** Initialize =vterm=
 *** Description
 Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
@@ -1093,17 +1111,6 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 	:config
 	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
-#+end_src
-** Initialize =olivetti=
-*** Description
-Emacs minor mode for a nice writing environment.
-*** Code
-#+begin_src emacs-lisp
-  (use-package olivetti
-	:ensure t
-	:defer nil
-	:init
-	(setq olivetti-body-width .75))
 #+end_src
 ** Initialize =crux=
 *** Description

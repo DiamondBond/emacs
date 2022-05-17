@@ -145,7 +145,7 @@ Show column number in modeline.
 #+END_SRC
 ** Disable most gui elements
 #+BEGIN_SRC emacs-lisp
-  (tool-bar-mode 1)
+  (tool-bar-mode -1)
   (menu-bar-mode 1)
   (scroll-bar-mode 1)
   (set-scroll-bar-mode 'right) ;; For x-toolkit=athena
@@ -409,18 +409,15 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 Elisp sweetening.
 *** Code
 #+begin_src emacs-lisp
-  (use-package fn)      ; function
-  (use-package s)       ; string
-  (use-package f)       ; file
-  (use-package ht)      ; hash table
-  (use-package dash)    ; list
-  (use-package a)       ; assoc lists
-  (use-package async)   ; async
-  (use-package ts)      ; timestamps
-  (use-package pcre2el) ; sane regex
-
-  (use-package ct)
-  (use-package helpful)
+  (use-package fn      :demand t) ; function
+  (use-package s       :demand t) ; string
+  (use-package f       :demand t) ; file
+  (use-package ht      :demand t) ; hash table
+  (use-package dash    :demand t) ; list
+  (use-package a       :demand t) ; assoc lists
+  (use-package async   :demand t) ; async
+  (use-package ts      :demand t) ; timestamps
+  (use-package pcre2el :demand t) ; sane regex
 #+end_src
 ** Initialize =corfu=
 *** Description
@@ -632,7 +629,7 @@ Possible completion framework with 0.3s delay.
 	:init
 	(which-key-mode)
 	:config
-	(setq which-key-idle-delay 0.3))
+	(setq which-key-idle-delay 1.5))
 #+END_SRC
 ** Initialize =yasnippet=
 *** Description
@@ -1624,5 +1621,5 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 #+end_src
 ** Enable toolbar
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(tool-bar-lines . 1))
+;;(add-to-list 'default-frame-alist '(tool-bar-lines . 1))
 #+end_src

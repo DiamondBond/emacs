@@ -38,7 +38,6 @@
 
 ;; Install use-package with straight.el
 (straight-use-package 'use-package)
-(use-package git) ;; ensure we can install from git sources
 
 ;; Configure use-package & straight.el
 (use-package straight

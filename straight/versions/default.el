@@ -79,6 +79,7 @@
  ("svg-lib" . "5ff87b7f9a85e728360a63d8e4ae7aaa7eccf7d3")
  ("swiper" . "8bf8027e4bd8c093bddb76a813952d2a0dcbf21d")
  ("switch-window" . "8d9fe251d8d38b223d643df975876356ddfc1b98")
+ ("synosaurus" . "14d34fc92a77c3a916b4d58400424c44ae99cd81")
  ("tablist" . "faab7a035ef2258cc4ea2182f67e3aedab7e2af9")
  ("transient" . "a0c69e5c712511a35d0ab53a5634420e9705149e")
  ("treemacs" . "96a53189f51f3c75db8dcf3bf54bf82e927cf980")

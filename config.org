@@ -1103,7 +1103,7 @@ Emacs minor mode for a nice writing environment.
 	:ensure t
 	:defer nil
 	:init
-	(setq olivetti-body-width .67))
+	(setq olivetti-body-width .75))
 #+end_src
 ** Initialize =crux=
 *** Description

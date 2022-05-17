@@ -136,7 +136,8 @@ Show column number in modeline.
 #+END_SRC
 ** Set font
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
+  ;;(add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
+  (add-to-list 'default-frame-alist '(font . "Go Mono-12"))
 #+end_src
 ** Disable the default startup screen
 #+BEGIN_SRC emacs-lisp
@@ -145,7 +146,7 @@ Show column number in modeline.
 #+END_SRC
 ** Disable most gui elements
 #+BEGIN_SRC emacs-lisp
-  (tool-bar-mode -1)
+  ;;(tool-bar-mode -1)
   (menu-bar-mode 1)
   (scroll-bar-mode 1)
   (set-scroll-bar-mode 'right) ;; For x-toolkit=athena
@@ -1621,5 +1622,5 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 #+end_src
 ** Enable toolbar
 #+begin_src emacs-lisp
-;;(add-to-list 'default-frame-alist '(tool-bar-lines . 1))
+  ;;(add-to-list 'default-frame-alist '(tool-bar-lines . 1))
 #+end_src

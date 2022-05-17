@@ -1506,6 +1506,12 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	"Backup config.org to git"
 	(interactive)
 	(async-shell-command "cp ~/.emacs.d/config.org ~/git/emacs/config.org"))
+
+  (defun update-emacs-pkglist ()
+	"Backup straight lockfile to git"
+	(interactive)
+	(straight-freeze-versions)
+	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
 #+end_src
 ** Sync email
 #+begin_src emacs-lisp

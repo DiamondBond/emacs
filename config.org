@@ -418,7 +418,7 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 	(define-key corfu-map (kbd "<escape>") #'corfu-quit)
 	(define-key corfu-map (kbd "C-h") #'corfu-show-documentation)
 	(define-key corfu-map (kbd "RET") nil)
-	;;:init (corfu-global-mode)
+	:init (global-corfu-mode)
 	:config
 	;; Adapted from Corfu's manual.
 	(defun contrib/corfu-enable-always-in-minibuffer ()

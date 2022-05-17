@@ -13,7 +13,7 @@ It is recommend to run this distribution with the latest [[https://ftp.gnu.org/g
 
 [[https://github.com/DiamondBond/emacs/blob/master/config.org][Main Configuration]]
 
-[[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][Package Declarations]]
+[[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][Package Manifest]]
 
 [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][Keybind Maps]]
 

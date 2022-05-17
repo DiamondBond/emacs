@@ -1542,20 +1542,6 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(interactive)
 	(async-shell-command "offlineimap"))
 #+end_src
-** Record screen
-#+begin_src emacs-lisp
-  (defun record-screen-start ()
-	"Record screen to .mkv"
-	(interactive)
-	(let ((input (read-file-name "Output file: ")))
-	  (async-shell-command
-	   (concat "ffmpeg -y -f x11grab -s 2160x1440 -framerate 60 -i :0.0 " input))))
-
-  (defun record-screen-stop ()
-	"Stops recording screen."
-	(interactive)
-	(shell-command "killall -9 ffmpeg"))
-#+end_src
 ** Run in vterm
 #+begin_src emacs-lisp
   (defun run-in-vterm-kill (process event)

@@ -18,8 +18,6 @@ It is recommend to run this distribution with the latest Emacs [[https://savanna
 [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][Keybinds]]
 
 [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][Functions]]
-
-[[https://github.com/DiamondBond/emacs/blob/master/img/ss.png][Screenshot]]
 ** Why use this?
 Currently, the appeal of this Emacs distribution is a balance of features, performance & usability.
 

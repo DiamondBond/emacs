@@ -279,22 +279,6 @@ Global & private key maps.
   (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 #+END_SRC
 * Use-package
-** Initialize =auto-package-update=
-*** Description
-Auto-package-update automatically updates and removes old packages.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package auto-package-update
-	:disabled t
-	:ensure t
-	:defer nil
-	:config
-	;;(auto-package-update-maybe)
-	(setq auto-package-update-prompt-before-update t)
-	(setq auto-package-update-show-preview t)
-	(setq auto-package-update-delete-old-versions t)
-	(setq auto-package-update-hide-results t))
-#+END_SRC
 ** Initialize =org=
 *** Description
 Sensible and well-defined org-mode configuration with org-capture support.

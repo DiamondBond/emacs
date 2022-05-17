@@ -18,45 +18,58 @@ It is recommend to run this distribution with the latest Emacs [[https://savanna
 [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][Keybinds]]
 
 [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][Functions]]
-** Why use this?
-Currently, the appeal of this Emacs distribution is a balance of features, performance & usability.
+** Summary
+This Emacs distribution attempts to achieve the following goals:
 
-Utilizing Emacs defaults where possible and sticking to lightweight alternatives when needed.
+*** performance over all else
+Function-over-form.
+*** aggressively use best practices
+We utilize use-package & straight.el for reproducibility.
+*** extensively document and comment all code
+The main configuration is literate and has comments / docstrings wherever possible.
+*** remain as simple as possible whilst maximizing usability
+e.g: Vertico/Corfu & friends instead of Helm/Ivy/Company.
 * Setup
-Please refer to the dependencies section below first to make sure Emacs and your env have the required packages and configuration setup correctly, then proceed to clone and install this distribution.
+Please refer to the dependencies section below first to make sure Emacs and your environment have the required packages and configurations setup correctly, then proceed to clone and install this distribution.
 
 #+begin_src sh
-  # Clone to ~/git/emacs
+  # Clone configuration to ~/git/emacs
   mkdir -p ~/git; git clone https://github.com/diamondbond/emacs ~/git/emacs
 
-  # Backup old emacs cfg
+  # Backup old emacs configuration
   mv ~/.emacs.d ~/.emacs.d.old
 
-  # Copy new cfg to ~/.emacs.d
+  # Copy new configuration to ~/.emacs.d
   mkdir -p ~/.emacs.d; cp -r ~/git/emacs/{early-init.el,init.el,config.org,snippets,img} ~/.emacs.d/
 
-  # Start Emacs daemon
+  # Start the Emacs daemon
   emacs --daemon;
+  # make & get a cup/pot of tea &/or coffee,
+  # straight.el will begin cloning all the declared packages.
 
-  # Start Emacs client
+  # Start Emacs client once straight.el is done
   emacsclient -c -n -a 'emacs'
 #+end_src
-The first time you run Emacs, it will download all the declared packages in the config.org file, please be patient.
+The first time you run Emacs, straight.el will download all the declared packages in the config.org file, please be patient.
 
 To get autocompletion on JS/TS & Python files, you'll need to install the corresponding lsp backend servers first (you'll be automatically prompted to do so the first time you open a relevant file).
 
 *Post Setup*
-Compile pdf-tools, setup vterm & install all-the-icons font
+Once Emacs launches for the first time we need to setup a few more things:
 
-#+begin_quote
-M-x pdf-tools-install
+* Compile pdf-tools
+#+begin_src sh
+  M-x pdf-tools-install
+#+end_src
+* Compile vterm modules
+#+begin_src sh
+  M-x vterm
+#+end_src
+* Download & install all-the-icons font
+#+begin_src sh
+  M-x all-the-icons-install-fonts
+#+end_src
 
-M-x vterm
-
-M-x all-the-icons-install-fonts
-
-M-x kill-emacs # restart emacs
-#+end_quote
 * Dependencies
 ** Packages
 This section is just packages that I have needed in the past to comfortably run this Emacs distribution, not everything here is required, this is just a rough guideline.
@@ -122,7 +135,8 @@ Please install deno & typescript-language-server for Typescript (TS/TSX) support
   sudo apt install libgccjit0 libgccjit-9-dev
 #+end_src
 ** Files
-Certain files & folders must exist for some hooks to work.
+Certain files & folders must exist for some hooks/functions within Emacs to work.
+I use Dropbox and I symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 #+begin_src sh
   mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
 #+end_src

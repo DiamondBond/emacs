@@ -877,11 +877,6 @@ The definitive Git porcelain for Emacs.
 #+BEGIN_SRC emacs-lisp
   (use-package magit
 	:ensure t)
-
-  (use-package forge
-	:disabled t
-	:defer t
-	:commands forge-pull)
 #+END_SRC
 ** Initialize =autorevert=
 *** Description

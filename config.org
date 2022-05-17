@@ -18,8 +18,8 @@ Minor quality-of-life modifications for a more pleasant Emacs experience.
 #+end_src
 ** Auth
 #+begin_src emacs-lisp
-  (setq auth-sources '("~/.authinfo.gpg")
-		auth-source-cache-expiry nil)
+  ;; (setq auth-sources '("~/.authinfo.gpg")
+  ;; 	  auth-source-cache-expiry nil)
 #+end_src
 ** Performance
 #+begin_src emacs-lisp

@@ -81,6 +81,7 @@
  ("rust-mode" . "d17be3051b22a06d7742178cd1367aed61807a66")
  ("s.el" . "08661efb075d1c6b4fa812184c1e5e90c08795a9")
  ("slime" . "32f5652d6a976f68e7cf47b61d7d0e2764b68aae")
+ ("spacemacs-theme" . "bd376f705d6eb7afd9a1dfa0c1bd407e869d1e9f")
  ("spinner" . "34905eae12a236753fa88abc831eff1e41e8576e")
  ("straight.el" . "af5437f2afd00936c883124d6d3098721c2d306c")
  ("svg-lib" . "5ff87b7f9a85e728360a63d8e4ae7aaa7eccf7d3")

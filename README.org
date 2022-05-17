@@ -17,7 +17,7 @@ It is recommend to run this distribution with the latest [[https://ftp.gnu.org/g
 
 [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][Keybind Maps]]
 
-[[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][Functions Definitions]]
+[[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][Function Definitions]]
 
 ** Summary
 This Emacs distribution attempts to achieve the following goals:
@@ -86,6 +86,8 @@ libjansson
 rust-all cargo
 nodejs npm
 libxml2
+gopls
+prettier
 #+end_quote
 *** Python
 #+begin_src bash
@@ -94,50 +96,9 @@ libxml2
 *** NPM
 Please install deno & typescript-language-server for Typescript (TS/TSX) support.
 #+begin_src bash
-  sudo npm install -g deno typescript-language-server
-#+end_src
-*** [DEPRECATED] Ubuntu 20.04
-#+begin_src sh
-  sudo apt install bash-completion clang clangd llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps offlineimap msmtp clang clang-tools clangd ccls llvm libclang-dev build-essential imagemagick ripgrep git fd-find libxpm-dev libjpeg-dev libgnutls28-dev libgif-dev libtiff-dev libacl1-dev libgtk-3-dev libwebkit2gtk-4.0-dev librsvg2-dev libmagickcore-dev libmagick++-dev libgpm-dev libselinux1-dev libm17n-dev libotf-dev libsystemd-dev libtool-bin pandoc texlive-latex-recommended texlive-extra-utils texlive-latex-extra cmake cmake-extras html2ps groff xhtml2ps emacs-common-non-dfsg libjansson-dev editorconfig glslang-dev glslang-tools sbcl slime shellcheck rustc cargo pipenv wordnet gcc g++ make libsdl2-dev gnutls-bin libxml2-utils python3-pip gnugo gnuchess xboard libgccjit0 htop ffmpeg wget curl xdotool wmctrl slop wkhtmltopdf mupdf mupdf-tools appmenu-gtk2-module mediainfo exiftool unrar rar unace ace p7zip-full wordnet w3m-el xsel xclip mpd mpc ncmpcpp hunspell python3 python3-pip  libxpm-dev libgif-dev libjpeg-dev libpng-dev libtiff-dev libx11-dev libncurses5-dev automake autoconf texinfo libgtk2.0-dev nodejs ncdu exiftool libvterm-bin libvterm-dev libvterm0 libxapian-dev libgmime-3.0-dev libtalloc-dev zlib1g-dev fuse-overlayfs texlive-science zathura ghostscript default-jre rust-all cargo nodejs npm libjansson4 libjansson-dev golang-go python3-pip ca-certificates curl gnupg-agent software-properties-common fzf
-
-  # optional
-  sudo apt install ncmpcpp mpd mpc pavucontrol mpv rofi hexchat appmenu-gtk2-module appmenu-gtk3-module intel-media-va-driver vainfo ubuntu-restricted-extras build-essential git vim ubuntu-restricted-addons python3-pip bleachbit linux-tools-generic wildmidi timidity suckless-tools dmenu cmake libtool libtool-bin powertop tlp tlp-rdw transmission-gtk ncdu gimp kdenlive inkscape obs-studio kolourpaint gpick nomacs adwaita-icon-theme-full pm-utils hibernate acpi acpi-call-dkms
-
-  #sudo apt-get build-dep emacs
-  sudo apt install -y autoconf automake bsd-mailx dbus-x11 debhelper dpkg-dev \
-	   libacl1-dev libasound2-dev libdbus-1-dev libgif-dev libgnutls28-dev libgpm-dev \
-	   libgtk-3-dev libjansson-dev libjpeg-dev liblcms2-dev liblockfile-dev libm17n-dev \
-	   libncurses5-dev liboss4-salsa2 libotf-dev libpng-dev librsvg2-dev \
-	   libselinux1-dev libsystemd-dev libtiff-dev libxml2-dev libxpm-dev procps quilt \
-	   sharutils texinfo zlib1g-dev gvfs language-pack-en-base libasound2 libaspell15 \
-	   libasyncns0 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libbrotli1 \
-	   libcairo-gobject2 libcairo2 libcanberra-gtk3-0 libcanberra-gtk3-module \
-	   libcanberra0 libcroco3 libdatrie1 libdb5.3 libdrm2 libegl1 libenchant1c2a \
-	   libepoxy0 libflac8 libfontconfig1 libfreetype6 libgbm1 libgdk-pixbuf2.0-0 \
-	   libgif7 libgl1 libglvnd0 libglx0 libgpm2 libgraphite2-3 libgstreamer-gl1.0-0 \
-	   libgstreamer-plugins-base1.0-0 libgstreamer1.0-0 libgtk-3-0 libgudev-1.0-0 \
-	   libharfbuzz-icu0 libharfbuzz0b libhyphen0 libice6 libicu66 libjansson4 \
-	   libjavascriptcoregtk-4.0-18 libjbig0 libjpeg-turbo8 liblcms2-2 liblockfile1 \
-	   libltdl7 libm17n-0 libnotify4 libnss-mdns libnss-myhostname libnss-systemd \
-	   libogg0 liborc-0.4-0 libotf0 libpango-1.0-0 libpangocairo-1.0-0 \
-	   libpangoft2-1.0-0 libpixman-1-0 libpng16-16 libpulse0 librsvg2-2 libsasl2-2 \
-	   libsecret-1-0 libsm6 libsndfile1 libsoup2.4-1 libssl1.1 libstdc++6 libtdb1 \
-	   libthai0 libtiff5 libvorbis0a libvorbisenc2 libvorbisfile3 libwayland-client0 \
-	   libwayland-cursor0 libwayland-egl1 libwayland-server0 libwebp6 libwebpdemux2 \
-	   libwoff1 libx11-6 libx11-xcb1 libxau6 libxcb-render0 libxcb-shm0 libxcb1 \
-	   libxcomposite1 libxcursor1 libxdamage1 libxdmcp6 libxext6 libxfixes3 libxi6 \
-	   libxinerama1 libxkbcommon0 libxml2 libxpm4 libxrandr2 libxrender1 libxslt1.1 \
-	   libyajl2
-
-  # if running ubuntu 20.04:
-  sudo add-apt-repository ppa:ubuntu-toolchain-r/ppa
-  sudo apt install gcc-10 g++-10 libgccjit0 libgccjit-10-dev libjansson4 libjansson-dev
-  # or just match up your libgccjit version to your installed gcc version
-  gcc --version
-  sudo apt install libgccjit0 libgccjit-9-dev
+  sudo npm install -g deno typescript-language-server bash-language-server
 #+end_src
 ** Files
-Certain files & folders must exist for some hooks/functions within Emacs to work.
 I use Dropbox and I symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 #+begin_src sh
   mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
@@ -151,25 +112,14 @@ Clone the latest emacs sources:
   git clone -b master git://git.sv.gnu.org/emacs.git
 #+end_src
 *** Configuration
-We configure emacs to compile with various flags.
-My preferred toolkit of choice currently is Athena (xaw3d is required).
+Configure Emacs for building with json, native-comp and the athena toolkit with xaw3d toolbars.
 #+begin_src sh
-  # only if using the ubuntu 20.04 repo
-  # export CC=/usr/bin/gcc-10 CXX=/usr/bin/gcc-10
-
+  # Run the auto-generation script
   ./autogen.sh
 
-  # for athena & nativecomp [X11 + OPTIMIZATIONS] tag:29+
-  ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --without-compress-install --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
-
-  # for athena & nativecomp [X11 + OPTIMIZATIONS] tag:rc-28.1
+  # Configure Emacs
+  # athena & nativecomp [for: rc-28.1 on X11]
   ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --without-compress-install --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
-
-  # for pgtk & nativecomp [PGTK WAYLAND + OPTIMIZATIONS]
-  ./configure --with-dbus --with-pgtk --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --without-xwidgets --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
-
-  # for nativecomp & toolkit=gtk [DEFAULTS FOR MODERN X11 + OPTIMIZATIONS]
-  ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=gtk3 --with-xwidgets --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --with-xinput2 --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
 #+end_src
 *** Compiling
 We build with all cores and natively compile everything ahead of time, this will take a while.
@@ -177,7 +127,7 @@ We build with all cores and natively compile everything ahead of time, this will
   make NATIVE_FULL_AOT=1 -j$(nproc)
   sudo make install
 #+end_src
-** Notmuch
+** Optional: Notmuch Email
 Download the latest release from https://notmuchmail.org/releases & unzip to ~/src/
 #+begin_src sh
   cd ~/src/notmuch

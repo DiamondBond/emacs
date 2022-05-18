@@ -503,7 +503,7 @@ Shows keyboard macros or latest interactive commands as emacs lisp.
 *** Code
 #+begin_src emacs-lisp
   (use-package elmacro
-	:ensure t
+	:disabled t
 	:init
 	(elmacro-mode))
 #+end_src

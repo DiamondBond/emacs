@@ -503,9 +503,7 @@ Shows keyboard macros or latest interactive commands as emacs lisp.
 *** Code
 #+begin_src emacs-lisp
   (use-package elmacro
-	:disabled t
-	:init
-	(elmacro-mode))
+	:ensure t)
 #+end_src
 ** Initialize =corfu=
 *** Description

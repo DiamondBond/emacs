@@ -232,6 +232,7 @@ Global & private key maps.
   (define-prefix-command 'z-map)
   (global-set-key (kbd "C-1") 'z-map) ;; Ctrl-1
 
+  (define-key z-map (kbd "a") 'org-agenda)
   (define-key z-map (kbd "f") 'find-file-other-frame)
   (define-key z-map (kbd "D") 'dashboard-refresh-buffer)
   (define-key z-map (kbd "d") 'dired-other-frame)

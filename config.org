@@ -4,6 +4,7 @@
 #+DESCRIPTION: Eight Megabytes And Constantly Swapping
 #+LANGUAGE: en
 #+OPTIONS: num:nil
+#+FILETAGS: emacs-cfg
 
 * Core
 Minor quality-of-life modifications for a more pleasant Emacs experience.
@@ -315,6 +316,7 @@ Org-tree-slider included for presentation support.
 		  org-startup-with-inline-images "inlineimages"
 		  org-pretty-entitles t
 		  org-agenda-files (list "~/org/inbox.org"
+								 "~/org/tasks.org"
 								 "~/org/notes.org"
 								 "~/org/daily.org"
 								 "~/org/birthdays.org")
@@ -326,16 +328,19 @@ Org-tree-slider included for presentation support.
 
 	(setq org-todo-keywords
 		  '((sequence "TODO"
-					  "MAYBE"
-					  "NEXT"
-					  "STARTED"
+					  "WIP"
 					  "WAITING"
-					  "PR"
 					  "|"
 					  "DONE"
 					  "DEFERRED"
-					  "CANCELLED"
-					  "DELEGATED")))
+					  "CANCELLED")))
+
+	(setq org-refile-targets
+		  '(("~/org/archive.org" :maxlevel . 1)
+			("~/org/tasks.org" :maxlevel . 1)))
+
+	;; Save Org buffers after refiling!
+	(advice-add 'org-refile :after 'org-save-all-org-buffers)
 
 	(setq org-babel-load-languages
 		  '((awk        . t)
@@ -1132,14 +1137,13 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 				   (nnimap-address "imap.gmail.com")))
 
 	;; Make Gnus prettier
-	(when window-system
-	  (setq gnus-sum-thread-tree-indent "  ")
-	  (setq gnus-sum-thread-tree-root "● ")
-	  (setq gnus-sum-thread-tree-false-root "◯ ")
-	  (setq gnus-sum-thread-tree-single-indent "◎ ")
-	  (setq gnus-sum-thread-tree-vertical        "│")
-	  (setq gnus-sum-thread-tree-leaf-with-other "├─► ")
-	  (setq gnus-sum-thread-tree-single-leaf     "╰─► "))
+	(setq gnus-sum-thread-tree-indent "  ")
+	(setq gnus-sum-thread-tree-root "● ")
+	(setq gnus-sum-thread-tree-false-root "◯ ")
+	(setq gnus-sum-thread-tree-single-indent "◎ ")
+	(setq gnus-sum-thread-tree-vertical        "│")
+	(setq gnus-sum-thread-tree-leaf-with-other "├─► ")
+	(setq gnus-sum-thread-tree-single-leaf     "╰─► ")
 
 	(setq gnus-summary-line-format
 		  (concat
@@ -1192,6 +1196,8 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 
 	;; Fetch only part of the article if we can.
 	(setq gnus-read-active-file 'some)
+	;; Fetch some old headers
+	(setq gnus-fetch-old-headers 'some) 
 
 	;; Gnus automatic scoring
 	(setq gnus-use-adaptive-scoring t)

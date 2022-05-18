@@ -1675,6 +1675,21 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 #+end_src
 ** Open emacs-devel
 #+begin_src emacs-lisp
-  (fset 'open-emacs-devel
-		(kmacro-lambda-form [?\M-x ?g ?n ?u ?s return ?y ?B return ?n ?e ?w ?s ?. ?g ?m ?a ?n ?e ?. ?i ?o return ?\C-s ?e ?m ?a ?c ?s ?. ?d ?e ?v ?e ?l down return return return ?\M-x ?k ?m ?a ?c ?r ?o ?- ?e ?n ?d ?- ?o ?r] 0 "%d"))
+  (defun open-emacs-devel ()
+	"Starts gnus & connects to news.gmane.io/emacs-devel"
+	(interactive)
+	(setq last-command-event 121)
+	(gnus nil)
+	(setq last-command-event 121)
+	(execute-extended-command nil "gnus" "gnus")
+	(setq last-command-event 13)
+	(gnus-group-browse-foreign-server
+	 `(nntp "news.gmane.io"))
+	(setq last-command-event 13)
+	(swiper)
+	(setq last-command-event 13)
+	(gnus-browse-select-group nil))
+
+  ;; (fset 'open-emacs-devel
+  ;; 	  (kmacro-lambda-form [?\M-x ?g ?n ?u ?s return ?y ?B return ?n ?e ?w ?s ?. ?g ?m ?a ?n ?e ?. ?i ?o return ?\C-s ?e ?m ?a ?c ?s ?. ?d ?e ?v ?e ?l down return return return ?\M-x ?k ?m ?a ?c ?r ?o ?- ?e ?n ?d ?- ?o ?r] 0 "%d"))
 #+end_src

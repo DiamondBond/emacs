@@ -326,11 +326,12 @@ Org-tree-slider included for presentation support.
 					  "NEXT"
 					  "STARTED"
 					  "WAITING"
-					  "DELEGATED"
+					  "PR"
 					  "|"
 					  "DONE"
 					  "DEFERRED"
-					  "CANCELLED")))
+					  "CANCELLED"
+					  "DELEGATED")))
 
 	(setq org-babel-load-languages
 		  '((awk        . t)

@@ -749,6 +749,19 @@ C-x o and pick window (a,s,d...)
 Add icons and subtree's to dired.
 *** Code
 #+begin_src emacs-lisp
+  (use-package dired
+	:straight (:type built-in)
+	:commands (dired dired-jump)
+	:bind (("C-x C-j" . dired-jump))
+	:custom ((dired-listing-switches "-agho --group-directories-first"))
+	:config
+	(evil-collection-define-key 'normal 'dired-mode-map
+								"h" 'dired-single-up-directory
+								"l" 'dired-single-buffer))
+
+  (use-package dired-single
+	:commands (dired dired-jump))
+
   (use-package all-the-icons-dired
 	:ensure t
 	:diminish all-the-icons-dired-mode
@@ -758,27 +771,23 @@ Add icons and subtree's to dired.
 						  (unless (file-remote-p default-directory)
 							(all-the-icons-dired-mode)))))
 
+  (use-package dired-open
+	:commands (dired dired-jump)
+	:config
+	;; Doesn't work as expected!
+	;;(add-to-list 'dired-open-functions #'dired-open-xdg t)
+	(setq dired-open-extensions '(("png" . "nomacs")
+								  ("jpg" . "nomacs")
+								  ("mp4" . "mpv")
+								  ("mkv" . "mpv"))))
+
   (use-package dired-subtree
 	:ensure t
 	:config
-	(advice-add 'dired-subtree-toggle :after (lambda ()
-											   (interactive)
-											   (when all-the-icons-dired-mode
-												 (revert-buffer)))))
-
-  (defun xah/dired-sort ()
-	"Sort dired dir listing in different ways.
-  Prompt for a choice."
-	(interactive)
-	(let (sort-by arg)
-	  (setq sort-by (completing-read "Sort by:" '("name" "size" "date" "extension")))
-	  (pcase sort-by
-		("name" (setq arg "-ahl --group-directories-first"))
-		("date" (setq arg "-ahl -t --group-directories-first"))
-		("size" (setq arg "-ahl -S --group-directories-first"))
-		("extension" (setq arg "ahlD -X --group-directories-first"))
-		(otherwise (error "Dired-sort: unknown option %s" otherwise)))
-	  (dired-sort-other arg)))
+	(advice-add 'dired-subtree-toggle
+				:after (lambda () (interactive)
+						 (when all-the-icons-dired-mode
+						   (revert-buffer)))))
 #+end_src
 ** Initialize =evil=
 *** Description
@@ -1297,22 +1306,32 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
+** Initialize doom-themes
+*** Description
+The martian hackers Emacs theme collection.
+*** Code
+#+begin_src emacs-lisp
+  (use-package doom-themes
+	:disabled t
+	:ensure t
+	:init (load-theme 'doom-palenight t))
+#+end_src
 ** Initialize doom-modeline
 *** Description
 A fancy and fast mode-line inspired by minimalism design.
 *** Code
 #+begin_src emacs-lisp
   (use-package doom-modeline
-	:ensure t
+	:disabled t
 	:config
 	;; set modeline height
 	(setq doom-modeline-height 25)
+	;; show position in buffer on the left of the modeline
+	(setq doom-modeline-hud nil)
 	;; whether to display the buffer encoding or not
 	(setq doom-modeline-buffer-encoding nil)
 	;; whether to display the indentation info
 	(setq doom-modeline-indent-info nil)
-	;; show position in buffer on the left of the modeline
-	(setq doom-modeline-hud nil)
 	;; color the major mode icon
 	(setq doom-modeline-major-mode-color-icon t)
 	;; whether to display minor-modes or not
@@ -1719,6 +1738,22 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(if (buffer-file-name)
 		(if (string-match (car my-pair) buffer-file-name)
 			(funcall (cdr my-pair)))))
+#+end_src
+** Dired sort
+#+begin_src emacs-lisp
+  (defun xah/dired-sort ()
+	"Sort dired dir listing in different ways.
+  Prompt for a choice."
+	(interactive)
+	(let (sort-by arg)
+	  (setq sort-by (completing-read "Sort by:" '("name" "size" "date" "extension")))
+	  (pcase sort-by
+		("name" (setq arg "-ahl --group-directories-first"))
+		("date" (setq arg "-ahl -t --group-directories-first"))
+		("size" (setq arg "-ahl -S --group-directories-first"))
+		("extension" (setq arg "ahlD -X --group-directories-first"))
+		(otherwise (error "Dired-sort: unknown option %s" otherwise)))
+	  (dired-sort-other arg)))
 #+end_src
 ** Split and follow
 #+BEGIN_SRC emacs-lisp

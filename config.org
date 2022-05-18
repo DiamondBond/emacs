@@ -1122,9 +1122,16 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
   (use-package gnus
 	:ensure t
 	:config
+	(setq gnus-select-method '(nntp "news.gmane.io")) ;; Read feeds/atom through gmane
+	;; ask encryption password once
+	(setq epa-file-cache-passphrase-for-symmetric-encryption t)
+
+	;; Gmail
 	(setq gnus-select-method
 		  '(nnimap "gmail"
 				   (nnimap-address "imap.gmail.com")))
+
+	;; Make Gnus prettier
 	(when window-system
 	  (setq gnus-sum-thread-tree-indent "  ")
 	  (setq gnus-sum-thread-tree-root "● ")
@@ -1134,7 +1141,6 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 	  (setq gnus-sum-thread-tree-leaf-with-other "├─► ")
 	  (setq gnus-sum-thread-tree-single-leaf     "╰─► "))
 
-	;; Make Gnus prettier
 	(setq gnus-summary-line-format
 		  (concat
 		   "%0{%U%R%z%}"
@@ -1184,8 +1190,16 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 	(setq gnus-treat-display-smileys t)
 	(setq gnus-treat-emphasize 'head)
 
+	;; Fetch only part of the article if we can.
+	(setq gnus-read-active-file 'some)
+
 	;; Gnus automatic scoring
-	(setq gnus-use-adaptive-scoring t))
+	(setq gnus-use-adaptive-scoring t)
+
+	;; Gnus sorting
+	(setq gnus-thread-sort-functions
+		  '(gnus-thread-sort-by-most-recent-date
+			(not gnus-thread-sort-by-number))))
 #+end_src
 ** Initialize =erc=
 *** Description

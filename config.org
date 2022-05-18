@@ -18,8 +18,8 @@ Minor quality-of-life modifications for a more pleasant Emacs experience.
 #+end_src
 ** Auth
 #+begin_src emacs-lisp
-  ;; (setq auth-sources '("~/.authinfo.gpg")
-  ;; 	  auth-source-cache-expiry nil)
+  (setq auth-sources '("~/.authinfo" "~/.authinfo.gpg")
+		auth-source-cache-expiry nil)
 #+end_src
 ** Performance
 #+begin_src emacs-lisp
@@ -1113,6 +1113,79 @@ Email via notmuch and offlineimap as a sync backend.
 					(:name "unread" :query "(tag:unread)" :sort-order newest-first :key "n")
 					(:name "starred" :query "tag:flagged" :sort-order newest-first :key "f")
 					(:name "sent" :query "(tag:sent OR tag:replied)" :sort-order newest-first :key "s")))))
+#+end_src
+** Initialize =gnus=
+*** Description
+Gnus, or Gnus Network User Services, is a message reader which is part of GNU Emacs.
+*** Code
+#+begin_src emacs-lisp
+  (use-package gnus
+	:ensure t
+	:config
+	(setq gnus-select-method
+		  '(nnimap "gmail"
+				   (nnimap-address "imap.gmail.com")))
+	(when window-system
+	  (setq gnus-sum-thread-tree-indent "  ")
+	  (setq gnus-sum-thread-tree-root "● ")
+	  (setq gnus-sum-thread-tree-false-root "◯ ")
+	  (setq gnus-sum-thread-tree-single-indent "◎ ")
+	  (setq gnus-sum-thread-tree-vertical        "│")
+	  (setq gnus-sum-thread-tree-leaf-with-other "├─► ")
+	  (setq gnus-sum-thread-tree-single-leaf     "╰─► "))
+
+	;; Make Gnus prettier
+	(setq gnus-summary-line-format
+		  (concat
+		   "%0{%U%R%z%}"
+		   "%3{│%}" "%1{%d%}" "%3{│%}" ;; date
+		   "  "
+		   "%4{%-20,20f%}"               ;; name
+		   "  "
+		   "%3{│%}"
+		   " "
+		   "%1{%B%}"
+		   "%s\n"))
+
+	(setq gnus-summary-display-arrow t)
+
+	;; Make Gnus startup faster
+	(setq gnus-check-new-newsgroups nil
+		  gnus-check-bogus-newsgroups nil)
+
+	;; Fixing summary buffer
+	;; There’s no need to recenter the summary buffer all the time. It only slows gnus down.
+	(setq gnus-auto-center-summary nil)
+	;; Enter the summary buffer faster
+	(setq gnus-nov-is-evil nil
+		  gnus-show-threads t
+		  gnus-use-cross-reference nil)
+
+	;; News check
+	(defun gnus-demon-scan-news ()
+	  (interactive)
+	  (when gnus-plugged
+		(let ((win (current-window-configuration))
+			  (gnus-read-active-file nil)
+			  (gnus-check-new-newsgroups nil)
+			  (gnus-verbose 2)
+			  (gnus-verbose-backends 5))
+		  (unwind-protect
+			  (save-window-excursion
+				(when (gnus-alive-p)
+				  (with-current-buffer gnus-group-buffer
+					(gnus-group-get-new-news gnus-activate-level))))
+			(set-window-configuration win)))))
+
+	;; Configuring mail appearance
+	(setq gnus-treat-strip-multiple-blank-lines t)
+	(setq gnus-treat-trailing-blank-lines t)
+	;; let's see some smiles in gnus
+	(setq gnus-treat-display-smileys t)
+	(setq gnus-treat-emphasize 'head)
+
+	;; Gnus automatic scoring
+	(setq gnus-use-adaptive-scoring t))
 #+end_src
 ** Initialize =erc=
 *** Description

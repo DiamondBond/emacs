@@ -1704,9 +1704,13 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(interactive)
 	(forward-line -15))
 #+end_src
-** Enable toolbar
+** Enable athena toolbar
 #+begin_src emacs-lisp
   ;;(add-to-list 'default-frame-alist '(tool-bar-lines . 1))
+#+end_src
+** Honeydew
+#+begin_src emacs-lisp
+  ;; (add-to-list 'default-frame-alist '(background-color . "honeydew")) ;; f0fff0
 #+end_src
 ** Open emacs-devel
 #+begin_src emacs-lisp

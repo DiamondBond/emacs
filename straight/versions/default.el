@@ -30,6 +30,7 @@
  ("emacs-which-key" . "129f4ebfc74f207ac82978f6d90d8b4bb1a55cf9")
  ("emacsmirror-mirror" . "378111b2b7846064679a063f4eec48ef6de39ce9")
  ("embark" . "5bb0e3aa40d6177a4b377af6da296b33b7ad404a")
+ ("engine-mode" . "e0910f141f2d37c28936c51c3c8bb8a9ca0c01d1")
  ("erc" . "ec559be1e6f3bac68db3036177e9fe5f377f281b")
  ("esxml" . "7ac1fec0e45f12836b301fd9b8e7297434db2f70")
  ("evil" . "5a9cfbc443219c4063b17853b7828ec0a00d2736")

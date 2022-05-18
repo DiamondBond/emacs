@@ -213,6 +213,9 @@ Super - Control - <arrow>
   (defalias 'second 'cadr)
   (defalias 'third 'caddr)
   (defalias 'when-not 'unless)
+
+  ;; such a destructive command should not have a similar name
+  (defalias 'bookmark-delete-all 'bookmark-delete)
 #+end_src
 ** Set environment
 Essential for using shells in Emacs.

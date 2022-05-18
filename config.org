@@ -1171,18 +1171,32 @@ engine-mode is a global minor mode for Emacs that enables you to easily define s
   (use-package engine-mode
 	:ensure t
 	:config
-	(defengine google "https://google.com/search?q=%s" :keybinding "g")
-	(defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d")
-	(defengine qwant "https://www.qwant.com/?q=%s" :keybinding "q")
-	(defengine wikipedia "https://en.wikipedia.org/wiki/Special:Search?search=%s" :keybinding "w")
-	(defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y")
-	(defengine twitter "https://twitter.com/search?q=%s" :keybinding "t")
-	(defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h")
-	(defengine melpa "https://melpa.org/#/?q=%s" :keybinding "m")
-	(defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "s")
-	(defengine wolfram-alpha "http://www.wolframalpha.com/input/?i=%s" :keybinding "a")
-	(defengine rfcs "http://pretty-rfc.herokuapp.com/search?q=%s" :keybinding "r")
-	(defengine project-gutenberg "http://www.gutenberg.org/ebooks/search/?query=%s" :keybinding "p")
+	(defengine google "https://google.com/search?q=%s" :keybinding "g"
+	  :docstring "Applied Google-fu.")
+	(defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d"
+	  :docstring "DDG!")
+	(defengine qwant "https://www.qwant.com/?q=%s" :keybinding "q"
+	  :docstring "Qwant it.")
+	(defengine wikipedia "https://en.wikipedia.org/wiki/Special:Search?search=%s" :keybinding "w"
+	  :docstring "Search Wikipedia.")
+	(defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y"
+	  :docstring "Search YouTube.")
+	(defengine twitter "https://twitter.com/search?q=%s" :keybinding "t"
+	  :docstring "Search Twitter.")
+	(defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h"
+	  :docstring "Search GitHub.")
+	(defengine melpa "https://melpa.org/#/?q=%s" :keybinding "m"
+	  :docstring "Search the Milkypostman's Emacs Lisp Package Archive.")
+	(defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "s"
+	  :docstring "Search Stack Overflow.")
+	(defengine wolfram-alpha "http://www.wolframalpha.com/input/?i=%s" :keybinding "a"
+	  :docstring "Search Wolfram Alpha.")
+	(defengine rfcs "http://pretty-rfc.herokuapp.com/search?q=%s" :keybinding "r"
+	  :docstring "Search RFC documents.")
+	(defengine ctan "http://www.ctan.org/search/?x=1&PORTAL=on&phrase=%s" :keybinding "c"
+	  :docstring "Search the Comprehensive TeX Archive Network")
+	(defengine project-gutenberg "http://www.gutenberg.org/ebooks/search/?query=%s" :keybinding "p"
+	  :docstring "Search Project Gutenberg.")
 	(engine/set-keymap-prefix (kbd "C-x /"))
 	(setq engine/browser-function 'browse-url-firefox)
 	:init

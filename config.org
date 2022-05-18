@@ -49,17 +49,6 @@ Minor quality-of-life modifications for a more pleasant Emacs experience.
   (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
   (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 #+end_src
-** Configure Scrolling
-#+begin_src emacs-lisp
-  ;; Precision pixel scrolling
-  ;; (DEPENDS: Emacs@HEAD=29+)
-  ;; (pixel-scroll-precision-mode)
-
-  ;; Enables nice scrolling for Emacs<=28.1
-  (setq scroll-margin 0)
-  (setq scroll-conservatively 100000)
-  (setq scroll-preserve-screen-position 1)
-#+end_src
 ** Disable automatic creation of backup files
 #+BEGIN_SRC emacs-lisp
   (setq make-backup-files nil)
@@ -102,6 +91,17 @@ Set tabs & indents to 4sp.
   (setq-default indent-tabs-mode t)
   (setq backward-delete-char-untabify-method 'nil)
 #+END_SRC
+** Configure Scrolling
+#+begin_src emacs-lisp
+  ;; Precision pixel scrolling
+  ;; (DEPENDS: Emacs@HEAD=29+)
+  ;; (pixel-scroll-precision-mode)
+
+  ;; Enables nice scrolling for Emacs<=28.1
+  (setq scroll-margin 0)
+  (setq scroll-conservatively 100000)
+  (setq scroll-preserve-screen-position 1)
+#+end_src
 ** Fill whatever space the window manager has given us.
 #+begin_src emacs-lisp
   (setq window-resize-pixelwise t)
@@ -131,7 +131,7 @@ Set tabs & indents to 4sp.
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-  (add-hook 'text-mode-hook 'display-line-numbers-mode)
+  ;;(add-hook 'text-mode-hook 'display-line-numbers-mode)
 #+END_SRC
 ** Enable column numbers
 Show column number in modeline.
@@ -149,10 +149,10 @@ Show column number in modeline.
 #+END_SRC
 ** Disable most gui elements
 #+BEGIN_SRC emacs-lisp
-  ;;(tool-bar-mode -1)
   (menu-bar-mode 1)
-  (scroll-bar-mode 1)
-  (set-scroll-bar-mode 'right) ;; For x-toolkit=athena
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  ;;(set-scroll-bar-mode 'right) ;; For x-toolkit=athena
 #+END_SRC
 ** Enable copy-pasting outside of Emacs
 #+BEGIN_SRC emacs-lisp
@@ -496,6 +496,16 @@ Elisp sweetening.
   (use-package async   :demand t) ; async
   (use-package ts      :demand t) ; timestamps
   (use-package pcre2el :demand t) ; sane regex
+#+end_src
+** Initialize =elmacro=
+*** Description
+Shows keyboard macros or latest interactive commands as emacs lisp.
+*** Code
+#+begin_src emacs-lisp
+  (use-package elmacro
+	:ensure t
+	:init
+	(elmacro-mode))
 #+end_src
 ** Initialize =corfu=
 *** Description
@@ -1112,6 +1122,7 @@ Email via notmuch and offlineimap as a sync backend.
 	:commands (notmuch)
 	:config
 	(add-hook 'notmuch-hello-mode-hook
+			  ;; disable line numbers mode in notmuch
 			  (lambda () (display-line-numbers-mode 0)))
 	;; setup the mail address
 	(setq mail-user-agent 'message-user-agent)
@@ -1316,18 +1327,17 @@ The martian hackers Emacs theme collection.
 	:ensure t
 	:init (load-theme 'doom-palenight t))
 #+end_src
-** Initialize doom-modeline
+** Initialize =doom-modeline=
 *** Description
 A fancy and fast mode-line inspired by minimalism design.
 *** Code
 #+begin_src emacs-lisp
   (use-package doom-modeline
-	:disabled t
 	:config
 	;; set modeline height
 	(setq doom-modeline-height 25)
 	;; show position in buffer on the left of the modeline
-	(setq doom-modeline-hud nil)
+	(setq doom-modeline-hud t)
 	;; whether to display the buffer encoding or not
 	(setq doom-modeline-buffer-encoding nil)
 	;; whether to display the indentation info
@@ -1776,13 +1786,13 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 ** Erc handlers
 #+begin_src emacs-lisp
   (defun erc-start ()
-	"Start ERC and connect to Rizon"
+	"Start ERC and connect to Rizon."
 	(interactive)
 	(save-current-buffer
 	  (erc :server "irc.rizon.net" :port "6667" :nick "diamondbond")))
 
   (defun erc-quit ()
-	"Quit ERC"
+	"Quit ERC."
 	(interactive)
 	(erc-quit-server nil))
 #+end_src
@@ -1886,18 +1896,10 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(interactive)
 	(forward-line -15))
 #+end_src
-** Enable athena toolbar
-#+begin_src emacs-lisp
-  ;;(add-to-list 'default-frame-alist '(tool-bar-lines . 1))
-#+end_src
-** Honeydew
-#+begin_src emacs-lisp
-  ;; (add-to-list 'default-frame-alist '(background-color . "honeydew")) ;; f0fff0
-#+end_src
 ** Open emacs-devel
 #+begin_src emacs-lisp
   (defun open-emacs-devel ()
-	"Starts gnus & connects to news.gmane.io/emacs-devel"
+	"Starts gnus & connects to news.gmane.io/emacs-devel."
 	(interactive)
 	(setq last-command-event 121)
 	(gnus nil)
@@ -1913,4 +1915,28 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 
   ;; (fset 'open-emacs-devel
   ;; 	  (kmacro-lambda-form [?\M-x ?g ?n ?u ?s return ?y ?B return ?n ?e ?w ?s ?. ?g ?m ?a ?n ?e ?. ?i ?o return ?\C-s ?e ?m ?a ?c ?s ?. ?d ?e ?v ?e ?l down return return return ?\M-x ?k ?m ?a ?c ?r ?o ?- ?e ?n ?d ?- ?o ?r] 0 "%d"))
+#+end_src
+** Insert link template
+#+begin_src emacs-lisp
+  (defun insert-org-link-template ()
+	"Inserts org link template at point."
+	(interactive)
+	(setq last-command-event 91)
+	(org-self-insert-command 1)
+	(setq last-command-event 91)
+	(org-self-insert-command 1)
+	(setq last-command-event 'right)
+	(right-char 1)
+	(setq last-command-event 91)
+	(org-self-insert-command 1))
+#+end_src
+* Archived
+** Honeydew
+[[][]]
+#+begin_src emacs-lisp
+  ;; (add-to-list 'default-frame-alist '(background-color . "honeydew")) ;; f0fff0
+#+end_src
+** Enable athena toolbar
+#+begin_src emacs-lisp
+  ;;(add-to-list 'default-frame-alist '(tool-bar-lines . 1))
 #+end_src

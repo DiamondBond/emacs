@@ -25,6 +25,7 @@
  ("dired-single" . "b254f9b7bfc96a5eab5760a56811f2872d2c590a")
  ("el-get" . "91352ca0f895d099f608644c8e9ad8e844b5c520")
  ("elfeed" . "162d7d545ed41c27967d108c04aa31f5a61c8e16")
+ ("elmacro" . "d2e05012cee4f54fab6d8d8d6aced6e5eeef4f31")
  ("emacs-async" . "c78bab7506a70a735d2c3deab13fa87bf44a83d3")
  ("emacs-dashboard" . "a4eb09778f7b685b6ff652212bf1fa2e6e1305d7")
  ("emacs-kv" . "721148475bce38a70e0b678ba8aa923652e8900e")

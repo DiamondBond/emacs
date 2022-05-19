@@ -1928,6 +1928,14 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(setq last-command-event 91)
 	(org-self-insert-command 1))
 #+end_src
+** Start to org-agenda
+#+begin_src emacs-lisp
+  (defun start-to-org-agenda ()
+	"Environment manipulation macro to launch focused org-agenda."
+	(interactive)
+	(org-agenda-list)
+	(delete-other-windows))
+#+end_src
 * Archived
 ** Honeydew
 [[][]]

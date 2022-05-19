@@ -411,11 +411,11 @@ Org-tree-slider included for presentation support.
   (use-package org-wild-notifier
 	:ensure t
 	:after org
-	:custom
-	(alert-default-style 'libnotify)
-	(org-wild-notifier-alert-time '(1 10 15 30))
-	(org-wild-notifier-keyword-whitelist nil)
-	(org-wild-notifier-notification-title "*reminder*")
+	:config
+	(setq alert-default-style 'libnotify)
+	(setq org-wild-notifier-alert-time '(1 5 10 15 30))
+	(setq org-wild-notifier-keyword-whitelist nil)
+	(setq org-wild-notifier-notification-title "*reminder*")
 	:init
 	(org-wild-notifier-mode 1))
 

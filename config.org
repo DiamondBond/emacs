@@ -131,7 +131,7 @@ Set tabs & indents to 4sp.
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-  ;;(add-hook 'text-mode-hook 'display-line-numbers-mode)
+  (add-hook 'text-mode-hook 'display-line-numbers-mode)
 #+END_SRC
 ** Enable column numbers
 Show column number in modeline.
@@ -140,7 +140,8 @@ Show column number in modeline.
 #+END_SRC
 ** Set font
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
+  ;;(add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
+  (add-to-list 'default-frame-alist '(font . "Consolas-12"))
 #+end_src
 ** Disable the default startup screen
 #+BEGIN_SRC emacs-lisp
@@ -377,7 +378,7 @@ Org-tree-slider included for presentation support.
 
   ;; prettify org-mode
   (use-package org-modern
-	:ensure t
+	:disabled t
 	:after org
 	:config
 	(setq

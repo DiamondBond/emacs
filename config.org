@@ -153,7 +153,6 @@ Show column number in modeline.
   (menu-bar-mode 1)
   (tool-bar-mode -1)
   (scroll-bar-mode 1)
-  (set-scroll-bar-mode 'right) ;; For x-toolkit=athena
 #+END_SRC
 ** Enable copy-pasting outside of Emacs
 #+BEGIN_SRC emacs-lisp
@@ -1320,7 +1319,7 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 *** Code
 #+begin_src emacs-lisp
   (use-package modus-themes
-	:disabled t
+	:defer nil
 	:init
 	;; Add all your customizations prior to loading the themes
 	(setq modus-themes-italic-constructs t
@@ -2180,13 +2179,65 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(fit-frame-to-buffer))
 #+end_src
 ** Configure  default-frame-alist
-*** Honeydew
+*** Switch-theme
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(background-color . "honeydew"))
-  ;;(add-to-list 'default-frame-alist '(background-color . "cornsilk"))
-  ;;(add-to-list 'default-frame-alist '(background-color . "lavender"))
+  (defun switch-theme/disable-all ()
+	"Disable all active themes."
+	(dolist (i custom-enabled-themes)
+	  (disable-theme i)))
+
+  (defun switch-theme/reset ()
+	"Reset default-frame-alist."
+	(interactive)
+	(switch-theme/disable-all)
+	(setq default-frame-alist '((font . "Consolas-12") (internal-border-width . 0) (vertical-scroll-bars . right))))
+
+  (defun switch-theme/honeydew ()
+	"Switch to Honeydew theme."
+	(interactive)
+	(switch-theme/reset)
+	(set-background-color "honeydew")
+	(add-to-list 'default-frame-alist '(background-color . "honeydew")))
+
+  (defun switch-theme/lavender ()
+	"Switch to Lavender theme."
+	(interactive)
+	(switch-theme/reset)
+	(set-background-color "lavender")
+	(add-to-list 'default-frame-alist '(background-color . "lavender")))
+
+  (defun switch-theme/cornsilk ()
+	"Switch to Cornsilk theme."
+	(interactive)
+	(switch-theme/reset)
+	(set-background-color "cornsilk")
+	(add-to-list 'default-frame-alist '(background-color . "cornsilk")))
+
+  (defun switch-theme/ghostwhite ()
+	"Switch to GhostWhite theme."
+	(interactive)
+	(switch-theme/reset)
+	(set-background-color "ghostwhite")
+	(add-to-list 'default-frame-alist '(background-color . "ghostwhite")))
 #+end_src
-*** Enable athena toolbar
+*** Set theme depending on mode
 #+begin_src emacs-lisp
-  ;;(add-to-list 'default-frame-alist '(tool-bar-lines . 1))
+  ;; (defun my-set-theme-on-mode ()
+  ;;   "Set background color depending on file suffix."
+  ;;   (interactive)
+  ;;   (let ((fileNameSuffix (file-name-extension (buffer-file-name) ) ))
+  ;; 	(cond
+  ;; 	 ((string-equal fileNameSuffix "org" ) (theme/honeydew))
+  ;; 	 ((string-equal fileNameSuffix "el" ) (theme/lavender))
+  ;; 	 ((string-equal fileNameSuffix "txt" ) (theme/cornsilk))
+  ;; 	 (t (message "%s" "no match found"))
+  ;; 	 )
+  ;; 	))
+
+  ;; (add-hook 'find-file-hook 'my-set-theme-on-mode)
+#+end_src
+*** Athena
+#+begin_src emacs-lisp
+  (set-scroll-bar-mode 'right) ;; Enable right athena scrollbar
+  ;;(add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable athena toolbar
 #+end_src

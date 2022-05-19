@@ -413,7 +413,7 @@ Org-tree-slider included for presentation support.
 	:after org
 	:config
 	(setq alert-default-style 'libnotify)
-	(setq org-wild-notifier-alert-time '(1 5 10 15 30))
+	(setq org-wild-notifier-alert-time '(1 5 10 15 30 60))
 	(setq org-wild-notifier-keyword-whitelist nil)
 	(setq org-wild-notifier-notification-title "*reminder*")
 	:init

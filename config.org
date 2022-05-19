@@ -2101,7 +2101,6 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (defun sync-dotfiles ()
 	"Sync dotfiles."
 	(interactive)
-	(update-emacs-pkglist)
 	(async-shell-command "~/bin/sync-dotfiles.sh")
 	(alert "Sync Complete." :severity 'trivial))
 #+end_src

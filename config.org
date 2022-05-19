@@ -2129,6 +2129,15 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(setq last-command-event 91)
 	(org-self-insert-command 1))
 #+end_src
+** Insert WILD_NOTIFIER
+#+begin_src emacs-lisp
+  (defun insert-wild-notifier-template ()
+	"Inserts WILD_NOTIFIER_NOTIFY_BEFORE template at point."
+	(interactive)
+	(insert ":PROPERTIES:
+:WILD_NOTIFIER_NOTIFY_BEFORE: 60 30 15 10 5
+:END:"))
+#+end_src
 ** Start to org-agenda
 #+begin_src emacs-lisp
   (defun start-to-org-agenda ()

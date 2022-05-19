@@ -1329,8 +1329,8 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 
 	;; Load the theme files before enabling a theme
 	(modus-themes-load-themes)
-	;; :config
-	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	:config
+	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 ** Initialize =doom-themes=
@@ -1339,7 +1339,7 @@ The martian hackers Emacs theme collection.
 *** Code
 #+begin_src emacs-lisp
   (use-package doom-themes
-	:ensure t)
+	:disabled t)
 #+end_src
 ** Initialize =doom-modeline=
 *** Description
@@ -1347,6 +1347,7 @@ A fancy and fast mode-line inspired by minimalism design.
 *** Code
 #+begin_src emacs-lisp
   (use-package doom-modeline
+	:disabled t
 	:config
 	;; set modeline height
 	(setq doom-modeline-height 25)
@@ -1362,8 +1363,8 @@ A fancy and fast mode-line inspired by minimalism design.
 	(setq doom-modeline-minor-modes t)
 	;; irc
 	(setq doom-modeline-irc t)
-	(setq doom-modeline-irc-stylize 'identity))
-  ;;:init (doom-modeline-mode 1))
+	(setq doom-modeline-irc-stylize 'identity)
+	:init (doom-modeline-mode 1))
 #+end_src
 ** Initialize =crux=
 *** Description
@@ -2078,6 +2079,14 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(interactive)
 	(run-in-vterm "ncmpcpp"))
 #+end_src
+** Get buffer menu in new frame
+#+begin_src emacs-lisp
+  ;; https://stackoverflow.com/questions/12014036/emacs-make-frame-switch-buffer
+  (defun get-buffer-menu-in-new-frame ()
+	"Switch-to-buffer-other-frame in new frame."
+	(interactive)
+	(switch-to-buffer-other-frame (list-buffers-noselect)))
+#+end_src
 ** Yank Whole Buffer
 #+begin_src emacs-lisp
   (defun yank-whole-buffer ()
@@ -2137,14 +2146,6 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   ;; (fset 'open-emacs-devel
   ;; 	  (kmacro-lambda-form [?\M-x ?g ?n ?u ?s return ?y ?B return ?n ?e ?w ?s ?. ?g ?m ?a ?n ?e ?. ?i ?o return ?\C-s ?e ?m ?a ?c ?s ?. ?d ?e ?v ?e ?l down return return return ?\M-x ?k ?m ?a ?c ?r ?o ?- ?e ?n ?d ?- ?o ?r] 0 "%d"))
 #+end_src
-** Get buffer menu in new frame
-#+begin_src emacs-lisp
-  ;; https://stackoverflow.com/questions/12014036/emacs-make-frame-switch-buffer
-  (defun get-buffer-menu-in-new-frame ()
-	"Switch-to-buffer-other-frame in new frame."
-	(interactive)
-	(switch-to-buffer-other-frame (list-buffers-noselect)))
-#+end_src
 ** Insert link template
 #+begin_src emacs-lisp
   (defun insert-org-link-template ()
@@ -2177,12 +2178,12 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(delete-other-windows)
 	(fit-frame-to-buffer))
 #+end_src
-* Archived
-** Honeydew
+** Configure  default-frame-alist
+*** Honeydew
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(background-color . "honeydew")) ;; f0fff0
+  ;;(add-to-list 'default-frame-alist '(background-color . "honeydew")) ;; f0fff0
 #+end_src
-** Enable athena toolbar
+*** Enable athena toolbar
 #+begin_src emacs-lisp
   ;;(add-to-list 'default-frame-alist '(tool-bar-lines . 1))
 #+end_src

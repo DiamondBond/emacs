@@ -2101,7 +2101,9 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (defun sync-dotfiles ()
 	"Sync dotfiles."
 	(interactive)
-	(async-shell-command "~/bin/sync-dotfiles.sh"))
+	(update-emacs-pkglist)
+	(async-shell-command "~/bin/sync-dotfiles.sh")
+	(alert "Sync Complete." :severity 'trivial))
 #+end_src
 ** Sync Sources
 #+begin_src emacs-lisp
@@ -2111,16 +2113,6 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(sync-email)
 	(elfeed)
 	(elfeed-update))
-#+end_src
-** Sync all
-#+begin_src emacs-lisp
-  (defun sync-all ()
-	"Sync everything."
-	(interactive)
-	(sync-sources)
-	(update-emacs-pkglist)
-	(sync-dotfiles)
-	(alert "Sync Complete." :severity 'trivial))
 #+end_src
 ** Dev-C++ Compile & Run
 #+begin_src emacs-lisp

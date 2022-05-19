@@ -1373,6 +1373,17 @@ A Collection of Ridiculously Useful eXtensions.
   (use-package crux
 	:ensure t)
 #+end_src
+** Initialize =0x0=
+*** Description
+Instant upload to 0x0.st
+*** Code
+#+begin_src emacs-lisp
+  (use-package 0x0
+	:straight t
+	:defer t
+	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text)
+	:init (evil-leader/set-key "a 0" '0x0-dwim))
+#+end_src
 ** Initialize =deft=
 *** Description
 Deft is included for quicksearch of entire ~/org directory.

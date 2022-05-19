@@ -64,6 +64,7 @@
  ("marginalia" . "26f2bd9ee7b63bcad6604108e2f565b34bc6083b")
  ("markdown-mode" . "4477f381de0068a04b55e198c32614793f67b38a")
  ("melpa" . "1c858ee39e50876efc483881e6348597664adb7a")
+ ("modus-themes" . "b6285162d80fe438b4ac99acff74d33b5f901c35")
  ("notmuch" . "90a7c1af368a527700dcde9b0dcbd760afc7bd92")
  ("nov.el" . "8f5b42e9d9f304b422c1a7918b43ee323a7d3532")
  ("olivetti" . "8d287a80c5e3d72ac01b56c8afe60b01f18500b4")

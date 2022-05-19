@@ -1328,8 +1328,8 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 
 	;; Load the theme files before enabling a theme
 	(modus-themes-load-themes)
-	:config
-	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	;; :config
+	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 ** Initialize =doom-themes=
@@ -2115,7 +2115,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 ** Sync all
 #+begin_src emacs-lisp
   (defun sync-all ()
-	"Sync dotfiles, emacs, email & news."
+	"Sync everything."
 	(interactive)
 	(sync-sources)
 	(update-emacs-pkglist)
@@ -2204,7 +2204,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(delete-other-windows)
 	(fit-frame-to-buffer))
 #+end_src
-** Configure  default-frame-alist
+** Configure default-frame-alist
 *** Switch-theme
 #+begin_src emacs-lisp
   (defun switch-theme/disable-all ()
@@ -2216,7 +2216,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	"Reset default-frame-alist."
 	(interactive)
 	(switch-theme/disable-all)
-  	(set-background-color "white")
+	(set-background-color "white")
 	(setq default-frame-alist '((font . "Consolas-12") (internal-border-width . 0) (vertical-scroll-bars . right))))
 
   (defun switch-theme/honeydew ()
@@ -2239,6 +2239,13 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(switch-theme/reset)
 	(set-background-color "cornsilk")
 	(add-to-list 'default-frame-alist '(background-color . "cornsilk")))
+
+  (defun switch-theme/white ()
+	"Switch to White theme."
+	(interactive)
+	(switch-theme/reset)
+	(set-background-color "white")
+	(add-to-list 'default-frame-alist '(background-color . "white")))
 
   (defun switch-theme/ghostwhite ()
 	"Switch to GhostWhite theme."

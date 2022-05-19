@@ -243,6 +243,8 @@ Global & private key maps.
   (define-key z-map (kbd "d") 'dired-other-frame)
   (define-key z-map (kbd "g") 'org-mark-ring-goto)
   (define-key z-map (kbd "G") 'org-mark-ring-goto)
+  (define-key z-map (kbd "h") (lambda () (interactive) (global-hl-line-mode 0)))
+  (define-key z-map (kbd "H") (lambda () (interactive) (global-hl-line-mode 1)))
   (define-key z-map (kbd "2") 'make-frame-command)
   (define-key z-map (kbd "o") 'olivetti-mode)
   (define-key z-map (kbd "m") 'magit-status)
@@ -378,7 +380,7 @@ Org-tree-slider included for presentation support.
 
   ;; prettify org-mode
   (use-package org-modern
-	:disabled t
+	:ensure t
 	:after org
 	:config
 	(setq
@@ -401,9 +403,9 @@ Org-tree-slider included for presentation support.
 	   (800 1000 1200 1400 1600 1800 2000)
 	   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
 	 org-agenda-current-time-string
-	 "⭠ now ─────────────────────────────────────────────────")
-	:init
-	(global-org-modern-mode))
+	 "⭠ now ─────────────────────────────────────────────────"))
+  ;;:init
+  ;;(global-org-modern-mode))
 
   ;; reminders
   (use-package org-wild-notifier
@@ -1098,6 +1100,9 @@ Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based
   (use-package vterm
 	:ensure t
 	:config
+	:config
+	(add-hook 'vterm-mode-hook
+			  (lambda () (global-hl-line-mode 0)))
 	(setq vterm-max-scrollback 10000))
 #+end_src
 ** Initialize =saveplace=
@@ -1321,8 +1326,8 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 
 	;; Load the theme files before enabling a theme
 	(modus-themes-load-themes)
-	:config
-	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	;; :config
+	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 ** Initialize doom-themes
@@ -1773,6 +1778,155 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 		("extension" (setq arg "ahlD -X --group-directories-first"))
 		(otherwise (error "Dired-sort: unknown option %s" otherwise)))
 	  (dired-sort-other arg)))
+#+end_src
+** Toggle Letter Case
+#+begin_src emacs-lisp
+  (put 'upcase-region 'disabled nil)
+  (put 'downcase-region 'disabled nil)
+
+  (defun xah-toggle-letter-case ()
+	"Toggle the letter case of current word or text selection.
+	  Always cycle in this order: Init Caps, ALL CAPS, all lower.
+
+	  URL `http://xahlee.info/emacs/emacs/modernization_upcase-word.html'
+	  Version 2020-06-26"
+	(interactive)
+	(let (
+		  (deactivate-mark nil)
+		  $p1 $p2)
+	  (if (use-region-p)
+		  (setq $p1 (region-beginning) $p2 (region-end))
+		(save-excursion
+		  (skip-chars-backward "[:alpha:]")
+		  (setq $p1 (point))
+		  (skip-chars-forward "[:alpha:]")
+		  (setq $p2 (point))))
+	  (when (not (eq last-command this-command))
+		(put this-command 'state 0))
+	  (cond
+	   ((equal 0 (get this-command 'state))
+		(upcase-initials-region $p1 $p2)
+		(put this-command 'state 1))
+	   ((equal 1 (get this-command 'state))
+		(upcase-region $p1 $p2)
+		(put this-command 'state 2))
+	   ((equal 2 (get this-command 'state))
+		(downcase-region $p1 $p2)
+		(put this-command 'state 0)))))
+
+  (defun xah-toggle-previous-letter-case ()
+	"Toggle the letter case of the letter to the left of cursor.
+  URL `http://xahlee.info/emacs/emacs/modernization_upcase-word.html'
+  Version 2015-12-22"
+	(interactive)
+	(let ((case-fold-search nil))
+	  (left-char 1)
+	  (cond
+	   ((looking-at "[[:lower:]]") (upcase-region (point) (1+ (point))))
+	   ((looking-at "[[:upper:]]") (downcase-region (point) (1+ (point)))))
+	  (right-char)))
+#+end_src
+** Reformat Lines
+#+begin_src emacs-lisp
+  (defun xah-reformat-lines ( &optional @width)
+	"Reformat current text block or selection into short lines or 1 long line.
+
+	  When called for the first time, change to one long line. Second call change it to multiple short lines. Repeated call toggles.
+
+	  If `universal-argument' is called first, use the number value for min length of line. By default, it's 70.
+
+	  URL `http://xahlee.info/emacs/emacs/emacs_reformat_lines.html'
+	  Created 2016 or before.
+	  Version 2021-07-05"
+	(interactive)
+	;; This command symbol has a property “'isLong-p”, the possible values are t and nil. This property is used to easily determine whether to compact or uncompact, when this command is called again
+	(let ( isLong-p $blanksRegex $p1 $p2 )
+	  (setq @width (if @width
+					   @width
+					 (if current-prefix-arg
+						 (prefix-numeric-value current-prefix-arg) 70 )))
+	  (setq isLong-p
+			(if (eq last-command this-command)
+				(get this-command 'isLong-p)
+			  nil))
+	  (setq $blanksRegex "\n[ \t]*\n")
+	  (if (use-region-p)
+		  (setq $p1 (region-beginning) $p2 (region-end))
+		(save-excursion
+		  (if (re-search-backward $blanksRegex nil "move")
+			  (progn (re-search-forward $blanksRegex)
+					 (setq $p1 (point)))
+			(setq $p1 (point)))
+		  (if (re-search-forward $blanksRegex nil "move")
+			  (progn (re-search-backward $blanksRegex)
+					 (setq $p2 (point)))
+			(setq $p2 (point)))))
+	  (progn
+		(if current-prefix-arg
+			(xah-reformat-to-multi-lines $p1 $p2 @width)
+		  (if isLong-p
+			  (xah-reformat-to-multi-lines $p1 $p2 @width)
+			(xah-reformat-whitespaces-to-one-space $p1 $p2)))
+		(put this-command 'isLong-p (not isLong-p)))))
+
+  (defun xah-reformat-whitespaces-to-one-space (@begin @end)
+	"Replace whitespaces by one space.
+
+	URL `http://xahlee.info/emacs/emacs/emacs_reformat_lines.html'
+	Version 2017-01-11"
+	(interactive "r")
+	(save-excursion
+	  (save-restriction
+		(narrow-to-region @begin @end)
+		(goto-char (point-min))
+		(while
+			(search-forward "\n" nil "move")
+		  (replace-match " "))
+		(goto-char (point-min))
+		(while
+			(search-forward "\t" nil "move")
+		  (replace-match " "))
+		(goto-char (point-min))
+		(while
+			(re-search-forward "  +" nil "move")
+		  (replace-match " ")))))
+
+  (defun xah-reformat-to-multi-lines ( &optional @begin @end @min-length)
+	"Replace spaces by a newline at places so lines are not long.
+  When there is a text selection, act on the selection, else, act on a text block separated by blank lines.
+
+  If `universal-argument' is called first, use the number value for min length of line. By default, it's 70.
+
+  URL `http://xahlee.info/emacs/emacs/emacs_reformat_lines.html'
+  Version 2018-12-16 2020-09-08"
+	(interactive)
+	(let (
+		  $p1 $p2
+		  ($blanks-regex "\n[ \t]*\n")
+		  ($minlen (if @min-length
+					   @min-length
+					 (if current-prefix-arg (prefix-numeric-value current-prefix-arg) fill-column))))
+	  (if (and  @begin @end)
+		  (setq $p1 @begin $p2 @end)
+		(if (use-region-p)
+			(progn (setq $p1 (region-beginning) $p2 (region-end)))
+		  (save-excursion
+			(if (re-search-backward $blanks-regex nil "move")
+				(progn (re-search-forward $blanks-regex)
+					   (setq $p1 (point)))
+			  (setq $p1 (point)))
+			(if (re-search-forward $blanks-regex nil "move")
+				(progn (re-search-backward $blanks-regex)
+					   (setq $p2 (point)))
+			  (setq $p2 (point))))))
+	  (save-excursion
+		(save-restriction
+		  (narrow-to-region $p1 $p2)
+		  (goto-char (point-min))
+		  (while
+			  (re-search-forward " +" nil "move")
+			(when (> (- (point) (line-beginning-position)) $minlen)
+			  (replace-match "\n" )))))))
 #+end_src
 ** Split and follow
 #+BEGIN_SRC emacs-lisp

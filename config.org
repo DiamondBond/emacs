@@ -1317,7 +1317,6 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 *** Code
 #+begin_src emacs-lisp
   (use-package modus-themes
-	:disabled t
 	:defer nil
 	:init
 	;; Add all your customizations prior to loading the themes
@@ -1327,8 +1326,8 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 
 	;; Load the theme files before enabling a theme
 	(modus-themes-load-themes)
-	:config
-	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	;; :config
+	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 ** Initialize =doom-themes=
@@ -1337,9 +1336,7 @@ The martian hackers Emacs theme collection.
 *** Code
 #+begin_src emacs-lisp
   (use-package doom-themes
-	:disabled t
-	:ensure t
-	:init (load-theme 'doom-palenight t))
+	:ensure t)
 #+end_src
 ** Initialize =doom-modeline=
 *** Description
@@ -1347,7 +1344,6 @@ A fancy and fast mode-line inspired by minimalism design.
 *** Code
 #+begin_src emacs-lisp
   (use-package doom-modeline
-	:disabled t
 	:config
 	;; set modeline height
 	(setq doom-modeline-height 25)
@@ -1363,8 +1359,8 @@ A fancy and fast mode-line inspired by minimalism design.
 	(setq doom-modeline-minor-modes t)
 	;; irc
 	(setq doom-modeline-irc t)
-	(setq doom-modeline-irc-stylize 'identity)
-	:init (doom-modeline-mode 1))
+	(setq doom-modeline-irc-stylize 'identity))
+  ;;:init (doom-modeline-mode 1))
 #+end_src
 ** Initialize =crux=
 *** Description

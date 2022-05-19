@@ -1388,6 +1388,18 @@ Deft is included for quicksearch of entire ~/org directory.
 	:bind
 	("C-c n d" . deft))
 #+end_src
+** Initialize =dictionary-mode=
+*** Description
+Quick lookup in a dictionary.
+*** Code
+#+begin_src emacs-lisp
+  (use-package dictionary
+	:straight t
+	:commands (dictionary-search)
+	:init
+	(global-set-key (kbd "C-c d") #'dictionary-search)
+	:config (setq dictionary-server "dict.org"))
+#+end_src
 ** Initialize =engine-mode=
 *** Description
 engine-mode is a global minor mode for Emacs that enables you to easily define search engines, bind them to keybindings, and query them from the comfort of your editor.
@@ -2113,6 +2125,14 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 
   ;; (fset 'open-emacs-devel
   ;; 	  (kmacro-lambda-form [?\M-x ?g ?n ?u ?s return ?y ?B return ?n ?e ?w ?s ?. ?g ?m ?a ?n ?e ?. ?i ?o return ?\C-s ?e ?m ?a ?c ?s ?. ?d ?e ?v ?e ?l down return return return ?\M-x ?k ?m ?a ?c ?r ?o ?- ?e ?n ?d ?- ?o ?r] 0 "%d"))
+#+end_src
+** Get buffer menu in new frame
+#+begin_src emacs-lisp
+  ;; https://stackoverflow.com/questions/12014036/emacs-make-frame-switch-buffer
+  (defun get-buffer-menu-in-new-frame ()
+	"Switch-to-buffer-other-frame in new frame."
+	(interactive)
+	(switch-to-buffer-other-frame (list-buffers-noselect)))
 #+end_src
 ** Insert link template
 #+begin_src emacs-lisp

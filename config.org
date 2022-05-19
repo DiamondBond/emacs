@@ -301,7 +301,10 @@ Global & private key maps.
 Alert is a Growl-workalike for Emacs which uses a common notification interface and multiple, selectable "styles", whose use is fully customizable by the user.
 *** Code
 #+begin_src emacs-lisp
-  (use-package alert :ensure t)
+  (use-package alert
+	:ensure t
+	:config
+	(setq alert-fade-time 300))
 #+end_src
 ** Initialize =org=
 *** Description

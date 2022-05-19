@@ -303,7 +303,7 @@ Alert is a Growl-workalike for Emacs which uses a common notification interface 
   (use-package alert
 	:ensure t
 	:config
-	(setq alert-fade-time 300))
+	(setq alert-fade-time 30))
 #+end_src
 ** Initialize =org=
 *** Description
@@ -1204,11 +1204,11 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 	;; Make Gnus prettier
 	(setq gnus-sum-thread-tree-indent "  ")
 	(setq gnus-sum-thread-tree-root "● ")
-	(setq gnus-sum-thread-tree-false-root "◯ ")
+	;; (setq gnus-sum-thread-tree-false-root "◯ ")
 	(setq gnus-sum-thread-tree-single-indent "◎ ")
-	(setq gnus-sum-thread-tree-vertical        "│")
-	(setq gnus-sum-thread-tree-leaf-with-other "├─► ")
-	(setq gnus-sum-thread-tree-single-leaf     "╰─► ")
+	;; (setq gnus-sum-thread-tree-vertical        "│")
+	;; (setq gnus-sum-thread-tree-leaf-with-other "├─► ")
+	;; (setq gnus-sum-thread-tree-single-leaf     "╰─► ")
 
 	(setq gnus-summary-line-format
 		  (concat
@@ -2095,6 +2095,32 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(save-excursion
 	  (mark-whole-buffer)
 	  (call-interactively 'evil-yank)))
+#+end_src
+** Sync dotfiles
+#+begin_src emacs-lisp
+  (defun sync-dotfiles ()
+	"Sync dotfiles."
+	(interactive)
+	(async-shell-command "~/bin/sync-dotfiles.sh"))
+#+end_src
+** Sync Sources
+#+begin_src emacs-lisp
+  (defun sync-sources ()
+	"Syncs in-Emacs sources; elfeed & email."
+	(interactive)
+	(sync-email)
+	(elfeed)
+	(elfeed-update))
+#+end_src
+** Sync all
+#+begin_src emacs-lisp
+  (defun sync-all ()
+	"Sync dotfiles, emacs, email & news."
+	(interactive)
+	(sync-sources)
+	(update-emacs-pkglist)
+	(sync-dotfiles)
+	(alert "Sync Complete." :severity 'trivial))
 #+end_src
 ** Dev-C++ Compile & Run
 #+begin_src emacs-lisp

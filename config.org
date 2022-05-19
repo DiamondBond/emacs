@@ -439,19 +439,23 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 	:diminish dashboard-mode
 	:preface
 	(defun init-edit ()
-	  "Edit initialization file"
+	  "Edit initialization file."
 	  (interactive)
 	  (find-file "~/.emacs.d/init.el"))
-	(defun notes-edit ()
-	  "Edit notes file"
-	  (interactive)
-	  (find-file "~/org/notes.org"))
 	(defun config-edit ()
-	  "Edit configuration file"
+	  "Edit configuration file."
 	  (interactive)
 	  (find-file "~/.emacs.d/config.org"))
+	(defun notes-edit ()
+	  "Edit notes file."
+	  (interactive)
+	  (find-file "~/org/notes.org"))
+	(defun tasks-edit ()
+	  "Edit tasks file."
+	  (interactive)
+	  (find-file "~/org/tasks.org"))
 	(defun create-scratch-buffer ()
-	  "Create a scratch buffer"
+	  "Create a scratch buffer."
 	  (interactive)
 	  (switch-to-buffer (get-buffer-create "*scratch*"))
 	  (lisp-interaction-mode))
@@ -467,19 +471,24 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 	(setq dashboard-set-navigator t)
 	(setq dashboard-navigator-buttons
 		  `(((,nil
-			  "Scratch"
-			  "Switch to the scratch buffer"
-			  (lambda (&rest _) (create-scratch-buffer))
-			  'default)
-			 (nil
 			  "Notes"
 			  "Open personal notes"
 			  (lambda (&rest _) (notes-edit))
 			  'default)
 			 (nil
-			  "Config"
-			  "Open Emacs configuration"
-			  (lambda (&rest _) (config-edit))
+			  "Tasks"
+			  "Open tasks"
+			  (lambda (&rest _) (tasks-edit))
+			  'default)
+			 (nil
+			  "Agenda"
+			  "Open Org-Agenda"
+			  (lambda (&rest _) (start-to-org-agenda))
+			  'default)
+			 (nil
+			  "Scratch"
+			  "Switch to the scratch buffer"
+			  (lambda (&rest _) (create-scratch-buffer))
 			  'default)))))
 #+END_SRC
 ** Initialize =elisp-enhancers=
@@ -1934,7 +1943,8 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	"Environment manipulation macro to launch focused org-agenda."
 	(interactive)
 	(org-agenda-list)
-	(delete-other-windows))
+	(delete-other-windows)
+	(fit-frame-to-buffer))
 #+end_src
 * Archived
 ** Honeydew

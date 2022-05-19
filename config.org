@@ -412,11 +412,11 @@ Org-tree-slider included for presentation support.
 	:ensure t
 	:after org
 	:custom
-	(alert-default-style 'notifications)
+	(alert-default-style 'libnotify)
 	(org-wild-notifier-alert-time '(1 10 15 30))
 	(org-wild-notifier-keyword-whitelist nil)
 	(org-wild-notifier-notification-title "*reminder*")
-	:config
+	:init
 	(org-wild-notifier-mode 1))
 
   ;; presentations
@@ -466,7 +466,8 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 	(dashboard-setup-startup-hook)
 	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
-	(setq dashboard-startup-banner (expand-file-name "img/gnusstorm-2.gif" user-emacs-directory))
+	;; (setq dashboard-startup-banner (expand-file-name "img/gnusstorm-2.gif" user-emacs-directory))
+	(setq dashboard-startup-banner 'official)
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)
@@ -1316,7 +1317,7 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 *** Code
 #+begin_src emacs-lisp
   (use-package modus-themes
-	:ensure t
+	:disabled t
 	:defer nil
 	:init
 	;; Add all your customizations prior to loading the themes
@@ -1326,11 +1327,11 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 
 	;; Load the theme files before enabling a theme
 	(modus-themes-load-themes)
-	;; :config
-	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	:config
+	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
-** Initialize doom-themes
+** Initialize =doom-themes=
 *** Description
 The martian hackers Emacs theme collection.
 *** Code
@@ -1826,6 +1827,41 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	   ((looking-at "[[:upper:]]") (downcase-region (point) (1+ (point)))))
 	  (right-char)))
 #+end_src
+** Auto Toggle Fill/Unfill Region
+#+begin_src emacs-lisp
+  (defun xah-fill-or-unfill ()
+	"Reformat current paragraph or region to `fill-column', like `fill-paragraph' or “unfill”.
+  When there is a text selection, act on the selection, else, act on a text block separated by blank lines.
+  URL `http://xahlee.info/emacs/emacs/modernization_fill-paragraph.html'
+  Version 2017-01-08"
+	(interactive)
+	;; This command symbol has a property “'compact-p”, the possible values are t and nil. This property is used to easily determine whether to compact or uncompact, when this command is called again
+	(let ( ($compact-p
+			(if (eq last-command this-command)
+				(get this-command 'compact-p)
+			  (> (- (line-end-position) (line-beginning-position)) fill-column)))
+		   (deactivate-mark nil)
+		   ($blanks-regex "\n[ \t]*\n")
+		   $p1 $p2
+		   )
+	  (if (use-region-p)
+		  (progn (setq $p1 (region-beginning))
+				 (setq $p2 (region-end)))
+		(save-excursion
+		  (if (re-search-backward $blanks-regex nil "NOERROR")
+			  (progn (re-search-forward $blanks-regex)
+					 (setq $p1 (point)))
+			(setq $p1 (point)))
+		  (if (re-search-forward $blanks-regex nil "NOERROR")
+			  (progn (re-search-backward $blanks-regex)
+					 (setq $p2 (point)))
+			(setq $p2 (point)))))
+	  (if $compact-p
+		  (fill-region $p1 $p2)
+		(let ((fill-column most-positive-fixnum ))
+		  (fill-region $p1 $p2)))
+	  (put this-command 'compact-p (not $compact-p))))
+#+end_src
 ** Reformat Lines
 #+begin_src emacs-lisp
   (defun xah-reformat-lines ( &optional @width)
@@ -2105,7 +2141,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 * Archived
 ** Honeydew
 #+begin_src emacs-lisp
-  ;;(add-to-list 'default-frame-alist '(background-color . "honeydew")) ;; f0fff0
+  (add-to-list 'default-frame-alist '(background-color . "honeydew")) ;; f0fff0
 #+end_src
 ** Enable athena toolbar
 #+begin_src emacs-lisp

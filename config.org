@@ -482,6 +482,10 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 	  "Edit archive file."
 	  (interactive)
 	  (find-file "~/org/archive.org"))
+	(defun inbox-edit ()
+	  "Edit inbox file."
+	  (interactive)
+	  (find-file "~/org/inbox.org"))
 	(defun create-scratch-buffer ()
 	  "Create a scratch buffer."
 	  (interactive)
@@ -514,9 +518,9 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 			  (lambda (&rest _) (start-to-org-agenda))
 			  'default)
 			 (nil
-			  "Archive"
-			  "Open archive"
-			  (lambda (&rest _) (archive-edit))
+			  "Inbox"
+			  "Open Inbox"
+			  (lambda (&rest _) (inbox-edit))
 			  'default)))))
 #+END_SRC
 ** Initialize =elisp-enhancers=
@@ -760,10 +764,10 @@ Useful snippets.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
-	:defer t
+	:ensure t
 	:diminish yas-minor-mode
 	:config
-	(setq yas-snippet-dirs '("~/emacs.d/snippets"))
+	;;(setq yas-snippet-dirs '("~/emacs.d/snippets"))
 	(yas-reload-all))
 
   (use-package yasnippet-snippets

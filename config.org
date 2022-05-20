@@ -56,6 +56,17 @@ Minor quality-of-life modifications for a more pleasant Emacs experience.
   (setq create-lockfiles nil)
   (setq vc-make-backup-files nil)
 #+END_SRC
+** Set bookmarks file location
+#+begin_src emacs-lisp
+  ;;(setq bookmark-default-file  (concat user-emacs-directory "bookmarks"))
+  (setq bookmark-default-file "~/org/bookmarks")
+#+end_src
+** Bookmarks autosaving
+#+begin_src emacs-lisp
+  (setq bookmark-save-flag 1) ; everytime bookmark is changed, automatically save it
+  (setq bookmark-save-flag t) ; save bookmark when emacs quits 
+  (setq bookmark-save-flag nil) ; never auto save.
+#+end_src
 ** Don't ask for confirmation when opening symlinked file
 #+begin_src emacs-lisp
   (setq vc-follow-symlinks t)
@@ -1530,6 +1541,17 @@ Deadgrep and ag - the_silver_searcher.
 	:bind (("C-`"   . popper-toggle-latest)
 		   ("C-<tab>"   . popper-cycle)
 		   ("C-M-`" . popper-toggle-type))
+	:config
+	(defun popper-enable ()
+	  "Enable popper."
+	  (interactive)
+	  (popper-mode +1)
+	  (popper-echo-mode +1))
+	(defun popper-disable ()
+	  "Disable popper."
+	  (interactive)
+	  (popper-mode -1)
+	  (popper-echo-mode -1))
 	:init
 	(setq popper-reference-buffers
 		  '("\\*Messages\\*"
@@ -1548,9 +1570,9 @@ Deadgrep and ag - the_silver_searcher.
 			"^\\*shell.*\\*$"  shell-mode  ;shell as a popup
 			"^\\*term.*\\*$"   term-mode   ;term as a popup
 			"^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
-			compilation-mode))
-	(popper-mode +1)
-	(popper-echo-mode +1))                ; For echo area hints
+			compilation-mode)))
+  ;;(popper-mode +1)
+  ;;(popper-echo-mode +1))                ; For echo area hints
 #+end_src
 ** Initialize =imenu-list=
 *** Description

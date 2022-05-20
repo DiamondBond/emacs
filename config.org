@@ -2278,6 +2278,6 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 *** Athena
 #+begin_src emacs-lisp
   ;;(add-to-list 'default-frame-alist '(background-color . "honeydew"))
-  (set-scroll-bar-mode 'right) ;; Enable right athena scrollbar
   ;;(add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable athena toolbar
+  (set-scroll-bar-mode 'right) ;; Enable right athena scrollbar
 #+end_src

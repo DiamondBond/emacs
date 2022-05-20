@@ -4,7 +4,6 @@
 #+DESCRIPTION: Eight Megabytes And Constantly Swapping
 #+LANGUAGE: en
 #+OPTIONS: num:nil
-#+FILETAGS: emacs-cfg
 
 * Core
 Minor quality-of-life modifications for a more pleasant Emacs experience.

@@ -323,8 +323,7 @@ Org-tree-slider included for presentation support.
 		  org-agenda-files (list "~/org/inbox.org"
 								 "~/org/tasks.org"
 								 "~/org/notes.org"
-								 "~/org/daily.org"
-								 "~/org/birthdays.org")
+								 "~/org/daily.org")
 		  org-image-actual-width nil
 		  +org-export-directory "~/org/export"
 		  org-default-notes-file "~/org/inbox.org"
@@ -459,11 +458,14 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 	  "Edit tasks file."
 	  (interactive)
 	  (find-file "~/org/tasks.org"))
+	(defun archive-edit ()
+	  "Edit archive file."
+	  (interactive)
+	  (find-file "~/org/archive.org"))
 	(defun create-scratch-buffer ()
 	  "Create a scratch buffer."
 	  (interactive)
-	  (switch-to-buffer (get-buffer-create "*scratch*"))
-	  (lisp-interaction-mode))
+	  (switch-to-buffer (get-buffer-create "*scratch*")))
 	:config
 	(dashboard-setup-startup-hook)
 	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
@@ -492,9 +494,9 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 			  (lambda (&rest _) (start-to-org-agenda))
 			  'default)
 			 (nil
-			  "Scratch"
-			  "Switch to the scratch buffer"
-			  (lambda (&rest _) (create-scratch-buffer))
+			  "Archive"
+			  "Open archive"
+			  (lambda (&rest _) (archive-edit))
 			  'default)))))
 #+END_SRC
 ** Initialize =elisp-enhancers=
@@ -2189,7 +2191,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 ** Start to org-agenda
 #+begin_src emacs-lisp
   (defun start-to-org-agenda ()
-	"Environment manipulation macro to launch focused org-agenda."
+	"Launch focused org-agenda."
 	(interactive)
 	(org-agenda-list)
 	(delete-other-windows)

@@ -130,7 +130,7 @@ Set tabs & indents to 4sp.
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-  (add-hook 'text-mode-hook 'display-line-numbers-mode)
+  ;;(add-hook 'text-mode-hook 'display-line-numbers-mode)
 #+END_SRC
 ** Enable column numbers
 Show column number in modeline.
@@ -168,6 +168,8 @@ Show column number in modeline.
 #+END_SRC
 ** Show parent parentheses
 #+BEGIN_SRC emacs-lisp
+  (setq show-paren-delay 0
+		show-paren-style 'parenthesis)
   (show-paren-mode 1)
 #+END_SRC
 ** Enable bracket pair-matching

@@ -1329,8 +1329,8 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 
 	;; Load the theme files before enabling a theme
 	(modus-themes-load-themes)
-	:config
-	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	;; :config
+	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 ** Initialize =doom-themes=
@@ -2272,6 +2272,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 #+end_src
 *** Athena
 #+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist '(background-color . "honeydew"))
   (set-scroll-bar-mode 'right) ;; Enable right athena scrollbar
   ;;(add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable athena toolbar
 #+end_src

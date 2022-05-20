@@ -214,6 +214,9 @@ Super - Control - <arrow>
   (defalias 'third 'caddr)
   (defalias 'when-not 'unless)
 
+  ;; frame cmds
+  (defalias 'shrinkwrap 'fit-frame-to-buffer)
+
   ;; such a destructive command should not have a similar name
   (defalias 'bookmark-delete-all 'bookmark-delete)
 #+end_src
@@ -1739,7 +1742,9 @@ Prettier formatter for JSX & TSX.
 Improve eshell prompt and assign aliases, also setup some custom helper functions for easier use.
 *** Prompt
 #+BEGIN_SRC emacs-lisp
+  (setq eshell-highlight-prompt nil)
   (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
+
   (setq eshell-prompt-function
 		(lambda nil
 		  (concat
@@ -1753,7 +1758,8 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 			   (propertize " α " 'face `(:foreground "#FF6666"))
 			 (propertize " λ " 'face `(:foreground "#A6E22E"))))))
 
-  (setq eshell-highlight-prompt nil)
+  (add-hook 'eshell-mode-hook
+			(lambda () (global-hl-line-mode 0)))
 #+END_SRC
 *** Clear
 #+begin_src emacs-lisp

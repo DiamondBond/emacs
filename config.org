@@ -85,11 +85,15 @@ Set tabs & indents to 4sp.
 #+BEGIN_SRC emacs-lisp
   (setq-default tab-width 4)
   (setq-default standard-indent 4)
-  (setq c-basic-offset tab-width)
   (setq-default electric-indent-inhibit t)
   (setq-default indent-tabs-mode t)
   (setq backward-delete-char-untabify-method 'nil)
 #+END_SRC
+** Number of tabs for C and C++ programming and braces in new line
+#+begin_src emacs-lisp
+  (setq c-default-style "linux")
+  (setq c-basic-offset tab-width)
+#+end_src
 ** Configure Scrolling
 #+begin_src emacs-lisp
   ;; Precision pixel scrolling
@@ -108,7 +112,7 @@ Set tabs & indents to 4sp.
 #+end_src
 ** Fringe mode
 #+begin_src emacs-lisp
-  (fringe-mode nil)
+  (fringe-mode nil) ;; (fringe-mode 0)
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
   (setq-default indicate-empty-lines nil)
@@ -130,7 +134,7 @@ Set tabs & indents to 4sp.
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-  ;;(add-hook 'text-mode-hook 'display-line-numbers-mode)
+  (add-hook 'text-mode-hook 'display-line-numbers-mode)
 #+END_SRC
 ** Enable column numbers
 Show column number in modeline.
@@ -376,6 +380,8 @@ Org-tree-slider included for presentation support.
 			 "* %?\n%a\nEntered on %U")
 			("j" "Journal" entry (file+datetree "~/org/journal.org")
 			 "* %?\n%a\nEntered on %U")))
+
+	;; (add-hook 'org-mode-hook #'visual-line-mode)
 
 	:bind
 	("C-c c" . 'org-capture)
@@ -831,8 +837,16 @@ Heresy; Vim keybindings in Emacs.
 	:config
 	(evil-mode 1)
 	(setq evil-want-fine-undo t) ; more granular undo with evil
+	;; set evil state on a per mode basis
 	(evil-set-initial-state 'messages-buffer-mode 'normal)
 	(evil-set-initial-state 'dashboard-mode 'normal)
+	(evil-set-initial-state 'term-mode 'emacs)
+	(evil-set-initial-state 'eshell-mode 'emacs)
+	(evil-set-initial-state 'vterm-mode 'insert)
+	(evil-set-initial-state 'inferior-scheme-mode 'emacs) 
+	;; :q kills buffer
+	(evil-ex-define-cmd "q" 'delete-window) 
+	;; org-cycle
 	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle))
 
   (use-package evil-collection
@@ -847,8 +861,8 @@ C-s to spawn a search minibuffer that can be traversed via C-n and C-p & <RET>.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package swiper
-	:ensure t
-	:bind ("C-s" . 'swiper))
+    :ensure t
+    :bind ("C-s" . 'swiper))
 #+END_SRC
 ** Initialize =avy=
 *** Description
@@ -1501,6 +1515,29 @@ Deadgrep and ag - the_silver_searcher.
   (use-package ag
 	:ensure t
 	:defer nil)
+#+end_src
+** Initialize =popper=
+*** Description
+*** Code
+#+begin_src emacs-lisp
+  (use-package popper
+	:ensure t ; or :straight t
+	:bind (("C-`"   . popper-toggle-latest)
+		   ("C-<tab>"   . popper-cycle)
+		   ("C-M-`" . popper-toggle-type))
+	:init
+	(setq popper-reference-buffers
+		  '("\\*Messages\\*"
+			"Output\\*$"
+			;;"\\*Async Shell Command\\*"
+			;;"^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
+			"^\\*shell.*\\*$"  shell-mode  ;shell as a popup
+			"^\\*term.*\\*$"   term-mode   ;term as a popup
+			"^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
+			help-mode
+			compilation-mode))
+	(popper-mode +1)
+	(popper-echo-mode +1))                ; For echo area hints
 #+end_src
 ** Initialize =imenu-list=
 *** Description
@@ -2211,6 +2248,14 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(delete-other-windows)
 	(fit-frame-to-buffer))
 #+end_src
+** Insert date
+#+begin_src emacs-lisp
+  ;; insert date in a buffer in my preferred format
+  (defun get-date () (format-time-string "** %b %d, %Y")) 
+  (defun insert-date () 
+	(interactive) 
+	(insert (get-date))) 
+#+end_src
 ** Configure default-frame-alist
 *** Switch-theme
 #+begin_src emacs-lisp
@@ -2274,7 +2319,6 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   ;; 	 (t (message "%s" "no match found"))
   ;; 	 )
   ;; 	))
-
   ;; (add-hook 'find-file-hook 'my-set-theme-on-mode)
 #+end_src
 *** Athena

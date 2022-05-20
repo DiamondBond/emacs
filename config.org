@@ -1012,12 +1012,17 @@ The definitive Git porcelain for Emacs.
 #+END_SRC
 ** Initialize =autorevert=
 *** Description
-Diminish ARV from modeline.
+Auto-revert a few modes & diminish ARV from modeline.
 *** Code
 #+begin_src emacs-lisp
   (use-package autorevert
 	:after magit
-	:diminish auto-revert-mode)
+	:diminish auto-revert-mode
+	:hook ((prog-mode
+			text-mode
+			tex-mode
+			org-mode
+			conf-mode) . auto-revert-mode))
 #+end_src
 ** Initialize =elfeed=
 *** Description

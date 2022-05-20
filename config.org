@@ -1330,8 +1330,8 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 
 	;; Load the theme files before enabling a theme
 	(modus-themes-load-themes)
-	;; :config
-	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	:config
+	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 ** Initialize =doom-themes=
@@ -2188,7 +2188,15 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 :WILD_NOTIFIER_NOTIFY_BEFORE: 60 30 15 10 5
 :END:"))
 #+end_src
-** Start to org-agenda
+** Shrinkwrapped bufflist
+#+begin_src emacs-lisp
+  (defun shrink-wrapped-buffer-list ()
+	"Launch focused *Buffer List*."
+	(interactive)
+	(switch-to-buffer (list-buffers-noselect))
+	(fit-frame-to-buffer))
+#+end_src
+** Start org-agenda
 #+begin_src emacs-lisp
   (defun start-to-org-agenda ()
 	"Launch focused org-agenda."

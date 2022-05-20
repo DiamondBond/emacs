@@ -125,16 +125,12 @@ Set tabs & indents to 4sp.
 ** Highlight current line
 #+BEGIN_SRC emacs-lisp
   (global-hl-line-mode nil)
-
-  ;; only in prog-mode
-  (add-hook 'prog-mode-hook
-			(lambda () (display-line-numbers-mode 1)))
 #+END_SRC
 ** Enable line numbers
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-  ;;(add-hook 'text-mode-hook 'display-line-numbers-mode)
+  (add-hook 'text-mode-hook 'display-line-numbers-mode)
 #+END_SRC
 ** Enable column numbers
 Show column number in modeline.
@@ -1336,7 +1332,7 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 	;; Load the theme files before enabling a theme
 	(modus-themes-load-themes)
 	;; :config
-	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 ** Initialize =doom-themes=
@@ -2281,7 +2277,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 #+end_src
 *** Athena
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(background-color . "honeydew"))
+  ;;(add-to-list 'default-frame-alist '(background-color . "honeydew"))
   (set-scroll-bar-mode 'right) ;; Enable right athena scrollbar
   ;;(add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable athena toolbar
 #+end_src

@@ -1527,8 +1527,7 @@ Deadgrep and ag - the_silver_searcher.
 		   ("C-M-`" . popper-toggle-type))
 	:init
 	(setq popper-reference-buffers
-		  '(help-mode
-			"\\*Messages\\*"
+		  '("\\*Messages\\*"
 			"\\*Warnings\\*"
 			"\\*Compile-Log\\*"
 			"\\*Completions\\*"

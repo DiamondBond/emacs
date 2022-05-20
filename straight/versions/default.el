@@ -80,6 +80,7 @@
  ("pdf-tools" . "fedd930a09a497c03df3ce5204ccbd80da724662")
  ("pdf-view-restore" . "5a1947c01a3edecc9e0fe7629041a2f53e0610c9")
  ("pfuture" . "f9e67bd7edbd5b4e033efd82c0acc4a85ff860a8")
+ ("popper" . "6599c9b5a12b411c6cf1536bf200ae233fa24389")
  ("posframe" . "c91d4d53fa479ceb604071008ce0a901770eff57")
  ("prettier-emacs" . "e9b73e81d3e1642aec682195f127a42dfb0b5774")
  ("project" . "e721db5ad1f87600c5124234aa23bbfb1982c2e8")

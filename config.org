@@ -2259,71 +2259,48 @@ Prettier formatter for JSX & TSX.
 	(interactive) 
 	(insert (get-date))) 
 #+end_src
-** Configure default-frame-alist
-*** Switch-theme
+** Change background
 #+begin_src emacs-lisp
-  (defun switch-theme/disable-all ()
+  (defun disable-all-themes ()
 	"Disable all active themes."
 	(dolist (i custom-enabled-themes)
 	  (disable-theme i)))
 
-  (defun switch-theme/reset ()
+  (defun reset-default-frame-alist ()
 	"Reset default-frame-alist."
 	(interactive)
-	(switch-theme/disable-all)
+	(disable-all-themes)
 	(set-background-color "white")
 	(setq default-frame-alist '((font . "Consolas-12") (internal-border-width . 0) (vertical-scroll-bars . right))))
 
-  (defun switch-theme/honeydew ()
+  (defun switch-bg/honeydew ()
 	"Switch to Honeydew theme."
 	(interactive)
-	(switch-theme/reset)
-	(set-background-color "honeydew")
-	(add-to-list 'default-frame-alist '(background-color . "honeydew")))
+	(set-background-color "honeydew"))
+  ;;(add-to-list 'default-frame-alist '(background-color . "honeydew")))
 
-  (defun switch-theme/lavender ()
+  (defun switch-bg/lavender ()
 	"Switch to Lavender theme."
 	(interactive)
-	(switch-theme/reset)
-	(set-background-color "lavender")
-	(add-to-list 'default-frame-alist '(background-color . "lavender")))
+	(set-background-color "lavender"))
 
-  (defun switch-theme/cornsilk ()
+  (defun switch-bg/cornsilk ()
 	"Switch to Cornsilk theme."
 	(interactive)
-	(switch-theme/reset)
-	(set-background-color "cornsilk")
-	(add-to-list 'default-frame-alist '(background-color . "cornsilk")))
+	(set-background-color "cornsilk"))
 
-  (defun switch-theme/white ()
+  (defun switch-bg/white ()
 	"Switch to White theme."
 	(interactive)
-	(switch-theme/reset)
-	(set-background-color "white")
-	(add-to-list 'default-frame-alist '(background-color . "white")))
+	(set-background-color "white"))
+  ;;(add-to-list 'default-frame-alist '(background-color . "white")))
 
-  (defun switch-theme/ghostwhite ()
+  (defun switch-bg/ghostwhite ()
 	"Switch to GhostWhite theme."
 	(interactive)
-	(switch-theme/reset)
-	(set-background-color "ghostwhite")
-	(add-to-list 'default-frame-alist '(background-color . "ghostwhite")))
+	(set-background-color "ghostwhite"))
 #+end_src
-*** Set theme depending on mode
-#+begin_src emacs-lisp
-  ;; (defun my-set-theme-on-mode ()
-  ;;   "Set background color depending on file suffix."
-  ;;   (interactive)
-  ;;   (let ((fileNameSuffix (file-name-extension (buffer-file-name) ) ))
-  ;; 	(cond
-  ;; 	 ((string-equal fileNameSuffix "org" ) (theme/honeydew))
-  ;; 	 ((string-equal fileNameSuffix "el" ) (theme/lavender))
-  ;; 	 ((string-equal fileNameSuffix "txt" ) (theme/cornsilk))
-  ;; 	 (t (message "%s" "no match found"))
-  ;; 	 )
-  ;; 	))
-  ;; (add-hook 'find-file-hook 'my-set-theme-on-mode)
-#+end_src
+** Configure default-frame-alist
 *** Athena Toolkit
 #+begin_src emacs-lisp
   ;;(add-to-list 'default-frame-alist '(background-color . "honeydew"))

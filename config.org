@@ -313,7 +313,7 @@ Global & private key maps.
   (define-key global-map (kbd "C-S-n") #'next-15-lines)
   (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 #+END_SRC
-* Use-package
+* Modules
 ** Initialize =elisp-enhancers=
 *** Description
 Elisp sweetening.

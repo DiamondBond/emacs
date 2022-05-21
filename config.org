@@ -2243,9 +2243,6 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(swiper)
 	(setq last-command-event 13)
 	(gnus-browse-select-group nil))
-
-  ;; (fset 'open-emacs-devel
-  ;; 	  (kmacro-lambda-form [?\M-x ?g ?n ?u ?s return ?y ?B return ?n ?e ?w ?s ?. ?g ?m ?a ?n ?e ?. ?i ?o return ?\C-s ?e ?m ?a ?c ?s ?. ?d ?e ?v ?e ?l down return return return ?\M-x ?k ?m ?a ?c ?r ?o ?- ?e ?n ?d ?- ?o ?r] 0 "%d"))
 #+end_src
 ** Insert link template
 #+begin_src emacs-lisp
@@ -2290,25 +2287,10 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 ** Insert date
 #+begin_src emacs-lisp
   ;; insert date in a buffer in my preferred format
-  (defun get-date () (format-time-string "** %b %d, %Y")) 
+  (defun get-date () (format-time-string "%b %d, %Y")) 
   (defun insert-date () 
 	(interactive) 
 	(insert (get-date))) 
-#+end_src
-** Normalize paragraph
-#+begin_src emacs-lisp
-  (defun vz/normalise-paragraph ()
-	"`vz/unfill-paragraph' then double spaces -> single space."
-	(interactive)
-	(let ((end (set-marker (make-marker) (if (use-region-p) (region-end) nil))))
-	  (vz/unfill-paragraph)
-	  (save-excursion
-		(beginning-of-line)
-		(while (re-search-forward "\\([]\"')]?\\)\\([.?!]\\)\\([]\"')]?\\)  "
-								  (if (marker-position end) end (line-end-position))
-								  'return-nil)
-		  (replace-match "\\1\\2\\3 ")))
-	  (set-marker end nil)))
 #+end_src
 ** Configure default-frame-alist
 *** Switch-theme

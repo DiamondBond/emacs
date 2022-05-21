@@ -427,7 +427,7 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 			 (nil
 			  "Agenda"
 			  "Open Org-Agenda"
-			  (lambda (&rest _) ((org-agenda nil "n")))
+			  (lambda (&rest _) (org-agenda nil "n"))
 			  'default)
 			 (nil
 			  "Inbox"

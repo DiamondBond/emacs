@@ -141,6 +141,10 @@ Set tabs & indents to 4sp.
 #+BEGIN_SRC emacs-lisp
   (global-hl-line-mode nil)
 #+END_SRC
+** Visual line mode
+#+begin_src emacs-lisp
+  ;; (global-visual-line-mode t)
+#+end_src
 ** Enable line numbers
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
 #+BEGIN_SRC emacs-lisp

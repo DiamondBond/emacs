@@ -226,7 +226,10 @@ Super - Control - <arrow>
 #+BEGIN_SRC emacs-lisp
   ;; always use eww
   (setq browse-url-default-browser 'eww-browse-url)
-  (setq browse-url-browser-function 'eww-browse-url)
+  ;; (setq browse-url-browser-function 'eww-browse-url)
+
+  ;; firefox
+  (setq browse-url-browser-function 'browse-url-firefox)
 #+END_SRC
 ** Define aliases
 #+begin_src emacs-lisp
@@ -747,6 +750,19 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 		  '(gnus-thread-sort-by-most-recent-date
 			(not gnus-thread-sort-by-number))))
 #+end_src
+** Initialize =md4rd=
+#+begin_src emacs-lisp
+  (use-package md4rd :ensure t
+	:config
+	(add-hook 'md4rd-mode-hook 'md4rd-indent-all-the-lines)
+	(setq md4rd-subs-active '(emacs lisp+Common_Lisp prolog clojure linux unixporn usabilityporn unixart))
+	(setq md4rd--oauth-access-token
+		  "b54o-0xVeapTlgqkHeMIMWEeYIoLAg")
+	(setq md4rd--oauth-refresh-token
+		  "b54o-0xVeapTlgqkHeMIMWEeYIoLAg")
+	(add-hook 'md4rd-mode-hook 'md4rd-indent-all-the-lines))
+  ;; (run-with-timer 0 3540 'md4rd-refresh-login))
+#+end_src
 ** Intialize =rcirc=
 *** Description
 Built in irc client, I use this for irc.libera.chat
@@ -1095,6 +1111,7 @@ Heresy; Vim keybindings in Emacs.
 	(evil-set-initial-state 'term-mode 'emacs)
 	(evil-set-initial-state 'eshell-mode 'emacs)
 	(evil-set-initial-state 'vterm-mode 'insert)
+	(evil-set-initial-state 'md4rd-mode 'emacs)
 	(evil-set-initial-state 'inferior-scheme-mode 'emacs) 
 	;; :q kills buffer
 	(evil-ex-define-cmd "q" 'delete-window) 

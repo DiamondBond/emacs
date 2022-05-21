@@ -603,6 +603,54 @@ Add icons and subtree's to dired.
 						 (when all-the-icons-dired-mode
 						   (revert-buffer)))))
 #+end_src
+** Initialize =eshell=
+*** Description
+Improve eshell prompt and assign aliases, also setup some custom helper functions for easier use.
+*** Prompt
+#+BEGIN_SRC emacs-lisp
+  (setq eshell-highlight-prompt nil)
+  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
+
+  (setq eshell-prompt-function
+		(lambda nil
+		  (concat
+		   (if (string= (eshell/pwd) (getenv "HOME"))
+			   (propertize "~" 'face `(:foreground "#99CCFF"))
+			 (replace-regexp-in-string
+			  (getenv "HOME")
+			  (propertize "~" 'face `(:foreground "#99CCFF"))
+			  (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
+		   (if (= (user-uid) 0)
+			   (propertize " α " 'face `(:foreground "#FF6666"))
+			 (propertize " λ " 'face `(:foreground "#A6E22E"))))))
+
+  (add-hook 'eshell-mode-hook
+			(lambda () (global-hl-line-mode 0)))
+#+END_SRC
+*** Clear
+#+begin_src emacs-lisp
+  (defun eshell/clear-scrollback ()
+	"Clear the scrollback content of the eshell window."
+	(let ((inhibit-read-only t))
+	  (erase-buffer)))
+#+end_src
+*** Aliases
+#+BEGIN_SRC emacs-lisp
+  (defalias 'open 'find-file-other-window)
+  (defalias 'clean 'eshell/clear-scrollback)
+#+END_SRC
+*** Open eshell in other window
+#+BEGIN_SRC emacs-lisp
+  (defun eshell-other-window ()
+	"Create or visit an eshell buffer."
+	(interactive)
+	(if (not (get-buffer "*eshell*"))
+		(progn
+		  (split-window-sensibly (selected-window))
+		  (other-window 1)
+		  (eshell))
+	  (switch-to-buffer-other-window "*eshell*")))
+#+END_SRC
 ** Initialize =gnus=
 *** Description
 Gnus, or Gnus Network User Services, is a message reader which is part of GNU Emacs.
@@ -1781,54 +1829,6 @@ Prettier formatter for JSX & TSX.
 								'("\\.tsx?\\'" . prettier-js-mode))))
 #+end_src
 * Functions
-** Eshell
-*** Description
-Improve eshell prompt and assign aliases, also setup some custom helper functions for easier use.
-*** Prompt
-#+BEGIN_SRC emacs-lisp
-  (setq eshell-highlight-prompt nil)
-  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
-
-  (setq eshell-prompt-function
-		(lambda nil
-		  (concat
-		   (if (string= (eshell/pwd) (getenv "HOME"))
-			   (propertize "~" 'face `(:foreground "#99CCFF"))
-			 (replace-regexp-in-string
-			  (getenv "HOME")
-			  (propertize "~" 'face `(:foreground "#99CCFF"))
-			  (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
-		   (if (= (user-uid) 0)
-			   (propertize " α " 'face `(:foreground "#FF6666"))
-			 (propertize " λ " 'face `(:foreground "#A6E22E"))))))
-
-  (add-hook 'eshell-mode-hook
-			(lambda () (global-hl-line-mode 0)))
-#+END_SRC
-*** Clear
-#+begin_src emacs-lisp
-  (defun eshell/clear-scrollback ()
-	"Clear the scrollback content of the eshell window."
-	(let ((inhibit-read-only t))
-	  (erase-buffer)))
-#+end_src
-*** Aliases
-#+BEGIN_SRC emacs-lisp
-  (defalias 'open 'find-file-other-window)
-  (defalias 'clean 'eshell/clear-scrollback)
-#+END_SRC
-*** Open eshell in other window
-#+BEGIN_SRC emacs-lisp
-  (defun eshell-other-window ()
-	"Create or visit an eshell buffer."
-	(interactive)
-	(if (not (get-buffer "*eshell*"))
-		(progn
-		  (split-window-sensibly (selected-window))
-		  (other-window 1)
-		  (eshell))
-	  (switch-to-buffer-other-window "*eshell*")))
-#+END_SRC
 ** Enable Minor mode
 #+begin_src emacs-lisp
   (defun enable-minor-mode (my-pair)

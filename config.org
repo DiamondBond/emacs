@@ -392,7 +392,7 @@ Org-tree-slider included for presentation support.
 			("j" "Journal" entry (file+datetree "~/org/journal.org")
 			 "* %?\n%a\nEntered on %U")))
 
-	;; (add-hook 'org-mode-hook #'visual-line-mode)
+	(add-hook 'org-mode-hook #'visual-line-mode)
 
 	:bind
 	("C-c c" . 'org-capture)
@@ -1593,20 +1593,20 @@ Popup contents mini-buffer.
 Diminish hides minor modes to prevent cluttering your mode line.
 *** Code
 #+begin_src emacs-lisp
-	(use-package diminish
-	  :ensure t
-	  :init
-	  ;; Diminish as mode is already loaded
-	  (diminish 'visual-line-mode "")
-	  (diminish 'abbrev-mode "")
-	  (diminish 'c-mode "")
-	  (diminish 'yas "")
-	  :config
-	  ;; Diminish after mode is loaded
-	  (eval-after-load "flymake" '(diminish 'flymake-mode))
-	  (eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
-	  (eval-after-load "which-key" '(diminish 'which-key-mode))
-	  (eval-after-load "eldoc" '(diminish 'eldoc-mode)))
+  (use-package diminish
+	:ensure t
+	:init
+	;; Diminish as mode is already loaded
+	(diminish 'visual-line-mode "")
+	(diminish 'abbrev-mode "")
+	(diminish 'c-mode "")
+	(diminish 'yas "")
+	:config
+	;; Diminish after mode is loaded
+	(eval-after-load "flymake" '(diminish 'flymake-mode))
+	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
+	(eval-after-load "which-key" '(diminish 'which-key-mode))
+	(eval-after-load "eldoc" '(diminish 'eldoc-mode)))
 #+end_src
 * Languages
 ** LSP
@@ -2295,6 +2295,21 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(interactive) 
 	(insert (get-date))) 
 #+end_src
+** Normalize paragraph
+#+begin_src emacs-lisp
+  (defun vz/normalise-paragraph ()
+	"`vz/unfill-paragraph' then double spaces -> single space."
+	(interactive)
+	(let ((end (set-marker (make-marker) (if (use-region-p) (region-end) nil))))
+	  (vz/unfill-paragraph)
+	  (save-excursion
+		(beginning-of-line)
+		(while (re-search-forward "\\([]\"')]?\\)\\([.?!]\\)\\([]\"')]?\\)  "
+								  (if (marker-position end) end (line-end-position))
+								  'return-nil)
+		  (replace-match "\\1\\2\\3 ")))
+	  (set-marker end nil)))
+#+end_src
 ** Configure default-frame-alist
 *** Switch-theme
 #+begin_src emacs-lisp
@@ -2360,7 +2375,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   ;; 	))
   ;; (add-hook 'find-file-hook 'my-set-theme-on-mode)
 #+end_src
-*** Athena
+*** Athena Toolkit
 #+begin_src emacs-lisp
   ;;(add-to-list 'default-frame-alist '(background-color . "honeydew"))
   ;;(add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable athena toolbar

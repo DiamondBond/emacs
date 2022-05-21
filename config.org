@@ -427,7 +427,7 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 			 (nil
 			  "Agenda"
 			  "Open Org-Agenda"
-			  (lambda (&rest _) (start-to-org-agenda))
+			  (lambda (&rest _) ((org-agenda nil "n")))
 			  'default)
 			 (nil
 			  "Inbox"
@@ -2272,7 +2272,7 @@ Prettier formatter for JSX & TSX.
   (defun start-to-org-agenda ()
 	"Launch focused org-agenda."
 	(interactive)
-	(org-agenda-list)
+	(org-agenda nil "n")
 	(delete-other-windows)
 	(fit-frame-to-buffer))
 #+end_src

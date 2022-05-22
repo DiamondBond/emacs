@@ -314,15 +314,15 @@ Shrinks frame to buffer contents.
 #+begin_src emacs-lisp
   (defalias 'shrink-wrap 'fit-frame-to-buffer)
 #+end_src
-*** Saftey
-So I dont accidentally delete all my bookmarks.
-#+begin_src emacs-lisp
-  (defalias 'bookmark-delete-all 'bookmark-delete)
-#+end_src
 *** Presentation
 Easy to remember org-beamer-export command.
 #+begin_src emacs-lisp
   (defalias 'produce-presentation 'org-beamer-export-to-pdf)
+#+end_src
+*** Saftey
+Dont accidentally delete all my bookmarks.
+#+begin_src emacs-lisp
+  (defalias 'bookmark-delete-all 'bookmark-delete)
 #+end_src
 * Keybinds
 ** Description

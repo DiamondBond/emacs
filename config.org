@@ -19,11 +19,6 @@ Set user name and email address.
 		user-mail-address "diamondbond1@gmail.com")
 #+end_src
 *** Authentication
-Symlink authinfo.
-#+begin_src sh
-  ln -s ~/org/.authinfo.gpg ~/.authinfo
-#+end_src
-
 Set authinfo file location and authinfo expiry to never.
 #+begin_src emacs-lisp
   (setq auth-sources '("~/.authinfo" "~/.authinfo.gpg")
@@ -818,6 +813,7 @@ Show alerts for unread emails.
 **** Code
 #+begin_src emacs-lisp
   (use-package mu4e-alert
+	:ensure t
 	:after mu4e
 	:config
 	;; Show unread emails from all inboxes
@@ -2392,6 +2388,18 @@ Sync Emacs configuration to git.
 	(interactive)
 	(straight-freeze-versions)
 	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
+#+end_src
+*** Sync AuthInfo
+#+begin_src emacs-lisp
+  (defun auth-info/backup ()
+	"Backup authinfo to ~/org"
+	(interactive)
+	(async-shell-command "cp ~/.authinfo.gpg ~/org/"))
+
+  (defun auth-info/restore ()
+	"Restore authinfo from ~/org"
+	(interactive)
+	(async-shell-command "cp ~/org/.authinfo.gpg ~/"))
 #+end_src
 *** Sync Email
 Sync Email locally.

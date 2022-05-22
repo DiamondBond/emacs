@@ -156,13 +156,13 @@ Disable the annoying bell.
   (setq ring-bell-function 'ignore)
 #+END_SRC
 *** Configure Scrolling
-**** Enables nice scrolling for Emacs<=28.1
+**** Enables nice-scrolling for Emacs 28+
 #+begin_src emacs-lisp
   (setq scroll-margin 0)
   (setq scroll-conservatively 100000)
   (setq scroll-preserve-screen-position 1)
 #+end_src
-**** Enables pixel-scroll-precision-mode for Emacs>=29
+**** Enables pixel-scroll-precision-mode for Emacs 29+
 #+begin_src emacs-lisp
   (pixel-scroll-precision-mode)
 #+end_src

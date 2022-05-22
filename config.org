@@ -370,8 +370,8 @@ Global & private key maps.
   (define-key z-map (kbd "C-c") 'calendar)
   (define-key z-map (kbd ".") 'org-date-from-calendar)
 
-  (define-key z-map (kbd "n") (lambda () (interactive) (find-file "~/org/notes.org")))
-  (define-key z-map (kbd "c") (lambda () (interactive) (find-file "~/.emacs.d/config.org")))
+  (define-key z-map (kbd "n") 'notes-edit)
+  (define-key z-map (kbd "c") 'config-edit)
 
   ;;---------------------------------------------------------------------
   ;; global-map

@@ -16,6 +16,10 @@
   (setq file-name-handler-alist startup/file-name-handler-alist))
 (add-hook 'emacs-startup-hook 'startup/revert-file-name-handler-alist)
 
+;;; For performance
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+
 ;; Initialize melpa repo
 (require 'package)
 (add-to-list 'package-archives

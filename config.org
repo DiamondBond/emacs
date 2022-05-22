@@ -353,8 +353,8 @@ Utilize asynchronous processes whenever possible.
 	:init
 	(dired-async-mode 1)
 	:config
-	(add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil)))
-	(async-bytecomp-package-mode 1))
+	(async-bytecomp-package-mode 1)
+	(add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil))))
 #+END_SRC
 ** Initialize =alert=
 *** Description

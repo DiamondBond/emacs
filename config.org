@@ -12,7 +12,7 @@ Enable lexical binding.
   ;;; config.el -*- lexical-binding: t; -*-
 
   ;; Author: Diamond Bond <diamondbond1@gmail.com>
-  ;; Version: nil
+  ;; Version: 1.0
   ;; Package-Requires: ((emacs "29"))
   ;; Created: 2020-06-29
   ;; Keywords: emacs configuration
@@ -104,7 +104,7 @@ Set bookmarks file location to ~/org/bookmarks
 Offload the custom-set-variables to a separate file.
 This keeps your init.el neater and you have the option to gitignore your custom.el if you see fit.
 #+begin_src emacs-lisp
-  (setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
+  (setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
   (unless (file-exists-p custom-file)
 	(write-region "" nil custom-file))
    ;;; Load custom file. Don't hide errors. Hide success message
@@ -211,7 +211,6 @@ Set tabs & indents to 4sp.
 *** Set font
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
-  ;;(add-to-list 'default-frame-alist '(font . "Consolas-12"))
 #+end_src
 *** Disable default startup screen
 #+BEGIN_SRC emacs-lisp
@@ -325,12 +324,17 @@ Global & private key maps.
 ** Code
 #+begin_src emacs-lisp
   ;;---------------------------------------------------------------------
-  ;; private-map
+  ;; z-map definition
   ;;---------------------------------------------------------------------
 
   (define-prefix-command 'z-map)
-  (global-set-key (kbd "C-1") 'z-map) ;; Ctrl-1
+  (global-set-key (kbd "C-1") 'z-map)
 
+  ;;---------------------------------------------------------------------
+  ;; private-map
+  ;;---------------------------------------------------------------------
+
+  ;; general
   (define-key z-map (kbd "a") 'org-agenda)
   (define-key z-map (kbd "f") 'find-file-other-frame)
   (define-key z-map (kbd "D") 'dashboard-refresh-buffer)
@@ -344,9 +348,11 @@ Global & private key maps.
   (define-key z-map (kbd "m") 'magit-status)
   (define-key z-map (kbd "v") 'vterm)
 
+  ;; modeline
   (define-key z-map (kbd "b") 'display-battery-mode)
   (define-key z-map (kbd "t") 'display-time-mode)
 
+  ;; quick
   (define-key z-map (kbd "*") 'quick-calc)
   (define-key z-map (kbd "O") 'org-redisplay-inline-images)
   (define-key z-map (kbd "s") 'ispell-word)
@@ -354,10 +360,12 @@ Global & private key maps.
   (define-key z-map (kbd "w") 'eww)
   (define-key z-map (kbd "F") 'follow-mode)
 
+  ;; short
   (define-key z-map (kbd "x") 'switch-to-buffer-other-frame)
   (define-key z-map (kbd "k") 'compile)
   (define-key z-map (kbd "e") 'eval-region)
 
+  ;; auxiliary
   (define-key z-map (kbd "S") 'speedbar-frame-mode)
   (define-key z-map (kbd "y") 'yas-minor-mode)
   (define-key z-map (kbd "i") 'consult-imenu)
@@ -365,9 +373,11 @@ Global & private key maps.
   (define-key z-map (kbd "9") 'switch-to-qemu-and-run)
   (define-key z-map (kbd "0") 'switch-to-qemu-and-paste)
 
+  ;; calendar
   (define-key z-map (kbd "C-c") 'calendar)
   (define-key z-map (kbd ".") 'org-date-from-calendar)
 
+  ;; files
   (define-key z-map (kbd "n") 'notes-edit)
   (define-key z-map (kbd "c") 'config-edit)
 
@@ -375,6 +385,7 @@ Global & private key maps.
   ;; global-map
   ;;---------------------------------------------------------------------
 
+  ;; function
   (global-set-key (kbd "<f9>") 'tab-bar-mode)
   (global-set-key (kbd "S-<f9>") 'tab-line-mode)
   (global-set-key (kbd "<f5>") 'revert-buffer)
@@ -383,6 +394,8 @@ Global & private key maps.
   (global-set-key (kbd "<f8>") 'tool-bar-mode)
   (global-set-key (kbd "<f12>") 'linum-mode)
   (global-set-key (kbd "<f10>") 'compile)
+
+  ;; windows
   (global-set-key (kbd "C-x w") 'elfeed)
   (global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
   (global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
@@ -390,6 +403,8 @@ Global & private key maps.
   (global-set-key (kbd "s-C-<up>") 'enlarge-window)
   (global-set-key (kbd "C-x x") 'window-swap-states)
   (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
+
+  ;; next/prev
   (define-key global-map (kbd "C-S-n") #'next-15-lines)
   (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 
@@ -546,7 +561,6 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 	;;(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)
 	;;(setq dashboard-set-footer nil)
-	;; (setq dashboard-page-separator "\n\n")
 	(setq dashboard-set-navigator t)
 	(setq dashboard-navigator-buttons
 		  `(;; line 1
@@ -655,41 +669,23 @@ Org-tree-slider included for presentation support.
 			("j" "Journal" entry (file+datetree "~/org/journal.org")
 			 "* %?\n%a\nEntered on %U")))
 
+	;; Agenda styling
+	(setq org-agenda-block-separator ?─
+		  org-agenda-time-grid
+		  '((daily today require-timed)
+			(800 1000 1200 1400 1600 1800 2000)
+			" ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+		  org-agenda-current-time-string
+		  "⭠ now ─────────────────────────────────────────────────")
+
+
+	;; visual-line-mode only for org-mode
 	(add-hook 'org-mode-hook #'visual-line-mode)
 
 	:bind
 	("C-c c" . 'org-capture)
 	("C-c l" . 'org-store-link)
 	("C-<f1>" . (lambda()(interactive)(show-all))))
-
-  ;; prettify org-mode
-  (use-package org-modern
-	:ensure t
-	:after org
-	:config
-	(setq
-	 ;; Edit settings
-	 org-auto-align-tags nil
-	 org-tags-column 0
-	 org-catch-invisible-edits 'show-and-error
-	 org-special-ctrl-a/e t
-	 org-insert-heading-respect-content t
-
-	 ;; Org styling, hide markup etc.
-	 org-hide-emphasis-markers t
-	 org-pretty-entities t
-	 org-ellipsis "…"
-
-	 ;; Agenda styling
-	 org-agenda-block-separator ?─
-	 org-agenda-time-grid
-	 '((daily today require-timed)
-	   (800 1000 1200 1400 1600 1800 2000)
-	   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
-	 org-agenda-current-time-string
-	 "⭠ now ─────────────────────────────────────────────────"))
-  ;;:init
-  ;;(global-org-modern-mode))
 
   ;; reminders
   (use-package org-wild-notifier
@@ -705,7 +701,7 @@ Org-tree-slider included for presentation support.
 
   ;; presentations
   (use-package org-tree-slide
-	:ensure t
+	:defer t
 	:custom
 	(org-tree-slide-slide-in-effect t)
 	(org-tree-slide-activate-message "Presentation started!")
@@ -723,10 +719,6 @@ Add icons and subtree's to dired.
 	:straight (:type built-in)
 	:commands (dired dired-jump)
 	:bind (("C-x C-j" . dired-jump))
-	;; :config
-	;; (evil-collection-define-key 'normal 'dired-mode-map
-	;; 							  "h" 'dired-single-up-directory
-	;; 							  "l" 'dired-single-buffer)
 	:custom ((dired-listing-switches "-agho --group-directories-first")))
 
   (use-package dired-single
@@ -869,7 +861,7 @@ mu4e mail client.
 	(setq mu4e-view-show-images t)
 	(setq mu4e-view-show-addresses 't)
 
-	;; Make sure that moving a message (like to Trash) causes the
+	;; make sure that moving a message (like to Trash) causes the
 	;; message to get a new file name.  This helps to avoid the
 	;; dreaded "UID is N beyond highest assigned" error.
 	;; See this link for more info: https://stackoverflow.com/a/43461973
@@ -893,11 +885,11 @@ mu4e mail client.
 	;; allow for updating mail using 'U' in the main view:
 	(setq mu4e-get-mail-command "offlineimap")
 
-	;; Why would I want to leave my message open after I've sent it?
+	;; why would I want to leave my message open after I've sent it?
 	(setq message-kill-buffer-on-exit t)
-	;; Don't ask for a 'context' upon opening mu4e
+	;; don't ask for a 'context' upon opening mu4e
 	(setq mu4e-context-policy 'pick-first)
-	;; Don't ask to quit... why is this the default?
+	;; don't ask to quit
 	(setq mu4e-confirm-quit nil))
 #+end_src
 *** Initialize =mu4e-alert=
@@ -909,10 +901,10 @@ Show alerts for unread emails.
 	:ensure t
 	:after mu4e
 	:config
-	;; Show unread emails from all inboxes
+	;; show unread emails from all inboxes
 	(setq mu4e-alert-interesting-mail-query db/mu4e-inbox-query)
 
-	;; Show notifications for mails already notified
+	;; show notifications for mails already notified
 	(setq mu4e-alert-notify-repeated-mails nil)
 	:init
 	(mu4e-alert-enable-notifications))
@@ -944,14 +936,14 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
   (use-package gnus
 	:ensure t
 	:config
-	;; Make Gnus startup faster
+	;; make Gnus startup faster
 	(setq gnus-check-new-newsgroups nil
 		  gnus-check-bogus-newsgroups nil)
 
-	;; Read feeds/atom through gmane
+	;; read feeds/atom through Gmane
 	(setq gnus-select-method '(nntp "news.gmane.io"))
 
-	;; Ask for encryption password once
+	;; ask for encryption password once
 	(setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
 	;; Gmail
@@ -959,7 +951,7 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 		  '(nnimap "gmail"
 				   (nnimap-address "imap.gmail.com")))
 
-	;; Make Gnus prettier
+	;; make Gnus prettier
 	(setq gnus-sum-thread-tree-indent "  ")
 	(setq gnus-sum-thread-tree-root "● ")
 	(setq gnus-sum-thread-tree-false-root "◯ ")
@@ -968,31 +960,28 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 	(setq gnus-sum-thread-tree-leaf-with-other "├─► ")
 	(setq gnus-sum-thread-tree-single-leaf     "╰─► ")
 	(setq gnus-summary-display-arrow t)
-
 	(setq gnus-summary-line-format
 		  (concat
 		   "%0{%U%R%z%}"
-		   "%3{│%}" "%1{%d%}" "%3{│%}" ;; date
+		   "%3{│%}" "%1{%d%}" "%3{│%}"
 		   "  "
-		   "%4{%-20,20f%}"               ;; name
+		   "%4{%-20,20f%}"
 		   "  "
 		   "%3{│%}"
 		   " "
 		   "%1{%B%}"
 		   "%s\n"))
 
-
-
-	;; Fixing summary buffer
-	;; There’s no need to recenter the summary buffer all the time. It only slows gnus down.
+	;; fixing summary buffer
+	;; there’s no need to recenter the summary buffer all the time, it only slows gnus down.
 	(setq gnus-auto-center-summary nil)
 
-	;; Enter the summary buffer faster
+	;; enter the summary buffer faster
 	(setq gnus-nov-is-evil nil
 		  gnus-show-threads t
 		  gnus-use-cross-reference nil)
 
-	;; News check
+	;; news check
 	(defun gnus-demon-scan-news ()
 	  (interactive)
 	  (when gnus-plugged
@@ -1008,16 +997,16 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 					(gnus-group-get-new-news gnus-activate-level))))
 			(set-window-configuration win)))))
 
-	;; Configuring mail appearance
+	;; configuring mail appearance
 	(setq gnus-treat-strip-multiple-blank-lines t)
 	(setq gnus-treat-trailing-blank-lines t)
 	;; let's see some smiles in gnus
 	(setq gnus-treat-display-smileys t)
 	(setq gnus-treat-emphasize 'head)
 
-	;; Fetch only part of the article if we can.
+	;; fetch only part of the article if we can.
 	(setq gnus-read-active-file 'some)
-	;; Fetch some old headers
+	;; fetch some old headers
 	(setq gnus-fetch-old-headers 'some)
 
 	;; Gnus automatic scoring
@@ -1082,13 +1071,13 @@ ERC is a powerful, modular, and extensible IRC client for Emacs.
 	:config
 	;; login
 	(setq erc-nickserv-identify-mode 'autodetect)
-	;; Interpret mIRC-style color commands in IRC chats
+	;; interpret mIRC-style color commands in IRC chats
 	(setq erc-interpret-mirc-color t)
-	;; Kill buffers for channels after /part
+	;; kill buffers for channels after /part
 	(setq erc-kill-buffer-on-part t)
-	;; Kill buffers for private queries after quitting the server
+	;; kill buffers for private queries after quitting the server
 	(setq erc-kill-queries-on-quit t)
-	;; Kill buffers for server messages after quitting the server
+	;; kill buffers for server messages after quitting the server
 	(setq erc-kill-server-buffer-on-quit t)
 	;; open query buffers in the current window
 	(setq erc-query-display 'buffer)
@@ -1159,7 +1148,7 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 	(define-key corfu-map (kbd "RET") nil)
 	:init (global-corfu-mode)
 	:config
-	;; Adapted from Corfu's manual.
+	;; adapted from Corfu's manual.
 	(defun contrib/corfu-enable-always-in-minibuffer ()
 	  "Enable Corfu in the minibuffer if Vertico is not active.
   Useful for prompts such as `eval-expression' and `shell-command'."
@@ -1185,7 +1174,7 @@ Completio at point extensions.
 Vertico, orderless, marginalia, consult & embark.
 *** Code
 #+begin_src emacs-lisp
-  ;; Enable vertico
+  ;; enable vertico
   (use-package vertico
 	:straight t
 	:ensure t
@@ -1204,7 +1193,7 @@ Vertico, orderless, marginalia, consult & embark.
 	;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
 	(setq vertico-cycle t))
 
-  ;; Configure directory extension.
+  ;; configure directory extension.
   (use-package vertico-directory
 	:straight nil
 	:load-path "straight/repos/vertico/extensions"
@@ -1222,13 +1211,13 @@ Vertico, orderless, marginalia, consult & embark.
 		  completion-category-defaults nil
 		  completion-category-overrides '((file (styles basic partial-completion)))))
 
-  ;; Persist history over Emacs restarts. Vertico sorts by history position.
+  ;; persist history over Emacs restarts. Vertico sorts by history position.
   (use-package savehist
 	:ensure t
 	:init
 	(savehist-mode))
 
-  ;; Information in the margins
+  ;; information in the margins
   (use-package marginalia
 	:ensure t
 	:init
@@ -1249,10 +1238,10 @@ Vertico, orderless, marginalia, consult & embark.
 	 ("C-;" . embark-dwim)        ;; good alternative: M-.
 	 ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
 	:init
-	;; Optionally replace the key help with a completing-read interface
+	;; optionally replace the key help with a completing-read interface
 	(setq prefix-help-command #'embark-prefix-help-command)
 	:config
-	;; Hide the mode line of the Embark live/completions buffers
+	;; hide the mode line of the Embark live/completions buffers
 	(add-to-list 'display-buffer-alist
 				 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
 				   nil
@@ -1268,33 +1257,33 @@ Vertico, orderless, marginalia, consult & embark.
 	:hook
 	(embark-collect-mode . consult-preview-at-point-mode))
 
-  ;; A few more useful configurations...
+  ;; a few more useful configurations...
   (use-package emacs
 	:init
-	;; Add prompt indicator to `completing-read-multiple'.
-	;; Alternatively try `consult-completing-read-multiple'.
+	;; add prompt indicator to `completing-read-multiple'.
+	;; alternatively try `consult-completing-read-multiple'.
 	(defun crm-indicator (args)
 	  (cons (concat "[CRM] " (car args)) (cdr args)))
 	(advice-add #'completing-read-multiple :filter-args #'crm-indicator)
 
-	;; Do not allow the cursor in the minibuffer prompt
+	;; do not allow the cursor in the minibuffer prompt
 	(setq minibuffer-prompt-properties
 		  '(read-only t cursor-intangible t face minibuffer-prompt))
 	(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
-	;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+	;; Emacs 28: hide commands in M-x which do not work in the current mode.
 	;; Vertico commands are hidden in normal buffers.
 	(setq read-extended-command-predicate
 		  #'command-completion-default-include-p)
 
-	;; Enable recursive minibuffers
+	;; enable recursive minibuffers
 	(setq enable-recursive-minibuffers t)
 
-	;; Completion ignores case
+	;; completion ignores case
 	(setq completion-ignore-case t)
 	(setq read-file-name-completion-ignore-case t)
 
-	;; Allow Emacs to resize mini windows
+	;; allow Emacs to resize mini windows
 	(setq resize-mini-windows t))
 #+end_src
 ** Initialize =dabbrev=
@@ -1302,10 +1291,10 @@ Vertico, orderless, marginalia, consult & embark.
 Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
 *** Code
 #+begin_src emacs-lisp
-  ;; Use dabbrev with Corfu!
+  ;; use dabbrev with Corfu!
   (use-package dabbrev
 	:ensure t
-	;; Swap M-/ and C-M-/
+	;; swap M-/ and C-M-/
 	:bind (("M-/" . dabbrev-completion)
 		   ("C-M-/" . dabbrev-expand)))
 #+end_src
@@ -1701,48 +1690,6 @@ Instant upload to 0x0.st
 	:defer t
 	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
 #+end_src
-** Initialize =popper=
-*** Description
-*** Code
-#+begin_src emacs-lisp
-  (use-package popper
-	:ensure t ; or :straight t
-	:bind (("C-`"   . popper-toggle-latest)
-		   ("C-<tab>"   . popper-cycle)
-		   ("C-M-`" . popper-toggle-type))
-	:config
-	(defun popper-enable ()
-	  "Enable popper."
-	  (interactive)
-	  (popper-mode +1)
-	  (popper-echo-mode +1))
-	(defun popper-disable ()
-	  "Disable popper."
-	  (interactive)
-	  (popper-mode -1)
-	  (popper-echo-mode -1))
-	:init
-	(setq popper-reference-buffers
-		  '("\\*Messages\\*"
-			"\\*Warnings\\*"
-			"\\*Compile-Log\\*"
-			"\\*Completions\\*"
-			"\\*Backtrace\\*"
-			"\\*Apropos\\*"
-			"\\*evil-registers\\*"
-			"\\*TeX Help\\*"
-			"^Calc:"
-			"[Oo]utput\\*$"
-			"\\*Shell Command Output\\*"
-			("\\*Async Shell Command\\*" . hide)
-			;;"^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
-			"^\\*shell.*\\*$"  shell-mode  ;shell as a popup
-			"^\\*term.*\\*$"   term-mode   ;term as a popup
-			"^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
-			compilation-mode)))
-  ;;(popper-mode +1)
-  ;;(popper-echo-mode +1))                ; For echo area hints
-#+end_src
 ** Initialize =hydra=
 *** Description
 Hydra is a simple menu creator for keybindings.
@@ -1808,13 +1755,13 @@ Diminish hides minor modes to prevent cluttering your mode line.
   (use-package diminish
 	:ensure t
 	:init
-	;; Diminish as mode is already loaded
+	;; diminish as mode is already loaded
 	(diminish 'visual-line-mode "")
 	(diminish 'abbrev-mode "")
 	(diminish 'c-mode "")
 	(diminish 'yas "")
 	:config
-	;; Diminish after mode is loaded
+	;; diminish after mode is loaded
 	(eval-after-load "flymake" '(diminish 'flymake-mode))
 	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
 	(eval-after-load "which-key" '(diminish 'which-key-mode))
@@ -1828,14 +1775,12 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
   (use-package modus-themes
 	:defer nil
 	:init
-	;; Add all your customizations prior to loading the themes
 	(setq modus-themes-italic-constructs t
 		  modus-themes-bold-constructs t
 		  modus-themes-region '(accented bg-only no-extend))
-
-	;; Load the theme files before enabling a theme
+	;; load the theme files before enabling a theme
 	(modus-themes-load-themes)
-	;; :config
+	:config
 	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
@@ -2054,13 +1999,6 @@ Prettier formatter for JSX & TSX.
 #+end_src
 * Functions
 ** Helpers
-*** Reload config
-#+begin_src emacs-lisp
-  (defun reload-config ()
-	"Reload Emacs Configuration."
-	(interactive)
-	(load-file (concat user-emacs-directory "init.el")))
-#+end_src
 *** Load if exists
 #+begin_src emacs-lisp
   (defun load-if-exists (f)
@@ -2147,8 +2085,239 @@ Prettier formatter for JSX & TSX.
 	  (mark-whole-buffer)
 	  (call-interactively 'evil-yank)))
 #+end_src
+*** Disable all themes
+#+begin_src emacs-lisp
+  (defun disable-all-themes ()
+	"Disable all active themes."
+	(dolist (i custom-enabled-themes)
+	  (disable-theme i)))
+#+end_src
+*** Reload config
+#+begin_src emacs-lisp
+  (defun reload-config ()
+	"Reload Emacs Configuration."
+	(interactive)
+	(load-file (concat user-emacs-directory "init.el")))
+#+end_src
+*** Reading mode
+#+begin_src emacs-lisp
+  (defun read-mode/disable ()
+	"Enables menubar & scrollbar."
+	(interactive)
+	(menu-bar-mode 1)
+	(scroll-bar-mode 1))
+
+  (defun read-mode/enable ()
+	"Disables menubar & scrollbar."
+	(interactive)
+	(menu-bar-mode -1)
+	(scroll-bar-mode -1))
+#+end_src
+** Buffers
+*** Split and follow
+#+BEGIN_SRC emacs-lisp
+  (defun split-and-follow-horizontally ()
+	"Split and follow horizontally."
+	(interactive)
+	(split-window-below)
+	(balance-windows)
+	(other-window 1))
+  (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+
+  (defun split-and-follow-vertically ()
+	"Split and follow vertically."
+	(interactive)
+	(split-window-right)
+	(balance-windows)
+	(other-window 1))
+  (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+#+END_SRC
+*** Get buffer menu in new frame
+#+begin_src emacs-lisp
+  ;; https://stackoverflow.com/questions/12014036/emacs-make-frame-switch-buffer
+  (defun get-buffer-menu-in-new-frame ()
+	"Switch-to-buffer-other-frame in new frame."
+	(interactive)
+	(switch-to-buffer (list-buffers-noselect)))
+#+end_src
+** Syncing
+*** Sync Emacs
+Sync Emacs configuration to git.
+#+begin_src emacs-lisp
+  (defun sync/emacs ()
+	"Sync Emacs configuration."
+	(interactive)
+	(async-shell-command "~/bin/sync-emacs.sh"))
+
+  (defun sync/emacs/lock-file ()
+	"Sync Emacs lock-file."
+	(interactive)
+	(straight-freeze-versions)
+	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
+#+end_src
+*** Sync Mail
+Sync Email locally.
+#+begin_src emacs-lisp
+  (defun sync/mail ()
+	"Sync email."
+	(interactive)
+	(async-shell-command "offlineimap")
+	(mu4e-update-index))
+#+end_src
+*** Sync News
+Sync Elfeed & Mail.
+#+begin_src emacs-lisp
+  (defun sync/news ()
+	"Sync; elfeed & email."
+	(interactive)
+	(sync-mail)
+	(elfeed)
+	(elfeed-update))
+#+end_src
+*** Sync Dotfiles
+Sync dotfiles (incl. Emacs) to git.
+#+begin_src emacs-lisp
+  (defun sync/dotfiles ()
+	"Sync dotfiles."
+	(interactive)
+	(async-shell-command "~/bin/sync-dotfiles.sh")
+	(alert "Sync Complete." :severity 'trivial))
+#+end_src
+*** Sync Personal
+#+begin_src emacs-lisp
+  (defun sync/personal/backup ()
+	"Backup authinfo & personal info"
+	(interactive)
+	;; authinfo
+	(async-shell-command "cp ~/.authinfo.gpg ~/org/")
+	(async-shell-command "cp ~/.emacs.d/secrets.el.gpg ~/org/")
+	(async-shell-command "cp ~/.emacs.d/network-security.data ~/org/")
+	;; metadata
+	(async-shell-command "cp ~/.emacs.d/custom.el ~/org/")
+	(async-shell-command "cp ~/.emacs.d/places ~/org/")
+	(async-shell-command "cp ~/.emacs.d/recentf ~/org/"))
+
+  (defun sync/personal/restore ()
+	"Restore authinfo & personal info"
+	(interactive)
+	;; authinfo
+	(async-shell-command "cp ~/org/.authinfo.gpg ~/")
+	(async-shell-command "cp ~/org/.secrets.el.gpg ~/.emacs.d/")
+	(async-shell-command "cp ~/org/network-security-data ~/.emacs.d/")
+	;; metadata
+	(async-shell-command "cp ~/org/custom.el ~/.emacs.d/")
+	(async-shell-command "cp ~/org/places ~/.emacs.d/")
+	(async-shell-command "cp ~/org/recentf ~/.emacs.d/"))
+#+end_src
+** Launchers
+*** Music
+Run ncmpcpp within vterm.
+#+begin_src emacs-lisp
+  (defun music ()
+	"Play music with ncmpcpp."
+	(interactive)
+	(run-in-vterm "ncmpcpp"))
+#+end_src
+*** Open emacs-devel
+Launches gnus and connects to news.gmane.io/emacs-devel.
+#+begin_src emacs-lisp
+  (defun open-emacs-devel ()
+	"Read the Emacs-devel mailing list."
+	(interactive)
+	(setq last-command-event 121)
+	(gnus nil)
+	(setq last-command-event 121)
+	(execute-extended-command nil "gnus" "gnus")
+	(setq last-command-event 13)
+	(gnus-group-browse-foreign-server
+	 `(nntp "news.gmane.io"))
+	(setq last-command-event 13)
+	(swiper)
+	(setq last-command-event 13)
+	(gnus-browse-select-group nil))
+#+end_src
+*** Start org-agenda
+#+begin_src emacs-lisp
+  (defun start-to-org-agenda ()
+	"Launch focused org-agenda."
+	(interactive)
+	(org-agenda nil "n")
+	(delete-other-windows)
+	(fit-frame-to-buffer))
+#+end_src
+*** Shrinkwrapped bufflist
+#+begin_src emacs-lisp
+  (defun shrink-wrapped-buffer-list ()
+	"Launch frame-fitted *Buffer List*."
+	(interactive)
+	(switch-to-buffer (list-buffers-noselect))
+	(shrink-wrap))
+#+end_src
+** Inserts
+*** Date
+Insert date in a buffer in my preferred format
+#+begin_src emacs-lisp
+  (defun get-date () (format-time-string "%b %d, %Y"))
+  (defun insert-date ()
+	(interactive)
+	(insert (get-date)))
+#+end_src
+*** Link
+Inserts org-mode link template.
+#+begin_src emacs-lisp
+  (defun insert-org-link-template ()
+	"Inserts org link template at point."
+	(interactive)
+	(setq last-command-event 91)
+	(org-self-insert-command 1)
+	(setq last-command-event 91)
+	(org-self-insert-command 1)
+	(setq last-command-event 'right)
+	(right-char 1)
+	(setq last-command-event 91)
+	(org-self-insert-command 1))
+#+end_src
+*** WILD_NOTIFIER
+Insert WILD_NOTIFIER properties template.
+#+begin_src emacs-lisp
+  (defun insert-wild-notifier-template ()
+	"Inserts WILD_NOTIFIER_NOTIFY_BEFORE template at point."
+	(interactive)
+	(insert ":PROPERTIES:
+:WILD_NOTIFIER_NOTIFY_BEFORE: 60 30 15 10 5
+:END:"))
+#+end_src
+*** Current filename
+Insert currently visiting buffer filename.
+#+begin_src emacs-lisp
+  (defun insert-current-file-name-at-point (&optional full-path)
+	"Insert the current filename at point.
+  With prefix argument, use full path."
+	(interactive "P")
+	(let* ((buffer
+			(if (minibufferp)
+				(window-buffer
+				 (minibuffer-selected-window))
+			  (current-buffer)))
+		   (filename (buffer-file-name buffer)))
+	  (if filename
+		  (insert (if full-path filename (file-name-nondirectory filename)))
+		(error (format "Buffer %s is not visiting a file" (buffer-name buffer))))))
+#+end_src
 ** Text Manipulation
-*** Toggle Letter Case
+*** Next/Prev 15-lines
+#+begin_src emacs-lisp
+  (defun next-15-lines ()
+	"Move to the next 15 lines."
+	(interactive)
+	(forward-line 15))
+
+  (defun previous-15-lines ()
+	"Move to the previous 15 lines."
+	(interactive)
+	(forward-line -15))
+#+end_src
+*** Toggle Letter case
 #+begin_src emacs-lisp
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
@@ -2412,260 +2581,4 @@ Prettier formatter for JSX & TSX.
 		  (downcase-region start end))
 		(goto-char start)
 		(unless had-initial-underscore (delete-char 1)))))
-#+end_src
-*** Move Next/Prev 15-lines
-#+begin_src emacs-lisp
-  (defun next-15-lines ()
-	"Move to the next 15 lines."
-	(interactive)
-	(forward-line 15))
-
-  (defun previous-15-lines ()
-	"Move to the previous 15 lines."
-	(interactive)
-	(forward-line -15))
-#+end_src
-** Inserts
-*** Date
-Insert date in a buffer in my preferred format
-#+begin_src emacs-lisp
-  (defun get-date () (format-time-string "%b %d, %Y"))
-  (defun insert-date ()
-	(interactive)
-	(insert (get-date)))
-#+end_src
-*** Link
-Inserts org-mode link template.
-#+begin_src emacs-lisp
-  (defun insert-org-link-template ()
-	"Inserts org link template at point."
-	(interactive)
-	(setq last-command-event 91)
-	(org-self-insert-command 1)
-	(setq last-command-event 91)
-	(org-self-insert-command 1)
-	(setq last-command-event 'right)
-	(right-char 1)
-	(setq last-command-event 91)
-	(org-self-insert-command 1))
-#+end_src
-*** WILD_NOTIFIER
-Insert WILD_NOTIFIER properties template.
-#+begin_src emacs-lisp
-  (defun insert-wild-notifier-template ()
-	"Inserts WILD_NOTIFIER_NOTIFY_BEFORE template at point."
-	(interactive)
-	(insert ":PROPERTIES:
-:WILD_NOTIFIER_NOTIFY_BEFORE: 60 30 15 10 5
-:END:"))
-#+end_src
-*** Current filename
-Insert currently visiting buffer filename.
-#+begin_src emacs-lisp
-  (defun insert-current-file-name-at-point (&optional full-path)
-	"Insert the current filename at point.
-  With prefix argument, use full path."
-	(interactive "P")
-	(let* ((buffer
-			(if (minibufferp)
-				(window-buffer
-				 (minibuffer-selected-window))
-			  (current-buffer)))
-		   (filename (buffer-file-name buffer)))
-	  (if filename
-		  (insert (if full-path filename (file-name-nondirectory filename)))
-		(error (format "Buffer %s is not visiting a file" (buffer-name buffer))))))
-#+end_src
-** Buffers
-*** Split and follow
-#+BEGIN_SRC emacs-lisp
-  (defun split-and-follow-horizontally ()
-	"Split and follow horizontally."
-	(interactive)
-	(split-window-below)
-	(balance-windows)
-	(other-window 1))
-  (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
-
-  (defun split-and-follow-vertically ()
-	"Split and follow vertically."
-	(interactive)
-	(split-window-right)
-	(balance-windows)
-	(other-window 1))
-  (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
-#+END_SRC
-*** Get buffer menu in new frame
-#+begin_src emacs-lisp
-  ;; https://stackoverflow.com/questions/12014036/emacs-make-frame-switch-buffer
-  (defun get-buffer-menu-in-new-frame ()
-	"Switch-to-buffer-other-frame in new frame."
-	(interactive)
-	(switch-to-buffer (list-buffers-noselect)))
-#+end_src
-** Syncing
-*** Sync Emacs
-Sync Emacs configuration to git.
-#+begin_src emacs-lisp
-  (defun sync/emacs ()
-	"Sync Emacs configuration."
-	(interactive)
-	(async-shell-command "~/bin/sync-emacs.sh"))
-
-  (defun sync/emacs/lock-file ()
-	"Sync Emacs lock-file."
-	(interactive)
-	(straight-freeze-versions)
-	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
-#+end_src
-*** Sync Mail
-Sync Email locally.
-#+begin_src emacs-lisp
-  (defun sync/mail ()
-	"Sync email."
-	(interactive)
-	(async-shell-command "offlineimap")
-	(mu4e-update-index))
-#+end_src
-*** Sync News
-Sync Elfeed & Mail.
-#+begin_src emacs-lisp
-  (defun sync/news ()
-	"Sync; elfeed & email."
-	(interactive)
-	(sync-mail)
-	(elfeed)
-	(elfeed-update))
-#+end_src
-*** Sync Dotfiles
-Sync dotfiles (incl. Emacs) to git.
-#+begin_src emacs-lisp
-  (defun sync/dotfiles ()
-	"Sync dotfiles."
-	(interactive)
-	(async-shell-command "~/bin/sync-dotfiles.sh")
-	(alert "Sync Complete." :severity 'trivial))
-#+end_src
-*** Sync Personal
-#+begin_src emacs-lisp
-  (defun sync/personal/backup ()
-	"Backup authinfo & personal info"
-	(interactive)
-	;; authinfo
-	(async-shell-command "cp ~/.authinfo.gpg ~/org/")
-	(async-shell-command "cp ~/.emacs.d/secrets.el.gpg ~/org/")
-	(async-shell-command "cp ~/.emacs.d/network-security.data ~/org/")
-	;; locations
-	(async-shell-command "cp ~/.emacs.d/places ~/org/")
-	(async-shell-command "cp ~/.emacs.d/recentf ~/org/"))
-
-  (defun sync/personal/restore ()
-	"Restore authinfo & personal info"
-	(interactive)
-	;; authinfo
-	(async-shell-command "cp ~/org/.authinfo.gpg ~/")
-	(async-shell-command "cp ~/org/.secrets.el.gpg ~/.emacs.d/")
-	(async-shell-command "cp ~/org/network-security-data ~/.emacs.d/")
-	;; locations
-	(async-shell-command "cp ~/org/places ~/.emacs.d/")
-	(async-shell-command "cp ~/org/recentf ~/.emacs.d/"))
-#+end_src
-** Launchers
-*** Music
-Run ncmpcpp within vterm.
-#+begin_src emacs-lisp
-  (defun music ()
-	"Play music with ncmpcpp."
-	(interactive)
-	(run-in-vterm "ncmpcpp"))
-#+end_src
-*** Open emacs-devel
-Launches gnus and connects to news.gmane.io/emacs-devel.
-#+begin_src emacs-lisp
-  (defun open-emacs-devel ()
-	"Read the Emacs-devel mailing list."
-	(interactive)
-	(setq last-command-event 121)
-	(gnus nil)
-	(setq last-command-event 121)
-	(execute-extended-command nil "gnus" "gnus")
-	(setq last-command-event 13)
-	(gnus-group-browse-foreign-server
-	 `(nntp "news.gmane.io"))
-	(setq last-command-event 13)
-	(swiper)
-	(setq last-command-event 13)
-	(gnus-browse-select-group nil))
-#+end_src
-*** Start org-agenda
-#+begin_src emacs-lisp
-  (defun start-to-org-agenda ()
-	"Launch focused org-agenda."
-	(interactive)
-	(org-agenda nil "n")
-	(delete-other-windows)
-	(fit-frame-to-buffer))
-#+end_src
-*** Shrinkwrapped bufflist
-#+begin_src emacs-lisp
-  (defun shrink-wrapped-buffer-list ()
-	"Launch frame-fitted *Buffer List*."
-	(interactive)
-	(switch-to-buffer (list-buffers-noselect))
-	(shrink-wrap))
-#+end_src
-** Read-mode
-#+begin_src emacs-lisp
-  (defun read-mode/disable ()
-	"Enables menubar & scrollbar."
-	(interactive)
-	(menu-bar-mode 1)
-	(scroll-bar-mode 1))
-
-  (defun read-mode/enable ()
-	"Disables menubar & scrollbar."
-	(interactive)
-	(menu-bar-mode -1)
-	(scroll-bar-mode -1))
-#+end_src
-** Switch Background
-#+begin_src emacs-lisp
-  (defun disable-all-themes ()
-	"Disable all active themes."
-	(dolist (i custom-enabled-themes)
-	  (disable-theme i)))
-
-  (defun reset-default-frame-alist ()
-	"Reset default-frame-alist."
-	(interactive)
-	(disable-all-themes)
-	(set-background-color "white")
-	(setq default-frame-alist '((font . "Consolas-12") (internal-border-width . 0) (vertical-scroll-bars . right))))
-
-  (defun switch-bg/honeydew ()
-	"Switch to Honeydew theme."
-	(interactive)
-	(set-background-color "honeydew"))
-  ;;(add-to-list 'default-frame-alist '(background-color . "honeydew")))
-
-  (defun switch-bg/lavender ()
-	"Switch to Lavender theme."
-	(interactive)
-	(set-background-color "lavender"))
-
-  (defun switch-bg/cornsilk ()
-	"Switch to Cornsilk theme."
-	(interactive)
-	(set-background-color "cornsilk"))
-
-  (defun switch-bg/white ()
-	"Switch to White theme."
-	(interactive)
-	(set-background-color "white"))
-  ;;(add-to-list 'default-frame-alist '(background-color . "white")))
-
-  (defun switch-bg/ghostwhite ()
-	"Switch to GhostWhite theme."
-	(interactive)
-	(set-background-color "ghostwhite"))
 #+end_src

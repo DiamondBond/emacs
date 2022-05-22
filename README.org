@@ -76,6 +76,7 @@ Once Emacs launches for the first time we need to setup a few more things:
 This section is just packages that I have needed in the past to comfortably run this Emacs distribution, not everything here is required, this is just a rough guideline.
 *** System
 #+begin_quote
+offlineimap
 fzf ripgrep ag
 clang clangd llvm
 texlive-latex-recommended
@@ -87,7 +88,6 @@ nodejs npm
 libxml2
 gopls
 prettier
-mu offlineimap
 #+end_quote
 *** Python
 #+begin_src bash
@@ -103,6 +103,18 @@ I use Dropbox and I symlink ~/org & ~/pdf to their respective subdirs within ~/D
 #+begin_src sh
   mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
 #+end_src
+** Email
+*** 0. Prerequisites
+I use mu4e (mu) & offlineimap to manage my Email within Emacs.
+#+begin_quote
+maildir=~/mail
+#+end_quote
+*** 1. Configuring offlineimap
+[[https://github.com/DiamondBond/dotfiles/blob/master/.offlineimaprc][offlineimap.rc]]
+
+[[https://github.com/DiamondBond/dotfiles/blob/master/.offlineimap.py][offlineimap.py]]
+*** 2. Configuring mu
+[[https://github.com/DiamondBond/emacs/blob/master/config.org#prerequisites][mu Setup]]
 ** Emacs
 How to compile and install the latest GNU Emacs from HEAD.
 *** Grabbing sources

@@ -1696,6 +1696,22 @@ Show event history and command history of some or all buffers.
   (use-package command-log-mode
 	:ensure t)
 #+end_src
+** Initialize =yasnippet=
+*** Description
+Yasnippet provides useful snippets.
+*** Code
+#+begin_src emacs-lisp
+  (use-package yasnippet
+	:ensure t
+	:diminish yas-minor-mode
+	:hook
+	((c-mode c++-mode) . yas-minor-mode)
+	:config
+	(yas-reload-all))
+
+  (use-package yasnippet-snippets
+	:ensure t)
+#+end_src
 ** Initialize =diminish=
 *** Description
 Diminish hides minor modes to prevent cluttering your mode line.

@@ -821,7 +821,7 @@ Show alerts for unread emails.
 
 	;; Show notifications for mails already notified
 	(setq mu4e-alert-notify-repeated-mails nil)
-
+	:init
 	(mu4e-alert-enable-notifications))
 #+end_src
 *** Initialize =smtpmail=
@@ -2381,7 +2381,7 @@ Sync Emacs configuration to git.
   (defun sync-emacs ()
 	"Sync Emacs configuration."
 	(interactive)
-	(async-shell-command "cp ~/.emacs.d/config.org ~/git/emacs/config.org"))
+	(async-shell-command "~/bin/sync-emacs.sh"))
 
   (defun sync-emacs-lockfile ()
 	"Sync Emacs straight lock-file."

@@ -12,7 +12,7 @@ Enable lexical binding.
   ;;; config.el -*- lexical-binding: t; -*-
 
   ;; Author: Diamond Bond <diamondbond1@gmail.com>
-  ;; Version: 2.1
+  ;; Version: nil
   ;; Package-Requires: ((emacs "29"))
   ;; Created: 2020-06-29
   ;; Keywords: emacs configuration
@@ -193,7 +193,6 @@ Match brackets.
 							  (?\" . ?\")))
   (electric-pair-mode t)
 #+END_SRC
-** Text
 *** Configure indentation
 Set tabs & indents to 4sp.
 #+BEGIN_SRC emacs-lisp

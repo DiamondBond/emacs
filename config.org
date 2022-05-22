@@ -6,7 +6,6 @@
 #+OPTIONS: num:nil
 
 * Base
-Base configuration.
 ** Header
 Enable lexical binding.
 #+begin_src emacs-lisp
@@ -116,13 +115,13 @@ Disable the annoying bell.
   (setq ring-bell-function 'ignore)
 #+END_SRC
 *** Configure Scrolling
-Enables nice scrolling for Emacs<=28.1
+**** Enables nice scrolling for Emacs<=28.1
 #+begin_src emacs-lisp
   (setq scroll-margin 0)
   (setq scroll-conservatively 100000)
   (setq scroll-preserve-screen-position 1)
 #+end_src
-Precision pixel scrolling for Emacs>=29
+**** Enables pixel-scroll-precision-mode for Emacs>=29
 #+begin_src emacs-lisp
   (pixel-scroll-precision-mode)
 #+end_src
@@ -132,7 +131,7 @@ Precision pixel scrolling for Emacs>=29
   (setq save-interprogram-paste-before-kill t)
 #+END_SRC
 *** Pair matching
-**** Enable paren mode
+**** Enable paren-mode
 Show parent parentheses.
 #+BEGIN_SRC emacs-lisp
   (setq show-paren-delay 0
@@ -148,7 +147,7 @@ Match brackets.
 							  (?\" . ?\")))
   (electric-pair-mode t)
 #+END_SRC
-** GUI Appearance
+** Graphical Appearance
 *** Set font
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
@@ -213,16 +212,11 @@ Show column number in modeline.
 #+BEGIN_SRC emacs-lisp
   (global-hl-line-mode nil)
 #+END_SRC
-*** Enable visual line mode
-I prefer to enable this only in =org-mode=
-#+begin_src emacs-lisp
-  ;; (global-visual-line-mode t)
-#+end_src
-*** Enable prettify symbols mode
+*** Enable prettify-symbols-mode
 #+BEGIN_SRC emacs-lisp
   (global-prettify-symbols-mode t)
 #+END_SRC
-*** Enable line numbers mode
+*** Enable line-numbers-mode
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)

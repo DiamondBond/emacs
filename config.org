@@ -604,7 +604,6 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 ** Initialize =org=
 *** Description
 Sensible and well-defined org-mode configuration with org-capture support.
-Org-tree-slider included for presentation support.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package org
@@ -669,16 +668,6 @@ Org-tree-slider included for presentation support.
 			("j" "Journal" entry (file+datetree "~/org/journal.org")
 			 "* %?\n%a\nEntered on %U")))
 
-	;; Agenda styling
-	(setq org-agenda-block-separator ?─
-		  org-agenda-time-grid
-		  '((daily today require-timed)
-			(800 1000 1200 1400 1600 1800 2000)
-			" ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
-		  org-agenda-current-time-string
-		  "⭠ now ─────────────────────────────────────────────────")
-
-
 	;; visual-line-mode only for org-mode
 	(add-hook 'org-mode-hook #'visual-line-mode)
 
@@ -698,17 +687,6 @@ Org-tree-slider included for presentation support.
 	(setq org-wild-notifier-notification-title "*reminder*")
 	:init
 	(org-wild-notifier-mode 1))
-
-  ;; presentations
-  (use-package org-tree-slide
-	:defer t
-	:custom
-	(org-tree-slide-slide-in-effect t)
-	(org-tree-slide-activate-message "Presentation started!")
-	(org-tree-slide-deactivate-message "Presentation finished!")
-	(org-tree-slide-header t)
-	(org-tree-slide-breadcrumbs " > ")
-	(org-image-actual-width nil))
 #+end_src
 ** Initialize =dired=
 *** Description

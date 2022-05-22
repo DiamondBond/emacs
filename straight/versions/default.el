@@ -76,7 +76,6 @@
  ("org" . "27789725093f483c2d123b4e90776ea1f67f3b61")
  ("org-noter" . "9ead81d42dd4dd5074782d239b2efddf9b8b7b3d")
  ("org-pdftools" . "967f48fb5038bba32915ee9da8dc4e8b10ba3376")
- ("org-tree-slide" . "3faa042393ebfe5699a3bffce775f039d7416ceb")
  ("org-wild-notifier.el" . "4b1d874aafdee90815136c308f1f3bd3577971ec")
  ("page-break-lines" . "cc283621c64e4f1133a63e0945658a4abecf42ef")
  ("pcre2el" . "0b5b2a2c173aab3fd14aac6cf5e90ad3bf58fa7d")

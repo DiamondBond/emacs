@@ -7,11 +7,12 @@
 #+html: <img src="https://raw.githubusercontent.com/DiamondBond/emacs/master/img/gnusstorm-2.gif" align="right" width="42%">
 
 * Introduction
-This Emacs distro aims to enhance the default Emacs experience.
+Emacs distro aimed at enhancing the default experience.
 
 It is recommend to run this distribution with the latest [[https://savannah.gnu.org/git/?group=emacs][Emacs HEAD]] compiled from source with
 these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]].
 
+** Contents
 [[https://github.com/DiamondBond/emacs/blob/master/config.org][Main Configuration]]
 
 [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][Package Manifest]]
@@ -21,7 +22,7 @@ these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuratio
 [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][Function Definitions]]
 
 ** Summary
-This Emacs distribution attempts to achieve the following goals:
+This Emacs distro attempts to achieve the following goals:
 
 *** Performance over all else
 Function-over-form.
@@ -33,7 +34,7 @@ The main configuration is literate and has comments / docstrings wherever possib
 e.g: Vertico/Corfu & friends instead of Helm/Ivy/Company.
 
 * Setup
-Please refer to the dependencies section below first to make sure Emacs and your environment have the required packages and configurations setup correctly, then proceed to clone and install this distribution.
+Please refer to the dependencies section below first to make sure Emacs and your environment have the required packages and configurations setup correctly, then proceed to clone and install this distro.
 
 #+begin_src sh
   # Clone configuration to ~/git/emacs
@@ -74,7 +75,7 @@ Once Emacs launches for the first time we need to setup a few more things:
 #+end_src
 * Dependencies
 ** Packages
-This section is just packages that I have needed in the past to comfortably run this Emacs distribution, not everything here is required, this is just a rough guideline.
+This section is just packages that I have needed in the past to comfortably run this Emacs distro, not everything here is required, this is just a rough guideline.
 *** System
 #+begin_quote
 offlineimap

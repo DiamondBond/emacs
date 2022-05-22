@@ -88,11 +88,27 @@ https://emacs.stackexchange.com/questions/28736
   (setq auto-window-vscroll nil)
 #+end_src
 ** Files
+*** Bookmarks
+**** Set file location
+Set bookmarks file location to ~/org/bookmarks
+#+begin_src emacs-lisp
+  (setq bookmark-default-file "~/org/bookmarks")
+#+end_src
+**** Configure autosaving
+#+begin_src emacs-lisp
+  (setq bookmark-save-flag 1) ; everytime bookmark is changed, automatically save it
+  (setq bookmark-save-flag t) ; save bookmark when Emacs quits
+  (setq bookmark-save-flag nil) ; never auto save.
+#+end_src
 *** Do not litter init.el
+Offload the custom-set-variables to a separate file.
+This keeps your init.el neater and you have the option to gitignore your custom.el if you see fit.
 #+begin_src emacs-lisp
   (setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
-  (when (file-exists-p custom-file) ; Don’t forget to load it, we still need it
-	(load custom-file))
+  (unless (file-exists-p custom-file)
+	(write-region "" nil custom-file))
+   ;;; Load custom file. Don't hide errors. Hide success message
+  (load custom-file nil t)
 #+end_src
 *** Load newer .elc or .el
 Load the newer .elc or .el file, rather than stopping at .elc.
@@ -111,17 +127,10 @@ Load the newer .elc or .el file, rather than stopping at .elc.
   (setq create-lockfiles nil)
   (setq vc-make-backup-files nil)
 #+END_SRC
-*** Bookmarks
-**** Set file location
-Set bookmarks file location to ~/org/bookmarks
+*** Delete trailing whitespace on save
 #+begin_src emacs-lisp
-  (setq bookmark-default-file "~/org/bookmarks")
-#+end_src
-**** Configure autosaving
-#+begin_src emacs-lisp
-  (setq bookmark-save-flag 1) ; everytime bookmark is changed, automatically save it
-  (setq bookmark-save-flag t) ; save bookmark when Emacs quits 
-  (setq bookmark-save-flag nil) ; never auto save.
+  (add-hook 'before-save-hook
+			'delete-trailing-whitespace)
 #+end_src
 ** Environment
 *** Use UTF-8
@@ -184,7 +193,7 @@ Match brackets.
 							  (?\" . ?\")))
   (electric-pair-mode t)
 #+END_SRC
-** Graphical Appearance
+** Display
 *** Set font
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
@@ -198,9 +207,12 @@ Match brackets.
 *** Disable some gui elements
 I only disable the tool-bar, I find the menu-bar and scroll-bar to be useful.
 #+BEGIN_SRC emacs-lisp
-  (tool-bar-mode -1)
-  (menu-bar-mode 1)
-  (scroll-bar-mode 1)
+  (if (fboundp 'menu-bar-mode)
+	  (menu-bar-mode 1))
+  (if (fboundp 'tool-bar-mode)
+	  (tool-bar-mode -1))
+  (if (fboundp 'scroll-bar-mode)
+	  (scroll-bar-mode 1))
 #+END_SRC
 *** Configure default-frame-alist
 Place the scrollbar on the right side when using x-toolkit=athena.
@@ -233,8 +245,9 @@ Emacs will fill up the space reported by the window manager.
   (setq window-resize-pixelwise t)
   (setq frame-resize-pixelwise t)
 #+end_src
-** Text Appearance
-*** Configure indentation
+** Text
+*** Style
+**** Configure indentation
 Set tabs & indents to 4sp.
 #+BEGIN_SRC emacs-lisp
   (setq-default tab-width 4)
@@ -243,7 +256,7 @@ Set tabs & indents to 4sp.
   (setq-default indent-tabs-mode t)
   (setq backward-delete-char-untabify-method 'nil)
 #+END_SRC
-*** Set C/C++ Tabs & Braces
+**** Set C/C++ Tabs & Braces
 #+begin_src emacs-lisp
   (setq c-default-style "linux")
   (setq c-basic-offset tab-width)
@@ -267,6 +280,10 @@ Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview 
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (add-hook 'text-mode-hook 'display-line-numbers-mode)
 #+END_SRC
+*** Set linum format
+#+begin_src emacs-lisp
+  (setq linum-format "%4d ")
+#+end_src
 ** Configure Proced
 Auto-update proced every 5 seconds.
 #+begin_src emacs-lisp
@@ -377,6 +394,20 @@ Global & private key maps.
   (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
   (define-key global-map (kbd "C-S-n") #'next-15-lines)
   (define-key global-map (kbd "C-S-p") #'previous-15-lines)
+
+  ;;---------------------------------------------------------------------
+  ;; sane-map
+  ;;---------------------------------------------------------------------
+
+  ;; ;; Gives right-click a context menu
+  (global-set-key [mouse-3] 'mouse-popup-menubar-stuff)
+  ;; ;; Indent selection by one tab length
+  (global-set-key (kbd "C->") 'indent-rigidly-right-to-tab-stop)
+  ;; ;; De-indent selection by one tab length
+  (global-set-key (kbd "C-<") 'indent-rigidly-left-to-tab-stop)
+  ;; ;; Kill word without copying it to your clipboard
+  (global-set-key (kbd "M-DEL") 'sanemacs/backward-kill-word)
+  (global-set-key (kbd "C-DEL") 'sanemacs/backward-kill-word)
 #+END_SRC
 * Use-package
 ** Initialize =elisp=
@@ -445,9 +476,9 @@ Heresy; Vim keybindings in Emacs.
 	(evil-set-initial-state 'eshell-mode 'emacs)
 	(evil-set-initial-state 'vterm-mode 'insert)
 	(evil-set-initial-state 'md4rd-mode 'emacs)
-	(evil-set-initial-state 'inferior-scheme-mode 'emacs) 
+	(evil-set-initial-state 'inferior-scheme-mode 'emacs)
 	;; :q kills buffer
-	(evil-ex-define-cmd "q" 'delete-window) 
+	(evil-ex-define-cmd "q" 'delete-window)
 	;; org-cycle
 	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle))
 
@@ -723,11 +754,11 @@ Add icons and subtree's to dired.
 	:straight (:type built-in)
 	:commands (dired dired-jump)
 	:bind (("C-x C-j" . dired-jump))
-	:custom ((dired-listing-switches "-agho --group-directories-first"))
 	:config
 	(evil-collection-define-key 'normal 'dired-mode-map
 								"h" 'dired-single-up-directory
-								"l" 'dired-single-buffer))
+								"l" 'dired-single-buffer)
+	:custom ((dired-listing-switches "-agho --group-directories-first")))
 
   (use-package dired-single
 	:commands (dired dired-jump))
@@ -744,8 +775,6 @@ Add icons and subtree's to dired.
   (use-package dired-open
 	:commands (dired dired-jump)
 	:config
-	;; Doesn't work as expected!
-	;;(add-to-list 'dired-open-functions #'dired-open-xdg t)
 	(setq dired-open-extensions '(("png" . "nomacs")
 								  ("jpg" . "nomacs")
 								  ("mp4" . "mpv")
@@ -1020,7 +1049,7 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 	;; Fetch only part of the article if we can.
 	(setq gnus-read-active-file 'some)
 	;; Fetch some old headers
-	(setq gnus-fetch-old-headers 'some) 
+	(setq gnus-fetch-old-headers 'some)
 
 	;; Gnus automatic scoring
 	(setq gnus-use-adaptive-scoring t)
@@ -1379,6 +1408,7 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	:load-path "site-lisp/pdf-tools/lisp"
 	:magic ("%PDF" . pdf-view-mode)
 	:config
+	;; install pdf-tools
 	(pdf-tools-install 'no-query)
 	;; open pdfs scaled to fit page
 	(setq-default pdf-view-display-size 'fit-page)
@@ -1700,8 +1730,7 @@ Instant upload to 0x0.st
   (use-package 0x0
 	:straight t
 	:defer t
-	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text)
-	:init (evil-leader/set-key "a 0" '0x0-dwim))
+	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
 #+end_src
 ** Initialize =popper=
 *** Description
@@ -2056,6 +2085,13 @@ Prettier formatter for JSX & TSX.
 #+end_src
 * Functions
 ** Helpers
+*** Reload config
+#+begin_src emacs-lisp
+  (defun reload-config ()
+	"Reload Emacs Configuration."
+	(interactive)
+	(load-file (concat user-emacs-directory "init.el")))
+#+end_src
 *** Load if exists
 #+begin_src emacs-lisp
   (defun load-if-exists (f)
@@ -2342,6 +2378,14 @@ Prettier formatter for JSX & TSX.
 	(forward-line -1)
 	(indent-for-tab-command))
 #+end_src
+*** Backward kill word
+#+begin_src emacs-lisp
+  (defun sanemacs/backward-kill-word ()
+	(interactive "*")
+	(push-mark)
+	(backward-word)
+	(delete-region (point) (mark)))
+#+end_src
 *** Auto Toggle Fill/Unfill Region
 #+begin_src emacs-lisp
   (defun xah-fill-or-unfill ()
@@ -2416,10 +2460,10 @@ Prettier formatter for JSX & TSX.
 *** Date
 Insert date in a buffer in my preferred format
 #+begin_src emacs-lisp
-  (defun get-date () (format-time-string "%b %d, %Y")) 
-  (defun insert-date () 
-	(interactive) 
-	(insert (get-date))) 
+  (defun get-date () (format-time-string "%b %d, %Y"))
+  (defun insert-date ()
+	(interactive)
+	(insert (get-date)))
 #+end_src
 *** Link
 Inserts org-mode link template.
@@ -2489,7 +2533,6 @@ Insert currently visiting buffer filename.
 	"Switch-to-buffer-other-frame in new frame."
 	(interactive)
 	(switch-to-buffer (list-buffers-noselect)))
-  ;;-other-frame 
 #+end_src
 ** Syncing
 *** Sync Emacs
@@ -2513,7 +2556,7 @@ Sync Email locally.
 	"Sync email."
 	(interactive)
 	(async-shell-command "offlineimap")
-	(mu4e-update-index)
+	(mu4e-update-index))
 #+end_src
 *** Sync News
 Sync Elfeed & Mail.

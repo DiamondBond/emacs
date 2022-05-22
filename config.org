@@ -735,11 +735,11 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 *** Code
 #+begin_src emacs-lisp
   (use-package mu4e
-	:straight (:files (:defaults "mu4e/*.el")
-					  :local-repo
-					  "/usr/share/emacs/site-lisp/mu4e"
-					  :pre-build())
+	:straight (:local-repo
+			   "/usr/share/emacs/site-lisp/mu4e"
+			   :pre-build())
 	:config
+
 	;; default
 	(setq mu4e-maildir (expand-file-name "~/mail"))
 

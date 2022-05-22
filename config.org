@@ -154,6 +154,18 @@ Match brackets.
   (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
   ;;(add-to-list 'default-frame-alist '(font . "Consolas-12"))
 #+end_src
+*** Disable default startup screen
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-message t)
+  (setq initial-scratch-message "")
+#+END_SRC
+*** Disable some gui elements
+I only disable the tool-bar, I find the menu-bar and scroll-bar to be useful.
+#+BEGIN_SRC emacs-lisp
+  (tool-bar-mode -1)
+  (menu-bar-mode 1)
+  (scroll-bar-mode 1)
+#+END_SRC
 *** Set window title
 #+BEGIN_SRC emacs-lisp
   (setq-default frame-title-format '("" "%b"))
@@ -215,18 +227,6 @@ Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (add-hook 'text-mode-hook 'display-line-numbers-mode)
-#+END_SRC
-*** Disable default startup screen
-#+BEGIN_SRC emacs-lisp
-  (setq inhibit-startup-message t)
-  (setq initial-scratch-message "")
-#+END_SRC
-*** Disable some gui elements
-I only disable the tool-bar, I find the menu-bar and scroll-bar to be useful.
-#+BEGIN_SRC emacs-lisp
-  (tool-bar-mode -1)
-  (menu-bar-mode 1)
-  (scroll-bar-mode 1)
 #+END_SRC
 ** Configure Proced
 Auto-update proced every 5 seconds.
@@ -342,7 +342,7 @@ Global & private key maps.
 * Use-package
 ** Initialize =elisp=
 *** Description
-Elisp sweetening.
+Elisp enhancers.
 *** Code
 #+begin_src emacs-lisp
   (use-package fn      :demand t) ; function

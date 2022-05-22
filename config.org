@@ -202,6 +202,13 @@ I only disable the tool-bar, I find the menu-bar and scroll-bar to be useful.
   (menu-bar-mode 1)
   (scroll-bar-mode 1)
 #+END_SRC
+*** Configure default-frame-alist
+Place the scrollbar on the right side when using x-toolkit=athena.
+Optionally; enable toolbar when using x-toolkit=athena.
+#+begin_src emacs-lisp
+  (set-scroll-bar-mode 'right) ;; Enable right scrollbar
+  ;; (add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable toolbar
+#+end_src
 *** Set window title
 #+BEGIN_SRC emacs-lisp
   (setq-default frame-title-format '("" "%b"))
@@ -2602,14 +2609,4 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	"Switch to GhostWhite theme."
 	(interactive)
 	(set-background-color "ghostwhite"))
-#+end_src
-** Configure default-frame-alist
-*** Supress *Async Shell Command* output
-#+begin_src emacs-lisp
-  (add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil)))
-#+end_src
-*** Athena Toolkit
-#+begin_src emacs-lisp
-  ;; (add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable athena toolbar
-  (set-scroll-bar-mode 'right) ;; Enable right athena scrollbar
 #+end_src

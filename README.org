@@ -71,7 +71,6 @@ Once Emacs launches for the first time we need to setup a few more things:
 #+begin_src sh
   M-x all-the-icons-install-fonts
 #+end_src
-
 * Dependencies
 ** Packages
 This section is just packages that I have needed in the past to comfortably run this Emacs distribution, not everything here is required, this is just a rough guideline.
@@ -88,6 +87,7 @@ nodejs npm
 libxml2
 gopls
 prettier
+mu offlineimap
 #+end_quote
 *** Python
 #+begin_src bash
@@ -125,13 +125,5 @@ Configure Emacs for building with json, native-comp and the athena toolkit with 
 We build with all cores and natively compile everything ahead of time, this will take a while.
 #+begin_src sh
   make NATIVE_FULL_AOT=1 -j$(nproc)
-  sudo make install
-#+end_src
-** Optional: Notmuch Email
-Download the latest release from https://notmuchmail.org/releases & unzip to ~/src/
-#+begin_src sh
-  cd ~/src/notmuch
-  ./configure
-  make
   sudo make install
 #+end_src

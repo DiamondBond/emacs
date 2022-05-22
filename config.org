@@ -83,7 +83,7 @@ Set bookmarks file location to ~/org/bookmarks
 **** Configure autosaving
 #+begin_src emacs-lisp
   (setq bookmark-save-flag 1) ; everytime bookmark is changed, automatically save it
-  (setq bookmark-save-flag t) ; save bookmark when emacs quits 
+  (setq bookmark-save-flag t) ; save bookmark when Emacs quits 
   (setq bookmark-save-flag nil) ; never auto save.
 #+end_src
 ** Environment
@@ -373,7 +373,7 @@ Alert is a Growl-workalike for Emacs which uses a common notification interface 
 #+end_src
 ** Initialize =elmacro=
 *** Description
-Shows keyboard macros or latest interactive commands as emacs lisp.
+Shows keyboard macros or latest interactive commands as Emacs lisp.
 *** Code
 #+begin_src emacs-lisp
   (use-package elmacro
@@ -1718,7 +1718,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 #+end_src
 ** Initialize =modus-themes=
 *** Description
-Accessible themes for GNU Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
+Accessible themes for Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
 *** Code
 #+begin_src emacs-lisp
   (use-package modus-themes
@@ -1812,12 +1812,12 @@ Go-mode.
 	:ensure t
 	:mode "\\.go\\'"
 	:config
-	(defun my/go-mode-hook()
+	(defun db/go-mode-hook()
 	  ;;(setq-default tab-width 2)
 	  (add-hook 'before-save-hook 'gofmt-before-save)
 	  (set (make-local-variable 'compile-command)
 		   "go test"))
-	:hook ((go-mode . my/go-mode-hook)))
+	:hook ((go-mode . db/go-mode-hook)))
 #+end_src
 ** Rust
 *** Description
@@ -2389,55 +2389,67 @@ Insert currently visiting buffer filename.
 *** Sync Emacs
 Sync Emacs configuration to git.
 #+begin_src emacs-lisp
-  (defun sync-emacs ()
+  (defun sync/emacs ()
 	"Sync Emacs configuration."
 	(interactive)
 	(async-shell-command "~/bin/sync-emacs.sh"))
 
-  (defun sync-emacs-lockfile ()
-	"Sync Emacs straight lock-file."
+  (defun sync/emacs/lock-file ()
+	"Sync Emacs lock-file."
 	(interactive)
 	(straight-freeze-versions)
 	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
 #+end_src
-*** Sync AuthInfo
-#+begin_src emacs-lisp
-  (defun auth-info/backup ()
-	"Backup authinfo to ~/org"
-	(interactive)
-	(async-shell-command "cp ~/.authinfo.gpg ~/org/"))
-
-  (defun auth-info/restore ()
-	"Restore authinfo from ~/org"
-	(interactive)
-	(async-shell-command "cp ~/org/.authinfo.gpg ~/"))
-#+end_src
-*** Sync Email
+*** Sync Mail
 Sync Email locally.
 #+begin_src emacs-lisp
-  (defun sync-email ()
-	"Sync email to local database."
+  (defun sync/mail ()
+	"Sync email."
 	(interactive)
 	(async-shell-command "offlineimap"))
+#+end_src
+*** Sync News
+Sync Elfeed & Mail.
+#+begin_src emacs-lisp
+  (defun sync/news ()
+	"Sync; elfeed & email."
+	(interactive)
+	(sync-mail)
+	(elfeed)
+	(elfeed-update))
 #+end_src
 *** Sync Dotfiles
 Sync dotfiles (incl. Emacs) to git.
 #+begin_src emacs-lisp
-  (defun sync-dotfiles ()
+  (defun sync/dotfiles ()
 	"Sync dotfiles."
 	(interactive)
 	(async-shell-command "~/bin/sync-dotfiles.sh")
 	(alert "Sync Complete." :severity 'trivial))
 #+end_src
-*** Sync Sources
-Sync Elfeed & Mail.
+*** Sync Personal
 #+begin_src emacs-lisp
-  (defun sync-sources ()
-	"Syncs in-Emacs sources; elfeed & email."
+  (defun sync/personal/backup ()
+	"Backup authinfo & personal info"
 	(interactive)
-	(sync-email)
-	(elfeed)
-	(elfeed-update))
+	;; authinfo
+	(async-shell-command "cp ~/.authinfo.gpg ~/org/")
+	(async-shell-command "cp ~/.emacs.d/secrets.el.gpg ~/org/")
+	(async-shell-command "cp ~/.emacs.d/network-security.data ~/org/")
+	;; locations
+	(async-shell-command "cp ~/.emacs.d/places ~/org/")
+	(async-shell-command "cp ~/.emacs.d/recentf ~/org/"))
+
+  (defun sync/personal/restore ()
+	"Restore authinfo & personal info"
+	(interactive)
+	;; authinfo
+	(async-shell-command "cp ~/org/.authinfo.gpg ~/")
+	(async-shell-command "cp ~/org/.secrets.el.gpg ~/.emacs.d/")
+	(async-shell-command "cp ~/org/network-security-data ~/.emacs.d/")
+	;; locations
+	(async-shell-command "cp ~/org/places ~/.emacs.d/")
+	(async-shell-command "cp ~/org/recentf ~/.emacs.d/"))
 #+end_src
 ** Launchers
 *** Music

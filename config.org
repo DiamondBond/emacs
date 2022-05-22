@@ -340,7 +340,6 @@ Elisp enhancers.
   (use-package ht      :demand t) ; hash table
   (use-package dash    :demand t) ; list
   (use-package a       :demand t) ; assoc lists
-  (use-package async   :demand t) ; async
   (use-package ts      :demand t) ; timestamps
   (use-package pcre2el :demand t) ; sane regex
 #+end_src
@@ -354,6 +353,7 @@ Utilize asynchronous processes whenever possible.
 	:init
 	(dired-async-mode 1)
 	:config
+	(add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil)))
 	(async-bytecomp-package-mode 1))
 #+END_SRC
 ** Initialize =alert=

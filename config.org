@@ -210,8 +210,9 @@ Optionally; enable toolbar when using x-toolkit=athena.
   ;; (add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable toolbar
 #+end_src
 *** Set window title
+Make window title the buffer name.
 #+BEGIN_SRC emacs-lisp
-  (setq-default frame-title-format '("" "%b"))
+  (setq-default frame-title-format '("%b"))
 #+END_SRC
 *** Configure fringe
 Disable fringe-mode.
@@ -439,7 +440,7 @@ Heresy; Vim keybindings in Emacs.
 	(setq evil-want-fine-undo t) ; more granular undo with evil
 	;; set evil state on a per mode basis
 	(evil-set-initial-state 'messages-buffer-mode 'normal)
-	(evil-set-initial-state 'dashboard-mode 'normal)
+	(evil-set-initial-state 'dashboard-mode 'emacs)
 	(evil-set-initial-state 'term-mode 'emacs)
 	(evil-set-initial-state 'eshell-mode 'emacs)
 	(evil-set-initial-state 'vterm-mode 'insert)
@@ -511,16 +512,34 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 	:config
 	(dashboard-setup-startup-hook)
 	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
-	(setq dashboard-items '((recents . 5)))
+	;;(setq dashboard-items '((recents . 5)))
 	;; (setq dashboard-startup-banner (expand-file-name "img/gnusstorm-2.gif" user-emacs-directory))
 	(setq dashboard-startup-banner 'official)
 	(setq dashboard-center-content t)
-	(setq dashboard-show-shortcuts nil)
+	;;(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)
-	(setq dashboard-set-footer nil)
+	;;(setq dashboard-set-footer nil)
+	;; (setq dashboard-page-separator "\n\n")
 	(setq dashboard-set-navigator t)
 	(setq dashboard-navigator-buttons
-		  `(((,nil
+		  `(;; line1
+			((,nil
+			  "Config"
+			  "Open config file for easy editing"
+			  (lambda (&rest _) (config-edit))
+			  'default)
+			 (nil
+			  "Magit"
+			  "Open this config's local git repository"
+			  (lambda (&rest _) (magit "~/git/emacs"))
+			  'default)
+			 (nil
+			  "Github"
+			  "Open this config's Gitlab page in your web browser"
+			  (lambda (&rest _) (browse-url "https://github.com/diamondbond/emacs"))
+			  'default))
+			;; line 2
+			((,nil
 			  "Notes"
 			  "Open personal notes"
 			  (lambda (&rest _) (notes-edit))
@@ -539,6 +558,33 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 			  "Inbox"
 			  "Open Inbox"
 			  (lambda (&rest _) (inbox-edit))
+			  'default))
+			;; line 3
+			((,nil
+			  "Email"
+			  "Read email with mu4e"
+			  (lambda (&rest _) (mu4e))
+			  'default)
+			 (nil
+			  "Elfeed"
+			  "Read RSS/Atom feeds with Elfeed"
+			  (lambda (&rest _) (elfeed))
+			  'default)
+			 (nil
+			  "Devel"
+			  "Read emacs-devel with Gnus"
+			  (lambda (&rest _) (open-emacs-devel))
+			  'default))
+			;; line 4
+			((,nil
+			  "Terminal"
+			  "Open vterm"
+			  (lambda (&rest _) (vterm))
+			  'default)
+			 (nil
+			  "Dired"
+			  "Manage files with dired"
+			  (lambda (&rest _) (dired "~/"))
 			  'default)))))
 #+END_SRC
 ** Initialize =org=
@@ -2466,7 +2512,8 @@ Sync Email locally.
   (defun sync/mail ()
 	"Sync email."
 	(interactive)
-	(async-shell-command "offlineimap"))
+	(async-shell-command "offlineimap")
+	(mu4e-update-index)
 #+end_src
 *** Sync News
 Sync Elfeed & Mail.

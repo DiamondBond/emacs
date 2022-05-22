@@ -9,7 +9,8 @@
 * Introduction
 This Emacs distro aims to enhance the default Emacs experience.
 
-It is recommend to run this distribution with the latest [[https://ftp.gnu.org/gnu/emacs/emacs-28.1.tar.xz][Emacs 28.1]] compiled from source with these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]].
+It is recommend to run this distribution with the latest [[https://savannah.gnu.org/git/?group=emacs][Emacs HEAD]] compiled from source with
+these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]].
 
 [[https://github.com/DiamondBond/emacs/blob/master/config.org][Main Configuration]]
 
@@ -104,7 +105,7 @@ I use Dropbox and I symlink ~/org & ~/pdf to their respective subdirs within ~/D
   mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
 #+end_src
 ** Emacs
-How to compile and install the latest GNU Emacs from HEAD.
+How to compile and install the latest GNU Emacs @ HEAD.
 *** Grabbing sources
 Clone the latest emacs sources:
 #+begin_src sh
@@ -118,8 +119,7 @@ Configure Emacs for building with json, native-comp and the athena toolkit with 
   ./autogen.sh
 
   # Configure Emacs
-  # athena & nativecomp [for: rc-28.1 on X11]
-  ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --without-compress-install --with-native-compilation CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
+  ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --without-compress-install --with-native-compilation --with-xinput2 CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
 #+end_src
 *** Compiling
 We build with all cores and natively compile everything ahead of time, this will take a while.

@@ -125,6 +125,11 @@ Disable the annoying bell.
   (setq x-select-enable-clipboard t)
   (setq save-interprogram-paste-before-kill t)
 #+END_SRC
+*** Disabling external pin entry
+You can force GPG to not use an external tool for pin entry. That is particularly useful if you don’t want the default GPG Agent pin entry tool to start, particularly if you want Emacs to handle the pin entry for you.
+#+begin_src emacs-lisp
+  (setenv "GPG_AGENT_INFO" nil)
+#+end_src
 *** Pair matching
 **** Enable paren-mode
 Show parent parentheses.
@@ -955,16 +960,12 @@ RSS reader for Emacs.
 #+END_SRC
 ** Initialize =md4rd=
 #+begin_src emacs-lisp
-  (use-package md4rd :ensure t
+  (use-package md4rd
+	:ensure t
 	:config
-	(add-hook 'md4rd-mode-hook 'md4rd-indent-all-the-lines)
 	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure))
-	(setq md4rd--oauth-access-token
-		  "b54o-0xVeapTlgqkHeMIMWEeYIoLAg")
-	(setq md4rd--oauth-refresh-token
-		  "b54o-0xVeapTlgqkHeMIMWEeYIoLAg")
-	(add-hook 'md4rd-mode-hook 'md4rd-indent-all-the-lines))
-  ;; (run-with-timer 0 3540 'md4rd-refresh-login))
+	(load-if-exists "~/.emacs.d/secrets.el.gpg"))
+  ;; (add-hook 'md4rd-mode-hook 'md4rd-indent-all-the-lines))
 #+end_src
 ** Initialize =erc=
 *** Description
@@ -1945,6 +1946,12 @@ Prettier formatter for JSX & TSX.
 #+end_src
 * Functions
 ** Helpers
+*** Load if exists
+#+begin_src emacs-lisp
+  (defun load-if-exists (f)
+	(if (file-exists-p (expand-file-name f))
+		(load-file (expand-file-name f))))
+#+end_src
 *** Enable Minor mode
 #+begin_src emacs-lisp
   (defun enable-minor-mode (my-pair)

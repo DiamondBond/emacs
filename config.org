@@ -252,7 +252,7 @@ Some basic aliases & transform yes-or-no into y-or-n.
 *** Fit-frame
 Shrinks frame to buffer contents.
 #+begin_src emacs-lisp
-  (defalias 'shrinkwrap 'fit-frame-to-buffer)
+  (defalias 'shrink-wrap 'fit-frame-to-buffer)
 #+end_src
 *** Saftey
 So I dont accidentally delete all my bookmarks.
@@ -1719,8 +1719,7 @@ Accessible themes for GNU Emacs, conforming with the highest standard for colour
 * Languages
 ** LSP
 *** Description
-Language Server Protocol.
-Handles the following languages:
+Language Server Protocol, handles the following languages:
 - C/C++
 - [WEB] JS/JSX/HTML/CSS
 - Python
@@ -1858,6 +1857,15 @@ Lua mode.
 	:config
 	(setq lua-indent-level 2))
 #+end_src
+** CSV
+*** Description
+Major mode for editing records in a generalized CSV (character-separated values) format.
+*** Code
+#+begin_src emacs-lisp
+  (use-package csv-mode
+	:ensure t
+	:mode ("\\.csv\\'" . csv-mode))
+#+end_src
 ** JSON
 *** Description
 Syntax highlighting for json files.
@@ -1922,6 +1930,87 @@ Prettier formatter for JSX & TSX.
 								'("\\.tsx?\\'" . prettier-js-mode))))
 #+end_src
 * Functions
+** Helpers
+*** Enable Minor mode
+#+begin_src emacs-lisp
+  (defun enable-minor-mode (my-pair)
+	"Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
+	(if (buffer-file-name)
+		(if (string-match (car my-pair) buffer-file-name)
+			(funcall (cdr my-pair)))))
+#+end_src
+*** Dired sort
+#+begin_src emacs-lisp
+  (defun xah/dired-sort ()
+	"Sort dired dir listing in different ways.
+  Prompt for a choice."
+	(interactive)
+	(let (sort-by arg)
+	  (setq sort-by (completing-read "Sort by:" '("name" "size" "date" "extension")))
+	  (pcase sort-by
+		("name" (setq arg "-ahl --group-directories-first"))
+		("date" (setq arg "-ahl -t --group-directories-first"))
+		("size" (setq arg "-ahl -S --group-directories-first"))
+		("extension" (setq arg "ahlD -X --group-directories-first"))
+		(otherwise (error "Dired-sort: unknown option %s" otherwise)))
+	  (dired-sort-other arg)))
+#+end_src
+*** Erc handlers
+#+begin_src emacs-lisp
+  (defun erc-start ()
+	"Start ERC and connect to Rizon."
+	(interactive)
+	(save-current-buffer
+	  (erc :server "irc.rizon.net" :port "6667" :nick "diamondbond")))
+
+  (defun erc-quit ()
+	"Quit ERC."
+	(interactive)
+	(erc-quit-server nil))
+#+end_src
+*** Run in vterm
+#+begin_src emacs-lisp
+  (defun run-in-vterm-kill (process event)
+	"A process sentinel. Kills PROCESS's buffer if it is live."
+	(let ((b (process-buffer process)))
+	  (and (buffer-live-p b)
+		   (kill-buffer b))))
+
+  (defun run-in-vterm (command)
+	"Execute string COMMAND in a new vterm.
+
+	Interactively, prompt for COMMAND with the current buffer's file
+	name supplied. When called from Dired, supply the name of the
+	file at point.
+
+	Like `async-shell-command`, but run in a vterm for full terminal features.
+
+	The new vterm buffer is named in the form `*foo bar.baz*`, the
+	command and its arguments in earmuffs.
+
+	When the command terminates, the shell remains open, but when the
+	shell exits, the buffer is killed."
+	(interactive
+	 (list
+	  (let* ((f (cond (buffer-file-name)
+					  ((eq major-mode 'dired-mode)
+					   (dired-get-filename nil t))))
+			 (filename (concat " " (shell-quote-argument (and f (file-relative-name f))))))
+		(read-shell-command "Command: "))))
+	(with-current-buffer (vterm (concat "*" command "*"))
+	  (set-process-sentinel vterm--process #'run-in-vterm-kill)
+	  (vterm-send-string command)
+	  (vterm-send-return)))
+#+end_src
+*** Yank Whole Buffer
+#+begin_src emacs-lisp
+  (defun yank-whole-buffer ()
+	"Yanks whole buffer."
+	(interactive)
+	(save-excursion
+	  (mark-whole-buffer)
+	  (call-interactively 'evil-yank)))
+#+end_src
 ** Text Manipulation
 *** Toggle Letter Case
 #+begin_src emacs-lisp
@@ -1970,40 +2059,15 @@ Prettier formatter for JSX & TSX.
 	   ((looking-at "[[:upper:]]") (downcase-region (point) (1+ (point)))))
 	  (right-char)))
 #+end_src
-*** Auto Toggle Fill/Unfill Region
+*** Upcase last word
 #+begin_src emacs-lisp
-  (defun xah-fill-or-unfill ()
-	"Reformat current paragraph or region to `fill-column', like `fill-paragraph' or “unfill”.
-  When there is a text selection, act on the selection, else, act on a text block separated by blank lines.
-  URL `http://xahlee.info/emacs/emacs/modernization_fill-paragraph.html'
-  Version 2017-01-08"
+  (defun upcase-last-word ()
 	(interactive)
-	;; This command symbol has a property “'compact-p”, the possible values are t and nil. This property is used to easily determine whether to compact or uncompact, when this command is called again
-	(let ( ($compact-p
-			(if (eq last-command this-command)
-				(get this-command 'compact-p)
-			  (> (- (line-end-position) (line-beginning-position)) fill-column)))
-		   (deactivate-mark nil)
-		   ($blanks-regex "\n[ \t]*\n")
-		   $p1 $p2
-		   )
-	  (if (use-region-p)
-		  (progn (setq $p1 (region-beginning))
-				 (setq $p2 (region-end)))
-		(save-excursion
-		  (if (re-search-backward $blanks-regex nil "NOERROR")
-			  (progn (re-search-forward $blanks-regex)
-					 (setq $p1 (point)))
-			(setq $p1 (point)))
-		  (if (re-search-forward $blanks-regex nil "NOERROR")
-			  (progn (re-search-backward $blanks-regex)
-					 (setq $p2 (point)))
-			(setq $p2 (point)))))
-	  (if $compact-p
-		  (fill-region $p1 $p2)
-		(let ((fill-column most-positive-fixnum ))
-		  (fill-region $p1 $p2)))
-	  (put this-command 'compact-p (not $compact-p))))
+	(move-end-of-line 1)
+	(backward-word 1)
+	(upcase-word 1)
+	(move-beginning-of-line 1)
+	(next-line 1 1))
 #+end_src
 *** Reformat Lines
 #+begin_src emacs-lisp
@@ -2128,31 +2192,148 @@ Prettier formatter for JSX & TSX.
 	  (forward-line 1)
 	  (yank)))
 #+end_src
-** Enable Minor mode
+*** Open new line below
 #+begin_src emacs-lisp
-  (defun enable-minor-mode (my-pair)
-	"Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
-	(if (buffer-file-name)
-		(if (string-match (car my-pair) buffer-file-name)
-			(funcall (cdr my-pair)))))
-#+end_src
-** Dired sort
-#+begin_src emacs-lisp
-  (defun xah/dired-sort ()
-	"Sort dired dir listing in different ways.
-  Prompt for a choice."
+  (defun open-line-below ()
+	"Open a new line below point."
 	(interactive)
-	(let (sort-by arg)
-	  (setq sort-by (completing-read "Sort by:" '("name" "size" "date" "extension")))
-	  (pcase sort-by
-		("name" (setq arg "-ahl --group-directories-first"))
-		("date" (setq arg "-ahl -t --group-directories-first"))
-		("size" (setq arg "-ahl -S --group-directories-first"))
-		("extension" (setq arg "ahlD -X --group-directories-first"))
-		(otherwise (error "Dired-sort: unknown option %s" otherwise)))
-	  (dired-sort-other arg)))
+	(end-of-line)
+	(newline)
+	(indent-for-tab-command))
 #+end_src
-** Split and follow
+*** Open new line above
+#+begin_src emacs-lisp
+  (defun open-line-above ()
+	"Open a new line above point."
+	(interactive)
+	(beginning-of-line)
+	(newline)
+	(forward-line -1)
+	(indent-for-tab-command))
+#+end_src
+*** Auto Toggle Fill/Unfill Region
+#+begin_src emacs-lisp
+  (defun xah-fill-or-unfill ()
+	"Reformat current paragraph or region to `fill-column', like `fill-paragraph' or “unfill”.
+  When there is a text selection, act on the selection, else, act on a text block separated by blank lines.
+  URL `http://xahlee.info/emacs/emacs/modernization_fill-paragraph.html'
+  Version 2017-01-08"
+	(interactive)
+	;; This command symbol has a property “'compact-p”, the possible values are t and nil. This property is used to easily determine whether to compact or uncompact, when this command is called again
+	(let ( ($compact-p
+			(if (eq last-command this-command)
+				(get this-command 'compact-p)
+			  (> (- (line-end-position) (line-beginning-position)) fill-column)))
+		   (deactivate-mark nil)
+		   ($blanks-regex "\n[ \t]*\n")
+		   $p1 $p2
+		   )
+	  (if (use-region-p)
+		  (progn (setq $p1 (region-beginning))
+				 (setq $p2 (region-end)))
+		(save-excursion
+		  (if (re-search-backward $blanks-regex nil "NOERROR")
+			  (progn (re-search-forward $blanks-regex)
+					 (setq $p1 (point)))
+			(setq $p1 (point)))
+		  (if (re-search-forward $blanks-regex nil "NOERROR")
+			  (progn (re-search-backward $blanks-regex)
+					 (setq $p2 (point)))
+			(setq $p2 (point)))))
+	  (if $compact-p
+		  (fill-region $p1 $p2)
+		(let ((fill-column most-positive-fixnum ))
+		  (fill-region $p1 $p2)))
+	  (put this-command 'compact-p (not $compact-p))))
+#+end_src
+*** Convert =camelCase= to =snake_case=
+#+begin_src emacs-lisp
+  (defun camel-to-snake-case (arg)
+	"Convert a camelCase word to snake_case.
+
+  If the prefix argument ARG is non-nil, convert the text to uppercase."
+	(interactive "p")
+	(progn
+	  (let ((start (region-beginning))
+			(end (region-end))
+			(case-fold-search nil)
+			(had-initial-underscore nil))
+		(goto-char start)
+		(when (looking-at "_") (setq had-initial-underscore t))
+		(while (re-search-forward "\\([A-Z]\\)" end t)
+		  (replace-match "_\\1")
+		  (setq end (1+ end)))
+		(if arg
+			(upcase-region start end)
+		  (downcase-region start end))
+		(goto-char start)
+		(unless had-initial-underscore (delete-char 1)))))
+#+end_src
+*** Move Next/Prev 15-lines
+#+begin_src emacs-lisp
+  (defun next-15-lines ()
+	"Move to the next 15 lines."
+	(interactive)
+	(forward-line 15))
+
+  (defun previous-15-lines ()
+	"Move to the previous 15 lines."
+	(interactive)
+	(forward-line -15))
+#+end_src
+** Inserts
+*** Date
+Insert date in a buffer in my preferred format
+#+begin_src emacs-lisp
+  (defun get-date () (format-time-string "%b %d, %Y")) 
+  (defun insert-date () 
+	(interactive) 
+	(insert (get-date))) 
+#+end_src
+*** Link
+Inserts org-mode link template.
+#+begin_src emacs-lisp
+  (defun insert-org-link-template ()
+	"Inserts org link template at point."
+	(interactive)
+	(setq last-command-event 91)
+	(org-self-insert-command 1)
+	(setq last-command-event 91)
+	(org-self-insert-command 1)
+	(setq last-command-event 'right)
+	(right-char 1)
+	(setq last-command-event 91)
+	(org-self-insert-command 1))
+#+end_src
+*** WILD_NOTIFIER
+Insert WILD_NOTIFIER properties template.
+#+begin_src emacs-lisp
+  (defun insert-wild-notifier-template ()
+	"Inserts WILD_NOTIFIER_NOTIFY_BEFORE template at point."
+	(interactive)
+	(insert ":PROPERTIES:
+:WILD_NOTIFIER_NOTIFY_BEFORE: 60 30 15 10 5
+:END:"))
+#+end_src
+*** Current filename
+Insert currently visiting buffer filename.
+#+begin_src emacs-lisp
+  (defun insert-current-file-name-at-point (&optional full-path)
+	"Insert the current filename at point.
+  With prefix argument, use full path."
+	(interactive "P")
+	(let* ((buffer
+			(if (minibufferp)
+				(window-buffer
+				 (minibuffer-selected-window))
+			  (current-buffer)))
+		   (filename (buffer-file-name buffer)))
+	  (if filename
+		  (insert (if full-path filename (file-name-nondirectory filename)))
+		(error (format "Buffer %s is not visiting a file" (buffer-name buffer))))))
+#+end_src
+** Buffers
+*** Split and follow
 #+BEGIN_SRC emacs-lisp
   (defun split-and-follow-horizontally ()
 	"Split and follow horizontally."
@@ -2170,81 +2351,7 @@ Prettier formatter for JSX & TSX.
 	(other-window 1))
   (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 #+END_SRC
-** Erc handlers
-#+begin_src emacs-lisp
-  (defun erc-start ()
-	"Start ERC and connect to Rizon."
-	(interactive)
-	(save-current-buffer
-	  (erc :server "irc.rizon.net" :port "6667" :nick "diamondbond")))
-
-  (defun erc-quit ()
-	"Quit ERC."
-	(interactive)
-	(erc-quit-server nil))
-#+end_src
-** Update emacs git
-#+begin_src emacs-lisp
-  (defun update-emacs-git ()
-	"Backup config.org to git"
-	(interactive)
-	(async-shell-command "cp ~/.emacs.d/config.org ~/git/emacs/config.org"))
-
-  (defun update-emacs-pkglist ()
-	"Backup straight lockfile to git"
-	(interactive)
-	(straight-freeze-versions)
-	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
-#+end_src
-** Sync email
-#+begin_src emacs-lisp
-  (defun sync-email ()
-	"Sync email to local database."
-	(interactive)
-	(async-shell-command "offlineimap"))
-#+end_src
-** Run in vterm
-#+begin_src emacs-lisp
-  (defun run-in-vterm-kill (process event)
-	"A process sentinel. Kills PROCESS's buffer if it is live."
-	(let ((b (process-buffer process)))
-	  (and (buffer-live-p b)
-		   (kill-buffer b))))
-
-  (defun run-in-vterm (command)
-	"Execute string COMMAND in a new vterm.
-
-	Interactively, prompt for COMMAND with the current buffer's file
-	name supplied. When called from Dired, supply the name of the
-	file at point.
-
-	Like `async-shell-command`, but run in a vterm for full terminal features.
-
-	The new vterm buffer is named in the form `*foo bar.baz*`, the
-	command and its arguments in earmuffs.
-
-	When the command terminates, the shell remains open, but when the
-	shell exits, the buffer is killed."
-	(interactive
-	 (list
-	  (let* ((f (cond (buffer-file-name)
-					  ((eq major-mode 'dired-mode)
-					   (dired-get-filename nil t))))
-			 (filename (concat " " (shell-quote-argument (and f (file-relative-name f))))))
-		(read-shell-command "Command: "))))
-	(with-current-buffer (vterm (concat "*" command "*"))
-	  (set-process-sentinel vterm--process #'run-in-vterm-kill)
-	  (vterm-send-string command)
-	  (vterm-send-return)))
-#+end_src
-** Music
-#+begin_src emacs-lisp
-  (defun music ()
-	"Play music with ncmpcpp."
-	(interactive)
-	(run-in-vterm "ncmpcpp"))
-#+end_src
-** Get buffer menu in new frame
+*** Get buffer menu in new frame
 #+begin_src emacs-lisp
   ;; https://stackoverflow.com/questions/12014036/emacs-make-frame-switch-buffer
   (defun get-buffer-menu-in-new-frame ()
@@ -2253,16 +2360,31 @@ Prettier formatter for JSX & TSX.
 	(switch-to-buffer (list-buffers-noselect)))
   ;;-other-frame 
 #+end_src
-** Yank Whole Buffer
+** Syncing
+*** Sync Emacs
+Sync Emacs configuration to git.
 #+begin_src emacs-lisp
-  (defun yank-whole-buffer ()
-	"Yanks whole buffer."
+  (defun sync-emacs ()
+	"Sync Emacs configuration."
 	(interactive)
-	(save-excursion
-	  (mark-whole-buffer)
-	  (call-interactively 'evil-yank)))
+	(async-shell-command "cp ~/.emacs.d/config.org ~/git/emacs/config.org"))
+
+  (defun sync-emacs-lockfile ()
+	"Sync straight lock-file to git."
+	(interactive)
+	(straight-freeze-versions)
+	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
 #+end_src
-** Sync dotfiles
+*** Sync Email
+Sync Email locally.
+#+begin_src emacs-lisp
+  (defun sync-email ()
+	"Sync email to local database."
+	(interactive)
+	(async-shell-command "offlineimap"))
+#+end_src
+*** Sync Dotfiles
+Sync dotfiles (incl. Emacs) to git.
 #+begin_src emacs-lisp
   (defun sync-dotfiles ()
 	"Sync dotfiles."
@@ -2270,7 +2392,8 @@ Prettier formatter for JSX & TSX.
 	(async-shell-command "~/bin/sync-dotfiles.sh")
 	(alert "Sync Complete." :severity 'trivial))
 #+end_src
-** Sync Sources
+*** Sync Sources
+Sync Elfeed & Mail.
 #+begin_src emacs-lisp
   (defun sync-sources ()
 	"Syncs in-Emacs sources; elfeed & email."
@@ -2279,40 +2402,20 @@ Prettier formatter for JSX & TSX.
 	(elfeed)
 	(elfeed-update))
 #+end_src
-** Dev-C++ Compile & Run
+** Launchers
+*** Music
+Run ncmpcpp within vterm.
 #+begin_src emacs-lisp
-  (defun devcpp/compile-and-run ()
-	"Yanks Current Buffer, switches to QEMU & pastes clipboard."
+  (defun music ()
+	"Play music with ncmpcpp."
 	(interactive)
-	(yank-whole-buffer)
-	(async-shell-command "sh -c ~/bin/stqap.sh"))
+	(run-in-vterm "ncmpcpp"))
 #+end_src
-** Upcase last word
-#+begin_src emacs-lisp
-  (defun upcase-last-word ()
-	(interactive)
-	(move-end-of-line 1)
-	(backward-word 1)
-	(upcase-word 1)
-	(move-beginning-of-line 1)
-	(next-line 1 1))
-#+end_src
-** Next/Prev 15-lines
-#+begin_src emacs-lisp
-  (defun next-15-lines ()
-	"Move to the next 15 lines."
-	(interactive)
-	(forward-line 15))
-
-  (defun previous-15-lines ()
-	"Move to the previous 15 lines."
-	(interactive)
-	(forward-line -15))
-#+end_src
-** Open emacs-devel
+*** Open emacs-devel
+Launches gnus and connects to news.gmane.io/emacs-devel.
 #+begin_src emacs-lisp
   (defun open-emacs-devel ()
-	"Starts gnus & connects to news.gmane.io/emacs-devel."
+	"Read the Emacs-devel mailing list."
 	(interactive)
 	(setq last-command-event 121)
 	(gnus nil)
@@ -2326,38 +2429,7 @@ Prettier formatter for JSX & TSX.
 	(setq last-command-event 13)
 	(gnus-browse-select-group nil))
 #+end_src
-** Insert link template
-#+begin_src emacs-lisp
-  (defun insert-org-link-template ()
-	"Inserts org link template at point."
-	(interactive)
-	(setq last-command-event 91)
-	(org-self-insert-command 1)
-	(setq last-command-event 91)
-	(org-self-insert-command 1)
-	(setq last-command-event 'right)
-	(right-char 1)
-	(setq last-command-event 91)
-	(org-self-insert-command 1))
-#+end_src
-** Insert WILD_NOTIFIER
-#+begin_src emacs-lisp
-  (defun insert-wild-notifier-template ()
-	"Inserts WILD_NOTIFIER_NOTIFY_BEFORE template at point."
-	(interactive)
-	(insert ":PROPERTIES:
-:WILD_NOTIFIER_NOTIFY_BEFORE: 60 30 15 10 5
-:END:"))
-#+end_src
-** Shrinkwrapped bufflist
-#+begin_src emacs-lisp
-  (defun shrink-wrapped-buffer-list ()
-	"Launch focused *Buffer List*."
-	(interactive)
-	(switch-to-buffer (list-buffers-noselect))
-	(fit-frame-to-buffer))
-#+end_src
-** Start org-agenda
+*** Start org-agenda
 #+begin_src emacs-lisp
   (defun start-to-org-agenda ()
 	"Launch focused org-agenda."
@@ -2366,15 +2438,29 @@ Prettier formatter for JSX & TSX.
 	(delete-other-windows)
 	(fit-frame-to-buffer))
 #+end_src
-** Insert date
+*** Shrinkwrapped bufflist
 #+begin_src emacs-lisp
-  ;; insert date in a buffer in my preferred format
-  (defun get-date () (format-time-string "%b %d, %Y")) 
-  (defun insert-date () 
-	(interactive) 
-	(insert (get-date))) 
+  (defun shrink-wrapped-buffer-list ()
+	"Launch frame-fitted *Buffer List*."
+	(interactive)
+	(switch-to-buffer (list-buffers-noselect))
+	(shrink-wrap))
 #+end_src
-** Switch background
+** Read-mode
+#+begin_src emacs-lisp
+  (defun read-mode/disable ()
+	"Enables menubar & scrollbar."
+	(interactive)
+	(menu-bar-mode 1)
+	(scroll-bar-mode 1))
+
+  (defun read-mode/enable ()
+	"Disables menubar & scrollbar."
+	(interactive)
+	(menu-bar-mode -1)
+	(scroll-bar-mode -1))
+#+end_src
+** Switch Background
 #+begin_src emacs-lisp
   (defun disable-all-themes ()
 	"Disable all active themes."
@@ -2414,20 +2500,6 @@ Prettier formatter for JSX & TSX.
 	"Switch to GhostWhite theme."
 	(interactive)
 	(set-background-color "ghostwhite"))
-#+end_src
-** Read-mode
-#+begin_src emacs-lisp
-  (defun read-mode/disable ()
-	"Enables menubar & scrollbar."
-	(interactive)
-	(menu-bar-mode 1)
-	(scroll-bar-mode 1))
-
-  (defun read-mode/enable ()
-	"Disables menubar & scrollbar."
-	(interactive)
-	(menu-bar-mode -1)
-	(scroll-bar-mode -1))
 #+end_src
 ** Configure default-frame-alist
 *** Supress *Async Shell Command* output

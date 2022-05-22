@@ -129,6 +129,23 @@ Precision pixel scrolling for Emacs>=29
   (setq x-select-enable-clipboard t)
   (setq save-interprogram-paste-before-kill t)
 #+END_SRC
+*** Pair matching
+**** Enable paren mode
+Show parent parentheses.
+#+BEGIN_SRC emacs-lisp
+  (setq show-paren-delay 0
+		show-paren-style 'parenthesis)
+  (show-paren-mode 1)
+#+END_SRC
+**** Enable bracket pair-matching
+Match brackets.
+#+BEGIN_SRC emacs-lisp
+  (setq electric-pair-pairs '((?\{ . ?\})
+							  (?\( . ?\))
+							  (?\[ . ?\])
+							  (?\" . ?\")))
+  (electric-pair-mode t)
+#+END_SRC
 ** GUI Appearance
 *** Set font
 #+begin_src emacs-lisp
@@ -208,23 +225,6 @@ I only disable the tool-bar, I find the menu-bar and scroll-bar to be useful.
   (tool-bar-mode -1)
   (menu-bar-mode 1)
   (scroll-bar-mode 1)
-#+END_SRC
-** Brackets
-*** Enable paren mode
-Show parent parentheses.
-#+BEGIN_SRC emacs-lisp
-  (setq show-paren-delay 0
-		show-paren-style 'parenthesis)
-  (show-paren-mode 1)
-#+END_SRC
-*** Enable bracket pair-matching
-Match brackets.
-#+BEGIN_SRC emacs-lisp
-  (setq electric-pair-pairs '((?\{ . ?\})
-							  (?\( . ?\))
-							  (?\[ . ?\])
-							  (?\" . ?\")))
-  (electric-pair-mode t)
 #+END_SRC
 ** Configure Proced
 Auto-update proced every 5 seconds.
@@ -723,17 +723,22 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 #+END_SRC
 ** Initialize =mu4e=
 *** Description
+**** Install mu & offlineimap.
 #+begin_src sh
   yay -S offlineimap mu
+#+end_src
+**** Build mu index.
+#+begin_src sh
   mu init --maildir=/home/diamond/mail/ --my-address=diamondbond1@gmail.com
   mu index
 #+end_src
 *** Code
 #+begin_src emacs-lisp
   (use-package mu4e
-	:straight (:local-repo
-			   "/usr/share/emacs/site-lisp/mu4e"
-			   :pre-build())
+	:straight (:files (:defaults "mu4e/*.el")
+					  :local-repo
+					  "/usr/share/emacs/site-lisp/mu4e"
+					  :pre-build())
 	:config
 	;; default
 	(setq mu4e-maildir (expand-file-name "~/mail"))

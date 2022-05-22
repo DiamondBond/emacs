@@ -718,15 +718,33 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	  (switch-to-buffer-other-window "*eshell*")))
 #+END_SRC
 ** Initialize =mail=
-*** Description
-**** Install mu & offlineimap.
+*** Prerequisites
+**** 0. Install offlineimap
 #+begin_src sh
-  yay -S offlineimap mu
+  yay -S offlineimap
 #+end_src
-**** Build mu index.
-#+begin_src sh
-  mu init --maildir=/home/diamond/mail/ --my-address=diamondbond1@gmail.com
-  mu index
+**** 1. Compile mu
+Note: 'mu' binary is output to ~/.emacs.d/straight/repos/mu/build/mu/mu
+#+begin_src emacs-lisp
+  (defun mu-setup/build-mu-binary ()
+	"Compiles 'mu' binary."
+	(interactive)
+	(async-shell-command "cd ~/.emacs.d/straight/repos/mu; ./autogen.sh; ninja -C build"))
+#+end_src
+**** 2. Initialize mu
+Change --my-address=<...@gmail.com> to your email address.
+#+begin_src emacs-lisp
+  (defun mu-setup/init-mu ()
+	"Initializes 'mu' db."
+	(interactive)
+	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu init --maildir=/home/diamond/mail/ --my-address=diamondbond1@gmail.com"))
+#+end_src
+**** 3. Build mu index.
+#+begin_src emacs-lisp
+  (defun mu-setup/build-mu-index ()
+	"Builds 'mu' index."
+	(interactive)
+	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu index"))
 #+end_src
 *** Initialize =mu4e=
 **** Description
@@ -734,9 +752,12 @@ mu4e mail client.
 **** Code
 #+begin_src emacs-lisp
   (use-package mu4e
-	:ensure nil
-	:defer 5
-	:load-path "/usr/share/emacs/site-lisp/mu4e/"
+	:straight ( :host github
+				:repo "djcb/mu"
+				:branch "master"
+				:files ("build/mu4e/*")
+				:pre-build (("./autogen.sh") ("make")))
+	:custom   (mu4e-mu-binary (expand-file-name "build/mu/mu" (straight--repos-dir "mu")))
 	:config
 	;; default
 	(require 'org-mu4e)
@@ -789,10 +810,7 @@ mu4e mail client.
 	;; Don't ask for a 'context' upon opening mu4e
 	(setq mu4e-context-policy 'pick-first)
 	;; Don't ask to quit... why is this the default?
-	(setq mu4e-confirm-quit nil)
-
-	;; Enable mu4e
-	(mu4e t))
+	(setq mu4e-confirm-quit nil))
 #+end_src
 *** Initialize =mu4e-alert=
 **** Description
@@ -2370,7 +2388,7 @@ Sync Emacs configuration to git.
 	(async-shell-command "cp ~/.emacs.d/config.org ~/git/emacs/config.org"))
 
   (defun sync-emacs-lockfile ()
-	"Sync straight lock-file to git."
+	"Sync Emacs straight lock-file."
 	(interactive)
 	(straight-freeze-versions)
 	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))

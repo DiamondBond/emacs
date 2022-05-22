@@ -560,7 +560,7 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 	:config
 	(dashboard-setup-startup-hook)
 	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
-	;;(setq dashboard-items '((recents . 5)))
+	;; (setq dashboard-items '((recents . 5)))
 	;; (setq dashboard-startup-banner (expand-file-name "img/gnusstorm-2.gif" user-emacs-directory))
 	(setq dashboard-startup-banner 'official)
 	(setq dashboard-center-content t)

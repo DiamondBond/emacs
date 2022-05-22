@@ -582,7 +582,7 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 			  (lambda (&rest _) (elfeed))
 			  'default)
 			 (nil
-			  "Devel"
+			  "Gnus"
 			  "Read emacs-devel with Gnus"
 			  (lambda (&rest _) (open-emacs-devel))
 			  'default)))))

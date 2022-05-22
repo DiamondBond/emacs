@@ -306,6 +306,7 @@ Some basic aliases & transform yes-or-no into y-or-n.
   (defalias 'second 'cadr)
   (defalias 'third 'caddr)
   (defalias 'when-not 'unless)
+  (defalias 'word-count 'count-words)
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+end_src
 *** Fit-frame
@@ -317,6 +318,11 @@ Shrinks frame to buffer contents.
 So I dont accidentally delete all my bookmarks.
 #+begin_src emacs-lisp
   (defalias 'bookmark-delete-all 'bookmark-delete)
+#+end_src
+*** Presentation
+Easy to remember org-beamer-export command.
+#+begin_src emacs-lisp
+  (defalias 'produce-presentation 'org-beamer-export-to-pdf)
 #+end_src
 * Keybinds
 ** Description
@@ -1589,8 +1595,6 @@ Enable on the fly with M-x flyspell-mode.
 	:config
 	(setq ispell-program-name "hunspell"
 		  ispell-default-dictionary "en_US")
-	:custom
-	(defalias 'word-count 'count-words)
 	:bind (("M-<f7>" . flyspell-buffer)))
 #+end_src
 ** Initialize =imenu-list=

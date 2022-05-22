@@ -193,6 +193,21 @@ Match brackets.
 							  (?\" . ?\")))
   (electric-pair-mode t)
 #+END_SRC
+** Text
+*** Configure indentation
+Set tabs & indents to 4sp.
+#+BEGIN_SRC emacs-lisp
+  (setq-default tab-width 4)
+  (setq-default standard-indent 4)
+  (setq-default electric-indent-inhibit t)
+  (setq-default indent-tabs-mode t)
+  (setq backward-delete-char-untabify-method 'nil)
+#+END_SRC
+*** Set C/C++ Tabs & Braces
+#+begin_src emacs-lisp
+  (setq c-default-style "linux")
+  (setq c-basic-offset tab-width)
+#+end_src
 ** Display
 *** Set font
 #+begin_src emacs-lisp
@@ -244,22 +259,6 @@ Emacs will fill up the space reported by the window manager.
 #+begin_src emacs-lisp
   (setq window-resize-pixelwise t)
   (setq frame-resize-pixelwise t)
-#+end_src
-** Text
-*** Style
-**** Configure indentation
-Set tabs & indents to 4sp.
-#+BEGIN_SRC emacs-lisp
-  (setq-default tab-width 4)
-  (setq-default standard-indent 4)
-  (setq-default electric-indent-inhibit t)
-  (setq-default indent-tabs-mode t)
-  (setq backward-delete-char-untabify-method 'nil)
-#+END_SRC
-**** Set C/C++ Tabs & Braces
-#+begin_src emacs-lisp
-  (setq c-default-style "linux")
-  (setq c-basic-offset tab-width)
 #+end_src
 *** Enable column-numbers-mode
 Show column number in modeline.
@@ -551,23 +550,7 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 	;; (setq dashboard-page-separator "\n\n")
 	(setq dashboard-set-navigator t)
 	(setq dashboard-navigator-buttons
-		  `(;; line1
-			((,nil
-			  "Config"
-			  "Open config file for easy editing"
-			  (lambda (&rest _) (config-edit))
-			  'default)
-			 (nil
-			  "Magit"
-			  "Open this config's local git repository"
-			  (lambda (&rest _) (magit "~/git/emacs"))
-			  'default)
-			 (nil
-			  "Github"
-			  "Open this config's Gitlab page in your web browser"
-			  (lambda (&rest _) (browse-url "https://github.com/diamondbond/emacs"))
-			  'default))
-			;; line 2
+		  `(;; line 1
 			((,nil
 			  "Notes"
 			  "Open personal notes"
@@ -588,7 +571,7 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 			  "Open Inbox"
 			  (lambda (&rest _) (inbox-edit))
 			  'default))
-			;; line 3
+			;; line 2
 			((,nil
 			  "Email"
 			  "Read email with mu4e"
@@ -603,17 +586,6 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 			  "Devel"
 			  "Read emacs-devel with Gnus"
 			  (lambda (&rest _) (open-emacs-devel))
-			  'default))
-			;; line 4
-			((,nil
-			  "Terminal"
-			  "Open vterm"
-			  (lambda (&rest _) (vterm))
-			  'default)
-			 (nil
-			  "Dired"
-			  "Manage files with dired"
-			  (lambda (&rest _) (dired "~/"))
 			  'default)))))
 #+END_SRC
 ** Initialize =org=
@@ -752,10 +724,10 @@ Add icons and subtree's to dired.
 	:straight (:type built-in)
 	:commands (dired dired-jump)
 	:bind (("C-x C-j" . dired-jump))
-	:config
-	(evil-collection-define-key 'normal 'dired-mode-map
-								"h" 'dired-single-up-directory
-								"l" 'dired-single-buffer)
+	;; :config
+	;; (evil-collection-define-key 'normal 'dired-mode-map
+	;; 							  "h" 'dired-single-up-directory
+	;; 							  "l" 'dired-single-buffer)
 	:custom ((dired-listing-switches "-agho --group-directories-first")))
 
   (use-package dired-single

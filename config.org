@@ -959,13 +959,17 @@ RSS reader for Emacs.
 			("https://www.phoronix.com/rss.php" phoronix))))
 #+END_SRC
 ** Initialize =md4rd=
+*** Description
+Reddit client within Emacs with oauth2 support.
+*** Code
 #+begin_src emacs-lisp
   (use-package md4rd
 	:ensure t
 	:config
 	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure))
-	(load-if-exists "~/.emacs.d/secrets.el.gpg"))
-  ;; (add-hook 'md4rd-mode-hook 'md4rd-indent-all-the-lines))
+	(load-if-exists "~/.emacs.d/secrets.el.gpg")
+	;; (add-hook 'md4rd-mode-hook 'md4rd-indent-all-the-lines))
+	(add-hook 'md4rd-mode-hook 'visual-line-mode))
 #+end_src
 ** Initialize =erc=
 *** Description

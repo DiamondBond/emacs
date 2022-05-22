@@ -7,40 +7,30 @@
 
 * Base
 Base configuration.
-** Rudimentary
+** Header
+Enable lexical binding.
 #+begin_src emacs-lisp
   ;;; config.el -*- lexical-binding: t; -*-
 #+end_src
-** Identity
-Set identity and email address.
+** Personal
+*** Identity
+Set user name and email address.
 #+begin_src emacs-lisp
   (setq user-full-name "Diamond"
 		user-mail-address "diamondbond1@gmail.com")
 #+end_src
-** Auth
+*** Authentication
 Symlink authinfo.
 #+begin_src sh
   ln -s ~/org/.authinfo.gpg ~/.authinfo
 #+end_src
-Set authinfo file location and expiry to never.
+
+Set authinfo file location and authinfo expiry to never.
 #+begin_src emacs-lisp
   (setq auth-sources '("~/.authinfo" "~/.authinfo.gpg")
 		auth-source-cache-expiry nil)
 #+end_src
 ** Performance
-Do not steal focus while doing async compilations
-#+begin_src emacs-lisp
-  (setq warning-suppress-types '((comp)))
-#+end_src
-Turn off ad-redef warnings
-#+begin_src emacs-lisp
-  (setq ad-redefinition-action 'accept)
-#+end_src
-Potentially speed up cursor operations
-https://emacs.stackexchange.com/questions/28736
-#+begin_src emacs-lisp
-  (setq auto-window-vscroll nil)
-#+end_src
 *** Garbage collect when in minibuffer
 While the minibuffer is open, garbage collection will never occur, but once we make a selection, or cancel, garbage collection will kick off immediately and then revert back to the default, sensible behavior.
 #+begin_src emacs-lisp
@@ -53,7 +43,36 @@ While the minibuffer is open, garbage collection will never occur, but once we m
   (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
   (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 #+end_src
-** Disable automatic creation of backup files
+*** Do not steal focus while doing async compilations
+#+begin_src emacs-lisp
+  (setq warning-suppress-types '((comp)))
+#+end_src
+*** Turn off ad-redef warnings
+#+begin_src emacs-lisp
+  (setq ad-redefinition-action 'accept)
+#+end_src
+*** Potentially speed up cursor operations
+https://emacs.stackexchange.com/questions/28736
+#+begin_src emacs-lisp
+  (setq auto-window-vscroll nil)
+#+end_src
+** Files
+*** Do not litter init.el
+#+begin_src emacs-lisp
+  (setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
+  (when (file-exists-p custom-file) ; Don’t forget to load it, we still need it
+	(load custom-file))
+#+end_src
+*** Load newer .elc or .el
+Load the newer .elc or .el file, rather than stopping at .elc.
+#+begin_src emacs-lisp
+  (setq load-prefer-newer t)
+#+end_src
+*** Don't ask for confirmation when opening symlinked file
+#+begin_src emacs-lisp
+  (setq vc-follow-symlinks t)
+#+end_src
+*** Disable automatic creation of backup files
 #+BEGIN_SRC emacs-lisp
   (setq make-backup-files nil)
   (setq auto-save-default nil)
@@ -61,44 +80,20 @@ While the minibuffer is open, garbage collection will never occur, but once we m
   (setq create-lockfiles nil)
   (setq vc-make-backup-files nil)
 #+END_SRC
-** Set bookmarks file location
+*** Bookmarks
+**** Set file location
 Set bookmarks file location to ~/org/bookmarks
 #+begin_src emacs-lisp
   (setq bookmark-default-file "~/org/bookmarks")
 #+end_src
-** Bookmarks autosaving
+**** Configure autosaving
 #+begin_src emacs-lisp
   (setq bookmark-save-flag 1) ; everytime bookmark is changed, automatically save it
   (setq bookmark-save-flag t) ; save bookmark when emacs quits 
   (setq bookmark-save-flag nil) ; never auto save.
 #+end_src
-** Don't ask for confirmation when opening symlinked file
-#+begin_src emacs-lisp
-  (setq vc-follow-symlinks t)
-#+end_src
-** Do not litter init.el
-#+begin_src emacs-lisp
-  (setq-default custom-file (expand-file-name ".custom.el" user-emacs-directory))
-  (when (file-exists-p custom-file) ; Don’t forget to load it, we still need it
-	(load custom-file))
-#+end_src
-** Load newer .elc or .el
-Load the newer .elc or .el file, rather than stopping at .elc.
-#+begin_src emacs-lisp
-  (setq load-prefer-newer t)
-#+end_src
-** Set font
-#+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
-  ;;(add-to-list 'default-frame-alist '(font . "Consolas-12"))
-#+end_src
-** Set environment
-Essential for using shells in Emacs.
-#+begin_src emacs-lisp
-  (setenv "PAGER" "cat")
-  (setq default-directory "~/")
-#+end_src
-** UTF-8
+** Environment
+*** Use UTF-8
 UTF-8 please.
 #+begin_src emacs-lisp
   (setq locale-coding-system 'utf-8)
@@ -107,21 +102,18 @@ UTF-8 please.
   (set-selection-coding-system 'utf-8)
   (prefer-coding-system 'utf-8)
 #+end_src
-** Indentation
-Set tabs & indents to 4sp.
-#+BEGIN_SRC emacs-lisp
-  (setq-default tab-width 4)
-  (setq-default standard-indent 4)
-  (setq-default electric-indent-inhibit t)
-  (setq-default indent-tabs-mode t)
-  (setq backward-delete-char-untabify-method 'nil)
-#+END_SRC
-** Set C/C++ Tabs & Braces
+*** Set Pager
+Essential for using shells in Emacs.
 #+begin_src emacs-lisp
-  (setq c-default-style "linux")
-  (setq c-basic-offset tab-width)
+  (setenv "PAGER" "cat")
+  (setq default-directory "~/")
 #+end_src
-** Configure Scrolling
+*** Disable ring-bell
+Disable the annoying bell.
+#+BEGIN_SRC emacs-lisp
+  (setq ring-bell-function 'ignore)
+#+END_SRC
+*** Configure Scrolling
 Enables nice scrolling for Emacs<=28.1
 #+begin_src emacs-lisp
   (setq scroll-margin 0)
@@ -132,16 +124,23 @@ Precision pixel scrolling for Emacs>=29
 #+begin_src emacs-lisp
   (pixel-scroll-precision-mode)
 #+end_src
-** Set internal border width
+*** Enable external-bound copy-pasting
+#+BEGIN_SRC emacs-lisp
+  (setq x-select-enable-clipboard t)
+  (setq save-interprogram-paste-before-kill t)
+#+END_SRC
+** GUI Appearance
+*** Set font
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(internal-border-width . 0))
+  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
+  ;;(add-to-list 'default-frame-alist '(font . "Consolas-12"))
 #+end_src
-** Fill whatever space the window manager has given us.
-#+begin_src emacs-lisp
-  (setq window-resize-pixelwise t)
-  (setq frame-resize-pixelwise t)
-#+end_src
-** Fringe mode
+*** Set window title
+#+BEGIN_SRC emacs-lisp
+  (setq-default frame-title-format '("" "%b"))
+#+END_SRC
+*** Configure fringe
+Disable fringe-mode.
 #+begin_src emacs-lisp
   (fringe-mode nil)
   (setq-default fringes-outside-margins nil)
@@ -149,54 +148,76 @@ Precision pixel scrolling for Emacs>=29
   (setq-default indicate-empty-lines nil)
   (setq-default overflow-newline-into-fringe t)
 #+end_src
-** Window title
+*** Set internal border width
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist '(internal-border-width . 0))
+#+end_src
+*** Fill space provided by WM
+Emacs will fill up the space reported by the window manager.
+#+begin_src emacs-lisp
+  (setq window-resize-pixelwise t)
+  (setq frame-resize-pixelwise t)
+#+end_src
+** Text Appearance
+*** Configure indentation
+Set tabs & indents to 4sp.
 #+BEGIN_SRC emacs-lisp
-  (setq-default frame-title-format '("" "%b"))
+  (setq-default tab-width 4)
+  (setq-default standard-indent 4)
+  (setq-default electric-indent-inhibit t)
+  (setq-default indent-tabs-mode t)
+  (setq backward-delete-char-untabify-method 'nil)
 #+END_SRC
-** Enable column numbers mode
+*** Set C/C++ Tabs & Braces
+#+begin_src emacs-lisp
+  (setq c-default-style "linux")
+  (setq c-basic-offset tab-width)
+#+end_src
+*** Enable column-numbers-mode
 Show column number in modeline.
 #+BEGIN_SRC emacs-lisp
   (column-number-mode 1)
 #+END_SRC
-** Enable global Highlight line mode
+*** Enable global-highlight-line-mode
 #+BEGIN_SRC emacs-lisp
   (global-hl-line-mode nil)
 #+END_SRC
-** Enable Visual line mode
+*** Enable visual line mode
 I prefer to enable this only in =org-mode=
 #+begin_src emacs-lisp
   ;; (global-visual-line-mode t)
 #+end_src
-** Enable prettify symbols mode
+*** Enable prettify symbols mode
 #+BEGIN_SRC emacs-lisp
   (global-prettify-symbols-mode t)
 #+END_SRC
-** Enable line numbers mode
+*** Enable line numbers mode
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (add-hook 'text-mode-hook 'display-line-numbers-mode)
 #+END_SRC
-** Disable default startup screen
+*** Disable default startup screen
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-message t)
   (setq initial-scratch-message "")
 #+END_SRC
-** Disable some gui elements
+*** Disable some gui elements
 I only disable the tool-bar, I find the menu-bar and scroll-bar to be useful.
 #+BEGIN_SRC emacs-lisp
   (tool-bar-mode -1)
   (menu-bar-mode 1)
   (scroll-bar-mode 1)
 #+END_SRC
-** Enable paren mode
+** Brackets
+*** Enable paren mode
 Show parent parentheses.
 #+BEGIN_SRC emacs-lisp
   (setq show-paren-delay 0
 		show-paren-style 'parenthesis)
   (show-paren-mode 1)
 #+END_SRC
-** Enable bracket pair-matching
+*** Enable bracket pair-matching
 Match brackets.
 #+BEGIN_SRC emacs-lisp
   (setq electric-pair-pairs '((?\{ . ?\})
@@ -205,20 +226,8 @@ Match brackets.
 							  (?\" . ?\")))
   (electric-pair-mode t)
 #+END_SRC
-** Disable ring-bell
-#+BEGIN_SRC emacs-lisp
-  (setq ring-bell-function 'ignore)
-#+END_SRC
-** Enable copy-pasting outside of Emacs
-#+BEGIN_SRC emacs-lisp
-  (setq x-select-enable-clipboard t)
-  (setq save-interprogram-paste-before-kill t)
-#+END_SRC
-** Transform yes-or-no into y-or-n
-#+BEGIN_SRC emacs-lisp
-  (defalias 'yes-or-no-p 'y-or-n-p)
-#+END_SRC
 ** Configure Proced
+Auto-update proced every 5 seconds.
 #+begin_src emacs-lisp
   (setq proced-auto-update-flag t)
   (setq proced-auto-update-interval 5)
@@ -226,26 +235,32 @@ Match brackets.
   (setq proced-filter 'user)
 #+end_src
 ** Configure Browser
+Firefox as default browser.
 #+BEGIN_SRC emacs-lisp
   ;; eww
-  (setq browse-url-default-browser 'eww-browse-url)
   ;; (setq browse-url-browser-function 'eww-browse-url)
 
   ;; firefox
   (setq browse-url-browser-function 'browse-url-firefox)
 #+END_SRC
 ** Define aliases
+*** Basic
+Some basic aliases & transform yes-or-no into y-or-n.
 #+begin_src emacs-lisp
-  ;; basic
   (defalias 'first 'car)
   (defalias 'second 'cadr)
   (defalias 'third 'caddr)
   (defalias 'when-not 'unless)
-
-  ;; frame cmds
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+end_src
+*** Fit-frame
+Shrinks frame to buffer contents.
+#+begin_src emacs-lisp
   (defalias 'shrinkwrap 'fit-frame-to-buffer)
-
-  ;; saftey
+#+end_src
+*** Saftey
+So I dont accidentally delete all my bookmarks.
+#+begin_src emacs-lisp
   (defalias 'bookmark-delete-all 'bookmark-delete)
 #+end_src
 * Keybinds

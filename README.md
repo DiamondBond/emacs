@@ -1,19 +1,7 @@
-
-# Table of Contents
-
--   [Introduction](#org40c6105)
--   [Setup](#org557afe2)
--   [Compile pdf-tools](#org7a91f95)
--   [Compile vterm modules](#org4c567d0)
--   [Download & install all-the-icons font](#org8662df8)
--   [Dependencies](#org89bc4c5)
-
 <a href="https://www.gnu.org/software/emacs/"><img alt="GNU Emacs" src="https://github.com/minad/corfu/blob/screenshots/emacs.svg?raw=true"/></a>
 
 <img src="https://raw.githubusercontent.com/DiamondBond/emacs/master/img/gnusstorm-2.gif" align="right" width="42%">
 
-
-<a id="org40c6105"></a>
 
 # Introduction
 
@@ -64,7 +52,8 @@ Simple to fork & edit
 e.g: Vertico/Corfu & friends instead of Helm/Ivy/Company.
 
 
-<a id="org557afe2"></a>
+## Contents
+
 
 # Setup
 
@@ -95,28 +84,20 @@ To get autocompletion on JS/TS & Python files, you'll need to install the corres
 Once Emacs launches for the first time we need to setup a few more things:
 
 
-<a id="org7a91f95"></a>
-
 # Compile pdf-tools
 
     M-x pdf-tools-install
 
-
-<a id="org4c567d0"></a>
 
 # Compile vterm modules
 
     M-x vterm
 
 
-<a id="org8662df8"></a>
-
 # Download & install all-the-icons font
 
     M-x all-the-icons-install-fonts
 
-
-<a id="org89bc4c5"></a>
 
 # Dependencies
 

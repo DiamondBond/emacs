@@ -4,7 +4,6 @@
 #+html: <a href="https://www.gnu.org/software/emacs/"><img alt="GNU Emacs" src="https://github.com/minad/corfu/blob/screenshots/emacs.svg?raw=true"/></a>
 #+html: <img src="https://raw.githubusercontent.com/DiamondBond/emacs/master/img/gnusstorm-2.gif" align="right" width="42%">
 #+OPTIONS: toc:nil num:nil
-#+TOC: headlines 1 local
 * Introduction
 Emacs distro aimed at enhancing the default experience.
 
@@ -34,6 +33,8 @@ Simple to fork & edit
 *** Remain as simple as possible whilst maximizing usability
 e.g: Vertico/Corfu & friends instead of Helm/Ivy/Company.
 
+** Contents
+#+TOC: headlines 1 local
 * Setup
 Please refer to the dependencies section below first to make sure Emacs and your environment have the required packages and configurations setup correctly, then proceed to clone and install this distro.
 

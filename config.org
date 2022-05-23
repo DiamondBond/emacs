@@ -462,7 +462,7 @@ Alert is a Growl-workalike for Emacs which uses a common notification interface 
   (use-package alert
 	:ensure t
 	:config
-	(setq alert-fade-time 30))
+	(setq alert-fade-time 15))
 #+end_src
 ** Initialize =elmacro=
 *** Description
@@ -592,17 +592,22 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 			  'default))
 			;; line 2
 			((,nil
-			  "Email"
+			  "mu4e"
 			  "Read email with mu4e"
 			  (lambda (&rest _) (mu4e))
 			  'default)
+			 (,nil
+			  "md4rd"
+			  "Reddit with md4rd"
+			  (lambda (&rest _) (md4rd))
+			  'default)
 			 (nil
-			  "Elfeed"
+			  "elfeed"
 			  "Read RSS/Atom feeds with Elfeed"
 			  (lambda (&rest _) (elfeed))
 			  'default)
 			 (nil
-			  "Gnus"
+			  "gnus"
 			  "Read emacs-devel with Gnus"
 			  (lambda (&rest _) (open-emacs-devel))
 			  'default)))))

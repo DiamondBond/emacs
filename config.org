@@ -1117,8 +1117,6 @@ Vertico, orderless, marginalia, consult & embark.
   (use-package marginalia
 	:straight t
 	:after vertico
-	:custom
-	(marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
 	:init
 	(marginalia-mode))
 

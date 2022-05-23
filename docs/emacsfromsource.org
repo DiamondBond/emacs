@@ -1,0 +1,32 @@
+* How to compile and install GNU Emacs@HEAD
+
+** Grabbing sources
+
+Clone the latest emacs sources:
+
+#+begin_src sh
+  cd ~/git
+  git clone -b master git://git.sv.gnu.org/emacs.git
+#+end_src
+
+** Configuration
+
+Configure Emacs with json, native-comp, xinput2 and the athena toolkit with xaw3d-toolbars.
+
+#+begin_src sh
+  # Run the auto-generation script
+  ./autogen.sh
+
+  # Configure Emacs
+  ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --without-compress-install --with-native-compilation --with-xinput2 CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
+  # note: Remove "--with-xinput2" if your target build is Emacs28
+#+end_src
+
+** Compiling
+
+Compile with all cores and native full ahead of time compilation, this takes a while.
+
+#+begin_src sh
+  make NATIVE_FULL_AOT=1 -j$(nproc)
+  sudo make install
+#+end_src

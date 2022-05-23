@@ -10,7 +10,7 @@ A sensible Emacs distro aimed at enhancing the default experience.
 
 # Quick Start
 
-Install the latest [Emacs@HEAD](https://github.com/DiamondBond/emacs/blob/master/README.org/#compiling) compiled from source with these [configure flags](https://github.com/DiamondBond/emacs/blob/master/README.org#configuration).
+Install [Emacs@Head](docs/emacsfromsource.md).
 
 Clone this repository to `~/.emacs.d` or `~/.config/emacs`:
 
@@ -190,39 +190,6 @@ Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 1.  ~/.emacs.d/places
 2.  ~/.emacs.d/recentf
 3.  ~/.emacs.d/custom.el
-
-
-## Emacs
-
-How to compile and install the latest GNU Emacs @ HEAD.
-
-
-### Grabbing sources
-
-Clone the latest emacs sources:
-
-    cd ~/git
-    git clone -b master git://git.sv.gnu.org/emacs.git
-
-
-### Configuration
-
-Configure Emacs with json, native-comp, xinput2 and the athena toolkit with xaw3d-toolbars.
-
-    # Run the auto-generation script
-    ./autogen.sh
-
-    # Configure Emacs
-    ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --without-compress-install --with-native-compilation --with-xinput2 CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
-    # note: Remove "--with-xinput2" if your target build is Emacs28
-
-
-### Compiling
-
-Compile with all cores and native full ahead of time compilation, this takes a while.
-
-    make NATIVE_FULL_AOT=1 -j$(nproc)
-    sudo make install
 
 
 # Contributing

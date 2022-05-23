@@ -85,98 +85,22 @@ To get autocompletion on JS/TS & Python files, you'll need to install the corres
 Once Emacs launches for the first time we need to setup a few more things:
 
 
-# Compile pdf-tools
+## Compile pdf-tools
 
     M-x pdf-tools-install
 
 
-# Compile vterm modules
+## Compile vterm modules
 
     M-x vterm
 
 
-# Download & install all-the-icons font
+## Download & install all-the-icons font
 
     M-x all-the-icons-install-fonts
 
 
-# Dependencies
-
-
-## Packages
-
-This section is just packages that I have needed in the past to comfortably run this Emacs distro, not everything here is required, this is just a rough guideline.
-
-
-### System
-
-> offlineimap
-> fzf ripgrep ag
-> clang clangd llvm
-> texlive-latex-recommended
-> imagemagick
-> editorconfig
-> libjansson
-> rust-all cargo
-> nodejs npm
-> libxml2
-> gopls
-> prettier
-
-
-### Python
-
-    pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi
-
-
-### NPM
-
-Please install deno & typescript-language-server for Typescript (TS/TSX) support.
-
-    sudo npm install -g deno typescript-language-server bash-language-server
-
-
-## Files
-
-I use Dropbox and I symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
-
-    mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
-
-
-## Emacs
-
-How to compile and install the latest GNU Emacs @ HEAD.
-
-
-### Grabbing sources
-
-Clone the latest emacs sources:
-
-    cd ~/git
-    git clone -b master git://git.sv.gnu.org/emacs.git
-
-
-### Configuration
-
-Configure Emacs for building with json, native-comp and the athena toolkit with xaw3d toolbars.
-
-    # Run the auto-generation script
-    ./autogen.sh
-
-    # Configure Emacs
-    ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --without-compress-install --with-native-compilation --with-xinput2 CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
-    # note: Remove "--with-xinput2" if you're building Emacs28
-
-
-### Compiling
-
-We build with all cores and natively compile everything ahead of time, this will take a while.
-
-    make NATIVE_FULL_AOT=1 -j$(nproc)
-    sudo make install
-
-
-## Email
+## Setup Email
 
 
 ### 0. Prerequisites
@@ -189,10 +113,79 @@ mu4e (mu) & offlineimap to manage Email within Emacs.
 ### 1. Configuring offlineimap
 
 [offlineimap.rc](https://github.com/DiamondBond/dotfiles/blob/master/.offlineimaprc)
-
 [offlineimap.py](https://github.com/DiamondBond/dotfiles/blob/master/.offlineimap.py)
 
 
 ### 2. Configuring mu
 
 [mu Setup](https://github.com/DiamondBond/emacs/blob/master/config.org#prerequisites)
+
+
+## Dependencies
+
+
+### Packages
+
+This section is just packages that I have needed in the past to comfortably run this Emacs distro, not everything here is required, this is just a rough guideline.
+
+-   System
+
+    > offlineimap
+    > fzf ripgrep ag
+    > clang clangd llvm
+    > texlive-latex-recommended
+    > imagemagick
+    > editorconfig
+    > libjansson
+    > rust-all cargo
+    > nodejs npm
+    > libxml2
+    > gopls
+    > prettier
+
+-   Python
+
+        pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi
+
+-   NPM
+
+    Please install deno & typescript-language-server for Typescript (TS/TSX) support.
+
+        sudo npm install -g deno typescript-language-server bash-language-server
+
+
+### Files
+
+I use Dropbox and I symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
+
+    mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
+
+
+### Emacs
+
+How to compile and install the latest GNU Emacs @ HEAD.
+
+-   Grabbing sources
+
+    Clone the latest emacs sources:
+
+        cd ~/git
+        git clone -b master git://git.sv.gnu.org/emacs.git
+
+-   Configuration
+
+    Configure Emacs for building with json, native-comp and the athena toolkit with xaw3d toolbars.
+
+        # Run the auto-generation script
+        ./autogen.sh
+
+        # Configure Emacs
+        ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --without-compress-install --with-native-compilation --with-xinput2 CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
+        # note: Remove "--with-xinput2" if you're building Emacs28
+
+-   Compiling
+
+    We build with all cores and natively compile everything ahead of time, this will take a while.
+
+        make NATIVE_FULL_AOT=1 -j$(nproc)
+        sudo make install

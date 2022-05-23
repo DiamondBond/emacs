@@ -416,7 +416,7 @@ Global, private & sane key maps.
   (define-key z-map (kbd "0") 'switch-to-qemu-and-paste)
 
   ;; calendar
-  (define-key z-map (kbd "C-c") 'calendar)
+  (define-key z-map (kbd "C-c") 'cfw:open-org-calendar)
   (define-key z-map (kbd ".") 'org-date-from-calendar)
 
   ;; files
@@ -556,7 +556,6 @@ Heresy; Vim keybindings in Emacs.
 	:config
 	(evil-commentary-mode))
 
-
   (use-package evil-collection
 	:after evil
 	:demand t
@@ -673,6 +672,14 @@ An extensible emacs startup screen.
 			  (lambda (&rest _) (inbox-edit))
 			  'default)))))
 #+END_SRC
+** Initialize =calfw=
+*** Description
+Calendar view in Emacs buffer.
+*** Code
+#+begin_src emacs-lisp
+  (use-package calfw
+	:straight t)
+#+end_src
 ** Initialize =org=
 *** Description
 Sensible and well-defined org-mode configuration with org-capture support & notifications.
@@ -1613,14 +1620,6 @@ Show event history and command history of some or all buffers.
 #+begin_src emacs-lisp
   (use-package command-log-mode
 	:ensure t)
-#+end_src
-** Initialize =calfw=
-*** Description
-Calendar view in Emacs buffer.
-*** Code
-#+begin_src emacs-lisp
-  (use-package calfw
-	:straight t)
 #+end_src
 ** Initialize =yasnippet=
 *** Description

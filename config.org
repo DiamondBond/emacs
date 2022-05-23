@@ -801,7 +801,6 @@ Note: 'mu' binary is output to ~/.emacs.d/straight/repos/mu/build/mu/mu
 	(async-shell-command "cd ~/.emacs.d/straight/repos/mu; ./autogen.sh; ninja -C build"))
 #+end_src
 **** 2. Initialize mu
-Change --my-address=<...@gmail.com> to your email address.
 #+begin_src emacs-lisp
   (defun mu-setup/init-mu ()
 	"Initializes 'mu' db."

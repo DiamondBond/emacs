@@ -141,7 +141,7 @@ Disable the annoying bell.
 #+BEGIN_SRC emacs-lisp
   (setq ring-bell-function 'ignore)
 #+END_SRC
-*** Configure Scrolling
+*** Configure scrolling
 **** Enables nice-scrolling for Emacs 28+
 #+begin_src emacs-lisp
   (setq scroll-margin 0)
@@ -188,10 +188,15 @@ Set tabs & indents to 4sp.
   (setq-default indent-tabs-mode t)
   (setq backward-delete-char-untabify-method 'nil)
 #+END_SRC
-*** Set C/C++ Tabs & Braces
+*** Set C/C++ tabs & braces
 #+begin_src emacs-lisp
   (setq c-default-style "linux")
   (setq c-basic-offset tab-width)
+#+end_src
+*** Enable subword-mode for C/C++ buffers
+#+begin_src emacs-lisp
+  (add-hook 'c-mode-common-hook
+			(lambda () (subword-mode 1)))
 #+end_src
 ** Display
 *** Appearance
@@ -1755,6 +1760,15 @@ Note: 'mu' binary is output to ~/.emacs.d/straight/repos/mu/build/mu/mu
 	"Rebuilds 'mu' index."
 	(interactive)
 	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu index"))
+#+end_src
+*** 4. Automagic setup
+#+begin_src emacs-lisp
+  (defun mu-setup/automagic ()
+	"Auto-magically configures 'mu'."
+	(interactive)
+	(mu-setup/build-mu-binary)
+	(mu-setup/init-mu)
+	(mu-setup/rebuild-mu-index))
 #+end_src
 ** Initialize =mu4e=
 *** Description

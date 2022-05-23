@@ -634,7 +634,7 @@ An extensible emacs startup screen.
 			  'default)
 			 (,nil
 			  "md4rd"
-			  "Reddit with md4rd"
+			  "Browse reddit with md4rd"
 			  (lambda (&rest _) (md4rd))
 			  'default)
 			 (nil

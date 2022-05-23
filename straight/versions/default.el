@@ -81,8 +81,6 @@
  ("olivetti" . "8d287a80c5e3d72ac01b56c8afe60b01f18500b4")
  ("orderless" . "75eeae21971d86b51a712ed8ecd6434463b2d866")
  ("org" . "27789725093f483c2d123b4e90776ea1f67f3b61")
- ("org-noter" . "9ead81d42dd4dd5074782d239b2efddf9b8b7b3d")
- ("org-pdftools" . "967f48fb5038bba32915ee9da8dc4e8b10ba3376")
  ("org-wild-notifier.el" . "4b1d874aafdee90815136c308f1f3bd3577971ec")
  ("page-break-lines" . "cc283621c64e4f1133a63e0945658a4abecf42ef")
  ("pcre2el" . "0b5b2a2c173aab3fd14aac6cf5e90ad3bf58fa7d")

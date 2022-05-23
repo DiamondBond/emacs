@@ -535,9 +535,32 @@ Heresy; Vim keybindings in Emacs.
 	;; org-cycle
 	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle))
 
+  (use-package evil-escape
+	:straight t
+	:defer 1
+	:custom
+	(evil-escape-key-sequence "jk")
+	:config
+	(evil-escape-mode))
+
+  (use-package evil-surround
+	:straight t
+	:defer 2
+	:after evil
+	:config
+	(global-evil-surround-mode 1))
+
+  (use-package evil-commentary
+	:straight t
+	:defer 2
+	:config
+	(evil-commentary-mode))
+
+
   (use-package evil-collection
 	:after evil
-	:ensure t
+	:demand t
+	:straight t
 	:config
 	(evil-collection-init))
 #+END_SRC
@@ -733,6 +756,13 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	(setq org-wild-notifier-notification-title "*reminder*")
 	:init
 	(org-wild-notifier-mode 1))
+
+  ;; display org schedules
+  (use-package calfw-org
+	:straight t
+	:defer 2
+	:config
+	(setq cfw:org-agenda-schedule-args '(:timestamp :scheduled :deadline)))
 #+end_src
 ** Initialize =dired=
 *** Description
@@ -1286,6 +1316,17 @@ Saves cursor location in buffers.
 	:config
 	(save-place-mode))
 #+end_src
+** Initialize =rainbow-mode=
+*** Description
+Colorize color names in buffers.
+*** Code
+#+begin_src emacs-lisp
+  (use-package rainbow-mode
+	:straight t
+	:hook prog-mode
+	:config
+	(rainbow-mode))
+#+end_src
 ** Initialize =rainbow-delimiters=
 *** Description
 Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimiters such as parentheses, brackets or braces according to their depth.
@@ -1573,6 +1614,14 @@ Show event history and command history of some or all buffers.
   (use-package command-log-mode
 	:ensure t)
 #+end_src
+** Initialize =calfw=
+*** Description
+Calendar view in Emacs buffer.
+*** Code
+#+begin_src emacs-lisp
+  (use-package calfw
+	:straight t)
+#+end_src
 ** Initialize =yasnippet=
 *** Description
 Yasnippet provides useful snippets.
@@ -1625,6 +1674,15 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	:config
 	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
+#+end_src
+** Initialize =solaire-mode=
+*** Description
+Gives other windows slightly different background colors (brightness).
+*** Code
+#+begin_src emacs-lisp
+  (use-package solaire-mode
+	:straight t
+	:hook (after-init . solaire-global-mode))
 #+end_src
 * Mail
 ** Prerequisites

@@ -1,0 +1,24 @@
+* Enabling Reveal.js Presentations
+
+1. Install reveal.js
+
+#+begin_src sh
+  npm install reveal.js
+#+end_src
+
+2. Insert ox-reveal use-package macro into a file that gets read by your Emacs =load-path=
+
+#+begin_src emacs-lisp
+
+  (use-package ox-reveal
+	:straight t
+	:defer 3
+	:after org
+	:custom
+	(setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
+	(setq org-reveal-klipsify-src t))
+
+  (use-package htmlize
+	:straight t)
+
+#+end_src

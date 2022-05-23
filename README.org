@@ -22,6 +22,8 @@ Clone this repository to =~/.emacs.d= or =~/.config/emacs=:
 
 #+end_src
 
+Start Emacs to tangle the configuration and bootstrap straight.el (this may takeawhile)
+
 * Principles
 
 This configuration and all associated modules intend to follow the below priniciples.

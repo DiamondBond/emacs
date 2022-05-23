@@ -414,6 +414,7 @@ Global, private & sane key maps.
   (define-key z-map (kbd "I") 'imenu-list)
   (define-key z-map (kbd "9") 'switch-to-qemu-and-run)
   (define-key z-map (kbd "0") 'switch-to-qemu-and-paste)
+  (define-key z-map (kbd "C-1") 'display-buffer-other-frame)
 
   ;; calendar
   (define-key z-map (kbd "C-c") 'cfw:open-org-calendar)
@@ -535,24 +536,18 @@ Heresy; Vim keybindings in Emacs.
 	;; org-cycle
 	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle))
 
+  ;; press =jk= to:
+  ;; escape from evil states to normal states
+  ;; quit any completion (minibuffer, isearch, etc)
   (use-package evil-escape
 	:straight t
-	:defer 1
 	:custom
 	(evil-escape-key-sequence "jk")
 	:config
 	(evil-escape-mode))
 
-  (use-package evil-surround
-	:straight t
-	:defer 2
-	:after evil
-	:config
-	(global-evil-surround-mode 1))
-
   (use-package evil-commentary
 	:straight t
-	:defer 2
 	:config
 	(evil-commentary-mode))
 

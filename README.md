@@ -7,7 +7,7 @@
 
 Emacs distro aimed at enhancing the default experience.
 
-It is recommend to run this distribution with the latest [Emacs HEAD](https://savannah.gnu.org/git/?group=emacs) compiled from source with
+It is recommend to run this distro with the latest [Emacs@HEAD](https://github.com/DiamondBond/emacs/blob/master/README.org/#compiling) compiled from source with
 these [configure flags](https://github.com/DiamondBond/emacs/blob/master/README.org#configuration).
 
 

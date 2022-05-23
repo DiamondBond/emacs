@@ -530,6 +530,7 @@ Heresy; Vim keybindings in Emacs.
 	(evil-set-initial-state 'eshell-mode 'emacs)
 	(evil-set-initial-state 'vterm-mode 'insert)
 	(evil-set-initial-state 'md4rd-mode 'emacs)
+	(evil-set-initial-state 'mu4e-mode 'normal)
 	(evil-set-initial-state 'inferior-scheme-mode 'emacs)
 	;; :q kills buffer
 	(evil-ex-define-cmd "q" 'delete-window)

@@ -3,7 +3,7 @@
 #+LANGUAGE: en
 #+html: <a href="https://www.gnu.org/software/emacs/"><img alt="GNU Emacs" src="https://github.com/minad/corfu/blob/screenshots/emacs.svg?raw=true"/></a>
 #+html: <img src="https://raw.githubusercontent.com/DiamondBond/emacs/master/img/gnusstorm-2.gif" align="right" width="42%">
-#+OPTIONS: num:nil
+#+OPTIONS: num:nil toc:2
 
 * Introduction
 Emacs distro aimed at enhancing the default experience.
@@ -11,7 +11,7 @@ Emacs distro aimed at enhancing the default experience.
 It is recommend to run this distribution with the latest [[https://savannah.gnu.org/git/?group=emacs][Emacs HEAD]] compiled from source with
 these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]].
 
-** Contents
+** Conceptual overview
 [[https://github.com/DiamondBond/emacs/blob/master/config.org][Main Configuration]]
 
 [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][Package Manifest]]

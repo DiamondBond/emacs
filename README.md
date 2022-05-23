@@ -1,38 +1,25 @@
 
 # Table of Contents
 
--   [Introduction](#org2c07e14)
-    -   [Contents](#org000623e)
-    -   [Summary](#org0c32523)
-        -   [Performance over all else](#orgbe0f245)
-        -   [Aggressively use best practices](#orgfb230da)
-        -   [Extensively document and comment all code](#orgcbbb824)
-        -   [Remain as simple as possible whilst maximizing usability](#orgc9e5945)
--   [Setup](#org8fd8cbf)
--   [Compile pdf-tools](#org7da94e7)
--   [Compile vterm modules](#org6111d53)
--   [Download & install all-the-icons font](#org4979efe)
--   [Dependencies](#org657592a)
-    -   [Packages](#orgfa33b13)
-        -   [System](#orgb8adff4)
-        -   [Python](#orge53b0d1)
-        -   [NPM](#orgf4c3930)
-    -   [Files](#orga3a361b)
-    -   [Emacs](#org3908cec)
-        -   [Grabbing sources](#org89c5399)
-        -   [Configuration](#org81437f0)
-        -   [Compiling](#orgce50cc9)
-    -   [Email](#org95313c4)
-        -   [0. Prerequisites](#orgb60d4a2)
-        -   [1. Configuring offlineimap](#org3cc00ac)
-        -   [2. Configuring mu](#orgfc69cd9)
+-   [Introduction](#org5c54193)
+    -   [Conceptual overview](#org6ecd84c)
+    -   [Summary](#orgecaf12c)
+-   [Setup](#org8b416b5)
+-   [Compile pdf-tools](#org98eb9f5)
+-   [Compile vterm modules](#org362771e)
+-   [Download & install all-the-icons font](#orge0b62fc)
+-   [Dependencies](#org0e22059)
+    -   [Packages](#org6c37b7b)
+    -   [Files](#org96cd016)
+    -   [Emacs](#org39753b2)
+    -   [Email](#orga66ceec)
 
 <a href="https://www.gnu.org/software/emacs/"><img alt="GNU Emacs" src="https://github.com/minad/corfu/blob/screenshots/emacs.svg?raw=true"/></a>
 
 <img src="https://raw.githubusercontent.com/DiamondBond/emacs/master/img/gnusstorm-2.gif" align="right" width="42%">
 
 
-<a id="org2c07e14"></a>
+<a id="org5c54193"></a>
 
 # Introduction
 
@@ -42,9 +29,9 @@ It is recommend to run this distribution with the latest [Emacs HEAD](https://sa
 these [configure flags](https://github.com/DiamondBond/emacs/blob/master/README.org#configuration).
 
 
-<a id="org000623e"></a>
+<a id="org6ecd84c"></a>
 
-## Contents
+## Conceptual overview
 
 [Main Configuration](https://github.com/DiamondBond/emacs/blob/master/config.org)
 
@@ -55,42 +42,39 @@ these [configure flags](https://github.com/DiamondBond/emacs/blob/master/README.
 [Function Definitions](https://github.com/DiamondBond/emacs/blob/master/config.org#functions)
 
 
-<a id="org0c32523"></a>
+<a id="orgecaf12c"></a>
 
 ## Summary
 
 This Emacs distro attempts to achieve the following goals:
 
 
-<a id="orgbe0f245"></a>
+### Performant in its nature of operation
 
-### Performance over all else
-
-Function-over-form.
+Responsive & adheres to function over form principles.
 
 
-<a id="orgfb230da"></a>
+### Aggressively utilizing best practices
 
-### Aggressively use best practices
-
-We utilize use-package & straight.el for reproducibility.
+Utilizes straight.el for reproducibility & increased stability.
 
 
-<a id="orgcbbb824"></a>
+### Extensively documented
 
-### Extensively document and comment all code
-
-The main configuration is literate and has comments / docstrings wherever possible.
+Literate configuration with comments & inline docstrings.
 
 
-<a id="orgc9e5945"></a>
+### Contrived with alteration in mind
+
+Simple to fork & edit
+
 
 ### Remain as simple as possible whilst maximizing usability
 
 e.g: Vertico/Corfu & friends instead of Helm/Ivy/Company.
 
 
-<a id="org8fd8cbf"></a>
+<a id="org8b416b5"></a>
 
 # Setup
 
@@ -121,40 +105,38 @@ To get autocompletion on JS/TS & Python files, you'll need to install the corres
 Once Emacs launches for the first time we need to setup a few more things:
 
 
-<a id="org7da94e7"></a>
+<a id="org98eb9f5"></a>
 
 # Compile pdf-tools
 
     M-x pdf-tools-install
 
 
-<a id="org6111d53"></a>
+<a id="org362771e"></a>
 
 # Compile vterm modules
 
     M-x vterm
 
 
-<a id="org4979efe"></a>
+<a id="orge0b62fc"></a>
 
 # Download & install all-the-icons font
 
     M-x all-the-icons-install-fonts
 
 
-<a id="org657592a"></a>
+<a id="org0e22059"></a>
 
 # Dependencies
 
 
-<a id="orgfa33b13"></a>
+<a id="org6c37b7b"></a>
 
 ## Packages
 
 This section is just packages that I have needed in the past to comfortably run this Emacs distro, not everything here is required, this is just a rough guideline.
 
-
-<a id="orgb8adff4"></a>
 
 ### System
 
@@ -172,14 +154,10 @@ This section is just packages that I have needed in the past to comfortably run 
 > prettier
 
 
-<a id="orge53b0d1"></a>
-
 ### Python
 
     pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi
 
-
-<a id="orgf4c3930"></a>
 
 ### NPM
 
@@ -188,7 +166,7 @@ Please install deno & typescript-language-server for Typescript (TS/TSX) support
     sudo npm install -g deno typescript-language-server bash-language-server
 
 
-<a id="orga3a361b"></a>
+<a id="org96cd016"></a>
 
 ## Files
 
@@ -197,14 +175,12 @@ I use Dropbox and I symlink ~/org & ~/pdf to their respective subdirs within ~/D
     mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
 
 
-<a id="org3908cec"></a>
+<a id="org39753b2"></a>
 
 ## Emacs
 
 How to compile and install the latest GNU Emacs @ HEAD.
 
-
-<a id="org89c5399"></a>
 
 ### Grabbing sources
 
@@ -213,8 +189,6 @@ Clone the latest emacs sources:
     cd ~/git
     git clone -b master git://git.sv.gnu.org/emacs.git
 
-
-<a id="org81437f0"></a>
 
 ### Configuration
 
@@ -228,8 +202,6 @@ Configure Emacs for building with json, native-comp and the athena toolkit with 
     # note: Remove "--with-xinput2" if you're building Emacs28
 
 
-<a id="orgce50cc9"></a>
-
 ### Compiling
 
 We build with all cores and natively compile everything ahead of time, this will take a while.
@@ -238,12 +210,10 @@ We build with all cores and natively compile everything ahead of time, this will
     sudo make install
 
 
-<a id="org95313c4"></a>
+<a id="orga66ceec"></a>
 
 ## Email
 
-
-<a id="orgb60d4a2"></a>
 
 ### 0. Prerequisites
 
@@ -252,16 +222,12 @@ mu4e (mu) & offlineimap to manage Email within Emacs.
 > maildir=~/mail
 
 
-<a id="org3cc00ac"></a>
-
 ### 1. Configuring offlineimap
 
 [offlineimap.rc](https://github.com/DiamondBond/dotfiles/blob/master/.offlineimaprc)
 
 [offlineimap.py](https://github.com/DiamondBond/dotfiles/blob/master/.offlineimap.py)
 
-
-<a id="orgfc69cd9"></a>
 
 ### 2. Configuring mu
 

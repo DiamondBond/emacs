@@ -1,4 +1,4 @@
-;;; init.el -*- lexical-binding: t; -*-
+;;; init.el --- Bootstrap -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022 Diamond Bond
 ;; This file is NOT part of GNU Emacs.
@@ -17,6 +17,7 @@
 (defvar startup/file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
 (defun startup/revert-file-name-handler-alist ()
+  "Revert file name handler alist."
   (setq file-name-handler-alist startup/file-name-handler-alist))
 (add-hook 'emacs-startup-hook 'startup/revert-file-name-handler-alist)
 

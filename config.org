@@ -9,7 +9,7 @@
 ** Header
 Enable lexical binding.
 #+begin_src emacs-lisp
-  ;;; config.el --- Emacs Configuration -*- lexical-binding: t; -*-
+  ;;; config.el --- Configuration. -*- lexical-binding: t; -*-
 
   ;; Copyright (C) 2022 Diamond Bond
   ;; This file is NOT part of GNU Emacs.

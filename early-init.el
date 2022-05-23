@@ -1,4 +1,4 @@
-;;; early-init.el -*- lexical-binding: t; -*-
+;;; early-init.el --- Early Initialization. -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022 Diamond Bond
 ;; This file is NOT part of GNU Emacs.

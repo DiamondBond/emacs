@@ -601,7 +601,7 @@ An extensible emacs startup screen.
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)
-	(setq dashboard-set-footer nil)
+	(setq dashboard-set-footer t)
 	(setq dashboard-set-navigator t)
 	(setq dashboard-navigator-buttons
 		  `(;; line 1

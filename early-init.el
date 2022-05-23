@@ -62,7 +62,6 @@
 
 ;; Emacs "updates" its ui more often than it needs to, so we slow it down
 ;; slightly from 0.5s:
-					 ;;; optimizations (from Doom's core.el). See that file for descriptions.
 (setq idle-update-delay 1.0)
 
 ;; Disable bidirectional text scanning for a modest performance boost. I've set

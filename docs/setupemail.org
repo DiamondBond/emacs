@@ -1,0 +1,51 @@
+* How to setup Email within Emacs
+
+/mu4e/ (/mu/) & /offlineimap/ to manage Email within Emacs.
+
+/mu/ is the server.
+
+/mu4e/ is the mail client within Emacs.
+
+/offlineimap/ is the imap synchronization utility.
+
+** 0. Prerequisites
+
+Create your maildir in $HOME as ~/mail
+
+#+begin_src sh
+  mkdir -p ~/mail
+#+end_src
+
+** 1. Configuring offlineimap
+
+~/[[https://github.com/DiamondBond/dotfiles/blob/master/.offlineimaprc][offlineimap.rc]]
+
+[[https://github.com/DiamondBond/dotfiles/blob/master/.offlineimap.py][~/offlineimap.py]]
+
+** 2. Configuring mu
+
+Please refer to [[https://github.com/DiamondBond/emacs/blob/master/config.org#prerequisites][mu Setup]] in config.org.
+
+*** Compile mu
+
+Compile mu & mu4e.
+
+#+begin_quote
+M-x mu-setup/build-mu-binary
+#+end_quote
+
+*** Initialize mu
+
+Initialize mu with maildir & address.
+
+#+begin_quote
+M-x mu-setup/init-mu
+#+end_quote
+
+*** Build mu index
+
+Inform mu as to the contents of ~/mail by building/rebuilding the mu index.
+
+#+begin_quote
+M-x mu-setup/rebuild-mu-index
+#+end_quote

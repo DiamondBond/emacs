@@ -92,49 +92,12 @@ Download & install the all-the-icons font.
 
 ## Setup LSP
 
-Install [language servers](https://github.com/emacs-lsp/lsp-mode#supported-languages) manually (refer to dependencies) or with `M-x lsp-install-server`
+Install [language servers](https://github.com/emacs-lsp/lsp-mode#supported-languages) manually (see [dependencies](https://github.com/DiamondBond/emacs#dependencies)) or with `M-x lsp-install-server`
 
 
 ## Setup Email
 
-mu4e (mu) & offlineimap to manage Email within Emacs.
-
-
-### 0. Prerequisites
-
-Create your maildir in $HOME as ~/mail
-
-    mkdir -p ~/mail
-
-
-### 1. Configuring offlineimap
-
-~/[offlineimap.rc](https://github.com/DiamondBond/dotfiles/blob/master/.offlineimaprc)
-
-[~/offlineimap.py](https://github.com/DiamondBond/dotfiles/blob/master/.offlineimap.py)
-
-
-### 2. Configuring mu
-
-Please refer to [mu Setup](https://github.com/DiamondBond/emacs/blob/master/config.org#prerequisites) in config.org.
-
--   Compile mu
-
-    Compile mu & mu4e.
-
-    > M-x mu-setup/build-mu-binary
-
--   Initialize mu
-
-    Initialize mu with maildir & address.
-
-    > M-x mu-setup/init-mu
-
--   Build mu index
-
-    Inform mu as to the contents of ~/mail by building/rebuilding the mu index.
-
-    > M-x mu-setup/rebuild-mu-index
+Refer to the [Email setup documentation](https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org) for this functionality.
 
 
 # Dependencies

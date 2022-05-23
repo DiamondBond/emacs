@@ -10,7 +10,7 @@ A sensible Emacs distro aimed at enhancing the default experience.
 
 # Quick Start
 
-Install [Emacs@Head](docs/emacsfromsource.md).
+Install [Emacs@Head](https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org).
 
 Clone this repository to `~/.emacs.d` or `~/.config/emacs`:
 

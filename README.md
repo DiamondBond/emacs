@@ -17,6 +17,8 @@ Clone this repository to `~/.emacs.d` or `~/.config/emacs`:
 
     git clone https://github.com/diamondbond/emacs ~/.emacs.d
 
+Start Emacs to tangle the configuration and bootstrap straight.el (this may takeawhile)
+
 
 # Principles
 

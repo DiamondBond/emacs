@@ -6,47 +6,45 @@
 #+OPTIONS: toc:nil num:nil
 
 * Introduction
-Emacs distro aimed at enhancing the default experience.
+A sensible Emacs distro aimed at enhancing the default experience.
 
-It is recommend to run this distro with the latest [[https://github.com/DiamondBond/emacs/blob/master/README.org/#compiling][Emacs@HEAD]] compiled from source with
-these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]].
+* Quick Start
 
-** Points of interest
-[[https://github.com/DiamondBond/emacs/blob/master/early-init.el][Early Bootstrap]]
+Install the latest [[https://github.com/DiamondBond/emacs/blob/master/README.org/#compiling][Emacs@HEAD]] compiled from source with these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]].
 
-[[https://github.com/DiamondBond/emacs/blob/master/init.el][Bootstrap]]
+Clone this repository to =~/.emacs.d= or =~/.config/emacs=:
 
-[[https://github.com/DiamondBond/emacs/blob/master/config.org#base][Base Configuration]]
+#+caption: Command to clone this Emacs distros =git= repository.
+#+name: li#git_clone
+#+begin_src sh
 
-[[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][Package Manifest]]
+  git clone https://github.com/diamondbond/emacs ~/.emacs.d
 
-[[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][Keybinds]]
+#+end_src
 
-[[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][Functions]]
-
-** Principles
+* Principles
 
 This configuration and all associated modules intend to follow the below priniciples.
 
-*** Performant
+** Performant
 
 Responsive & adheres to function over form principles.
 
-*** Reproducible
+** Reproducible
 
 Utilizes straight.el for reproducibility & increased stability.
 
-*** Literate
+** Literate
 
 Comments & inline doc-strings.
 
-*** Correct
+** Correct
 
 Aggressively utilizes best practices.
 
 Where possible, we will leverage built-in Emacs functionality instead of external packages.
 
-*** Modular
+** Modular
 
 The base configuration only sets up Emacs to have a cleaner presentation with sensible defaults.
 It is up to the user to decide how to customize it.
@@ -55,32 +53,16 @@ Configuration modules should depend on other modules and the base configuration 
 
 The implication is that someone should be able to install or copy code from this configuration into their own configuration without using this Emacs distro.
 
-* Quick Start
+* Modules
 
-Please refer to the dependencies section below first to make sure Emacs and your environment have the required packages and configurations setup correctly, then proceed to clone and install this distro.
+This list is in chronological load order.
 
-#+begin_src sh
-  # Clone configuration to ~/git/emacs
-  mkdir -p ~/git; git clone https://github.com/diamondbond/emacs ~/git/emacs
-
-  # Backup old emacs configuration
-  mv ~/.emacs.d ~/.emacs.d.old
-
-  # Copy new configuration to ~/.emacs.d
-  mkdir -p ~/.emacs.d; cp -r ~/git/emacs/{early-init.el,init.el,config.org,snippets,img} ~/.emacs.d/
-
-  # Start the Emacs daemon
-  emacs --daemon;
-  # make & get a cup/pot of tea &/or coffee,
-  # straight.el will begin cloning all the declared packages.
-
-  # Start Emacs client once straight.el is done
-  emacsclient -c -n -a 'emacs'
-#+end_src
-
-The first time you run Emacs, straight.el will download all the declared packages in the config.org file, please be patient.
-
-To get autocompletion on JS/TS & Python files, you'll need to install the corresponding lsp backend servers first (you'll be automatically prompted to do so the first time you open a relevant file).
+- [[file:early-init.el][early-bootstrap]] :: Early bootstrap
+- [[file:init.el][bootstrap]] :: Bootstrap straight.el
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#base][base]] :: Base configuration
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][packages]] :: Package manifest
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][keybinds]] :: Keybinding maps
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][functions]] :: Function definitions
 
 * Post Setup
 
@@ -88,51 +70,79 @@ Once Emacs launches for the first time we need to setup a few more things for ev
 
 ** Compile pdf-tools
 
-#+begin_src sh
+Install pdf-tools.
+
+#+begin_quote
   M-x pdf-tools-install
-#+end_src
+#+end_quote
 
 ** Compile vterm modules
 
-#+begin_src sh
+Compile vterm-modules & setup vterm.
+
+#+begin_quote
   M-x vterm
-#+end_src
+#+end_quote
 
 ** Setup all-the-icons
 
-Download & install all-the-icons font
+Download & install the all-the-icons font.
 
-#+begin_src sh
+#+begin_quote
   M-x all-the-icons-install-fonts
-#+end_src
+#+end_quote
 
 ** Setup Email
 
-*** 0. Prerequisites
-
 mu4e (mu) & offlineimap to manage Email within Emacs.
 
-#+begin_quote
-maildir=~/mail
-#+end_quote
+*** 0. Prerequisites
+
+Create your maildir in $HOME as ~/mail
+
+#+begin_src sh
+  mkdir -p ~/mail
+#+end_src
 
 *** 1. Configuring offlineimap
 
-[[https://github.com/DiamondBond/dotfiles/blob/master/.offlineimaprc][offlineimap.rc]]
+~/[[https://github.com/DiamondBond/dotfiles/blob/master/.offlineimaprc][offlineimap.rc]]
 
-[[https://github.com/DiamondBond/dotfiles/blob/master/.offlineimap.py][offlineimap.py]]
+[[https://github.com/DiamondBond/dotfiles/blob/master/.offlineimap.py][~/offlineimap.py]]
 
 *** 2. Configuring mu
 
-[[https://github.com/DiamondBond/emacs/blob/master/config.org#prerequisites][mu Setup]]
+Please refer to [[https://github.com/DiamondBond/emacs/blob/master/config.org#prerequisites][mu Setup]] in config.org.
 
-** Dependencies
+**** Compile mu
 
-*** Packages
+Compile mu & mu4e.
 
-This section is just packages that I have needed in the past to comfortably run this Emacs distro, not everything here is required, this is just a rough guideline.
+#+begin_quote
+M-x mu-setup/build-mu-binary
+#+end_quote
 
-**** System
+**** Initialize mu
+
+Initialize mu with maildir & address.
+
+#+begin_quote
+M-x mu-setup/init-mu
+#+end_quote
+
+**** Build mu index
+
+Inform mu as to the contents of ~/mail by building/rebuilding the mu index.
+
+#+begin_quote
+M-x mu-setup/rebuild-mu-index
+#+end_quote
+
+* Dependencies
+
+** Packages
+
+*** System
 
 #+begin_quote
 offlineimap
@@ -149,13 +159,13 @@ gopls
 prettier
 #+end_quote
 
-**** Python
+*** Python
 
 #+begin_src bash
   pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi
 #+end_src
 
-**** NPM
+*** NPM
 
 Deno & typescript-language-server for Typescript (TS/TSX) support.
 
@@ -163,7 +173,9 @@ Deno & typescript-language-server for Typescript (TS/TSX) support.
   sudo npm install -g deno typescript-language-server bash-language-server
 #+end_src
 
-*** Files
+** Files
+
+*** ~/org & ~/pdfs
 
 Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 
@@ -171,11 +183,23 @@ Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
   mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
 #+end_src
 
-*** Emacs
+*** auth-info
+
+1. ~/org/.authinfo.gpg
+2. ~/org/secrets-el.gpg
+3. ~/org/network-security.data
+
+*** Emacs related files
+
+1. ~/.emacs.d/places
+2. ~/.emacs.d/recentf
+3. ~/.emacs.d/custom.el
+
+** Emacs
 
 How to compile and install the latest GNU Emacs @ HEAD.
 
-**** Grabbing sources
+*** Grabbing sources
 
 Clone the latest emacs sources:
 
@@ -184,7 +208,7 @@ Clone the latest emacs sources:
   git clone -b master git://git.sv.gnu.org/emacs.git
 #+end_src
 
-**** Configuration
+*** Configuration
 
 Configure Emacs with json, native-comp, xinput2 and the athena toolkit with xaw3d-toolbars.
 
@@ -197,7 +221,7 @@ Configure Emacs with json, native-comp, xinput2 and the athena toolkit with xaw3
   # note: Remove "--with-xinput2" if your target build is Emacs28
 #+end_src
 
-**** Compiling
+*** Compiling
 
 Compile with all cores and native full ahead of time compilation, this takes a while.
 

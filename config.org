@@ -277,6 +277,13 @@ Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview 
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (add-hook 'text-mode-hook 'display-line-numbers-mode)
 #+END_SRC
+*** Enable visual-line-mode
+Enable in text buffers & org + md4rd.
+#+begin_src emacs-lisp
+  (add-hook 'text-mode-hook 'visual-line-mode)
+  (add-hook 'org-mode-hook 'visual-line-mode)
+  (add-hook 'md4rd-mode-hook 'visual-line-mode)
+#+end_src
 *** Set linum format
 #+begin_src emacs-lisp
   (setq linum-format "%4d ")
@@ -314,15 +321,20 @@ Shrinks frame to buffer contents.
 #+begin_src emacs-lisp
   (defalias 'shrink-wrap 'fit-frame-to-buffer)
 #+end_src
+*** Recentf delete
+Remove items from recents list.
+#+begin_src emacs-lisp
+  (defalias 'recentf-delete 'recentf-edit-list)
+#+end_src
+*** Bookmark delete
+Dont accidentally delete all my bookmarks.
+#+begin_src emacs-lisp
+  (defalias 'bookmark-delete-all 'bookmark-delete)
+#+end_src
 *** Presentation
 Easy to remember org-beamer-export command.
 #+begin_src emacs-lisp
   (defalias 'produce-presentation 'org-beamer-export-to-pdf)
-#+end_src
-*** Saftey
-Dont accidentally delete all my bookmarks.
-#+begin_src emacs-lisp
-  (defalias 'bookmark-delete-all 'bookmark-delete)
 #+end_src
 * Keybinds
 ** Description
@@ -679,9 +691,6 @@ Sensible and well-defined org-mode configuration with org-capture support.
 			("j" "Journal" entry (file+datetree "~/org/journal.org")
 			 "* %?\n%a\nEntered on %U")))
 
-	;; visual-line-mode only for org-mode
-	(add-hook 'org-mode-hook #'visual-line-mode)
-
 	:bind
 	("C-c c" . 'org-capture)
 	("C-c l" . 'org-store-link)
@@ -1032,9 +1041,8 @@ Reddit client within Emacs with oauth2 support.
 	:ensure t
 	:config
 	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure))
-	(load-if-exists "~/.emacs.d/secrets.el.gpg")
-	;; (add-hook 'md4rd-mode-hook 'md4rd-indent-all-the-lines))
-	(add-hook 'md4rd-mode-hook 'visual-line-mode))
+	(load-if-exists "~/.emacs.d/secrets.el.gpg"))
+  ;; (add-hook 'md4rd-mode-hook 'md4rd-indent-all-the-lines))
 #+end_src
 ** Initialize =erc=
 *** Description
@@ -1742,16 +1750,16 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	:ensure t
 	:init
 	;; diminish as mode is already loaded
-	(diminish 'visual-line-mode "")
+	;;(diminish 'visual-line-mode "")
 	(diminish 'abbrev-mode "")
-	(diminish 'c-mode "")
-	(diminish 'yas "")
 	:config
 	;; diminish after mode is loaded
+	(eval-after-load "c-mode" '(diminiish 'c-mode))
+	(eval-after-load "c++-mode" '(diminiish 'c++-mode))
+	(eval-after-load "eldoc" '(diminish 'eldoc-mode))
 	(eval-after-load "flymake" '(diminish 'flymake-mode))
 	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
-	(eval-after-load "which-key" '(diminish 'which-key-mode))
-	(eval-after-load "eldoc" '(diminish 'eldoc-mode)))
+	(eval-after-load "which-key" '(diminish 'which-key-mode)))
 #+end_src
 ** Initialize =modus-themes=
 *** Description

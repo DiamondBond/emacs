@@ -411,7 +411,7 @@ Global, private & sane key maps.
   (define-key z-map (kbd "b") 'display-battery-mode)
   (define-key z-map (kbd "t") 'display-time-mode)
 
-  ;; quick
+  ;; functions
   (define-key z-map (kbd "*") 'quick-calc)
   (define-key z-map (kbd "O") 'org-redisplay-inline-images)
   (define-key z-map (kbd "s") 'ispell-word)
@@ -419,7 +419,8 @@ Global, private & sane key maps.
   (define-key z-map (kbd "w") 'eww)
   (define-key z-map (kbd "F") 'follow-mode)
 
-  ;; short
+  ;; quick
+  (define-key z-map (kbd "C-1") 'display-buffer-other-frame)
   (define-key z-map (kbd "x") 'switch-to-buffer-other-frame)
   (define-key z-map (kbd "k") 'compile)
   (define-key z-map (kbd "e") 'eval-region)
@@ -431,7 +432,6 @@ Global, private & sane key maps.
   (define-key z-map (kbd "I") 'imenu-list)
   (define-key z-map (kbd "9") 'switch-to-qemu-and-run)
   (define-key z-map (kbd "0") 'switch-to-qemu-and-paste)
-  (define-key z-map (kbd "C-1") 'display-buffer-other-frame)
 
   ;; calendar
   (define-key z-map (kbd "C-c") 'cfw:open-org-calendar)
@@ -586,7 +586,6 @@ Possible completion framework with 0.3s delay.
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
 	:straight t
-	:diminish which-key-mode
 	:init
 	(which-key-mode)
 	:config
@@ -953,7 +952,6 @@ Reddit client within Emacs with oauth2 support.
 	:config
 	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure))
 	(load-if-exists "~/.emacs.d/secrets.el.gpg"))
-  ;; (add-hook 'md4rd-mode-hook 'md4rd-indent-all-the-lines))
 #+end_src
 ** Initialize =erc=
 *** Description
@@ -1351,6 +1349,7 @@ Colorize color names in buffers.
 #+begin_src emacs-lisp
   (use-package rainbow-mode
 	:straight t
+	:diminish rainbow-mode
 	:hook prog-mode
 	:config
 	(rainbow-mode))
@@ -1670,14 +1669,15 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	:init
 	;; diminish as mode is already loaded
 	(diminish 'abbrev-mode "")
+	(diminish 'subword-mode)
+	(diminish 'visual-line-mode)
+	(diminish 'outline-mode)
 	:config
 	;; diminish after mode is loaded
 	(eval-after-load "eldoc" '(diminish 'eldoc-mode))
-	(eval-after-load "c-mode" '(diminiish 'c-mode))
-	(eval-after-load "c++-mode" '(diminiish 'c++-mode))
-	(eval-after-load "rainbow" '(diminish 'rainbow-mode))
+	(eval-after-load "c-mode" '(diminish 'c-mode))
+	(eval-after-load "c++-mode" '(diminish 'c++-mode))
 	(eval-after-load "which-key" '(diminish 'which-key-mode))
-	(eval-after-load "flymake" '(diminish 'flymake-mode))
 	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
 	(eval-after-load "outline" '(diminish 'outline-minor-mode))
 	(eval-after-load "evil-commentary" '(diminish 'evil-commentary-mode))
@@ -1691,6 +1691,7 @@ Branching tree of changes made in a file.
 #+begin_src emacs-lisp
   (use-package undo-tree
 	:straight t
+	:diminish undo-tree-mode
 	:init
 	(global-undo-tree-mode)
 	:config
@@ -1718,11 +1719,19 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 *** Code
 #+begin_src emacs-lisp
   (use-package elcord
-	:disabled t
+	:straight t
 	:defer 5
 	:config
+	;; provide id
 	(setq elcord-client-id "978267848038297661")
-	(setq elcord-editor-icon "emacs_icon"))
+	;; set icon
+	(setq elcord-editor-icon "emacs_icon")
+	;; override buffer-details-format
+	(defun elcord-buffer-details-format ()
+	  "Return the buffer details string shown on discord."
+	  (format "%s" (buffer-name)))
+	;; autostart elcord
+	(elcord-mode))
 #+end_src
 * Mail
 ** Prerequisites
@@ -2716,5 +2725,6 @@ Insert currently visiting buffer filename.
 
 * Footer
 #+begin_src emacs-lisp
-  ;; config.el ends here
+
+  ;;; config.el ends here
 #+end_src

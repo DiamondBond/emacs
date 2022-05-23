@@ -80,4 +80,5 @@
 (setq highlight-nonselected-windows nil)
 (setq fast-but-imprecise-scrolling t)
 (setq inhibit-compacting-font-caches t)
+
 ;;; early-init.el ends here

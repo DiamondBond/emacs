@@ -1,4 +1,4 @@
-* How to compile and install Emacs@HEAD from source
+* How to compile and install Emacs@HEAD
 
 ** Grabbing sources
 

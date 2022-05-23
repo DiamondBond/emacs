@@ -11,13 +11,17 @@ It is recommend to run this distribution with the latest [[https://savannah.gnu.
 these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]].
 
 ** Points of interest
-[[https://github.com/DiamondBond/emacs/blob/master/config.org][Main Configuration]]
+[[https://github.com/DiamondBond/emacs/blob/master/early-init.el][Early Bootstrap]]
+
+[[https://github.com/DiamondBond/emacs/blob/master/init.el][Bootstrap]]
+
+[[https://github.com/DiamondBond/emacs/blob/master/config.org#base][Base Configuration]]
 
 [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][Package Manifest]]
 
-[[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][Keybind Maps]]
+[[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][Keybinds]]
 
-[[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][Function Definitions]]
+[[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][Functions]]
 
 ** Summary
 This Emacs distro attempts to achieve the following goals:

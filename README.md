@@ -13,13 +13,17 @@ these [configure flags](https://github.com/DiamondBond/emacs/blob/master/README.
 
 ## Points of interest
 
-[Main Configuration](https://github.com/DiamondBond/emacs/blob/master/config.org)
+[Early Bootstrap](https://github.com/DiamondBond/emacs/blob/master/early-init.el)
+
+[Bootstrap](https://github.com/DiamondBond/emacs/blob/master/init.el)
+
+[Base Configuration](https://github.com/DiamondBond/emacs/blob/master/config.org#base)
 
 [Package Manifest](https://github.com/DiamondBond/emacs/blob/master/config.org#use-package)
 
-[Keybind Maps](https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds)
+[Keybinds](https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds)
 
-[Function Definitions](https://github.com/DiamondBond/emacs/blob/master/config.org#functions)
+[Functions](https://github.com/DiamondBond/emacs/blob/master/config.org#functions)
 
 
 ## Summary

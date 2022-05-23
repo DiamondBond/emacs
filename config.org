@@ -13,13 +13,11 @@ Enable lexical binding.
 
   ;; Copyright (C) 2022 Diamond Bond
   ;; This file is NOT part of GNU Emacs.
+  ;; This file is free software.
 
   ;; Author: Diamond Bond <diamondbond1@gmail.com>
   ;; URL: https://github.com/diamondbond/emacs
-  ;; Version: 1.0
   ;; Package-Requires: ((emacs "29"))
-  ;; Created: 2020-06-29
-  ;; Keywords: emacs configuration
 
   ;;; Commentary:
   ;; This file provides the sanctioned configuration.
@@ -187,16 +185,36 @@ Set tabs & indents to 4sp.
   (setq c-basic-offset tab-width)
 #+end_src
 ** Display
-*** Set font
+*** Appearance
+**** Set font
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
 #+end_src
-*** Disable default startup screen
+**** Set linum format
+#+begin_src emacs-lisp
+  (setq linum-format "%4d ")
+#+end_src
+**** Set window title
+Make window title the buffer name.
+#+BEGIN_SRC emacs-lisp
+  (setq-default frame-title-format '("%b"))
+#+END_SRC
+**** Set internal border width
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist '(internal-border-width . 0))
+#+end_src
+**** Fill space provided by WM
+Emacs will fill up the space reported by the window manager.
+#+begin_src emacs-lisp
+  (setq window-resize-pixelwise t)
+  (setq frame-resize-pixelwise t)
+#+end_src
+**** Disable default startup screen
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-message t)
   (setq initial-scratch-message "")
 #+END_SRC
-*** Disable some gui elements
+**** Disable some gui elements
 I only disable the tool-bar, I find the menu-bar and scroll-bar to be useful.
 #+BEGIN_SRC emacs-lisp
   (if (fboundp 'menu-bar-mode)
@@ -206,19 +224,7 @@ I only disable the tool-bar, I find the menu-bar and scroll-bar to be useful.
   (if (fboundp 'scroll-bar-mode)
 	  (scroll-bar-mode 1))
 #+END_SRC
-*** Configure default-frame-alist
-Place the scrollbar on the right side when using x-toolkit=athena.
-Optionally; enable toolbar when using x-toolkit=athena.
-#+begin_src emacs-lisp
-  (set-scroll-bar-mode 'right) ;; Enable right scrollbar
-  ;; (add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable toolbar
-#+end_src
-*** Set window title
-Make window title the buffer name.
-#+BEGIN_SRC emacs-lisp
-  (setq-default frame-title-format '("%b"))
-#+END_SRC
-*** Configure fringe
+**** Configure fringe
 Disable fringe-mode.
 #+begin_src emacs-lisp
   (fringe-mode nil)
@@ -227,64 +233,42 @@ Disable fringe-mode.
   (setq-default indicate-empty-lines nil)
   (setq-default overflow-newline-into-fringe t)
 #+end_src
-*** Set internal border width
+
+**** Configure default-frame-alist
+Place the scrollbar on the right side when using x-toolkit=athena.
+Optionally; enable toolbar when using x-toolkit=athena.
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(internal-border-width . 0))
+  (set-scroll-bar-mode 'right) ;; Enable right scrollbar
+  ;; (add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable toolbar
 #+end_src
-*** Fill space provided by WM
-Emacs will fill up the space reported by the window manager.
-#+begin_src emacs-lisp
-  (setq window-resize-pixelwise t)
-  (setq frame-resize-pixelwise t)
-#+end_src
-*** Enable column-numbers-mode
+*** Modes
+**** Enable column-numbers-mode
 Show column number in modeline.
 #+BEGIN_SRC emacs-lisp
   (column-number-mode 1)
 #+END_SRC
-*** Enable global-highlight-line-mode
+**** Enable global-highlight-line-mode
 #+BEGIN_SRC emacs-lisp
   (global-hl-line-mode nil)
 #+END_SRC
-*** Enable prettify-symbols-mode
+**** Enable prettify-symbols-mode
 #+BEGIN_SRC emacs-lisp
   (global-prettify-symbols-mode t)
 #+END_SRC
-*** Enable line-numbers-mode
+**** Enable line-numbers-mode
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (add-hook 'text-mode-hook 'display-line-numbers-mode)
 #+END_SRC
-*** Enable visual-line-mode
+**** Enable visual-line-mode
 Enable in text buffers & org + md4rd.
 #+begin_src emacs-lisp
   (add-hook 'text-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'md4rd-mode-hook 'visual-line-mode)
 #+end_src
-*** Set linum format
-#+begin_src emacs-lisp
-  (setq linum-format "%4d ")
-#+end_src
-** Configure Proced
-Auto-update proced every 5 seconds.
-#+begin_src emacs-lisp
-  (setq proced-auto-update-flag t)
-  (setq proced-auto-update-interval 5)
-  (setq proced-descend t)
-  (setq proced-filter 'user)
-#+end_src
-** Configure Browser
-Firefox as default browser.
-#+BEGIN_SRC emacs-lisp
-  ;; eww
-  ;; (setq browse-url-browser-function 'eww-browse-url)
-
-  ;; firefox
-  (setq browse-url-browser-function 'browse-url-firefox)
-#+END_SRC
-** Define aliases
+** Aliases
 *** Basic
 Some basic aliases & transform yes-or-no into y-or-n.
 #+begin_src emacs-lisp
@@ -310,9 +294,75 @@ Dont accidentally delete all my bookmarks.
 #+begin_src emacs-lisp
   (defalias 'bookmark-delete-all 'bookmark-delete)
 #+end_src
+** Built-in
+*** Configure =proced=
+Auto-update proced every 5 seconds.
+#+begin_src emacs-lisp
+  (setq proced-auto-update-flag t)
+  (setq proced-auto-update-interval 5)
+  (setq proced-descend t)
+  (setq proced-filter 'user)
+#+end_src
+*** Configure =browser=
+Firefox as default browser.
+#+BEGIN_SRC emacs-lisp
+  ;; eww
+  ;; (setq browse-url-browser-function 'eww-browse-url)
+
+  ;; firefox
+  (setq browse-url-browser-function 'browse-url-firefox)
+#+END_SRC
+*** Configure =eshell=
+**** Description
+Improve eshell prompt and assign aliases, also setup some custom helper functions for easier use.
+**** Prompt
+#+BEGIN_SRC emacs-lisp
+  (setq eshell-highlight-prompt nil)
+  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
+
+  (setq eshell-prompt-function
+		(lambda nil
+		  (concat
+		   (if (string= (eshell/pwd) (getenv "HOME"))
+			   (propertize "~" 'face `(:foreground "#99CCFF"))
+			 (replace-regexp-in-string
+			  (getenv "HOME")
+			  (propertize "~" 'face `(:foreground "#99CCFF"))
+			  (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
+		   (if (= (user-uid) 0)
+			   (propertize " α " 'face `(:foreground "#FF6666"))
+			 (propertize " λ " 'face `(:foreground "#A6E22E"))))))
+
+  (add-hook 'eshell-mode-hook
+			(lambda () (global-hl-line-mode 0)))
+#+END_SRC
+**** Clear
+#+begin_src emacs-lisp
+  (defun eshell/clear-scrollback ()
+	"Clear the scrollback content of the eshell window."
+	(let ((inhibit-read-only t))
+	  (erase-buffer)))
+#+end_src
+**** Aliases
+#+BEGIN_SRC emacs-lisp
+  (defalias 'open 'find-file-other-window)
+  (defalias 'clean 'eshell/clear-scrollback)
+#+END_SRC
+**** Open eshell in other window
+#+BEGIN_SRC emacs-lisp
+  (defun eshell-other-window ()
+	"Create or visit an eshell buffer."
+	(interactive)
+	(if (not (get-buffer "*eshell*"))
+		(progn
+		  (split-window-sensibly (selected-window))
+		  (other-window 1)
+		  (eshell))
+	  (switch-to-buffer-other-window "*eshell*")))
+#+END_SRC
 * Keybinds
 ** Description
-Global & private key maps.
+Global, private & sane key maps.
 ** Code
 #+begin_src emacs-lisp
   ;;---------------------------------------------------------------------
@@ -502,12 +552,11 @@ Possible completion framework with 0.3s delay.
 	:init
 	(which-key-mode)
 	:config
-	(setq which-key-idle-delay 1.5))
+	(setq which-key-idle-delay 0.3))
 #+END_SRC
 ** Initialize =dashboard=
 *** Description
 An extensible emacs startup screen.
-Hardcoded in three buffers that I frequently visit along with helper functions.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
@@ -600,7 +649,7 @@ Hardcoded in three buffers that I frequently visit along with helper functions.
 #+END_SRC
 ** Initialize =org=
 *** Description
-Sensible and well-defined org-mode configuration with org-capture support.
+Sensible and well-defined org-mode configuration with org-capture support & notifications.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package org
@@ -720,184 +769,6 @@ Add icons and subtree's to dired.
 				:after (lambda () (interactive)
 						 (when all-the-icons-dired-mode
 						   (revert-buffer)))))
-#+end_src
-** Initialize =eshell=
-*** Description
-Improve eshell prompt and assign aliases, also setup some custom helper functions for easier use.
-*** Prompt
-#+BEGIN_SRC emacs-lisp
-  (setq eshell-highlight-prompt nil)
-  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
-
-  (setq eshell-prompt-function
-		(lambda nil
-		  (concat
-		   (if (string= (eshell/pwd) (getenv "HOME"))
-			   (propertize "~" 'face `(:foreground "#99CCFF"))
-			 (replace-regexp-in-string
-			  (getenv "HOME")
-			  (propertize "~" 'face `(:foreground "#99CCFF"))
-			  (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
-		   (if (= (user-uid) 0)
-			   (propertize " α " 'face `(:foreground "#FF6666"))
-			 (propertize " λ " 'face `(:foreground "#A6E22E"))))))
-
-  (add-hook 'eshell-mode-hook
-			(lambda () (global-hl-line-mode 0)))
-#+END_SRC
-*** Clear
-#+begin_src emacs-lisp
-  (defun eshell/clear-scrollback ()
-	"Clear the scrollback content of the eshell window."
-	(let ((inhibit-read-only t))
-	  (erase-buffer)))
-#+end_src
-*** Aliases
-#+BEGIN_SRC emacs-lisp
-  (defalias 'open 'find-file-other-window)
-  (defalias 'clean 'eshell/clear-scrollback)
-#+END_SRC
-*** Open eshell in other window
-#+BEGIN_SRC emacs-lisp
-  (defun eshell-other-window ()
-	"Create or visit an eshell buffer."
-	(interactive)
-	(if (not (get-buffer "*eshell*"))
-		(progn
-		  (split-window-sensibly (selected-window))
-		  (other-window 1)
-		  (eshell))
-	  (switch-to-buffer-other-window "*eshell*")))
-#+END_SRC
-** Initialize =mail=
-*** Prerequisites
-**** 0. Install offlineimap
-#+begin_src sh
-  yay -S offlineimap
-#+end_src
-**** 1. Compile mu
-Note: 'mu' binary is output to ~/.emacs.d/straight/repos/mu/build/mu/mu
-#+begin_src emacs-lisp
-  (defun mu-setup/build-mu-binary ()
-	"Compiles 'mu' binary."
-	(interactive)
-	(async-shell-command "cd ~/.emacs.d/straight/repos/mu; ./autogen.sh; ninja -C build"))
-#+end_src
-**** 2. Initialize mu
-#+begin_src emacs-lisp
-  (defun mu-setup/init-mu ()
-	"Initializes 'mu' db."
-	(interactive)
-	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu init --maildir=/home/diamond/mail/ --my-address=diamondbond1@gmail.com"))
-#+end_src
-**** 3. Rebuild mu index.
-#+begin_src emacs-lisp
-  (defun mu-setup/rebuild-mu-index ()
-	"Rebuilds 'mu' index."
-	(interactive)
-	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu index"))
-#+end_src
-*** Initialize =mu4e=
-**** Description
-mu4e mail client.
-**** Code
-#+begin_src emacs-lisp
-  (use-package mu4e
-	:straight ( :host github
-				:repo "djcb/mu"
-				:branch "master"
-				:files ("build/mu4e/*")
-				:pre-build (("./autogen.sh") ("make")))
-	:custom   (mu4e-mu-binary (expand-file-name "build/mu/mu" (straight--repos-dir "mu")))
-	:config
-	;; default
-	(require 'org-mu4e)
-	(setq mu4e-maildir (expand-file-name "~/mail"))
-
-	;; set folders
-	(setq mu4e-drafts-folder "/[Gmail].Drafts")
-	(setq mu4e-sent-folder   "/[Gmail].Sent Mail")
-	(setq mu4e-trash-folder  "/[Gmail].Trash")
-
-	;; don't save message to Sent Messages, GMail/IMAP will take care of this
-	(setq mu4e-sent-messages-behavior 'delete)
-
-	;; composing mail
-	(setq mu4e-compose-dont-reply-to-self t)
-
-	;; don't keep message buffers around
-	(setq message-kill-buffer-on-exit t)
-
-	;; display options
-	(setq mu4e-view-show-images t)
-	(setq mu4e-view-show-addresses 't)
-
-	;; make sure that moving a message (like to Trash) causes the
-	;; message to get a new file name.  This helps to avoid the
-	;; dreaded "UID is N beyond highest assigned" error.
-	;; See this link for more info: https://stackoverflow.com/a/43461973
-	(setq mu4e-change-filenames-when-moving t)
-
-	;; setup some handy shortcuts
-	(setq mu4e-maildir-shortcuts
-		  '(("/INBOX"             . ?i)
-			("/[Gmail].Sent Mail" . ?s)
-			("/[Gmail].Trash"     . ?t)))
-
-	;; inbox-query
-	(setq db/mu4e-inbox-query
-		  "(maildir:/Inbox OR maildir:/INBOX) AND flag:unread")
-
-	;; go-to-inbox function
-	(defun db/go-to-inbox ()
-	  (interactive)
-	  (mu4e-headers-search dw/mu4e-inbox-query))
-
-	;; allow for updating mail using 'U' in the main view:
-	(setq mu4e-get-mail-command "offlineimap")
-
-	;; why would I want to leave my message open after I've sent it?
-	(setq message-kill-buffer-on-exit t)
-	;; don't ask for a 'context' upon opening mu4e
-	(setq mu4e-context-policy 'pick-first)
-	;; don't ask to quit
-	(setq mu4e-confirm-quit nil))
-#+end_src
-*** Initialize =mu4e-alert=
-**** Description
-Show alerts for unread emails.
-**** Code
-#+begin_src emacs-lisp
-  (use-package mu4e-alert
-	:ensure t
-	:after mu4e
-	:config
-	;; show unread emails from all inboxes
-	(setq mu4e-alert-interesting-mail-query db/mu4e-inbox-query)
-
-	;; show notifications for mails already notified
-	(setq mu4e-alert-notify-repeated-mails nil)
-	:init
-	(mu4e-alert-enable-notifications))
-#+end_src
-*** Initialize =smtpmail=
-**** Description
-smtp mail within Emacs.
-**** Code
-#+begin_src emacs-lisp
-  (use-package smtpmail
-	:ensure t
-	:config
-	(setq message-send-mail-function 'smtpmail-send-it
-		  starttls-use-gnutls t
-		  smtpmail-starttls-credentials
-		  '(("smtp.gmail.com" 587 nil nil))
-		  smtpmail-auth-credentials
-		  (expand-file-name "~/.authinfo.gpg")
-		  smtpmail-default-smtp-server "smtp.gmail.com"
-		  smtpmail-smtp-server "smtp.gmail.com"
-		  smtpmail-smtp-service 587
-		  smtpmail-debug-info t))
 #+end_src
 ** Initialize =gnus=
 *** Description
@@ -1752,6 +1623,136 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
+* Mail
+** Prerequisites
+*** 0. Install offlineimap
+#+begin_src sh
+  yay -S offlineimap
+#+end_src
+*** 1. Compile mu
+Note: 'mu' binary is output to ~/.emacs.d/straight/repos/mu/build/mu/mu
+#+begin_src emacs-lisp
+  (defun mu-setup/build-mu-binary ()
+	"Compiles 'mu' binary."
+	(interactive)
+	(async-shell-command "cd ~/.emacs.d/straight/repos/mu; ./autogen.sh; ninja -C build"))
+#+end_src
+*** 2. Initialize mu
+#+begin_src emacs-lisp
+  (defun mu-setup/init-mu ()
+	"Initializes 'mu' db."
+	(interactive)
+	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu init --maildir=/home/diamond/mail/ --my-address=diamondbond1@gmail.com"))
+#+end_src
+*** 3. Rebuild mu index.
+#+begin_src emacs-lisp
+  (defun mu-setup/rebuild-mu-index ()
+	"Rebuilds 'mu' index."
+	(interactive)
+	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu index"))
+#+end_src
+** Initialize =mu4e=
+*** Description
+mu4e mail client.
+*** Code
+#+begin_src emacs-lisp
+  (use-package mu4e
+	:straight ( :host github
+				:repo "djcb/mu"
+				:branch "master"
+				:files ("build/mu4e/*")
+				:pre-build (("./autogen.sh") ("make")))
+	:custom   (mu4e-mu-binary (expand-file-name "build/mu/mu" (straight--repos-dir "mu")))
+	:config
+	;; default
+	(require 'org-mu4e)
+	(setq mu4e-maildir (expand-file-name "~/mail"))
+
+	;; set folders
+	(setq mu4e-drafts-folder "/[Gmail].Drafts")
+	(setq mu4e-sent-folder   "/[Gmail].Sent Mail")
+	(setq mu4e-trash-folder  "/[Gmail].Trash")
+
+	;; don't save message to Sent Messages, GMail/IMAP will take care of this
+	(setq mu4e-sent-messages-behavior 'delete)
+
+	;; composing mail
+	(setq mu4e-compose-dont-reply-to-self t)
+
+	;; don't keep message buffers around
+	(setq message-kill-buffer-on-exit t)
+
+	;; display options
+	(setq mu4e-view-show-images t)
+	(setq mu4e-view-show-addresses 't)
+
+	;; make sure that moving a message (like to Trash) causes the
+	;; message to get a new file name.  This helps to avoid the
+	;; dreaded "UID is N beyond highest assigned" error.
+	;; See this link for more info: https://stackoverflow.com/a/43461973
+	(setq mu4e-change-filenames-when-moving t)
+
+	;; setup some handy shortcuts
+	(setq mu4e-maildir-shortcuts
+		  '(("/INBOX"             . ?i)
+			("/[Gmail].Sent Mail" . ?s)
+			("/[Gmail].Trash"     . ?t)))
+
+	;; inbox-query
+	(setq db/mu4e-inbox-query
+		  "(maildir:/Inbox OR maildir:/INBOX) AND flag:unread")
+
+	;; go-to-inbox function
+	(defun db/go-to-inbox ()
+	  (interactive)
+	  (mu4e-headers-search dw/mu4e-inbox-query))
+
+	;; allow for updating mail using 'U' in the main view:
+	(setq mu4e-get-mail-command "offlineimap")
+
+	;; why would I want to leave my message open after I've sent it?
+	(setq message-kill-buffer-on-exit t)
+	;; don't ask for a 'context' upon opening mu4e
+	(setq mu4e-context-policy 'pick-first)
+	;; don't ask to quit
+	(setq mu4e-confirm-quit nil))
+#+end_src
+** Initialize =mu4e-alert=
+*** Description
+Show alerts for unread emails.
+*** Code
+#+begin_src emacs-lisp
+  (use-package mu4e-alert
+	:ensure t
+	:after mu4e
+	:config
+	;; show unread emails from all inboxes
+	(setq mu4e-alert-interesting-mail-query db/mu4e-inbox-query)
+
+	;; show notifications for mails already notified
+	(setq mu4e-alert-notify-repeated-mails nil)
+	:init
+	(mu4e-alert-enable-notifications))
+#+end_src
+** Initialize =smtpmail=
+*** Description
+smtp mail within Emacs.
+*** Code
+#+begin_src emacs-lisp
+  (use-package smtpmail
+	:ensure t
+	:config
+	(setq message-send-mail-function 'smtpmail-send-it
+		  starttls-use-gnutls t
+		  smtpmail-starttls-credentials
+		  '(("smtp.gmail.com" 587 nil nil))
+		  smtpmail-auth-credentials
+		  (expand-file-name "~/.authinfo.gpg")
+		  smtpmail-default-smtp-server "smtp.gmail.com"
+		  smtpmail-smtp-server "smtp.gmail.com"
+		  smtpmail-smtp-service 587
+		  smtpmail-debug-info t))
+#+end_src
 * Languages
 ** LSP
 *** Description
@@ -1883,15 +1884,14 @@ Geiser - Scheme Lisp REPL.
 	(interactive)
 	(geiser-repl--write-input-ring))
 #+end_src
-** Lua
+** JSON
 *** Description
-Lua mode.
+Syntax highlighting for json files.
 *** Code
 #+begin_src emacs-lisp
-  (use-package lua-mode
+  (use-package json-mode
 	:ensure t
-	:config
-	(setq lua-indent-level 2))
+	:mode ("\\.json\\'" . json-mode))
 #+end_src
 ** CSV
 *** Description
@@ -1902,14 +1902,15 @@ Major mode for editing records in a generalized CSV (character-separated values)
 	:ensure t
 	:mode ("\\.csv\\'" . csv-mode))
 #+end_src
-** JSON
+** Lua
 *** Description
-Syntax highlighting for json files.
+Lua mode.
 *** Code
 #+begin_src emacs-lisp
-  (use-package json-mode
+  (use-package lua-mode
 	:ensure t
-	:mode ("\\.json\\'" . json-mode))
+	:config
+	(setq lua-indent-level 2))
 #+end_src
 ** Markdown
 *** Description
@@ -2117,7 +2118,7 @@ Sync Emacs configuration to git.
 	(interactive)
 	(async-shell-command "~/bin/sync-emacs.sh"))
 
-  (defun sync/emacs/lock-file ()
+  (defun sync/emacs-lockfile ()
 	"Sync Emacs lock-file."
 	(interactive)
 	(straight-freeze-versions)

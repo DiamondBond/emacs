@@ -1,7 +1,19 @@
 ;;; early-init.el -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2022 Diamond Bond
+;; This file is NOT part of GNU Emacs.
+;; This file is free software.
+
+;; Author: Diamond Bond <diamondbond1@gmail.com>
+;; URL: https://github.com/diamondbond/emacs
+;; Package-Requires: ((emacs "29"))
+
+;;; Commentary:
+;; This file provides the early-bootstrap configuration.
 ;; Emacs HEAD (27+) introduces early-init.el, which is run before init.el,
 ;; before package and UI initialization happens.
+
+;;; Code:
 
 ;; Garbage Collections
 ;; A big contributor to startup times is garbage collection. We up the gc

@@ -1,13 +1,17 @@
 ;;; init.el -*- lexical-binding: t; -*-
-;;; 
-;;; Diamond Bond's Emacs Configuration
-;;;
 
-;; Copyright (C) Diamond Bond
-;; Author: Diamond B <diamondbond1@gmail.com>
-;; URL: https://github.com/diamondbond/emacs
-;; This file is not part of GNU Emacs.
+;; Copyright (C) 2022 Diamond Bond
+;; This file is NOT part of GNU Emacs.
 ;; This file is free software.
+
+;; Author: Diamond Bond <diamondbond1@gmail.com>
+;; URL: https://github.com/diamondbond/emacs
+;; Package-Requires: ((emacs "29"))
+
+;;; Commentary:
+;; This file provides the bootstrap configuration.
+
+;;; Code:
 
 ;; Make emacs startup faster
 (defvar startup/file-name-handler-alist file-name-handler-alist)
@@ -52,8 +56,10 @@
   (straight-check-for-modifications nil)
   (use-package-always-defer t))
 
-;; Load org
-(straight-use-package 'org)
+;; Load built-in org for initial tangling
+(use-package org
+  :straight (:type built-in))
+;; (straight-use-package 'org)
 
 ;; Tangle config
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
@@ -64,6 +70,7 @@
 			(setq gc-cons-threshold gc-cons-threshold-original)
 			(setq gc-cons-percentage gc-cons-percentage-original)))
 
+;; init.el ends here
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

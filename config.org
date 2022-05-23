@@ -2551,3 +2551,8 @@ Insert currently visiting buffer filename.
 		(goto-char start)
 		(unless had-initial-underscore (delete-char 1)))))
 #+end_src
+
+* Footer
+#+begin_src emacs-lisp
+  ;; config.el ends here
+#+end_src

@@ -4,10 +4,11 @@
 #+html: <a href="https://www.gnu.org/software/emacs/"><img alt="GNU Emacs" src="https://github.com/minad/corfu/blob/screenshots/emacs.svg?raw=true"></a>
 #+html: <img src="https://raw.githubusercontent.com/DiamondBond/emacs/master/img/gnusstorm-2.gif">
 #+OPTIONS: toc:nil num:nil
+
 * Introduction
 Emacs distro aimed at enhancing the default experience.
 
-It is recommend to run this distribution with the latest [[https://savannah.gnu.org/git/?group=emacs][Emacs HEAD]] compiled from source with
+It is recommend to run this distro with the latest [[https://github.com/DiamondBond/emacs/blob/master/README.org/#compiling][Emacs@HEAD]] compiled from source with
 these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuration][configure flags]].
 
 ** Points of interest

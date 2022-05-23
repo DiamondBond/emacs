@@ -15,7 +15,7 @@
 
 ;;; Code:
 
-;; Garbage Collections
+;; Garbage Collection
 ;; A big contributor to startup times is garbage collection. We up the gc
 ;; threshold to temporarily prevent it from running, then reset it later by
 ;; enabling `gcmh-mode'. Not resetting it will cause stuttering/freezes.
@@ -80,3 +80,4 @@
 (setq highlight-nonselected-windows nil)
 (setq fast-but-imprecise-scrolling t)
 (setq inhibit-compacting-font-caches t)
+;;; early-init.el ends here

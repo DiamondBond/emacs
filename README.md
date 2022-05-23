@@ -90,6 +90,11 @@ Download & install the all-the-icons font.
 > M-x all-the-icons-install-fonts
 
 
+## Setup LSP
+
+Install [language servers](https://github.com/emacs-lsp/lsp-mode#supported-languages) manually (refer to dependencies) or with `M-x lsp-install-server`
+
+
 ## Setup Email
 
 mu4e (mu) & offlineimap to manage Email within Emacs.

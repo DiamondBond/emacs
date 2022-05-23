@@ -137,6 +137,8 @@ Please refer to [mu Setup](https://github.com/DiamondBond/emacs/blob/master/conf
 
 # Dependencies
 
+Dependencies required to run this Emacs distro.
+
 
 ## Packages
 
@@ -224,3 +226,59 @@ Compile with all cores and native full ahead of time compilation, this takes a w
 
     make NATIVE_FULL_AOT=1 -j$(nproc)
     sudo make install
+
+
+# Contributing
+
+[![img](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![img](https://img.shields.io/badge/elisp-style%20guide-purple.svg?style=flat-square)](https://github.com/bbatsov/emacs-lisp-style-guide)
+
+This is a community-run modular Emacs configuration, for which we appreciate
+feedback in the form of issues and pull requests. Feel free to open an issue
+prior to opening a pull request if you're not certain your idea is in the spirit
+of the [Principles](https://github.com/diamondbond/emacs/blob/master/README.org#principles).
+
+
+## Contributing Tips for Elisp
+
+-   Provide verbose doc-strings for `defvar`, `defcustom`, `defun`, `defmacro`,
+    etc to clearly document what is going on.
+-   Make sure to follow doc-string guidelines (see [Documentation Tips](https://www.gnu.org/software/emacs/manual/html_node/elisp/Documentation-Tips.html) or [[<elisp#Documentation>
+
+Tips][elisp#Documentation Tips]])
+
+-   Add comments for blocks of code, especially to describe *why* the code is
+    present, or the intention. These comments serve as documentation when
+    reading the code where a doc-string is not an option.
+-   Add or update documentation in the *docs* folder. Especially for new
+    modules, please provide the info file with your PR. (see [Contributing Documentation](docs/CONTRIBUTING.md))
+-   If your PR addresses an issue, whether it closes or fixes the issue, or is
+    just related to it, please add the issue number in your commit message or
+    the description of your PR so they can be linked together.
+
+
+## Contributing Tips for Issues
+
+We welcome your questions and ideas, please open an issue if you have one!
+
+-   If you feel there is a defect with what we provide, please provide the
+    steps necessary to reproduce the issue. A minimal configuration, a link to
+    your configuration, or a gist/pastebin link or similar is appreciated to
+    help us work toward a solution together.
+-   If you feel there is a missing feature, please describe your feature in as
+    much detail as possible so we understand your request.
+-   If you have a question, be as specific as possible so we can understand how
+    to help you as best we can.
+-   PRs to address any of the issues you might raise are appreciated and
+    encouraged! If you don't provide one, please be patient with us, it may
+    take longer to fix an issue or provide a missing feature. That being said,
+    please feel free to check on the status of issues from time to time if it
+    has been a while since the last activity.
+
+
+# License
+
+This code is licensed under the MIT License. Why? So you can copy the code from
+this configuration!
+
+---

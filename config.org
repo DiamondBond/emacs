@@ -262,7 +262,7 @@ Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview 
   (add-hook 'text-mode-hook 'display-line-numbers-mode)
 #+END_SRC
 **** Enable visual-line-mode
-Enable in text buffers & org + md4rd.
+Enable visual-line-mode in text buffers & org + md4rd.
 #+begin_src emacs-lisp
   (add-hook 'text-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'visual-line-mode)

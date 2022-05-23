@@ -111,7 +111,7 @@ Dependencies required to run this Emacs distro.
 offlineimap
 fzf ripgrep ag
 clang clangd llvm
-texlive-latex-recommended
+texlive-core texlive-bin texlive-science
 imagemagick
 editorconfig
 libjansson
@@ -119,6 +119,7 @@ rust-all cargo
 nodejs npm
 libxml2
 gopls
+gnuplot
 prettier
 #+end_quote
 

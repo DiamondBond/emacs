@@ -35,8 +35,9 @@ Set user name and email address.
 *** Authentication
 Set authinfo file location and authinfo expiry to never.
 #+begin_src emacs-lisp
-  (setq auth-sources '("~/.authinfo" "~/.authinfo.gpg")
-		auth-source-cache-expiry nil)
+  (if (file-exists-p "~/.authinfo.gpg")
+	  (setq auth-sources '("~/.authinfo" "~/.authinfo.gpg")
+			auth-source-cache-expiry nil))
 #+end_src
 ** Performance
 *** Garbage collect when in minibuffer
@@ -69,7 +70,9 @@ https://emacs.stackexchange.com/questions/28736
 **** Set file location
 Set bookmarks file location to ~/org/bookmarks
 #+begin_src emacs-lisp
-  (setq bookmark-default-file "~/org/bookmarks")
+  (when (file-directory-p "~/org")
+	(if (file-exists-p "~/org/bookmarks")
+		(setq bookmark-default-file "~/org/bookmarks")))
 #+end_src
 **** Configure autosaving
 #+begin_src emacs-lisp
@@ -121,11 +124,15 @@ UTF-8 please.
   (set-selection-coding-system 'utf-8)
   (prefer-coding-system 'utf-8)
 #+end_src
+*** Set default dir
+#+begin_src emacs-lisp
+  (when (file-directory-p "~/org")
+	(setq default-directory "~/"))
+#+end_src
 *** Set Pager
 Essential for using shells in Emacs.
 #+begin_src emacs-lisp
   (setenv "PAGER" "cat")
-  (setq default-directory "~/")
 #+end_src
 *** Disable ring-bell
 Disable the annoying bell.
@@ -294,6 +301,16 @@ Dont accidentally delete all my bookmarks.
 #+begin_src emacs-lisp
   (defalias 'bookmark-delete-all 'bookmark-delete)
 #+end_src
+** Constants
+#+begin_src emacs-lisp
+  (defconst NATIVECOMP (if (fboundp 'native-comp-available-p) (native-comp-available-p)))
+  (defconst EMACS28+   (> emacs-major-version 27))
+  (defconst EMACS29+   (> emacs-major-version 28))
+  (defconst IS-MAC     (eq system-type 'darwin))
+  (defconst IS-LINUX   (eq system-type 'gnu/linux))
+  (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
+  (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
+#+end_src
 ** Built-in
 *** Configure =proced=
 Auto-update proced every 5 seconds.
@@ -435,7 +452,7 @@ Global, private & sane key maps.
   (global-set-key (kbd "<f6>") 'menu-bar-mode)
   (global-set-key (kbd "<f7>") 'scroll-bar-mode)
   (global-set-key (kbd "<f8>") 'tool-bar-mode)
-  (global-set-key (kbd "<f12>") 'linum-mode)
+  (global-set-key (kbd "C-<f12>") 'linum-mode)
   (global-set-key (kbd "<f10>") 'compile)
 
   ;; windows
@@ -542,7 +559,7 @@ Heresy; Vim keybindings in Emacs.
 
   (use-package evil-collection
 	:after evil
-	:demand t
+	;;:demand t
 	:straight t
 	:config
 	(evil-collection-init))
@@ -588,27 +605,34 @@ An extensible emacs startup screen.
 	(defun init-edit ()
 	  "Edit initialization file."
 	  (interactive)
-	  (find-file "~/.emacs.d/init.el"))
+	  (if (file-exists-p "~/.emacs.d/init.el")
+		  (find-file "~.emacs.d/init.el")))
 	(defun config-edit ()
 	  "Edit configuration file."
 	  (interactive)
-	  (find-file "~/.emacs.d/config.org"))
-	(defun notes-edit ()
-	  "Edit notes file."
-	  (interactive)
-	  (find-file "~/org/notes.org"))
-	(defun tasks-edit ()
-	  "Edit tasks file."
-	  (interactive)
-	  (find-file "~/org/tasks.org"))
-	(defun archive-edit ()
-	  "Edit archive file."
-	  (interactive)
-	  (find-file "~/org/archive.org"))
-	(defun inbox-edit ()
-	  "Edit inbox file."
-	  (interactive)
-	  (find-file "~/org/inbox.org"))
+	  (if (file-exists-p "~/.emacs.d/config.org")
+		  (find-file "~/.emacs.d/config.org")))
+	(when (file-directory-p "~/org")
+	  (defun notes-edit ()
+		"Edit notes file."
+		(interactive)
+		(if (file-exists-p "~/org/notes.org")
+			(find-file "~/org/notes.org")))
+	  (defun tasks-edit ()
+		"Edit tasks file."
+		(interactive)
+		(if (file-exists-p "~/org/tasks.org")
+			(find-file "~/org/tasks.org")))
+	  (defun archive-edit ()
+		"Edit archive file."
+		(interactive)
+		(if (file-exists-p "~/org/archive.org")
+			(find-file "~/org/archive.org")))
+	  (defun inbox-edit ()
+		"Edit inbox file."
+		(interactive)
+		(if (file-exists-p "~/org/inbox.org")
+			(find-file "~/org/inbox.org"))))
 	(defun create-scratch-buffer ()
 	  "Create a scratch buffer."
 	  (interactive)
@@ -624,52 +648,53 @@ An extensible emacs startup screen.
 	(setq dashboard-set-init-info t)
 	(setq dashboard-set-footer t)
 	(setq dashboard-set-navigator t)
-	(setq dashboard-navigator-buttons
-		  `(;; line 1
-			((,nil
-			  "mu4e"
-			  "Read email with mu4e"
-			  (lambda (&rest _) (mu4e))
-			  'default)
-			 (,nil
-			  "md4rd"
-			  "Browse reddit with md4rd"
-			  (lambda (&rest _) (md4rd))
-			  'default)
-			 (nil
-			  "elfeed"
-			  "Read RSS/Atom feeds with Elfeed"
-			  (lambda (&rest _) (elfeed))
-			  'default)
-			 (nil
-			  "gnus"
-			  "Read emacs-devel with Gnus"
-			  (lambda (&rest _) (open-emacs-devel))
-			  'default))
-			;; separator
-			((,nil "==============================" ""
-				   (lambda (&rest _) ()) 'default))
-			;; line 2
-			((,nil
-			  "Notes"
-			  "Open personal notes"
-			  (lambda (&rest _) (notes-edit))
-			  'default)
-			 (nil
-			  "Tasks"
-			  "Open tasks"
-			  (lambda (&rest _) (tasks-edit))
-			  'default)
-			 (nil
-			  "Agenda"
-			  "Open Org-Agenda"
-			  (lambda (&rest _) (org-agenda nil "n"))
-			  'default)
-			 (nil
-			  "Inbox"
-			  "Open Inbox"
-			  (lambda (&rest _) (inbox-edit))
-			  'default)))))
+	(when (file-directory-p "~/org")
+	  (setq dashboard-navigator-buttons
+			`(;; line 1
+			  ((,nil
+				"mu4e"
+				"Read email with mu4e"
+				(lambda (&rest _) (mu4e))
+				'default)
+			   (,nil
+				"md4rd"
+				"Browse reddit with md4rd"
+				(lambda (&rest _) (md4rd))
+				'default)
+			   (nil
+				"elfeed"
+				"Read RSS/Atom feeds with Elfeed"
+				(lambda (&rest _) (elfeed))
+				'default)
+			   (nil
+				"gnus"
+				"Read emacs-devel with Gnus"
+				(lambda (&rest _) (open-emacs-devel))
+				'default))
+			  ;; separator
+			  ((,nil "==============================" ""
+					 (lambda (&rest _) ()) 'default))
+			  ;; line 2
+			  ((,nil
+				"Notes"
+				"Open personal notes"
+				(lambda (&rest _) (notes-edit))
+				'default)
+			   (nil
+				"Tasks"
+				"Open tasks"
+				(lambda (&rest _) (tasks-edit))
+				'default)
+			   (nil
+				"Agenda"
+				"Open Org-Agenda"
+				(lambda (&rest _) (org-agenda nil "n"))
+				'default)
+			   (nil
+				"Inbox"
+				"Open Inbox"
+				(lambda (&rest _) (inbox-edit))
+				'default))))))
 #+END_SRC
 ** Initialize =calfw=
 *** Description
@@ -687,21 +712,21 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
   (use-package org
 	:straight t
 	:config
-	(setq org-directory "~/org"
-		  initial-major-mode 'org-mode
+	(setq initial-major-mode 'org-mode
 		  org-display-inline-images t
 		  org-redisplay-inline-images t
-		  org-startup-with-inline-images "inlineimages"
-		  org-pretty-entitles t
-		  org-agenda-files (list "~/org/inbox.org"
-								 "~/org/tasks.org"
-								 "~/org/notes.org"
-								 "~/org/daily.org")
 		  org-image-actual-width nil
-		  +org-export-directory "~/org/export"
-		  org-default-notes-file "~/org/inbox.org"
-		  org-id-locations-file "~/org/.orgids"
-		  org-catch-invisible-edits 'smart)
+		  org-startup-with-inline-images "inlineimages"
+		  org-catch-invisible-edits 'smart
+		  org-pretty-entities t)
+	(when (file-directory-p "~/org")
+	  (setq org-directory "~/org"
+			org-agenda-files (list "~/org/inbox.org"
+								   "~/org/tasks.org"
+								   "~/org/notes.org"
+								   "~/org/daily.org")
+			org-default-notes-file "~/org/inbox.org"
+			org-id-locations-file "~/org/.orgids"))
 
 	(setq org-todo-keywords
 		  '((sequence "TODO"
@@ -712,9 +737,10 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 					  "DEFERRED"
 					  "CANCELLED")))
 
-	(setq org-refile-targets
-		  '(("~/org/archive.org" :maxlevel . 1)
-			("~/org/tasks.org" :maxlevel . 1)))
+	(when (file-directory-p "~/org")
+	  (setq org-refile-targets
+			'(("~/org/archive.org" :maxlevel . 1)
+			  ("~/org/tasks.org" :maxlevel . 1))))
 
 	;; Save Org buffers after refiling!
 	(advice-add 'org-refile :after 'org-save-all-org-buffers)
@@ -740,11 +766,12 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 								 '((shell . t)))
 
 	;; org templates
-	(setq org-capture-templates
-		  '(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
-			 "* %?\n%a\nEntered on %U")
-			("j" "Journal" entry (file+datetree "~/org/journal.org")
-			 "* %?\n%a\nEntered on %U")))
+	(when (file-directory-p "~/org")
+	  (setq org-capture-templates
+			'(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
+			   "* %?\n%a\nEntered on %U")
+			  ("j" "Journal" entry (file+datetree "~/org/journal.org")
+			   "* %?\n%a\nEntered on %U"))))
 
 	:bind
 	("C-c c" . 'org-capture)

@@ -1,10 +1,9 @@
 #+STARTUP: overview
 #+AUTHOR: Diamond Bond
 #+LANGUAGE: en
-#+OPTIONS: toc:2
-
 #+html: <a href="https://www.gnu.org/software/emacs/"><img alt="GNU Emacs" src="https://github.com/minad/corfu/blob/screenshots/emacs.svg?raw=true"/></a>
 #+html: <img src="https://raw.githubusercontent.com/DiamondBond/emacs/master/img/gnusstorm-2.gif" align="right" width="42%">
+#+OPTIONS: num:nil
 
 * Introduction
 Emacs distro aimed at enhancing the default experience.
@@ -24,12 +23,14 @@ these [[https://github.com/DiamondBond/emacs/blob/master/README.org#configuratio
 ** Summary
 This Emacs distro attempts to achieve the following goals:
 
-*** Performance over all else
-Function-over-form.
-*** Aggressively use best practices
-We utilize use-package & straight.el for reproducibility.
-*** Extensively document and comment all code
-The main configuration is literate and has comments / docstrings wherever possible.
+*** Performant in its nature of operation
+Responsive & adheres to function over form principles.
+*** Aggressively utilizing best practices
+Utilizes straight.el for reproducibility & increased stability.
+*** Extensively documented
+Literate configuration with comments & inline docstrings.
+*** Contrived with alteration in mind
+Simple to fork & edit
 *** Remain as simple as possible whilst maximizing usability
 e.g: Vertico/Corfu & friends instead of Helm/Ivy/Company.
 

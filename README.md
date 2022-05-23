@@ -1,25 +1,38 @@
 
 # Table of Contents
 
-1.  [Introduction](#orgf4e701f)
-    1.  [Contents](#orgfb03282)
-    2.  [Summary](#org9d83c05)
-2.  [Setup](#org8222dc9)
-3.  [Compile pdf-tools](#orge61f563)
-4.  [Compile vterm modules](#org20f726d)
-5.  [Download & install all-the-icons font](#orgfe3fc8c)
-6.  [Dependencies](#org0a35b2f)
-    1.  [Packages](#org67b8dbc)
-    2.  [Files](#orgbf71acc)
-    3.  [Emacs](#org29b0f68)
-    4.  [Email](#org4efc4bf)
+-   [Introduction](#org2c07e14)
+    -   [Contents](#org000623e)
+    -   [Summary](#org0c32523)
+        -   [Performance over all else](#orgbe0f245)
+        -   [Aggressively use best practices](#orgfb230da)
+        -   [Extensively document and comment all code](#orgcbbb824)
+        -   [Remain as simple as possible whilst maximizing usability](#orgc9e5945)
+-   [Setup](#org8fd8cbf)
+-   [Compile pdf-tools](#org7da94e7)
+-   [Compile vterm modules](#org6111d53)
+-   [Download & install all-the-icons font](#org4979efe)
+-   [Dependencies](#org657592a)
+    -   [Packages](#orgfa33b13)
+        -   [System](#orgb8adff4)
+        -   [Python](#orge53b0d1)
+        -   [NPM](#orgf4c3930)
+    -   [Files](#orga3a361b)
+    -   [Emacs](#org3908cec)
+        -   [Grabbing sources](#org89c5399)
+        -   [Configuration](#org81437f0)
+        -   [Compiling](#orgce50cc9)
+    -   [Email](#org95313c4)
+        -   [0. Prerequisites](#orgb60d4a2)
+        -   [1. Configuring offlineimap](#org3cc00ac)
+        -   [2. Configuring mu](#orgfc69cd9)
 
 <a href="https://www.gnu.org/software/emacs/"><img alt="GNU Emacs" src="https://github.com/minad/corfu/blob/screenshots/emacs.svg?raw=true"/></a>
 
 <img src="https://raw.githubusercontent.com/DiamondBond/emacs/master/img/gnusstorm-2.gif" align="right" width="42%">
 
 
-<a id="orgf4e701f"></a>
+<a id="org2c07e14"></a>
 
 # Introduction
 
@@ -29,7 +42,7 @@ It is recommend to run this distribution with the latest [Emacs HEAD](https://sa
 these [configure flags](https://github.com/DiamondBond/emacs/blob/master/README.org#configuration).
 
 
-<a id="orgfb03282"></a>
+<a id="org000623e"></a>
 
 ## Contents
 
@@ -42,34 +55,42 @@ these [configure flags](https://github.com/DiamondBond/emacs/blob/master/README.
 [Function Definitions](https://github.com/DiamondBond/emacs/blob/master/config.org#functions)
 
 
-<a id="org9d83c05"></a>
+<a id="org0c32523"></a>
 
 ## Summary
 
 This Emacs distro attempts to achieve the following goals:
 
 
+<a id="orgbe0f245"></a>
+
 ### Performance over all else
 
 Function-over-form.
 
+
+<a id="orgfb230da"></a>
 
 ### Aggressively use best practices
 
 We utilize use-package & straight.el for reproducibility.
 
 
+<a id="orgcbbb824"></a>
+
 ### Extensively document and comment all code
 
 The main configuration is literate and has comments / docstrings wherever possible.
 
+
+<a id="orgc9e5945"></a>
 
 ### Remain as simple as possible whilst maximizing usability
 
 e.g: Vertico/Corfu & friends instead of Helm/Ivy/Company.
 
 
-<a id="org8222dc9"></a>
+<a id="org8fd8cbf"></a>
 
 # Setup
 
@@ -100,38 +121,40 @@ To get autocompletion on JS/TS & Python files, you'll need to install the corres
 Once Emacs launches for the first time we need to setup a few more things:
 
 
-<a id="orge61f563"></a>
+<a id="org7da94e7"></a>
 
 # Compile pdf-tools
 
     M-x pdf-tools-install
 
 
-<a id="org20f726d"></a>
+<a id="org6111d53"></a>
 
 # Compile vterm modules
 
     M-x vterm
 
 
-<a id="orgfe3fc8c"></a>
+<a id="org4979efe"></a>
 
 # Download & install all-the-icons font
 
     M-x all-the-icons-install-fonts
 
 
-<a id="org0a35b2f"></a>
+<a id="org657592a"></a>
 
 # Dependencies
 
 
-<a id="org67b8dbc"></a>
+<a id="orgfa33b13"></a>
 
 ## Packages
 
 This section is just packages that I have needed in the past to comfortably run this Emacs distro, not everything here is required, this is just a rough guideline.
 
+
+<a id="orgb8adff4"></a>
 
 ### System
 
@@ -149,10 +172,14 @@ This section is just packages that I have needed in the past to comfortably run 
 > prettier
 
 
+<a id="orge53b0d1"></a>
+
 ### Python
 
     pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi
 
+
+<a id="orgf4c3930"></a>
 
 ### NPM
 
@@ -161,7 +188,7 @@ Please install deno & typescript-language-server for Typescript (TS/TSX) support
     sudo npm install -g deno typescript-language-server bash-language-server
 
 
-<a id="orgbf71acc"></a>
+<a id="orga3a361b"></a>
 
 ## Files
 
@@ -170,12 +197,14 @@ I use Dropbox and I symlink ~/org & ~/pdf to their respective subdirs within ~/D
     mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
 
 
-<a id="org29b0f68"></a>
+<a id="org3908cec"></a>
 
 ## Emacs
 
 How to compile and install the latest GNU Emacs @ HEAD.
 
+
+<a id="org89c5399"></a>
 
 ### Grabbing sources
 
@@ -184,6 +213,8 @@ Clone the latest emacs sources:
     cd ~/git
     git clone -b master git://git.sv.gnu.org/emacs.git
 
+
+<a id="org81437f0"></a>
 
 ### Configuration
 
@@ -197,6 +228,8 @@ Configure Emacs for building with json, native-comp and the athena toolkit with 
     # note: Remove "--with-xinput2" if you're building Emacs28
 
 
+<a id="orgce50cc9"></a>
+
 ### Compiling
 
 We build with all cores and natively compile everything ahead of time, this will take a while.
@@ -205,10 +238,12 @@ We build with all cores and natively compile everything ahead of time, this will
     sudo make install
 
 
-<a id="org4efc4bf"></a>
+<a id="org95313c4"></a>
 
 ## Email
 
+
+<a id="orgb60d4a2"></a>
 
 ### 0. Prerequisites
 
@@ -217,12 +252,16 @@ mu4e (mu) & offlineimap to manage Email within Emacs.
 > maildir=~/mail
 
 
+<a id="org3cc00ac"></a>
+
 ### 1. Configuring offlineimap
 
 [offlineimap.rc](https://github.com/DiamondBond/dotfiles/blob/master/.offlineimaprc)
 
 [offlineimap.py](https://github.com/DiamondBond/dotfiles/blob/master/.offlineimap.py)
 
+
+<a id="orgfc69cd9"></a>
 
 ### 2. Configuring mu
 

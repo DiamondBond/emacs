@@ -484,7 +484,7 @@ Utilize asynchronous processes whenever possible.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package async
-	:ensure t
+	:straight t
 	:init
 	(dired-async-mode 1)
 	:config
@@ -497,7 +497,7 @@ Alert is a Growl-workalike for Emacs which uses a common notification interface 
 *** Code
 #+begin_src emacs-lisp
   (use-package alert
-	:ensure t
+	:straight t
 	:config
 	(setq alert-fade-time 15))
 #+end_src
@@ -507,7 +507,7 @@ Shows keyboard macros or latest interactive commands as Emacs lisp.
 *** Code
 #+begin_src emacs-lisp
   (use-package elmacro
-	:ensure t)
+	:straight t)
 #+end_src
 ** Initialize =evil=
 *** Description
@@ -515,7 +515,7 @@ Heresy; Vim keybindings in Emacs.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package evil
-	:ensure t
+	:straight t
 	:defer nil
 	:init
 	(setq evil-want-keybinding nil)
@@ -566,7 +566,7 @@ Possible completion framework with 0.3s delay.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
-	:ensure t
+	:straight t
 	:diminish which-key-mode
 	:init
 	(which-key-mode)
@@ -579,7 +579,7 @@ An extensible emacs startup screen.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
-	:ensure t
+	:straight t
 	:defer nil
 	:diminish dashboard-mode
 	:preface
@@ -683,7 +683,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 **** Code
 #+BEGIN_SRC emacs-lisp
   (use-package org
-	:ensure t
+	:straight t
 	:config
 	(setq org-directory "~/org"
 		  initial-major-mode 'org-mode
@@ -751,7 +751,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 
   ;; reminders
   (use-package org-wild-notifier
-	:ensure t
+	:straight t
 	:after org
 	:config
 	(setq alert-default-style 'libnotify)
@@ -783,7 +783,7 @@ Add icons and subtree's to dired.
 	:commands (dired dired-jump))
 
   (use-package all-the-icons-dired
-	:ensure t
+	:straight t
 	:diminish all-the-icons-dired-mode
 	:config
 	:hook (dired-mode . (lambda ()
@@ -800,7 +800,7 @@ Add icons and subtree's to dired.
 								  ("mkv" . "mpv"))))
 
   (use-package dired-subtree
-	:ensure t
+	:straight t
 	:config
 	(advice-add 'dired-subtree-toggle
 				:after (lambda () (interactive)
@@ -813,7 +813,7 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 *** Code
 #+begin_src emacs-lisp
   (use-package gnus
-	:ensure t
+	:straight t
 	:config
 	;; make Gnus startup faster
 	(setq gnus-check-new-newsgroups nil
@@ -902,7 +902,7 @@ RSS reader for Emacs.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package elfeed
-	:ensure t
+	:straight t
 	:config
 	(setq elfeed-feeds
 		  '(("https://www.archlinux.org/feeds/news/" archlinux)
@@ -920,7 +920,7 @@ Reddit client within Emacs with oauth2 support.
 *** Code
 #+begin_src emacs-lisp
   (use-package md4rd
-	:ensure t
+	:straight t
 	:config
 	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure))
 	(load-if-exists "~/.emacs.d/secrets.el.gpg"))
@@ -932,7 +932,7 @@ ERC is a powerful, modular, and extensible IRC client for Emacs.
 *** Code
 #+begin_src emacs-lisp
   (use-package erc
-	:ensure t
+	:straight t
 	:custom
 	(erc-autojoin-timing 'ident)
 	(erc-autojoin-channels-alist '(("irc.rizon.net" "#rice")))
@@ -990,7 +990,7 @@ The definitive Git porcelain for Emacs.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package magit
-	:ensure t)
+	:straight t)
 #+END_SRC
 ** Initialize =autorevert=
 *** Description
@@ -1013,7 +1013,7 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 #+BEGIN_SRC emacs-lisp
   (use-package corfu
 	:straight t
-	:ensure t
+	:straight t
 	:custom
 	(corfu-auto t)
 	(corfu-auto-prefix 3)
@@ -1041,7 +1041,7 @@ Completio at point extensions.
 *** Code
 #+begin_src emacs-lisp
   (use-package cape
-	:ensure t
+	:straight t
 	:config
 	(setq cape-dabbrev-min-length 3)
 	(dolist (backend '( cape-symbol cape-keyword cape-file cape-dabbrev))
@@ -1055,7 +1055,7 @@ Vertico, orderless, marginalia, consult & embark.
   ;; enable vertico
   (use-package vertico
 	:straight t
-	:ensure t
+	:straight t
 	:bind (:map vertico-map
 				("C-j" . vertico-next)
 				("C-k" . vertico-previous)
@@ -1083,7 +1083,7 @@ Vertico, orderless, marginalia, consult & embark.
 				("M-DEL" . vertico-directory-delete-word)))
 
   (use-package orderless
-	:ensure t
+	:straight t
 	:init
 	(setq completion-styles '(orderless basic)
 		  completion-category-defaults nil
@@ -1091,26 +1091,26 @@ Vertico, orderless, marginalia, consult & embark.
 
   ;; persist history over Emacs restarts. Vertico sorts by history position.
   (use-package savehist
-	:ensure t
+	:straight t
 	:init
 	(savehist-mode))
 
   ;; information in the margins
   (use-package marginalia
-	:ensure t
+	:straight t
 	:init
 	(marginalia-mode))
 
   ;; Consult provides practical commands based on the Emacs completion function completing-read.
   (use-package consult
-	:ensure t
+	:straight t
 	:bind
 	(("M-y" . consult-yank-from-kill-ring)
 	 ("C-x b" . consult-buffer)))
 
   ;; Emacs Mini-Buffer Actions Rooted in Keymaps
   (use-package embark
-	:ensure t
+	:straight t
 	:bind
 	(("C-." . embark-act)         ;; pick some comfortable binding
 	 ("C-;" . embark-dwim)        ;; good alternative: M-.
@@ -1127,7 +1127,7 @@ Vertico, orderless, marginalia, consult & embark.
 
   ;; Consult users will also want the embark-consult package.
   (use-package embark-consult
-	:ensure t
+	:straight t
 	:after (embark consult)
 	:demand t ; only necessary if you have the hook below
 	;; if you want to have consult previews as you move around an
@@ -1171,7 +1171,7 @@ Expand the word in the buffer before point as a dynamic abbrev, by searching for
 #+begin_src emacs-lisp
   ;; use dabbrev with Corfu!
   (use-package dabbrev
-	:ensure t
+	:straight t
 	;; swap M-/ and C-M-/
 	:bind (("M-/" . dabbrev-completion)
 		   ("C-M-/" . dabbrev-expand)))
@@ -1182,7 +1182,7 @@ C-x o and pick window (a,s,d...)
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package switch-window
-	:ensure t
+	:straight t
 	:config
 	(setq switch-window-input-style 'minibuffer)
 	(setq switch-window-increase 4)
@@ -1199,7 +1199,7 @@ Global mode which displays form feed characters as tidy horizontal rules.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package page-break-lines
-	:ensure t
+	:straight t
 	:diminish page-break-lines-mode)
 #+END_SRC
 ** Initialize =all-the-icons=
@@ -1207,7 +1207,7 @@ Global mode which displays form feed characters as tidy horizontal rules.
 All the icons!
 #+begin_src emacs-lisp
   (use-package all-the-icons
-	:ensure t)
+	:straight t)
 
   (use-package all-the-icons-completion
 	:after (marginalia all-the-icons)
@@ -1221,7 +1221,7 @@ Kind icons.
 *** Code
 #+begin_src emacs-lisp
   (use-package kind-icon
-	:ensure t
+	:straight t
 	:after corfu
 	:custom
 	(kind-icon-use-icons t)
@@ -1237,7 +1237,7 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
-	:ensure t
+	:straight t
 	:defer nil
 	:commands (pdf-view-mode pdf-tools-install)
 	:mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
@@ -1257,13 +1257,13 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 
   (use-package pdf-view-restore
 	:after pdf-tools
-	:ensure t
+	:straight t
 	:config
 	:hook (pdf-view-mode . pdf-view-restore-mode))
 
   (use-package org-pdftools
 	:after pdf-view-restore
-	:ensure t
+	:straight t
 	:hook (org-load-hook . org-pdftools-setup-link))
 #+END_SRC
 ** Initialize =nov=
@@ -1272,7 +1272,7 @@ Major mode for reading EPUBs.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package nov
-	:ensure t
+	:straight t
 	:defer nil
 	:config
 	(defun nov-font-setup ()
@@ -1288,7 +1288,7 @@ Minor mode to aid in finding common writing problems. Highlights text based on a
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package writegood-mode
-	:ensure t)
+	:straight t)
 #+END_SRC
 ** Initialize =synosaurus=
 *** Description
@@ -1296,7 +1296,7 @@ Synosaurus is a thesaurus frontend for Emacs with pluggable backends.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package synosaurus
-	:ensure t)
+	:straight t)
 #+END_SRC
 ** Initialize =olivetti=
 *** Description
@@ -1304,7 +1304,7 @@ Emacs minor mode for a nice writing environment.
 *** Code
 #+begin_src emacs-lisp
   (use-package olivetti
-	:ensure t
+	:straight t
 	:defer nil
 	:init
 	(setq olivetti-body-width .75))
@@ -1315,7 +1315,7 @@ Saves cursor location in buffers.
 *** Code
 #+begin_src emacs-lisp
   (use-package saveplace
-	:ensure t
+	:straight t
 	:defer nil
 	:config
 	(save-place-mode))
@@ -1337,7 +1337,7 @@ Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimit
 *** Code
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
-	:ensure t
+	:straight t
 	:hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 ** Initialize =dictionary-mode=
@@ -1358,7 +1358,7 @@ engine-mode is a global minor mode for Emacs that enables you to easily define s
 *** Code
 #+begin_src emacs-lisp
   (use-package engine-mode
-	:ensure t
+	:straight t
 	:config
 	(defengine google "https://google.com/search?q=%s" :keybinding "g"
 	  :docstring "Applied Google-fu.")
@@ -1399,7 +1399,7 @@ Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based
 *** Code
 #+begin_src emacs-lisp
   (use-package vterm
-	:ensure t
+	:straight t
 	:config
 	:config
 	(add-hook 'vterm-mode-hook
@@ -1412,8 +1412,7 @@ Tree layout file explorer.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package treemacs
-	:ensure t
-	:defer t
+	:straight t
 	:init
 	(with-eval-after-load 'winum
 	  (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
@@ -1473,14 +1472,14 @@ Tree layout file explorer.
 
   (use-package treemacs-evil
 	:after treemacs evil
-	:ensure t)
+	:straight t)
 
   (use-package treemacs-magit
 	:straight t)
 
   (use-package treemacs-icons-dired
 	:after treemacs dired
-	:ensure t
+	:straight t
 	:config (treemacs-icons-dired-mode))
 #+END_SRC
 ** Initialize =flycheck=
@@ -1499,7 +1498,7 @@ Enable on the fly with M-x flyspell-mode.
 *** Code
 #+begin_src emacs-lisp
   (use-package flyspell
-	:ensure t
+	:straight t
 	:config
 	(setq ispell-program-name "hunspell"
 		  ispell-default-dictionary "en_US")
@@ -1511,7 +1510,7 @@ Popup contents mini-buffer.
 *** Code
 #+begin_src emacs-lisp
   (use-package imenu-list
-	:ensure t
+	:straight t
 	:config
 	(setq imenu-list-auto-resize t))
 #+end_src
@@ -1521,11 +1520,11 @@ Deadgrep and ag - the_silver_searcher.
 *** Code
 #+begin_src emacs-lisp
   (use-package deadgrep
-	:defer t
+	:straight t
 	:commands deadgrep)
 
   (use-package ag
-	:ensure t
+	:straight t
 	:defer nil)
 #+end_src
 ** Initialize =swiper=
@@ -1534,7 +1533,7 @@ C-s to spawn a search minibuffer that can be traversed via C-n and C-p & <RET>.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package swiper
-    :ensure t
+    :straight t
     :bind ("C-s" . 'swiper))
 #+END_SRC
 ** Initialize =avy=
@@ -1543,7 +1542,7 @@ M-s to jump to desired character.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package avy
-	:ensure t
+	:straight t
 	:bind
 	("M-s" . avy-goto-char))
 #+END_SRC
@@ -1553,7 +1552,7 @@ Deft is included for quicksearch of entire ~/org directory.
 *** Code
 #+begin_src emacs-lisp
   (use-package deft
-	:ensure t
+	:straight t
 	:config
 	(setq deft-directory org-directory
 		  deft-recursive t
@@ -1568,7 +1567,7 @@ A Collection of Ridiculously Useful eXtensions.
 *** Code
 #+begin_src emacs-lisp
   (use-package crux
-	:ensure t)
+	:straight t)
 #+end_src
 ** Initialize =0x0=
 *** Description
@@ -1577,7 +1576,6 @@ Instant upload to 0x0.st
 #+begin_src emacs-lisp
   (use-package 0x0
 	:straight t
-	:defer t
 	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
 #+end_src
 ** Initialize =hydra=
@@ -1586,7 +1584,7 @@ Hydra is a simple menu creator for keybindings.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package hydra
-	:ensure t)
+	:straight t)
 
   (defhydra hydra-zoom ()
 	"
@@ -1619,7 +1617,7 @@ Show event history and command history of some or all buffers.
 *** Code
 #+begin_src emacs-lisp
   (use-package command-log-mode
-	:ensure t)
+	:straight t)
 #+end_src
 ** Initialize =yasnippet=
 *** Description
@@ -1644,7 +1642,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 *** Code
 #+begin_src emacs-lisp
   (use-package diminish
-	:ensure t
+	:straight t
 	:init
 	;; diminish as mode is already loaded
 	(diminish 'abbrev-mode "")
@@ -1691,14 +1689,16 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
-** Initialize =solaire-mode=
+** Initialize =elcord=
 *** Description
-Gives other windows slightly different background colors (brightness).
 *** Code
 #+begin_src emacs-lisp
-  (use-package solaire-mode
+  (use-package elcord
 	:straight t
-	:hook (after-init . solaire-global-mode))
+	:defer 5
+	:config
+	(setq elcord-client-id "978267848038297661")
+	(setq elcord-editor-icon "emacs_icon"))
 #+end_src
 * Mail
 ** Prerequisites
@@ -1800,7 +1800,7 @@ Show alerts for unread emails.
 *** Code
 #+begin_src emacs-lisp
   (use-package mu4e-alert
-	:ensure t
+	:straight t
 	:after mu4e
 	:config
 	;; show unread emails from all inboxes
@@ -1817,7 +1817,7 @@ smtp mail within Emacs.
 *** Code
 #+begin_src emacs-lisp
   (use-package smtpmail
-	:ensure t
+	:straight t
 	:config
 	(setq message-send-mail-function 'smtpmail-send-it
 		  starttls-use-gnutls t
@@ -1840,7 +1840,7 @@ Language Server Protocol, handles the following languages:
 *** Code
 #+begin_src emacs-lisp
   (use-package lsp-mode
-	:ensure t
+	:straight t
 	:init
 	;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
 	(setq lsp-keymap-prefix "C-c l")
@@ -1884,7 +1884,7 @@ Language Server Protocol, handles the following languages:
 	(setq lsp-disabled-clients '(eslint)))
 
   (use-package lsp-ui
-	:ensure t
+	:straight t
 	:after lsp
 	:commands lsp-ui-mode
 	:config
@@ -1896,7 +1896,7 @@ Language Server Protocol, handles the following languages:
 	(setq lsp-ui-sideline-delay 0.05))
 
   (use-package lsp-pyright
-	:ensure t
+	:straight t
 	:after lsp
 	:hook (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred)))
 	:init (when (executable-find "python3")
@@ -1916,7 +1916,7 @@ Go-mode.
 *** Code
 #+begin_src emacs-lisp
   (use-package go-mode
-	:ensure t
+	:straight t
 	:mode "\\.go\\'"
 	:config
 	(defun db/go-mode-hook()
@@ -1932,7 +1932,7 @@ Rust-mode.
 *** Code
 #+begin_src emacs-lisp
   (use-package rust-mode
-	:ensure t
+	:straight t
 	:mode "\\.rs\\'"
 	:hook ((go-mode . subword-mode)))
 #+end_src
@@ -1943,7 +1943,7 @@ SLIME - Common Lisp REPL.
 **** Code
 #+BEGIN_SRC emacs-lisp
   (use-package slime
-	:ensure t
+	:straight t
 	:config
 	(setq inferior-lisp-program "/usr/bin/sbcl")
 	(setq slime-contribs '(slime-fancy slime-quicklisp)))
@@ -1954,7 +1954,7 @@ Geiser - Scheme Lisp REPL.
 **** Code
 #+BEGIN_SRC emacs-lisp
   (use-package geiser
-	:ensure t
+	:straight t
 	:config
 	(setq geiser-active-implementations '(chez guile mit))
 	(setq geiser-chez-binary "chez")
@@ -1962,7 +1962,7 @@ Geiser - Scheme Lisp REPL.
 	(setq geiser-default-implementation 'chez))
 
   (use-package geiser-chez
-	:ensure t
+	:straight t
 	:after geiser
 	:config
 	(add-to-list 'auto-mode-alist
@@ -1979,7 +1979,7 @@ Syntax highlighting for json files.
 *** Code
 #+begin_src emacs-lisp
   (use-package json-mode
-	:ensure t
+	:straight t
 	:mode ("\\.json\\'" . json-mode))
 #+end_src
 ** CSV
@@ -1988,7 +1988,7 @@ Major mode for editing records in a generalized CSV (character-separated values)
 *** Code
 #+begin_src emacs-lisp
   (use-package csv-mode
-	:ensure t
+	:straight t
 	:mode ("\\.csv\\'" . csv-mode))
 #+end_src
 ** Lua
@@ -1997,7 +1997,7 @@ Lua mode.
 *** Code
 #+begin_src emacs-lisp
   (use-package lua-mode
-	:ensure t
+	:straight t
 	:config
 	(setq lua-indent-level 2))
 #+end_src
@@ -2023,7 +2023,7 @@ Markdown-mode & enable auto fill.
 *** Code
 #+begin_src emacs-lisp
   (use-package markdown-mode
-	:ensure t
+	:straight t
 	:mode "\\.md\\'"
 	:hook ((markdown-mode . auto-fill-mode)))
 #+end_src
@@ -2032,8 +2032,8 @@ Markdown-mode & enable auto fill.
 Auctex for LaTeX.
 *** Code
 #+begin_src emacs-lisp
-  (use-package auctex
-	:ensure t
+  (use-package tex
+	:straight auctex
 	:config
 	(setq TeX-auto-save t)
 	(setq TeX-parse-self t)
@@ -2074,7 +2074,7 @@ Web editing mode.
 *** Code
 #+begin_src emacs-lisp
   (use-package web-mode
-	:ensure t
+	:straight t
 	:custom
 	(setq web-mode-markup-indent-offset 2)
 	(setq web-mode-code-indent-offset 2)
@@ -2088,7 +2088,7 @@ Prettier formatter for JSX & TSX.
 *** Code
 #+begin_src emacs-lisp
   (use-package prettier-js
-	:ensure t)
+	:straight t)
 
   (add-hook 'web-mode-hook #'(lambda ()
 							   (enable-minor-mode

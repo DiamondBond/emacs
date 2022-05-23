@@ -1,25 +1,19 @@
 
 # Table of Contents
 
--   [Introduction](#org5c54193)
-    -   [Conceptual overview](#org6ecd84c)
-    -   [Summary](#orgecaf12c)
--   [Setup](#org8b416b5)
--   [Compile pdf-tools](#org98eb9f5)
--   [Compile vterm modules](#org362771e)
--   [Download & install all-the-icons font](#orge0b62fc)
--   [Dependencies](#org0e22059)
-    -   [Packages](#org6c37b7b)
-    -   [Files](#org96cd016)
-    -   [Emacs](#org39753b2)
-    -   [Email](#orga66ceec)
+-   [Introduction](#org40c6105)
+-   [Setup](#org557afe2)
+-   [Compile pdf-tools](#org7a91f95)
+-   [Compile vterm modules](#org4c567d0)
+-   [Download & install all-the-icons font](#org8662df8)
+-   [Dependencies](#org89bc4c5)
 
 <a href="https://www.gnu.org/software/emacs/"><img alt="GNU Emacs" src="https://github.com/minad/corfu/blob/screenshots/emacs.svg?raw=true"/></a>
 
 <img src="https://raw.githubusercontent.com/DiamondBond/emacs/master/img/gnusstorm-2.gif" align="right" width="42%">
 
 
-<a id="org5c54193"></a>
+<a id="org40c6105"></a>
 
 # Introduction
 
@@ -29,9 +23,7 @@ It is recommend to run this distribution with the latest [Emacs HEAD](https://sa
 these [configure flags](https://github.com/DiamondBond/emacs/blob/master/README.org#configuration).
 
 
-<a id="org6ecd84c"></a>
-
-## Conceptual overview
+## Points of interest
 
 [Main Configuration](https://github.com/DiamondBond/emacs/blob/master/config.org)
 
@@ -41,8 +33,6 @@ these [configure flags](https://github.com/DiamondBond/emacs/blob/master/README.
 
 [Function Definitions](https://github.com/DiamondBond/emacs/blob/master/config.org#functions)
 
-
-<a id="orgecaf12c"></a>
 
 ## Summary
 
@@ -74,7 +64,7 @@ Simple to fork & edit
 e.g: Vertico/Corfu & friends instead of Helm/Ivy/Company.
 
 
-<a id="org8b416b5"></a>
+<a id="org557afe2"></a>
 
 # Setup
 
@@ -105,33 +95,31 @@ To get autocompletion on JS/TS & Python files, you'll need to install the corres
 Once Emacs launches for the first time we need to setup a few more things:
 
 
-<a id="org98eb9f5"></a>
+<a id="org7a91f95"></a>
 
 # Compile pdf-tools
 
     M-x pdf-tools-install
 
 
-<a id="org362771e"></a>
+<a id="org4c567d0"></a>
 
 # Compile vterm modules
 
     M-x vterm
 
 
-<a id="orge0b62fc"></a>
+<a id="org8662df8"></a>
 
 # Download & install all-the-icons font
 
     M-x all-the-icons-install-fonts
 
 
-<a id="org0e22059"></a>
+<a id="org89bc4c5"></a>
 
 # Dependencies
 
-
-<a id="org6c37b7b"></a>
 
 ## Packages
 
@@ -166,16 +154,12 @@ Please install deno & typescript-language-server for Typescript (TS/TSX) support
     sudo npm install -g deno typescript-language-server bash-language-server
 
 
-<a id="org96cd016"></a>
-
 ## Files
 
 I use Dropbox and I symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 
     mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
 
-
-<a id="org39753b2"></a>
 
 ## Emacs
 
@@ -209,8 +193,6 @@ We build with all cores and natively compile everything ahead of time, this will
     make NATIVE_FULL_AOT=1 -j$(nproc)
     sudo make install
 
-
-<a id="orga66ceec"></a>
 
 ## Email
 

@@ -1262,11 +1262,6 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	:straight t
 	:config
 	:hook (pdf-view-mode . pdf-view-restore-mode))
-
-  (use-package org-pdftools
-	:after pdf-view-restore
-	:straight t
-	:hook (org-load-hook . org-pdftools-setup-link))
 #+END_SRC
 ** Initialize =nov=
 *** Description

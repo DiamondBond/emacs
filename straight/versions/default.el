@@ -26,7 +26,6 @@
  ("dired-hacks" . "7c0ef09d57a80068a11edc74c3568e5ead5cc15a")
  ("dired-single" . "b254f9b7bfc96a5eab5760a56811f2872d2c590a")
  ("el-get" . "91352ca0f895d099f608644c8e9ad8e844b5c520")
- ("elcord" . "70fd716e673b724b30b921f4cfa0033f9c02d0f2")
  ("elfeed" . "162d7d545ed41c27967d108c04aa31f5a61c8e16")
  ("elmacro" . "d2e05012cee4f54fab6d8d8d6aced6e5eeef4f31")
  ("emacs-0x0" . "63cd5eccc85e527f28e1acc89502a53245000428")

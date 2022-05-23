@@ -522,7 +522,6 @@ Heresy; Vim keybindings in Emacs.
 	(setq evil-want-C-u-scroll t)
 	:config
 	(evil-mode 1)
-	(setq evil-want-fine-undo t) ; more granular undo with evil
 	;; set evil state on a per mode basis
 	(evil-set-initial-state 'messages-buffer-mode 'normal)
 	(evil-set-initial-state 'dashboard-mode 'emacs)
@@ -531,15 +530,25 @@ Heresy; Vim keybindings in Emacs.
 	(evil-set-initial-state 'eshell-mode 'emacs)
 	(evil-set-initial-state 'inferior-scheme-mode 'emacs)
 	(evil-set-initial-state 'md4rd-mode 'emacs)
+	(evil-set-initial-state 'mu4e-mode 'emacs)
 	(evil-set-initial-state 'mu4e-main-mode 'emacs)
 	(evil-set-initial-state 'pdf-view-mode 'emacs)
+	;; more granular undo with evil
+	(setq evil-want-fine-undo t)
 	;; :q kills buffer
 	(evil-ex-define-cmd "q" 'delete-window)
 	;; org-cycle
 	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle))
 
+  (use-package evil-collection
+	:after evil
+	:demand t
+	:straight t
+	:config
+	(evil-collection-init))
+
   ;; press =jk= to:
-  ;; escape from evil states to normal states
+  ;; escape from evil states to normal states,
   ;; quit any completion (minibuffer, isearch, etc)
   (use-package evil-escape
 	:straight t
@@ -552,13 +561,6 @@ Heresy; Vim keybindings in Emacs.
 	:straight t
 	:config
 	(evil-commentary-mode))
-
-  (use-package evil-collection
-	:after evil
-	:demand t
-	:straight t
-	:config
-	(evil-collection-init))
 #+END_SRC
 ** Initialize =which-key=
 *** Description
@@ -1694,7 +1696,7 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 *** Code
 #+begin_src emacs-lisp
   (use-package elcord
-	:straight t
+	:disabled t
 	:defer 5
 	:config
 	(setq elcord-client-id "978267848038297661")

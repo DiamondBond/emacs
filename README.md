@@ -26,37 +26,44 @@ these [configure flags](https://github.com/DiamondBond/emacs/blob/master/README.
 [Functions](https://github.com/DiamondBond/emacs/blob/master/config.org#functions)
 
 
-## Summary
+## Principles
 
-This Emacs distro attempts to achieve the following goals:
+This configuration and all associated modules intend to follow the below priniciples.
 
 
-### Performant in its nature of operation
+### Performant
 
 Responsive & adheres to function over form principles.
 
 
-### Aggressively utilizing best practices
+### Reproducible
 
 Utilizes straight.el for reproducibility & increased stability.
 
 
-### Extensively documented
+### Literate
 
-Literate configuration with comments & inline docstrings.
-
-
-### Contrived with alteration in mind
-
-Simple to fork & edit
+Comments & inline doc-strings.
 
 
-### Remain as simple as possible whilst maximizing usability
+### Correct
 
-e.g: Vertico/Corfu & friends instead of Helm/Ivy/Company.
+Aggressively utilizes best practices.
+
+Where possible, we will leverage built-in Emacs functionality instead of external packages.
 
 
-# Setup
+### Modular
+
+The base configuration only sets up Emacs to have a cleaner presentation with sensible defaults.
+It is up to the user to decide how to customize it.
+
+Configuration modules should depend on other modules and the base configuration as little as possible. When a configuration module needs to integrate with other functionality in Emacs, the standard extensibility points of each package should be used (instead of expecting our own configuration module).
+
+The implication is that someone should be able to install or copy code from this configuration into their own configuration without using this Emacs distro.
+
+
+# Quick Start
 
 Please refer to the dependencies section below first to make sure Emacs and your environment have the required packages and configurations setup correctly, then proceed to clone and install this distro.
 
@@ -81,8 +88,10 @@ The first time you run Emacs, straight.el will download all the declared package
 
 To get autocompletion on JS/TS & Python files, you'll need to install the corresponding lsp backend servers first (you'll be automatically prompted to do so the first time you open a relevant file).
 
-**Post Setup**
-Once Emacs launches for the first time we need to setup a few more things:
+
+# Post Setup
+
+Once Emacs launches for the first time we need to setup a few more things for everything to work correctly.
 
 
 ## Compile pdf-tools
@@ -95,7 +104,9 @@ Once Emacs launches for the first time we need to setup a few more things:
     M-x vterm
 
 
-## Download & install all-the-icons font
+## Setup all-the-icons
+
+Download & install all-the-icons font
 
     M-x all-the-icons-install-fonts
 
@@ -113,6 +124,7 @@ mu4e (mu) & offlineimap to manage Email within Emacs.
 ### 1. Configuring offlineimap
 
 [offlineimap.rc](https://github.com/DiamondBond/dotfiles/blob/master/.offlineimaprc)
+
 [offlineimap.py](https://github.com/DiamondBond/dotfiles/blob/master/.offlineimap.py)
 
 
@@ -149,14 +161,14 @@ This section is just packages that I have needed in the past to comfortably run 
 
 -   NPM
 
-    Please install deno & typescript-language-server for Typescript (TS/TSX) support.
+    Deno & typescript-language-server for Typescript (TS/TSX) support.
 
         sudo npm install -g deno typescript-language-server bash-language-server
 
 
 ### Files
 
-I use Dropbox and I symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
+Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 
     mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
 
@@ -174,18 +186,18 @@ How to compile and install the latest GNU Emacs @ HEAD.
 
 -   Configuration
 
-    Configure Emacs for building with json, native-comp and the athena toolkit with xaw3d toolbars.
+    Configure Emacs with json, native-comp, xinput2 and the athena toolkit with xaw3d-toolbars.
 
         # Run the auto-generation script
         ./autogen.sh
 
         # Configure Emacs
         ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --without-compress-install --with-native-compilation --with-xinput2 CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
-        # note: Remove "--with-xinput2" if you're building Emacs28
+        # note: Remove "--with-xinput2" if your target build is Emacs28
 
 -   Compiling
 
-    We build with all cores and natively compile everything ahead of time, this will take a while.
+    Compile with all cores and native full ahead of time compilation, this takes a while.
 
         make NATIVE_FULL_AOT=1 -j$(nproc)
         sudo make install

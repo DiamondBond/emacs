@@ -52,9 +52,6 @@ Simple to fork & edit
 e.g: Vertico/Corfu & friends instead of Helm/Ivy/Company.
 
 
-## Contents
-
-
 # Setup
 
 Please refer to the dependencies section below first to make sure Emacs and your environment have the required packages and configurations setup correctly, then proceed to clone and install this distro.

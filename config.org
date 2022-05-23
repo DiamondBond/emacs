@@ -310,11 +310,6 @@ Dont accidentally delete all my bookmarks.
 #+begin_src emacs-lisp
   (defalias 'bookmark-delete-all 'bookmark-delete)
 #+end_src
-*** Presentation
-Easy to remember org-beamer-export command.
-#+begin_src emacs-lisp
-  (defalias 'produce-presentation 'org-beamer-export-to-pdf)
-#+end_src
 * Keybinds
 ** Description
 Global & private key maps.

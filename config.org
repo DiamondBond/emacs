@@ -1627,7 +1627,7 @@ Yasnippet provides useful snippets.
 *** Code
 #+begin_src emacs-lisp
   (use-package yasnippet
-	:ensure t
+	:straight t
 	:diminish yas-minor-mode
 	:hook
 	((c-mode c++-mode) . yas-minor-mode)
@@ -1635,7 +1635,8 @@ Yasnippet provides useful snippets.
 	(yas-reload-all))
 
   (use-package yasnippet-snippets
-	:ensure t)
+	:after yasnippet
+	:straight t)
 #+end_src
 ** Initialize =diminish=
 *** Description
@@ -1646,16 +1647,32 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	:ensure t
 	:init
 	;; diminish as mode is already loaded
-	;;(diminish 'visual-line-mode "")
 	(diminish 'abbrev-mode "")
 	:config
 	;; diminish after mode is loaded
+	(eval-after-load "eldoc" '(diminish 'eldoc-mode))
 	(eval-after-load "c-mode" '(diminiish 'c-mode))
 	(eval-after-load "c++-mode" '(diminiish 'c++-mode))
-	(eval-after-load "eldoc" '(diminish 'eldoc-mode))
+	(eval-after-load "rainbow" '(diminish 'rainbow-mode))
+	(eval-after-load "which-key" '(diminish 'which-key-mode))
 	(eval-after-load "flymake" '(diminish 'flymake-mode))
 	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
-	(eval-after-load "which-key" '(diminish 'which-key-mode)))
+	(eval-after-load "outline" '(diminish 'outline-minor-mode))
+	(eval-after-load "evil-commentary" '(diminish 'evil-commentary-mode))
+	(eval-after-load "evil-escape" '(diminish 'evil-escape-mode))
+	(eval-after-load "evil-collection-unimpaired" '(diminish 'evil-collection-unimpaired-mode)))
+#+end_src
+** Initialize =undo-tree=
+*** Description
+Branching tree of changes made in a file.
+*** Code
+#+begin_src emacs-lisp
+  (use-package undo-tree
+	:straight t
+	:init
+	(global-undo-tree-mode)
+	:config
+	(setq undo-tree-auto-save-history nil))
 #+end_src
 ** Initialize =modus-themes=
 *** Description
@@ -1830,13 +1847,17 @@ Language Server Protocol, handles the following languages:
 	:hook ((c-mode          ; clangd
 			c++-mode        ; clangd
 			c-or-c++-mode   ; clangd
+			js2-mode        ; ts-ls (tsserver wrapper)
 			js-mode         ; ts-ls (tsserver wrapper)
+			rjsx-mode       ; ts-ls (tsserver wrapper)
 			js-jsx-mode     ; ts-ls (tsserver wrapper)
 			typescript-mode ; ts-ls (tsserver wrapper)
 			python-mode     ; pyright
+			rust-mode       ; rust-analyzer
+			ruby-mode       ; solargraph
 			web-mode        ; ts-ls/HTML/CSS
 			) . lsp-deferred)
-	:commands lsp
+	:commands (lsp lsp-deferred)
 	:config
 	(setq lsp-auto-guess-root t)
 	(setq lsp-log-io nil)
@@ -1853,7 +1874,7 @@ Language Server Protocol, handles the following languages:
 	(setq lsp-enable-folding nil)
 	(setq lsp-enable-imenu nil)
 	(setq lsp-enable-snippet nil)
-	(setq lsp-completion-provider :none)
+    (setq lsp-enable-completion-at-point t)
 	(setq read-process-output-max (* 1024 1024)) ;; 1MB
 	(setq completion-styles '(orderless)
 		  completion-category-defaults nil)
@@ -1880,6 +1901,14 @@ Language Server Protocol, handles the following languages:
 	:hook (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred)))
 	:init (when (executable-find "python3")
 			(setq lsp-pyright-python-executable-cmd "python3")))
+#+end_src
+** C#
+*** Description
+CSharp mode.
+*** Code
+#+begin_src emacs-lisp
+  (use-package csharp-mode
+	:straight t)
 #+end_src
 ** Go
 *** Description
@@ -1972,6 +2001,22 @@ Lua mode.
 	:config
 	(setq lua-indent-level 2))
 #+end_src
+** Ruby
+*** Description
+Ruby mode.
+*** Code
+#+begin_src emacs-lisp
+  (use-package ruby-mode
+	:straight t)
+#+end_src
+** Python
+*** Description
+*** Code
+#+begin_src emacs-lisp
+  (use-package python-mode
+	:straight t
+	:hook (python-mode-hook . jedi:setup))
+#+end_src
 ** Markdown
 *** Description
 Markdown-mode & enable auto fill.
@@ -1994,9 +2039,38 @@ Auctex for LaTeX.
 	(setq TeX-parse-self t)
 	(setq-default TeX-master nil))
 #+end_src
+** Javascript
+*** Description
+Improved Javascript editing mode.
+*** Code
+#+begin_src emacs-lisp
+  (use-package js2-mode
+	:straight t
+	:custom
+	(js-indent-level 2)
+	(js2-basic-offset 2)
+	:init
+	(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+#+end_src
+** JSX
+*** Description
+A JSX major mode.
+*** Code
+#+begin_src emacs-lisp
+  (use-package rjsx-mode
+	:straight t)
+#+end_src
+** Typescript
+*** Description
+TypeScript support for Emacs.
+*** Code
+#+begin_src emacs-lisp
+  (use-package typescript-mode
+	:straight t)
+#+end_src
 ** Web
 *** Description
-Web mode for JS/JSX/TS/TSX/HTML files
+Web editing mode.
 *** Code
 #+begin_src emacs-lisp
   (use-package web-mode
@@ -2005,11 +2079,7 @@ Web mode for JS/JSX/TS/TSX/HTML files
 	(setq web-mode-markup-indent-offset 2)
 	(setq web-mode-code-indent-offset 2)
 	(setq web-mode-css-indent-offset 2)
-	:mode (("\\.js\\'" . web-mode)
-		   ("\\.jsx\\'" .  web-mode)
-		   ("\\.ts\\'" . web-mode)
-		   ("\\.tsx\\'" . web-mode)
-		   ("\\.html\\'" . web-mode))
+	:mode (("\\.html\\'" . web-mode))
 	:commands web-mode)
 #+end_src
 ** Prettier

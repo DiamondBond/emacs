@@ -807,10 +807,10 @@ Note: 'mu' binary is output to ~/.emacs.d/straight/repos/mu/build/mu/mu
 	(interactive)
 	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu init --maildir=/home/diamond/mail/ --my-address=diamondbond1@gmail.com"))
 #+end_src
-**** 3. Build mu index.
+**** 3. Rebuild mu index.
 #+begin_src emacs-lisp
-  (defun mu-setup/build-mu-index ()
-	"Builds 'mu' index."
+  (defun mu-setup/rebuild-mu-index ()
+	"Rebuilds 'mu' index."
 	(interactive)
 	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu index"))
 #+end_src

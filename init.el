@@ -56,13 +56,12 @@
   (straight-check-for-modifications nil)
   (use-package-always-defer t))
 
-;; Load built-in org for initial tangling
-(use-package org
-  :straight (:type built-in))
-;; (straight-use-package 'org)
+;; Load built-in org
+(straight-use-package 'org)
 
 ;; Tangle config
-(org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
+(when (file-readable-p "~/.emacs.d/config.org")
+  (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 
 ;; Restore original GC
 (add-hook 'emacs-startup-hook

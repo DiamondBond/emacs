@@ -13,7 +13,7 @@ Clone the latest Emacs sources:
 
 ** Configuring
 
-Configure Emacs with native-comp, xinput2, imagemagick, harfbuzz, json, athena-toolkit with xaw3d-toolbars & custom O3 CFLAGS for mild performance enhancements.
+Configure Emacs with native-comp, xinput2, imagemagick, harfbuzz, json, athena-toolkit with xaw3d-toolbars & custom O3 CFLAGS for mild performance improvements.
 
 #+begin_src sh
 

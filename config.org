@@ -17,7 +17,7 @@ Enable lexical binding.
 
   ;; Author: Diamond Bond <diamondbond1@gmail.com>
   ;; URL: https://github.com/diamondbond/emacs
-  ;; Package-Requires: ((emacs "29"))
+  ;; Package-Requires: ((emacs "28.1"))
 
   ;;; Commentary:
   ;; This file provides the sanctioned configuration.
@@ -148,7 +148,7 @@ Disable the annoying bell.
 #+end_src
 **** Enables pixel-scroll-precision-mode for Emacs 29+
 #+begin_src emacs-lisp
-  (pixel-scroll-precision-mode)
+  ;; (pixel-scroll-precision-mode)
 #+end_src
 *** Enable external-bound copy-pasting
 #+BEGIN_SRC emacs-lisp
@@ -401,7 +401,6 @@ Global, private & sane key maps.
   (define-key z-map (kbd "g") 'org-mark-ring-goto)
   (define-key z-map (kbd "G") 'org-mark-ring-goto)
   (define-key z-map (kbd "h") 'global-hl-line-mode)
-  (define-key z-map (kbd "l") 'global-display-line-numbers-mode)
   (define-key z-map (kbd "2") 'make-frame-command)
   (define-key z-map (kbd "o") 'olivetti-mode)
   (define-key z-map (kbd "m") 'magit-status)
@@ -563,21 +562,6 @@ Heresy; Vim keybindings in Emacs.
 	:straight t
 	:config
 	(evil-collection-init))
-
-  ;; press =jk= to:
-  ;; escape from evil states to normal states,
-  ;; quit any completion (minibuffer, isearch, etc)
-  (use-package evil-escape
-	:straight t
-	:custom
-	(evil-escape-key-sequence "jk")
-	:config
-	(evil-escape-mode))
-
-  (use-package evil-commentary
-	:straight t
-	:config
-	(evil-commentary-mode))
 #+END_SRC
 ** Initialize =which-key=
 *** Description
@@ -1021,12 +1005,17 @@ The definitive Git porcelain for Emacs.
 #+END_SRC
 ** Initialize =autorevert=
 *** Description
-Auto-revert a few modes & diminish ARV from modeline.
+Autorevert hooked buffers & diminish auto-revert-mode.
 *** Code
 #+begin_src emacs-lisp
   (use-package autorevert
+	:straight t
 	:after magit
 	:diminish auto-revert-mode
+	:init
+	(progn
+	  (setq auto-revert-verbose nil
+			global-auto-revert-non-file-buffers t))
 	:hook ((prog-mode
 			text-mode
 			tex-mode
@@ -1039,7 +1028,6 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package corfu
-	:straight t
 	:straight t
 	:custom
 	(corfu-auto t)
@@ -1081,22 +1069,25 @@ Vertico, orderless, marginalia, consult & embark.
 #+begin_src emacs-lisp
   ;; enable vertico
   (use-package vertico
-	:straight t
-	:straight t
+	:straight (:files (:defaults "extensions/*"))
 	:bind (:map vertico-map
 				("C-j" . vertico-next)
 				("C-k" . vertico-previous)
-				("M-j" . vertico-next)
-				("M-k" . vertico-previous)
 				("C-f" . vertico-exit)
+				;; 		   ("M-j" . vertico-next)
+				;; 		   ("M-k" . vertico-previous)
 				:map minibuffer-local-map
 				("M-h" . backward-kill-word))
+	:custom
+	(vertico-cycle t)
 	:init
 	(vertico-mode)
 	;; Grow and shrink the Vertico minibuffer
 	(setq vertico-resize t)
 	;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-	(setq vertico-cycle t))
+	(setq vertico-cycle t)
+	:config
+	(vertico-mouse-mode))
 
   ;; configure directory extension.
   (use-package vertico-directory
@@ -1125,6 +1116,9 @@ Vertico, orderless, marginalia, consult & embark.
   ;; information in the margins
   (use-package marginalia
 	:straight t
+	:after vertico
+	:custom
+	(marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
 	:init
 	(marginalia-mode))
 
@@ -1511,8 +1505,8 @@ Modern on-the-fly syntax checking extension.
 *** Code
 #+begin_src emacs-lisp
   (use-package flycheck
-  :straight t
-  :hook (prog-mode . flycheck-mode))
+	:straight t
+	:hook (prog-mode . flycheck-mode))
 #+end_src
 ** Initialize =flyspell=
 *** Description
@@ -1695,7 +1689,9 @@ Branching tree of changes made in a file.
 	:init
 	(global-undo-tree-mode)
 	:config
-	(setq undo-tree-auto-save-history nil))
+	(setq undo-tree-auto-save-history nil)
+	(setq undo-tree-visualizer-timestamps t)
+	(setq undo-tree-visualizer-diff t))
 #+end_src
 ** Initialize =modus-themes=
 *** Description
@@ -1907,7 +1903,7 @@ Language Server Protocol, handles the following languages:
 	(setq lsp-enable-folding nil)
 	(setq lsp-enable-imenu nil)
 	(setq lsp-enable-snippet nil)
-    (setq lsp-enable-completion-at-point t)
+	(setq lsp-enable-completion-at-point t)
 	(setq read-process-output-max (* 1024 1024)) ;; 1MB
 	(setq completion-styles '(orderless)
 		  completion-category-defaults nil)
@@ -1927,6 +1923,10 @@ Language Server Protocol, handles the following languages:
 	(setq lsp-ui-doc-border (face-foreground 'default))
 	(setq lsp-ui-sideline-show-code-actions t)
 	(setq lsp-ui-sideline-delay 0.05))
+
+  (use-package lsp-treemacs
+    :straight t
+	:after lsp)
 
   (use-package lsp-pyright
 	:straight t
@@ -2003,6 +2003,7 @@ Geiser - Scheme Lisp REPL.
 				 '("\\.sc\\'" . scheme-mode)))
 
   (defun geiser-save ()
+	"Save geiser repl contents to input ring."
 	(interactive)
 	(geiser-repl--write-input-ring))
 #+end_src
@@ -2148,7 +2149,7 @@ Prettier formatter for JSX & TSX.
 *** Dired sort
 #+begin_src emacs-lisp
   (defun xah/dired-sort ()
-	"Sort dired dir listing in different ways.
+	"Sort Dired dir listing in different ways.
   Prompt for a choice."
 	(interactive)
 	(let (sort-by arg)

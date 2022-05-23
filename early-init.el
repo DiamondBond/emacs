@@ -6,7 +6,7 @@
 
 ;; Author: Diamond Bond <diamondbond1@gmail.com>
 ;; URL: https://github.com/diamondbond/emacs
-;; Package-Requires: ((emacs "29"))
+;; Package-Requires: ((emacs "28.1"))
 
 ;;; Commentary:
 ;; This file provides the early-bootstrap configuration.

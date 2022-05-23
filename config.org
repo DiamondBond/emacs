@@ -2302,7 +2302,7 @@ Sync dotfiles (incl. Emacs) to git.
 #+end_src
 *** Sync Personal
 #+begin_src emacs-lisp
-  (defun sync/personal/backup ()
+  (defun sync/personal-backup ()
 	"Backup authinfo & personal info."
 	(interactive)
 	;; authinfo
@@ -2314,7 +2314,7 @@ Sync dotfiles (incl. Emacs) to git.
 	(async-shell-command "cp ~/.emacs.d/places ~/org/")
 	(async-shell-command "cp ~/.emacs.d/recentf ~/org/"))
 
-  (defun sync/personal/restore ()
+  (defun sync/personal-restore ()
 	"Restore authinfo & personal info."
 	(interactive)
 	;; authinfo

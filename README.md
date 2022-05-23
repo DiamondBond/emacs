@@ -115,7 +115,7 @@ Dependencies required to run this Emacs distro.
 > offlineimap
 > fzf ripgrep ag
 > clang clangd llvm
-> texlive-latex-recommended
+> texlive-core texlive-bin texlive-science
 > imagemagick
 > editorconfig
 > libjansson
@@ -123,6 +123,7 @@ Dependencies required to run this Emacs distro.
 > nodejs npm
 > libxml2
 > gopls
+> gnuplot
 > prettier
 
 
@@ -154,12 +155,18 @@ Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 2.  ~/org/secrets-el.gpg
 3.  ~/org/network-security.data
 
+    NOTE: 'auth-info' can be backed up and restored to/from ~/org with `M-x
+       sync/personal-backup` & `M-x sync/personal-restore`.
+
 
 ### Emacs related files
 
 1.  ~/.emacs.d/places
 2.  ~/.emacs.d/recentf
 3.  ~/.emacs.d/custom.el
+
+    NOTE: 'Emacs related files' can be backed up and restored to/from ~/org with `M-x
+       sync/personal-backup` & `M-x sync/personal-restore`.
 
 
 # Contributing
@@ -177,7 +184,10 @@ of the [Principles](https://github.com/diamondbond/emacs/blob/master/README.org#
 
 -   Provide verbose doc-strings for `defvar`, `defcustom`, `defun`, `defmacro`,
     etc to clearly document what is going on.
--   Make sure to follow doc-string guidelines (see [Documentation Tips](https://www.gnu.org/software/emacs/manual/html_node/elisp/Documentation-Tips.html) or [elisp#Documentation Tips](elisp#Documentation Tips))
+-   Make sure to follow doc-string guidelines (see [Documentation Tips](https://www.gnu.org/software/emacs/manual/html_node/elisp/Documentation-Tips.html) or [[<elisp#Documentation>
+
+Tips][elisp#Documentation Tips]])
+
 -   Add comments for blocks of code, especially to describe *why* the code is
     present, or the intention. These comments serve as documentation when
     reading the code where a doc-string is not an option.

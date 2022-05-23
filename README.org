@@ -153,11 +153,17 @@ Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 2. ~/org/secrets-el.gpg
 3. ~/org/network-security.data
 
+   NOTE: 'auth-info' can be backed up and restored to/from ~/org with =M-x
+   sync/personal-backup= & =M-x sync/personal-restore=.
+
 *** Emacs related files
 
 1. ~/.emacs.d/places
 2. ~/.emacs.d/recentf
 3. ~/.emacs.d/custom.el
+
+   NOTE: 'Emacs related files' can be backed up and restored to/from ~/org with =M-x
+   sync/personal-backup= & =M-x sync/personal-restore=.
 
 * Contributing
 [[http://makeapullrequest.com][https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square]]

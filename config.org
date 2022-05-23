@@ -2332,6 +2332,14 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	(setq last-command-event 13)
 	(gnus-browse-select-group nil))
 #+end_src
+*** Open emacs git
+Launches this Emacs' configuration GitHub page with default browser
+#+begin_src emacs-lisp
+  (defun open-emacs-github ()
+	"Launches this Emacs' configuration GitHub page in browser."
+	(interactive)
+	(browse-url-firefox "https://github.com/diamondbond/emacs"))
+#+end_src
 *** Start org-agenda
 #+begin_src emacs-lisp
   (defun start-to-org-agenda ()

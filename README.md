@@ -25,7 +25,7 @@ This configuration and all associated modules intend to follow the below prinici
 
 ## Performant
 
-Responsive & adheres to function over form principles.
+Provides a responsive experience that adheres to function over form principles.
 
 
 ## Reproducible
@@ -35,7 +35,7 @@ Utilizes straight.el for reproducibility & increased stability.
 
 ## Literate
 
-Comments & inline doc-strings.
+Provides verbose doc-strings.
 
 
 ## Correct
@@ -48,11 +48,8 @@ Where possible, we will leverage built-in Emacs functionality instead of externa
 ## Modular
 
 The base configuration only sets up Emacs to have a cleaner presentation with sensible defaults.
-It is up to the user to decide how to customize it.
 
-Configuration modules should depend on other modules and the base configuration as little as possible. When a configuration module needs to integrate with other functionality in Emacs, the standard extensibility points of each package should be used (instead of expecting our own configuration module).
-
-The implication is that someone should be able to install or copy code from this configuration into their own configuration without using this Emacs distro.
+The implication is that someone should be able to install or copy code from this configuration into their own configuration or vice versa.
 
 
 # Modules
@@ -243,10 +240,7 @@ of the [Principles](https://github.com/diamondbond/emacs/blob/master/README.org#
 
 -   Provide verbose doc-strings for `defvar`, `defcustom`, `defun`, `defmacro`,
     etc to clearly document what is going on.
--   Make sure to follow doc-string guidelines (see [Documentation Tips](https://www.gnu.org/software/emacs/manual/html_node/elisp/Documentation-Tips.html) or [[<elisp#Documentation>
-
-Tips][elisp#Documentation Tips]])
-
+-   Make sure to follow doc-string guidelines (see [Documentation Tips](https://www.gnu.org/software/emacs/manual/html_node/elisp/Documentation-Tips.html) or [elisp#Documentation Tips](elisp#Documentation Tips))
 -   Add comments for blocks of code, especially to describe *why* the code is
     present, or the intention. These comments serve as documentation when
     reading the code where a doc-string is not an option.

@@ -9,7 +9,7 @@
 ** Header
 Enable lexical binding.
 #+begin_src emacs-lisp
-  ;;; config.el -*- lexical-binding: t; -*-
+  ;;; config.el --- Emacs Configuration -*- lexical-binding: t; -*-
 
   ;; Copyright (C) 2022 Diamond Bond
   ;; This file is NOT part of GNU Emacs.
@@ -44,9 +44,11 @@ Set authinfo file location and authinfo expiry to never.
 While the minibuffer is open, garbage collection will never occur, but once we make a selection, or cancel, garbage collection will kick off immediately and then revert back to the default, sensible behavior.
 #+begin_src emacs-lisp
   (defun my-minibuffer-setup-hook ()
+	"Garbage collection will never occur."
 	(setq gc-cons-threshold most-positive-fixnum))
 
   (defun my-minibuffer-exit-hook ()
+	"Garbage collection will kick off immediately."
 	(setq gc-cons-threshold gc-cons-threshold-original))
 
   (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
@@ -152,7 +154,7 @@ Disable the annoying bell.
 #+end_src
 *** Enable external-bound copy-pasting
 #+BEGIN_SRC emacs-lisp
-  (setq x-select-enable-clipboard t)
+  (setq select-enable-clipboard t)
   (setq save-interprogram-paste-before-kill t)
 #+END_SRC
 *** Disabling external pin entry
@@ -300,16 +302,6 @@ Remove items from recents list.
 Dont accidentally delete all my bookmarks.
 #+begin_src emacs-lisp
   (defalias 'bookmark-delete-all 'bookmark-delete)
-#+end_src
-** Constants
-#+begin_src emacs-lisp
-  (defconst NATIVECOMP (if (fboundp 'native-comp-available-p) (native-comp-available-p)))
-  (defconst EMACS28+   (> emacs-major-version 27))
-  (defconst EMACS29+   (> emacs-major-version 28))
-  (defconst IS-MAC     (eq system-type 'darwin))
-  (defconst IS-LINUX   (eq system-type 'gnu/linux))
-  (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
-  (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
 #+end_src
 ** Built-in
 *** Configure =proced=
@@ -788,7 +780,7 @@ Add icons and subtree's to dired.
   (use-package dired
 	:straight (:type built-in)
 	:commands (dired dired-jump)
-	:bind (("C-x C-j" . dired-jump))
+	:bind ("C-x C-j" . dired-jump)
 	:custom ((dired-listing-switches "-agho --group-directories-first")))
 
   (use-package dired-single
@@ -1691,6 +1683,15 @@ Branching tree of changes made in a file.
 	(setq undo-tree-visualizer-timestamps t)
 	(setq undo-tree-visualizer-diff t))
 #+end_src
+** Initialize =drag-stuff=
+*** Description
+Meta shift & Mouse-1 to drag-stuff.
+*** Code
+#+begin_src emacs-lisp
+  (use-package drag-stuff
+	:defer t
+	:config (setq drag-stuff-modifier '(meta shift)))
+#+end_src
 ** Initialize =modus-themes=
 *** Description
 Accessible themes for Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
@@ -1744,7 +1745,7 @@ Note: 'mu' binary is output to ~/.emacs.d/straight/repos/mu/build/mu/mu
 *** 2. Initialize mu
 #+begin_src emacs-lisp
   (defun mu-setup/init-mu ()
-	"Initializes 'mu' db."
+	"Initialize 'mu' db."
 	(interactive)
 	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu init --maildir=/home/diamond/mail/ --my-address=diamondbond1@gmail.com"))
 #+end_src
@@ -2133,6 +2134,7 @@ Prettier formatter for JSX & TSX.
 *** Load if exists
 #+begin_src emacs-lisp
   (defun load-if-exists (f)
+	"Load file F if it exists."
 	(if (file-exists-p (expand-file-name f))
 		(load-file (expand-file-name f))))
 #+end_src
@@ -2143,22 +2145,6 @@ Prettier formatter for JSX & TSX.
 	(if (buffer-file-name)
 		(if (string-match (car my-pair) buffer-file-name)
 			(funcall (cdr my-pair)))))
-#+end_src
-*** Dired sort
-#+begin_src emacs-lisp
-  (defun xah/dired-sort ()
-	"Sort Dired dir listing in different ways.
-  Prompt for a choice."
-	(interactive)
-	(let (sort-by arg)
-	  (setq sort-by (completing-read "Sort by:" '("name" "size" "date" "extension")))
-	  (pcase sort-by
-		("name" (setq arg "-ahl --group-directories-first"))
-		("date" (setq arg "-ahl -t --group-directories-first"))
-		("size" (setq arg "-ahl -S --group-directories-first"))
-		("extension" (setq arg "ahlD -X --group-directories-first"))
-		(otherwise (error "Dired-sort: unknown option %s" otherwise)))
-	  (dired-sort-other arg)))
 #+end_src
 *** Erc handlers
 #+begin_src emacs-lisp
@@ -2176,7 +2162,7 @@ Prettier formatter for JSX & TSX.
 *** Run in vterm
 #+begin_src emacs-lisp
   (defun run-in-vterm-kill (process event)
-	"A process sentinel. Kills PROCESS's buffer if it is live."
+	"A process sentinel.  Kill PROCESS's buffer if it is live with arg EVENT."
 	(let ((b (process-buffer process)))
 	  (and (buffer-live-p b)
 		   (kill-buffer b))))
@@ -2185,7 +2171,7 @@ Prettier formatter for JSX & TSX.
 	"Execute string COMMAND in a new vterm.
 
 	Interactively, prompt for COMMAND with the current buffer's file
-	name supplied. When called from Dired, supply the name of the
+	name supplied.  When called from Dired, supply the name of the
 	file at point.
 
 	Like `async-shell-command`, but run in a vterm for full terminal features.
@@ -2210,13 +2196,13 @@ Prettier formatter for JSX & TSX.
 *** Yank Whole Buffer
 #+begin_src emacs-lisp
   (defun yank-whole-buffer ()
-	"Yanks whole buffer."
+	"Yank whole buffer."
 	(interactive)
 	(save-excursion
 	  (mark-whole-buffer)
 	  (call-interactively 'evil-yank)))
 #+end_src
-*** Disable all themes
+*** Disable all theme
 #+begin_src emacs-lisp
   (defun disable-all-themes ()
 	"Disable all active themes."
@@ -2233,13 +2219,13 @@ Prettier formatter for JSX & TSX.
 *** Reading mode
 #+begin_src emacs-lisp
   (defun read-mode/disable ()
-	"Enables menubar & scrollbar."
+	"Enablemenubar & scrollbar."
 	(interactive)
 	(menu-bar-mode 1)
 	(scroll-bar-mode 1))
 
   (defun read-mode/enable ()
-	"Disables menubar & scrollbar."
+	"Disable menubar & scrollbar."
 	(interactive)
 	(menu-bar-mode -1)
 	(scroll-bar-mode -1))
@@ -2281,7 +2267,7 @@ Sync Emacs configuration to git.
 	(async-shell-command "~/bin/sync-emacs.sh"))
 
   (defun sync/emacs-lockfile ()
-	"Sync Emacs lock-file."
+	"Sync Emacs 'lock-file'."
 	(interactive)
 	(straight-freeze-versions)
 	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
@@ -2317,7 +2303,7 @@ Sync dotfiles (incl. Emacs) to git.
 *** Sync Personal
 #+begin_src emacs-lisp
   (defun sync/personal/backup ()
-	"Backup authinfo & personal info"
+	"Backup authinfo & personal info."
 	(interactive)
 	;; authinfo
 	(async-shell-command "cp ~/.authinfo.gpg ~/org/")
@@ -2329,7 +2315,7 @@ Sync dotfiles (incl. Emacs) to git.
 	(async-shell-command "cp ~/.emacs.d/recentf ~/org/"))
 
   (defun sync/personal/restore ()
-	"Restore authinfo & personal info"
+	"Restore authinfo & personal info."
 	(interactive)
 	;; authinfo
 	(async-shell-command "cp ~/org/.authinfo.gpg ~/")
@@ -2378,7 +2364,7 @@ Launches this Emacs' configuration GitHub page with default browser
 *** Start org-agenda
 #+begin_src emacs-lisp
   (defun start-to-org-agenda ()
-	"Launch focused org-agenda."
+	"Launch focused 'org-agenda'."
 	(interactive)
 	(org-agenda nil "n")
 	(delete-other-windows)
@@ -2396,8 +2382,12 @@ Launches this Emacs' configuration GitHub page with default browser
 *** Date
 Insert date in a buffer in my preferred format
 #+begin_src emacs-lisp
-  (defun get-date () (format-time-string "%b %d, %Y"))
+  (defun get-date ()
+	"Get date."
+	(format-time-string "%b %d, %Y"))
+
   (defun insert-date ()
+	"Insert date."
 	(interactive)
 	(insert (get-date)))
 #+end_src
@@ -2405,7 +2395,7 @@ Insert date in a buffer in my preferred format
 Inserts org-mode link template.
 #+begin_src emacs-lisp
   (defun insert-org-link-template ()
-	"Inserts org link template at point."
+	"Insert org link template at point."
 	(interactive)
 	(setq last-command-event 91)
 	(org-self-insert-command 1)
@@ -2420,7 +2410,7 @@ Inserts org-mode link template.
 Insert WILD_NOTIFIER properties template.
 #+begin_src emacs-lisp
   (defun insert-wild-notifier-template ()
-	"Inserts WILD_NOTIFIER_NOTIFY_BEFORE template at point."
+	"Insert WILD_NOTIFIER_NOTIFY_BEFORE template at point."
 	(interactive)
 	(insert ":PROPERTIES:
 :WILD_NOTIFIER_NOTIFY_BEFORE: 60 30 15 10 5
@@ -2431,7 +2421,7 @@ Insert currently visiting buffer filename.
 #+begin_src emacs-lisp
   (defun insert-current-file-name-at-point (&optional full-path)
 	"Insert the current filename at point.
-  With prefix argument, use full path."
+  With prefix argument, use FULL-PATH."
 	(interactive "P")
 	(let* ((buffer
 			(if (minibufferp)
@@ -2456,164 +2446,16 @@ Insert currently visiting buffer filename.
 	(interactive)
 	(forward-line -15))
 #+end_src
-*** Toggle Letter case
-#+begin_src emacs-lisp
-  (put 'upcase-region 'disabled nil)
-  (put 'downcase-region 'disabled nil)
-
-  (defun xah-toggle-letter-case ()
-	"Toggle the letter case of current word or text selection.
-	  Always cycle in this order: Init Caps, ALL CAPS, all lower.
-
-	  URL `http://xahlee.info/emacs/emacs/modernization_upcase-word.html'
-	  Version 2020-06-26"
-	(interactive)
-	(let (
-		  (deactivate-mark nil)
-		  $p1 $p2)
-	  (if (use-region-p)
-		  (setq $p1 (region-beginning) $p2 (region-end))
-		(save-excursion
-		  (skip-chars-backward "[:alpha:]")
-		  (setq $p1 (point))
-		  (skip-chars-forward "[:alpha:]")
-		  (setq $p2 (point))))
-	  (when (not (eq last-command this-command))
-		(put this-command 'state 0))
-	  (cond
-	   ((equal 0 (get this-command 'state))
-		(upcase-initials-region $p1 $p2)
-		(put this-command 'state 1))
-	   ((equal 1 (get this-command 'state))
-		(upcase-region $p1 $p2)
-		(put this-command 'state 2))
-	   ((equal 2 (get this-command 'state))
-		(downcase-region $p1 $p2)
-		(put this-command 'state 0)))))
-
-  (defun xah-toggle-previous-letter-case ()
-	"Toggle the letter case of the letter to the left of cursor.
-  URL `http://xahlee.info/emacs/emacs/modernization_upcase-word.html'
-  Version 2015-12-22"
-	(interactive)
-	(let ((case-fold-search nil))
-	  (left-char 1)
-	  (cond
-	   ((looking-at "[[:lower:]]") (upcase-region (point) (1+ (point))))
-	   ((looking-at "[[:upper:]]") (downcase-region (point) (1+ (point)))))
-	  (right-char)))
-#+end_src
 *** Upcase last word
 #+begin_src emacs-lisp
   (defun upcase-last-word ()
+	"Convert last word to uppercase."
 	(interactive)
 	(move-end-of-line 1)
 	(backward-word 1)
 	(upcase-word 1)
 	(move-beginning-of-line 1)
 	(next-line 1 1))
-#+end_src
-*** Reformat Lines
-#+begin_src emacs-lisp
-  (defun xah-reformat-lines ( &optional @width)
-	"Reformat current text block or selection into short lines or 1 long line.
-
-	  When called for the first time, change to one long line. Second call change it to multiple short lines. Repeated call toggles.
-
-	  If `universal-argument' is called first, use the number value for min length of line. By default, it's 70.
-
-	  URL `http://xahlee.info/emacs/emacs/emacs_reformat_lines.html'
-	  Created 2016 or before.
-	  Version 2021-07-05"
-	(interactive)
-	;; This command symbol has a property “'isLong-p”, the possible values are t and nil. This property is used to easily determine whether to compact or uncompact, when this command is called again
-	(let ( isLong-p $blanksRegex $p1 $p2 )
-	  (setq @width (if @width
-					   @width
-					 (if current-prefix-arg
-						 (prefix-numeric-value current-prefix-arg) 70 )))
-	  (setq isLong-p
-			(if (eq last-command this-command)
-				(get this-command 'isLong-p)
-			  nil))
-	  (setq $blanksRegex "\n[ \t]*\n")
-	  (if (use-region-p)
-		  (setq $p1 (region-beginning) $p2 (region-end))
-		(save-excursion
-		  (if (re-search-backward $blanksRegex nil "move")
-			  (progn (re-search-forward $blanksRegex)
-					 (setq $p1 (point)))
-			(setq $p1 (point)))
-		  (if (re-search-forward $blanksRegex nil "move")
-			  (progn (re-search-backward $blanksRegex)
-					 (setq $p2 (point)))
-			(setq $p2 (point)))))
-	  (progn
-		(if current-prefix-arg
-			(xah-reformat-to-multi-lines $p1 $p2 @width)
-		  (if isLong-p
-			  (xah-reformat-to-multi-lines $p1 $p2 @width)
-			(xah-reformat-whitespaces-to-one-space $p1 $p2)))
-		(put this-command 'isLong-p (not isLong-p)))))
-
-  (defun xah-reformat-whitespaces-to-one-space (@begin @end)
-	"Replace whitespaces by one space.
-
-	URL `http://xahlee.info/emacs/emacs/emacs_reformat_lines.html'
-	Version 2017-01-11"
-	(interactive "r")
-	(save-excursion
-	  (save-restriction
-		(narrow-to-region @begin @end)
-		(goto-char (point-min))
-		(while
-			(search-forward "\n" nil "move")
-		  (replace-match " "))
-		(goto-char (point-min))
-		(while
-			(search-forward "\t" nil "move")
-		  (replace-match " "))
-		(goto-char (point-min))
-		(while
-			(re-search-forward "  +" nil "move")
-		  (replace-match " ")))))
-
-  (defun xah-reformat-to-multi-lines ( &optional @begin @end @min-length)
-	"Replace spaces by a newline at places so lines are not long.
-  When there is a text selection, act on the selection, else, act on a text block separated by blank lines.
-
-  If `universal-argument' is called first, use the number value for min length of line. By default, it's 70.
-
-  URL `http://xahlee.info/emacs/emacs/emacs_reformat_lines.html'
-  Version 2018-12-16 2020-09-08"
-	(interactive)
-	(let (
-		  $p1 $p2
-		  ($blanks-regex "\n[ \t]*\n")
-		  ($minlen (if @min-length
-					   @min-length
-					 (if current-prefix-arg (prefix-numeric-value current-prefix-arg) fill-column))))
-	  (if (and  @begin @end)
-		  (setq $p1 @begin $p2 @end)
-		(if (use-region-p)
-			(progn (setq $p1 (region-beginning) $p2 (region-end)))
-		  (save-excursion
-			(if (re-search-backward $blanks-regex nil "move")
-				(progn (re-search-forward $blanks-regex)
-					   (setq $p1 (point)))
-			  (setq $p1 (point)))
-			(if (re-search-forward $blanks-regex nil "move")
-				(progn (re-search-backward $blanks-regex)
-					   (setq $p2 (point)))
-			  (setq $p2 (point))))))
-	  (save-excursion
-		(save-restriction
-		  (narrow-to-region $p1 $p2)
-		  (goto-char (point-min))
-		  (while
-			  (re-search-forward " +" nil "move")
-			(when (> (- (point) (line-beginning-position)) $minlen)
-			  (replace-match "\n" )))))))
 #+end_src
 *** Delete current line
 #+begin_src emacs-lisp
@@ -2658,45 +2500,11 @@ Insert currently visiting buffer filename.
 *** Backward kill word
 #+begin_src emacs-lisp
   (defun sanemacs/backward-kill-word ()
-	(interactive "*")
+	"Kill word backwards without littering 'kill-ring'."
+	(interactive )
 	(push-mark)
 	(backward-word)
 	(delete-region (point) (mark)))
-#+end_src
-*** Auto Toggle Fill/Unfill Region
-#+begin_src emacs-lisp
-  (defun xah-fill-or-unfill ()
-	"Reformat current paragraph or region to `fill-column', like `fill-paragraph' or “unfill”.
-  When there is a text selection, act on the selection, else, act on a text block separated by blank lines.
-  URL `http://xahlee.info/emacs/emacs/modernization_fill-paragraph.html'
-  Version 2017-01-08"
-	(interactive)
-	;; This command symbol has a property “'compact-p”, the possible values are t and nil. This property is used to easily determine whether to compact or uncompact, when this command is called again
-	(let ( ($compact-p
-			(if (eq last-command this-command)
-				(get this-command 'compact-p)
-			  (> (- (line-end-position) (line-beginning-position)) fill-column)))
-		   (deactivate-mark nil)
-		   ($blanks-regex "\n[ \t]*\n")
-		   $p1 $p2
-		   )
-	  (if (use-region-p)
-		  (progn (setq $p1 (region-beginning))
-				 (setq $p2 (region-end)))
-		(save-excursion
-		  (if (re-search-backward $blanks-regex nil "NOERROR")
-			  (progn (re-search-forward $blanks-regex)
-					 (setq $p1 (point)))
-			(setq $p1 (point)))
-		  (if (re-search-forward $blanks-regex nil "NOERROR")
-			  (progn (re-search-backward $blanks-regex)
-					 (setq $p2 (point)))
-			(setq $p2 (point)))))
-	  (if $compact-p
-		  (fill-region $p1 $p2)
-		(let ((fill-column most-positive-fixnum ))
-		  (fill-region $p1 $p2)))
-	  (put this-command 'compact-p (not $compact-p))))
 #+end_src
 *** Convert =camelCase= to =snake_case=
 #+begin_src emacs-lisp

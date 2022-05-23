@@ -25,6 +25,7 @@
  ("diminish.el" . "6b7e837b0cf0129e9d7d6abae48093cf599bb9e8")
  ("dired-hacks" . "7c0ef09d57a80068a11edc74c3568e5ead5cc15a")
  ("dired-single" . "b254f9b7bfc96a5eab5760a56811f2872d2c590a")
+ ("drag-stuff.el" . "6d06d846cd37c052d79acd0f372c13006aa7e7c8")
  ("el-get" . "91352ca0f895d099f608644c8e9ad8e844b5c520")
  ("elcord" . "70fd716e673b724b30b921f4cfa0033f9c02d0f2")
  ("elfeed" . "162d7d545ed41c27967d108c04aa31f5a61c8e16")

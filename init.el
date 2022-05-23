@@ -54,8 +54,7 @@
   (straight-use-package-by-default t)
   (straight-vc-git-default-clone-depth 1)
   (straight-recipes-gnu-elpa-use-mirror t)
-  (straight-check-for-modifications nil)
-  (use-package-always-defer t))
+  (straight-check-for-modifications nil))
 
 ;; Load built-in org
 (straight-use-package 'org)

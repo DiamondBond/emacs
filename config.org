@@ -597,6 +597,7 @@ An extensible emacs startup screen.
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
 	:straight t
+    :defer nil
 	:diminish dashboard-mode
 	:preface
 	(defun init-edit ()

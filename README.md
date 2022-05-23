@@ -12,7 +12,7 @@ A sensible Emacs distro aimed at enhancing the default experience.
 
 Install [Emacs@Head](https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org).
 
-Clone this repository to `~/.emacs.d` or `~/.config/emacs`:
+Clone this repository to `~/.emacs.d`
 
 
     git clone https://github.com/diamondbond/emacs ~/.emacs.d
@@ -184,7 +184,10 @@ of the [Principles](https://github.com/diamondbond/emacs/blob/master/README.org#
 
 -   Provide verbose doc-strings for `defvar`, `defcustom`, `defun`, `defmacro`,
     etc to clearly document what is going on.
--   Make sure to follow doc-string guidelines (see [Documentation Tips](https://www.gnu.org/software/emacs/manual/html_node/elisp/Documentation-Tips.html) or [elisp#Documentation Tips](elisp#Documentation Tips))
+-   Make sure to follow doc-string guidelines (see [Documentation Tips](https://www.gnu.org/software/emacs/manual/html_node/elisp/Documentation-Tips.html) or [[<elisp#Documentation>
+
+Tips][elisp#Documentation Tips]])
+
 -   Add comments for blocks of code, especially to describe *why* the code is
     present, or the intention. These comments serve as documentation when
     reading the code where a doc-string is not an option.

@@ -12,7 +12,7 @@ A sensible Emacs distro aimed at enhancing the default experience.
 
 Install [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs@Head]].
 
-Clone this repository to =~/.emacs.d= or =~/.config/emacs=:
+Clone this repository to =~/.emacs.d=
 
 #+caption: Command to clone this Emacs distros =git= repository.
 #+name: li#git_clone

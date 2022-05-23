@@ -54,6 +54,10 @@ While the minibuffer is open, garbage collection will never occur, but once we m
   (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
   (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 #+end_src
+*** Garbage collect on focus-out
+#+begin_src emacs-lisp
+  (add-hook 'focus-out-hook #'garbage-collect)
+#+end_src
 *** Do not steal focus while doing async compilations
 #+begin_src emacs-lisp
   (setq warning-suppress-types '((comp)))
@@ -82,7 +86,7 @@ Set bookmarks file location to ~/org/bookmarks
   (setq bookmark-save-flag t) ; save bookmark when Emacs quits
   (setq bookmark-save-flag nil) ; never auto save.
 #+end_src
-*** Do not litter init.el
+*** Custom file
 Offload the custom-set-variables to a separate file.
 This keeps your init.el neater and you have the option to gitignore your custom.el if you see fit.
 #+begin_src emacs-lisp
@@ -91,6 +95,20 @@ This keeps your init.el neater and you have the option to gitignore your custom.
 	(write-region "" nil custom-file))
    ;;; Load custom file. Don't hide errors. Hide success message
   (load custom-file nil t)
+#+end_src
+*** Load userconfig.el
+Whenever the base =config.org= file is updated, all the custom user settings are wiped out.
+
+To prevent this, the user may define permanent settings in the =userconfig.org= file.
+#+begin_src emacs-lisp
+  (setq-default userconfig-file (expand-file-name "userconfig.el" user-emacs-directory))
+  (when (file-exists-p userconfig-file)
+	(load userconfig-file))
+#+end_src
+*** Load custom themes
+#+begin_src emacs-lisp
+  (when (file-exists-p (expand-file-name "themes/" user-emacs-directory))
+	(add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory)))
 #+end_src
 *** Load newer .elc or .el
 Load the newer .elc or .el file, rather than stopping at .elc.
@@ -579,7 +597,6 @@ An extensible emacs startup screen.
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
 	:straight t
-	:defer nil
 	:diminish dashboard-mode
 	:preface
 	(defun init-edit ()
@@ -1316,7 +1333,6 @@ Emacs minor mode for a nice writing environment.
 #+begin_src emacs-lisp
   (use-package olivetti
 	:straight t
-	:defer nil
 	:init
 	(setq olivetti-body-width .75))
 #+end_src
@@ -1536,8 +1552,7 @@ Deadgrep and ag - the_silver_searcher.
 	:commands deadgrep)
 
   (use-package ag
-	:straight t
-	:defer nil)
+	:straight t)
 #+end_src
 ** Initialize =swiper=
 *** Description
@@ -1703,7 +1718,7 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 *** Code
 #+begin_src emacs-lisp
   (use-package modus-themes
-	:defer nil
+	:straight t
 	:init
 	(setq modus-themes-italic-constructs t
 		  modus-themes-bold-constructs t

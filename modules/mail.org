@@ -52,6 +52,8 @@ Create your maildir in $HOME as ~/mail
 
 ** 1. Configuring offlineimap
 
+These files should be automatically tangled below.
+
 ~/[[https://github.com/DiamondBond/dotfiles/blob/master/.offlineimaprc][offlineimap.rc]]
 
 [[https://github.com/DiamondBond/dotfiles/blob/master/.offlineimap.py][~/offlineimap.py]]

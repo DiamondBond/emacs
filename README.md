@@ -20,10 +20,8 @@ A sensible Emacs distro aimed at enhancing the default experience.
 1.  Install
 
 
-    # Backup old emacs configuration
     mv ~/.emacs.d ~/.emacs.d.old
 
-    # Install new one
     cd ~/git/emacs
     chmod +x install.sh
     ./install.sh
@@ -34,13 +32,11 @@ A sensible Emacs distro aimed at enhancing the default experience.
     Please answer y for vterm-modules to be autoinstalled.
 
 
-    # Start Emacs daemon
     emacs --daemon
 
 1.  Connect to Emacs
 
 
-    # Start Emacs daemon
     emacsclient -c -n -a 'emacs'
 
 
@@ -210,7 +206,10 @@ of the [Principles](https://github.com/diamondbond/emacs/blob/master/README.org#
 
 -   Provide verbose doc-strings for `defvar`, `defcustom`, `defun`, `defmacro`,
     etc to clearly document what is going on.
--   Make sure to follow doc-string guidelines (see [Documentation Tips](https://www.gnu.org/software/emacs/manual/html_node/elisp/Documentation-Tips.html) or [elisp#Documentation Tips](elisp#Documentation Tips))
+-   Make sure to follow doc-string guidelines (see [Documentation Tips](https://www.gnu.org/software/emacs/manual/html_node/elisp/Documentation-Tips.html) or [[<elisp#Documentation>
+
+Tips][elisp#Documentation Tips]])
+
 -   Add comments for blocks of code, especially to describe *why* the code is
     present, or the intention. These comments serve as documentation when
     reading the code where a doc-string is not an option.

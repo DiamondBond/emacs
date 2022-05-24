@@ -28,10 +28,8 @@ A sensible Emacs distro aimed at enhancing the default experience.
 #+name: li#install
 #+begin_src sh
 
-  # Backup old emacs configuration
   mv ~/.emacs.d ~/.emacs.d.old
 
-  # Install new one
   cd ~/git/emacs
   chmod +x install.sh
   ./install.sh
@@ -47,7 +45,6 @@ A sensible Emacs distro aimed at enhancing the default experience.
 #+name: li#bootstrap
 #+begin_src sh
 
-  # Start Emacs daemon
   emacs --daemon
 
 #+end_src
@@ -58,7 +55,6 @@ A sensible Emacs distro aimed at enhancing the default experience.
 #+name: li#connectemacs
 #+begin_src sh
 
-  # Start Emacs daemon
   emacsclient -c -n -a 'emacs'
 
 #+end_src

@@ -10,9 +10,9 @@ A sensible Emacs distro aimed at enhancing the default experience.
 
 * Quick Start
 
-0. Install [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs]].
+** 0. Install [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs]].
 
-1. Clone this repository
+** 1. Clone this repository
 
 #+caption: Command to clone this Emacs distros =git= repository.
 #+name: li#git_clone
@@ -22,7 +22,7 @@ A sensible Emacs distro aimed at enhancing the default experience.
 
 #+end_src
 
-2. Install
+** 2. Install
 
 #+caption: Command to install this Emacs distro.
 #+name: li#install
@@ -36,7 +36,7 @@ A sensible Emacs distro aimed at enhancing the default experience.
 
 #+end_src
 
-3. Bootstrap Emacs
+** 3. Bootstrap Emacs
 
   This will take some time.
   Please answer y for vterm-modules to be autoinstalled.
@@ -49,7 +49,7 @@ A sensible Emacs distro aimed at enhancing the default experience.
 
 #+end_src
 
-4. Connect to Emacs
+** 4. Connect to Emacs
 
 #+caption: Command to connect to Emacs daemon.
 #+name: li#connectemacs

@@ -1,4 +1,4 @@
-#+TITLE: Sensible Emacs
+#+TITLE: Diamond's Emacs
 #+DESCRIPTION: Eight Megabytes And Constantly Swapping
 #+CREATED: <2020-06-29 Mon>
 #+DATE: <2022-04-24 Tue>
@@ -6,10 +6,10 @@
 #+EMAIL: diamondbond1@gmail.com
 #+LANGUAGE: en
 #+STARTUP: inlineimages show2levels
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-#+SETUPFILE: setup/theme-readtheorg-local.setup
+#+SETUPFILE: resources/stylish_white.theme
 #+EXPORT_FILE_NAME: emacs.html
 #+CREATOR: Emacs 28.1 (Org mode 9.5.3)
+#+OPTIONS: toc:nil
 
 
 * Introduction
@@ -19,7 +19,7 @@
   #+end_center
 
   #+begin_center
-  *[SENSIBLE EMACS]*
+  *[EMACS CONFIGURATION]*
 
   [[https://github.com/diamondbond/emacs][*Github*]] | [[https://github.com/DiamondBond/emacs/blob/master/config.org][*Source*]]
   #+end_center

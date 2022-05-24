@@ -9,7 +9,6 @@
 A sensible Emacs distro aimed at enhancing the default experience.
 
 * Quick Start
-
 ** 0. Install Emacs > 27
 
 [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs]] build instructions.
@@ -96,7 +95,6 @@ Install [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language se
 *** Setup Email
 
 Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email setup documentation]] for this functionality.
-
 
 * Principles
 

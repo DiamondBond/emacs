@@ -1,4 +1,4 @@
-;;; userconfig.el --- User Configuration. -*- lexical-binding: t; -*-
+;;; mail.el --- Mail Configuration. -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022 Diamond Bond
 ;; This file is NOT part of GNU Emacs.
@@ -123,4 +123,5 @@
 		smtpmail-smtp-service 587
 		smtpmail-debug-info t))
 
+(provide 'mail)
 ;;; userconfig.el ends here

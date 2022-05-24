@@ -8,7 +8,7 @@
 * Header
 Enable lexical binding.
 #+begin_src emacs-lisp
-  ;;; userconfig.el --- User Configuration. -*- lexical-binding: t; -*-
+  ;;; mail.el --- Mail Configuration. -*- lexical-binding: t; -*-
 
   ;; Copyright (C) 2022 Diamond Bond
   ;; This file is NOT part of GNU Emacs.
@@ -223,5 +223,6 @@ smtp mail within Emacs.
 * Footer
 #+begin_src emacs-lisp
 
+  (provide 'mail)
   ;;; userconfig.el ends here
 #+end_src

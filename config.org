@@ -166,11 +166,6 @@ Disable the annoying bell.
   (setq select-enable-clipboard t)
   (setq save-interprogram-paste-before-kill t)
 #+END_SRC
-*** Disabling external pin entry
-You can force GPG to not use an external tool for pin entry. That is particularly useful if you don’t want the default GPG Agent pin entry tool to start, particularly if you want Emacs to handle the pin entry for you.
-#+begin_src emacs-lisp
-  (setenv "GPG_AGENT_INFO" nil)
-#+end_src
 *** Pair matching
 **** Enable paren-mode
 Show parent parentheses.
@@ -987,6 +982,9 @@ ERC is a powerful, modular, and extensible IRC client for Emacs.
 	(erc-server-reconnect-attempts 5)
 	(erc-server-reconnect-timeout 3)
 	(erc-quit-reason 'erc-quit-reason-normal)
+	(erc-timestamp-format "[%I:%M %p] ")
+	(erc-timestamp-only-if-changed-flag nil)
+	(erc-truncate-mode t)
 	(erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
 							   "324" "329" "332" "333" "353" "477"))
 	:config
@@ -1002,9 +1000,10 @@ ERC is a powerful, modular, and extensible IRC client for Emacs.
 	(setq erc-kill-server-buffer-on-quit t)
 	;; open query buffers in the current window
 	(setq erc-query-display 'buffer)
-	;; misc stuff
+	;; configure appearance
 	(setq erc-prompt " >"
 		  erc-nick '("diamondbond" "diamondbond_"))
+	;; load erc modules
 	(add-to-list 'erc-modules 'notifications)
 	(add-to-list 'erc-modules 'spelling))
 #+end_src
@@ -1444,15 +1443,12 @@ Popup contents mini-buffer.
 #+end_src
 ** Initialize =ripgrep=
 *** Description
-Deadgrep and ag - the_silver_searcher.
+Deadgrep.
 *** Code
 #+begin_src emacs-lisp
   (use-package deadgrep
 	:straight t
 	:commands deadgrep)
-
-  (use-package ag
-	:straight t)
 #+end_src
 ** Initialize =swiper=
 *** Description
@@ -1473,6 +1469,20 @@ M-s to jump to desired character.
 	:bind
 	("M-s" . avy-goto-char))
 #+END_SRC
+** Initialize =ag=
+*** Description
+The Silver Surfer - A code searching tool similar to ack, with a focus on speed.
+*** Code
+#+begin_src emacs-lisp
+  (defvar executable-ag-available?
+	(executable-find "ag"))
+
+  (use-package ag
+	:if executable-ag-available?
+	:init
+	(use-package wgrep-ag)
+	(setq-default ag-highlight-search t))
+#+end_src
 ** Initialize =deft=
 *** Description
 Deft is included for quicksearch of entire ~/org directory.
@@ -1848,6 +1858,12 @@ Prettier formatter for JSX & TSX.
 								'("\\.jsx?\\'" . prettier-js-mode))
 							   (enable-minor-mode
 								'("\\.tsx?\\'" . prettier-js-mode))))
+#+end_src
+** Editorconfig
+#+begin_src emacs-lisp
+  (use-package editorconfig
+	:if (executable-find "editorconfig")
+	:mode ("\\.editorconfig\\'" . conf-unix-mode))
 #+end_src
 * Functions
 ** Helpers

@@ -142,8 +142,7 @@ mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~
 ~/.emacs.d/custom.el
 #+end_quote
 
-NOTE: 'auth-info' can be backed up and restored to/from ~/org with =M-x
-sync/personal/backup= & =M-x sync/personal/restore=.
+NOTE: 'auth-info' can be backed up and restored to/from ~/org with =M-x auth/backup= & =M-x auth/restore=.
 
 * Installation
 ** Install Emacs
@@ -2453,7 +2452,7 @@ Sync dotfiles (incl. Emacs) to git.
 #+end_src
 *** =sync/auth=
 #+begin_src emacs-lisp
-(defun sync/auth/backup ()
+(defun auth/backup ()
   "Backup authinfo & personal info."
   (interactive)
   ;; authinfo
@@ -2463,7 +2462,7 @@ Sync dotfiles (incl. Emacs) to git.
   ;; metadata
   (async-shell-command "cp ~/.emacs.d/custom.el ~/org/"))
 
-(defun sync/auth/restore ()
+(defun auth/restore ()
   "Restore authinfo & personal info."
   (interactive)
   ;; authinfo

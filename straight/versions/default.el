@@ -32,6 +32,7 @@
  ("emacs-async" . "c78bab7506a70a735d2c3deab13fa87bf44a83d3")
  ("emacs-calfw" . "03abce97620a4a7f7ec5f911e669da9031ab9088")
  ("emacs-dashboard" . "a4eb09778f7b685b6ff652212bf1fa2e6e1305d7")
+ ("emacs-htmlize" . "dd27bc3f26efd728f2b1f01f9e4ac4f61f2ffbf9")
  ("emacs-kv" . "721148475bce38a70e0b678ba8aa923652e8900e")
  ("emacs-libvterm" . "b44723552f86407d528c4a6c8057382c061b008e")
  ("emacs-request" . "c769cf33f2ac0a1a9798b508935c4b260e856ab5")

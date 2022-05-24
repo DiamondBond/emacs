@@ -28,7 +28,6 @@ Enable lexical binding.
 
 * Email
 ** Load =[[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email=]] module
-
 *** Description
 
 Email in Emacs via mu4e & offlineimap.
@@ -43,15 +42,17 @@ Email in Emacs via mu4e & offlineimap.
 
 * Discord
 ** Load =elcord= package
-
 *** Description
 
 Discord RPC via Emacs.
 
 *** Code
+
 #+begin_src emacs-lisp
   (use-package elcord
 	:straight t
+	:init
+	(load-if-exists "~/.emacs.d/secrets.el.gpg")
 	:config
 	;; set icon
 	(setq elcord-editor-icon "emacs_icon")

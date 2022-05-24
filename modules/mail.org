@@ -24,8 +24,6 @@ Enable lexical binding.
   ;;; Code:
 
 #+end_src
-* Email
-** Description
 
 Refer to [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email Setup]].
 

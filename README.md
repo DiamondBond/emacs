@@ -10,7 +10,7 @@ A sensible Emacs distro aimed at enhancing the default experience.
 
 # Quick Start
 
-1.  Install [Emacs@Head](https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org).
+1.  Install [Emacs](https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org).
 
 2.  Clone this repository
 
@@ -85,8 +85,9 @@ This list is in chronological load order.
 -   **[early-bootstrap](early-init.el):** Early bootstrap
 -   **[bootstrap](init.el):** Bootstrap straight.el
 -   **[base](https://github.com/DiamondBond/emacs/blob/master/config.org#base):** Base configuration
--   **[packages](https://github.com/DiamondBond/emacs/blob/master/config.org#use-package):** Package manifest
 -   **[keybinds](https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds):** Keybinding maps
+-   **[packages](https://github.com/DiamondBond/emacs/blob/master/config.org#use-package):** Package manifest
+-   **[languages](https://github.com/DiamondBond/emacs/blob/master/config.org#languages):** Language manifest
 -   **[functions](https://github.com/DiamondBond/emacs/blob/master/config.org#functions):** Function definitions
 
 
@@ -208,10 +209,7 @@ of the [Principles](https://github.com/diamondbond/emacs/blob/master/README.org#
 
 -   Provide verbose doc-strings for `defvar`, `defcustom`, `defun`, `defmacro`,
     etc to clearly document what is going on.
--   Make sure to follow doc-string guidelines (see [Documentation Tips](https://www.gnu.org/software/emacs/manual/html_node/elisp/Documentation-Tips.html) or [[<elisp#Documentation>
-
-Tips][elisp#Documentation Tips]])
-
+-   Make sure to follow doc-string guidelines (see [Documentation Tips](https://www.gnu.org/software/emacs/manual/html_node/elisp/Documentation-Tips.html) or [elisp#Documentation Tips](elisp#Documentation Tips))
 -   Add comments for blocks of code, especially to describe *why* the code is
     present, or the intention. These comments serve as documentation when
     reading the code where a doc-string is not an option.

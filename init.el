@@ -64,9 +64,6 @@
   (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 
 ;; Tangle user configuration
-;; (let ((userconfig-location (expand-file-name "userconfig.org" user-emacs-directory)))
-;;   (when (file-exists-p userconfig-location)
-;; 	(org-babel-load-file userconfig-location)))
 (when (file-readable-p "~/.emacs.d/userconfig.org")
   (org-babel-load-file (expand-file-name "~/.emacs.d/userconfig.org")))
 

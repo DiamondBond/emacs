@@ -10,10 +10,17 @@
 
 ** 0. Prerequisites
 
+*** 0.1 maildir
 Create your maildir in $HOME as ~/mail
 
 #+begin_src sh
   mkdir -p ~/mail
+#+end_src
+
+*** 0.2 offlineimap
+
+#+begin_src sh
+  yay -S offlineimap
 #+end_src
 
 ** 1. Configuring offlineimap
@@ -24,9 +31,17 @@ Create your maildir in $HOME as ~/mail
 
 ** 2. Configuring mu
 
-Please refer to [[https://github.com/DiamondBond/emacs/blob/master/config.org#prerequisites][mu Setup]] in config.org.
+Please refer to [[https://github.com/DiamondBond/emacs/blob/master/userconfig.org#email][Email]] in userconfig.org to understand what these functions do, you'll have to change the maildir & my-address flags to correspond to your environments setup.
 
-*** Compile mu
+*** Automatically
+
+#+begin_quote
+M-x mu-setup/automagic
+#+end_quote
+
+*** Manually
+
+**** Compile mu
 
 Compile mu & mu4e.
 
@@ -34,7 +49,7 @@ Compile mu & mu4e.
 M-x mu-setup/build-mu-binary
 #+end_quote
 
-*** Initialize mu
+**** Initialize mu
 
 Initialize mu with maildir & address.
 
@@ -42,7 +57,7 @@ Initialize mu with maildir & address.
 M-x mu-setup/init-mu
 #+end_quote
 
-*** Build mu index
+**** Build mu index
 
 Inform mu as to the contents of ~/mail by building/rebuilding the mu index.
 

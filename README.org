@@ -10,7 +10,7 @@ A sensible Emacs distro aimed at enhancing the default experience.
 
 * Quick Start
 
-0. Install [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs@Head]].
+0. Install [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs]].
 
 1. Clone this repository
 
@@ -98,8 +98,9 @@ This list is in chronological load order.
 - [[file:early-init.el][early-bootstrap]] :: Early bootstrap
 - [[file:init.el][bootstrap]] :: Bootstrap straight.el
 - [[https://github.com/DiamondBond/emacs/blob/master/config.org#base][base]] :: Base configuration
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][packages]] :: Package manifest
 - [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][keybinds]] :: Keybinding maps
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][packages]] :: Package manifest
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#languages][languages]] :: Language manifest
 - [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][functions]] :: Function definitions
 
 * Post Setup

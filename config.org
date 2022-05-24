@@ -497,7 +497,7 @@ Elisp enhancers.
   (use-package s         :demand t) ; string
   (use-package f         :demand t) ; file
   (use-package ht        :demand t) ; hash table
-  (use-package dash      :demand t) ; list
+  (use-package dash      :demand t) ; lists
   (use-package a         :demand t) ; assoc lists
   (use-package ts        :demand t) ; timestamps
   (use-package pcre2el   :demand t) ; sane regex
@@ -510,6 +510,7 @@ Utilize asynchronous processes whenever possible.
 #+BEGIN_SRC emacs-lisp
   (use-package async
 	:straight t
+	:demand t
 	:init
 	(dired-async-mode 1)
 	:config
@@ -2078,9 +2079,7 @@ Sync dotfiles (incl. Emacs) to git.
 	(async-shell-command "cp ~/.emacs.d/secrets.el.gpg ~/org/")
 	(async-shell-command "cp ~/.emacs.d/network-security.data ~/org/")
 	;; metadata
-	(async-shell-command "cp ~/.emacs.d/custom.el ~/org/")
-	(async-shell-command "cp ~/.emacs.d/places ~/org/")
-	(async-shell-command "cp ~/.emacs.d/recentf ~/org/"))
+	(async-shell-command "cp ~/.emacs.d/custom.el ~/org/"))
 
   (defun sync/personal/restore ()
 	"Restore authinfo & personal info."
@@ -2090,9 +2089,7 @@ Sync dotfiles (incl. Emacs) to git.
 	(async-shell-command "cp ~/org/.secrets.el.gpg ~/.emacs.d/")
 	(async-shell-command "cp ~/org/network-security.data ~/.emacs.d/")
 	;; metadata
-	(async-shell-command "cp ~/org/custom.el ~/.emacs.d/")
-	(async-shell-command "cp ~/org/places ~/.emacs.d/")
-	(async-shell-command "cp ~/org/recentf ~/.emacs.d/"))
+	(async-shell-command "cp ~/org/custom.el ~/.emacs.d/"))
 #+end_src
 ** Launchers
 *** Music

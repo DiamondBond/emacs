@@ -25,19 +25,23 @@ Enable lexical binding.
 
 #+end_src
 
-*Refer to [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email Setup]].*
+* Email
 
-#+begin_quote
+** Intro
 
-  offlineimap  -  sync
+See [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email Setup]].
 
-  mu           -  server
+** Overview
 
-  mu4e         -  client
+- sync   :: mu
 
-#+end_quote
+- server :: offlineimap
 
-** Files
+- client :: mu4e
+
+** Declaration
+*** Files
+**** =~/.offlineimaprc=
 #+begin_src conf :tangle .offlineimaprc
   [general]
   accounts = Gmail
@@ -65,6 +69,7 @@ Enable lexical binding.
   sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 #+end_src
 
+**** =~/.offlineimaprc=
 #+begin_src python :tangle .offlineimap.py
   #!/usr/bin/python
   import re, os
@@ -75,8 +80,8 @@ Enable lexical binding.
 	  authinfo = os.popen("gpg -q --no-tty -d ~/.authinfo.gpg").read()
 	  return p.search(authinfo).group(1)
 #+end_src
-** Functions
-*** 1. Compile mu
+*** Functions
+**** 1. Compile mu
 
 'mu' binary is output to ~/.emacs.d/straight/repos/mu/build/mu/mu
 
@@ -87,7 +92,7 @@ Enable lexical binding.
 	(async-shell-command "cd ~/.emacs.d/straight/repos/mu; ./autogen.sh; ninja -C build"))
 #+end_src
 
-*** 2. Initialize mu
+**** 2. Initialize mu
 
 Modify this defun to contain your $maildir & Email address.
 
@@ -98,14 +103,14 @@ Modify this defun to contain your $maildir & Email address.
 	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu init --maildir=/home/diamond/mail/ --my-address=diamondbond1@gmail.com"))
 #+end_src
 
-*** 3. Rebuild mu index.
+**** 3. Rebuild mu index.
 #+begin_src emacs-lisp
   (defun mu-setup/rebuild-mu-index ()
 	"Rebuilds 'mu' index."
 	(interactive)
 	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu index"))
 #+end_src
-*** 4. Automagic setup
+**** 4. Automagic setup
 #+begin_src emacs-lisp
   (defun mu-setup/automagic ()
 	"Auto-magically configures 'mu'."
@@ -114,11 +119,11 @@ Modify this defun to contain your $maildir & Email address.
 	(mu-setup/init-mu)
 	(mu-setup/rebuild-mu-index))
 #+end_src
-** Use-package
-*** Initialize =mu4e=
-**** Description
+*** Use-package
+**** Initialize =mu4e=
+***** Description
 mu4e mail client.
-**** Code
+***** Code
 #+begin_src emacs-lisp
   (use-package mu4e
 	:straight ( :host github
@@ -183,10 +188,10 @@ mu4e mail client.
     ;; start mu4e
 	(mu4e t))
 #+end_src
-*** Initialize =mu4e-alert=
-**** Description
+**** Initialize =mu4e-alert=
+***** Description
 Show alerts for unread emails.
-**** Code
+***** Code
 #+begin_src emacs-lisp
   (use-package mu4e-alert
 	:straight t
@@ -200,10 +205,10 @@ Show alerts for unread emails.
 	:init
 	(mu4e-alert-enable-notifications))
 #+end_src
-*** Initialize =smtpmail=
-**** Description
+**** Initialize =smtpmail=
+***** Description
 smtp mail within Emacs.
-**** Code
+***** Code
 #+begin_src emacs-lisp
   (use-package smtpmail
 	:straight t

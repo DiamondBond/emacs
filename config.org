@@ -1,14 +1,32 @@
-#+STARTUP: overview
-#+TITLE: Emacs Configuration
-#+AUTHOR: Diamond Bond
+#+TITLE: Sensible Emacs
 #+DESCRIPTION: Eight Megabytes And Constantly Swapping
+#+CREATED: <2020-06-29 Mon>
+#+DATE: <2022-04-24 Tue>
+#+AUTHOR: Diamond Bond
+#+EMAIL: diamondbond1@gmail.com
 #+LANGUAGE: en
-#+html: <a href="https://www.gnu.org/software/emacs/"><img alt="GNU Emacs" src="https://github.com/minad/corfu/blob/screenshots/emacs.svg?raw=true"></a>
-#+html: <img src="img/gnusstorm-2.gif">
-#+OPTIONS: toc:nil num:nil
+#+STARTUP: inlineimages show2levels
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+SETUPFILE: setup/theme-readtheorg-local.setup
+#+EXPORT_FILE_NAME: index.html
+#+CREATOR: Emacs 28.1 (Org mode 9.5.3)
+
 
 * Introduction
-Sensible Emacs distro aimed at enhancing the default experience.
+
+  #+begin_center
+  [[./img/gnusstorm-2.gif]]
+  #+end_center
+
+  #+begin_center
+  *[SENSIBLE EMACS]*
+
+  [[https://github.com/diamondbond/emacs][*Github*]] | [[https://github.com/DiamondBond/emacs/blob/master/config.org][*Source*]]
+  #+end_center
+
+  #+begin_quote
+  Sensible Emacs distro aimed at enhancing the default experience.
+  #+end_quote
 
 ** Principles
 
@@ -44,28 +62,28 @@ The implication is that someone should be able to install or copy code from this
 
 This list is in chronological load order.
 
-*early-init.el*
-- [[file:early-init.el][early-bootstrap]] :: Early bootstrap
+*** *early-init.el*
+- [[file:early-init.el][early-bootstrap]] - Early bootstrap
 
-*init.el*
-- [[file:init.el][bootstrap]] :: Bootstrap straight.el
+*** *init.el*
+- [[file:init.el][bootstrap]] - Bootstrap straight.el
 
-*config.org*
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#base][base]] :: Base configuration
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][keybinds]] :: Keybinding maps
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][packages]] :: Package manifest
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#languages][languages]] :: Language manifest
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][functions]] :: Function definitions
+*** *config.org*
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#base][base]] - Base configuration
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][keybinds]] - Keybinding maps
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][packages]] - Package manifest
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#languages][languages]] - Language manifest
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][functions]] - Function definitions
 
-*userconfig.org*
-- [[https://github.com/DiamondBond/emacs/blob/master/userconfig.org][user]] :: User configuration
+*** *userconfig.org*
+- [[https://github.com/DiamondBond/emacs/blob/master/userconfig.org][user]] - User configuration
 
-*modules/mail.org*
-- [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][mail]] :: Mail configuration
+*** *modules/mail.org*
+- [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][mail]] - Mail configuration
 
 ** Dependencies
 
-Some dependencies required to run this Emacs distro.
+Some dependencies are required to run this Emacs distro.
 
 *** Packages
 **** System
@@ -86,23 +104,21 @@ gnuplot
 prettier
 hunspell
 #+end_quote
-
 **** Python
 
 #+begin_src bash
   pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi
 #+end_src
 
-**** Node
+*** Node
 
 Deno & typescript-language-server for Typescript (TS/TSX) support.
 
 #+begin_src bash
   sudo npm install -g deno typescript-language-server bash-language-server
 #+end_src
-
 *** Files
-**** Dropbox
+**** Dropbox Folders
 
 Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 
@@ -110,7 +126,7 @@ Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
   mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
 #+end_src
 
-**** Auth-Info List
+**** Auth-Info Files
 
 1. ~/org/.authinfo.gpg
 2. ~/org/secrets-el.gpg
@@ -119,12 +135,13 @@ Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 
    NOTE: 'auth-info' can be backed up and restored to/from ~/org with =M-x
    sync/personal-backup= & =M-x sync/personal-restore=.
+
 * Installation
-** 0. Install Emacs
+** Install Emacs
 
 [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs]] build instructions.
 
-** 1. Clone this repository
+** Clone this repo
 
 #+caption: Command to clone this Emacs distros =git= repository.
 #+name: li#git_clone
@@ -134,7 +151,7 @@ Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 
 #+end_src
 
-** 2. Install the configuration
+** Install the config
 
 #+caption: Command to install this Emacs distro.
 #+name: li#install
@@ -148,7 +165,7 @@ Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 
 #+end_src
 
-** 3. Bootstrap Emacs
+** Bootstrap Emacs
 
   This will take some time.
   NOTE: Please answer y for vterm-modules to be autoinstalled.
@@ -161,7 +178,7 @@ Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 
 #+end_src
 
-** 4. Connect to Emacs
+** Connect to Emacs
 
 #+caption: Command to connect to Emacs daemon.
 #+name: li#connectemacs
@@ -171,7 +188,7 @@ Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 
 #+end_src
 
-** 5. Post Setup
+** Post Setup
 
 Once Emacs launches for the first time we need to setup a few more things for everything to work as intended.
 
@@ -538,14 +555,6 @@ Dont accidentally delete all my bookmarks.
   (defalias 'bookmark-delete-all 'bookmark-delete)
 #+end_src
 ** Built-in
-*** Configure =proced=
-Auto-update proced every 5 seconds.
-#+begin_src emacs-lisp
-  (setq proced-auto-update-flag t)
-  (setq proced-auto-update-interval 5)
-  (setq proced-descend t)
-  (setq proced-filter 'user)
-#+end_src
 *** Configure =browser=
 Firefox as default browser.
 #+BEGIN_SRC emacs-lisp
@@ -555,6 +564,14 @@ Firefox as default browser.
   ;; firefox
   (setq browse-url-browser-function 'browse-url-firefox)
 #+END_SRC
+*** Configure =proced=
+Auto-update proced every 5 seconds.
+#+begin_src emacs-lisp
+  (setq proced-auto-update-flag t)
+  (setq proced-auto-update-interval 5)
+  (setq proced-descend t)
+  (setq proced-filter 'user)
+#+end_src
 *** Configure =eshell=
 **** Description
 Improve eshell prompt and assign aliases, also setup some custom helper functions for easier use.
@@ -604,9 +621,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	  (switch-to-buffer-other-window "*eshell*")))
 #+END_SRC
 * Keybinds
-** Description
-Global, private & sane key maps.
-** Code
+** Define z-map
 #+begin_src emacs-lisp
   ;;---------------------------------------------------------------------
   ;; z-map definition
@@ -615,6 +630,9 @@ Global, private & sane key maps.
   (define-prefix-command 'z-map)
   (global-set-key (kbd "C-1") 'z-map)
 
+#+end_src
+** Define private-map
+#+begin_src emacs-lisp
   ;;---------------------------------------------------------------------
   ;; private-map
   ;;---------------------------------------------------------------------
@@ -667,6 +685,9 @@ Global, private & sane key maps.
   (define-key z-map (kbd "n") 'notes-edit)
   (define-key z-map (kbd "c") 'config-edit)
 
+#+end_src
+** Define global-map
+#+begin_src emacs-lisp
   ;;---------------------------------------------------------------------
   ;; global-map
   ;;---------------------------------------------------------------------
@@ -694,6 +715,9 @@ Global, private & sane key maps.
   (define-key global-map (kbd "C-S-n") #'next-15-lines)
   (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 
+#+end_src
+** Define sane-map
+#+begin_src emacs-lisp
   ;;---------------------------------------------------------------------
   ;; sane-map
   ;;---------------------------------------------------------------------
@@ -705,7 +729,8 @@ Global, private & sane key maps.
   ;; Kill word without copying it to your clipboard
   (global-set-key (kbd "M-DEL") 'sanemacs/backward-kill-word)
   (global-set-key (kbd "C-DEL") 'sanemacs/backward-kill-word)
-#+END_SRC
+
+#+end_src
 * Use-package
 ** Core
 *** Initialize =elisp=
@@ -1035,6 +1060,14 @@ Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based
 	(add-hook 'vterm-mode-hook
 			  (lambda () (global-hl-line-mode 0)))
 	(setq vterm-max-scrollback 10000))
+#+end_src
+*** Initialize =htmlize=
+**** Description
+Used for exporting source code with syntax highlighting.
+**** Code
+#+begin_src emacs-lisp
+  (use-package htmlize
+	:straight t)
 #+end_src
 ** Completion
 *** Initialize =corfu=
@@ -2175,50 +2208,6 @@ Prettier formatter for JSX & TSX.
 	(interactive)
 	(switch-to-buffer (list-buffers-noselect)))
 #+end_src
-** Launchers
-*** Music
-Run ncmpcpp within vterm.
-#+begin_src emacs-lisp
-  (defun music ()
-	"Play music with ncmpcpp."
-	(interactive)
-	(run-in-vterm "ncmpcpp"))
-#+end_src
-*** Open emacs-devel
-Launches gnus and connects to news.gmane.io/emacs-devel.
-#+begin_src emacs-lisp
-  (defun open-emacs-devel ()
-	"Read the Emacs-devel mailing list."
-	(interactive)
-	(setq last-command-event 121)
-	(gnus nil)
-	(setq last-command-event 121)
-	(execute-extended-command nil "gnus" "gnus")
-	(setq last-command-event 13)
-	(gnus-group-browse-foreign-server
-	 `(nntp "news.gmane.io"))
-	(setq last-command-event 13)
-	(consult-line)
-	(setq last-command-event 13)
-	(gnus-browse-select-group nil))
-#+end_src
-*** Start org-agenda
-#+begin_src emacs-lisp
-  (defun start-to-org-agenda ()
-	"Launch focused 'org-agenda'."
-	(interactive)
-	(org-agenda nil "n")
-	(delete-other-windows)
-	(fit-frame-to-buffer))
-#+end_src
-*** Shrinkwrapped bufflist
-#+begin_src emacs-lisp
-  (defun shrink-wrapped-buffer-list ()
-	"Launch frame-fitted *Buffer List*."
-	(interactive)
-	(switch-to-buffer (list-buffers-noselect))
-	(shrink-wrap))
-#+end_src
 ** Inserts
 *** Date
 Insert date in a buffer in my preferred format
@@ -2247,8 +2236,8 @@ Inserts org-mode link template.
 	(setq last-command-event 91)
 	(org-self-insert-command 1))
 #+end_src
-*** WILD_NOTIFIER
-Insert WILD_NOTIFIER properties template.
+*** Notifications
+Insert WILD NOTIFIER properties template.
 #+begin_src emacs-lisp
   (defun insert-wild-notifier-template ()
 	"Insert WILD_NOTIFIER_NOTIFY_BEFORE template at point."
@@ -2338,8 +2327,52 @@ Insert currently visiting buffer filename.
 	(forward-line -1)
 	(indent-for-tab-command))
 #+end_src
+** Launchers
+*** Music
+Run ncmpcpp within vterm.
+#+begin_src emacs-lisp
+  (defun music ()
+	"Play music with ncmpcpp."
+	(interactive)
+	(run-in-vterm "ncmpcpp"))
+#+end_src
+*** Open emacs-devel
+Launches gnus and connects to news.gmane.io/emacs-devel.
+#+begin_src emacs-lisp
+  (defun open-emacs-devel ()
+	"Read the Emacs-devel mailing list."
+	(interactive)
+	(setq last-command-event 121)
+	(gnus nil)
+	(setq last-command-event 121)
+	(execute-extended-command nil "gnus" "gnus")
+	(setq last-command-event 13)
+	(gnus-group-browse-foreign-server
+	 `(nntp "news.gmane.io"))
+	(setq last-command-event 13)
+	(consult-line)
+	(setq last-command-event 13)
+	(gnus-browse-select-group nil))
+#+end_src
+*** Start org-agenda
+#+begin_src emacs-lisp
+  (defun start-to-org-agenda ()
+	"Launch focused 'org-agenda'."
+	(interactive)
+	(org-agenda nil "n")
+	(delete-other-windows)
+	(fit-frame-to-buffer))
+#+end_src
+*** Shrinkwrapped bufflist
+#+begin_src emacs-lisp
+  (defun shrink-wrapped-buffer-list ()
+	"Launch frame-fitted *Buffer List*."
+	(interactive)
+	(switch-to-buffer (list-buffers-noselect))
+	(shrink-wrap))
+#+end_src
 ** Syncing
-*** Sync Emacs
+*** =sync/emacs=
 Sync Emacs configuration to git.
 #+begin_src emacs-lisp
   (defun sync/emacs ()
@@ -2353,7 +2386,7 @@ Sync Emacs configuration to git.
 	(straight-freeze-versions)
 	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
 #+end_src
-*** Sync Mail
+*** =sync/mail=
 Sync Email locally.
 #+begin_src emacs-lisp
   (defun sync/mail ()
@@ -2362,7 +2395,7 @@ Sync Email locally.
 	(async-shell-command "offlineimap")
 	(mu4e-update-index))
 #+end_src
-*** Sync News
+*** =sync/news=
 Sync Elfeed & Mail.
 #+begin_src emacs-lisp
   (defun sync/news ()
@@ -2372,7 +2405,7 @@ Sync Elfeed & Mail.
 	(elfeed)
 	(elfeed-update))
 #+end_src
-*** Sync Dotfiles
+*** =sync/dotfiles=
 Sync dotfiles (incl. Emacs) to git.
 #+begin_src emacs-lisp
   (defun sync/dotfiles ()
@@ -2381,9 +2414,9 @@ Sync dotfiles (incl. Emacs) to git.
 	(async-shell-command "~/bin/sync-dotfiles.sh")
 	(alert "Sync Complete." :severity 'trivial))
 #+end_src
-*** Sync Personal
+*** =sync/auth=
 #+begin_src emacs-lisp
-  (defun sync/personal/backup ()
+  (defun sync/auth/backup ()
 	"Backup authinfo & personal info."
 	(interactive)
 	;; authinfo
@@ -2393,7 +2426,7 @@ Sync dotfiles (incl. Emacs) to git.
 	;; metadata
 	(async-shell-command "cp ~/.emacs.d/custom.el ~/org/"))
 
-  (defun sync/personal/restore ()
+  (defun sync/auth/restore ()
 	"Restore authinfo & personal info."
 	(interactive)
 	;; authinfo

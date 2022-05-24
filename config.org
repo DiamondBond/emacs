@@ -785,39 +785,39 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 Add icons and subtree's to dired.
 *** Code
 #+begin_src emacs-lisp
-  (use-package dired
+      (use-package dired
 	:straight (:type built-in)
-	:commands (dired dired-jump)
-	:bind ("C-x C-j" . dired-jump)
-	:custom ((dired-listing-switches "-agho --group-directories-first")))
+	    :commands (dired dired-jump)
+	    :bind ("C-x C-j" . dired-jump)
+	    :custom ((dired-listing-switches "-agho --group-directories-first")))
 
-  (use-package dired-single
-	:commands (dired dired-jump))
+      (use-package dired-single
+	    :commands (dired dired-jump))
 
-  (use-package all-the-icons-dired
-	:straight t
-	:diminish all-the-icons-dired-mode
-	:config
-	:hook (dired-mode . (lambda ()
-						  (interactive)
-						  (unless (file-remote-p default-directory)
-							(all-the-icons-dired-mode)))))
+      (use-package all-the-icons-dired
+	    :straight t
+	    :diminish all-the-icons-dired-mode
+	    :config
+	    :hook (dired-mode . (lambda ()
+						      (interactive)
+						      (unless (file-remote-p default-directory)
+							    (all-the-icons-dired-mode)))))
 
-  (use-package dired-open
-	:commands (dired dired-jump)
-	:config
-	(setq dired-open-extensions '(("png" . "nomacs")
-								  ("jpg" . "nomacs")
-								  ("mp4" . "mpv")
-								  ("mkv" . "mpv"))))
+      (use-package dired-open
+	    :commands (dired dired-jump)
+	    :config
+	    (setq dired-open-extensions '(("png" . "nomacs")
+								      ("jpg" . "nomacs")
+								      ("mp4" . "mpv")
+								      ("mkv" . "mpv"))))
 
-  (use-package dired-subtree
-	:straight t
-	:config
-	(advice-add 'dired-subtree-toggle
-				:after (lambda () (interactive)
-						 (when all-the-icons-dired-mode
-						   (revert-buffer)))))
+      (use-package dired-subtree
+	    :straight t
+	    :config
+	    (advice-add 'dired-subtree-toggle
+				    :after (lambda () (interactive)
+						     (when all-the-icons-dired-mode
+						       (revert-buffer)))))
 #+end_src
 ** Initialize =gnus=
 *** Description

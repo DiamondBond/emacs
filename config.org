@@ -631,7 +631,7 @@ An extensible emacs startup screen.
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)
-	(setq dashboard-set-footer t)
+	(setq dashboard-set-footer nil)
 	(setq dashboard-set-navigator t)
 	(when (file-directory-p "~/org")
 	  (setq dashboard-navigator-buttons
@@ -755,7 +755,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	  (setq org-capture-templates
 			'(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
 			   "* %?\n%a\nEntered on %U")
-			  ("j" "Journal" entry (file+datetree "~/org/journal.org")
+			  ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
 			   "* %?\n%a\nEntered on %U"))))
 
 	:bind
@@ -1332,9 +1332,7 @@ Colorize color names in buffers.
   (use-package rainbow-mode
 	:straight t
 	:diminish rainbow-mode
-	:hook prog-mode
-	:config
-	(rainbow-mode))
+	:hook prog-mode)
 #+end_src
 ** Initialize =rainbow-delimiters=
 *** Description
@@ -1586,7 +1584,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	(eval-after-load "which-key" '(diminish 'which-key-mode))
 	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
 	(eval-after-load "outline" '(diminish 'outline-minor-mode))
-	(eval-after-load "magit" '(diminish 'auto-revert-mode ""))
+	(eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode ""))
 	(eval-after-load "evil-commentary" '(diminish 'evil-commentary-mode))
 	(eval-after-load "evil-escape" '(diminish 'evil-escape-mode))
 	(eval-after-load "evil-collection-unimpaired" '(diminish 'evil-collection-unimpaired-mode)))
@@ -1621,136 +1619,6 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	(defun elcord-buffer-details-format ()
 	  "Return the buffer details string shown on discord."
 	  (format "%s" (buffer-name))))
-#+end_src
-* Email
-** Prerequisites
-*** 0. Install offlineimap
-#+begin_src sh
-  yay -S offlineimap
-#+end_src
-*** 1. Compile mu
-Note: 'mu' binary is output to ~/.emacs.d/straight/repos/mu/build/mu/mu
-#+begin_src emacs-lisp
-  (defun mu-setup/build-mu-binary ()
-	"Compiles 'mu' binary."
-	(interactive)
-	(async-shell-command "cd ~/.emacs.d/straight/repos/mu; ./autogen.sh; ninja -C build"))
-#+end_src
-*** 2. Initialize mu
-#+begin_src emacs-lisp
-  (defun mu-setup/init-mu ()
-	"Initialize 'mu' db."
-	(interactive)
-	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu init --maildir=/home/diamond/mail/ --my-address=diamondbond1@gmail.com"))
-#+end_src
-*** 3. Rebuild mu index.
-#+begin_src emacs-lisp
-  (defun mu-setup/rebuild-mu-index ()
-	"Rebuilds 'mu' index."
-	(interactive)
-	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu index"))
-#+end_src
-** Initialize =mu4e=
-*** Description
-mu4e mail client.
-*** Code
-#+begin_src emacs-lisp
-  (use-package mu4e
-	:straight ( :host github
-				:repo "djcb/mu"
-				:branch "master"
-				:files ("build/mu4e/*")
-				:pre-build (("./autogen.sh") ("make")))
-	:custom   (mu4e-mu-binary (expand-file-name "build/mu/mu" (straight--repos-dir "mu")))
-	:config
-	;; default
-	(require 'org-mu4e)
-	(setq mu4e-maildir (expand-file-name "~/mail"))
-
-	;; set folders
-	(setq mu4e-drafts-folder "/[Gmail].Drafts")
-	(setq mu4e-sent-folder   "/[Gmail].Sent Mail")
-	(setq mu4e-trash-folder  "/[Gmail].Trash")
-
-	;; don't save message to Sent Messages, GMail/IMAP will take care of this
-	(setq mu4e-sent-messages-behavior 'delete)
-
-	;; composing mail
-	(setq mu4e-compose-dont-reply-to-self t)
-
-	;; don't keep message buffers around
-	(setq message-kill-buffer-on-exit t)
-
-	;; display options
-	(setq mu4e-view-show-images t)
-	(setq mu4e-view-show-addresses 't)
-
-	;; make sure that moving a message (like to Trash) causes the
-	;; message to get a new file name.  This helps to avoid the
-	;; dreaded "UID is N beyond highest assigned" error.
-	;; See this link for more info: https://stackoverflow.com/a/43461973
-	(setq mu4e-change-filenames-when-moving t)
-
-	;; setup some handy shortcuts
-	(setq mu4e-maildir-shortcuts
-		  '(("/INBOX"             . ?i)
-			("/[Gmail].Sent Mail" . ?s)
-			("/[Gmail].Trash"     . ?t)))
-
-	;; inbox-query
-	(setq db/mu4e-inbox-query
-		  "(maildir:/Inbox OR maildir:/INBOX) AND flag:unread")
-
-	;; go-to-inbox function
-	(defun db/go-to-inbox ()
-	  (interactive)
-	  (mu4e-headers-search dw/mu4e-inbox-query))
-
-	;; allow for updating mail using 'U' in the main view:
-	(setq mu4e-get-mail-command "offlineimap")
-
-	;; why would I want to leave my message open after I've sent it?
-	(setq message-kill-buffer-on-exit t)
-	;; don't ask for a 'context' upon opening mu4e
-	(setq mu4e-context-policy 'pick-first)
-	;; don't ask to quit
-	(setq mu4e-confirm-quit nil))
-#+end_src
-** Initialize =mu4e-alert=
-*** Description
-Show alerts for unread emails.
-*** Code
-#+begin_src emacs-lisp
-  (use-package mu4e-alert
-	:straight t
-	:after mu4e
-	:config
-	;; show unread emails from all inboxes
-	(setq mu4e-alert-interesting-mail-query db/mu4e-inbox-query)
-
-	;; show notifications for mails already notified
-	(setq mu4e-alert-notify-repeated-mails nil)
-	:init
-	(mu4e-alert-enable-notifications))
-#+end_src
-** Initialize =smtpmail=
-*** Description
-smtp mail within Emacs.
-*** Code
-#+begin_src emacs-lisp
-  (use-package smtpmail
-	:straight t
-	:config
-	(setq message-send-mail-function 'smtpmail-send-it
-		  starttls-use-gnutls t
-		  smtpmail-starttls-credentials
-		  '(("smtp.gmail.com" 587 nil nil))
-		  smtpmail-auth-credentials
-		  (expand-file-name "~/.authinfo.gpg")
-		  smtpmail-default-smtp-server "smtp.gmail.com"
-		  smtpmail-smtp-server "smtp.gmail.com"
-		  smtpmail-smtp-service 587
-		  smtpmail-debug-info t))
 #+end_src
 * Languages
 ** LSP
@@ -2220,7 +2088,7 @@ Sync dotfiles (incl. Emacs) to git.
 	;; authinfo
 	(async-shell-command "cp ~/org/.authinfo.gpg ~/")
 	(async-shell-command "cp ~/org/.secrets.el.gpg ~/.emacs.d/")
-	(async-shell-command "cp ~/org/network-security-data ~/.emacs.d/")
+	(async-shell-command "cp ~/org/network-security.data ~/.emacs.d/")
 	;; metadata
 	(async-shell-command "cp ~/org/custom.el ~/.emacs.d/")
 	(async-shell-command "cp ~/org/places ~/.emacs.d/")

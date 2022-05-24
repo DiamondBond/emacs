@@ -1,0 +1,35 @@
+#+STARTUP: overview
+#+TITLE: Emacs User Configuration
+#+AUTHOR: Diamond Bond
+#+DESCRIPTION: Eight Megabytes And Constantly Swapping
+#+LANGUAGE: en
+#+OPTIONS: num:nil
+
+* Header
+Enable lexical binding.
+#+begin_src emacs-lisp
+  ;;; userconfig.el --- User Configuration. -*- lexical-binding: t; -*-
+
+  ;; Copyright (C) 2022 Diamond Bond
+  ;; This file is NOT part of GNU Emacs.
+  ;; This file is free software.
+
+  ;; Author: Diamond Bond <diamondbond1@gmail.com>
+  ;; URL: https://github.com/diamondbond/emacs
+  ;; Package-Requires: ((emacs "28.1"))
+
+  ;;; Commentary:
+  ;; This file provides the user configuration.
+
+  ;;; Code:
+
+#+end_src
+* User Configuration
+#+begin_src emacs-lisp
+  ;; user configuration goes here
+#+end_src
+* Footer
+#+begin_src emacs-lisp
+
+  ;;; userconfig.el ends here
+#+end_src

@@ -10,19 +10,58 @@ A sensible Emacs distro aimed at enhancing the default experience.
 
 * Quick Start
 
-Install [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs@Head]].
+0. Install [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs@Head]].
 
-Clone this repository to =~/.emacs.d=
+1. Clone this repository
 
 #+caption: Command to clone this Emacs distros =git= repository.
 #+name: li#git_clone
 #+begin_src sh
 
-  git clone https://github.com/diamondbond/emacs ~/.emacs.d
+  git clone https://github.com/diamondbond/emacs ~/git/emacs
 
 #+end_src
 
-Start Emacs to tangle the configuration and bootstrap straight.el (this may takeawhile)
+2. Install
+
+#+caption: Command to install this Emacs distro.
+#+name: li#install
+#+begin_src sh
+
+  # Backup old emacs configuration
+  mv ~/.emacs.d ~/.emacs.d.old
+
+  # Install new one
+  cd ~/git/emacs
+  chmod +x install.sh
+  ./install.sh
+
+#+end_src
+
+3. Bootstrap Emacs
+
+  This will take some time.
+  Please answer y for vterm-modules to be autoinstalled.
+
+#+caption: Command to bootstrap this Emacs distro.
+#+name: li#bootstrap
+#+begin_src sh
+
+  # Start Emacs daemon
+  emacs --daemon
+
+#+end_src
+
+4. Connect to Emacs
+
+#+caption: Command to connect to Emacs daemon.
+#+name: li#connectemacs
+#+begin_src sh
+
+  # Start Emacs daemon
+  emacsclient -c -n -a 'emacs'
+
+#+end_src
 
 * Principles
 

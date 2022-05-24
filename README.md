@@ -10,14 +10,38 @@ A sensible Emacs distro aimed at enhancing the default experience.
 
 # Quick Start
 
-Install [Emacs@Head](https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org).
+1.  Install [Emacs@Head](https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org).
 
-Clone this repository to `~/.emacs.d`
+2.  Clone this repository
 
 
-    git clone https://github.com/diamondbond/emacs ~/.emacs.d
+    git clone https://github.com/diamondbond/emacs ~/git/emacs
 
-Start Emacs to tangle the configuration and bootstrap straight.el (this may takeawhile)
+1.  Install
+
+
+    # Backup old emacs configuration
+    mv ~/.emacs.d ~/.emacs.d.old
+
+    # Install new one
+    cd ~/git/emacs
+    chmod +x install.sh
+    ./install.sh
+
+1.  Bootstrap Emacs
+
+    This will take some time.
+    Please answer y for vterm-modules to be autoinstalled.
+
+
+    # Start Emacs daemon
+    emacs --daemon
+
+1.  Connect to Emacs
+
+
+    # Start Emacs daemon
+    emacsclient -c -n -a 'emacs'
 
 
 # Principles

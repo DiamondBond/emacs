@@ -238,7 +238,9 @@ Emacs will fill up the space reported by the window manager.
   (setq initial-scratch-message "")
 #+END_SRC
 **** Disable some gui elements
-I only disable the tool-bar, I find the menu-bar and scroll-bar to be useful.
+Disable =tool-bar=.
+Keep =scroll-bar= as it provides contextual information regarding your whereabouts in the buffer.
+Keep =menu-bar= as it provides quick access to certain functions.
 #+BEGIN_SRC emacs-lisp
   (if (fboundp 'menu-bar-mode)
 	  (menu-bar-mode 1))
@@ -256,7 +258,6 @@ Disable fringe-mode.
   (setq-default indicate-empty-lines nil)
   (setq-default overflow-newline-into-fringe t)
 #+end_src
-
 **** Configure default-frame-alist
 Place the scrollbar on the right side when using x-toolkit=athena.
 Optionally; enable toolbar when using x-toolkit=athena.
@@ -492,14 +493,15 @@ Global, private & sane key maps.
 Elisp enhancers.
 *** Code
 #+begin_src emacs-lisp
-  (use-package fn      :demand t) ; function
-  (use-package s       :demand t) ; string
-  (use-package f       :demand t) ; file
-  (use-package ht      :demand t) ; hash table
-  (use-package dash    :demand t) ; list
-  (use-package a       :demand t) ; assoc lists
-  (use-package ts      :demand t) ; timestamps
-  (use-package pcre2el :demand t) ; sane regex
+  (use-package fn        :demand t) ; function
+  (use-package s         :demand t) ; string
+  (use-package f         :demand t) ; file
+  (use-package ht        :demand t) ; hash table
+  (use-package dash      :demand t) ; list
+  (use-package a         :demand t) ; assoc lists
+  (use-package ts        :demand t) ; timestamps
+  (use-package pcre2el   :demand t) ; sane regex
+  (use-package hierarchy :demand t) ; hierarchy
 #+end_src
 ** Initialize =async=
 *** Description
@@ -624,8 +626,8 @@ An extensible emacs startup screen.
 	(dashboard-setup-startup-hook)
 	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
-	(setq dashboard-startup-banner (expand-file-name "img/gnusstorm-2.gif" user-emacs-directory))
-	;; (setq dashboard-startup-banner 'official)
+	;; (setq dashboard-startup-banner (expand-file-name "img/gnusstorm-2.gif" user-emacs-directory))
+	(setq dashboard-startup-banner 'official)
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)
@@ -978,7 +980,7 @@ ERC is a powerful, modular, and extensible IRC client for Emacs.
 #+end_src
 ** Initialize =rcirc=
 *** Description
-Built in irc client, I use this for irc.libera.chat
+Emacs' builtin irc client.
 *** Code
 #+begin_src emacs-lisp
   (use-package rcirc
@@ -1571,6 +1573,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	:straight t
 	:init
 	;; diminish as mode is already loaded
+	(diminish 'auto-revert-mode "")
 	(diminish 'abbrev-mode "")
 	(diminish 'subword-mode)
 	(diminish 'visual-line-mode)
@@ -1583,7 +1586,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	(eval-after-load "which-key" '(diminish 'which-key-mode))
 	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
 	(eval-after-load "outline" '(diminish 'outline-minor-mode))
-	(eval-after-load "auto-revert" '(diminish 'auto-revert-minor-mode))
+	(eval-after-load "magit" '(diminish 'auto-revert-mode ""))
 	(eval-after-load "evil-commentary" '(diminish 'evil-commentary-mode))
 	(eval-after-load "evil-escape" '(diminish 'evil-escape-mode))
 	(eval-after-load "evil-collection-unimpaired" '(diminish 'evil-collection-unimpaired-mode)))
@@ -1611,20 +1614,15 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 #+begin_src emacs-lisp
   (use-package elcord
 	:straight t
-	:defer 5
 	:config
-	;; provide id
-	(setq elcord-client-id "978267848038297661")
 	;; set icon
 	(setq elcord-editor-icon "emacs_icon")
 	;; override buffer-details-format
 	(defun elcord-buffer-details-format ()
 	  "Return the buffer details string shown on discord."
-	  (format "%s" (buffer-name)))
-	;; autostart elcord
-	(elcord-mode))
+	  (format "%s" (buffer-name))))
 #+end_src
-* Mail
+* Email
 ** Prerequisites
 *** 0. Install offlineimap
 #+begin_src sh
@@ -1651,15 +1649,6 @@ Note: 'mu' binary is output to ~/.emacs.d/straight/repos/mu/build/mu/mu
 	"Rebuilds 'mu' index."
 	(interactive)
 	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu index"))
-#+end_src
-*** 4. Automagic setup
-#+begin_src emacs-lisp
-  (defun mu-setup/automagic ()
-	"Auto-magically configures 'mu'."
-	(interactive)
-	(mu-setup/build-mu-binary)
-	(mu-setup/init-mu)
-	(mu-setup/rebuild-mu-index))
 #+end_src
 ** Initialize =mu4e=
 *** Description

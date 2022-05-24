@@ -26,17 +26,7 @@ Create your maildir in $HOME as ~/mail
 
 Please refer to [[https://github.com/DiamondBond/emacs/blob/master/config.org#prerequisites][mu Setup]] in config.org.
 
-*** Auto-magic setup
-
-Automatically compile & initialize mu & build mu's index.
-
-#+begin_quote
-M-x mu-setup/automagic
-#+end_quote
-
-*** Manual Setup
-
-**** Compile mu
+*** Compile mu
 
 Compile mu & mu4e.
 
@@ -44,7 +34,7 @@ Compile mu & mu4e.
 M-x mu-setup/build-mu-binary
 #+end_quote
 
-**** Initialize mu
+*** Initialize mu
 
 Initialize mu with maildir & address.
 
@@ -52,7 +42,7 @@ Initialize mu with maildir & address.
 M-x mu-setup/init-mu
 #+end_quote
 
-**** Build mu index
+*** Build mu index
 
 Inform mu as to the contents of ~/mail by building/rebuilding the mu index.
 

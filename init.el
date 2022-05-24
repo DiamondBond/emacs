@@ -22,7 +22,6 @@
 (add-hook 'emacs-startup-hook 'startup/revert-file-name-handler-alist)
 
 ;;; For performance
-(setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
 ;; Initialize melpa repo
@@ -31,10 +30,11 @@
 			 '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
-;; Initialize straight.el
+;; Bootstrap straight.el
+(setq straight-base-dir (expand-file-name "var" user-emacs-directory))
 (defvar bootstrap-version)
 (let ((bootstrap-file
-	   (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+	   (expand-file-name "var/straight/repos/straight.el/bootstrap.el" user-emacs-directory))
 	  (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
 	(with-current-buffer
@@ -48,7 +48,7 @@
 ;; Install use-package with straight.el
 (straight-use-package 'use-package)
 
-;; Configure use-package & straight.el
+;; Configure straight.el
 (use-package straight
   :custom
   (straight-use-package-by-default t)
@@ -56,36 +56,25 @@
   (straight-recipes-gnu-elpa-use-mirror t)
   (straight-check-for-modifications nil))
 
-;; Load built-in org
+;; Load org for tangling
 (straight-use-package 'org)
 
-;; Tangle base config
+;; Tangle base configuration
 (when (file-readable-p "~/.emacs.d/config.org")
   (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 
-;; Tangle user config
-(setq-default userconfig-file (expand-file-name "userconfig.el" user-emacs-directory))
-  (when (file-exists-p userconfig-file)
-    (load userconfig-file))
+;; Tangle user configuration
+(let ((userconfig-location (expand-file-name "userconfig.org" user-emacs-directory)))
+  (when (file-exists-p userconfig-location)
+	(org-babel-load-file userconfig-location)))
 
-;; Restore original GC
+;; Garbage collect
+(garbage-collect)
+
+;; Restore original GC values
 (add-hook 'emacs-startup-hook
 		  (lambda ()
 			(setq gc-cons-threshold gc-cons-threshold-original)
 			(setq gc-cons-percentage gc-cons-percentage-original)))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(warning-suppress-log-types '((use-package) (browse-url) (comp)))
- '(warning-suppress-types '((use-package) (browse-url) (comp))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 ;;; init.el ends here

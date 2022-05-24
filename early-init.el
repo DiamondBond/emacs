@@ -17,17 +17,16 @@
 
 ;; Garbage Collection
 ;; A big contributor to startup times is garbage collection. We up the gc
-;; threshold to temporarily prevent it from running, then reset it later by
-;; enabling `gcmh-mode'. Not resetting it will cause stuttering/freezes.
+;; threshold to temporarily prevent it from running, then reset it later.
 (setq gc-cons-percentage-original gc-cons-percentage
 	  gc-cons-threshold-original gc-cons-threshold)
 (setq gc-cons-threshold most-positive-fixnum)
 (setq gc-cons-percentage 0.6)
 
-;; Compile warnings
+;; Silence compiler warnings
 (setq warning-minimum-level :emergency)
 (setq warning-suppress-types '((comp)))
-(setq comp-async-report-warnings-errors nil) ;; native-comp warning
+(setq comp-async-report-warnings-errors nil)
 (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local cl-functions))
 
 ;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;

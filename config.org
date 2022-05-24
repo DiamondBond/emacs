@@ -65,7 +65,7 @@ This list is in chronological load order.
 
 ** Dependencies
 
-Dependencies required to run this Emacs distro.
+Some dependencies required to run this Emacs distro.
 
 *** Packages
 **** System
@@ -102,7 +102,7 @@ Deno & typescript-language-server for Typescript (TS/TSX) support.
 #+end_src
 
 *** Files
-**** filesync
+**** Dropbox
 
 Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 
@@ -110,7 +110,7 @@ Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
   mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
 #+end_src
 
-**** auth-info
+**** Auth-Info List
 
 1. ~/org/.authinfo.gpg
 2. ~/org/secrets-el.gpg
@@ -454,7 +454,7 @@ Emacs will fill up the space reported by the window manager.
   (setq initial-scratch-message "")
 #+END_SRC
 **** Disable some gui elements
-Disable =tool-bar=.
+Disable =tool-bar= as it consumes too many pixels from our total frame-size.
 Keep =scroll-bar= as it provides contextual information regarding your whereabouts in the buffer.
 Keep =menu-bar= as it provides quick access to certain functions.
 #+BEGIN_SRC emacs-lisp

@@ -5,10 +5,10 @@
 #+AUTHOR: Diamond Bond
 #+EMAIL: diamondbond1@gmail.com
 #+LANGUAGE: en
+#+CREATOR: Emacs 28.1 (Org mode 9.5.3)
 #+STARTUP: inlineimages show2levels
 #+SETUPFILE: resources/white.theme
 #+EXPORT_FILE_NAME: emacs.html
-#+CREATOR: Emacs 28.1 (Org mode 9.5.3)
 #+OPTIONS: toc:2
 
 

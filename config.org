@@ -2040,7 +2040,7 @@ Sync dotfiles (incl. Emacs) to git.
 	(interactive)
 	;; authinfo
 	(async-shell-command "cp ~/org/.authinfo.gpg ~/")
-	(async-shell-command "cp ~/org/.secrets.el.gpg ~/.emacs.d/")
+	(async-shell-command "cp ~/org/secrets.el.gpg ~/.emacs.d/")
 	(async-shell-command "cp ~/org/network-security.data ~/.emacs.d/")
 	;; metadata
 	(async-shell-command "cp ~/org/custom.el ~/.emacs.d/"))

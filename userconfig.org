@@ -6,7 +6,6 @@
 #+OPTIONS: num:nil
 
 * Header
-
 Enable lexical binding.
 
 #+begin_src emacs-lisp
@@ -28,7 +27,6 @@ Enable lexical binding.
 #+end_src
 
 * Email
-
 ** Load =[[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email=]] module
 
 *** Description
@@ -44,7 +42,6 @@ Email in Emacs via mu4e & offlineimap.
 #+end_src
 
 * Discord
-
 ** Load =elcord= package
 
 *** Description

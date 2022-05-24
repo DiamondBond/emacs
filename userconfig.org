@@ -27,8 +27,9 @@ Enable lexical binding.
 #+end_src
 
 * Email
-** Load =[[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email=]] module
+** Load =email= module
 *** Description
+URL: https://github.com/DiamondBond/emacs/blob/master/modules/mail.org
 
 Email in Emacs via mu4e & offlineimap.
 
@@ -43,8 +44,9 @@ Email in Emacs via mu4e & offlineimap.
 * Discord
 ** Load =elcord= package
 *** Description
+URL: https://github.com/Mstrodl/elcord
 
-Discord RPC via Emacs.
+Discord RPC for Emacs.
 =M-x elcord= to toggle.
 
 *** Code

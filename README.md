@@ -11,7 +11,7 @@ A sensible Emacs distro aimed at enhancing the default experience.
 # Quick Start
 
 
-## 0. Install Emacs > 27
+## 0. Install Emacs
 
 [Emacs](https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org) build instructions.
 
@@ -90,7 +90,7 @@ This configuration and all associated modules intend to follow the below prinici
 
 ## Performant
 
-Provides a responsive experience that adheres to function over form principles.
+Provides a responsive experience that adheres to form follows function principles.
 
 
 ## Reproducible
@@ -100,7 +100,9 @@ Utilizes straight.el for reproducibility & increased stability.
 
 ## Literate
 
-Provides verbose doc-strings.
+Every elisp snippet is commented or documented.
+
+Provide verbose doc-strings and inline code commentary.
 
 
 ## Correct

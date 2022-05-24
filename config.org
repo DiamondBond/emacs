@@ -974,7 +974,7 @@ ERC is a powerful, modular, and extensible IRC client for Emacs.
 	(setq erc-prompt " >"
 		  erc-nick '("diamondbond" "diamondbond_"))
 	(add-to-list 'erc-modules 'notifications)
-	(add-to-list 'erc-modules 'spelling))
+	(add-to-list 'erc-modules 'spelling)))
 +end_src
 ** Initialize =rcirc=
 *** Description

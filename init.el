@@ -59,9 +59,14 @@
 ;; Load built-in org
 (straight-use-package 'org)
 
-;; Tangle config
+;; Tangle base config
 (when (file-readable-p "~/.emacs.d/config.org")
   (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+
+;; Tangle user config
+;;(setq-default userconfig-file (expand-file-name "userconfig.el" user-emacs-directory))
+;;(when (file-exists-p userconfig-file)
+;;  (load userconfig-file))
 
 ;; Restore original GC
 (add-hook 'emacs-startup-hook

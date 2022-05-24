@@ -96,15 +96,6 @@ This keeps your init.el neater and you have the option to gitignore your custom.
    ;;; Load custom file. Don't hide errors. Hide success message
   (load custom-file nil t)
 #+end_src
-*** Load userconfig.el
-Whenever the base =config.org= file is updated, all the custom user settings are wiped out.
-
-To prevent this, the user may define permanent settings in the =userconfig.org= file.
-#+begin_src emacs-lisp
-  (setq-default userconfig-file (expand-file-name "userconfig.el" user-emacs-directory))
-  (when (file-exists-p userconfig-file)
-	(load userconfig-file))
-#+end_src
 *** Load custom themes
 #+begin_src emacs-lisp
   (when (file-exists-p (expand-file-name "themes/" user-emacs-directory))
@@ -432,6 +423,7 @@ Global, private & sane key maps.
   (define-key z-map (kbd "W") 'elfeed)
   (define-key z-map (kbd "w") 'eww)
   (define-key z-map (kbd "F") 'follow-mode)
+  (define-key z-map (kbd "U") 'undo-redo)
 
   ;; quick
   (define-key z-map (kbd "C-1") 'display-buffer-other-frame)
@@ -590,7 +582,7 @@ An extensible emacs startup screen.
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
 	:straight t
-    :defer nil
+	:defer nil
 	:diminish dashboard-mode
 	:preface
 	(defun init-edit ()
@@ -644,12 +636,12 @@ An extensible emacs startup screen.
 			`(;; line 1
 			  ((,nil
 				"mu4e"
-				"Read email with mu4e"
+				"Read Email with mu4e"
 				(lambda (&rest _) (mu4e))
 				'default)
 			   (,nil
 				"md4rd"
-				"Browse reddit with md4rd"
+				"Browse Reddit with md4rd"
 				(lambda (&rest _) (md4rd))
 				'default)
 			   (nil
@@ -659,7 +651,7 @@ An extensible emacs startup screen.
 				'default)
 			   (nil
 				"gnus"
-				"Read emacs-devel with Gnus"
+				"Read mailing lists with Gnus"
 				(lambda (&rest _) (open-emacs-devel))
 				'default))
 			  ;; separator
@@ -668,12 +660,12 @@ An extensible emacs startup screen.
 			  ;; line 2
 			  ((,nil
 				"Notes"
-				"Open personal notes"
+				"Open Notes"
 				(lambda (&rest _) (notes-edit))
 				'default)
 			   (nil
 				"Tasks"
-				"Open tasks"
+				"Open Tasks"
 				(lambda (&rest _) (tasks-edit))
 				'default)
 			   (nil
@@ -982,10 +974,8 @@ ERC is a powerful, modular, and extensible IRC client for Emacs.
 	(setq erc-prompt " >"
 		  erc-nick '("diamondbond" "diamondbond_"))
 	(add-to-list 'erc-modules 'notifications)
-	(add-to-list 'erc-modules 'spelling)
-	(erc-services-mode 1)
-	(erc-update-modules))
-#+end_src
+	(add-to-list 'erc-modules 'spelling))
++end_src
 ** Initialize =rcirc=
 *** Description
 Built in irc client, I use this for irc.libera.chat
@@ -1021,9 +1011,7 @@ Autorevert hooked buffers & diminish auto-revert-mode.
 	:after magit
 	:diminish auto-revert-mode
 	:init
-	(progn
-	  (setq auto-revert-verbose nil
-			global-auto-revert-non-file-buffers t))
+	(setq auto-revert-verbose nil)
 	:hook ((prog-mode
 			text-mode
 			tex-mode
@@ -1081,6 +1069,8 @@ Vertico, orderless, marginalia, consult & embark.
 	:bind (:map vertico-map
 				("C-j" . vertico-next)
 				("C-k" . vertico-previous)
+				("M-j" . vertico-next)
+				("M-k" . vertico-previous)
 				("C-f" . vertico-exit)
 				;; 		   ("M-j" . vertico-next)
 				;; 		   ("M-k" . vertico-previous)
@@ -1593,33 +1583,10 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	(eval-after-load "which-key" '(diminish 'which-key-mode))
 	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
 	(eval-after-load "outline" '(diminish 'outline-minor-mode))
+	(eval-after-load "auto-revert" '(diminish 'auto-revert-minor-mode))
 	(eval-after-load "evil-commentary" '(diminish 'evil-commentary-mode))
 	(eval-after-load "evil-escape" '(diminish 'evil-escape-mode))
 	(eval-after-load "evil-collection-unimpaired" '(diminish 'evil-collection-unimpaired-mode)))
-#+end_src
-** Initialize =undo-tree=
-*** Description
-Branching tree of changes made in a file.
-*** Code
-#+begin_src emacs-lisp
-  (use-package undo-tree
-	:straight t
-	:diminish undo-tree-mode
-	:init
-	(global-undo-tree-mode)
-	:config
-	(setq undo-tree-auto-save-history nil)
-	(setq undo-tree-visualizer-timestamps t)
-	(setq undo-tree-visualizer-diff t))
-#+end_src
-** Initialize =drag-stuff=
-*** Description
-Meta shift & Mouse-1 to drag-stuff.
-*** Code
-#+begin_src emacs-lisp
-  (use-package drag-stuff
-	:defer t
-	:config (setq drag-stuff-modifier '(meta shift)))
 #+end_src
 ** Initialize =modus-themes=
 *** Description
@@ -1868,6 +1835,13 @@ Language Server Protocol, handles the following languages:
 	:init (when (executable-find "python3")
 			(setq lsp-pyright-python-executable-cmd "python3")))
 #+end_src
+** C/C++
+Default C/C++ mode is sufficient.
+Add modern cpp syntax highlighting.
+#+begin_src emacs-lisp
+  (use-package modern-cpp-font-lock
+	:straight t)
+#+end_src
 ** C#
 *** Description
 CSharp mode.
@@ -2086,11 +2060,14 @@ Prettier formatter for JSX & TSX.
 	"Start ERC and connect to Rizon."
 	(interactive)
 	(save-current-buffer
+	  (erc-services-mode 1)
+	  (erc-update-modules)
 	  (erc :server "irc.rizon.net" :port "6667" :nick "diamondbond")))
 
   (defun erc-quit ()
 	"Quit ERC."
 	(interactive)
+	(erc-services-mode 0)
 	(erc-quit-server nil))
 #+end_src
 *** Run in vterm
@@ -2236,7 +2213,7 @@ Sync dotfiles (incl. Emacs) to git.
 #+end_src
 *** Sync Personal
 #+begin_src emacs-lisp
-  (defun sync/personal-backup ()
+  (defun sync/personal/backup ()
 	"Backup authinfo & personal info."
 	(interactive)
 	;; authinfo
@@ -2248,7 +2225,7 @@ Sync dotfiles (incl. Emacs) to git.
 	(async-shell-command "cp ~/.emacs.d/places ~/org/")
 	(async-shell-command "cp ~/.emacs.d/recentf ~/org/"))
 
-  (defun sync/personal-restore ()
+  (defun sync/personal/restore ()
 	"Restore authinfo & personal info."
 	(interactive)
 	;; authinfo

@@ -1965,71 +1965,6 @@ Prettier formatter for JSX & TSX.
 	(interactive)
 	(switch-to-buffer (list-buffers-noselect)))
 #+end_src
-** Syncing
-*** Sync Emacs
-Sync Emacs configuration to git.
-#+begin_src emacs-lisp
-  (defun sync/emacs ()
-	"Sync Emacs configuration."
-	(interactive)
-	(async-shell-command "~/bin/sync-emacs.sh"))
-
-  (defun sync/emacs-lockfile ()
-	"Sync Emacs 'lock-file'."
-	(interactive)
-	(straight-freeze-versions)
-	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
-#+end_src
-*** Sync Mail
-Sync Email locally.
-#+begin_src emacs-lisp
-  (defun sync/mail ()
-	"Sync email."
-	(interactive)
-	(async-shell-command "offlineimap")
-	(mu4e-update-index))
-#+end_src
-*** Sync News
-Sync Elfeed & Mail.
-#+begin_src emacs-lisp
-  (defun sync/news ()
-	"Sync; elfeed & email."
-	(interactive)
-	(sync-mail)
-	(elfeed)
-	(elfeed-update))
-#+end_src
-*** Sync Dotfiles
-Sync dotfiles (incl. Emacs) to git.
-#+begin_src emacs-lisp
-  (defun sync/dotfiles ()
-	"Sync dotfiles."
-	(interactive)
-	(async-shell-command "~/bin/sync-dotfiles.sh")
-	(alert "Sync Complete." :severity 'trivial))
-#+end_src
-*** Sync Personal
-#+begin_src emacs-lisp
-  (defun sync/personal/backup ()
-	"Backup authinfo & personal info."
-	(interactive)
-	;; authinfo
-	(async-shell-command "cp ~/.authinfo.gpg ~/org/")
-	(async-shell-command "cp ~/.emacs.d/secrets.el.gpg ~/org/")
-	(async-shell-command "cp ~/.emacs.d/network-security.data ~/org/")
-	;; metadata
-	(async-shell-command "cp ~/.emacs.d/custom.el ~/org/"))
-
-  (defun sync/personal/restore ()
-	"Restore authinfo & personal info."
-	(interactive)
-	;; authinfo
-	(async-shell-command "cp ~/org/.authinfo.gpg ~/")
-	(async-shell-command "cp ~/org/secrets.el.gpg ~/.emacs.d/")
-	(async-shell-command "cp ~/org/network-security.data ~/.emacs.d/")
-	;; metadata
-	(async-shell-command "cp ~/org/custom.el ~/.emacs.d/"))
-#+end_src
 ** Launchers
 *** Music
 Run ncmpcpp within vterm.
@@ -2192,6 +2127,71 @@ Insert currently visiting buffer filename.
 	(newline)
 	(forward-line -1)
 	(indent-for-tab-command))
+#+end_src
+** Syncing
+*** Sync Emacs
+Sync Emacs configuration to git.
+#+begin_src emacs-lisp
+  (defun sync/emacs ()
+	"Sync Emacs configuration."
+	(interactive)
+	(async-shell-command "~/bin/sync-emacs.sh"))
+
+  (defun sync/emacs-lockfile ()
+	"Sync Emacs 'lock-file'."
+	(interactive)
+	(straight-freeze-versions)
+	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
+#+end_src
+*** Sync Mail
+Sync Email locally.
+#+begin_src emacs-lisp
+  (defun sync/mail ()
+	"Sync email."
+	(interactive)
+	(async-shell-command "offlineimap")
+	(mu4e-update-index))
+#+end_src
+*** Sync News
+Sync Elfeed & Mail.
+#+begin_src emacs-lisp
+  (defun sync/news ()
+	"Sync; elfeed & email."
+	(interactive)
+	(sync-mail)
+	(elfeed)
+	(elfeed-update))
+#+end_src
+*** Sync Dotfiles
+Sync dotfiles (incl. Emacs) to git.
+#+begin_src emacs-lisp
+  (defun sync/dotfiles ()
+	"Sync dotfiles."
+	(interactive)
+	(async-shell-command "~/bin/sync-dotfiles.sh")
+	(alert "Sync Complete." :severity 'trivial))
+#+end_src
+*** Sync Personal
+#+begin_src emacs-lisp
+  (defun sync/personal/backup ()
+	"Backup authinfo & personal info."
+	(interactive)
+	;; authinfo
+	(async-shell-command "cp ~/.authinfo.gpg ~/org/")
+	(async-shell-command "cp ~/.emacs.d/secrets.el.gpg ~/org/")
+	(async-shell-command "cp ~/.emacs.d/network-security.data ~/org/")
+	;; metadata
+	(async-shell-command "cp ~/.emacs.d/custom.el ~/org/"))
+
+  (defun sync/personal/restore ()
+	"Restore authinfo & personal info."
+	(interactive)
+	;; authinfo
+	(async-shell-command "cp ~/org/.authinfo.gpg ~/")
+	(async-shell-command "cp ~/org/secrets.el.gpg ~/.emacs.d/")
+	(async-shell-command "cp ~/org/network-security.data ~/.emacs.d/")
+	;; metadata
+	(async-shell-command "cp ~/org/custom.el ~/.emacs.d/"))
 #+end_src
 ** Config
 *** =config/reload=

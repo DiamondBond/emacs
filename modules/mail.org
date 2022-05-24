@@ -25,7 +25,7 @@ Enable lexical binding.
 
 #+end_src
 
-Refer to [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email Setup]].
+*Refer to [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email Setup]].*
 
 #+begin_quote
 

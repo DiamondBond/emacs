@@ -207,8 +207,7 @@ Install [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language se
 
 Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email setup documentation]] for this functionality.
 
-* Bootstrap
-** Header
+* Header
 Enable lexical binding.
 #+begin_src emacs-lisp
   ;;; config.el --- Configuration. -*- lexical-binding: t; -*-
@@ -230,10 +229,14 @@ Enable lexical binding.
 * Base
 ** Personal
 *** Identity
-Set user name and email address.
 #+begin_src emacs-lisp
-  (setq user-full-name "Diamond"
-		user-mail-address "diamondbond1@gmail.com")
+  (setq user-full-name "Diamond Bond"
+		user-mail-address "diamondbond1@gmail.com"
+		erc-nick '("diamondbond" "diamondbond_")
+		erc-nick-short "diamondbond"
+		rcirc-default-user-name "diamondbond"
+		rcirc-default-nick      "diamondbond"
+		rcirc-default-full-name "Diamond Bond")
 #+end_src
 *** Authentication
 Set authinfo file location and authinfo expiry to never.
@@ -1410,8 +1413,7 @@ Usage: irc.rizon.net
 	;; open query buffers in the current window
 	(setq erc-query-display 'buffer)
 	;; configure appearance
-	(setq erc-prompt " >"
-		  erc-nick '("diamondbond" "diamondbond_"))
+	(setq erc-prompt " >")
 	;; load erc modules
 	(add-to-list 'erc-modules 'notifications)
 	(add-to-list 'erc-modules 'spelling))
@@ -1428,9 +1430,6 @@ Usage: irc.libera.chat
 	:commands (irc rcirc)
 	:ensure nil
 	:config
-	(setq rcirc-default-user-name "diamondbond"
-		  rcirc-default-nick      "diamondbond"
-		  rcirc-default-full-name "Diamond Bond")
 	(setq rcirc-auto-authenticate-flag t)
 	(setq rcirc-time-format "[%I:%M %p] ")
 	(rcirc-track-minor-mode 1))
@@ -2111,7 +2110,7 @@ Prettier formatter for JSX & TSX.
 	(save-current-buffer
 	  (erc-services-mode 1)
 	  (erc-update-modules)
-	  (erc :server "irc.rizon.net" :port "6667" :nick "diamondbond")))
+	  (erc :server "irc.rizon.net" :port "6667" :nick erc-nick-short)))
 
   (defun erc-quit ()
 	"Quit ERC."

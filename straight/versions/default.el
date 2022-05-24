@@ -6,6 +6,7 @@
  ("all-the-icons-dired" . "147ed0dfd1034a686795a08dc63e2c293128597e")
  ("all-the-icons.el" . "ca1ef30004d3fb76aaa70bd47cb83e9fe017a7f7")
  ("auctex" . "53b82804c9dd9dbea306876f3be84ebacbeb7e74")
+ ("auto-package-update.el" . "ad95435fefe2bb501d1d787b08272f9c1b7df488")
  ("avy" . "ba5f035be33693d1a136a5cbeedb24327f551a92")
  ("cape" . "2ac24a8ac26dc36a3930fab52863cf66583f5251")
  ("chez" . "48427d4aecc6fed751d266673f1ce2ad57ddbcfc")

@@ -26,9 +26,13 @@ Enable lexical binding.
 
 #+end_src
 
+
 * Email
+
 ** Load =email= module
+
 *** Description
+
 URL: https://github.com/DiamondBond/emacs/blob/master/modules/mail.org
 
 Email in Emacs via mu4e & offlineimap.
@@ -42,8 +46,11 @@ Email in Emacs via mu4e & offlineimap.
 #+end_src
 
 * Discord
+
 ** Load =elcord= package
+
 *** Description
+
 URL: https://github.com/Mstrodl/elcord
 
 Discord RPC for Emacs.
@@ -67,7 +74,7 @@ Discord RPC for Emacs.
 	  (format "%s" (buffer-name))))
 #+end_src
 
-* Function
+* Functions
 #+begin_src emacs-lisp
   (defun config/push ()
 	(async-shell-command "cd ~/git/emacs; git add -A; git commit -asm 'Automatic Sync'; git push"))
@@ -78,6 +85,8 @@ Discord RPC for Emacs.
 	(sync/emacs)
 	(config/push))
 #+end_src
+
+
 * Footer
 #+begin_src emacs-lisp
 

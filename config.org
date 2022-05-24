@@ -1155,6 +1155,7 @@ Vertico, orderless, marginalia, consult & embark.
 	:bind
 	(("M-y" . consult-yank-from-kill-ring)
 	 ("C-s" . consult-line)
+	 ("C-x r b" . consult-bookmark)
 	 ("C-x b" . consult-buffer)))
 
   ;; Emacs Mini-Buffer Actions Rooted in Keymaps
@@ -1431,16 +1432,6 @@ Enable on the fly with M-x flyspell-mode.
 	(setq ispell-program-name "hunspell"
 		  ispell-default-dictionary "en_US")
 	:bind (("M-<f7>" . flyspell-buffer)))
-#+end_src
-** Initialize =imenu-list=
-*** Description
-Popup contents mini-buffer.
-*** Code
-#+begin_src emacs-lisp
-  (use-package imenu-list
-	:straight t
-	:config
-	(setq imenu-list-auto-resize t))
 #+end_src
 ** Initialize =ripgrep=
 *** Description

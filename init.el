@@ -31,7 +31,6 @@
 (package-initialize)
 
 ;; Bootstrap straight.el
-(setq straight-base-dir (expand-file-name "var" user-emacs-directory))
 (defvar bootstrap-version)
 (let ((bootstrap-file
 	   (expand-file-name "var/straight/repos/straight.el/bootstrap.el" user-emacs-directory))

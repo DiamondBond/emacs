@@ -35,14 +35,6 @@ Enable lexical binding.
 
 /offlineimap/ is the imap synchronization utility.
 
-** Overview
-
-- sync   :: mu
-
-- server :: offlineimap
-
-- client :: mu4e
-
 ** 0. Prerequisites
 
 *** 0.1 maildir

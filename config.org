@@ -241,6 +241,9 @@ Set authinfo file location and authinfo expiry to never.
   (if (file-exists-p "~/.authinfo.gpg")
 	  (setq auth-sources '("~/.authinfo" "~/.authinfo.gpg")
 			auth-source-cache-expiry nil))
+
+  ;; ask for encryption password once
+  (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 #+end_src
 ** Performance
 *** Garbage collect when in minibuffer
@@ -1284,9 +1287,6 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 
 	;; read feeds/atom through Gmane
 	(setq gnus-select-method '(nntp "news.gmane.io"))
-
-	;; ask for encryption password once
-	(setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
 	;; Gmail
 	(setq gnus-select-method

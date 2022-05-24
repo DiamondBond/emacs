@@ -67,6 +67,17 @@ Discord RPC for Emacs.
 	  (format "%s" (buffer-name))))
 #+end_src
 
+* Function
+#+begin_src emacs-lisp
+  (defun config/push ()
+	(async-shell-command "cd ~/git/emacs; git add -A; git commit -asm 'Automatic Sync'; git push"))
+
+  (defun config/update ()
+	"@USER-OVERRIDE: Updates the Emacs configuration git repository."
+	(interactive)
+	(sync/emacs)
+	(config/push))
+#+end_src
 * Footer
 #+begin_src emacs-lisp
 

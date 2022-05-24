@@ -26,7 +26,6 @@ Enable lexical binding.
 
 #+end_src
 
-
 * Email
 
 ** Load =email= module
@@ -85,7 +84,6 @@ Discord RPC for Emacs.
 	(sync/emacs)
 	(config/push))
 #+end_src
-
 
 * Footer
 #+begin_src emacs-lisp

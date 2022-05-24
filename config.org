@@ -101,11 +101,6 @@ This keeps your init.el neater and you have the option to gitignore your custom.
   (when (file-exists-p (expand-file-name "themes/" user-emacs-directory))
 	(add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory)))
 #+end_src
-*** Load newer .elc or .el
-Load the newer .elc or .el file, rather than stopping at .elc.
-#+begin_src emacs-lisp
-  (setq load-prefer-newer t)
-#+end_src
 *** Don't ask for confirmation when opening symlinked file
 #+begin_src emacs-lisp
   (setq vc-follow-symlinks t)
@@ -483,10 +478,11 @@ Global, private & sane key maps.
   (global-set-key (kbd "C-DEL") 'sanemacs/backward-kill-word)
 #+END_SRC
 * Use-package
-** Initialize =elisp=
-*** Description
+** Core
+*** Initialize =elisp=
+**** Description
 Elisp enhancers.
-*** Code
+**** Code
 #+begin_src emacs-lisp
   (use-package fn        :demand t) ; function
   (use-package s         :demand t) ; string
@@ -498,10 +494,10 @@ Elisp enhancers.
   (use-package pcre2el   :demand t) ; sane regex
   (use-package hierarchy :demand t) ; hierarchy
 #+end_src
-** Initialize =async=
-*** Description
+*** Initialize =async=
+**** Description
 Utilize asynchronous processes whenever possible.
-*** Code
+**** Code
 #+BEGIN_SRC emacs-lisp
   (use-package async
 	:straight t
@@ -512,20 +508,20 @@ Utilize asynchronous processes whenever possible.
 	(async-bytecomp-package-mode 1)
 	(add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil))))
 #+END_SRC
-** Initialize =alert=
-*** Description
+*** Initialize =alert=
+**** Description
 Alert is a Growl-workalike for Emacs which uses a common notification interface and multiple, selectable "styles", whose use is fully customizable by the user.
-*** Code
+**** Code
 #+begin_src emacs-lisp
   (use-package alert
 	:straight t
 	:config
 	(setq alert-fade-time 15))
 #+end_src
-** Initialize =evil=
-*** Description
+*** Initialize =evil=
+**** Description
 Heresy; Vim keybindings in Emacs.
-*** Code
+**** Code
 #+BEGIN_SRC emacs-lisp
   (use-package evil
 	:straight t
@@ -553,171 +549,10 @@ Heresy; Vim keybindings in Emacs.
 	;; org-cycle
 	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle))
 #+END_SRC
-** Initialize =elmacro=
-*** Description
-Shows keyboard macros or latest interactive commands as Emacs lisp.
-*** Code
-#+begin_src emacs-lisp
-  (use-package elmacro
-	:straight t)
-#+end_src
-** Initialize =which-key=
-*** Description
-Possible completion framework with 0.3s delay.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package which-key
-	:straight t
-	:init
-	(which-key-mode)
-	:config
-	(setq which-key-idle-delay 0.3))
-#+END_SRC
-** Initialize =switch-window=
-*** Description
-C-x o and pick window (a,s,d...)
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package switch-window
-	:straight t
-	:config
-	(setq switch-window-input-style 'minibuffer)
-	(setq switch-window-increase 4)
-	(setq switch-window-threshold 2)
-	(setq switch-window-shortcut-style 'qwerty)
-	(setq switch-window-qwerty-shortcuts
-		  '("a" "s" "d" "f" "j" "k" "l"))
-	:bind
-	([remap other-window] . switch-window))
-#+END_SRC
-** Initialize =dabbrev=
-*** Description
-Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
-*** Code
-#+begin_src emacs-lisp
-  ;; use dabbrev with Corfu!
-  (use-package dabbrev
-	:straight t
-	;; swap M-/ and C-M-/
-	:bind (("M-/" . dabbrev-completion)
-		   ("C-M-/" . dabbrev-expand)))
-#+end_src
-** Initialize =dashboard=
-*** Description
-An extensible emacs startup screen.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package dashboard
-	:straight t
-	:defer nil
-	:diminish dashboard-mode
-	:preface
-	(defun init-edit ()
-	  "Edit initialization file."
-	  (interactive)
-	  (if (file-exists-p "~/.emacs.d/init.el")
-		  (find-file "~.emacs.d/init.el")))
-	(defun config-edit ()
-	  "Edit configuration file."
-	  (interactive)
-	  (if (file-exists-p "~/.emacs.d/config.org")
-		  (find-file "~/.emacs.d/config.org")))
-	(when (file-directory-p "~/org")
-	  (defun notes-edit ()
-		"Edit notes file."
-		(interactive)
-		(if (file-exists-p "~/org/notes.org")
-			(find-file "~/org/notes.org")))
-	  (defun tasks-edit ()
-		"Edit tasks file."
-		(interactive)
-		(if (file-exists-p "~/org/tasks.org")
-			(find-file "~/org/tasks.org")))
-	  (defun archive-edit ()
-		"Edit archive file."
-		(interactive)
-		(if (file-exists-p "~/org/archive.org")
-			(find-file "~/org/archive.org")))
-	  (defun inbox-edit ()
-		"Edit inbox file."
-		(interactive)
-		(if (file-exists-p "~/org/inbox.org")
-			(find-file "~/org/inbox.org"))))
-	(defun create-scratch-buffer ()
-	  "Create a scratch buffer."
-	  (interactive)
-	  (switch-to-buffer (get-buffer-create "*scratch*")))
-	:config
-	(dashboard-setup-startup-hook)
-	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
-	(setq dashboard-items '((recents . 5)))
-	;; (setq dashboard-startup-banner (expand-file-name "img/gnusstorm-2.gif" user-emacs-directory))
-	(setq dashboard-startup-banner 'official)
-	(setq dashboard-center-content t)
-	(setq dashboard-show-shortcuts nil)
-	(setq dashboard-set-init-info t)
-	(setq dashboard-set-footer nil)
-	(setq dashboard-set-navigator t)
-	(when (file-directory-p "~/org")
-	  (setq dashboard-navigator-buttons
-			`(;; line 1
-			  ((,nil
-				"mu4e"
-				"Read Email with mu4e"
-				(lambda (&rest _) (mu4e))
-				'default)
-			   (,nil
-				"md4rd"
-				"Browse Reddit with md4rd"
-				(lambda (&rest _) (md4rd))
-				'default)
-			   (nil
-				"elfeed"
-				"Read RSS/Atom feeds with Elfeed"
-				(lambda (&rest _) (elfeed))
-				'default)
-			   (nil
-				"gnus"
-				"Read mailing lists with Gnus"
-				(lambda (&rest _) (open-emacs-devel))
-				'default))
-			  ;; separator
-			  ((,nil "==============================" ""
-					 (lambda (&rest _) ()) 'default))
-			  ;; line 2
-			  ((,nil
-				"Notes"
-				"Open Notes"
-				(lambda (&rest _) (notes-edit))
-				'default)
-			   (nil
-				"Tasks"
-				"Open Tasks"
-				(lambda (&rest _) (tasks-edit))
-				'default)
-			   (nil
-				"Agenda"
-				"Open Org-Agenda"
-				(lambda (&rest _) (org-agenda nil "n"))
-				'default)
-			   (nil
-				"Inbox"
-				"Open Inbox"
-				(lambda (&rest _) (inbox-edit))
-				'default))))))
-#+END_SRC
-** Initialize =calfw=
-*** Description
-Calendar view in Emacs buffer.
-*** Code
-#+begin_src emacs-lisp
-  (use-package calfw
-	:straight t)
-#+end_src
-** Initialize =org=
-*** Description
+*** Initialize =org=
+**** Description
 Sensible and well-defined org-mode configuration with org-capture support & notifications.
-**** Code
+***** Code
 #+BEGIN_SRC emacs-lisp
   (use-package org
 	:straight t
@@ -807,10 +642,10 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	:config
 	(setq cfw:org-agenda-schedule-args '(:timestamp :scheduled :deadline)))
 #+end_src
-** Initialize =dired=
-*** Description
+*** Initialize =dired=
+**** Description
 Add icons and subtree's to dired.
-*** Code
+**** Code
 #+begin_src emacs-lisp
       (use-package dired
 	:straight (:type built-in)
@@ -846,213 +681,126 @@ Add icons and subtree's to dired.
 						     (when all-the-icons-dired-mode
 						       (revert-buffer)))))
 #+end_src
-** Initialize =gnus=
-*** Description
-Gnus, or Gnus Network User Services, is a message reader which is part of GNU Emacs.
-*** Code
+** Keys
+*** Initialize =elmacro=
+**** Description
+Shows keyboard macros or latest interactive commands as Emacs lisp.
+**** Code
 #+begin_src emacs-lisp
-  (use-package gnus
-	:straight t
-	:config
-	;; make Gnus startup faster
-	(setq gnus-check-new-newsgroups nil
-		  gnus-check-bogus-newsgroups nil)
-
-	;; read feeds/atom through Gmane
-	(setq gnus-select-method '(nntp "news.gmane.io"))
-
-	;; ask for encryption password once
-	(setq epa-file-cache-passphrase-for-symmetric-encryption t)
-
-	;; Gmail
-	(setq gnus-select-method
-		  '(nnimap "gmail"
-				   (nnimap-address "imap.gmail.com")))
-
-	;; make Gnus prettier
-	(setq gnus-sum-thread-tree-indent "  ")
-	(setq gnus-sum-thread-tree-root "● ")
-	(setq gnus-sum-thread-tree-false-root "◯ ")
-	(setq gnus-sum-thread-tree-single-indent "◎ ")
-	(setq gnus-sum-thread-tree-vertical        "│")
-	(setq gnus-sum-thread-tree-leaf-with-other "├─► ")
-	(setq gnus-sum-thread-tree-single-leaf     "╰─► ")
-	(setq gnus-summary-display-arrow t)
-	(setq gnus-summary-line-format
-		  (concat
-		   "%0{%U%R%z%}"
-		   "%3{│%}" "%1{%d%}" "%3{│%}"
-		   "  "
-		   "%4{%-20,20f%}"
-		   "  "
-		   "%3{│%}"
-		   " "
-		   "%1{%B%}"
-		   "%s\n"))
-
-	;; fixing summary buffer
-	;; there’s no need to recenter the summary buffer all the time, it only slows gnus down.
-	(setq gnus-auto-center-summary nil)
-
-	;; enter the summary buffer faster
-	(setq gnus-nov-is-evil nil
-		  gnus-show-threads t
-		  gnus-use-cross-reference nil)
-
-	;; news check
-	(defun gnus-demon-scan-news ()
-	  (interactive)
-	  (when gnus-plugged
-		(let ((win (current-window-configuration))
-			  (gnus-read-active-file nil)
-			  (gnus-check-new-newsgroups nil)
-			  (gnus-verbose 2)
-			  (gnus-verbose-backends 5))
-		  (unwind-protect
-			  (save-window-excursion
-				(when (gnus-alive-p)
-				  (with-current-buffer gnus-group-buffer
-					(gnus-group-get-new-news gnus-activate-level))))
-			(set-window-configuration win)))))
-
-	;; configuring mail appearance
-	(setq gnus-treat-strip-multiple-blank-lines t)
-	(setq gnus-treat-trailing-blank-lines t)
-	;; let's see some smiles in gnus
-	(setq gnus-treat-display-smileys t)
-	(setq gnus-treat-emphasize 'head)
-
-	;; fetch only part of the article if we can.
-	(setq gnus-read-active-file 'some)
-	;; fetch some old headers
-	(setq gnus-fetch-old-headers 'some)
-
-	;; Gnus automatic scoring
-	(setq gnus-use-adaptive-scoring t)
-
-	;; Gnus sorting
-	(setq gnus-thread-sort-functions
-		  '(gnus-thread-sort-by-most-recent-date
-			(not gnus-thread-sort-by-number))))
-#+end_src
-** Initialize =elfeed=
-*** Description
-RSS reader for Emacs.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package elfeed
-	:straight t
-	:config
-	(setq elfeed-feeds
-		  '(("https://www.archlinux.org/feeds/news/" archlinux)
-			("https://www.gnome.org/feed/" gnome)
-			("http://nullprogram.com/feed/" nullprog)
-			("https://planet.emacslife.com/atom.xml" emacs community)
-			("https://www.ecb.europa.eu/rss/press.html" economics eu)
-			("https://drewdevault.com/blog/index.xml" drew devault)
-			("https://news.ycombinator.com/rss" ycombinator news)
-			("https://www.phoronix.com/rss.php" phoronix))))
-#+END_SRC
-** Initialize =md4rd=
-*** Description
-Reddit client within Emacs with oauth2 support.
-*** Code
-#+begin_src emacs-lisp
-  (use-package md4rd
-	:straight t
-	:config
-	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure))
-	(load-if-exists "~/.emacs.d/secrets.el.gpg"))
-#+end_src
-** Initialize =erc=
-*** Description
-ERC is a powerful, modular, and extensible IRC client for Emacs.
-*** Code
-#+begin_src emacs-lisp
-  (use-package erc
-	:straight t
-	:custom
-	(erc-autojoin-timing 'ident)
-	(erc-autojoin-channels-alist '(("irc.rizon.net" "#rice")))
-	(erc-fill-function 'erc-fill-static)
-	(erc-fill-static-center 22)
-	(erc-hide-list '("JOIN" "PART" "QUIT"))
-	(erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
-	(erc-lurker-threshold-time 43200)
-	(erc-server-reconnect-attempts 5)
-	(erc-server-reconnect-timeout 3)
-	(erc-quit-reason 'erc-quit-reason-normal)
-	(erc-timestamp-format "[%I:%M %p] ")
-	(erc-timestamp-only-if-changed-flag nil)
-	(erc-truncate-mode t)
-	(erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
-							   "324" "329" "332" "333" "353" "477"))
-	:config
-	;; login
-	(setq erc-nickserv-identify-mode 'autodetect)
-	;; interpret mIRC-style color commands in IRC chats
-	(setq erc-interpret-mirc-color t)
-	;; kill buffers for channels after /part
-	(setq erc-kill-buffer-on-part t)
-	;; kill buffers for private queries after quitting the server
-	(setq erc-kill-queries-on-quit t)
-	;; kill buffers for server messages after quitting the server
-	(setq erc-kill-server-buffer-on-quit t)
-	;; open query buffers in the current window
-	(setq erc-query-display 'buffer)
-	;; configure appearance
-	(setq erc-prompt " >"
-		  erc-nick '("diamondbond" "diamondbond_"))
-	;; load erc modules
-	(add-to-list 'erc-modules 'notifications)
-	(add-to-list 'erc-modules 'spelling))
-#+end_src
-** Initialize =rcirc=
-*** Description
-Emacs' builtin irc client.
-*** Code
-#+begin_src emacs-lisp
-  (use-package rcirc
-	:defer
-	:commands (irc rcirc)
-	:ensure nil
-	:config
-	(setq rcirc-default-user-name "diamondbond"
-		  rcirc-default-nick      "diamondbond"
-		  rcirc-default-full-name "Diamond Bond")
-	(setq rcirc-auto-authenticate-flag t)
-	(setq rcirc-time-format "[%I:%M %p] ")
-	(rcirc-track-minor-mode 1))
-#+end_src
-** Initialize =magit=
-*** Description
-The definitive Git porcelain for Emacs.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package magit
+  (use-package elmacro
 	:straight t)
-#+END_SRC
-** Initialize =autorevert=
-*** Description
-Autorevert hooked buffers & diminish auto-revert-mode.
-*** Code
-#+begin_src emacs-lisp
-  (use-package autorevert
-	:straight t
-	:after magit
-	:diminish auto-revert-mode
-	:init
-	(setq auto-revert-verbose nil)
-	:hook ((prog-mode
-			text-mode
-			tex-mode
-			org-mode
-			conf-mode) . auto-revert-mode))
 #+end_src
-** Initialize =corfu=
-*** Description
+*** Initialize =which-key=
+**** Description
+Possible completion framework with 0.3s delay.
+**** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+	:straight t
+	:init
+	(which-key-mode)
+	:config
+	(setq which-key-idle-delay 0.3))
+#+END_SRC
+*** Initialize =switch-window=
+**** Description
+C-x o and pick window (a,s,d...)
+**** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package switch-window
+	:straight t
+	:config
+	(setq switch-window-input-style 'minibuffer)
+	(setq switch-window-increase 4)
+	(setq switch-window-threshold 2)
+	(setq switch-window-shortcut-style 'qwerty)
+	(setq switch-window-qwerty-shortcuts
+		  '("a" "s" "d" "f" "j" "k" "l"))
+	:bind
+	([remap other-window] . switch-window))
+#+END_SRC
+*** Initialize =dabbrev=
+**** Description
+Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
+**** Code
+#+begin_src emacs-lisp
+  ;; use dabbrev with Corfu!
+  (use-package dabbrev
+	:straight t
+	;; swap M-/ and C-M-/
+	:bind (("M-/" . dabbrev-completion)
+		   ("C-M-/" . dabbrev-expand)))
+#+end_src
+** Tools
+*** Initialize =yasnippet=
+**** Description
+Yasnippet provides useful snippets.
+**** Code
+#+begin_src emacs-lisp
+  (use-package yasnippet
+	:straight t
+	:diminish yas-minor-mode
+	:hook
+	((c-mode c++-mode) . yas-minor-mode)
+	:config
+	(yas-reload-all))
+
+  (use-package yasnippet-snippets
+	:after yasnippet
+	:straight t)
+#+end_src
+*** Initialize =calfw=
+**** Description
+Calendar view in Emacs buffer.
+**** Code
+#+begin_src emacs-lisp
+  (use-package calfw
+	:straight t)
+#+end_src
+*** Initialize =crux=
+**** Description
+A Collection of Ridiculously Useful eXtensions.
+**** Code
+#+begin_src emacs-lisp
+  (use-package crux
+	:straight t)
+#+end_src
+*** Initialize =0x0=
+**** Description
+Instant upload to 0x0.st
+**** Code
+#+begin_src emacs-lisp
+  (use-package 0x0
+	:straight t
+	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
+#+end_src
+*** Initialize =clm=
+**** Description
+Show event history and command history of some or all buffers.
+**** Code
+#+begin_src emacs-lisp
+  (use-package command-log-mode
+	:straight t
+	:diminish command-log-mode)
+#+end_src
+*** Initialize =vterm=
+**** Description
+Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
+**** Code
+#+begin_src emacs-lisp
+  (use-package vterm
+	:straight t
+	:config
+	:config
+	(add-hook 'vterm-mode-hook
+			  (lambda () (global-hl-line-mode 0)))
+	(setq vterm-max-scrollback 10000))
+#+end_src
+** Completion
+*** Initialize =corfu=
+**** Description
 Completion Overlay Region FUnction - Corfu enhances completion at point with a small completion popup. The current candidates are shown in a popup below or above the point. Corfu is the minimalistic completion-in-region counterpart of the Vertico minibuffer UI.
-*** Code
+**** Code
 #+BEGIN_SRC emacs-lisp
   (use-package corfu
 	:straight t
@@ -1077,10 +825,10 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 
 	(add-hook 'minibuffer-setup-hook #'contrib/corfu-enable-always-in-minibuffer 1))
 #+END_SRC
-** Initialize =cape=
-*** Description
+*** Initialize =cape=
+**** Description
 Completio at point extensions.
-*** Code
+**** Code
 #+begin_src emacs-lisp
   (use-package cape
 	:straight t
@@ -1089,10 +837,10 @@ Completio at point extensions.
 	(dolist (backend '( cape-symbol cape-keyword cape-file cape-dabbrev))
 	  (add-to-list 'completion-at-point-functions backend)))
 #+end_src
-** Initialize =vertico-&-friends=
-*** Description
+*** Initialize =vertico-&-friends=
+**** Description
 Vertico, orderless, marginalia, consult & embark.
-*** Code
+**** Code
 #+begin_src emacs-lisp
   ;; enable vertico
   (use-package vertico
@@ -1214,8 +962,8 @@ Vertico, orderless, marginalia, consult & embark.
 	;; allow Emacs to resize mini windows
 	(setq resize-mini-windows t))
 #+end_src
-** Initialize =all-the-icons=
-*** Description
+*** Initialize =all-the-icons=
+**** Description
 All the icons!
 #+begin_src emacs-lisp
   (use-package all-the-icons
@@ -1227,10 +975,10 @@ All the icons!
 	:init
 	(all-the-icons-completion-mode))
 #+end_src
-** Initialize =kind-icon=
-*** Description
+*** Initialize =kind-icon=
+**** Description
 Kind icons.
-*** Code
+**** Code
 #+begin_src emacs-lisp
   (use-package kind-icon
 	:straight t
@@ -1243,10 +991,237 @@ Kind icons.
 	:config
 	(add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+end_src
-** Initialize =pdf-tools=
-*** Description
+** Git
+*** Initialize =magit=
+**** Description
+The definitive Git porcelain for Emacs.
+**** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+	:straight t)
+#+END_SRC
+*** Initialize =autorevert=
+**** Description
+Autorevert hooked buffers & diminish auto-revert-mode.
+**** Code
+#+begin_src emacs-lisp
+  (use-package autorevert
+	:straight t
+	:after magit
+	:diminish auto-revert-mode
+	:init
+	(setq auto-revert-verbose nil)
+	:hook ((prog-mode
+			text-mode
+			tex-mode
+			org-mode
+			conf-mode) . auto-revert-mode))
+#+end_src
+** News
+*** Initialize =elfeed=
+**** Description
+RSS reader for Emacs.
+**** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package elfeed
+	:straight t
+	:config
+	(setq elfeed-feeds
+		  '(("https://www.archlinux.org/feeds/news/" archlinux)
+			("https://www.gnome.org/feed/" gnome)
+			("http://nullprogram.com/feed/" nullprog)
+			("https://planet.emacslife.com/atom.xml" emacs community)
+			("https://www.ecb.europa.eu/rss/press.html" economics eu)
+			("https://drewdevault.com/blog/index.xml" drew devault)
+			("https://news.ycombinator.com/rss" ycombinator news)
+			("https://www.phoronix.com/rss.php" phoronix))))
+#+END_SRC
+*** Initialize =gnus=
+**** Description
+Gnus, or Gnus Network User Services, is a message reader which is part of GNU Emacs.
+**** Code
+#+begin_src emacs-lisp
+  (use-package gnus
+	:straight t
+	:config
+	;; make Gnus startup faster
+	(setq gnus-check-new-newsgroups nil
+		  gnus-check-bogus-newsgroups nil)
+
+	;; read feeds/atom through Gmane
+	(setq gnus-select-method '(nntp "news.gmane.io"))
+
+	;; ask for encryption password once
+	(setq epa-file-cache-passphrase-for-symmetric-encryption t)
+
+	;; Gmail
+	(setq gnus-select-method
+		  '(nnimap "gmail"
+				   (nnimap-address "imap.gmail.com")))
+
+	;; make Gnus prettier
+	(setq gnus-sum-thread-tree-indent "  ")
+	(setq gnus-sum-thread-tree-root "● ")
+	(setq gnus-sum-thread-tree-false-root "◯ ")
+	(setq gnus-sum-thread-tree-single-indent "◎ ")
+	(setq gnus-sum-thread-tree-vertical        "│")
+	(setq gnus-sum-thread-tree-leaf-with-other "├─► ")
+	(setq gnus-sum-thread-tree-single-leaf     "╰─► ")
+	(setq gnus-summary-display-arrow t)
+	(setq gnus-summary-line-format
+		  (concat
+		   "%0{%U%R%z%}"
+		   "%3{│%}" "%1{%d%}" "%3{│%}"
+		   "  "
+		   "%4{%-20,20f%}"
+		   "  "
+		   "%3{│%}"
+		   " "
+		   "%1{%B%}"
+		   "%s\n"))
+
+	;; fixing summary buffer
+	;; there’s no need to recenter the summary buffer all the time, it only slows gnus down.
+	(setq gnus-auto-center-summary nil)
+
+	;; enter the summary buffer faster
+	(setq gnus-nov-is-evil nil
+		  gnus-show-threads t
+		  gnus-use-cross-reference nil)
+
+	;; news check
+	(defun gnus-demon-scan-news ()
+	  (interactive)
+	  (when gnus-plugged
+		(let ((win (current-window-configuration))
+			  (gnus-read-active-file nil)
+			  (gnus-check-new-newsgroups nil)
+			  (gnus-verbose 2)
+			  (gnus-verbose-backends 5))
+		  (unwind-protect
+			  (save-window-excursion
+				(when (gnus-alive-p)
+				  (with-current-buffer gnus-group-buffer
+					(gnus-group-get-new-news gnus-activate-level))))
+			(set-window-configuration win)))))
+
+	;; configuring mail appearance
+	(setq gnus-treat-strip-multiple-blank-lines t)
+	(setq gnus-treat-trailing-blank-lines t)
+	;; let's see some smiles in gnus
+	(setq gnus-treat-display-smileys t)
+	(setq gnus-treat-emphasize 'head)
+
+	;; fetch only part of the article if we can.
+	(setq gnus-read-active-file 'some)
+	;; fetch some old headers
+	(setq gnus-fetch-old-headers 'some)
+
+	;; Gnus automatic scoring
+	(setq gnus-use-adaptive-scoring t)
+
+	;; Gnus sorting
+	(setq gnus-thread-sort-functions
+		  '(gnus-thread-sort-by-most-recent-date
+			(not gnus-thread-sort-by-number))))
+#+end_src
+*** Initialize =md4rd=
+**** Description
+Reddit client within Emacs with oauth2 support.
+**** Code
+#+begin_src emacs-lisp
+  (use-package md4rd
+	:straight t
+	:config
+	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure))
+	(load-if-exists "~/.emacs.d/secrets.el.gpg"))
+#+end_src
+** IRC
+*** Initialize =erc=
+**** Description
+ERC is a powerful, modular, and extensible IRC client for Emacs.
+
+Usage: irc.rizon.net
+**** Code
+#+begin_src emacs-lisp
+  (use-package erc
+	:straight t
+	:custom
+	(erc-autojoin-timing 'ident)
+	(erc-autojoin-channels-alist '(("irc.rizon.net" "#rice")))
+	(erc-fill-function 'erc-fill-static)
+	(erc-fill-static-center 22)
+	(erc-hide-list '("JOIN" "PART" "QUIT"))
+	(erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+	(erc-lurker-threshold-time 43200)
+	(erc-server-reconnect-attempts 5)
+	(erc-server-reconnect-timeout 3)
+	(erc-quit-reason 'erc-quit-reason-normal)
+	(erc-timestamp-format "[%I:%M %p] ")
+	(erc-timestamp-only-if-changed-flag nil)
+	(erc-truncate-mode t)
+	(erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
+							   "324" "329" "332" "333" "353" "477"))
+	:config
+	;; login
+	(setq erc-nickserv-identify-mode 'autodetect)
+	;; interpret mIRC-style color commands in IRC chats
+	(setq erc-interpret-mirc-color t)
+	;; kill buffers for channels after /part
+	(setq erc-kill-buffer-on-part t)
+	;; kill buffers for private queries after quitting the server
+	(setq erc-kill-queries-on-quit t)
+	;; kill buffers for server messages after quitting the server
+	(setq erc-kill-server-buffer-on-quit t)
+	;; open query buffers in the current window
+	(setq erc-query-display 'buffer)
+	;; configure appearance
+	(setq erc-prompt " >"
+		  erc-nick '("diamondbond" "diamondbond_"))
+	;; load erc modules
+	(add-to-list 'erc-modules 'notifications)
+	(add-to-list 'erc-modules 'spelling))
+#+end_src
+*** Initialize =rcirc=
+**** Description
+Emacs' builtin irc client.
+
+Usage: irc.libera.chat
+**** Code
+#+begin_src emacs-lisp
+  (use-package rcirc
+	:defer
+	:commands (irc rcirc)
+	:ensure nil
+	:config
+	(setq rcirc-default-user-name "diamondbond"
+		  rcirc-default-nick      "diamondbond"
+		  rcirc-default-full-name "Diamond Bond")
+	(setq rcirc-auto-authenticate-flag t)
+	(setq rcirc-time-format "[%I:%M %p] ")
+	(rcirc-track-minor-mode 1))
+#+end_src
+** Documents
+*** Initialize =nov=
+**** Description
+Major mode for reading EPUBs.
+**** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package nov
+	:straight t
+	:defer nil
+	:config
+	(defun nov-font-setup ()
+	  (face-remap-add-relative 'variable-pitch :family "Liberation Serif"
+							   :height 1.0)
+	  (text-scale-increase 2))
+	:mode ("\\.epub\\'" . nov-mode)
+	:hook (nov-mode . nov-font-setup))
+#+END_SRC
+*** Initialize =pdf-tools=
+**** Description
 PDF Tools is, among other things, a replacement of DocView for PDF files. The key difference is that pages are not pre-rendered by e.g. ghostscript and stored in the file-system, but rather created on-demand and stored in memory.
-*** Code
+**** Code
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
 	:straight t
@@ -1273,52 +1248,36 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	:config
 	:hook (pdf-view-mode . pdf-view-restore-mode))
 #+END_SRC
-** Initialize =nov=
-*** Description
-Major mode for reading EPUBs.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package nov
-	:straight t
-	:defer nil
-	:config
-	(defun nov-font-setup ()
-	  (face-remap-add-relative 'variable-pitch :family "Liberation Serif"
-							   :height 1.0)
-	  (text-scale-increase 2))
-	:mode ("\\.epub\\'" . nov-mode)
-	:hook (nov-mode . nov-font-setup))
-#+END_SRC
-** Initialize =writegood=
-*** Description
+*** Initialize =writegood=
+**** Description
 Minor mode to aid in finding common writing problems. Highlights text based on a set of weasel-words, passive-voice and duplicate words.
-*** Code
+**** Code
 #+BEGIN_SRC emacs-lisp
   (use-package writegood-mode
 	:straight t)
 #+END_SRC
-** Initialize =synosaurus=
-*** Description
+*** Initialize =synosaurus=
+**** Description
 Synosaurus is a thesaurus frontend for Emacs with pluggable backends.
-*** Code
+**** Code
 #+BEGIN_SRC emacs-lisp
   (use-package synosaurus
 	:straight t)
 #+END_SRC
-** Initialize =olivetti=
-*** Description
+*** Initialize =olivetti=
+**** Description
 Emacs minor mode for a nice writing environment.
-*** Code
+**** Code
 #+begin_src emacs-lisp
   (use-package olivetti
 	:straight t
 	:init
 	(setq olivetti-body-width .75))
 #+end_src
-** Initialize =saveplace=
-*** Description
+*** Initialize =saveplace=
+**** Description
 Saves cursor location in buffers.
-*** Code
+**** Code
 #+begin_src emacs-lisp
   (use-package saveplace
 	:straight t
@@ -1326,29 +1285,11 @@ Saves cursor location in buffers.
 	:config
 	(save-place-mode))
 #+end_src
-** Initialize =rainbow-mode=
-*** Description
-Colorize color names in buffers.
-*** Code
-#+begin_src emacs-lisp
-  (use-package rainbow-mode
-	:straight t
-	:diminish rainbow-mode
-	:hook prog-mode)
-#+end_src
-** Initialize =rainbow-delimiters=
-*** Description
-Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimiters such as parentheses, brackets or braces according to their depth.
-*** Code
-#+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-	:straight t
-	:hook (prog-mode . rainbow-delimiters-mode))
-#+end_src
-** Initialize =dictionary-mode=
-*** Description
+** Search
+*** Initialize =dictionary-mode=
+**** Description
 Quick lookup in a dictionary.
-*** Code
+**** Code
 #+begin_src emacs-lisp
   (use-package dictionary
 	:straight t
@@ -1357,10 +1298,10 @@ Quick lookup in a dictionary.
 	(global-set-key (kbd "C-c d") #'dictionary-search)
 	:config (setq dictionary-server "dict.org"))
 #+end_src
-** Initialize =engine-mode=
-*** Description
+*** Initialize =engine-mode=
+**** Description
 engine-mode is a global minor mode for Emacs that enables you to easily define search engines, bind them to keybindings, and query them from the comfort of your editor.
-*** Code
+**** Code
 #+begin_src emacs-lisp
   (use-package engine-mode
 	:straight t
@@ -1398,64 +1339,29 @@ engine-mode is a global minor mode for Emacs that enables you to easily define s
 	:init
 	(engine-mode t))
 #+end_src
-** Initialize =vterm=
-*** Description
-Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
-*** Code
-#+begin_src emacs-lisp
-  (use-package vterm
-	:straight t
-	:config
-	:config
-	(add-hook 'vterm-mode-hook
-			  (lambda () (global-hl-line-mode 0)))
-	(setq vterm-max-scrollback 10000))
-#+end_src
-** Initialize =flycheck=
-*** Description
-Modern on-the-fly syntax checking extension.
-*** Code
-#+begin_src emacs-lisp
-  (use-package flycheck
-	:straight t
-	:hook (prog-mode . flycheck-mode))
-#+end_src
-** Initialize =flyspell=
-*** Description
-Spell checking.
-Enable on the fly with M-x flyspell-mode.
-*** Code
-#+begin_src emacs-lisp
-  (use-package flyspell
-	:straight t
-	:config
-	(setq ispell-program-name "hunspell"
-		  ispell-default-dictionary "en_US")
-	:bind (("M-<f7>" . flyspell-buffer)))
-#+end_src
-** Initialize =ripgrep=
-*** Description
+*** Initialize =ripgrep=
+**** Description
 Deadgrep.
-*** Code
+**** Code
 #+begin_src emacs-lisp
   (use-package deadgrep
 	:straight t
 	:commands deadgrep)
 #+end_src
-** Initialize =avy=
-*** Description
+*** Initialize =avy=
+**** Description
 M-s to jump to desired character.
-*** Code
+**** Code
 #+BEGIN_SRC emacs-lisp
   (use-package avy
 	:straight t
 	:bind
 	("M-s" . avy-goto-char))
 #+END_SRC
-** Initialize =ag=
-*** Description
+*** Initialize =ag=
+**** Description
 The Silver Surfer - A code searching tool similar to ack, with a focus on speed.
-*** Code
+**** Code
 #+begin_src emacs-lisp
   (defvar executable-ag-available?
 	(executable-find "ag"))
@@ -1466,10 +1372,10 @@ The Silver Surfer - A code searching tool similar to ack, with a focus on speed.
 	(use-package wgrep-ag)
 	(setq-default ag-highlight-search t))
 #+end_src
-** Initialize =deft=
-*** Description
+*** Initialize =deft=
+**** Description
 Deft is included for quicksearch of entire ~/org directory.
-*** Code
+**** Code
 #+begin_src emacs-lisp
   (use-package deft
 	:straight t
@@ -1481,53 +1387,34 @@ Deft is included for quicksearch of entire ~/org directory.
 	:bind
 	("C-c n d" . deft))
 #+end_src
-** Initialize =crux=
-*** Description
-A Collection of Ridiculously Useful eXtensions.
-*** Code
+** Syntax
+*** Initialize =flycheck=
+**** Description
+Modern on-the-fly syntax checking extension.
+**** Code
 #+begin_src emacs-lisp
-  (use-package crux
-	:straight t)
-#+end_src
-** Initialize =0x0=
-*** Description
-Instant upload to 0x0.st
-*** Code
-#+begin_src emacs-lisp
-  (use-package 0x0
+  (use-package flycheck
 	:straight t
-	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
+	:hook (prog-mode . flycheck-mode))
 #+end_src
-** Initialize =clm=
-*** Description
-Show event history and command history of some or all buffers.
-*** Code
+*** Initialize =flyspell=
+**** Description
+Spell checking.
+Enable on the fly with M-x flyspell-mode.
+**** Code
 #+begin_src emacs-lisp
-  (use-package command-log-mode
+  (use-package flyspell
 	:straight t
-	:diminish command-log-mode)
-#+end_src
-** Initialize =yasnippet=
-*** Description
-Yasnippet provides useful snippets.
-*** Code
-#+begin_src emacs-lisp
-  (use-package yasnippet
-	:straight t
-	:diminish yas-minor-mode
-	:hook
-	((c-mode c++-mode) . yas-minor-mode)
 	:config
-	(yas-reload-all))
-
-  (use-package yasnippet-snippets
-	:after yasnippet
-	:straight t)
+	(setq ispell-program-name "hunspell"
+		  ispell-default-dictionary "en_US")
+	:bind (("M-<f7>" . flyspell-buffer)))
 #+end_src
-** Initialize =diminish=
-*** Description
+** Appearance
+*** Initialize =diminish=
+**** Description
 Diminish hides minor modes to prevent cluttering your mode line.
-*** Code
+**** Code
 #+begin_src emacs-lisp
   (use-package diminish
 	:straight t
@@ -1551,10 +1438,114 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	(eval-after-load "evil-escape" '(diminish 'evil-escape-mode))
 	(eval-after-load "evil-collection-unimpaired" '(diminish 'evil-collection-unimpaired-mode)))
 #+end_src
-** Initialize =modus-themes=
-*** Description
+*** Initialize =dashboard=
+**** Description
+An extensible emacs startup screen.
+**** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package dashboard
+	:straight t
+	:defer nil
+	:diminish dashboard-mode
+	:preface
+	(defun init-edit ()
+	  "Edit initialization file."
+	  (interactive)
+	  (if (file-exists-p "~/.emacs.d/init.el")
+		  (find-file "~.emacs.d/init.el")))
+	(defun config-edit ()
+	  "Edit configuration file."
+	  (interactive)
+	  (if (file-exists-p "~/.emacs.d/config.org")
+		  (find-file "~/.emacs.d/config.org")))
+	(when (file-directory-p "~/org")
+	  (defun notes-edit ()
+		"Edit notes file."
+		(interactive)
+		(if (file-exists-p "~/org/notes.org")
+			(find-file "~/org/notes.org")))
+	  (defun tasks-edit ()
+		"Edit tasks file."
+		(interactive)
+		(if (file-exists-p "~/org/tasks.org")
+			(find-file "~/org/tasks.org")))
+	  (defun archive-edit ()
+		"Edit archive file."
+		(interactive)
+		(if (file-exists-p "~/org/archive.org")
+			(find-file "~/org/archive.org")))
+	  (defun inbox-edit ()
+		"Edit inbox file."
+		(interactive)
+		(if (file-exists-p "~/org/inbox.org")
+			(find-file "~/org/inbox.org"))))
+	(defun create-scratch-buffer ()
+	  "Create a scratch buffer."
+	  (interactive)
+	  (switch-to-buffer (get-buffer-create "*scratch*")))
+	:config
+	(dashboard-setup-startup-hook)
+	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
+	(setq dashboard-items '((recents . 5)))
+	;; (setq dashboard-startup-banner (expand-file-name "img/gnusstorm-2.gif" user-emacs-directory))
+	(setq dashboard-startup-banner 'official)
+	(setq dashboard-center-content t)
+	(setq dashboard-show-shortcuts nil)
+	(setq dashboard-set-init-info t)
+	(setq dashboard-set-footer nil)
+	(setq dashboard-set-navigator t)
+	(when (file-directory-p "~/org")
+	  (setq dashboard-navigator-buttons
+			`(;; line 1
+			  ((,nil
+				"mu4e"
+				"Read Email with mu4e"
+				(lambda (&rest _) (mu4e))
+				'default)
+			   (,nil
+				"md4rd"
+				"Browse Reddit with md4rd"
+				(lambda (&rest _) (md4rd))
+				'default)
+			   (nil
+				"elfeed"
+				"Read RSS/Atom feeds with Elfeed"
+				(lambda (&rest _) (elfeed))
+				'default)
+			   (nil
+				"gnus"
+				"Read mailing lists with Gnus"
+				(lambda (&rest _) (open-emacs-devel))
+				'default))
+			  ;; separator
+			  ((,nil "==============================" ""
+					 (lambda (&rest _) ()) 'default))
+			  ;; line 2
+			  ((,nil
+				"Notes"
+				"Open Notes"
+				(lambda (&rest _) (notes-edit))
+				'default)
+			   (nil
+				"Tasks"
+				"Open Tasks"
+				(lambda (&rest _) (tasks-edit))
+				'default)
+			   (nil
+				"Agenda"
+				"Open Org-Agenda"
+				(lambda (&rest _) (org-agenda nil "n"))
+				'default)
+			   (nil
+				"Inbox"
+				"Open Inbox"
+				(lambda (&rest _) (inbox-edit))
+				'default))))))
+#+END_SRC
+*** Initialize =modus-themes=
+**** Description
 Accessible themes for Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
-*** Code
+**** Code
 #+begin_src emacs-lisp
   (use-package modus-themes
 	:straight t
@@ -1567,6 +1558,25 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	:config
 	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
+#+end_src
+*** Initialize =rainbow-mode=
+**** Description
+Colorize color names in buffers.
+**** Code
+#+begin_src emacs-lisp
+  (use-package rainbow-mode
+	:straight t
+	:diminish rainbow-mode
+	:hook prog-mode)
+#+end_src
+*** Initialize =rainbow-delimiters=
+**** Description
+Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimiters such as parentheses, brackets or braces according to their depth.
+**** Code
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+	:straight t
+	:hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 * Languages
 ** LSP

@@ -72,9 +72,6 @@
 ;; Garbage collect
 (garbage-collect)
 
-; Move to the user directory
-(cd "~/")
-
 ;; Restore original GC values
 (add-hook 'emacs-startup-hook
 		  (lambda ()

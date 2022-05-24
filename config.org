@@ -2519,6 +2519,7 @@ Updates the Emacs configuration.
 
 * Footer
 #+begin_src emacs-lisp
+  (cd "~/")
 
   ;;; config.el ends here
 #+end_src

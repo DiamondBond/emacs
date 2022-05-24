@@ -90,40 +90,42 @@ This list is in chronological load order.
 -   **[packages](https://github.com/DiamondBond/emacs/blob/master/config.org#use-package):** Package manifest
 -   **[languages](https://github.com/DiamondBond/emacs/blob/master/config.org#languages):** Language manifest
 -   **[functions](https://github.com/DiamondBond/emacs/blob/master/config.org#functions):** Function definitions
+-   **[user](https://github.com/DiamondBond/emacs/blob/master/userconfig.org):** User configuration
+-   **[mail](https://github.com/DiamondBond/emacs/blob/master/modules/mail.org):** Mail configuration
 
 
-# Post Setup
+## Post Setup
 
 Once Emacs launches for the first time we need to setup a few more things for everything to work correctly.
 
 
-## Compile pdf-tools
+### Compile pdf-tools
 
 Install pdf-tools.
 
 > M-x pdf-tools-install
 
 
-## Compile vterm modules
+### Compile vterm modules
 
 Compile vterm-modules & setup vterm.
 
 > M-x vterm
 
 
-## Setup all-the-icons
+### Setup all-the-icons
 
 Download & install the all-the-icons font.
 
 > M-x all-the-icons-install-fonts
 
 
-## Setup LSP
+### Setup LSP
 
 Install [language servers](https://github.com/emacs-lsp/lsp-mode#supported-languages) manually (see [dependencies](https://github.com/DiamondBond/emacs#dependencies)) or with `M-x lsp-install-server`
 
 
-## Setup Email
+### Setup Email
 
 Refer to the [Email setup documentation](https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org) for this functionality.
 

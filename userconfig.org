@@ -6,7 +6,9 @@
 #+OPTIONS: num:nil
 
 * Header
+
 Enable lexical binding.
+
 #+begin_src emacs-lisp
   ;;; userconfig.el --- User Configuration. -*- lexical-binding: t; -*-
 
@@ -24,13 +26,44 @@ Enable lexical binding.
   ;;; Code:
 
 #+end_src
+
 * Email
-Load Mail module.
+
+** Load =[[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email=]] module
+
+*** Description
+
+Email in Emacs via mu4e & offlineimap.
+
+*** Code
+
 #+begin_src emacs-lisp
   (when (file-directory-p "~/.emacs.d/modules")
 	(when (file-readable-p "~/.emacs.d/modules/mail.org")
 	  (org-babel-load-file (expand-file-name "~/.emacs.d/modules/mail.org"))))
 #+end_src
+
+* Discord
+
+** Load =elcord= package
+
+*** Description
+
+Discord RPC via Emacs.
+
+*** Code
+#+begin_src emacs-lisp
+  (use-package elcord
+	:straight t
+	:config
+	;; set icon
+	(setq elcord-editor-icon "emacs_icon")
+	;; override buffer-details-format
+	(defun elcord-buffer-details-format ()
+	  "Return the buffer details string shown on discord."
+	  (format "%s" (buffer-name))))
+#+end_src
+
 * Footer
 #+begin_src emacs-lisp
 

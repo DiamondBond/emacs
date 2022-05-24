@@ -527,14 +527,6 @@ Alert is a Growl-workalike for Emacs which uses a common notification interface 
 	:config
 	(setq alert-fade-time 15))
 #+end_src
-** Initialize =elmacro=
-*** Description
-Shows keyboard macros or latest interactive commands as Emacs lisp.
-*** Code
-#+begin_src emacs-lisp
-  (use-package elmacro
-	:straight t)
-#+end_src
 ** Initialize =evil=
 *** Description
 Heresy; Vim keybindings in Emacs.
@@ -566,6 +558,14 @@ Heresy; Vim keybindings in Emacs.
 	;; org-cycle
 	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle))
 #+END_SRC
+** Initialize =elmacro=
+*** Description
+Shows keyboard macros or latest interactive commands as Emacs lisp.
+*** Code
+#+begin_src emacs-lisp
+  (use-package elmacro
+	:straight t)
+#+end_src
 ** Initialize =which-key=
 *** Description
 Possible completion framework with 0.3s delay.
@@ -578,6 +578,35 @@ Possible completion framework with 0.3s delay.
 	:config
 	(setq which-key-idle-delay 0.3))
 #+END_SRC
+** Initialize =switch-window=
+*** Description
+C-x o and pick window (a,s,d...)
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package switch-window
+	:straight t
+	:config
+	(setq switch-window-input-style 'minibuffer)
+	(setq switch-window-increase 4)
+	(setq switch-window-threshold 2)
+	(setq switch-window-shortcut-style 'qwerty)
+	(setq switch-window-qwerty-shortcuts
+		  '("a" "s" "d" "f" "j" "k" "l"))
+	:bind
+	([remap other-window] . switch-window))
+#+END_SRC
+** Initialize =dabbrev=
+*** Description
+Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
+*** Code
+#+begin_src emacs-lisp
+  ;; use dabbrev with Corfu!
+  (use-package dabbrev
+	:straight t
+	;; swap M-/ and C-M-/
+	:bind (("M-/" . dabbrev-completion)
+		   ("C-M-/" . dabbrev-expand)))
+#+end_src
 ** Initialize =dashboard=
 *** Description
 An extensible emacs startup screen.
@@ -1184,35 +1213,6 @@ Vertico, orderless, marginalia, consult & embark.
 	;; allow Emacs to resize mini windows
 	(setq resize-mini-windows t))
 #+end_src
-** Initialize =dabbrev=
-*** Description
-Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
-*** Code
-#+begin_src emacs-lisp
-  ;; use dabbrev with Corfu!
-  (use-package dabbrev
-	:straight t
-	;; swap M-/ and C-M-/
-	:bind (("M-/" . dabbrev-completion)
-		   ("C-M-/" . dabbrev-expand)))
-#+end_src
-** Initialize =switch-window=
-*** Description
-C-x o and pick window (a,s,d...)
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package switch-window
-	:straight t
-	:config
-	(setq switch-window-input-style 'minibuffer)
-	(setq switch-window-increase 4)
-	(setq switch-window-threshold 2)
-	(setq switch-window-shortcut-style 'qwerty)
-	(setq switch-window-qwerty-shortcuts
-		  '("a" "s" "d" "f" "j" "k" "l"))
-	:bind
-	([remap other-window] . switch-window))
-#+END_SRC
 ** Initialize =all-the-icons=
 *** Description
 All the icons!
@@ -1421,7 +1421,7 @@ Modern on-the-fly syntax checking extension.
 #+end_src
 ** Initialize =flyspell=
 *** Description
-Spell checking, requires Hunspell.
+Spell checking.
 Enable on the fly with M-x flyspell-mode.
 *** Code
 #+begin_src emacs-lisp
@@ -1505,46 +1505,14 @@ Instant upload to 0x0.st
 	:straight t
 	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
 #+end_src
-** Initialize =hydra=
-*** Description
-Hydra is a simple menu creator for keybindings.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package hydra
-	:straight t)
-
-  (defhydra hydra-zoom ()
-	"
-	^Zoom^                 ^Other
-	^^^^^^^--------------------------
-	[_t_/_s_] zoom in/out  [_q_] quit
-	[_0_]^^   reset zoom
-	"
-	("t" text-scale-increase "zoom in")
-	("s" text-scale-decrease "zoom out")
-	("0" text-scale-adjust "reset")
-	("q" nil "finished" :exit t))
-
-  (defhydra windows-adjust-size ()
-	"
-  ^Zoom^                                ^Other
-  ^^^^^^^-----------------------------------------
-  [_t_/_s_] shrink/enlarge vertically   [_q_] quit
-  [_c_/_r_] shrink/enlarge horizontally
-  "
-	("q" nil :exit t)
-	("c" shrink-window-horizontally)
-	("t" enlarge-window)
-	("s" shrink-window)
-	("r" enlarge-window-horizontally))
-#+END_SRC
 ** Initialize =clm=
 *** Description
 Show event history and command history of some or all buffers.
 *** Code
 #+begin_src emacs-lisp
   (use-package command-log-mode
-	:straight t)
+	:straight t
+	:diminish command-log-mode)
 #+end_src
 ** Initialize =yasnippet=
 *** Description
@@ -1606,20 +1574,6 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	:config
 	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
-#+end_src
-** Initialize =elcord=
-*** Description
-*** Code
-#+begin_src emacs-lisp
-  (use-package elcord
-	:straight t
-	:config
-	;; set icon
-	(setq elcord-editor-icon "emacs_icon")
-	;; override buffer-details-format
-	(defun elcord-buffer-details-format ()
-	  "Return the buffer details string shown on discord."
-	  (format "%s" (buffer-name))))
 #+end_src
 * Languages
 ** LSP

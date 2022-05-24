@@ -161,6 +161,7 @@ libxml2
 gopls
 gnuplot
 prettier
+hunspell
 #+end_quote
 
 *** Python

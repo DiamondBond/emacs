@@ -150,6 +150,7 @@ Dependencies required to run this Emacs distro.
 > gopls
 > gnuplot
 > prettier
+> hunspell
 
 
 ### Python

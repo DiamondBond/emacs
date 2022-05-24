@@ -31,7 +31,7 @@ Create your maildir in $HOME as ~/mail
 
 ** 2. Configuring mu
 
-Please refer to [[https://github.com/DiamondBond/emacs/blob/master/userconfig.org#email][Email]] in userconfig.org to understand what these functions do, you'll have to change the maildir & my-address flags to correspond to your environments setup.
+Please refer to the [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email]] module to understand what these functions do, you'll have to change the maildir & my-address flags to correspond to your environments setup.
 
 *** Automatically
 

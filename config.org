@@ -828,6 +828,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 		org-catch-invisible-edits 'smart
 		org-pretty-entities t)
   (setq org-src-preserve-indentation nil
+		org-adapt-indentation nil
 		org-edit-src-content-indentation 0)
   (when (file-directory-p "~/org")
 	(setq org-directory "~/org"

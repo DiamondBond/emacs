@@ -6,10 +6,10 @@
 #+EMAIL: diamondbond1@gmail.com
 #+LANGUAGE: en
 #+STARTUP: inlineimages show2levels
-#+SETUPFILE: resources/stylish_white.theme
+#+SETUPFILE: resources/white.theme
 #+EXPORT_FILE_NAME: emacs.html
 #+CREATOR: Emacs 28.1 (Org mode 9.5.3)
-#+OPTIONS: toc:nil
+#+OPTIONS: toc:2
 
 
 * Introduction
@@ -30,7 +30,7 @@ Sensible Emacs distro aimed at enhancing the default experience.
 
 ** Preview
 
-This entire config file can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
+This entire config can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
 
 ** Principles
 
@@ -62,9 +62,9 @@ The base configuration only sets up Emacs to have a cleaner presentation with se
 
 The implication is that someone should be able to install or copy code from this configuration into their own configuration or vice versa.
 
-** Modules
+** Overview
 
-This list is in chronological load order.
+: CHRONOLOGICAL LOAD ORDER :
 
 *** *early-init.el*
 - [[file:early-init.el][early-bootstrap]] - Early bootstrap
@@ -110,15 +110,15 @@ hunspell
 #+end_quote
 **** Python
 
-#+begin_src bash
+#+begin_src sh
 pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi
 #+end_src
 
-*** Node
+**** NodeJS
 
 Deno & typescript-language-server for Typescript (TS/TSX) support.
 
-#+begin_src bash
+#+begin_src sh
 sudo npm install -g deno typescript-language-server bash-language-server
 #+end_src
 *** Files
@@ -234,21 +234,46 @@ Install [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language se
 Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email setup documentation]] for this functionality.
 
 * Header
+** Specification
 Enable lexical binding.
 #+begin_src emacs-lisp
 ;;; config.el --- Configuration. -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022 Diamond Bond
-;; This file is NOT part of GNU Emacs.
-;; This file is free software.
+#+end_src
 
+** Copyright
+#+begin_src emacs-lisp
+;; Copyright (C) 2022 Diamond Bond
+
+#+end_src
+
+** Information
+#+begin_src emacs-lisp
 ;; Author: Diamond Bond <diamondbond1@gmail.com>
+;; Created: 29 Jun 2020
+;; Keywords: emacs configuration
 ;; URL: https://github.com/diamondbond/emacs
 ;; Package-Requires: ((emacs "28.1"))
 
+#+end_src
+
+** Disclaimer
+#+begin_src emacs-lisp
+;; This file is not part of GNU Emacs.
+
+;; This file is free software…
+
+#+end_src
+
+** Commentary
+#+begin_src emacs-lisp
 ;;; Commentary:
 ;; This file provides the sanctioned configuration.
 
+#+end_src
+
+** Delimiter
+#+begin_src emacs-lisp
 ;;; Code:
 
 #+end_src
@@ -341,13 +366,13 @@ This keeps your init.el neater and you have the option to gitignore your custom.
 (setq vc-follow-symlinks t)
 #+end_src
 *** Disable automatic creation of backup files
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 (setq create-lockfiles nil)
 (setq vc-make-backup-files nil)
-#+END_SRC
+#+end_src
 *** Delete trailing whitespace on save
 #+begin_src emacs-lisp
 (add-hook 'before-save-hook
@@ -377,9 +402,9 @@ Essential for using shells in Emacs.
 #+end_src
 *** Disable ring-bell
 Disable the annoying bell.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq ring-bell-function 'ignore)
-#+END_SRC
+#+end_src
 *** Configure scrolling
 **** Enables nice-scrolling for Emacs 28+
 #+begin_src emacs-lisp
@@ -392,37 +417,37 @@ Disable the annoying bell.
 ;; (pixel-scroll-precision-mode)
 #+end_src
 *** Enable external-bound copy-pasting
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq select-enable-clipboard t)
 (setq save-interprogram-paste-before-kill t)
-#+END_SRC
+#+end_src
 *** Pair matching
 **** Enable paren-mode
 Show parent parentheses.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq show-paren-delay 0
 	  show-paren-style 'parenthesis)
 (show-paren-mode 1)
-#+END_SRC
+#+end_src
 **** Enable bracket pair-matching
 Match brackets.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq electric-pair-pairs '((?\{ . ?\})
 							(?\( . ?\))
 							(?\[ . ?\])
 							(?\" . ?\")))
 (electric-pair-mode t)
-#+END_SRC
+#+end_src
 *** Indentation
 Set tabs & indents to 4sp.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq-default tab-width 4)
 (setq-default standard-indent 4)
 (setq-default indent-tabs-mode t)
 (setq-default electric-indent-inhibit nil)
 (setq backward-delete-char-untabify-method 'nil)
 (electric-indent-mode t) ; Auto indentation
-#+END_SRC
+#+end_src
 *** Set C/C++ tabs & braces
 #+begin_src emacs-lisp
 (setq c-default-style "linux")
@@ -460,9 +485,9 @@ Set tabs & indents to 4sp.
 #+end_src
 **** Set window title
 Make window title the buffer name.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq-default frame-title-format '("%b"))
-#+END_SRC
+#+end_src
 **** Uniquify buffer name
 #+begin_src emacs-lisp
 (setq-default uniquify-buffer-name-style 'forward)
@@ -478,22 +503,22 @@ Emacs will fill up the space reported by the window manager.
 (setq frame-resize-pixelwise t)
 #+end_src
 **** Disable default startup screen
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq inhibit-startup-message t)
 (setq initial-scratch-message "")
-#+END_SRC
+#+end_src
 **** Disable some gui elements
 Disable =tool-bar= as it consumes too many pixels from our total frame-size.
 Keep =scroll-bar= as it provides contextual information regarding your whereabouts in the buffer.
 Keep =menu-bar= as it provides quick access to certain functions.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (if (fboundp 'menu-bar-mode)
 	(menu-bar-mode 1))
 (if (fboundp 'tool-bar-mode)
 	(tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode)
 	(scroll-bar-mode 1))
-#+END_SRC
+#+end_src
 **** Configure fringe
 Disable fringe-mode.
 #+begin_src emacs-lisp
@@ -513,23 +538,23 @@ Optionally; enable toolbar when using x-toolkit=athena.
 *** Modes
 **** Enable column-numbers-mode
 Show column number in modeline.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (column-number-mode 1)
-#+END_SRC
+#+end_src
 **** Enable global-highlight-line-mode
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (global-hl-line-mode nil)
-#+END_SRC
+#+end_src
 **** Enable prettify-symbols-mode
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (global-prettify-symbols-mode t)
-#+END_SRC
+#+end_src
 **** Enable line-numbers-mode
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so we utilize the approach of only enabling it on some major modes rather than globally.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'display-line-numbers-mode)
-#+END_SRC
+#+end_src
 **** Enable visual-line-mode
 Enable visual-line-mode in text buffers & org + md4rd.
 #+begin_src emacs-lisp
@@ -566,13 +591,13 @@ Dont accidentally delete all my bookmarks.
 ** Built-in
 *** Configure =browser=
 Firefox as default browser.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 ;; eww
 ;; (setq browse-url-browser-function 'eww-browse-url)
 
 ;; firefox
 (setq browse-url-browser-function 'browse-url-firefox)
-#+END_SRC
+#+end_src
 *** Configure =proced=
 Auto-update proced every 5 seconds.
 #+begin_src emacs-lisp
@@ -585,7 +610,7 @@ Auto-update proced every 5 seconds.
 **** Description
 Improve eshell prompt and assign aliases, also setup some custom helper functions for easier use.
 **** Prompt
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq eshell-highlight-prompt nil)
 (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
 
@@ -604,7 +629,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 
 (add-hook 'eshell-mode-hook
 		  (lambda () (global-hl-line-mode 0)))
-#+END_SRC
+#+end_src
 **** Clear
 #+begin_src emacs-lisp
 (defun eshell/clear-scrollback ()
@@ -613,12 +638,12 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 	(erase-buffer)))
 #+end_src
 **** Aliases
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defalias 'open 'find-file-other-window)
 (defalias 'clean 'eshell/clear-scrollback)
-#+END_SRC
+#+end_src
 **** Open eshell in other window
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun eshell-other-window ()
   "Create or visit an eshell buffer."
   (interactive)
@@ -628,9 +653,9 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 		(other-window 1)
 		(eshell))
 	(switch-to-buffer-other-window "*eshell*")))
-#+END_SRC
+#+end_src
 * Keybinds
-** Define z-map
+** z-map
 #+begin_src emacs-lisp
 ;;---------------------------------------------------------------------
 ;; z-map definition
@@ -640,7 +665,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 (global-set-key (kbd "C-1") 'z-map)
 
 #+end_src
-** Define private-map
+** private-map
 #+begin_src emacs-lisp
 ;;---------------------------------------------------------------------
 ;; private-map
@@ -695,7 +720,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 (define-key z-map (kbd "c") 'config-edit)
 
 #+end_src
-** Define global-map
+** global-map
 #+begin_src emacs-lisp
 ;;---------------------------------------------------------------------
 ;; global-map
@@ -725,7 +750,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 
 #+end_src
-** Define sane-map
+** sane-map
 #+begin_src emacs-lisp
 ;;---------------------------------------------------------------------
 ;; sane-map
@@ -761,7 +786,7 @@ Elisp enhancers.
 **** Description
 Utilize asynchronous processes whenever possible.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package async
   :straight t
   :demand t
@@ -770,7 +795,7 @@ Utilize asynchronous processes whenever possible.
   :config
   (async-bytecomp-package-mode 1)
   (add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil))))
-#+END_SRC
+#+end_src
 *** Initialize =alert=
 **** Description
 Alert is a Growl-workalike for Emacs which uses a common notification interface and multiple, selectable "styles", whose use is fully customizable by the user.
@@ -785,7 +810,7 @@ Alert is a Growl-workalike for Emacs which uses a common notification interface 
 **** Description
 Heresy; Vim keybindings in Emacs.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package evil
   :straight t
   :defer nil
@@ -811,12 +836,12 @@ Heresy; Vim keybindings in Emacs.
   (evil-ex-define-cmd "q" 'delete-window)
   ;; org-cycle
   (evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle))
-#+END_SRC
+#+end_src
 *** Initialize =org=
 **** Description
 Sensible and well-defined org-mode configuration with org-capture support & notifications.
 ***** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package org
   :straight t
   :config
@@ -829,7 +854,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 		org-pretty-entities t)
   (setq org-src-preserve-indentation nil
 		org-adapt-indentation nil
-		org-edit-src-content-indentation 0)
+		org-edit-src-content-indentation 2)
   (when (file-directory-p "~/org")
 	(setq org-directory "~/org"
 		  org-agenda-files (list "~/org/inbox.org"
@@ -960,19 +985,19 @@ Shows keyboard macros or latest interactive commands as Emacs lisp.
 **** Description
 Possible completion framework with 0.3s delay.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package which-key
   :straight t
   :init
   (which-key-mode)
   :config
   (setq which-key-idle-delay 0.3))
-#+END_SRC
+#+end_src
 *** Initialize =switch-window=
 **** Description
 C-x o and pick window (a,s,d...)
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package switch-window
   :straight t
   :config
@@ -984,7 +1009,7 @@ C-x o and pick window (a,s,d...)
 		'("a" "s" "d" "f" "j" "k" "l"))
   :bind
   ([remap other-window] . switch-window))
-#+END_SRC
+#+end_src
 *** Initialize =dabbrev=
 **** Description
 Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
@@ -1086,7 +1111,7 @@ Used for exporting source code with syntax highlighting.
 **** Description
 Completion Overlay Region FUnction - Corfu enhances completion at point with a small completion popup. The current candidates are shown in a popup below or above the point. Corfu is the minimalistic completion-in-region counterpart of the Vertico minibuffer UI.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package corfu
   :straight t
   :custom
@@ -1109,7 +1134,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	  (corfu-mode 1)))
 
   (add-hook 'minibuffer-setup-hook #'contrib/corfu-enable-always-in-minibuffer 1))
-#+END_SRC
+#+end_src
 *** Initialize =cape=
 **** Description
 Completio at point extensions.
@@ -1281,10 +1306,10 @@ Kind icons.
 **** Description
 The definitive Git porcelain for Emacs.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package magit
   :straight t)
-#+END_SRC
+#+end_src
 *** Initialize =autorevert=
 **** Description
 Autorevert hooked buffers & diminish auto-revert-mode.
@@ -1307,7 +1332,7 @@ Autorevert hooked buffers & diminish auto-revert-mode.
 **** Description
 RSS reader for Emacs.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package elfeed
   :straight t
   :config
@@ -1320,7 +1345,7 @@ RSS reader for Emacs.
 		  ("https://drewdevault.com/blog/index.xml" drew devault)
 		  ("https://news.ycombinator.com/rss" ycombinator news)
 		  ("https://www.phoronix.com/rss.php" phoronix))))
-#+END_SRC
+#+end_src
 *** Initialize =gnus=
 **** Description
 Gnus, or Gnus Network User Services, is a message reader which is part of GNU Emacs.
@@ -1484,7 +1509,7 @@ Usage: irc.libera.chat
 **** Description
 Major mode for reading EPUBs.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package nov
   :straight t
   :defer nil
@@ -1495,12 +1520,12 @@ Major mode for reading EPUBs.
 	(text-scale-increase 2))
   :mode ("\\.epub\\'" . nov-mode)
   :hook (nov-mode . nov-font-setup))
-#+END_SRC
+#+end_src
 *** Initialize =pdf-tools=
 **** Description
 PDF Tools is, among other things, a replacement of DocView for PDF files. The key difference is that pages are not pre-rendered by e.g. ghostscript and stored in the file-system, but rather created on-demand and stored in memory.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package pdf-tools
   :straight t
   :defer nil
@@ -1525,23 +1550,23 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
   :straight t
   :config
   :hook (pdf-view-mode . pdf-view-restore-mode))
-#+END_SRC
+#+end_src
 *** Initialize =writegood=
 **** Description
 Minor mode to aid in finding common writing problems. Highlights text based on a set of weasel-words, passive-voice and duplicate words.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package writegood-mode
   :straight t)
-#+END_SRC
+#+end_src
 *** Initialize =synosaurus=
 **** Description
 Synosaurus is a thesaurus frontend for Emacs with pluggable backends.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package synosaurus
   :straight t)
-#+END_SRC
+#+end_src
 *** Initialize =olivetti=
 **** Description
 Emacs minor mode for a nice writing environment.
@@ -1630,12 +1655,12 @@ Deadgrep.
 **** Description
 M-s to jump to desired character.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package avy
   :straight t
   :bind
   ("M-s" . avy-goto-char))
-#+END_SRC
+#+end_src
 *** Initialize =ag=
 **** Description
 The Silver Surfer - A code searching tool similar to ack, with a focus on speed.
@@ -1720,7 +1745,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 **** Description
 An extensible emacs startup screen.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package dashboard
   :straight t
   :defer nil
@@ -1819,7 +1844,7 @@ An extensible emacs startup screen.
 			  "Open Inbox"
 			  (lambda (&rest _) (inbox-edit))
 			  'default))))))
-#+END_SRC
+#+end_src
 *** Initialize =modus-themes=
 **** Description
 Accessible themes for Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
@@ -1974,18 +1999,18 @@ Rust-mode.
 **** Description
 SLIME - Common Lisp REPL.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package slime
   :straight t
   :config
   (setq inferior-lisp-program "/usr/bin/sbcl")
   (setq slime-contribs '(slime-fancy slime-quicklisp)))
-#+END_SRC
+#+end_src
 *** Scheme Lisp
 **** Description
 Geiser - Scheme Lisp REPL.
 **** Code
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package geiser
   :straight t
   :config
@@ -2195,7 +2220,7 @@ Prettier formatter for JSX & TSX.
 #+end_src
 ** Buffers
 *** Split and follow
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun split-and-follow-horizontally ()
   "Split and follow horizontally."
   (interactive)
@@ -2211,7 +2236,7 @@ Prettier formatter for JSX & TSX.
   (balance-windows)
   (other-window 1))
 (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
-#+END_SRC
+#+end_src
 *** Get buffer menu in new frame
 #+begin_src emacs-lisp
 ;; https://stackoverflow.com/questions/12014036/emacs-make-frame-switch-buffer
@@ -2562,6 +2587,7 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 #+end_src
 
 * Footer
+** Goodbye
 #+begin_src emacs-lisp
 
 ;;; config.el ends here

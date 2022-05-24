@@ -54,9 +54,9 @@ Discord RPC for Emacs.
 #+begin_src emacs-lisp
   (use-package elcord
 	:straight t
-	:init
-	(load-if-exists "~/.emacs.d/secrets.el.gpg")
 	:config
+	;; set api token
+	(setq elcord-client-id "978267848038297661")
 	;; set icon
 	(setq elcord-editor-icon "emacs_icon")
 	;; silence

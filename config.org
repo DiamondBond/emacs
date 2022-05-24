@@ -1154,6 +1154,7 @@ Vertico, orderless, marginalia, consult & embark.
 	:straight t
 	:bind
 	(("M-y" . consult-yank-from-kill-ring)
+	 ("C-s" . consult-line)
 	 ("C-x b" . consult-buffer)))
 
   ;; Emacs Mini-Buffer Actions Rooted in Keymaps
@@ -1450,15 +1451,6 @@ Deadgrep.
 	:straight t
 	:commands deadgrep)
 #+end_src
-** Initialize =swiper=
-*** Description
-C-s to spawn a search minibuffer that can be traversed via C-n and C-p & <RET>.
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package swiper
-    :straight t
-    :bind ("C-s" . 'swiper))
-#+END_SRC
 ** Initialize =avy=
 *** Description
 M-s to jump to desired character.
@@ -1859,12 +1851,6 @@ Prettier formatter for JSX & TSX.
 							   (enable-minor-mode
 								'("\\.tsx?\\'" . prettier-js-mode))))
 #+end_src
-** Editorconfig
-#+begin_src emacs-lisp
-  (use-package editorconfig
-	:if (executable-find "editorconfig")
-	:mode ("\\.editorconfig\\'" . conf-unix-mode))
-#+end_src
 * Functions
 ** Helpers
 *** Load if exists
@@ -2084,7 +2070,7 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	(gnus-group-browse-foreign-server
 	 `(nntp "news.gmane.io"))
 	(setq last-command-event 13)
-	(swiper)
+	(consult-line)
 	(setq last-command-event 13)
 	(gnus-browse-select-group nil))
 #+end_src

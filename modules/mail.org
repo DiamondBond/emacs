@@ -52,17 +52,19 @@ Create your maildir in $HOME as ~/mail
 
 ** 1. Configuring offlineimap
 
-These files should be automatically tangled below.
-
 ~/[[https://github.com/DiamondBond/dotfiles/blob/master/.offlineimaprc][offlineimap.rc]]
 
 [[https://github.com/DiamondBond/dotfiles/blob/master/.offlineimap.py][~/offlineimap.py]]
 
+These files should be automatically tangled below.
+
 ** 2. Configuring mu
 
-Please refer to the [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email]] module to understand what these functions do, you'll have to change the maildir & my-address flags to correspond to your own maildir & address.
+Scroll down to =Functions= to understand what these functions do, you'll have to change the maildir & my-address flags to correspond to your own maildir & address.
 
 *** Automatically
+
+Automatically build, install & run mu server/index.
 
 #+begin_quote
 M-x mu-setup/automagic

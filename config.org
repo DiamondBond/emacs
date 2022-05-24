@@ -8,7 +8,7 @@
 #+STARTUP: inlineimages show2levels
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 #+SETUPFILE: setup/theme-readtheorg-local.setup
-#+EXPORT_FILE_NAME: index.html
+#+EXPORT_FILE_NAME: emacs.html
 #+CREATOR: Emacs 28.1 (Org mode 9.5.3)
 
 
@@ -27,6 +27,10 @@
   #+begin_quote
   Sensible Emacs distro aimed at enhancing the default experience.
   #+end_quote
+
+** Preview
+
+  The entire config file can be viewed from [[https://neocities.diamondbond.org/emacs.html][here]] in HTML format.
 
 ** Principles
 

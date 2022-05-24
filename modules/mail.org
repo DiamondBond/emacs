@@ -32,7 +32,9 @@ Refer to [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org]
 #+begin_quote
 
   offlineimap  -  sync
+
   mu           -  server
+
   mu4e         -  client
 
 #+end_quote

@@ -55,6 +55,9 @@
   (straight-recipes-gnu-elpa-use-mirror t)
   (straight-check-for-modifications nil))
 
+;; Load newer .elc or .el
+(setq load-prefer-newer t)
+
 ;; Load org for tangling
 (straight-use-package 'org)
 

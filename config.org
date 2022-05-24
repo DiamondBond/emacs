@@ -975,7 +975,7 @@ ERC is a powerful, modular, and extensible IRC client for Emacs.
 		  erc-nick '("diamondbond" "diamondbond_"))
 	(add-to-list 'erc-modules 'notifications)
 	(add-to-list 'erc-modules 'spelling))
-+end_src
+#+end_src
 ** Initialize =rcirc=
 *** Description
 Built in irc client, I use this for irc.libera.chat

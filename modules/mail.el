@@ -95,6 +95,7 @@
   (setq mu4e-context-policy 'pick-first)
   ;; don't ask to quit
   (setq mu4e-confirm-quit nil)
+  ;; start mu4e
   (mu4e t))
 
 (use-package mu4e-alert

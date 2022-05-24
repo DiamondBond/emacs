@@ -11,7 +11,9 @@ A sensible Emacs distro aimed at enhancing the default experience.
 # Quick Start
 
 
-## 0. Install [Emacs](https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org).
+## 0. Install Emacs > 27
+
+Refer to my opinionated [Emacs](https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org) build instructions.
 
 
 ## 1. Clone this repository
@@ -20,7 +22,7 @@ A sensible Emacs distro aimed at enhancing the default experience.
     git clone https://github.com/diamondbond/emacs ~/git/emacs
 
 
-## 2. Install
+## 2. Install the configuration
 
 
     mv ~/.emacs.d ~/.emacs.d.old
@@ -33,7 +35,7 @@ A sensible Emacs distro aimed at enhancing the default experience.
 ## 3. Bootstrap Emacs
 
 This will take some time.
-Please answer y for vterm-modules to be autoinstalled.
+NOTE: Please answer y for vterm-modules to be autoinstalled.
 
 
     emacs --daemon
@@ -43,6 +45,42 @@ Please answer y for vterm-modules to be autoinstalled.
 
 
     emacsclient -c -n -a 'emacs'
+
+
+## 5. Post Setup
+
+Once Emacs launches for the first time we need to setup a few more things for everything to work as intended.
+
+
+### Compile pdf-tools
+
+Install pdf-tools.
+
+> M-x pdf-tools-install
+
+
+### Compile vterm modules
+
+Compile vterm-modules & setup vterm.
+
+> M-x vterm
+
+
+### Setup all-the-icons
+
+Download & install the all-the-icons font.
+
+> M-x all-the-icons-install-fonts
+
+
+### Setup LSP
+
+Install [language servers](https://github.com/emacs-lsp/lsp-mode#supported-languages) manually (see [dependencies](https://github.com/DiamondBond/emacs#dependencies)) or with `M-x lsp-install-server`
+
+
+### Setup Email
+
+Refer to the [Email setup documentation](https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org) for this functionality.
 
 
 # Principles
@@ -94,42 +132,6 @@ This list is in chronological load order.
 -   **[mail](https://github.com/DiamondBond/emacs/blob/master/modules/mail.org):** Mail configuration
 
 
-## Post Setup
-
-Once Emacs launches for the first time we need to setup a few more things for everything to work correctly.
-
-
-### Compile pdf-tools
-
-Install pdf-tools.
-
-> M-x pdf-tools-install
-
-
-### Compile vterm modules
-
-Compile vterm-modules & setup vterm.
-
-> M-x vterm
-
-
-### Setup all-the-icons
-
-Download & install the all-the-icons font.
-
-> M-x all-the-icons-install-fonts
-
-
-### Setup LSP
-
-Install [language servers](https://github.com/emacs-lsp/lsp-mode#supported-languages) manually (see [dependencies](https://github.com/DiamondBond/emacs#dependencies)) or with `M-x lsp-install-server`
-
-
-### Setup Email
-
-Refer to the [Email setup documentation](https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org) for this functionality.
-
-
 # Dependencies
 
 Dependencies required to run this Emacs distro.
@@ -161,7 +163,7 @@ Dependencies required to run this Emacs distro.
     pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi
 
 
-### NPM
+### Node
 
 Deno & typescript-language-server for Typescript (TS/TSX) support.
 
@@ -250,5 +252,3 @@ We welcome your questions and ideas, please open an issue if you have one!
 
 This code is licensed under the MIT License. Why? So you can copy the code from
 this configuration!
-
----

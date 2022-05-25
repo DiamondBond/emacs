@@ -1001,6 +1001,19 @@ Yasnippet provides useful snippets.
 	:after yasnippet
 	:straight t)
 #+end_src
+*** Initialize =vterm=
+**** Description
+Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
+**** Code
+#+begin_src emacs-lisp
+  (use-package vterm
+	:straight t
+	:config
+	:config
+	(add-hook 'vterm-mode-hook
+			  (lambda () (global-hl-line-mode 0)))
+	(setq vterm-max-scrollback 10000))
+#+end_src
 *** Initialize =calfw=
 **** Description
 Calendar view in Emacs buffer.
@@ -1017,14 +1030,13 @@ A Collection of Ridiculously Useful eXtensions.
   (use-package crux
 	:straight t)
 #+end_src
-*** Initialize =0x0=
+*** Initialize =htmlize=
 **** Description
-Instant upload to 0x0.st
+Used for exporting source code with syntax highlighting.
 **** Code
 #+begin_src emacs-lisp
-  (use-package 0x0
-	:straight t
-	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
+  (use-package htmlize
+	:straight t)
 #+end_src
 *** Initialize =clm=
 **** Description
@@ -1035,26 +1047,14 @@ Show event history and command history of some or all buffers.
 	:straight t
 	:diminish command-log-mode)
 #+end_src
-*** Initialize =vterm=
+*** Initialize =0x0=
 **** Description
-Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
+Instant upload to 0x0.st
 **** Code
 #+begin_src emacs-lisp
-  (use-package vterm
+  (use-package 0x0
 	:straight t
-	:config
-	:config
-	(add-hook 'vterm-mode-hook
-			  (lambda () (global-hl-line-mode 0)))
-	(setq vterm-max-scrollback 10000))
-#+end_src
-*** Initialize =htmlize=
-**** Description
-Used for exporting source code with syntax highlighting.
-**** Code
-#+begin_src emacs-lisp
-  (use-package htmlize
-	:straight t)
+	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
 #+end_src
 ** Appearance
 *** Initialize =dashboard=
@@ -1224,6 +1224,18 @@ Enable on the fly with M-x flyspell-mode.
 	:bind (("M-<f7>" . flyspell-buffer)))
 #+end_src
 ** Keys
+*** Initialize =dabbrev=
+**** Description
+Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
+**** Code
+#+begin_src emacs-lisp
+  ;; use dabbrev with Corfu!
+  (use-package dabbrev
+	:straight t
+	;; swap M-/ and C-M-/
+	:bind (("M-/" . dabbrev-completion)
+		   ("C-M-/" . dabbrev-expand)))
+#+end_src
 *** Initialize =elmacro=
 **** Description
 Shows keyboard macros or latest interactive commands as Emacs lisp.
@@ -1260,18 +1272,6 @@ C-x o and pick window (a,s,d...)
 		  '("a" "s" "d" "f" "j" "k" "l"))
 	:bind
 	([remap other-window] . switch-window))
-#+end_src
-*** Initialize =dabbrev=
-**** Description
-Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
-**** Code
-#+begin_src emacs-lisp
-  ;; use dabbrev with Corfu!
-  (use-package dabbrev
-	:straight t
-	;; swap M-/ and C-M-/
-	:bind (("M-/" . dabbrev-completion)
-		   ("C-M-/" . dabbrev-expand)))
 #+end_src
 ** Completion
 *** Initialize =corfu=

@@ -2229,6 +2229,13 @@ Prettier formatter for JSX & TSX.
 	(erc-services-mode 0)
 	(erc-quit-server nil))
 #+end_src
+*** Kill async buffers
+#+begin_src emacs-lisp
+  (defun kill-async-buffers ()
+	"Kill all buffers matching '*Async Shell Command' regex."
+	(interactive)
+	(kill-matching-buffers "*Async Shell Command*" nil t))
+#+end_src
 *** Disable all themes
 #+begin_src emacs-lisp
   (defun disable-all-themes ()
@@ -2425,29 +2432,6 @@ Sync Elfeed.
 	(elfeed)
 	(elfeed-update))
 #+end_src
-*** =sync/auth=
-Sync auth to Dropbox.
-#+begin_src emacs-lisp
-  (defun auth/backup ()
-	"Backup authinfo & personal info."
-	(interactive)
-	;; authinfo
-	(async-shell-command "cp ~/.authinfo.gpg ~/org/")
-	(async-shell-command "cp ~/.emacs.d/secrets.el.gpg ~/org/")
-	(async-shell-command "cp ~/.emacs.d/network-security.data ~/org/")
-	;; metadata
-	(async-shell-command "cp ~/.emacs.d/custom.el ~/org/"))
-
-  (defun auth/restore ()
-	"Restore authinfo & personal info."
-	(interactive)
-	;; authinfo
-	(async-shell-command "cp ~/org/.authinfo.gpg ~/")
-	(async-shell-command "cp ~/org/secrets.el.gpg ~/.emacs.d/")
-	(async-shell-command "cp ~/org/network-security.data ~/.emacs.d/")
-	;; metadata
-	(async-shell-command "cp ~/org/custom.el ~/.emacs.d/"))
-#+end_src
 *** =sync/dotfiles=
 Sync dotfiles to GitHub.
 #+begin_src emacs-lisp
@@ -2464,6 +2448,29 @@ Sync Emacs configuration to neocities.
 	"Sync neocities."
 	(interactive)
 	(async-shell-command "~/bin/sync-neocities.sh"))
+#+end_src
+*** =auth/backup/restore=
+Backup/Restore auth to/from Dropbox.
+#+begin_src emacs-lisp
+  (defun auth/backup ()
+	"Backup authinfo & personal info to Dropbox."
+	(interactive)
+	;; authinfo
+	(async-shell-command "cp ~/.authinfo.gpg ~/org/")
+	(async-shell-command "cp ~/.emacs.d/secrets.el.gpg ~/org/")
+	(async-shell-command "cp ~/.emacs.d/network-security.data ~/org/")
+	;; metadata
+	(async-shell-command "cp ~/.emacs.d/custom.el ~/org/"))
+
+  (defun auth/restore ()
+	"Restore authinfo & personal info to Dropbox."
+	(interactive)
+	;; authinfo
+	(async-shell-command "cp ~/org/.authinfo.gpg ~/")
+	(async-shell-command "cp ~/org/secrets.el.gpg ~/.emacs.d/")
+	(async-shell-command "cp ~/org/network-security.data ~/.emacs.d/")
+	;; metadata
+	(async-shell-command "cp ~/org/custom.el ~/.emacs.d/"))
 #+end_src
 ** Imported
 *** Helper

@@ -30,7 +30,7 @@ Enable lexical binding.
 ** Description
 Set your global variables here.
 
-TODO: Investigate whether or not these globals work considering they are loaded in very late in the load order.
+TODO: Investigate whether or not these globals work considering they are loaded in very late.
 ** Code
 #+begin_src emacs-lisp
   ;; set globals

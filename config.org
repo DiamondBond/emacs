@@ -2174,7 +2174,7 @@ Prettier formatter for JSX & TSX.
 								'("\\.tsx?\\'" . prettier-js-mode))))
 #+end_src
 * Functions
-** Helpers
+** Helper
 *** Load if exists
 #+begin_src emacs-lisp
   (defun load-if-exists (f)
@@ -2202,7 +2202,7 @@ Prettier formatter for JSX & TSX.
 *** Reading mode
 #+begin_src emacs-lisp
   (defun read-mode/disable ()
-	"Enablemenubar & scrollbar."
+	"Enable menubar & scrollbar."
 	(interactive)
 	(menu-bar-mode 1)
 	(scroll-bar-mode 1))
@@ -2254,7 +2254,38 @@ Prettier formatter for JSX & TSX.
 	(other-window 1))
   (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 #+end_src
-** Inserts
+** Config
+*** =config/reload=
+#+begin_src emacs-lisp
+  (defun config/reload ()
+	"Reload Emacs configuration."
+	(interactive)
+	(load-file (concat user-emacs-directory "init.el")))
+#+end_src
+*** =config/open=
+#+begin_src emacs-lisp
+  (defun config/open ()
+	"Open Emacs configuration for editing."
+	(interactive)
+	(find-file (expand-file-name "config.org" user-emacs-directory)))
+#+end_src
+*** =config/github=
+Launches this Emacs' configuration GitHub page with default browser
+#+begin_src emacs-lisp
+  (defun config/github ()
+	"Launches this Emacs' configuration GitHub page in browser."
+	(interactive)
+	(browse-url-firefox "https://github.com/diamondbond/emacs"))
+#+end_src
+*** =config/update=
+Updates the Emacs configuration.
+#+begin_src emacs-lisp
+  (defun config/update ()
+	"Updates this Emacs configuration."
+	(interactive)
+	(async-shell-command "cd ~/git/emacs; git pull"))
+#+end_src
+** Insert
 *** Date
 Insert date in a buffer in my preferred format
 #+begin_src emacs-lisp
@@ -2309,72 +2340,8 @@ Insert currently visiting buffer filename.
 		  (insert (if full-path filename (file-name-nondirectory filename)))
 		(error (format "Buffer %s is not visiting a file" (buffer-name buffer))))))
 #+end_src
-** Text Manipulation
-*** Next/Prev 15-lines
-#+begin_src emacs-lisp
-  (defun next-15-lines ()
-	"Move to the next 15 lines."
-	(interactive)
-	(forward-line 15))
-
-  (defun previous-15-lines ()
-	"Move to the previous 15 lines."
-	(interactive)
-	(forward-line -15))
-#+end_src
-*** Upcase last word
-#+begin_src emacs-lisp
-  (defun upcase-last-word ()
-	"Convert last word to uppercase."
-	(interactive)
-	(move-end-of-line 1)
-	(backward-word 1)
-	(upcase-word 1)
-	(move-beginning-of-line 1)
-	(next-line 1 1))
-#+end_src
-*** Open new line below
-#+begin_src emacs-lisp
-  (defun open-line-below ()
-	"Open a new line below point."
-	(interactive)
-	(end-of-line)
-	(newline)
-	(indent-for-tab-command))
-#+end_src
-*** Open new line above
-#+begin_src emacs-lisp
-  (defun open-line-above ()
-	"Open a new line above point."
-	(interactive)
-	(beginning-of-line)
-	(newline)
-	(forward-line -1)
-	(indent-for-tab-command))
-#+end_src
-*** Delete current line
-#+begin_src emacs-lisp
-  (defun db/delete-current-line ()
-	"Kill the whole line on which point is."
-	(interactive)
-	(beginning-of-line)
-	(kill-line 1))
-#+end_src
-*** Duplicate current line
-#+begin_src emacs-lisp
-  (defun db/duplicate-line()
-	"Duplicate line at point."
-	(interactive)
-	(save-excursion
-	  (move-beginning-of-line 1)
-	  (kill-line)
-	  (yank)
-	  (open-line 1)
-	  (forward-line 1)
-	  (yank)))
-#+end_src
-** Launchers
-*** music
+** Launch
+*** Music
 Run ncmpcpp within vterm.
 #+begin_src emacs-lisp
   (defun music ()
@@ -2382,7 +2349,7 @@ Run ncmpcpp within vterm.
 	(interactive)
 	(run-in-vterm "ncmpcpp"))
 #+end_src
-*** emacs-devel
+*** Emacs-devel
 Launches gnus and connects to news.gmane.io/emacs-devel.
 #+begin_src emacs-lisp
   (defun emacs-devel ()
@@ -2400,7 +2367,7 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	(setq last-command-event 13)
 	(gnus-browse-select-group nil))
 #+end_src
-*** org-agenda
+*** Org-agenda
 #+begin_src emacs-lisp
   (defun start-to-org-agenda ()
 	"Launch shrink-wrapped 'org-agenda'."
@@ -2409,7 +2376,7 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	(delete-other-windows)
 	(fit-frame-to-buffer))
 #+end_src
-*** buffer-menu-in-new-frame
+*** Buffer-menu-in-new-frame
 #+begin_src emacs-lisp
   ;; https://stackoverflow.com/questions/12014036/emacs-make-frame-switch-buffer
   (defun get-buffer-menu-in-new-frame ()
@@ -2417,7 +2384,7 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	(interactive)
 	(switch-to-buffer (list-buffers-noselect)))
 #+end_src
-*** shrink-wrapped-buffer-list
+*** Shrink-wrapped-buffer-list
 #+begin_src emacs-lisp
   (defun shrink-wrapped-buffer-list ()
 	"Launch frame-fitted *Buffer List*."
@@ -2498,39 +2465,9 @@ Sync Emacs configuration to neocities.
 	(interactive)
 	(async-shell-command "~/bin/sync-neocities.sh"))
 #+end_src
-** Config
-*** =config/reload=
-#+begin_src emacs-lisp
-  (defun config/reload ()
-	"Reload Emacs configuration."
-	(interactive)
-	(load-file (concat user-emacs-directory "init.el")))
-#+end_src
-*** =config/open=
-#+begin_src emacs-lisp
-  (defun config/open ()
-	"Open Emacs configuration for editing."
-	(interactive)
-	(find-file (expand-file-name "config.org" user-emacs-directory)))
-#+end_src
-*** =config/github=
-Launches this Emacs' configuration GitHub page with default browser
-#+begin_src emacs-lisp
-  (defun config/github ()
-	"Launches this Emacs' configuration GitHub page in browser."
-	(interactive)
-	(browse-url-firefox "https://github.com/diamondbond/emacs"))
-#+end_src
-*** =config/update=
-Updates the Emacs configuration.
-#+begin_src emacs-lisp
-  (defun config/update ()
-	"Updates this Emacs configuration."
-	(interactive)
-	(async-shell-command "cd ~/git/emacs; git pull"))
-#+end_src
 ** Imported
-*** =run-in-vterm=
+*** Helper
+**** =run-in-vterm=
 #+begin_src emacs-lisp
   (defun run-in-vterm-kill (process event)
 	"A process sentinel.  Kill PROCESS's buffer if it is live with arg EVENT."
@@ -2564,31 +2501,71 @@ Updates the Emacs configuration.
 	  (vterm-send-string command)
 	  (vterm-send-return)))
 #+end_src
-*** =sanemacs/backward-kill-word=
+*** Text Manipulation
+**** Next/Prev 15-lines
 #+begin_src emacs-lisp
-  (defun sanemacs/backward-kill-word ()
-	"Kill word backwards without littering 'kill-ring'."
-	(interactive )
-	(push-mark)
-	(backward-word)
-	(delete-region (point) (mark)))
+  (defun next-15-lines ()
+	"Move to the next 15 lines."
+	(interactive)
+	(forward-line 15))
+
+  (defun previous-15-lines ()
+	"Move to the previous 15 lines."
+	(interactive)
+	(forward-line -15))
 #+end_src
-*** =comment-line-dwim=
+**** Upcase last word
 #+begin_src emacs-lisp
-  ;; Original idea from
-  ;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
-  (defun comment-dwim-line (&optional arg)
-	"Replacement for the comment-dwim command.
-	If no region is selected and current line is not blank and we are not at the end of the line,
-	then comment current line.
-	Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
-	(interactive "*P")
-	(comment-normalize-vars)
-	(if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
-		(comment-or-uncomment-region (line-beginning-position) (line-end-position))
-	  (comment-dwim arg)))
+  (defun upcase-last-word ()
+	"Convert last word to uppercase."
+	(interactive)
+	(move-end-of-line 1)
+	(backward-word 1)
+	(upcase-word 1)
+	(move-beginning-of-line 1)
+	(next-line 1 1))
 #+end_src
-*** Convert =camelCase= to =snake_case=
+**** Open new line below
+#+begin_src emacs-lisp
+  (defun open-line-below ()
+	"Open a new line below point."
+	(interactive)
+	(end-of-line)
+	(newline)
+	(indent-for-tab-command))
+#+end_src
+**** Open new line above
+#+begin_src emacs-lisp
+  (defun open-line-above ()
+	"Open a new line above point."
+	(interactive)
+	(beginning-of-line)
+	(newline)
+	(forward-line -1)
+	(indent-for-tab-command))
+#+end_src
+**** Delete current line
+#+begin_src emacs-lisp
+  (defun db/delete-current-line ()
+	"Kill the whole line on which point is."
+	(interactive)
+	(beginning-of-line)
+	(kill-line 1))
+#+end_src
+**** Duplicate current line
+#+begin_src emacs-lisp
+  (defun db/duplicate-line()
+	"Duplicate line at point."
+	(interactive)
+	(save-excursion
+	  (move-beginning-of-line 1)
+	  (kill-line)
+	  (yank)
+	  (open-line 1)
+	  (forward-line 1)
+	  (yank)))
+#+end_src
+**** Convert =camelCase= to =snake_case=
 #+begin_src emacs-lisp
   (defun camel-to-snake-case (arg)
 	"Convert a camelCase word to snake_case.
@@ -2611,7 +2588,30 @@ Updates the Emacs configuration.
 		(goto-char start)
 		(unless had-initial-underscore (delete-char 1)))))
 #+end_src
-
+**** =sanemacs/backward-kill-word=
+#+begin_src emacs-lisp
+  (defun sanemacs/backward-kill-word ()
+	"Kill word backwards without littering 'kill-ring'."
+	(interactive )
+	(push-mark)
+	(backward-word)
+	(delete-region (point) (mark)))
+#+end_src
+**** =comment-line-dwim=
+#+begin_src emacs-lisp
+  ;; Original idea from
+  ;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
+  (defun comment-dwim-line (&optional arg)
+	"Replacement for the comment-dwim command.
+	If no region is selected and current line is not blank and we are not at the end of the line,
+	then comment current line.
+	Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
+	(interactive "*P")
+	(comment-normalize-vars)
+	(if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
+		(comment-or-uncomment-region (line-beginning-position) (line-end-position))
+	  (comment-dwim arg)))
+#+end_src
 * Footer
 ** Goodbye
 #+begin_src emacs-lisp

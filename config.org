@@ -981,6 +981,23 @@ Add icons and subtree's to dired.
 						   (revert-buffer)))))
 #+end_src
 ** Visual
+*** Initialize =modus-themes=
+**** Description
+Accessible themes for Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
+**** Code
+#+begin_src emacs-lisp
+  (use-package modus-themes
+	:straight t
+	:init
+	(setq modus-themes-italic-constructs t
+		  modus-themes-bold-constructs t
+		  modus-themes-region '(accented bg-only no-extend))
+	;; load the theme files before enabling a theme
+	(modus-themes-load-themes)
+	:config
+	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	:bind ("S-<f5>" . modus-themes-toggle))
+#+end_src
 *** Initialize =dashboard=
 **** Description
 An extensible emacs startup screen.
@@ -1087,23 +1104,6 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	(eval-after-load "evil-commentary" '(diminish 'evil-commentary-mode))
 	(eval-after-load "evil-escape" '(diminish 'evil-escape-mode))
 	(eval-after-load "evil-collection-unimpaired" '(diminish 'evil-collection-unimpaired-mode)))
-#+end_src
-*** Initialize =modus-themes=
-**** Description
-Accessible themes for Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
-**** Code
-#+begin_src emacs-lisp
-  (use-package modus-themes
-	:straight t
-	:init
-	(setq modus-themes-italic-constructs t
-		  modus-themes-bold-constructs t
-		  modus-themes-region '(accented bg-only no-extend))
-	;; load the theme files before enabling a theme
-	(modus-themes-load-themes)
-	:config
-	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
-	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 *** Initialize =rainbow-mode=
 **** Description

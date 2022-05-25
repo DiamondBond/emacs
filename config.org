@@ -1126,6 +1126,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	(eval-after-load "c-mode" '(diminish 'c-mode))
 	(eval-after-load "c++-mode" '(diminish 'c++-mode))
 	(eval-after-load "which-key" '(diminish 'which-key-mode))
+	(eval-after-load "org" '(diminish 'org-indent-mode))
 	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
 	(eval-after-load "outline" '(diminish 'outline-minor-mode))
 	(eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode ""))

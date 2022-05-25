@@ -266,7 +266,12 @@ Show alerts for unread emails.
 
 	;; show notifications for mails already notified
 	(setq mu4e-alert-notify-repeated-mails nil)
+
+	;; auto-enable notifications when opening mu4e
+	(add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
+
 	:init
+	;; enable notifications
 	(mu4e-alert-enable-notifications))
 #+end_src
 *** Initialize =smtpmail=

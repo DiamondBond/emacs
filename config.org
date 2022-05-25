@@ -804,7 +804,7 @@ Alert is a Growl-workalike for Emacs which uses a common notification interface 
   (use-package alert
 	:straight t
 	:config
-	(setq alert-fade-time 15))
+	(setq alert-fade-time 10))
 #+end_src
 *** Initialize =evil=
 **** Description

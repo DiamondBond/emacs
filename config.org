@@ -845,13 +845,12 @@ Heresy; Vim keybindings in Emacs.
 	(evil-mode 1)
 	;; set evil state on a per mode basis
 	(evil-set-initial-state 'messages-buffer-mode 'normal)
-	(evil-set-initial-state 'dashboard-mode 'emacs)
+	(evil-set-initial-state 'dashboard-mode 'normal)
 	(evil-set-initial-state 'vterm-mode 'insert)
 	(evil-set-initial-state 'term-mode 'emacs)
 	(evil-set-initial-state 'eshell-mode 'emacs)
 	(evil-set-initial-state 'inferior-scheme-mode 'emacs)
 	(evil-set-initial-state 'md4rd-mode 'emacs)
-	(evil-set-initial-state 'mu4e-mode 'emacs)
 	(evil-set-initial-state 'mu4e-main-mode 'emacs)
 	(evil-set-initial-state 'pdf-view-mode 'emacs)
 	;; more granular undo with evil

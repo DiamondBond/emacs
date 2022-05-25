@@ -871,10 +871,7 @@ Add icons and subtree's to dired.
 
 (use-package dired-hide-dotfiles
   :straight t
-  :hook (dired-mode . dired-hide-dotfiles-mode)
-  :config
-  (evil-collection-define-key 'normal 'dired-mode-map
-							  "H" dired-hide-dotfiles-mode))
+  :hook (dired-mode . dired-hide-dotfiles-mode))
 #+end_src
 ** Visual
 *** Initialize =modus-themes=
@@ -1006,12 +1003,12 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	(eval-after-load "org" '(diminish 'org-indent-mode))
 	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
 	(eval-after-load "outline" '(diminish 'outline-minor-mode))
+	(eval-after-load "dired" '(diminish 'dired-async-mode))
+	(eval-after-load "dired" '(diminish 'dired-hide-dotfiles-mode))
+	(eval-after-load "dired" '(diminish 'all-the-icons-dired-mode))
 	(eval-after-load "magit" '(diminish 'auto-fill-mode ""))
 	(eval-after-load "magit" '(diminish 'with-editor-mode ""))
-	(eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode ""))
-	(eval-after-load "evil-commentary" '(diminish 'evil-commentary-mode))
-	(eval-after-load "evil-escape" '(diminish 'evil-escape-mode))
-	(eval-after-load "evil-collection-unimpaired" '(diminish 'evil-collection-unimpaired-mode)))
+	(eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode "")))
 #+end_src
 *** Initialize =rainbow-mode=
 **** Description

@@ -1209,20 +1209,20 @@ Calendar view in Emacs buffer.
   (use-package calfw
 	:straight t)
 #+end_src
-*** Initialize =crux=
-**** Description
-A Collection of Ridiculously Useful eXtensions.
-**** Code
-#+begin_src emacs-lisp
-  (use-package crux
-	:straight t)
-#+end_src
 *** Initialize =htmlize=
 **** Description
 Used for exporting source code with syntax highlighting.
 **** Code
 #+begin_src emacs-lisp
   (use-package htmlize
+	:straight t)
+#+end_src
+*** Initialize =crux=
+**** Description
+A Collection of Ridiculously Useful eXtensions.
+**** Code
+#+begin_src emacs-lisp
+  (use-package crux
 	:straight t)
 #+end_src
 *** Initialize =0x0=

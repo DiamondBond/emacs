@@ -1,7 +1,5 @@
 #+TITLE: Diamond's Emacs
 #+DESCRIPTION: Eight Megabytes And Constantly Swapping
-#+CREATED: <2020-06-29 Mon>
-#+DATE: <2022-04-24 Tue>
 #+AUTHOR: Diamond Bond
 #+EMAIL: diamondbond1@gmail.com
 #+LANGUAGE: en
@@ -28,6 +26,10 @@
 
 Simple Emacs distro aimed at enhancing the default experience.
 
+#+end_quote
+
+#+begin_quote
+
 Personally, I feel inspired whenever I open Emacs. Like a craftsman entering his workshop, I feel a realm of possibility open before me. I feel the comfort of an environment that has evolved over time to fit me perfectly – an assortment of packages and keybindings which help me bring ideas to life day after day. - Daniel Higginbotham
 
 #+end_quote
@@ -39,6 +41,29 @@ Personally, I feel inspired whenever I open Emacs. Like a craftsman entering his
 ** Preview :noexport:
 
 This entire config can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
+
+** Overview
+
+: CHRONOLOGICAL LOAD ORDER
+
+*** *early-init.el*
+- [[https://github.com/DiamondBond/emacs/blob/master/early-init.el][early-bootstrap]] - Early bootstrap
+
+*** *init.el*
+- [[https://github.com/DiamondBond/emacs/blob/master/init.el][bootstrap]] - Bootstrap straight.el
+
+*** *config.org*
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#base][base]] - Base configuration
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][keybinds]] - Keybinding maps
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][packages]] - Package manifest
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#languages][languages]] - Language manifest
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][functions]] - Function definitions
+
+*** *userconfig.org*
+- [[https://github.com/DiamondBond/emacs/blob/master/userconfig.org][user]] - User configuration
+
+*** *modules/mail.org*
+- [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][mail]] - Mail configuration
 
 ** Principles
 
@@ -69,29 +94,6 @@ Where possible, we will leverage built-in Emacs functionality instead of externa
 The base configuration only sets up Emacs to have a cleaner presentation with sensible defaults.
 
 The implication is that someone should be able to install or copy code from this configuration into their own configuration or vice versa.
-
-** Overview
-
-: CHRONOLOGICAL LOAD ORDER
-
-*** *early-init.el*
-- [[https://github.com/DiamondBond/emacs/blob/master/early-init.el][early-bootstrap]] - Early bootstrap
-
-*** *init.el*
-- [[https://github.com/DiamondBond/emacs/blob/master/init.el][bootstrap]] - Bootstrap straight.el
-
-*** *config.org*
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#base][base]] - Base configuration
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][keybinds]] - Keybinding maps
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][packages]] - Package manifest
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#languages][languages]] - Language manifest
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][functions]] - Function definitions
-
-*** *userconfig.org*
-- [[https://github.com/DiamondBond/emacs/blob/master/userconfig.org][user]] - User configuration
-
-*** *modules/mail.org*
-- [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][mail]] - Mail configuration
 
 ** Dependencies
 

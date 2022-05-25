@@ -2487,32 +2487,33 @@ Sync dotfiles (incl. Emacs) to git.
 ** Config
 *** =config/reload=
 #+begin_src emacs-lisp
-(defun config/reload ()
-  "Reload Emacs Configuration."
-  (interactive)
-  (load-file (concat user-emacs-directory "init.el")))
+  (defun config/reload ()
+	"Reload Emacs configuration."
+	(interactive)
+	(load-file (concat user-emacs-directory "init.el")))
 #+end_src
 *** =config/open=
 #+begin_src emacs-lisp
-(defun config/open ()
-  (interactive)
-  (find-file (expand-file-name "config.org" user-emacs-directory)))
+  (defun config/open ()
+	"Open Emacs configuration for editing."
+	(interactive)
+	(find-file (expand-file-name "config.org" user-emacs-directory)))
 #+end_src
 *** =config/github=
 Launches this Emacs' configuration GitHub page with default browser
 #+begin_src emacs-lisp
-(defun config/github ()
-  "Launches this Emacs' configuration GitHub page in browser."
-  (interactive)
-  (browse-url-firefox "https://github.com/diamondbond/emacs"))
+  (defun config/github ()
+	"Launches this Emacs' configuration GitHub page in browser."
+	(interactive)
+	(browse-url-firefox "https://github.com/diamondbond/emacs"))
 #+end_src
 *** =config/update=
 Updates the Emacs configuration.
 #+begin_src emacs-lisp
-(defun config/update ()
-  "Updates the Emacs configuration."
-  (interactive)
-  (async-shell-command "cd ~/git/emacs; git pull"))
+  (defun config/update ()
+	"Updates this Emacs configuration."
+	(interactive)
+	(async-shell-command "cd ~/git/emacs; git pull"))
 #+end_src
 ** Imported
 *** =run-in-vterm=

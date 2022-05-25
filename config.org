@@ -980,91 +980,7 @@ Add icons and subtree's to dired.
 						 (when all-the-icons-dired-mode
 						   (revert-buffer)))))
 #+end_src
-** Tools
-*** Initialize =auto-package=update=
-Manually update packages.
-#+begin_src emacs-lisp
-  (use-package auto-package-update
-	:straight t
-	:commands update-packages
-	:custom
-	(auto-package-update-delete-old-versions t)
-	:config
-	(auto-package-update-maybe))
-#+end_src
-*** Initialize =yasnippet=
-**** Description
-Yasnippet provides useful snippets.
-**** Code
-#+begin_src emacs-lisp
-  (use-package yasnippet
-	:straight t
-	:diminish yas-minor-mode
-	:hook
-	((c-mode c++-mode) . yas-minor-mode)
-	:config
-	(yas-reload-all))
-
-  (use-package yasnippet-snippets
-	:after yasnippet
-	:straight t)
-#+end_src
-*** Initialize =vterm=
-**** Description
-Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
-**** Code
-#+begin_src emacs-lisp
-  (use-package vterm
-	:straight t
-	:config
-	:config
-	(add-hook 'vterm-mode-hook
-			  (lambda () (global-hl-line-mode 0)))
-	(setq vterm-max-scrollback 10000))
-#+end_src
-*** Initialize =calfw=
-**** Description
-Calendar view in Emacs buffer.
-**** Code
-#+begin_src emacs-lisp
-  (use-package calfw
-	:straight t)
-#+end_src
-*** Initialize =crux=
-**** Description
-A Collection of Ridiculously Useful eXtensions.
-**** Code
-#+begin_src emacs-lisp
-  (use-package crux
-	:straight t)
-#+end_src
-*** Initialize =htmlize=
-**** Description
-Used for exporting source code with syntax highlighting.
-**** Code
-#+begin_src emacs-lisp
-  (use-package htmlize
-	:straight t)
-#+end_src
-*** Initialize =clm=
-**** Description
-Show event history and command history of some or all buffers.
-**** Code
-#+begin_src emacs-lisp
-  (use-package command-log-mode
-	:straight t
-	:diminish command-log-mode)
-#+end_src
-*** Initialize =0x0=
-**** Description
-Instant upload to 0x0.st
-**** Code
-#+begin_src emacs-lisp
-  (use-package 0x0
-	:straight t
-	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
-#+end_src
-** Appearance
+** Visual
 *** Initialize =dashboard=
 **** Description
 An extensible emacs startup screen.
@@ -1208,7 +1124,90 @@ Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimit
 	:straight t
 	:hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
-** Syntax
+** Tools
+*** Initialize =auto-package=update=
+Manually update packages.
+#+begin_src emacs-lisp
+  (use-package auto-package-update
+	:straight t
+	:commands update-packages
+	:custom
+	(auto-package-update-delete-old-versions t)
+	:config
+	(auto-package-update-maybe))
+#+end_src
+*** Initialize =yasnippet=
+**** Description
+Yasnippet provides useful snippets.
+**** Code
+#+begin_src emacs-lisp
+  (use-package yasnippet
+	:straight t
+	:diminish yas-minor-mode
+	:hook
+	((c-mode c++-mode) . yas-minor-mode)
+	:config
+	(yas-reload-all))
+
+  (use-package yasnippet-snippets
+	:after yasnippet
+	:straight t)
+#+end_src
+*** Initialize =vterm=
+**** Description
+Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
+**** Code
+#+begin_src emacs-lisp
+  (use-package vterm
+	:straight t
+	:config
+	:config
+	(add-hook 'vterm-mode-hook
+			  (lambda () (global-hl-line-mode 0)))
+	(setq vterm-max-scrollback 10000))
+#+end_src
+*** Initialize =calfw=
+**** Description
+Calendar view in Emacs buffer.
+**** Code
+#+begin_src emacs-lisp
+  (use-package calfw
+	:straight t)
+#+end_src
+*** Initialize =crux=
+**** Description
+A Collection of Ridiculously Useful eXtensions.
+**** Code
+#+begin_src emacs-lisp
+  (use-package crux
+	:straight t)
+#+end_src
+*** Initialize =htmlize=
+**** Description
+Used for exporting source code with syntax highlighting.
+**** Code
+#+begin_src emacs-lisp
+  (use-package htmlize
+	:straight t)
+#+end_src
+*** Initialize =0x0=
+**** Description
+Instant upload to 0x0.st
+**** Code
+#+begin_src emacs-lisp
+  (use-package 0x0
+	:straight t
+	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
+#+end_src
+*** Initialize =clm=
+**** Description
+Show event history and command history of some or all buffers.
+**** Code
+#+begin_src emacs-lisp
+  (use-package command-log-mode
+	:straight t
+	:diminish command-log-mode)
+#+end_src
 *** Initialize =flycheck=
 **** Description
 Modern on-the-fly syntax checking extension.

@@ -393,9 +393,8 @@ Keep the =menu-bar= enabled as it provides quick access to certain functions.
 	  (scroll-bar-mode 1))
 #+end_src
 **** Configure fringe
-Disable fringe-mode.
 #+begin_src emacs-lisp
-  (fringe-mode 0)
+  (fringe-mode nil) ; Default fringe-mode.
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
   (setq-default indicate-empty-lines nil)

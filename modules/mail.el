@@ -133,5 +133,4 @@
 		smtpmail-smtp-service 587
 		smtpmail-debug-info t))
 
-(provide 'mail)
 ;;; userconfig.el ends here

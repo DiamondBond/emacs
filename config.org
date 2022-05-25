@@ -945,6 +945,14 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	("C-c l" . 'org-store-link)
 	("C-<f1>" . (lambda()(interactive)(show-all))))
 
+  ;; org-roam
+  (use-package org-roam
+	:straight t
+  :after org
+  :config
+  (setq find-file-visit-truename t)
+  (setq org-roam-directory (file-truename "~/org/roam"))
+
   ;; reminders
   (use-package org-wild-notifier
 	:straight t

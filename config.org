@@ -127,16 +127,12 @@ Enable lexical binding as opposed to the default dynamic binding because it is f
 * Base
 ** Globals
 *** Description
-Global variables to easily customize this Emacs configuration.
+Load global variables.
 *** Code
 #+begin_src emacs-lisp
-  (setq
-   globals--banner-path  "img/gnusstorm-2.gif"      		; Banner
-   globals--name         "Diamond Bond"             		; Name
-   globals--email        "diamondbond1@gmail.com"   		; Email
-   globals--irc          "diamondbond"              		; IRC
-   globals--erc          '("diamondbond" "diamondbond_")	; ERC
-   )
+  ;; Tangle global configuration
+  (when (file-readable-p "~/.emacs.d/globals.org")
+	(org-babel-load-file (expand-file-name "~/.emacs.d/globals.org")))
 #+end_src
 ** Personal
 *** Identity

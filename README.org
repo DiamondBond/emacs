@@ -80,11 +80,15 @@ If you care about fancy icons, install the fonts provided by [[https://github.co
 
 ** PDF
 
+If you want to view pdfs, install pdf-tools:
+
 #+begin_src emacs-lisp
   M-x pdf-tools-install
 #+end_src
 
 ** vterm
+
+If you want a terminal emulator based on libvterm, compile the vterm-modules by launching vterm:
 
 #+begin_src emacs-lisp
   M-x vterm
@@ -94,12 +98,14 @@ If you care about fancy icons, install the fonts provided by [[https://github.co
 
 Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mode][LSP]] package. For it to work properly, you need to install the appropriate [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]].
 
-** Mail
+** Email
 
 Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email setup documentation]] for this functionality.
 
 ** Customization
 
-Edit =userconfig.org= in the =.emacs.d= directory and define your globals, optionally add your custom settings there (in "emacs-lisp" org-mode code blocks).
+Edit =.emacs.d/globals.org= to change the default username & email address.
 
-You may also edit the =config.org= file directly, but your custom settings might be wiped out in case of an update - it is therefore recommended to fork this repo if you intend on customizing this configuration permanently.
+Edit =.emacs.d/userconfig.org= to add your custom settings (in "emacs-lisp" org-mode code blocks).
+
+You may also edit the =config.org= file directly, but your custom settings might be wiped out in case of an update.

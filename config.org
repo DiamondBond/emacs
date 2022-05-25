@@ -33,14 +33,6 @@ Personally, I feel inspired whenever I open Emacs. Like a craftsman entering his
 
 #+end_quote
 
-** Preview :noexport:
-
-This entire config can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
-
-** Screenshot :noexport:
-
-[[./img/screenshot.png]]
-
 ** Principles
 
 This configuration and all associated modules intend to follow the below priniciples.
@@ -1808,30 +1800,6 @@ An extensible emacs startup screen.
 	(when (file-directory-p "~/org")
 	  (setq dashboard-navigator-buttons
 			`(;; line 1
-			  ((,nil
-				"mu4e"
-				"Read Email with mu4e"
-				(lambda (&rest _) (mu4e))
-				'default)
-			   (,nil
-				"md4rd"
-				"Browse Reddit with md4rd"
-				(lambda (&rest _) (md4rd))
-				'default)
-			   (nil
-				"elfeed"
-				"Read RSS/Atom feeds with Elfeed"
-				(lambda (&rest _) (elfeed))
-				'default)
-			   (nil
-				"gnus"
-				"Read mailing lists with Gnus"
-				(lambda (&rest _) (open-emacs-devel))
-				'default))
-			  ;; separator
-			  ((,nil "==============================" ""
-					 (lambda (&rest _) ()) 'default))
-			  ;; line 2
 			  ((,nil
 				"Notes"
 				"Open Notes"

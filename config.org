@@ -33,13 +33,13 @@ Personally, I feel inspired whenever I open Emacs. Like a craftsman entering his
 
 #+end_quote
 
-** Screenshot                                                      :noexport:
-
-[[./img/screenshot.png]]
-
-** Preview                                                         :noexport:
+** Preview :noexport:
 
 This entire config can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
+
+** Screenshot :noexport:
+
+[[./img/screenshot.png]]
 
 ** Principles
 

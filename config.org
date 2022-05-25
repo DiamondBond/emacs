@@ -1813,8 +1813,8 @@ engine-mode is a global minor mode for Emacs that enables you to easily define s
 	:config
 	(defengine google "https://google.com/search?q=%s" :keybinding "g"
 			   :docstring "Search Google.")
-	(defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :docstring "Search Google Images")
-	(defengine google-maps "http://maps.google.com/maps?q=%s" :docstring "Search Google Maps.")
+	(defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :keybinding "i" :docstring "Search Google Images")
+	(defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m" :docstring "Search Google Maps.")
 	(defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d"
 			   :docstring "Search DuckDuckGo.")
 	(defengine qwant "https://www.qwant.com/?q=%s" :keybinding "q"
@@ -1827,7 +1827,7 @@ engine-mode is a global minor mode for Emacs that enables you to easily define s
 			   :docstring "Search Twitter.")
 	(defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h"
 			   :docstring "Search GitHub.")
-	(defengine melpa "https://melpa.org/#/?q=%s" :keybinding "m"
+	(defengine melpa "https://melpa.org/#/?q=%s" :keybinding "p"
 			   :docstring "Search the Milkypostman's Emacs Lisp Package Archive.")
 	(defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "s"
 			   :docstring "Search Stack Overflow.")

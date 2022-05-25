@@ -3,7 +3,6 @@
 #+EMAIL: diamondbond1@gmail.com
 #+LANGUAGE: en
 #+CREATOR: Emacs 28.1 (Org mode 9.5.3)
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
 #+OPTIONS: toc:2
 
 
@@ -11,32 +10,32 @@
 
 * Preview
 
-  The entire config file can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
+The entire config file can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
 
 * Installation
 
-  Clone this repo into your *.emacs.d*:
+Clone this repo into your *.emacs.d*:
 
-  #+begin_src sh
+#+begin_src sh
   $ git clone https://github.com/diamondbond/emacs.git ~/.emacs.d --recurse-submodules
-  #+end_src
+#+end_src
 
 ** Icons
 
-   If you care about fancy icons, install the fonts provided by [[https://github.com/domtronn/all-the-icons.el][all the icons]]:
+If you care about fancy icons, install the fonts provided by [[https://github.com/domtronn/all-the-icons.el][all the icons]]:
 
-   #+begin_src emacs-lisp
-   M-x all-the-icons-install-fonts
-   #+end_src
+#+begin_src emacs-lisp
+  M-x all-the-icons-install-fonts
+#+end_src
 
 ** Syntax checking/linting
 
-   Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mode][LSP]] package. For it to work properly, you need to install the appropriate [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]].
+Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mode][LSP]] package. For it to work properly, you need to install the appropriate [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]].
 
 ** Customization
 
-   Edit =userconfig.org= file in the =.emacs.d= directory and add your custom settings there (in "emacs-lisp" org-mode code blocks).
+Edit =userconfig.org= file in the =.emacs.d= directory and add your custom settings there (in "emacs-lisp" org-mode code blocks).
 
-   Make sure you set your global variables.
+Make sure you set your global variables in =userconfig.org=.
 
-   You may also edit the =config.org= file directly, but your custom settings might be wiped out in case of an update.
+You may also edit the =config.org= file directly, but your custom settings might be wiped out in case of an update.

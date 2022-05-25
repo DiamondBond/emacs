@@ -235,7 +235,7 @@ Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.
 
 * Header
 ** Specification
-Enable lexical binding.
+Enable lexical binding as opposed to the default dynamic binding because it is faster and less error-prone.
 #+begin_src emacs-lisp
   ;;; config.el --- Configuration. -*- lexical-binding: t; -*-
 
@@ -280,15 +280,16 @@ Enable lexical binding.
 * Base
 ** Globals
 *** Description
- Set your global variables here.
+Global variables to easily customize Emacs.
+Override this in =userconfig.org=.
 *** Code
 #+begin_src emacs-lisp
   (setq
-   globals--banner-path  "img/gnusstorm-2.gif"      ; Banner
-   globals--name         "Diamond Bond"             ; Name
-   globals--email        "diamondbond1@gmail.com"   ; Email
-   globals--irc          "diamondbond"              ; IRC
-   globals--erc          '("diamondbond" "diamondbond_")              ; ERC
+   globals--banner-path  "img/gnusstorm-2.gif"      		; Banner
+   globals--name         "Diamond Bond"             		; Name
+   globals--email        "diamondbond1@gmail.com"   		; Email
+   globals--irc          "diamondbond"              		; IRC
+   globals--erc          '("diamondbond" "diamondbond_")	; ERC
    )
 #+end_src
 ** Personal
@@ -304,13 +305,18 @@ Enable lexical binding.
 #+end_src
 *** Authentication
 Set authinfo file location and authinfo expiry to never.
+Configure gpg-email address.
 #+begin_src emacs-lisp
+  ;; Load authinfo
   (if (file-exists-p "~/.authinfo.gpg")
 	  (setq auth-sources '("~/.authinfo" "~/.authinfo.gpg")
 			auth-source-cache-expiry nil))
 
   ;; ask for encryption password once
   (setq epa-file-cache-passphrase-for-symmetric-encryption t)
+
+  ;; gpg-email
+  (setq epa-file-encrypt-to '(globals--email))
 #+end_src
 ** Performance
 *** Garbage collect when in minibuffer
@@ -1063,7 +1069,7 @@ An extensible emacs startup screen.
 	:config
 	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
-	(setq dashboard-startup-banner 'official)
+	;; (setq dashboard-startup-banner 'official)
 	(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)

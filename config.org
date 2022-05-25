@@ -350,22 +350,9 @@ https://emacs.stackexchange.com/questions/28736
   (setq auto-window-vscroll nil)
 #+end_src
 ** Files
-*** Bookmarks
-**** Set file location
-Set bookmarks file location to ~/org/bookmarks
-#+begin_src emacs-lisp
-  (when (file-directory-p "~/org")
-	(if (file-exists-p "~/org/bookmarks")
-		(setq bookmark-default-file "~/org/bookmarks")))
-#+end_src
-**** Configure autosaving
-#+begin_src emacs-lisp
-  (setq bookmark-save-flag 1) ; everytime bookmark is changed, automatically save it
-  (setq bookmark-save-flag t) ; save bookmark when Emacs quits
-#+end_src
-*** Custom file
-Offload the custom-set-variables to a separate file.
-This keeps your init.el neater and you have the option to gitignore your custom.el if you see fit.
+*** Custom
+Offload custom-set-variables to a separate file.
+This keeps your init.el clean and you have the option to gitignore your custom.el if you see fit.
 #+begin_src emacs-lisp
   (setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
   (unless (file-exists-p custom-file)
@@ -373,7 +360,23 @@ This keeps your init.el neater and you have the option to gitignore your custom.
    ;;; Load custom file. Don't hide errors. Hide success message
   (load custom-file nil t)
 #+end_src
+*** Bookmarks
+**** Set file location
+Set bookmarks file location to =~/org/bookmarks=.
+#+begin_src emacs-lisp
+  (when (file-directory-p "~/org")
+	(if (file-exists-p "~/org/bookmarks")
+		(setq bookmark-default-file "~/org/bookmarks")))
+#+end_src
+**** Configure autosaving
+Everytime a bookmark is changed, auto-save.
+Save bookmarks when Emacs quits.
+#+begin_src emacs-lisp
+  (setq bookmark-save-flag 1)
+  (setq bookmark-save-flag t)
+#+end_src
 *** Load custom themes
+Auto-load any custom themes in =~/.emacs.d/themes=.
 #+begin_src emacs-lisp
   (when (file-exists-p (expand-file-name "themes/" user-emacs-directory))
 	(add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory)))
@@ -1884,7 +1887,7 @@ The Silver Surfer - A code searching tool similar to ack, with a focus on speed.
 #+end_src
 *** Initialize =deft=
 **** Description
-Deft is included for quicksearch of entire ~/org directory.
+Deft is included for quicksearch of entire =~/org= directory.
 **** Code
 #+begin_src emacs-lisp
   (use-package deft

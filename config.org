@@ -527,9 +527,9 @@ Emacs will fill up the space reported by the window manager.
   (setq initial-scratch-message "")
 #+end_src
 **** Disable some gui elements
-Disable =tool-bar= as it consumes too many pixels from our total frame-size.
-Keep =scroll-bar= as it provides contextual information regarding your whereabouts in the buffer.
-Keep =menu-bar= as it provides quick access to certain functions.
+Disable the =tool-bar= as it consumes too many pixels from our frame.
+Keep the =scroll-bar= enabled as it provides contextual information regarding your whereabouts in the buffer.
+Keep the =menu-bar= enabled as it provides quick access to certain functions.
 #+begin_src emacs-lisp
   (if (fboundp 'menu-bar-mode)
 	  (menu-bar-mode 1))
@@ -1177,10 +1177,10 @@ Yasnippet provides useful snippets.
 	:diminish yas-minor-mode
 	:hook
 	((cc-mode c-lang-common cmake-mode c++-mode c-mode conf-unix-mode
-	csharp-mode css-mode emacs-lisp-mode fundamental-mode git-commit-mode
-	go-mode js-mode js2-mode html-mode makefile-mode makefile-automake-mode
-	markdown-mode org-mode prog-mode python-mode rjsx-mode rust-mode text-mode
-	typescript-mode web-mode) . yas-minor-mode)
+			  csharp-mode css-mode emacs-lisp-mode fundamental-mode git-commit-mode
+			  go-mode js-mode js2-mode html-mode makefile-mode makefile-automake-mode
+			  markdown-mode org-mode prog-mode python-mode rjsx-mode rust-mode text-mode
+			  typescript-mode web-mode) . yas-minor-mode)
 	:config
 	(yas-reload-all))
 
@@ -2190,22 +2190,6 @@ Prettier formatter for JSX & TSX.
 		(if (string-match (car my-pair) buffer-file-name)
 			(funcall (cdr my-pair)))))
 #+end_src
-*** Erc handlers
-#+begin_src emacs-lisp
-  (defun erc-start ()
-	"Start ERC and connect to Rizon."
-	(interactive)
-	(save-current-buffer
-	  (erc-services-mode 1)
-	  (erc-update-modules)
-	  (erc :server "irc.rizon.net" :port "6667" :nick erc-nick-short)))
-
-  (defun erc-quit ()
-	"Quit ERC."
-	(interactive)
-	(erc-services-mode 0)
-	(erc-quit-server nil))
-#+end_src
 *** Yank Whole Buffer
 #+begin_src emacs-lisp
   (defun yank-whole-buffer ()
@@ -2229,6 +2213,22 @@ Prettier formatter for JSX & TSX.
 	(menu-bar-mode -1)
 	(scroll-bar-mode -1))
 #+end_src
+*** Erc handlers
+#+begin_src emacs-lisp
+  (defun erc-start ()
+	"Start ERC and connect to Rizon."
+	(interactive)
+	(save-current-buffer
+	  (erc-services-mode 1)
+	  (erc-update-modules)
+	  (erc :server "irc.rizon.net" :port "6667" :nick erc-nick-short)))
+
+  (defun erc-quit ()
+	"Quit ERC."
+	(interactive)
+	(erc-services-mode 0)
+	(erc-quit-server nil))
+#+end_src
 *** Disable all themes
 #+begin_src emacs-lisp
   (defun disable-all-themes ()
@@ -2236,7 +2236,6 @@ Prettier formatter for JSX & TSX.
 	(dolist (i custom-enabled-themes)
 	  (disable-theme i)))
 #+end_src
-** Buffers
 *** Split and follow
 #+begin_src emacs-lisp
   (defun split-and-follow-horizontally ()
@@ -2254,14 +2253,6 @@ Prettier formatter for JSX & TSX.
 	(balance-windows)
 	(other-window 1))
   (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
-#+end_src
-*** Get buffer menu in new frame
-#+begin_src emacs-lisp
-  ;; https://stackoverflow.com/questions/12014036/emacs-make-frame-switch-buffer
-  (defun get-buffer-menu-in-new-frame ()
-	"Switch-to-buffer-other-frame in new frame."
-	(interactive)
-	(switch-to-buffer (list-buffers-noselect)))
 #+end_src
 ** Inserts
 *** Date
@@ -2342,6 +2333,25 @@ Insert currently visiting buffer filename.
 	(move-beginning-of-line 1)
 	(next-line 1 1))
 #+end_src
+*** Open new line below
+#+begin_src emacs-lisp
+  (defun open-line-below ()
+	"Open a new line below point."
+	(interactive)
+	(end-of-line)
+	(newline)
+	(indent-for-tab-command))
+#+end_src
+*** Open new line above
+#+begin_src emacs-lisp
+  (defun open-line-above ()
+	"Open a new line above point."
+	(interactive)
+	(beginning-of-line)
+	(newline)
+	(forward-line -1)
+	(indent-for-tab-command))
+#+end_src
 *** Delete current line
 #+begin_src emacs-lisp
   (defun db/delete-current-line ()
@@ -2363,27 +2373,8 @@ Insert currently visiting buffer filename.
 	  (forward-line 1)
 	  (yank)))
 #+end_src
-*** Open new line below
-#+begin_src emacs-lisp
-  (defun open-line-below ()
-	"Open a new line below point."
-	(interactive)
-	(end-of-line)
-	(newline)
-	(indent-for-tab-command))
-#+end_src
-*** Open new line above
-#+begin_src emacs-lisp
-  (defun open-line-above ()
-	"Open a new line above point."
-	(interactive)
-	(beginning-of-line)
-	(newline)
-	(forward-line -1)
-	(indent-for-tab-command))
-#+end_src
 ** Launchers
-*** Music
+*** music
 Run ncmpcpp within vterm.
 #+begin_src emacs-lisp
   (defun music ()
@@ -2391,10 +2382,10 @@ Run ncmpcpp within vterm.
 	(interactive)
 	(run-in-vterm "ncmpcpp"))
 #+end_src
-*** Open emacs-devel
+*** emacs-devel
 Launches gnus and connects to news.gmane.io/emacs-devel.
 #+begin_src emacs-lisp
-  (defun open-emacs-devel ()
+  (defun emacs-devel ()
 	"Read the Emacs-devel mailing list."
 	(interactive)
 	(setq last-command-event 121)
@@ -2409,16 +2400,24 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	(setq last-command-event 13)
 	(gnus-browse-select-group nil))
 #+end_src
-*** Start org-agenda
+*** org-agenda
 #+begin_src emacs-lisp
   (defun start-to-org-agenda ()
-	"Launch focused 'org-agenda'."
+	"Launch shrink-wrapped 'org-agenda'."
 	(interactive)
 	(org-agenda nil "n")
 	(delete-other-windows)
 	(fit-frame-to-buffer))
 #+end_src
-*** Shrinkwrapped bufflist
+*** buffer-menu-in-new-frame
+#+begin_src emacs-lisp
+  ;; https://stackoverflow.com/questions/12014036/emacs-make-frame-switch-buffer
+  (defun get-buffer-menu-in-new-frame ()
+	"Switch-to-buffer in new frame."
+	(interactive)
+	(switch-to-buffer (list-buffers-noselect)))
+#+end_src
+*** shrink-wrapped-buffer-list
 #+begin_src emacs-lisp
   (defun shrink-wrapped-buffer-list ()
 	"Launch frame-fitted *Buffer List*."
@@ -2442,7 +2441,7 @@ Sync Emacs configuration to git.
 	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
 #+end_src
 *** =sync/mail=
-Sync Email locally.
+Sync Email to $maildir.
 #+begin_src emacs-lisp
   (defun sync/mail ()
 	"Sync email."
@@ -2451,17 +2450,16 @@ Sync Email locally.
 	(mu4e-update-index))
 #+end_src
 *** =sync/news=
-Sync Elfeed & Mail.
+Sync Elfeed.
 #+begin_src emacs-lisp
   (defun sync/news ()
-	"Sync; elfeed & email."
+	"Sync elfeed."
 	(interactive)
-	(sync-mail)
 	(elfeed)
 	(elfeed-update))
 #+end_src
 *** =sync/dotfiles=
-Sync dotfiles (incl. Emacs) to git.
+Sync dotfiles to git.
 #+begin_src emacs-lisp
   (defun sync/dotfiles ()
 	"Sync dotfiles."

@@ -879,7 +879,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 		  org-pretty-entities t)
 
 	;; indentation
-	(setq org-src-preserve-indentation nil
+	(setq org-src-preserve-indentation t
 		  org-adapt-indentation nil)
 
 	;; set org directory & agenda files

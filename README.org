@@ -14,11 +14,21 @@ The entire config file can be viewed [[https://diamondbond.neocities.org/emacs.h
 
 * Installation
 
-Clone this repo into your *.emacs.d*:
+Clone this repo:
 
 #+begin_src sh
   $ git clone https://github.com/diamondbond/emacs.git ~/.emacs.d --recurse-submodules
 #+end_src
+
+Install:
+
+#+begin_src sh
+  $ cd ~/git/emacs
+  $ chmod +x install.sh
+  $ ./install.sh
+#+end_src
+
+NOTE: Make sure you set your global variables in the =userconfig.org= file in the =.emacs.d= directory.
 
 ** Icons
 
@@ -34,8 +44,6 @@ Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mo
 
 ** Customization
 
-Edit =userconfig.org= file in the =.emacs.d= directory and add your custom settings there (in "emacs-lisp" org-mode code blocks).
-
-Make sure you set your global variables in =userconfig.org=.
+Edit the =userconfig.org= file in the =.emacs.d= directory and add your custom settings there (in "emacs-lisp" org-mode code blocks).
 
 You may also edit the =config.org= file directly, but your custom settings might be wiped out in case of an update.

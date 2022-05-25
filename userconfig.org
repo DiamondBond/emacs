@@ -33,6 +33,7 @@ Set your global variables here.
 TODO: Investigate whether or not these globals work considering they are loaded in very late in the load order.
 ** Code
 #+begin_src emacs-lisp
+  ;; set globals
   (setq
    globals--banner-path  "img/gnusstorm-2.gif"      		; Banner
    globals--name         "Diamond Bond"             		; Name
@@ -54,6 +55,7 @@ Email in Emacs via mu4e & offlineimap.
 *** Code
 
 #+begin_src emacs-lisp
+  ;; load email module
   (when (file-directory-p "~/.emacs.d/modules")
 	(when (file-readable-p "~/.emacs.d/modules/mail.org")
 	  (org-babel-load-file (expand-file-name "~/.emacs.d/modules/mail.org"))))
@@ -73,6 +75,7 @@ Discord RPC for Emacs.
 *** Code
 
 #+begin_src emacs-lisp
+  ;; load elcord
   (use-package elcord
 	:straight t
 	:config
@@ -92,6 +95,7 @@ Discord RPC for Emacs.
 
 * Functions
 #+begin_src emacs-lisp
+  ;; user functions
   (defun config/push ()
 	(async-shell-command "cd ~/git/emacs; git add -A; git commit -asm 'Automatic Sync'; git push"))
 

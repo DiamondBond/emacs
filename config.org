@@ -23,7 +23,7 @@
 
 #+begin_quote
 
-Simple Emacs distro aimed at enhancing the default experience.
+Simple Emacs configuration aimed at enhancing the default experience.
 
 #+end_quote
 
@@ -88,7 +88,7 @@ The implication is that someone should be able to install or copy code from this
 
 ** Dependencies
 
-Some dependencies are required to run this Emacs distro.
+Some dependencies are required to run this Emacs configuration smoothly.
 
 *** Packages
 **** System
@@ -152,7 +152,7 @@ NOTE: 'auth-info' can be backed up and restored to/from ~/org with =M-x auth/bac
 
 ** Clone this repo
 
-#+caption: Command to clone this Emacs distros =git= repository.
+#+caption: Command to clone this Emacs configuration =git= repository.
 #+name: li#git_clone
 #+begin_src sh
 
@@ -162,7 +162,7 @@ NOTE: 'auth-info' can be backed up and restored to/from ~/org with =M-x auth/bac
 
 ** Install the config
 
-#+caption: Command to install this Emacs distro.
+#+caption: Command to install this Emacs configuration.
 #+name: li#install
 #+begin_src sh
 
@@ -179,7 +179,7 @@ NOTE: 'auth-info' can be backed up and restored to/from ~/org with =M-x auth/bac
 This will take some time.
 NOTE: Please answer y for vterm-modules to be autoinstalled.
 
-#+caption: Command to bootstrap this Emacs distro.
+#+caption: Command to bootstrap this Emacs configuration.
 #+name: li#bootstrap
 #+begin_src sh
 

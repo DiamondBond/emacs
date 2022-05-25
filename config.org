@@ -820,13 +820,14 @@ Utilize asynchronous processes whenever possible.
 #+end_src
 *** Initialize =alert=
 **** Description
-Alert is a Growl-workalike for Emacs which uses a common notification interface and multiple, selectable "styles", whose use is fully customizable by the user.
+Alert is a Growl-workalike for Emacs which uses a common notification interface.
 **** Code
 #+begin_src emacs-lisp
   (use-package alert
 	:straight t
 	:config
-	(setq alert-fade-time 10))
+	(setq alert-fade-time 10)
+	(setq alert-default-style 'libnotify))
 #+end_src
 *** Initialize =evil=
 **** Description
@@ -948,7 +949,6 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	:straight t
 	:after org
 	:config
-	(setq alert-default-style 'libnotify)
 	(setq org-wild-notifier-alert-time '(1 5 10 15 30 60))
 	(setq org-wild-notifier-keyword-whitelist nil)
 	(setq org-wild-notifier-notification-title "*reminder*")

@@ -9,14 +9,6 @@
 #+EXPORT_FILE_NAME: emacs.html
 #+OPTIONS: toc:2
 
-* Screenshot :noexport:
-
-[[./img/screenshot.png]]
-
-* Preview :noexport:
-
-This entire config can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
-
 * Introduction
 
 #+begin_center
@@ -40,6 +32,14 @@ Simple Emacs distro aimed at enhancing the default experience.
 Personally, I feel inspired whenever I open Emacs. Like a craftsman entering his workshop, I feel a realm of possibility open before me. I feel the comfort of an environment that has evolved over time to fit me perfectly – an assortment of packages and keybindings which help me bring ideas to life day after day. - Daniel Higginbotham
 
 #+end_quote
+
+** Screenshot                                                      :noexport:
+
+[[./img/screenshot.png]]
+
+** Preview                                                         :noexport:
+
+This entire config can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
 
 ** Principles
 

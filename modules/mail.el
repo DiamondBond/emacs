@@ -55,6 +55,9 @@
   ;; don't save message to Sent Messages, GMail/IMAP will take care of this
   (setq mu4e-sent-messages-behavior 'delete)
 
+  ;; view in browser
+  (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+
   ;; composing mail
   (setq mu4e-compose-dont-reply-to-self t)
 
@@ -84,7 +87,7 @@
   ;; go-to-inbox function
   (defun db/go-to-inbox ()
 	(interactive)
-	(mu4e-headers-search dw/mu4e-inbox-query))
+	(mu4e-headers-search db/mu4e-inbox-query))
 
   ;; allow for updating mail using 'U' in the main view:
   (setq mu4e-get-mail-command "offlineimap")
@@ -95,6 +98,7 @@
   (setq mu4e-context-policy 'pick-first)
   ;; don't ask to quit
   (setq mu4e-confirm-quit nil)
+
   ;; start mu4e
   (mu4e t))
 
@@ -107,7 +111,12 @@
 
   ;; show notifications for mails already notified
   (setq mu4e-alert-notify-repeated-mails nil)
+
+  ;; auto-enable notifications when opening mu4e
+  (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
+
   :init
+  ;; enable notifications
   (mu4e-alert-enable-notifications))
 
 (use-package smtpmail

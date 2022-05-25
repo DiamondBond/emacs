@@ -71,9 +71,8 @@ Discord RPC for Emacs.
 	(defun elcord-buffer-details-format ()
 	  "Return the buffer details string shown on discord."
 	  (format "%s" (buffer-name)))
-
-	;; start elcord
-	(elcord-mode))
+	;; handy alias to start elcord
+	(defalias 'discord 'elcord-mode))
 #+end_src
 
 * Functions

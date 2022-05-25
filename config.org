@@ -859,7 +859,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 
 	;; indentation
 	(setq org-src-preserve-indentation nil
-		  org-adapt-indentation nil)
+		  org-adapt-indentation t)
 
 	;; set org directory & agenda files
 	(when (file-directory-p "~/org")
@@ -2447,7 +2447,6 @@ Sync dotfiles (incl. Emacs) to git.
 	(async-shell-command "cp ~/.emacs.d/network-security.data ~/org/")
 	;; metadata
 	(async-shell-command "cp ~/.emacs.d/custom.el ~/org/"))
-
 
   (defun auth/restore ()
 	"Restore authinfo & personal info."

@@ -237,7 +237,7 @@ mu4e mail client.
 	;; go-to-inbox function
 	(defun db/go-to-inbox ()
 	  (interactive)
-	  (mu4e-headers-search dw/mu4e-inbox-query))
+	  (mu4e-headers-search db/mu4e-inbox-query))
 
 	;; allow for updating mail using 'U' in the main view:
 	(setq mu4e-get-mail-command "offlineimap")
@@ -251,15 +251,6 @@ mu4e mail client.
 
 	;; start mu4e
 	(mu4e t))
-#+end_src
-*** Initialize =mu4e-org=
-**** Description
-mu4e org-mode integration.
-**** Code
-#+begin_src emacs-lisp
-  (use-package mu4e-org
-  :straight t
-  :after mu4e)
 #+end_src
 *** Initialize =mu4e-alert=
 **** Description

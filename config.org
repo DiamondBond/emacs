@@ -1230,6 +1230,32 @@ Enable on the fly with M-x flyspell-mode.
 		  ispell-default-dictionary "en_US")
 	:bind (("M-<f7>" . flyspell-buffer)))
 #+end_src
+** Git
+*** Initialize =magit=
+**** Description
+The definitive Git porcelain for Emacs.
+**** Code
+#+begin_src emacs-lisp
+  (use-package magit
+	:straight t)
+#+end_src
+*** Initialize =autorevert=
+**** Description
+Autorevert hooked buffers & diminish auto-revert-mode.
+**** Code
+#+begin_src emacs-lisp
+  (use-package autorevert
+	:straight t
+	:after magit
+	:diminish auto-revert-mode
+	:init
+	(setq auto-revert-verbose nil)
+	:hook ((prog-mode
+			text-mode
+			tex-mode
+			org-mode
+			conf-mode) . auto-revert-mode))
+#+end_src
 ** Keys
 *** Initialize =dabbrev=
 **** Description
@@ -1474,32 +1500,6 @@ Kind icons.
 	(kind-icon-blend-frac 0.08)
 	:config
 	(add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
-#+end_src
-** Git
-*** Initialize =magit=
-**** Description
-The definitive Git porcelain for Emacs.
-**** Code
-#+begin_src emacs-lisp
-  (use-package magit
-	:straight t)
-#+end_src
-*** Initialize =autorevert=
-**** Description
-Autorevert hooked buffers & diminish auto-revert-mode.
-**** Code
-#+begin_src emacs-lisp
-  (use-package autorevert
-	:straight t
-	:after magit
-	:diminish auto-revert-mode
-	:init
-	(setq auto-revert-verbose nil)
-	:hook ((prog-mode
-			text-mode
-			tex-mode
-			org-mode
-			conf-mode) . auto-revert-mode))
 #+end_src
 ** News
 *** Initialize =elfeed=

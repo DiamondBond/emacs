@@ -1188,6 +1188,28 @@ Yasnippet provides useful snippets.
 	:after yasnippet
 	:straight t)
 #+end_src
+*** Initialize =flycheck=
+**** Description
+Modern on-the-fly syntax checking extension.
+**** Code
+#+begin_src emacs-lisp
+  (use-package flycheck
+	:straight t
+	:hook (prog-mode . flycheck-mode))
+#+end_src
+*** Initialize =flyspell=
+**** Description
+Spell checking.
+Enable on the fly with M-x flyspell-mode.
+**** Code
+#+begin_src emacs-lisp
+  (use-package flyspell
+	:straight t
+	:config
+	(setq ispell-program-name "hunspell"
+		  ispell-default-dictionary "en_US")
+	:bind (("M-<f7>" . flyspell-buffer)))
+#+end_src
 *** Initialize =vterm=
 **** Description
 Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
@@ -1242,28 +1264,6 @@ Show event history and command history of some or all buffers.
   (use-package command-log-mode
 	:straight t
 	:diminish command-log-mode)
-#+end_src
-*** Initialize =flycheck=
-**** Description
-Modern on-the-fly syntax checking extension.
-**** Code
-#+begin_src emacs-lisp
-  (use-package flycheck
-	:straight t
-	:hook (prog-mode . flycheck-mode))
-#+end_src
-*** Initialize =flyspell=
-**** Description
-Spell checking.
-Enable on the fly with M-x flyspell-mode.
-**** Code
-#+begin_src emacs-lisp
-  (use-package flyspell
-	:straight t
-	:config
-	(setq ispell-program-name "hunspell"
-		  ispell-default-dictionary "en_US")
-	:bind (("M-<f7>" . flyspell-buffer)))
 #+end_src
 ** Git
 *** Initialize =magit=

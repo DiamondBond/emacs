@@ -1090,7 +1090,7 @@ An extensible emacs startup screen.
 	(interactive)
 	(switch-to-buffer (get-buffer-create "*scratch*")))
   :config
-  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
+  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (setq dashboard-items '((recents . 5)))
   ;; (setq dashboard-startup-banner 'official)
   (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))

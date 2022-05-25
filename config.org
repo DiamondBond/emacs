@@ -1812,13 +1812,13 @@ engine-mode is a global minor mode for Emacs that enables you to easily define s
 	:straight t
 	:config
 	(defengine google "https://google.com/search?q=%s" :keybinding "g"
-			   :docstring "Applied Google-fu.")
-	(defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :docstring "Google Images")
-	(defengine google-maps "http://maps.google.com/maps?q=%s" :docstring "Mappin' it up.")
+			   :docstring "Search Google.")
+	(defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :docstring "Search Google Images")
+	(defengine google-maps "http://maps.google.com/maps?q=%s" :docstring "Search Google Maps.")
 	(defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d"
-			   :docstring "DDG!")
+			   :docstring "Search DuckDuckGo.")
 	(defengine qwant "https://www.qwant.com/?q=%s" :keybinding "q"
-			   :docstring "Qwant it.")
+			   :docstring "Search Qwant.")
 	(defengine wikipedia "https://en.wikipedia.org/wiki/Special:Search?search=%s" :keybinding "w"
 			   :docstring "Search Wikipedia.")
 	(defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y"

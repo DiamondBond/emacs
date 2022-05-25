@@ -362,7 +362,6 @@ Set bookmarks file location to ~/org/bookmarks
 #+begin_src emacs-lisp
   (setq bookmark-save-flag 1) ; everytime bookmark is changed, automatically save it
   (setq bookmark-save-flag t) ; save bookmark when Emacs quits
-  (setq bookmark-save-flag nil) ; never auto save.
 #+end_src
 *** Custom file
 Offload the custom-set-variables to a separate file.

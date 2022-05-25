@@ -2135,6 +2135,40 @@ Prettier formatter for JSX & TSX.
 	(other-window 1))
   (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 #+end_src
+**** =run-in-vterm=
+#+begin_src emacs-lisp
+  (defun run-in-vterm-kill (process event)
+	"A process sentinel.  Kill PROCESS's buffer if it is live with arg EVENT."
+	(let ((b (process-buffer process)))
+	  (and (buffer-live-p b)
+		   (kill-buffer b))))
+
+  (defun run-in-vterm (command)
+	"Execute string COMMAND in a new vterm.
+
+	Interactively, prompt for COMMAND with the current buffer's file
+	name supplied.  When called from Dired, supply the name of the
+	file at point.
+
+	Like `async-shell-command`, but run in a vterm for full terminal features.
+
+	The new vterm buffer is named in the form `*foo bar.baz*`, the
+	command and its arguments in earmuffs.
+
+	When the command terminates, the shell remains open, but when the
+	shell exits, the buffer is killed."
+	(interactive
+	 (list
+	  (let* ((f (cond (buffer-file-name)
+					  ((eq major-mode 'dired-mode)
+					   (dired-get-filename nil t))))
+			 (filename (concat " " (shell-quote-argument (and f (file-relative-name f))))))
+		(read-shell-command "Command: "))))
+	(with-current-buffer (vterm (concat "*" command "*"))
+	  (set-process-sentinel vterm--process #'run-in-vterm-kill)
+	  (vterm-send-string command)
+	  (vterm-send-return)))
+#+end_src
 ** Config
 *** =config/reload=
 #+begin_src emacs-lisp
@@ -2150,14 +2184,6 @@ Prettier formatter for JSX & TSX.
 	(interactive)
 	(find-file (expand-file-name "config.org" user-emacs-directory)))
 #+end_src
-*** =config/github=
-Launches this Emacs' configuration GitHub page with default browser
-#+begin_src emacs-lisp
-  (defun config/github ()
-	"Launches this Emacs' configuration GitHub page in browser."
-	(interactive)
-	(browse-url-firefox "https://github.com/diamondbond/emacs"))
-#+end_src
 *** =config/update=
 Updates the Emacs configuration.
 #+begin_src emacs-lisp
@@ -2165,6 +2191,14 @@ Updates the Emacs configuration.
 	"Updates this Emacs configuration."
 	(interactive)
 	(async-shell-command "cd ~/git/emacs; git pull"))
+#+end_src
+*** =config/github=
+Launches this Emacs' configuration GitHub page with default browser
+#+begin_src emacs-lisp
+  (defun config/github ()
+	"Launches this Emacs' configuration GitHub page in browser."
+	(interactive)
+	(browse-url-firefox "https://github.com/diamondbond/emacs"))
 #+end_src
 ** Insert
 *** Date
@@ -2274,20 +2308,6 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	(shrink-wrap))
 #+end_src
 ** Syncing
-*** =sync/emacs=
-Sync Emacs configuration to local git repository.
-#+begin_src emacs-lisp
-  (defun sync/emacs ()
-	"Sync Emacs configuration."
-	(interactive)
-	(async-shell-command "~/bin/sync-emacs.sh"))
-
-  (defun sync/emacs-lockfile ()
-	"Sync Emacs 'lock-file'."
-	(interactive)
-	(straight-freeze-versions)
-	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
-#+end_src
 *** =sync/mail=
 Sync Email to local mail directory.
 #+begin_src emacs-lisp
@@ -2306,75 +2326,8 @@ Sync Elfeed.
 	(elfeed)
 	(elfeed-update))
 #+end_src
-*** =sync/dotfiles=
-Sync dotfiles to GitHub.
-#+begin_src emacs-lisp
-  (defun sync/dotfiles ()
-	"Sync dotfiles."
-	(interactive)
-	(async-shell-command "~/bin/sync-dotfiles.sh")
-	(alert "Sync Complete." :severity 'trivial))
-#+end_src
-*** =sync/neocities=
-Sync Emacs configuration to neocities.
-#+begin_src emacs-lisp
-  (defun sync/neocities ()
-	"Sync neocities."
-	(interactive)
-	(save-window-excursion
-	  (async-shell-command "~/bin/sync-neocities.sh")))
-#+end_src
-*** =auth/backup/restore=
-Backup/Restore auth to/from Dropbox.
-#+begin_src emacs-lisp
-  (defun auth/backup ()
-	"Backup authinfo & personal info to Dropbox."
-	(interactive)
-	(async-shell-command "~/bin/auth-backup.sh"))
-
-  (defun auth/restore ()
-	"Restore authinfo & personal info to Dropbox."
-	(interactive)
-	(async-shell-command "~/bin/auth-restore.sh"))
-#+end_src
-** Imported
-*** Helper
-**** =run-in-vterm=
-#+begin_src emacs-lisp
-  (defun run-in-vterm-kill (process event)
-	"A process sentinel.  Kill PROCESS's buffer if it is live with arg EVENT."
-	(let ((b (process-buffer process)))
-	  (and (buffer-live-p b)
-		   (kill-buffer b))))
-
-  (defun run-in-vterm (command)
-	"Execute string COMMAND in a new vterm.
-
-	Interactively, prompt for COMMAND with the current buffer's file
-	name supplied.  When called from Dired, supply the name of the
-	file at point.
-
-	Like `async-shell-command`, but run in a vterm for full terminal features.
-
-	The new vterm buffer is named in the form `*foo bar.baz*`, the
-	command and its arguments in earmuffs.
-
-	When the command terminates, the shell remains open, but when the
-	shell exits, the buffer is killed."
-	(interactive
-	 (list
-	  (let* ((f (cond (buffer-file-name)
-					  ((eq major-mode 'dired-mode)
-					   (dired-get-filename nil t))))
-			 (filename (concat " " (shell-quote-argument (and f (file-relative-name f))))))
-		(read-shell-command "Command: "))))
-	(with-current-buffer (vterm (concat "*" command "*"))
-	  (set-process-sentinel vterm--process #'run-in-vterm-kill)
-	  (vterm-send-string command)
-	  (vterm-send-return)))
-#+end_src
-*** Text Manipulation
-**** Next/Prev 15-lines
+** Text Manipulation
+*** Next/Prev 15-lines
 #+begin_src emacs-lisp
   (defun next-15-lines ()
 	"Move to the next 15 lines."
@@ -2386,7 +2339,7 @@ Backup/Restore auth to/from Dropbox.
 	(interactive)
 	(forward-line -15))
 #+end_src
-**** Upcase last word
+*** Upcase last word
 #+begin_src emacs-lisp
   (defun upcase-last-word ()
 	"Convert last word to uppercase."
@@ -2397,7 +2350,7 @@ Backup/Restore auth to/from Dropbox.
 	(move-beginning-of-line 1)
 	(next-line 1 1))
 #+end_src
-**** Open new line below
+*** Open new line below
 #+begin_src emacs-lisp
   (defun open-line-below ()
 	"Open a new line below point."
@@ -2406,7 +2359,7 @@ Backup/Restore auth to/from Dropbox.
 	(newline)
 	(indent-for-tab-command))
 #+end_src
-**** Open new line above
+*** Open new line above
 #+begin_src emacs-lisp
   (defun open-line-above ()
 	"Open a new line above point."
@@ -2416,7 +2369,7 @@ Backup/Restore auth to/from Dropbox.
 	(forward-line -1)
 	(indent-for-tab-command))
 #+end_src
-**** Delete current line
+*** Delete current line
 #+begin_src emacs-lisp
   (defun db/delete-current-line ()
 	"Kill the whole line on which point is."
@@ -2424,7 +2377,7 @@ Backup/Restore auth to/from Dropbox.
 	(beginning-of-line)
 	(kill-line 1))
 #+end_src
-**** Duplicate current line
+*** Duplicate current line
 #+begin_src emacs-lisp
   (defun db/duplicate-line()
 	"Duplicate line at point."
@@ -2437,7 +2390,22 @@ Backup/Restore auth to/from Dropbox.
 	  (forward-line 1)
 	  (yank)))
 #+end_src
-**** Convert =camelCase= to =snake_case=
+*** =comment-line-dwim=
+#+begin_src emacs-lisp
+  ;; Original idea from
+  ;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
+  (defun comment-dwim-line (&optional arg)
+	"Replacement for the comment-dwim command.
+	If no region is selected and current line is not blank and we are not at the end of the line,
+	then comment current line.
+	Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
+	(interactive "*P")
+	(comment-normalize-vars)
+	(if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
+		(comment-or-uncomment-region (line-beginning-position) (line-end-position))
+	  (comment-dwim arg)))
+#+end_src
+*** =camelCase= to =snake_case=
 #+begin_src emacs-lisp
   (defun camel-to-snake-case (arg)
 	"Convert a camelCase word to snake_case.
@@ -2460,7 +2428,7 @@ Backup/Restore auth to/from Dropbox.
 		(goto-char start)
 		(unless had-initial-underscore (delete-char 1)))))
 #+end_src
-**** =sanemacs/backward-kill-word=
+*** =sanemacs/backward-kill-word=
 #+begin_src emacs-lisp
   (defun sanemacs/backward-kill-word ()
 	"Kill word backwards without littering 'kill-ring'."
@@ -2468,21 +2436,6 @@ Backup/Restore auth to/from Dropbox.
 	(push-mark)
 	(backward-word)
 	(delete-region (point) (mark)))
-#+end_src
-**** =comment-line-dwim=
-#+begin_src emacs-lisp
-  ;; Original idea from
-  ;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
-  (defun comment-dwim-line (&optional arg)
-	"Replacement for the comment-dwim command.
-	If no region is selected and current line is not blank and we are not at the end of the line,
-	then comment current line.
-	Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
-	(interactive "*P")
-	(comment-normalize-vars)
-	(if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
-		(comment-or-uncomment-region (line-beginning-position) (line-end-position))
-	  (comment-dwim arg)))
 #+end_src
 * Footer
 ** Goodbye

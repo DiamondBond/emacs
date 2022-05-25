@@ -715,160 +715,160 @@ Heresy; Vim keybindings in Emacs.
 Sensible and well-defined org-mode configuration with org-capture support & notifications.
 **** Code
 #+begin_src emacs-lisp
-(use-package org
-  :straight t
-  :config
-  ;; sensible defaults
-  (setq initial-major-mode 'org-mode
-		org-display-inline-images t
-		org-redisplay-inline-images t
-		org-image-actual-width nil
-		org-startup-with-inline-images "inlineimages"
-		org-catch-invisible-edits 'smart
-		org-pretty-entities t)
+  (use-package org
+	:straight t
+	:config
+	;; sensible defaults
+	(setq initial-major-mode 'org-mode
+		  org-display-inline-images t
+		  org-redisplay-inline-images t
+		  org-image-actual-width nil
+		  org-startup-with-inline-images "inlineimages"
+		  org-catch-invisible-edits 'smart
+		  org-pretty-entities t)
 
-  ;; indentation
-  (setq org-src-preserve-indentation nil
-		org-adapt-indentation nil)
+	;; indentation
+	(setq org-src-preserve-indentation nil
+		  org-adapt-indentation nil)
 
-  ;; set org directory & agenda files
-  (when (file-directory-p "~/org")
-	(setq org-directory "~/org"
-		  org-agenda-files (list "~/org/inbox.org"
-								 "~/org/tasks.org"
-								 "~/org/notes.org"
-								 "~/org/daily.org")
-		  org-default-notes-file "~/org/inbox.org"
-		  org-id-locations-file "~/org/.orgids"))
+	;; set org directory & agenda files
+	(when (file-directory-p "~/org")
+	  (setq org-directory "~/org"
+			org-agenda-files (list "~/org/inbox.org"
+								   "~/org/tasks.org"
+								   "~/org/notes.org"
+								   "~/org/daily.org")
+			org-default-notes-file "~/org/inbox.org"
+			org-id-locations-file "~/org/.orgids"))
 
-  ;; set org todo keywords
-  (setq org-todo-keywords
-		'((sequence "TODO"
-					"WIP"
-					"WAITING"
-					"|"
-					"DONE"
-					"DEFERRED"
-					"CANCELLED")))
+	;; set org todo keywords
+	(setq org-todo-keywords
+		  '((sequence "TODO"
+					  "WIP"
+					  "WAITING"
+					  "|"
+					  "DONE"
+					  "DEFERRED"
+					  "CANCELLED")))
 
-  ;; set org-refile targets
-  (when (file-directory-p "~/org")
-	(setq org-refile-targets
-		  '(("~/org/archive.org" :maxlevel . 1)
-			("~/org/tasks.org" :maxlevel . 1))))
+	;; set org-refile targets
+	(when (file-directory-p "~/org")
+	  (setq org-refile-targets
+			'(("~/org/archive.org" :maxlevel . 1)
+			  ("~/org/tasks.org" :maxlevel . 1))))
 
-  ;; save org buffers after refiling!
-  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+	;; save org buffers after refiling!
+	(advice-add 'org-refile :after 'org-save-all-org-buffers)
 
-  ;; org-src languages
-  (setq org-babel-load-languages
-		'((awk        . t)
-		  (calc       . t)
-		  (css        . t)
-		  (emacs-lisp . t)
-		  (gnuplot    . t)
-		  (haskell    . t)
-		  (js         . t)
-		  (lisp       . t)
-		  (org        . t)
-		  (python     . t)
-		  (scheme     . t)
-		  (shell      . t)
-		  (C          . t)
-		  (ein        . t)
-		  (sql        . t)))
+	;; org-src languages
+	(setq org-babel-load-languages
+		  '((awk        . t)
+			(calc       . t)
+			(css        . t)
+			(emacs-lisp . t)
+			(gnuplot    . t)
+			(haskell    . t)
+			(js         . t)
+			(lisp       . t)
+			(org        . t)
+			(python     . t)
+			(scheme     . t)
+			(shell      . t)
+			(C          . t)
+			(ein        . t)
+			(sql        . t)))
 
-  (org-babel-do-load-languages 'org-babel-load-languages
-							   '((shell . t)))
+	(org-babel-do-load-languages 'org-babel-load-languages
+								 '((shell . t)))
 
-  ;; org templates
-  (when (file-directory-p "~/org")
-	(setq org-capture-templates
-		  '(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
-			 "* %?\n%a\nEntered on %U")
-			("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
-			 "* %?\n%a\nEntered on %U"))))
+	;; org templates
+	(when (file-directory-p "~/org")
+	  (setq org-capture-templates
+			'(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
+			   "* %?\n%a\nEntered on %U")
+			  ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
+			   "* %?\n%a\nEntered on %U"))))
 
-  :bind
-  ("C-c c" . 'org-capture)
-  ("C-c l" . 'org-store-link)
-  ("C-<f1>" . (lambda()(interactive)(show-all))))
+	:bind
+	("C-c c" . 'org-capture)
+	("C-c l" . 'org-store-link)
+	("C-<f1>" . (lambda()(interactive)(show-all))))
 
-(use-package org-roam
-  :straight t
-  :after org
-  :init
-  (setq org-roam-v2-ack t)
-  :custom
-  (org-roam-directory "~/org/roam")
-  (org-id-link-to-org-use-id 'create-if-interactive)
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-		 ("C-c n f" . org-roam-node-find)
-		 ("C-c n i" . org-roam-node-insert)
-		 :map org-mode-map
-		 ("C-M-i"    . completion-at-point))
-  :config
-  (org-roam-setup))
+  (use-package org-roam
+	:straight t
+	:after org
+	:init
+	(setq org-roam-v2-ack t)
+	:custom
+	(org-roam-directory "~/org/roam")
+	(org-id-link-to-org-use-id 'create-if-interactive)
+	:bind (("C-c n l" . org-roam-buffer-toggle)
+		   ("C-c n f" . org-roam-node-find)
+		   ("C-c n i" . org-roam-node-insert)
+		   :map org-mode-map
+		   ("C-M-i"    . completion-at-point))
+	:config
+	(org-roam-setup))
 
-(use-package org-download
-  :straight t
-  :after org
-  :config
-  (setq-default org-download-image-dir "~/org/download-img")
-  (add-hook 'dired-mode-hook 'org-download-enable))
+  (use-package org-download
+	:straight t
+	:after org
+	:config
+	(setq-default org-download-image-dir "~/org/download-img")
+	(add-hook 'dired-mode-hook 'org-download-enable))
 
-;; reminders
-(use-package org-wild-notifier
-  :straight t
-  :after org
-  :config
-  (setq org-wild-notifier-alert-time '(1 5 10 15 30 60))
-  (setq org-wild-notifier-keyword-whitelist nil)
-  (setq org-wild-notifier-notification-title "*reminder*")
-  :init
-  (org-wild-notifier-mode 1))
+  ;; reminders
+  (use-package org-wild-notifier
+	:straight t
+	:after org
+	:config
+	(setq org-wild-notifier-alert-time '(1 5 10 15 30 60))
+	(setq org-wild-notifier-keyword-whitelist nil)
+	(setq org-wild-notifier-notification-title "*reminder*")
+	:init
+	(org-wild-notifier-mode 1))
 
-;; display org schedules
-(use-package calfw-org
-  :straight t
-  :defer 2
-  :config
-  (setq cfw:org-agenda-schedule-args '(:timestamp :scheduled :deadline)))
+  ;; display org schedules
+  (use-package calfw-org
+	:straight t
+	:defer 2
+	:config
+	(setq cfw:org-agenda-schedule-args '(:timestamp :scheduled :deadline)))
 #+end_src
 *** Initialize =dired=
 **** Description
 Add icons and subtree's to dired.
 **** Code
 #+begin_src emacs-lisp
-(use-package dired
-  :straight (:type built-in)
-  :commands (dired dired-jump)
-  :bind ("C-x C-j" . dired-jump)
-  :custom ((dired-listing-switches "-agho --group-directories-first")))
+  (use-package dired
+	:straight (:type built-in)
+	:commands (dired dired-jump)
+	:bind ("C-x C-j" . dired-jump)
+	:custom ((dired-listing-switches "-agho --group-directories-first")))
 
-(use-package dired-single
-  :commands (dired dired-jump))
+  (use-package dired-single
+	:commands (dired dired-jump))
 
-(use-package all-the-icons-dired
-  :straight t
-  :diminish all-the-icons-dired-mode
-  :config
-  :hook (dired-mode . (lambda ()
-						(interactive)
-						(unless (file-remote-p default-directory)
-						  (all-the-icons-dired-mode)))))
+  (use-package all-the-icons-dired
+	:straight t
+	:diminish all-the-icons-dired-mode
+	:config
+	:hook (dired-mode . (lambda ()
+						  (interactive)
+						  (unless (file-remote-p default-directory)
+							(all-the-icons-dired-mode)))))
 
-(use-package dired-open
-  :commands (dired dired-jump)
-  :config
-  (setq dired-open-extensions '(("png" . "nomacs")
-								("jpg" . "nomacs")
-								("mp4" . "mpv")
-								("mkv" . "mpv"))))
+  (use-package dired-open
+	:commands (dired dired-jump)
+	:config
+	(setq dired-open-extensions '(("png" . "nomacs")
+								  ("jpg" . "nomacs")
+								  ("mp4" . "mpv")
+								  ("mkv" . "mpv"))))
 
-(use-package dired-hide-dotfiles
-  :straight t
-  :hook (dired-mode . dired-hide-dotfiles-mode))
+  (use-package dired-hide-dotfiles
+	:straight t
+	:hook (dired-mode . dired-hide-dotfiles-mode))
 #+end_src
 ** Visual
 *** Initialize =modus-themes=
@@ -894,88 +894,88 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 An extensible emacs startup screen.
 **** Code
 #+begin_src emacs-lisp
-(use-package dashboard
-  :straight t
-  :defer nil
-  :diminish dashboard-mode
-  :init
-  (add-hook 'dashboard-mode-hook (lambda () (setq show-trailing-whitespace nil)))
-  :preface
-  (defun init-edit ()
-	"Edit initialization file."
-	(interactive)
-	(if (file-exists-p "~/.emacs.d/init.el")
-		(find-file "~.emacs.d/init.el")))
-  (defun config-edit ()
-	"Edit configuration file."
-	(interactive)
-	(if (file-exists-p "~/.emacs.d/config.org")
-		(find-file "~/.emacs.d/config.org")))
-  (when (file-directory-p "~/org")
-	(defun notes-edit ()
-	  "Edit notes file."
+  (use-package dashboard
+	:straight t
+	:defer nil
+	:diminish dashboard-mode
+	:init
+	(add-hook 'dashboard-mode-hook (lambda () (setq show-trailing-whitespace nil)))
+	:preface
+	(defun init-edit ()
+	  "Edit initialization file."
 	  (interactive)
-	  (if (file-exists-p "~/org/notes.org")
-		  (find-file "~/org/notes.org")))
-	(defun tasks-edit ()
-	  "Edit tasks file."
+	  (if (file-exists-p "~/.emacs.d/init.el")
+		  (find-file "~.emacs.d/init.el")))
+	(defun config-edit ()
+	  "Edit configuration file."
 	  (interactive)
-	  (if (file-exists-p "~/org/tasks.org")
-		  (find-file "~/org/tasks.org")))
-	(defun archive-edit ()
-	  "Edit archive file."
+	  (if (file-exists-p "~/.emacs.d/config.org")
+		  (find-file "~/.emacs.d/config.org")))
+	(when (file-directory-p "~/org")
+	  (defun notes-edit ()
+		"Edit notes file."
+		(interactive)
+		(if (file-exists-p "~/org/notes.org")
+			(find-file "~/org/notes.org")))
+	  (defun tasks-edit ()
+		"Edit tasks file."
+		(interactive)
+		(if (file-exists-p "~/org/tasks.org")
+			(find-file "~/org/tasks.org")))
+	  (defun archive-edit ()
+		"Edit archive file."
+		(interactive)
+		(if (file-exists-p "~/org/archive.org")
+			(find-file "~/org/archive.org")))
+	  (defun inbox-edit ()
+		"Edit inbox file."
+		(interactive)
+		(if (file-exists-p "~/org/inbox.org")
+			(find-file "~/org/inbox.org"))))
+	(defun create-scratch-buffer ()
+	  "Create a scratch buffer."
 	  (interactive)
-	  (if (file-exists-p "~/org/archive.org")
-		  (find-file "~/org/archive.org")))
-	(defun inbox-edit ()
-	  "Edit inbox file."
-	  (interactive)
-	  (if (file-exists-p "~/org/inbox.org")
-		  (find-file "~/org/inbox.org"))))
-  (defun create-scratch-buffer ()
-	"Create a scratch buffer."
-	(interactive)
-	(switch-to-buffer (get-buffer-create "*scratch*")))
-  :config
-  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
-  (setq dashboard-items '((recents . 5)))
-  ;; (setq dashboard-startup-banner 'official)
-  (setq dashboard-banner-logo-title "")
-  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
-  (setq dashboard-center-content t)
-  (setq dashboard-show-shortcuts nil)
-  (setq dashboard-set-init-info t)
-  (setq dashboard-set-footer nil)
-  (setq dashboard-set-navigator t)
-  (setq dashboard-set-navigator t)
+	  (switch-to-buffer (get-buffer-create "*scratch*")))
+	:config
+	(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+	(setq dashboard-items '((recents . 5)))
+	;; (setq dashboard-startup-banner 'official)
+	(setq dashboard-banner-logo-title "")
+	(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+	(setq dashboard-center-content t)
+	(setq dashboard-show-shortcuts nil)
+	(setq dashboard-set-init-info t)
+	(setq dashboard-set-footer nil)
+	(setq dashboard-set-navigator t)
+	(setq dashboard-set-navigator t)
 
-  ;; set dashboard navigator buttons
-  (when (file-directory-p "~/org")
-	(setq dashboard-navigator-buttons
-		  `(;; line 1
-			((,nil
-			  "Notes"
-			  "Open Notes"
-			  (lambda (&rest _) (notes-edit))
-			  'default)
-			 (nil
-			  "Tasks"
-			  "Open Tasks"
-			  (lambda (&rest _) (tasks-edit))
-			  'default)
-			 (nil
-			  "Agenda"
-			  "Open Org-Agenda"
-			  (lambda (&rest _) (start-to-org-agenda))
-			  'default)
-			 (nil
-			  "Inbox"
-			  "Open Inbox"
-			  (lambda (&rest _) (inbox-edit))
-			  'default)))))
+	;; set dashboard navigator buttons
+	(when (file-directory-p "~/org")
+	  (setq dashboard-navigator-buttons
+			`(;; line 1
+			  ((,nil
+				"Notes"
+				"Open Notes"
+				(lambda (&rest _) (notes-edit))
+				'default)
+			   (nil
+				"Tasks"
+				"Open Tasks"
+				(lambda (&rest _) (tasks-edit))
+				'default)
+			   (nil
+				"Agenda"
+				"Open Org-Agenda"
+				(lambda (&rest _) (start-to-org-agenda))
+				'default)
+			   (nil
+				"Inbox"
+				"Open Inbox"
+				(lambda (&rest _) (inbox-edit))
+				'default)))))
 
-  ;; setup dashboard
-  (dashboard-setup-startup-hook))
+	;; setup dashboard
+	(dashboard-setup-startup-hook))
 #+end_src
 *** Initialize =diminish=
 **** Description
@@ -1088,8 +1088,7 @@ Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based
 #+begin_src emacs-lisp
   (use-package vterm
 	:straight t
-	:init
-	(defvar vterm-install t)
+	:custom (vterm-install t)
 	:config
 	(add-hook 'vterm-mode-hook
 			  (lambda () (global-hl-line-mode 0)))
@@ -1397,18 +1396,18 @@ All the icons!
 Kind icons.
 **** Code
 #+begin_src emacs-lisp
-(use-package kind-icon
-  :straight t
-  :after corfu
-  :custom
-  (kind-icon-use-icons t)
-  ;; Have background color be the same as `corfu' face background
-  (kind-icon-default-face 'corfu-default)
-  ;; Use midpoint color between foreground and background colors ("blended")?
-  (kind-icon-blend-background nil)
-  (kind-icon-blend-frac 0.08)
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+  (use-package kind-icon
+	:straight t
+	:after corfu
+	:custom
+	(kind-icon-use-icons t)
+	;; Have background color be the same as `corfu' face background
+	(kind-icon-default-face 'corfu-default)
+	;; Use midpoint color between foreground and background colors ("blended")?
+	(kind-icon-blend-background nil)
+	(kind-icon-blend-frac 0.08)
+	:config
+	(add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+end_src
 ** News
 *** Initialize =elfeed=
@@ -1689,43 +1688,43 @@ Quick lookup in a dictionary.
 engine-mode is a global minor mode for Emacs that enables you to easily define search engines, bind them to keybindings, and query them from the comfort of your editor.
 **** Code
 #+begin_src emacs-lisp
-(use-package engine-mode
-  :straight t
-  :config
-  (defengine google "https://google.com/search?q=%s" :keybinding "g"
-			 :docstring "Search Google.")
-  (defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :keybinding "i"
-			 :docstring "Search Google Images")
-  (defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m"
-			 :docstring "Search Google Maps.")
-  (defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d"
-			 :docstring "Search DuckDuckGo.")
-  (defengine qwant "https://www.qwant.com/?q=%s" :keybinding "q"
-			 :docstring "Search Qwant.")
-  (defengine wikipedia "https://en.wikipedia.org/wiki/Special:Search?search=%s" :keybinding "w"
-			 :docstring "Search Wikipedia.")
-  (defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y"
-			 :docstring "Search YouTube.")
-  (defengine twitter "https://twitter.com/search?q=%s" :keybinding "t"
-			 :docstring "Search Twitter.")
-  (defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h"
-			 :docstring "Search GitHub.")
-  (defengine melpa "https://melpa.org/#/?q=%s" :keybinding "p"
-			 :docstring "Search the Milkypostman's Emacs Lisp Package Archive.")
-  (defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "s"
-			 :docstring "Search Stack Overflow.")
-  (defengine wolfram-alpha "http://www.wolframalpha.com/input/?i=%s" :keybinding "a"
-			 :docstring "Search Wolfram Alpha.")
-  (defengine rfcs "http://pretty-rfc.herokuapp.com/search?q=%s" :keybinding "r"
-			 :docstring "Search RFC documents.")
-  (defengine ctan "http://www.ctan.org/search/?x=1&PORTAL=on&phrase=%s" :keybinding "c"
-			 :docstring "Search the Comprehensive TeX Archive Network")
-  (defengine project-gutenberg "http://www.gutenberg.org/ebooks/search/?query=%s" :keybinding "p"
-			 :docstring "Search Project Gutenberg.")
-  (engine/set-keymap-prefix (kbd "C-x /"))
-  (setq engine/browser-function 'browse-url-firefox)
-  :init
-  (engine-mode t))
+  (use-package engine-mode
+	:straight t
+	:config
+	(defengine google "https://google.com/search?q=%s" :keybinding "g"
+			   :docstring "Search Google.")
+	(defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :keybinding "i"
+			   :docstring "Search Google Images")
+	(defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m"
+			   :docstring "Search Google Maps.")
+	(defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d"
+			   :docstring "Search DuckDuckGo.")
+	(defengine qwant "https://www.qwant.com/?q=%s" :keybinding "q"
+			   :docstring "Search Qwant.")
+	(defengine wikipedia "https://en.wikipedia.org/wiki/Special:Search?search=%s" :keybinding "w"
+			   :docstring "Search Wikipedia.")
+	(defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y"
+			   :docstring "Search YouTube.")
+	(defengine twitter "https://twitter.com/search?q=%s" :keybinding "t"
+			   :docstring "Search Twitter.")
+	(defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h"
+			   :docstring "Search GitHub.")
+	(defengine melpa "https://melpa.org/#/?q=%s" :keybinding "p"
+			   :docstring "Search the Milkypostman's Emacs Lisp Package Archive.")
+	(defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "s"
+			   :docstring "Search Stack Overflow.")
+	(defengine wolfram-alpha "http://www.wolframalpha.com/input/?i=%s" :keybinding "a"
+			   :docstring "Search Wolfram Alpha.")
+	(defengine rfcs "http://pretty-rfc.herokuapp.com/search?q=%s" :keybinding "r"
+			   :docstring "Search RFC documents.")
+	(defengine ctan "http://www.ctan.org/search/?x=1&PORTAL=on&phrase=%s" :keybinding "c"
+			   :docstring "Search the Comprehensive TeX Archive Network")
+	(defengine project-gutenberg "http://www.gutenberg.org/ebooks/search/?query=%s" :keybinding "p"
+			   :docstring "Search Project Gutenberg.")
+	(engine/set-keymap-prefix (kbd "C-x /"))
+	(setq engine/browser-function 'browse-url-firefox)
+	:init
+	(engine-mode t))
 #+end_src
 *** Initialize =ripgrep=
 **** Description

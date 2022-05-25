@@ -864,7 +864,7 @@ Heresy; Vim keybindings in Emacs.
 *** Initialize =org=
 **** Description
 Sensible and well-defined org-mode configuration with org-capture support & notifications.
-***** Code
+**** Code
 #+begin_src emacs-lisp
 (use-package org
   :straight t
@@ -960,6 +960,13 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 		 ("C-M-i"    . completion-at-point))
   :config
   (org-roam-setup))
+
+(use-package org-download
+  :straight t
+  :after org
+  :config
+  (setq-default org-download-image-dir "~/org/download-img")
+  (add-hook 'dired-mode-hook 'org-download-enable))
 
 ;; reminders
 (use-package org-wild-notifier

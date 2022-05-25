@@ -278,16 +278,29 @@ Enable lexical binding.
 
 #+end_src
 * Base
+** Globals
+*** Description
+ Set your global variables here.
+*** Code
+#+begin_src emacs-lisp
+  (setq
+   globals--banner-path  "img/gnusstorm-2.gif"      ; Banner
+   globals--name         "Diamond Bond"             ; Name
+   globals--email        "diamondbond1@gmail.com"   ; Email
+   globals--irc          "diamondbond"              ; IRC
+   globals--erc          '("diamondbond" "diamondbond_")              ; ERC
+   )
+#+end_src
 ** Personal
 *** Identity
 #+begin_src emacs-lisp
-  (setq user-full-name "Diamond Bond"
-		user-mail-address "diamondbond1@gmail.com"
-		erc-nick '("diamondbond" "diamondbond_")
-		erc-nick-short "diamondbond"
-		rcirc-default-user-name "diamondbond"
-		rcirc-default-nick      "diamondbond"
-		rcirc-default-full-name "Diamond Bond")
+  (setq user-full-name globals--name
+		user-mail-address globals--email
+		erc-nick globals--erc
+		erc-nick-short globals--irc
+		rcirc-default-user-name globals--irc
+		rcirc-default-nick      globals--irc
+		rcirc-default-full-name globals--name)
 #+end_src
 *** Authentication
 Set authinfo file location and authinfo expiry to never.
@@ -859,7 +872,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 
 	;; indentation
 	(setq org-src-preserve-indentation nil
-		  org-adapt-indentation t)
+		  org-adapt-indentation nil)
 
 	;; set org directory & agenda files
 	(when (file-directory-p "~/org")
@@ -1009,6 +1022,8 @@ An extensible emacs startup screen.
 	:straight t
 	:defer nil
 	:diminish dashboard-mode
+	:init
+	(add-hook 'dashboard-mode-hook (lambda () (setq show-trailing-whitespace nil)))
 	:preface
 	(defun init-edit ()
 	  "Edit initialization file."
@@ -1046,16 +1061,18 @@ An extensible emacs startup screen.
 	  (interactive)
 	  (switch-to-buffer (get-buffer-create "*scratch*")))
 	:config
-	(dashboard-setup-startup-hook)
 	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
-	;; (setq dashboard-startup-banner (expand-file-name "img/gnusstorm-2.gif" user-emacs-directory))
 	(setq dashboard-startup-banner 'official)
+	(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)
 	(setq dashboard-set-footer nil)
 	(setq dashboard-set-navigator t)
+	(setq dashboard-set-navigator t)
+
+	;; set dashboard navigator buttons
 	(when (file-directory-p "~/org")
 	  (setq dashboard-navigator-buttons
 			`(;; line 1
@@ -1078,7 +1095,10 @@ An extensible emacs startup screen.
 				"Inbox"
 				"Open Inbox"
 				(lambda (&rest _) (inbox-edit))
-				'default))))))
+				'default)))))
+
+	;; setup dashboard
+	(dashboard-setup-startup-hook))
 #+end_src
 *** Initialize =diminish=
 **** Description

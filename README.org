@@ -37,6 +37,6 @@
 
    Edit =userconfig.org= file in the =.emacs.d= directory and add your custom settings there (in "emacs-lisp" org-mode code blocks).
 
-   Make sure you set your email address in =config.org= & =modules/mail.org=.
+   Make sure you set your global variables.
 
    You may also edit the =config.org= file directly, but your custom settings might be wiped out in case of an update.

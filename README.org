@@ -18,28 +18,9 @@ Simple Emacs configuration aimed at enhancing the default experience.
 
 The entire config file can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
 
-* Overview
+[[https://diamondbond.neocities.org/emacs.html#orgf6a4612][Overview]]
 
-: CHRONOLOGICAL LOAD ORDER
-
-*** *early-init.el*
-- [[https://github.com/DiamondBond/emacs/blob/master/early-init.el][early-bootstrap]] - Early bootstrap
-
-*** *init.el*
-- [[https://github.com/DiamondBond/emacs/blob/master/init.el][bootstrap]] - Bootstrap straight.el
-
-*** *config.org*
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#base][base]] - Base configuration
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][keybinds]] - Keybinding maps
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][packages]] - Package manifest
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#languages][languages]] - Language manifest
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][functions]] - Function definitions
-
-*** *userconfig.org*
-- [[https://github.com/DiamondBond/emacs/blob/master/userconfig.org][user]] - User configuration
-
-*** *modules/mail.org*
-- [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][mail]] - Mail configuration
+[[https://diamondbond.neocities.org/emacs.html#org0e882ca][Principles]]
 
 * Installation
 

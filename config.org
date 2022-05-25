@@ -62,12 +62,16 @@ The implication is that someone should be able to install or copy code from this
 : CHRONOLOGICAL LOAD ORDER
 
 *** *early-init.el*
+
 - [[https://github.com/DiamondBond/emacs/blob/master/early-init.el][early-bootstrap]] - Early bootstrap
 
 *** *init.el*
+
 - [[https://github.com/DiamondBond/emacs/blob/master/init.el][bootstrap]] - Bootstrap straight.el
 
 *** *config.org*
+
+- [[https://github.com/DiamondBond/emacs/blob/master/globals.org][globals]] - Global configuration
 - [[https://github.com/DiamondBond/emacs/blob/master/config.org#base][base]] - Base configuration
 - [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][keybinds]] - Keybinding maps
 - [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][packages]] - Package manifest
@@ -75,9 +79,11 @@ The implication is that someone should be able to install or copy code from this
 - [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][functions]] - Function definitions
 
 *** *userconfig.org*
+
 - [[https://github.com/DiamondBond/emacs/blob/master/userconfig.org][user]] - User configuration
 
 *** *modules/mail.org*
+
 - [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][mail]] - Mail configuration
 
 * Header

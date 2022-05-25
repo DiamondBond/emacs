@@ -26,22 +26,6 @@ Enable lexical binding.
 
 #+end_src
 
-* Globals
-** Description
-Set your global variables here.
-
-TODO: Investigate whether or not these globals work considering they are loaded in very late.
-** Code
-#+begin_src emacs-lisp
-  ;; set globals
-  (setq
-   globals--banner-path  "img/gnusstorm-2.gif"      		; Banner
-   globals--name         "Diamond Bond"             		; Name
-   globals--email        "diamondbond1@gmail.com"   		; Email
-   globals--irc          "diamondbond"              		; IRC
-   globals--erc          '("diamondbond" "diamondbond_")	; ERC
-   )
-#+end_src
 * Email
 
 ** Load =email= module
@@ -94,6 +78,7 @@ Discord RPC for Emacs.
 #+end_src
 
 * Functions
+
 #+begin_src emacs-lisp
   ;; user functions
   (defun config/push ()
@@ -107,6 +92,7 @@ Discord RPC for Emacs.
 #+end_src
 
 * Footer
+
 #+begin_src emacs-lisp
 
   ;;; userconfig.el ends here

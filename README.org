@@ -38,13 +38,13 @@ If you care about fancy icons, install the fonts provided by [[https://github.co
   M-x all-the-icons-install-fonts
 #+end_src
 
-** Post setup
-
-Please refer to [[https://github.com/DiamondBond/emacs/blob/master/config.org#post-setup][the post setup documentation]] in order to fully configure everything.
-
 ** Syntax checking/linting
 
 Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mode][LSP]] package. For it to work properly, you need to install the appropriate [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]].
+
+** Post setup
+
+Please refer to [[https://github.com/DiamondBond/emacs/blob/master/config.org#post-setup][the post setup documentation]] in order to fully configure everything.
 
 ** Customization
 

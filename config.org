@@ -953,7 +953,6 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
   :custom
   (org-roam-directory "~/org/roam")
   (org-id-link-to-org-use-id 'create-if-interactive)
-  ;; (org-roam-completion-everywhere t)
   :bind (("C-c n l" . org-roam-buffer-toggle)
 		 ("C-c n f" . org-roam-node-find)
 		 ("C-c n i" . org-roam-node-insert)
@@ -1089,6 +1088,7 @@ An extensible emacs startup screen.
 	(setq dashboard-items '((recents . 5)))
 	;; (setq dashboard-startup-banner 'official)
 	(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+    (setq dashboard-banner-logo-title nil)
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)

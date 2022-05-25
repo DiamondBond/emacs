@@ -19,8 +19,6 @@ Configure Emacs with native-comp, xinput2, imagemagick, harfbuzz, json, athena-t
 
 NOTE: If you are intending to compile Emacs<=29 then omit the =--with-xinput2= flag when running =./configure= below.
 
-NOTE: that if you intend to run this emacs configuration for long periods of time then it is recommended to use the athena toolkit as its anecdotally more stabler (imo) as well as blessing you with the ability to not lose your emacs session upon logout - ie you can reconnect to your same emacs session after doing system updates (hopefully not kernel or systemd) and logging out and back in.
-
 #+begin_src sh
 
   # Run the auto-generation script

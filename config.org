@@ -1176,7 +1176,11 @@ Yasnippet provides useful snippets.
 	:straight t
 	:diminish yas-minor-mode
 	:hook
-	((cc-mode c-lang-common cmake-mode c++-mode c-mode conf-unix-mode csharp-mode css-mode emacs-lisp-mode fundamental-mode git-commit-mode go-mode js-mode js2-mode html-mode makefile-mode makefile-automake-mode markdown-mode org-mode prog-mode python-mode rjsx-mode rust-mode text-mode typescript-mode web-mode) . yas-minor-mode)
+	((cc-mode c-lang-common cmake-mode c++-mode c-mode conf-unix-mode
+	csharp-mode css-mode emacs-lisp-mode fundamental-mode git-commit-mode
+	go-mode js-mode js2-mode html-mode makefile-mode makefile-automake-mode
+	markdown-mode org-mode prog-mode python-mode rjsx-mode rust-mode text-mode
+	typescript-mode web-mode) . yas-minor-mode)
 	:config
 	(yas-reload-all))
 

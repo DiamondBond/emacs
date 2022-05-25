@@ -1813,7 +1813,7 @@ engine-mode is a global minor mode for Emacs that enables you to easily define s
 	:config
 	(defengine google "https://google.com/search?q=%s" :keybinding "g"
 			   :docstring "Applied Google-fu.")
-	(defengine google-images "http://www.google.com/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s" :docstring "Google Images")
+	(defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :docstring "Google Images")
 	(defengine google-maps "http://maps.google.com/maps?q=%s" :docstring "Mappin' it up.")
 	(defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d"
 			   :docstring "DDG!")
@@ -2602,5 +2602,5 @@ Updates the Emacs configuration.
 ** Goodbye
 #+begin_src emacs-lisp
 
-  ;;; config.el ends here
+;;; config.el ends here
 #+end_src

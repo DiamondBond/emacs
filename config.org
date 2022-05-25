@@ -2447,7 +2447,8 @@ Sync Emacs configuration to neocities.
   (defun sync/neocities ()
 	"Sync neocities."
 	(interactive)
-	(async-shell-command "~/bin/sync-neocities.sh"))
+	(save-window-excursion
+	  (async-shell-command "~/bin/sync-neocities.sh")))
 #+end_src
 *** =auth/backup/restore=
 Backup/Restore auth to/from Dropbox.
@@ -2455,22 +2456,12 @@ Backup/Restore auth to/from Dropbox.
   (defun auth/backup ()
 	"Backup authinfo & personal info to Dropbox."
 	(interactive)
-	;; authinfo
-	(async-shell-command "cp ~/.authinfo.gpg ~/org/")
-	(async-shell-command "cp ~/.emacs.d/secrets.el.gpg ~/org/")
-	(async-shell-command "cp ~/.emacs.d/network-security.data ~/org/")
-	;; metadata
-	(async-shell-command "cp ~/.emacs.d/custom.el ~/org/"))
+	(async-shell-command "~/bin/auth-backup.sh"))
 
   (defun auth/restore ()
 	"Restore authinfo & personal info to Dropbox."
 	(interactive)
-	;; authinfo
-	(async-shell-command "cp ~/org/.authinfo.gpg ~/")
-	(async-shell-command "cp ~/org/secrets.el.gpg ~/.emacs.d/")
-	(async-shell-command "cp ~/org/network-security.data ~/.emacs.d/")
-	;; metadata
-	(async-shell-command "cp ~/org/custom.el ~/.emacs.d/"))
+	(async-shell-command "~/bin/auth-restore.sh"))
 #+end_src
 ** Imported
 *** Helper

@@ -1088,7 +1088,8 @@ Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based
 #+begin_src emacs-lisp
   (use-package vterm
 	:straight t
-	:config
+	:init
+	(defvar vterm-install t)
 	:config
 	(add-hook 'vterm-mode-hook
 			  (lambda () (global-hl-line-mode 0)))

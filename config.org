@@ -32,7 +32,11 @@ Personally, I feel inspired whenever I open Emacs. Like a craftsman entering his
 
 #+end_quote
 
-** Preview
+** Screenshot :noexport:
+
+[[./img/screenshot.png]]
+
+** Preview :noexport:
 
 This entire config can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
 
@@ -68,13 +72,13 @@ The implication is that someone should be able to install or copy code from this
 
 ** Overview
 
-: CHRONOLOGICAL LOAD ORDER :
+: CHRONOLOGICAL LOAD ORDER
 
 *** *early-init.el*
-- [[file:early-init.el][early-bootstrap]] - Early bootstrap
+- [[https://github.com/DiamondBond/emacs/blob/master/early-init.el][early-bootstrap]] - Early bootstrap
 
 *** *init.el*
-- [[file:init.el][bootstrap]] - Bootstrap straight.el
+- [[https://github.com/DiamondBond/emacs/blob/master/init.el][bootstrap]] - Bootstrap straight.el
 
 *** *config.org*
 - [[https://github.com/DiamondBond/emacs/blob/master/config.org#base][base]] - Base configuration

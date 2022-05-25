@@ -70,7 +70,10 @@ Discord RPC for Emacs.
 	;; override buffer-details-format
 	(defun elcord-buffer-details-format ()
 	  "Return the buffer details string shown on discord."
-	  (format "%s" (buffer-name))))
+	  (format "%s" (buffer-name)))
+
+	;; start elcord
+	(elcord-mode))
 #+end_src
 
 * Functions

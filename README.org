@@ -41,7 +41,6 @@ The entire config file can be viewed [[https://diamondbond.neocities.org/emacs.h
 *** *modules/mail.org*
 - [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][mail]] - Mail configuration
 
-
 * Installation
 
 [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs build instructions]].
@@ -79,9 +78,11 @@ If you care about fancy icons, install the fonts provided by [[https://github.co
   M-x all-the-icons-install-fonts
 #+end_src
 
-** LSP
+** PDF
 
-Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mode][LSP]] package. For it to work properly, you need to install the appropriate [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]].
+#+begin_src emacs-lisp
+  M-x pdf-tools-install
+#+end_src
 
 ** vterm
 
@@ -89,11 +90,9 @@ Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mo
   M-x vterm
 #+end_src
 
-** PDF
+** LSP
 
-#+begin_src emacs-lisp
-  M-x pdf-tools-install
-#+end_src
+Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mode][LSP]] package. For it to work properly, you need to install the appropriate [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]].
 
 ** Mail
 

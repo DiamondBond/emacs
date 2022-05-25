@@ -972,56 +972,6 @@ Add icons and subtree's to dired.
 						 (when all-the-icons-dired-mode
 						   (revert-buffer)))))
 #+end_src
-** Keys
-*** Initialize =elmacro=
-**** Description
-Shows keyboard macros or latest interactive commands as Emacs lisp.
-**** Code
-#+begin_src emacs-lisp
-  (use-package elmacro
-	:straight t)
-#+end_src
-*** Initialize =which-key=
-**** Description
-Possible completion framework with 0.3s delay.
-**** Code
-#+begin_src emacs-lisp
-  (use-package which-key
-	:straight t
-	:init
-	(which-key-mode)
-	:config
-	(setq which-key-idle-delay 0.3))
-#+end_src
-*** Initialize =switch-window=
-**** Description
-C-x o and pick window (a,s,d...)
-**** Code
-#+begin_src emacs-lisp
-  (use-package switch-window
-	:straight t
-	:config
-	(setq switch-window-input-style 'minibuffer)
-	(setq switch-window-increase 4)
-	(setq switch-window-threshold 2)
-	(setq switch-window-shortcut-style 'qwerty)
-	(setq switch-window-qwerty-shortcuts
-		  '("a" "s" "d" "f" "j" "k" "l"))
-	:bind
-	([remap other-window] . switch-window))
-#+end_src
-*** Initialize =dabbrev=
-**** Description
-Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
-**** Code
-#+begin_src emacs-lisp
-  ;; use dabbrev with Corfu!
-  (use-package dabbrev
-	:straight t
-	;; swap M-/ and C-M-/
-	:bind (("M-/" . dabbrev-completion)
-		   ("C-M-/" . dabbrev-expand)))
-#+end_src
 ** Tools
 *** Initialize =auto-package=update=
 Manually update packages.
@@ -1105,6 +1055,223 @@ Used for exporting source code with syntax highlighting.
 #+begin_src emacs-lisp
   (use-package htmlize
 	:straight t)
+#+end_src
+** Appearance
+*** Initialize =dashboard=
+**** Description
+An extensible emacs startup screen.
+**** Code
+#+begin_src emacs-lisp
+  (use-package dashboard
+	:straight t
+	:defer nil
+	:diminish dashboard-mode
+	:preface
+	(defun init-edit ()
+	  "Edit initialization file."
+	  (interactive)
+	  (if (file-exists-p "~/.emacs.d/init.el")
+		  (find-file "~.emacs.d/init.el")))
+	(defun config-edit ()
+	  "Edit configuration file."
+	  (interactive)
+	  (if (file-exists-p "~/.emacs.d/config.org")
+		  (find-file "~/.emacs.d/config.org")))
+	(when (file-directory-p "~/org")
+	  (defun notes-edit ()
+		"Edit notes file."
+		(interactive)
+		(if (file-exists-p "~/org/notes.org")
+			(find-file "~/org/notes.org")))
+	  (defun tasks-edit ()
+		"Edit tasks file."
+		(interactive)
+		(if (file-exists-p "~/org/tasks.org")
+			(find-file "~/org/tasks.org")))
+	  (defun archive-edit ()
+		"Edit archive file."
+		(interactive)
+		(if (file-exists-p "~/org/archive.org")
+			(find-file "~/org/archive.org")))
+	  (defun inbox-edit ()
+		"Edit inbox file."
+		(interactive)
+		(if (file-exists-p "~/org/inbox.org")
+			(find-file "~/org/inbox.org"))))
+	(defun create-scratch-buffer ()
+	  "Create a scratch buffer."
+	  (interactive)
+	  (switch-to-buffer (get-buffer-create "*scratch*")))
+	:config
+	(dashboard-setup-startup-hook)
+	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
+	(setq dashboard-items '((recents . 5)))
+	;; (setq dashboard-startup-banner (expand-file-name "img/gnusstorm-2.gif" user-emacs-directory))
+	(setq dashboard-startup-banner 'official)
+	(setq dashboard-center-content t)
+	(setq dashboard-show-shortcuts nil)
+	(setq dashboard-set-init-info t)
+	(setq dashboard-set-footer nil)
+	(setq dashboard-set-navigator t)
+	(when (file-directory-p "~/org")
+	  (setq dashboard-navigator-buttons
+			`(;; line 1
+			  ((,nil
+				"Notes"
+				"Open Notes"
+				(lambda (&rest _) (notes-edit))
+				'default)
+			   (nil
+				"Tasks"
+				"Open Tasks"
+				(lambda (&rest _) (tasks-edit))
+				'default)
+			   (nil
+				"Agenda"
+				"Open Org-Agenda"
+				(lambda (&rest _) (start-to-org-agenda))
+				'default)
+			   (nil
+				"Inbox"
+				"Open Inbox"
+				(lambda (&rest _) (inbox-edit))
+				'default))))))
+#+end_src
+*** Initialize =diminish=
+**** Description
+Diminish hides minor modes to prevent cluttering your mode line.
+**** Code
+#+begin_src emacs-lisp
+  (use-package diminish
+	:straight t
+	:init
+	;; diminish as mode is already loaded
+	(diminish 'auto-revert-mode "")
+	(diminish 'abbrev-mode "")
+	(diminish 'subword-mode)
+	(diminish 'visual-line-mode)
+	(diminish 'outline-mode)
+	:config
+	;; diminish after mode is loaded
+	(eval-after-load "eldoc" '(diminish 'eldoc-mode))
+	(eval-after-load "c-mode" '(diminish 'c-mode))
+	(eval-after-load "c++-mode" '(diminish 'c++-mode))
+	(eval-after-load "which-key" '(diminish 'which-key-mode))
+	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
+	(eval-after-load "outline" '(diminish 'outline-minor-mode))
+	(eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode ""))
+	(eval-after-load "evil-commentary" '(diminish 'evil-commentary-mode))
+	(eval-after-load "evil-escape" '(diminish 'evil-escape-mode))
+	(eval-after-load "evil-collection-unimpaired" '(diminish 'evil-collection-unimpaired-mode)))
+#+end_src
+*** Initialize =modus-themes=
+**** Description
+Accessible themes for Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
+**** Code
+#+begin_src emacs-lisp
+  (use-package modus-themes
+	:straight t
+	:init
+	(setq modus-themes-italic-constructs t
+		  modus-themes-bold-constructs t
+		  modus-themes-region '(accented bg-only no-extend))
+	;; load the theme files before enabling a theme
+	(modus-themes-load-themes)
+	:config
+	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	:bind ("S-<f5>" . modus-themes-toggle))
+#+end_src
+*** Initialize =rainbow-mode=
+**** Description
+Colorize color names in buffers.
+**** Code
+#+begin_src emacs-lisp
+  (use-package rainbow-mode
+	:straight t
+	:diminish rainbow-mode
+	:hook prog-mode)
+#+end_src
+*** Initialize =rainbow-delimiters=
+**** Description
+Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimiters such as parentheses, brackets or braces according to their depth.
+**** Code
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+	:straight t
+	:hook (prog-mode . rainbow-delimiters-mode))
+#+end_src
+** Syntax
+*** Initialize =flycheck=
+**** Description
+Modern on-the-fly syntax checking extension.
+**** Code
+#+begin_src emacs-lisp
+  (use-package flycheck
+	:straight t
+	:hook (prog-mode . flycheck-mode))
+#+end_src
+*** Initialize =flyspell=
+**** Description
+Spell checking.
+Enable on the fly with M-x flyspell-mode.
+**** Code
+#+begin_src emacs-lisp
+  (use-package flyspell
+	:straight t
+	:config
+	(setq ispell-program-name "hunspell"
+		  ispell-default-dictionary "en_US")
+	:bind (("M-<f7>" . flyspell-buffer)))
+#+end_src
+** Keys
+*** Initialize =elmacro=
+**** Description
+Shows keyboard macros or latest interactive commands as Emacs lisp.
+**** Code
+#+begin_src emacs-lisp
+  (use-package elmacro
+	:straight t)
+#+end_src
+*** Initialize =which-key=
+**** Description
+Possible completion framework with 0.3s delay.
+**** Code
+#+begin_src emacs-lisp
+  (use-package which-key
+	:straight t
+	:init
+	(which-key-mode)
+	:config
+	(setq which-key-idle-delay 0.3))
+#+end_src
+*** Initialize =switch-window=
+**** Description
+C-x o and pick window (a,s,d...)
+**** Code
+#+begin_src emacs-lisp
+  (use-package switch-window
+	:straight t
+	:config
+	(setq switch-window-input-style 'minibuffer)
+	(setq switch-window-increase 4)
+	(setq switch-window-threshold 2)
+	(setq switch-window-shortcut-style 'qwerty)
+	(setq switch-window-qwerty-shortcuts
+		  '("a" "s" "d" "f" "j" "k" "l"))
+	:bind
+	([remap other-window] . switch-window))
+#+end_src
+*** Initialize =dabbrev=
+**** Description
+Expand the word in the buffer before point as a dynamic abbrev, by searching for words starting with that abbreviation ( dabbrev-expand ).
+**** Code
+#+begin_src emacs-lisp
+  ;; use dabbrev with Corfu!
+  (use-package dabbrev
+	:straight t
+	;; swap M-/ and C-M-/
+	:bind (("M-/" . dabbrev-completion)
+		   ("C-M-/" . dabbrev-expand)))
 #+end_src
 ** Completion
 *** Initialize =corfu=
@@ -1689,173 +1856,6 @@ Deft is included for quicksearch of entire ~/org directory.
 		  deft-use-filename-as-title t)
 	:bind
 	("C-c n d" . deft))
-#+end_src
-** Syntax
-*** Initialize =flycheck=
-**** Description
-Modern on-the-fly syntax checking extension.
-**** Code
-#+begin_src emacs-lisp
-  (use-package flycheck
-	:straight t
-	:hook (prog-mode . flycheck-mode))
-#+end_src
-*** Initialize =flyspell=
-**** Description
-Spell checking.
-Enable on the fly with M-x flyspell-mode.
-**** Code
-#+begin_src emacs-lisp
-  (use-package flyspell
-	:straight t
-	:config
-	(setq ispell-program-name "hunspell"
-		  ispell-default-dictionary "en_US")
-	:bind (("M-<f7>" . flyspell-buffer)))
-#+end_src
-** Appearance
-*** Initialize =diminish=
-**** Description
-Diminish hides minor modes to prevent cluttering your mode line.
-**** Code
-#+begin_src emacs-lisp
-  (use-package diminish
-	:straight t
-	:init
-	;; diminish as mode is already loaded
-	(diminish 'auto-revert-mode "")
-	(diminish 'abbrev-mode "")
-	(diminish 'subword-mode)
-	(diminish 'visual-line-mode)
-	(diminish 'outline-mode)
-	:config
-	;; diminish after mode is loaded
-	(eval-after-load "eldoc" '(diminish 'eldoc-mode))
-	(eval-after-load "c-mode" '(diminish 'c-mode))
-	(eval-after-load "c++-mode" '(diminish 'c++-mode))
-	(eval-after-load "which-key" '(diminish 'which-key-mode))
-	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
-	(eval-after-load "outline" '(diminish 'outline-minor-mode))
-	(eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode ""))
-	(eval-after-load "evil-commentary" '(diminish 'evil-commentary-mode))
-	(eval-after-load "evil-escape" '(diminish 'evil-escape-mode))
-	(eval-after-load "evil-collection-unimpaired" '(diminish 'evil-collection-unimpaired-mode)))
-#+end_src
-*** Initialize =dashboard=
-**** Description
-An extensible emacs startup screen.
-**** Code
-#+begin_src emacs-lisp
-  (use-package dashboard
-	:straight t
-	:defer nil
-	:diminish dashboard-mode
-	:preface
-	(defun init-edit ()
-	  "Edit initialization file."
-	  (interactive)
-	  (if (file-exists-p "~/.emacs.d/init.el")
-		  (find-file "~.emacs.d/init.el")))
-	(defun config-edit ()
-	  "Edit configuration file."
-	  (interactive)
-	  (if (file-exists-p "~/.emacs.d/config.org")
-		  (find-file "~/.emacs.d/config.org")))
-	(when (file-directory-p "~/org")
-	  (defun notes-edit ()
-		"Edit notes file."
-		(interactive)
-		(if (file-exists-p "~/org/notes.org")
-			(find-file "~/org/notes.org")))
-	  (defun tasks-edit ()
-		"Edit tasks file."
-		(interactive)
-		(if (file-exists-p "~/org/tasks.org")
-			(find-file "~/org/tasks.org")))
-	  (defun archive-edit ()
-		"Edit archive file."
-		(interactive)
-		(if (file-exists-p "~/org/archive.org")
-			(find-file "~/org/archive.org")))
-	  (defun inbox-edit ()
-		"Edit inbox file."
-		(interactive)
-		(if (file-exists-p "~/org/inbox.org")
-			(find-file "~/org/inbox.org"))))
-	(defun create-scratch-buffer ()
-	  "Create a scratch buffer."
-	  (interactive)
-	  (switch-to-buffer (get-buffer-create "*scratch*")))
-	:config
-	(dashboard-setup-startup-hook)
-	(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
-	(setq dashboard-items '((recents . 5)))
-	;; (setq dashboard-startup-banner (expand-file-name "img/gnusstorm-2.gif" user-emacs-directory))
-	(setq dashboard-startup-banner 'official)
-	(setq dashboard-center-content t)
-	(setq dashboard-show-shortcuts nil)
-	(setq dashboard-set-init-info t)
-	(setq dashboard-set-footer nil)
-	(setq dashboard-set-navigator t)
-	(when (file-directory-p "~/org")
-	  (setq dashboard-navigator-buttons
-			`(;; line 1
-			  ((,nil
-				"Notes"
-				"Open Notes"
-				(lambda (&rest _) (notes-edit))
-				'default)
-			   (nil
-				"Tasks"
-				"Open Tasks"
-				(lambda (&rest _) (tasks-edit))
-				'default)
-			   (nil
-				"Agenda"
-				"Open Org-Agenda"
-				(lambda (&rest _) (start-to-org-agenda))
-				'default)
-			   (nil
-				"Inbox"
-				"Open Inbox"
-				(lambda (&rest _) (inbox-edit))
-				'default))))))
-#+end_src
-*** Initialize =modus-themes=
-**** Description
-Accessible themes for Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
-**** Code
-#+begin_src emacs-lisp
-  (use-package modus-themes
-	:straight t
-	:init
-	(setq modus-themes-italic-constructs t
-		  modus-themes-bold-constructs t
-		  modus-themes-region '(accented bg-only no-extend))
-	;; load the theme files before enabling a theme
-	(modus-themes-load-themes)
-	:config
-	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
-	:bind ("S-<f5>" . modus-themes-toggle))
-#+end_src
-*** Initialize =rainbow-mode=
-**** Description
-Colorize color names in buffers.
-**** Code
-#+begin_src emacs-lisp
-  (use-package rainbow-mode
-	:straight t
-	:diminish rainbow-mode
-	:hook prog-mode)
-#+end_src
-*** Initialize =rainbow-delimiters=
-**** Description
-Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimiters such as parentheses, brackets or braces according to their depth.
-**** Code
-#+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-	:straight t
-	:hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 * Languages
 ** LSP

@@ -86,153 +86,6 @@ The implication is that someone should be able to install or copy code from this
 *** *modules/mail.org*
 - [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][mail]] - Mail configuration
 
-** Dependencies
-
-Some dependencies are required to run this Emacs configuration smoothly.
-
-*** Packages
-**** System
-
-#+begin_quote
-offlineimap
-fzf ripgrep ag
-clang clangd llvm
-texlive-core texlive-bin texlive-science
-imagemagick
-editorconfig
-libjansson
-rust-all cargo
-nodejs npm
-libxml2
-gopls
-gnuplot
-prettier
-hunspell
-#+end_quote
-**** Python
-
-#+begin_src sh
-  pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi
-#+end_src
-
-**** NodeJS
-
-Deno & typescript-language-server for Typescript (TS/TSX) support.
-
-#+begin_src sh
-  sudo npm install -g deno typescript-language-server bash-language-server
-#+end_src
-*** Files
-**** Dropbox Folders
-
-Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
-
-#+begin_src sh
-  mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
-#+end_src
-
-**** Auth-Info Files
-
-#+begin_quote
-~/org/.authinfo.gpg
-
-~/org/secrets-el.gpg
-
-~/org/network-security.data
-
-~/.emacs.d/custom.el
-#+end_quote
-
-NOTE: 'auth-info' can be backed up and restored to/from ~/org with =M-x auth/backup= & =M-x auth/restore=.
-
-* Installation
-** Install Emacs
-
-[[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs]] build instructions.
-
-** Clone this repo
-
-#+caption: Command to clone this Emacs configuration =git= repository.
-#+name: li#git_clone
-#+begin_src sh
-
-  git clone https://github.com/diamondbond/emacs ~/git/emacs
-
-#+end_src
-
-** Install the config
-
-#+caption: Command to install this Emacs configuration.
-#+name: li#install
-#+begin_src sh
-
-  mv ~/.emacs.d ~/.emacs.d.old
-
-  cd ~/git/emacs
-  chmod +x install.sh
-  ./install.sh
-
-#+end_src
-
-** Bootstrap Emacs
-
-This will take some time.
-NOTE: Please answer y for vterm-modules to be autoinstalled.
-
-#+caption: Command to bootstrap this Emacs configuration.
-#+name: li#bootstrap
-#+begin_src sh
-
-  emacs --daemon
-
-#+end_src
-
-** Connect to Emacs
-
-#+caption: Command to connect to Emacs daemon.
-#+name: li#connectemacs
-#+begin_src sh
-
-  emacsclient -c -n -a 'emacs'
-
-#+end_src
-
-** Post Setup
-
-Once Emacs launches for the first time we need to setup a few more things for everything to work as intended.
-
-*** Compile pdf-tools
-
-Install pdf-tools.
-
-#+begin_quote
-M-x pdf-tools-install
-#+end_quote
-
-*** Compile vterm modules
-
-Compile vterm-modules & setup vterm.
-
-#+begin_quote
-M-x vterm
-#+end_quote
-
-*** Download all-the-icons
-
-Download & install the all-the-icons font.
-
-#+begin_quote
-M-x all-the-icons-install-fonts
-#+end_quote
-
-*** Setup LSP
-
-Install [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]] manually (see [[https://github.com/DiamondBond/emacs#dependencies][dependencies]]) or with =M-x lsp-install-server=
-
-*** Configure Email
-
-Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email setup documentation]] for this functionality.
-
 * Header
 ** Specification
 Enable lexical binding as opposed to the default dynamic binding because it is faster and less error-prone.
@@ -542,7 +395,7 @@ Keep the =menu-bar= enabled as it provides quick access to certain functions.
 **** Configure fringe
 Disable fringe-mode.
 #+begin_src emacs-lisp
-  (fringe-mode nil)
+  (fringe-mode 0)
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
   (setq-default indicate-empty-lines nil)
@@ -849,6 +702,7 @@ Heresy; Vim keybindings in Emacs.
 	(evil-set-initial-state 'vterm-mode 'insert)
 	(evil-set-initial-state 'term-mode 'emacs)
 	(evil-set-initial-state 'eshell-mode 'emacs)
+	(evil-set-initial-state 'profiler-report-mode 'emacs)
 	(evil-set-initial-state 'inferior-scheme-mode 'emacs)
 	(evil-set-initial-state 'md4rd-mode 'emacs)
 	(evil-set-initial-state 'mu4e-main-mode 'emacs)

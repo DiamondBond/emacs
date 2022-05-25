@@ -1,8 +1,8 @@
-* How to compile and install Emacs@HEAD
+* How to compile and install Emacs
 
 ** Grabbing sources
 
-Clone the latest Emacs sources:
+Clone the latest Emacs@HEAD sources:
 
 #+begin_src sh
 
@@ -11,9 +11,15 @@ Clone the latest Emacs sources:
 
 #+end_src
 
+Or alternatively download the [[https://www.gnu.org/software/emacs/download.html][latest Emacs stable release]].
+
 ** Configuring
 
 Configure Emacs with native-comp, xinput2, imagemagick, harfbuzz, json, athena-toolkit with xaw3d-toolbars & custom O3 CFLAGS for mild performance improvements.
+
+NOTE: If you are intending to compile Emacs<=29 then omit the =--with-xinput2= flag when running =./configure= below.
+
+NOTE: that if you intend to run this emacs configuration for long periods of time then it is recommended to use the athena toolkit as its anecdotally more stabler (imo) as well as blessing you with the ability to not lose your emacs session upon logout - ie you can reconnect to your same emacs session after doing system updates (hopefully not kernel or systemd) and logging out and back in.
 
 #+begin_src sh
 
@@ -27,7 +33,7 @@ Configure Emacs with native-comp, xinput2, imagemagick, harfbuzz, json, athena-t
 
 ** Compiling
 
-Compile with all cores and do native full ahead of time compilation.
+Compile with n-1 cores and do native full ahead of time compilation.
 
 #+begin_src sh
 
@@ -36,7 +42,7 @@ Compile with all cores and do native full ahead of time compilation.
 
 #+end_src
 
-NOTE: This will take a while and it may heat up your CPU.
+NOTE: This may take awhile.
 
 ** Installing
 

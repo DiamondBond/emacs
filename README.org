@@ -14,18 +14,43 @@ The entire config file can be viewed [[https://diamondbond.neocities.org/emacs.h
 
 * Installation
 
+Install Emacs [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs] build instructions.
+
 Clone this repo:
 
 #+begin_src sh
-  $ git clone https://github.com/diamondbond/emacs.git ~/.emacs.d
+  $ git clone https://github.com/diamondbond/emacs.git ~/git/emacs
+#+end_src
+
+Backup old configuration:
+
+#+begin_src emacs-lisp
+  M-x kill-emacs
+#+end_src
+
+#+begin_src sh
+  $ mv ~/.emacs.d/ ~/.emacs.d.old/
 #+end_src
 
 Install:
 
 #+begin_src sh
-  $ cd ~/git/emacs
-  $ chmod +x install.sh
+  $ cd ~/
+  $ chmod +x install.sh; ./git/emacs/install.sh
   $ ./install.sh
+  $ emacs --daemon;
+#+end_src
+
+** vterm
+
+#+begin_src emacs-lisp
+  M-x vterm
+#+end_src
+
+** PDF
+
+#+begin_src emacs-lisp
+  M-x pdf-tools-install
 #+end_src
 
 ** Icons
@@ -36,18 +61,20 @@ If you care about fancy icons, install the fonts provided by [[https://github.co
   M-x all-the-icons-install-fonts
 #+end_src
 
-** Syntax checking/linting
+** LSP
 
 Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mode][LSP]] package. For it to work properly, you need to install the appropriate [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]].
+
+** Mail
+
+Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email setup documentation]] for this functionality.
 
 ** Post setup
 
 Make sure you set your global variables in the =Globals= heading in =userconfig.org= in the =.emacs.d= directory.
 
-Please refer to [[https://github.com/DiamondBond/emacs/blob/master/config.org#post-setup][the post setup documentation]] to fully configure everything.
-
 ** Customization
 
-Edit the =userconfig.org= file in the =.emacs.d= directory and add your custom settings there (in "emacs-lisp" org-mode code blocks).
+Edit =userconfig.org= in the =.emacs.d= directory and add your custom settings there (in "emacs-lisp" org-mode code blocks).
 
-You may also edit the =config.org= file directly, but your custom settings might be wiped out in case of an update.
+You may also edit the =config.org= file directly, but your custom settings might be wiped out in case of an update - it is therefore recommended to fork this repo if you intend on customizing this configuration permanently.

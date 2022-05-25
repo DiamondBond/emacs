@@ -1,0 +1,68 @@
+#+TITLE: Dependencies
+#+LANGUAGE: en
+#+OPTIONS: num:nil toc:2
+
+Declarative listing of dependencies for this Emacs configuration.
+
+* Packages
+
+** System
+
+#+begin_quote
+offlineimap
+fzf ripgrep ag
+clang clangd llvm
+texlive-core texlive-bin texlive-science
+imagemagick
+editorconfig
+libjansson
+rust-all cargo
+nodejs npm
+libxml2
+gopls
+gnuplot
+prettier
+hunspell
+#+end_quote
+
+** Python
+
+We let lsp handle the python language server, these are just miscellaneous python-pip modules that I personally use.
+
+NOTE: python-rofi is handy for org-capture on a keybind.
+
+#+begin_src sh
+  pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi
+#+end_src
+
+** NodeJS
+
+Deno & typescript-language-server for Typescript (TS/TSX) support.
+
+#+begin_src sh
+  sudo npm install -g deno typescript-language-server bash-language-server
+#+end_src
+
+* Files
+
+** Auth Files
+
+#+begin_quote
+~/.authinfo.gpg
+
+~/.emacs.d/secrets-el.gpg
+
+~/.emacs.d/network-security.data
+
+~/.emacs.d/custom.el
+#+end_quote
+
+NOTE: 'auth-info' can be backed up and restored to/from ~/org with =M-x auth/backup= & =M-x auth/restore=.
+
+** Dropbox Folders
+
+Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
+
+#+begin_src sh
+  mkdir -p ~/Dropbox/{org,pdfs}; ln -s ~/Dropbox/org ~/org; ln -s ~/Dropbox/pdfs ~/pdfs
+#+end_src

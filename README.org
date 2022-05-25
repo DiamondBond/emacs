@@ -8,13 +8,43 @@
 
 [[./img/screenshot.png]]
 
+#+begin_quote
+
+Simple Emacs configuration aimed at enhancing the default experience.
+
+#+end_quote
+
 * Preview
 
 The entire config file can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
 
+* Overview
+
+: IN CHRONOLOGICAL LOAD ORDER
+
+*** *early-init.el*
+- [[https://github.com/DiamondBond/emacs/blob/master/early-init.el][early-bootstrap]] - Early bootstrap
+
+*** *init.el*
+- [[https://github.com/DiamondBond/emacs/blob/master/init.el][bootstrap]] - Bootstrap straight.el
+
+*** *config.org*
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#base][base]] - Base configuration
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][keybinds]] - Keybinding maps
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][packages]] - Package manifest
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#languages][languages]] - Language manifest
+- [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][functions]] - Function definitions
+
+*** *userconfig.org*
+- [[https://github.com/DiamondBond/emacs/blob/master/userconfig.org][user]] - User configuration
+
+*** *modules/mail.org*
+- [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][mail]] - Mail configuration
+
+
 * Installation
 
-Install Emacs [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs] build instructions.
+[[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs build instructions]].
 
 Clone this repo:
 
@@ -41,18 +71,6 @@ Install:
   $ emacs --daemon;
 #+end_src
 
-** vterm
-
-#+begin_src emacs-lisp
-  M-x vterm
-#+end_src
-
-** PDF
-
-#+begin_src emacs-lisp
-  M-x pdf-tools-install
-#+end_src
-
 ** Icons
 
 If you care about fancy icons, install the fonts provided by [[https://github.com/domtronn/all-the-icons.el][all the icons]]:
@@ -65,16 +83,24 @@ If you care about fancy icons, install the fonts provided by [[https://github.co
 
 Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mode][LSP]] package. For it to work properly, you need to install the appropriate [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]].
 
+** vterm
+
+#+begin_src emacs-lisp
+  M-x vterm
+#+end_src
+
+** PDF
+
+#+begin_src emacs-lisp
+  M-x pdf-tools-install
+#+end_src
+
 ** Mail
 
 Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email setup documentation]] for this functionality.
 
-** Post setup
-
-Make sure you set your global variables in the =Globals= heading in =userconfig.org= in the =.emacs.d= directory.
-
 ** Customization
 
-Edit =userconfig.org= in the =.emacs.d= directory and add your custom settings there (in "emacs-lisp" org-mode code blocks).
+Edit =userconfig.org= in the =.emacs.d= directory and define your globals, optionally add your custom settings there (in "emacs-lisp" org-mode code blocks).
 
 You may also edit the =config.org= file directly, but your custom settings might be wiped out in case of an update - it is therefore recommended to fork this repo if you intend on customizing this configuration permanently.

@@ -2427,7 +2427,7 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 #+end_src
 ** Syncing
 *** =sync/emacs=
-Sync Emacs configuration to git.
+Sync Emacs configuration to local git repository.
 #+begin_src emacs-lisp
   (defun sync/emacs ()
 	"Sync Emacs configuration."
@@ -2441,7 +2441,7 @@ Sync Emacs configuration to git.
 	(async-shell-command "cp ~/.emacs.d/straight/versions/default.el ~/git/emacs/straight/versions/"))
 #+end_src
 *** =sync/mail=
-Sync Email to $maildir.
+Sync Email to local mail directory.
 #+begin_src emacs-lisp
   (defun sync/mail ()
 	"Sync email."
@@ -2458,16 +2458,8 @@ Sync Elfeed.
 	(elfeed)
 	(elfeed-update))
 #+end_src
-*** =sync/dotfiles=
-Sync dotfiles to git.
-#+begin_src emacs-lisp
-  (defun sync/dotfiles ()
-	"Sync dotfiles."
-	(interactive)
-	(async-shell-command "~/bin/sync-dotfiles.sh")
-	(alert "Sync Complete." :severity 'trivial))
-#+end_src
 *** =sync/auth=
+Sync auth to Dropbox.
 #+begin_src emacs-lisp
   (defun auth/backup ()
 	"Backup authinfo & personal info."
@@ -2488,6 +2480,23 @@ Sync dotfiles to git.
 	(async-shell-command "cp ~/org/network-security.data ~/.emacs.d/")
 	;; metadata
 	(async-shell-command "cp ~/org/custom.el ~/.emacs.d/"))
+#+end_src
+*** =sync/dotfiles=
+Sync dotfiles to GitHub.
+#+begin_src emacs-lisp
+  (defun sync/dotfiles ()
+	"Sync dotfiles."
+	(interactive)
+	(async-shell-command "~/bin/sync-dotfiles.sh")
+	(alert "Sync Complete." :severity 'trivial))
+#+end_src
+*** =sync/neocities=
+Sync Emacs configuration to neocities.
+#+begin_src emacs-lisp
+  (defun sync/neocities ()
+	"Sync neocities."
+	(interactive)
+	(async-shell-command "~/bin/sync-neocities.sh"))
 #+end_src
 ** Config
 *** =config/reload=

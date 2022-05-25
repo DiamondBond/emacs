@@ -217,7 +217,7 @@ Compile vterm-modules & setup vterm.
 M-x vterm
 #+end_quote
 
-*** Setup all-the-icons
+*** Download all-the-icons
 
 Download & install the all-the-icons font.
 
@@ -229,7 +229,7 @@ M-x all-the-icons-install-fonts
 
 Install [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]] manually (see [[https://github.com/DiamondBond/emacs#dependencies][dependencies]]) or with =M-x lsp-install-server=
 
-*** Setup Email
+*** Configure Email
 
 Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email setup documentation]] for this functionality.
 
@@ -280,8 +280,7 @@ Enable lexical binding as opposed to the default dynamic binding because it is f
 * Base
 ** Globals
 *** Description
-Global variables to easily customize Emacs.
-Override this in =userconfig.org=.
+Global variables to easily customize this Emacs configuration.
 *** Code
 #+begin_src emacs-lisp
   (setq

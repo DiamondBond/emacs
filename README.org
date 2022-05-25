@@ -28,8 +28,6 @@ Install:
   $ ./install.sh
 #+end_src
 
-NOTE: Make sure you set your global variables in the =userconfig.org= file in the =.emacs.d= directory.
-
 ** Icons
 
 If you care about fancy icons, install the fonts provided by [[https://github.com/domtronn/all-the-icons.el][all the icons]]:
@@ -43,6 +41,8 @@ If you care about fancy icons, install the fonts provided by [[https://github.co
 Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mode][LSP]] package. For it to work properly, you need to install the appropriate [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]].
 
 ** Post setup
+
+Make sure you set your global variables in the =Globals= heading in =userconfig.org= in the =.emacs.d= directory.
 
 Please refer to [[https://github.com/DiamondBond/emacs/blob/master/config.org#post-setup][the post setup documentation]] to fully configure everything.
 

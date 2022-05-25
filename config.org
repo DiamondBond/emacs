@@ -2602,5 +2602,5 @@ Updates the Emacs configuration.
 ** Goodbye
 #+begin_src emacs-lisp
 
-;;; config.el ends here
+  ;;; config.el ends here
 #+end_src

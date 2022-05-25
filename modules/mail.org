@@ -297,6 +297,5 @@ smtp mail within Emacs.
 * Footer
 #+begin_src emacs-lisp
 
-  (provide 'mail)
   ;;; userconfig.el ends here
 #+end_src

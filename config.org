@@ -951,8 +951,9 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
   :init
   (setq org-roam-v2-ack t)
   :custom
-  (org-roam-directory "~/org")
-  (org-roam-completion-everywhere t)
+  (org-roam-directory "~/org/roam")
+  (org-id-link-to-org-use-id 'create-if-interactive)
+  ;; (org-roam-completion-everywhere t)
   :bind (("C-c n l" . org-roam-buffer-toggle)
 		 ("C-c n f" . org-roam-node-find)
 		 ("C-c n i" . org-roam-node-insert)
@@ -1542,16 +1543,18 @@ All the icons!
 Kind icons.
 **** Code
 #+begin_src emacs-lisp
-  (use-package kind-icon
-	:straight t
-	:after corfu
-	:custom
-	(kind-icon-use-icons t)
-	(kind-icon-default-face 'corfu-default) ; Have background color be the same as `corfu' face background
-	(kind-icon-blend-background nil)  ; Use midpoint color between foreground and background colors ("blended")?
-	(kind-icon-blend-frac 0.08)
-	:config
-	(add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+(use-package kind-icon
+  :straight t
+  :after corfu
+  :custom
+  (kind-icon-use-icons t)
+  ;; Have background color be the same as `corfu' face background
+  (kind-icon-default-face 'corfu-default)
+  ;; Use midpoint color between foreground and background colors ("blended")?
+  (kind-icon-blend-background nil)
+  (kind-icon-blend-frac 0.08)
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+end_src
 ** News
 *** Initialize =elfeed=
@@ -1832,41 +1835,43 @@ Quick lookup in a dictionary.
 engine-mode is a global minor mode for Emacs that enables you to easily define search engines, bind them to keybindings, and query them from the comfort of your editor.
 **** Code
 #+begin_src emacs-lisp
-  (use-package engine-mode
-	:straight t
-	:config
-	(defengine google "https://google.com/search?q=%s" :keybinding "g"
-			   :docstring "Search Google.")
-	(defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :keybinding "i" :docstring "Search Google Images")
-	(defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m" :docstring "Search Google Maps.")
-	(defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d"
-			   :docstring "Search DuckDuckGo.")
-	(defengine qwant "https://www.qwant.com/?q=%s" :keybinding "q"
-			   :docstring "Search Qwant.")
-	(defengine wikipedia "https://en.wikipedia.org/wiki/Special:Search?search=%s" :keybinding "w"
-			   :docstring "Search Wikipedia.")
-	(defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y"
-			   :docstring "Search YouTube.")
-	(defengine twitter "https://twitter.com/search?q=%s" :keybinding "t"
-			   :docstring "Search Twitter.")
-	(defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h"
-			   :docstring "Search GitHub.")
-	(defengine melpa "https://melpa.org/#/?q=%s" :keybinding "p"
-			   :docstring "Search the Milkypostman's Emacs Lisp Package Archive.")
-	(defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "s"
-			   :docstring "Search Stack Overflow.")
-	(defengine wolfram-alpha "http://www.wolframalpha.com/input/?i=%s" :keybinding "a"
-			   :docstring "Search Wolfram Alpha.")
-	(defengine rfcs "http://pretty-rfc.herokuapp.com/search?q=%s" :keybinding "r"
-			   :docstring "Search RFC documents.")
-	(defengine ctan "http://www.ctan.org/search/?x=1&PORTAL=on&phrase=%s" :keybinding "c"
-			   :docstring "Search the Comprehensive TeX Archive Network")
-	(defengine project-gutenberg "http://www.gutenberg.org/ebooks/search/?query=%s" :keybinding "p"
-			   :docstring "Search Project Gutenberg.")
-	(engine/set-keymap-prefix (kbd "C-x /"))
-	(setq engine/browser-function 'browse-url-firefox)
-	:init
-	(engine-mode t))
+(use-package engine-mode
+  :straight t
+  :config
+  (defengine google "https://google.com/search?q=%s" :keybinding "g"
+			 :docstring "Search Google.")
+  (defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :keybinding "i"
+			 :docstring "Search Google Images")
+  (defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m"
+			 :docstring "Search Google Maps.")
+  (defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d"
+			 :docstring "Search DuckDuckGo.")
+  (defengine qwant "https://www.qwant.com/?q=%s" :keybinding "q"
+			 :docstring "Search Qwant.")
+  (defengine wikipedia "https://en.wikipedia.org/wiki/Special:Search?search=%s" :keybinding "w"
+			 :docstring "Search Wikipedia.")
+  (defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y"
+			 :docstring "Search YouTube.")
+  (defengine twitter "https://twitter.com/search?q=%s" :keybinding "t"
+			 :docstring "Search Twitter.")
+  (defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h"
+			 :docstring "Search GitHub.")
+  (defengine melpa "https://melpa.org/#/?q=%s" :keybinding "p"
+			 :docstring "Search the Milkypostman's Emacs Lisp Package Archive.")
+  (defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "s"
+			 :docstring "Search Stack Overflow.")
+  (defengine wolfram-alpha "http://www.wolframalpha.com/input/?i=%s" :keybinding "a"
+			 :docstring "Search Wolfram Alpha.")
+  (defengine rfcs "http://pretty-rfc.herokuapp.com/search?q=%s" :keybinding "r"
+			 :docstring "Search RFC documents.")
+  (defengine ctan "http://www.ctan.org/search/?x=1&PORTAL=on&phrase=%s" :keybinding "c"
+			 :docstring "Search the Comprehensive TeX Archive Network")
+  (defengine project-gutenberg "http://www.gutenberg.org/ebooks/search/?query=%s" :keybinding "p"
+			 :docstring "Search Project Gutenberg.")
+  (engine/set-keymap-prefix (kbd "C-x /"))
+  (setq engine/browser-function 'browse-url-firefox)
+  :init
+  (engine-mode t))
 #+end_src
 *** Initialize =ripgrep=
 **** Description

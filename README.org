@@ -20,7 +20,7 @@ The entire config file can be viewed [[https://diamondbond.neocities.org/emacs.h
 
 * Overview
 
-: IN CHRONOLOGICAL LOAD ORDER
+: CHRONOLOGICAL LOAD ORDER
 
 *** *early-init.el*
 - [[https://github.com/DiamondBond/emacs/blob/master/early-init.el][early-bootstrap]] - Early bootstrap

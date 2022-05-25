@@ -618,11 +618,11 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 		(lambda nil
 		  (concat
 		   (if (string= (eshell/pwd) (getenv "HOME"))
-			   (propertize "~" 'face `(:foreground "#99CCFF"))
+			   (propertize "~" 'face `(:foreground "#622486"))
 			 (replace-regexp-in-string
 			  (getenv "HOME")
-			  (propertize "~" 'face `(:foreground "#99CCFF"))
-			  (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
+			  (propertize "~" 'face `(:foreground "#622486"))
+			  (propertize (eshell/pwd) 'face `(:foreground "#622486"))))
 		   (if (= (user-uid) 0)
 			   (propertize " α " 'face `(:foreground "#FF6666"))
 			 (propertize " λ " 'face `(:foreground "#A6E22E"))))))

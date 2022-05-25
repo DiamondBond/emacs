@@ -1125,7 +1125,7 @@ Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimit
 	:hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 ** Tools
-*** Initialize =auto-package=update=
+*** Initialize =auto-package-update=
 Manually update packages.
 #+begin_src emacs-lisp
   (use-package auto-package-update

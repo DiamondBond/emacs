@@ -44,7 +44,7 @@ Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mo
 
 ** Post setup
 
-Please refer to [[https://github.com/DiamondBond/emacs/blob/master/config.org#post-setup][the post setup documentation]] in order to fully configure everything.
+Please refer to [[https://github.com/DiamondBond/emacs/blob/master/config.org#post-setup][the post setup documentation]] to fully configure everything.
 
 ** Customization
 

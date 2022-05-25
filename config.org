@@ -856,8 +856,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 
 	;; indentation
 	(setq org-src-preserve-indentation nil
-		  org-adapt-indentation t
-		  org-edit-src-content-indentation 2)
+		  org-adapt-indentation nil)
 
 	;; set org directory & agenda files
 	(when (file-directory-p "~/org")

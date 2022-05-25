@@ -1,4 +1,4 @@
-# basic
+# basic files
 .DS_Store
 *~
 *.*~
@@ -12,24 +12,35 @@
 test/.local*/
 test/result
 
-# emacs tempfiles that shouldn't be there
+# auth files
+authinfo
+authinfo.gpg
+.authinfo
+.authinfo.gpg
+secrets.el.gpg
+
+# emacs files that shouldn't be there
 .dap-breakpoints
 .org-id-locations
 .tern-port
 .yas-compiled-snippets.el
+.lsp-session*
 auto-save-list/
 cask/
 ede-projects.el
 elpa/
 eln-cache/
+eshell/
+history
 network-security.data
 places
+recentf
 semanticdb
 server/
 smex-items
 tramp
 transient/
-var/
+url/
 
 # compiled files
 *.elc
@@ -37,3 +48,12 @@ var/
 *.fas
 *.dat
 *.eld
+
+# user files
+config.el
+custom.el
+emacs.html
+globals.org
+globals.el
+userconfig.org
+userconfig.el

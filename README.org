@@ -18,9 +18,9 @@ Simple Emacs configuration aimed at enhancing the default experience.
 
 The entire config file can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
 
-[[https://diamondbond.neocities.org/emacs.html#org398a55e][Overview]
+[[https://diamondbond.neocities.org/emacs.html#org398a55e][Overview]]
 
-[[https://diamondbond.neocities.org/emacs.html#org2d35fd4][Principles]
+[[https://diamondbond.neocities.org/emacs.html#org2d35fd4][Principles]]
 
 * Installation
 

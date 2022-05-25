@@ -611,22 +611,25 @@ Auto-update proced every 5 seconds.
 Improve eshell prompt and assign aliases, also setup some custom helper functions for easier use.
 **** Prompt
 #+begin_src emacs-lisp
-  (setq eshell-highlight-prompt nil)
-  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
-
+  ;; set prompt
   (setq eshell-prompt-function
 		(lambda nil
 		  (concat
 		   (if (string= (eshell/pwd) (getenv "HOME"))
-			   (propertize "~" 'face `(:foreground "#622486"))
+			   (propertize "~" 'face `(:foreground "#00538b"))
 			 (replace-regexp-in-string
 			  (getenv "HOME")
-			  (propertize "~" 'face `(:foreground "#622486"))
-			  (propertize (eshell/pwd) 'face `(:foreground "#622486"))))
+			  (propertize "~" 'face `(:foreground "#00538b"))
+			  (propertize (eshell/pwd) 'face `(:foreground "#00538b"))))
 		   (if (= (user-uid) 0)
-			   (propertize " α " 'face `(:foreground "#FF6666"))
-			 (propertize " λ " 'face `(:foreground "#A6E22E"))))))
+			   (propertize " α " 'face `(:foreground "#780000"))
+			 (propertize " λ " 'face `(:foreground "#55348e"))))))
+  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
 
+  ;; do not highlight prompt
+  (setq eshell-highlight-prompt nil)
+
+  ;; disable global highlight
   (add-hook 'eshell-mode-hook
 			(lambda () (global-hl-line-mode 0)))
 #+end_src

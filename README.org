@@ -17,7 +17,7 @@ The entire config file can be viewed [[https://diamondbond.neocities.org/emacs.h
 Clone this repo:
 
 #+begin_src sh
-  $ git clone https://github.com/diamondbond/emacs.git ~/.emacs.d --recurse-submodules
+  $ git clone https://github.com/diamondbond/emacs.git ~/.emacs.d
 #+end_src
 
 Install:

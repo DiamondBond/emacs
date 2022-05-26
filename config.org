@@ -491,14 +491,14 @@ Colors taken from =modus-operandi-list-colors=.
 		(lambda nil
 		  (concat
 		   (if (string= (eshell/pwd) (getenv "HOME"))
-			   (propertize "~" 'face `(:foreground "#005e00"))
+			   (propertize "~" 'face `(:foreground "#2255bb"))
 			 (replace-regexp-in-string
 			  (getenv "HOME")
-			  (propertize "~" 'face `(:foreground "#005e00"))
-			  (propertize (eshell/pwd) 'face `(:foreground "#005e00"))))
+			  (propertize "~" 'face `(:foreground "#2255bb"))
+			  (propertize (eshell/pwd) 'face `(:foreground "#2255bf"))))
 		   (if (= (user-uid) 0)
-			   (propertize " α " 'face `(:foreground "#a60000"))
-			 (propertize " λ " 'face `(:foreground "#55348e"))))))
+			   (propertize " α " 'face `(:foreground "#aa0000"))
+			 (propertize " λ " 'face `(:foreground "#68228b"))))))
   (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
 
   ;; do not highlight prompt

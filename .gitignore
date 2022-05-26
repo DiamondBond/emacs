@@ -1,14 +1,17 @@
-
-# user files
+# elisp
 globals.el
 config.el
 custom.el
 userconfig.el
+
+# org
 globals.org
 userconfig.org
+
+# org-html-export
 emacs.html
 
-# basic files
+# misc files
 .DS_Store
 *~
 *.*~
@@ -59,7 +62,7 @@ url/
 *.dat
 *.eld
 
-* straight
+# straight.el
 straight/build/*
 straight/repos/*
 straight/build-cache.el

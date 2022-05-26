@@ -1648,7 +1648,7 @@ Reddit client within Emacs with oauth2 support.
 	:straight t
 	:config
 	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure))
-	(load-if-exists "~/.emacs.d/secrets.el.gpg"))
+	load-secrets())
 #+end_src
 ** IRC
 *** Initialize =erc=
@@ -2087,6 +2087,13 @@ Prettier formatter for JSX & TSX.
 	"Load file F if it exists."
 	(if (file-exists-p (expand-file-name f))
 		(load-file (expand-file-name f))))
+#+end_src
+*** Load secrets
+#+begin_src emacs-lisp
+  (defun load-secrets ()
+	"Load secrets."
+	(let ((secret "~/.secret.el.gpg"))
+	  (when (file-exists-p secret) (load-file secret))))
 #+end_src
 *** Enable Minor mode
 #+begin_src emacs-lisp

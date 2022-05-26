@@ -52,7 +52,7 @@ url/
 # user files
 config.el
 custom.el
-#userconfig.org
+userconfig.org
 userconfig.el
 emacs.html
 globals.org

@@ -18,8 +18,6 @@ A Simple Emacs configuration aimed at enhancing the default experience.
 
 The entire config file can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
 
-I recommend reading the =Introduction=.
-
 * Installation
 
 [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsfromsource.org][Emacs build instructions]].
@@ -27,26 +25,7 @@ I recommend reading the =Introduction=.
 Clone this repo:
 
 #+begin_src sh
-  $ git clone https://github.com/diamondbond/emacs.git ~/git/emacs
-#+end_src
-
-Backup old configuration:
-
-#+begin_src emacs-lisp
-  M-x kill-emacs
-#+end_src
-
-#+begin_src sh
-  $ mv ~/.emacs.d/ ~/.emacs.d.old/
-#+end_src
-
-Install:
-
-#+begin_src sh
-  $ cd ~/
-  $ chmod +x install.sh; ./git/emacs/install.sh
-  $ ./install.sh
-  $ emacs --daemon;
+  $ git clone https://github.com/diamondbond/emacs.git ~/.emacs.d --recurse-submodules
 #+end_src
 
 ** Icons
@@ -71,4 +50,10 @@ Edit =.emacs.d/globals.org= to change the default username & email address.
 
 Edit =.emacs.d/userconfig.org= to add your custom settings (in "emacs-lisp" org-mode code blocks).
 
-You may also edit the =config.org= file directly, but your custom settings might be wiped out in case of an update.
+You may also edit =.emacs.d/config.org= directly, but your custom settings might be wiped out during an update.
+
+** Updating
+
+#+begin_src emacs-lisp
+  M-x config/update
+#+end_src

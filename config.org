@@ -157,11 +157,11 @@ Configure gpg-email address & load oauth tokens.
 #+begin_src emacs-lisp
   ;; load authinfo
   (if (file-exists-p globals--auth-info)
-	  (setq auth-sources '(globals--auth-sources)
-			auth-source-cache-expiry nil))
+	  (setq auth-sources '(globals--auth-sources))
+	  (setq auth-source-cache-expiry nil))
 
   ;; ask for encryption password once
-  (setq epa-file-cache-passphrase-for-symmetric-encryption t)
+  ;; (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
   ;; disable prompt
   (setenv "GPG_AGENT_INFO" nil)

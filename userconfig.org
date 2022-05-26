@@ -29,6 +29,25 @@ Enable lexical binding.
 
 * Modules
 
+** =reddit=
+
+#+begin_src emacs-lisp
+  ;; load reddit module
+  ;; also loads my secret file
+  (when (file-directory-p "~/.emacs.d/modules")
+	(when (file-readable-p "~/.emacs.d/modules/reddit.org")
+	  (org-babel-load-file (expand-file-name "~/.emacs.d/modules/reddit.org"))))
+#+end_src
+
+** =discord=
+
+#+begin_src emacs-lisp
+  ;; load discord module
+  (when (file-directory-p "~/.emacs.d/modules")
+	(when (file-readable-p "~/.emacs.d/modules/discord.org")
+	  (org-babel-load-file (expand-file-name "~/.emacs.d/modules/discord.org"))))
+#+end_src
+
 ** =email=
 
 #+begin_src emacs-lisp
@@ -36,24 +55,6 @@ Enable lexical binding.
   (when (file-directory-p "~/.emacs.d/modules")
 	(when (file-readable-p "~/.emacs.d/modules/mail.org")
 	  (org-babel-load-file (expand-file-name "~/.emacs.d/modules/mail.org"))))
-#+end_src
-
-** =discord=
-
-#+begin_src emacs-lisp
-  ;; load email module
-  (when (file-directory-p "~/.emacs.d/modules")
-	(when (file-readable-p "~/.emacs.d/modules/discord.org")
-	  (org-babel-load-file (expand-file-name "~/.emacs.d/modules/discord.org"))))
-#+end_src
-
-** =reddit=
-
-#+begin_src emacs-lisp
-  ;; load email module
-  (when (file-directory-p "~/.emacs.d/modules")
-	(when (file-readable-p "~/.emacs.d/modules/reddit.org")
-	  (org-babel-load-file (expand-file-name "~/.emacs.d/modules/reddit.org"))))
 #+end_src
 
 * Functions

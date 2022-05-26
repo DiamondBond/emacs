@@ -15,7 +15,7 @@ Or alternatively download the [[https://www.gnu.org/software/emacs/download.html
 
 ** Configuring
 
-Configure Emacs with native-comp, xinput2, imagemagick, harfbuzz, json, athena-toolkit with xaw3d-toolbars & custom O3 CFLAGS for mild performance improvements.
+Configure Emacs with native-comp, xinput2, imagemagick, harfbuzz, json, athena-toolkit with xaw3d-toolbars & O3 CFLAGS for some minor performance improvements.
 
 NOTE: If you are intending to compile Emacs<=29 then omit the =--with-xinput2= flag when running =./configure= below.
 

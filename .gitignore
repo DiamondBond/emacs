@@ -16,6 +16,9 @@ userconfig.el
 # org-html-export
 emacs.html
 
+# org-roam
+org-roam.db
+
 # misc files
 .DS_Store
 *~

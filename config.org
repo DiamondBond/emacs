@@ -158,7 +158,7 @@ Configure gpg-email address & load oauth tokens.
   ;; load authinfo
   (if (file-exists-p globals--auth-info)
 	  (setq auth-sources '(globals--auth-sources))
-	  (setq auth-source-cache-expiry nil))
+	(setq auth-source-cache-expiry nil))
 
   ;; ask for encryption password once
   ;; (setq epa-file-cache-passphrase-for-symmetric-encryption t)

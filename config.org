@@ -2231,14 +2231,7 @@ Updates the Emacs configuration.
 *** =config/upgrade=
 Upgrades the Emacs configuration and its packages.
 #+begin_src emacs-lisp
-  (defalias 'config/upgrade-packages 'straight-pull-all)
-
-  (when (file-directory-p "~/.emacs.d")
-	(defun config/upgrade ()
-	  "Upgrades this Emacs configuration and its packages."
-	  (interactive)
-	  (config/update)
-	  (config/upgrade-packages)))
+  (defalias 'config/upgrade 'straight-pull-all)
 #+end_src
 *** =config/github=
 Launches this Emacs' configuration GitHub page with default browser

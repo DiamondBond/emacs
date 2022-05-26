@@ -2,7 +2,7 @@
 #+LANGUAGE: en
 #+OPTIONS: num:nil toc:2
 
-Declarative listing of dependencies for this Emacs configuration.
+Declarative dependency listing for this Emacs configuration.
 
 * Packages
 
@@ -24,6 +24,8 @@ gnuplot
 prettier
 hunspell
 #+end_quote
+
+For a complete list of system packages please view my [[https://github.com/DiamondBond/dotfiles/blob/master/pacman.txt][pacman manifest]].
 
 ** Python
 

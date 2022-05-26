@@ -6,6 +6,7 @@
 #+OPTIONS: num:nil
 
 * Header
+
 Enable lexical binding.
 
 #+begin_src emacs-lisp

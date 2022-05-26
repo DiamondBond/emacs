@@ -168,10 +168,6 @@ Configure gpg-email address & load oauth tokens.
 
   ;; gpg-email
   (setq epa-file-encrypt-to '(globals--email))
-
-  ;; load our oauth tokens if they exist
-  (if (file-exists-p globals--secret-file)
-      (load-file globals--secret-file))
 #+end_src
 ** Performance
 *** Garbage collect when in minibuffer

@@ -201,7 +201,7 @@ mu4e mail client.
 	:custom   (mu4e-mu-binary (expand-file-name "build/mu/mu" (straight--repos-dir "mu")))
 	:config
 	;; default
-	(require 'org-mu4e)
+    (require 'org-mu4e)
 	(setq mu4e-maildir (expand-file-name "~/mail"))
 
 	;; set folders

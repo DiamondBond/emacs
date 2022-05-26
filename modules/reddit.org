@@ -37,7 +37,8 @@ Reddit client within Emacs with oauth2 support.
 	:straight t
 	:config
 	;; set subreddits
-	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure)))
+	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure))
+	(load-if-exists "~/.emacs.d/secrets.el.gpg"))
 #+end_src
 
 * Footer

@@ -16,7 +16,7 @@ A Simple Emacs configuration aimed at enhancing the default experience.
 
 * Preview
 
-The entire config file can be viewed [[https://diamondbond.neocities.org/emacs.html][here]] in HTML format.
+[[https://diamondbond.neocities.org/emacs.html][The entire config file can be viewed here in HTML format]].
 
 * Installation
 
@@ -54,6 +54,8 @@ You may also edit =.emacs.d/config.org= directly, but your custom settings might
 
 ** Updating
 
+Upgrade this Emacs configuration and its packages:
+
 #+begin_src emacs-lisp
-  M-x config/update
+  M-x config/upgrade
 #+end_src

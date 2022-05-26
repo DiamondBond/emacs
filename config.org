@@ -822,7 +822,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	:after org
 	:config
 	(when (file-directory-p "~/org")
-	  (setq-default org-download-image-dir "~/org/download-img"))
+	  (setq-default org-download-image-dir "~/org/img/dl"))
 	(add-hook 'dired-mode-hook 'org-download-enable))
 
   ;; reminders

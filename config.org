@@ -82,8 +82,10 @@ The implication is that someone should be able to install or copy code from this
 
 - [[https://github.com/DiamondBond/emacs/blob/master/userconfig.org][user]] - User configuration
 
-*** *modules/mail.org*
+*** *modules*
 
+- [[https://github.com/DiamondBond/emacs/blob/master/modules/reddit.org][reddit]] - Reddit configuration
+- [[https://github.com/DiamondBond/emacs/blob/master/modules/discord.org][discord]] - Discord  configuration
 - [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][mail]] - Mail configuration
 
 * Header
@@ -161,10 +163,7 @@ Configure gpg-email address & load oauth tokens.
 	(setq auth-source-cache-expiry nil))
 
   ;; ask for encryption password once
-  ;; (setq epa-file-cache-passphrase-for-symmetric-encryption t)
-
-  ;; disable prompt
-  (setenv "GPG_AGENT_INFO" nil)
+  (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
   ;; gpg-email
   (setq epa-file-encrypt-to '(globals--email))
@@ -267,10 +266,14 @@ UTF-8 please.
   (when (file-directory-p "~/org")
 	(setq default-directory "~/"))
 #+end_src
-*** Set Pager
+*** Set pager
 Essential for using shells in Emacs.
 #+begin_src emacs-lisp
   (setenv "PAGER" "cat")
+#+end_src
+*** Set GPG Agent info
+#+begin_src emacs-lisp
+  (setenv "GPG_AGENT_INFO" nil)
 #+end_src
 *** Disable ring-bell
 Disable the annoying bell.

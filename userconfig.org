@@ -67,8 +67,7 @@ Sync dotfiles to GitHub.
   (defun sync/dotfiles ()
 	"Sync dotfiles."
 	(interactive)
-	(async-shell-command "~/bin/sync-dotfiles.sh")
-	(alert "Sync Complete." :severity 'trivial))
+	(async-shell-command "~/bin/sync-dotfiles.sh"))
 #+end_src
 
 *** =sync/neocities=

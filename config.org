@@ -2095,7 +2095,7 @@ Prettier formatter for JSX & TSX.
 #+begin_src emacs-lisp
   (defun load-secrets ()
 	"Load secrets."
-	(let ((secret "~/.secret.el.gpg"))
+	(let ((secret "~/.secrets.el.gpg"))
 	  (when (file-exists-p secret) (load-file secret))))
 #+end_src
 *** Enable Minor mode

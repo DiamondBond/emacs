@@ -51,6 +51,8 @@ Deno & typescript-language-server for Typescript (TS/TSX) support.
 ~/.emacs.d/userconfig.org
 
 ~/.emacs.d/globals.org
+
+~/.emacs.d/custom.el
 #+end_quote
 
 ** Auth Files
@@ -58,11 +60,9 @@ Deno & typescript-language-server for Typescript (TS/TSX) support.
 #+begin_quote
 ~/.authinfo.gpg
 
-~/.secrets-el.gpg
+~/.secrets.el.gpg
 
 ~/.emacs.d/network-security.data
-
-~/.emacs.d/custom.el
 #+end_quote
 
 ** Dropbox Folders

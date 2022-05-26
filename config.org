@@ -2191,10 +2191,25 @@ Prettier formatter for JSX & TSX.
 *** =config/update=
 Updates the Emacs configuration.
 #+begin_src emacs-lisp
-  (defun config/update ()
-	"Updates this Emacs configuration."
-	(interactive)
-	(async-shell-command "cd ~/.emacs.d; git pull"))
+  (when (file-directory-p "~/.emacs.d")
+	(defun config/update ()
+	  "Updates this Emacs configuration."
+	  (interactive)
+	  (async-shell-command "cd ~/.emacs.d; git pull")))
+#+end_src
+*** =config/upgrade=
+Upgrades the Emacs configuration and its packages.
+#+begin_src emacs-lisp
+  (defalias 'config/upgrade-packages 'straight-pull-all)
+
+  (when (file-directory-p "~/.emacs.d")
+	(defun config/upgrade ()
+	  "Upgrades this Emacs configuration and its packages."
+	  (interactive)
+	  (config/update)
+	  (config/upgrade-packages)
+	  (yes-or-no-p "Do you really want to reload everything?")
+	  (config/reload)))
 #+end_src
 *** =config/github=
 Launches this Emacs' configuration GitHub page with default browser

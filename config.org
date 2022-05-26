@@ -800,7 +800,8 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	:init
 	(setq org-roam-v2-ack t)
 	:custom
-	(org-roam-directory "~/org/roam")
+	(when (file-directory-p "~/org")
+	  (org-roam-directory "~/org/roam"))
 	(org-id-link-to-org-use-id 'create-if-interactive)
 	:bind (("C-c n l" . org-roam-buffer-toggle)
 		   ("C-c n f" . org-roam-node-find)
@@ -814,7 +815,8 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	:straight t
 	:after org
 	:config
-	(setq-default org-download-image-dir "~/org/download-img")
+	(when (file-directory-p "~/org")
+	  (setq-default org-download-image-dir "~/org/download-img"))
 	(add-hook 'dired-mode-hook 'org-download-enable))
 
   ;; reminders
@@ -1764,15 +1766,16 @@ The Silver Surfer - A code searching tool similar to ack, with a focus on speed.
 Deft is included for quicksearch of entire =~/org= directory.
 **** Code
 #+begin_src emacs-lisp
-  (use-package deft
-	:straight t
-	:config
-	(setq deft-directory org-directory
-		  deft-recursive t
-		  deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
-		  deft-use-filename-as-title t)
-	:bind
-	("C-c n d" . deft))
+  (when (file-directory-p "~/org")
+	(use-package deft
+	  :straight t
+	  :config
+	  (setq deft-directory org-directory
+			deft-recursive t
+			deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
+			deft-use-filename-as-title t)
+	  :bind
+	  ("C-c n d" . deft)))
 #+end_src
 * Languages
 ** LSP
@@ -2191,7 +2194,7 @@ Updates the Emacs configuration.
   (defun config/update ()
 	"Updates this Emacs configuration."
 	(interactive)
-	(async-shell-command "cd ~/git/emacs; git pull"))
+	(async-shell-command "cd ~/.emacs.d; git pull"))
 #+end_src
 *** =config/github=
 Launches this Emacs' configuration GitHub page with default browser

@@ -276,7 +276,6 @@ Show alerts for unread emails.
 	;; auto-enable notifications when opening mu4e
 	(add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
 
-	:init
 	;; enable notifications
 	(mu4e-alert-enable-notifications))
 #+end_src

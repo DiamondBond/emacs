@@ -2098,6 +2098,14 @@ Prettier formatter for JSX & TSX.
 	(let ((secret "~/.secrets.el.gpg"))
 	  (when (file-exists-p secret) (load-file secret))))
 #+end_src
+*** Lookup password
+#+begin_src emacs-lisp
+  (defun lookup-password (&rest keys)
+	(let ((result (apply #'auth-source-search keys)))
+	  (if result
+		  (funcall (plist-get (car result) :secret))
+		nil)))
+#+end_src
 *** Enable Minor mode
 #+begin_src emacs-lisp
   (defun enable-minor-mode (my-pair)

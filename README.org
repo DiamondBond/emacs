@@ -10,7 +10,7 @@
 
 #+begin_quote
 
-A Simple Emacs configuration aimed at enhancing the default experience.
+Simple Emacs configuration aimed at enhancing the default experience.
 
 #+end_quote
 

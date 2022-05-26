@@ -1,1 +1,128 @@
-/home/diamond/org/userconfig.org
+#+STARTUP: overview
+#+TITLE: User Configuration
+#+AUTHOR: Diamond Bond
+#+DESCRIPTION: User specified configuration.
+#+LANGUAGE: en
+#+OPTIONS: num:nil
+
+* Header
+Enable lexical binding.
+
+#+begin_src emacs-lisp
+  ;;; userconfig.el --- User Configuration. -*- lexical-binding: t; -*-
+
+  ;; Copyright (C) 2022 Diamond Bond
+  ;; This file is NOT part of GNU Emacs.
+  ;; This file is free software.
+
+  ;; Author: Diamond Bond <diamondbond1@gmail.com>
+  ;; URL: https://github.com/diamondbond/emacs
+  ;; Package-Requires: ((emacs "28.1"))
+
+  ;;; Commentary:
+  ;; This file provides the user configuration.
+
+  ;;; Code:
+
+#+end_src
+
+* Email
+
+** Load =email= module
+
+*** Description
+
+URL: https://github.com/DiamondBond/emacs/blob/master/modules/mail.org
+
+Email in Emacs via mu4e & offlineimap.
+
+*** Code
+
+#+begin_src emacs-lisp
+  ;; load email module
+  (when (file-directory-p "~/.emacs.d/modules")
+	(when (file-readable-p "~/.emacs.d/modules/mail.org")
+	  (org-babel-load-file (expand-file-name "~/.emacs.d/modules/mail.org"))))
+#+end_src
+
+* Discord
+
+** Load =elcord= package
+
+*** Description
+
+URL: https://github.com/Mstrodl/elcord
+
+Discord RPC for Emacs.
+=M-x elcord= to toggle.
+
+NOTE: Set =elcord-client-id= with your ID.
+
+*** Code
+
+#+begin_src emacs-lisp
+  ;; load elcord
+  (use-package elcord
+	:straight t
+	:config
+	;; set api token
+	(setq elcord-client-id "978267848038297661")
+	;; set icon
+	(setq elcord-editor-icon "emacs_icon")
+	;; silence
+	(setq elcord-quiet t)
+	;; override buffer-details-format
+	(defun elcord-buffer-details-format ()
+	  "Return the buffer details string shown on discord."
+	  (format "%s" (buffer-name)))
+	;; handy alias to start elcord
+	(defalias 'discord 'elcord-mode))
+#+end_src
+
+* Functions
+
+*** =sync/dotfiles=
+
+Sync dotfiles to GitHub.
+
+#+begin_src emacs-lisp
+  (defun sync/dotfiles ()
+	"Sync dotfiles."
+	(interactive)
+	(async-shell-command "~/bin/sync-dotfiles.sh")
+	(alert "Sync Complete." :severity 'trivial))
+#+end_src
+
+*** =sync/neocities=
+
+Sync Emacs configuration to neocities.
+
+#+begin_src emacs-lisp
+  (defun sync/neocities ()
+	"Sync neocities."
+	(interactive)
+	(save-window-excursion
+	  (async-shell-command "~/bin/sync-neocities.sh")))
+#+end_src
+
+*** =config/update=
+This overrides the user default config/update behaviour.
+#+begin_src emacs-lisp
+  ;; user functions
+  (defun config/push ()
+	(async-shell-command "cd ~/.emacs.d/; git add -A; git commit -asm 'Automatic Sync'; git push"))
+
+  (defun config/upgrade ()
+	"@USER-OVERRIDE: Updates the Emacs configuration git repository."
+	(interactive)
+	(sync/emacs)
+	(config/push))
+#+end_src
+
+* Footer
+
+#+begin_src emacs-lisp
+
+  (provide 'userconfig)
+  ;;; userconfig.el ends here
+#+end_src

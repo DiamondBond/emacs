@@ -1,12 +1,23 @@
+/*
+etc/*
+
+!.gitignore
+!index.html
+!userconfig.org
+!userconfig.el
+!globals.org
+!globals.el
+
+!docs/
+!.config
+!README.org
+!README.html
+
 # elisp
 globals.el
 config.el
 custom.el
 userconfig.el
-
-# org
-globals.org
-userconfig.org
 
 # org-html-export
 emacs.html

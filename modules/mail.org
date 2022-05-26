@@ -25,7 +25,6 @@ Enable lexical binding.
 
 #+end_src
 
-
 * Introduction
 
 URL: https://github.com/DiamondBond/emacs/blob/master/modules/mail.org
@@ -161,7 +160,7 @@ These files will get automatically tangled to their respective locations.
 
 *** 2. Initialize mu
 
-NOTE: Modify this defun to contain your $maildir & Email address.
+NOTE: Modify this defun to contain your =maildir= & email address.
 
 #+begin_src emacs-lisp
   (defun mu-setup/init-mu ()

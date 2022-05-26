@@ -1314,7 +1314,7 @@ Provides an =orderless= completion style that divides the pattern into space-sep
 		  completion-category-defaults nil
 		  completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
-*** Initialize =vertico=
+*** Initialize =marginalia=
 **** Description
 Provides marginalia-mode which adds marginalia to the minibuffer completions.
 **** Code

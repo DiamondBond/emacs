@@ -14,7 +14,6 @@
    globals--erc          '("diamondbond" "diamondbond_")      ; ERC
    globals--auth-info      "~/.authinfo.gpg"                  ; Auth Info
    globals--auth-sources  '("~/.authinfo" "~/.authinfo.gpg")  ; Auth Sources
-   globals--secret-file    "~/.secrets.el.gpg"                ; Secrets File
    )
 
   (provide 'globals)

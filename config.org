@@ -1245,7 +1245,7 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 #+end_src
 *** Initialize =cape=
 **** Description
-Completio at point extensions.
+Completion at point extensions.
 **** Code
 #+begin_src emacs-lisp
   (use-package cape
@@ -1255,9 +1255,9 @@ Completio at point extensions.
 	(dolist (backend '( cape-symbol cape-keyword cape-file cape-dabbrev))
 	  (add-to-list 'completion-at-point-functions backend)))
 #+end_src
-*** Initialize =vertico-&-friends=
+*** Initialize =vertico=
 **** Description
-Vertico, orderless, marginalia, consult & embark.
+Vertical Interactive Completion.
 **** Code
 #+begin_src emacs-lisp
   ;; enable vertico
@@ -1295,26 +1295,41 @@ Vertico, orderless, marginalia, consult & embark.
 				("DEL" . vertico-directory-delete-char)
 				("M-DEL" . vertico-directory-delete-word)))
 
+  ;; persist history over Emacs restarts. Vertico sorts by history position.
+  (use-package savehist
+	:straight t
+	:init
+	(savehist-mode))
+#+end_src
+*** Initialize =orderless=
+**** Description
+Provides an =orderless= completion style that divides the pattern into space-separated components.
+**** Code
+#+begin_src emacs-lisp
+  ;; enable vertico
   (use-package orderless
 	:straight t
 	:init
 	(setq completion-styles '(orderless basic)
 		  completion-category-defaults nil
 		  completion-category-overrides '((file (styles basic partial-completion)))))
-
-  ;; persist history over Emacs restarts. Vertico sorts by history position.
-  (use-package savehist
-	:straight t
-	:init
-	(savehist-mode))
-
-  ;; information in the margins
+#+end_src
+*** Initialize =vertico=
+**** Description
+Provides marginalia-mode which adds marginalia to the minibuffer completions.
+**** Code
+#+begin_src emacs-lisp
   (use-package marginalia
 	:straight t
 	:after vertico
 	:init
 	(marginalia-mode))
-
+#+end_src
+*** Initialize =consult=
+**** Description
+Provides practical commands based on the Emacs completion function =completing-read=.
+**** Code
+#+begin_src emacs-lisp
   ;; Consult provides practical commands based on the Emacs completion function completing-read.
   (use-package consult
 	:straight t
@@ -1323,8 +1338,12 @@ Vertico, orderless, marginalia, consult & embark.
 	 ("C-s" . consult-line)
 	 ("C-x r b" . consult-bookmark)
 	 ("C-x b" . consult-buffer)))
-
-  ;; Emacs Mini-Buffer Actions Rooted in Keymaps
+#+end_src
+*** Initialize =embark=
+**** Description
+Emacs Mini-Buffer Actions Rooted in Keymaps
+**** Code
+#+begin_src emacs-lisp
   (use-package embark
 	:straight t
 	:bind
@@ -1350,7 +1369,12 @@ Vertico, orderless, marginalia, consult & embark.
 	;; auto-updating embark collect buffer
 	:hook
 	(embark-collect-mode . consult-preview-at-point-mode))
-
+#+end_src
+*** Initialize =useful=
+**** Description
+This is not a package but instead a set of useful configurations to be used when utilizing the aforementioned completion framework packages.
+**** Code
+#+begin_src emacs-lisp
   ;; a few more useful configurations...
   (use-package emacs
 	:init
@@ -1410,6 +1434,111 @@ Kind icons.
 	(kind-icon-blend-frac 0.08)
 	:config
 	(add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+#+end_src
+** Search
+*** Initialize =dictionary-mode=
+**** Description
+Quick lookup in a dictionary.
+**** Code
+#+begin_src emacs-lisp
+  (use-package dictionary
+	:straight t
+	:commands (dictionary-search)
+	:init
+	(global-set-key (kbd "C-c d") #'dictionary-search)
+	:config (setq dictionary-server "dict.org"))
+#+end_src
+*** Initialize =engine-mode=
+**** Description
+engine-mode is a global minor mode for Emacs that enables you to easily define search engines, bind them to keybindings, and query them from the comfort of your editor.
+**** Code
+#+begin_src emacs-lisp
+  (use-package engine-mode
+	:straight t
+	:config
+	(defengine google "https://google.com/search?q=%s" :keybinding "g"
+			   :docstring "Search Google.")
+	(defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :keybinding "i"
+			   :docstring "Search Google Images")
+	(defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m"
+			   :docstring "Search Google Maps.")
+	(defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d"
+			   :docstring "Search DuckDuckGo.")
+	(defengine qwant "https://www.qwant.com/?q=%s" :keybinding "q"
+			   :docstring "Search Qwant.")
+	(defengine wikipedia "https://en.wikipedia.org/wiki/Special:Search?search=%s" :keybinding "w"
+			   :docstring "Search Wikipedia.")
+	(defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y"
+			   :docstring "Search YouTube.")
+	(defengine twitter "https://twitter.com/search?q=%s" :keybinding "t"
+			   :docstring "Search Twitter.")
+	(defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h"
+			   :docstring "Search GitHub.")
+	(defengine melpa "https://melpa.org/#/?q=%s" :keybinding "p"
+			   :docstring "Search the Milkypostman's Emacs Lisp Package Archive.")
+	(defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "s"
+			   :docstring "Search Stack Overflow.")
+	(defengine wolfram-alpha "http://www.wolframalpha.com/input/?i=%s" :keybinding "a"
+			   :docstring "Search Wolfram Alpha.")
+	(defengine rfcs "http://pretty-rfc.herokuapp.com/search?q=%s" :keybinding "r"
+			   :docstring "Search RFC documents.")
+	(defengine ctan "http://www.ctan.org/search/?x=1&PORTAL=on&phrase=%s" :keybinding "c"
+			   :docstring "Search the Comprehensive TeX Archive Network")
+	(defengine project-gutenberg "http://www.gutenberg.org/ebooks/search/?query=%s" :keybinding "p"
+			   :docstring "Search Project Gutenberg.")
+	(engine/set-keymap-prefix (kbd "C-x /"))
+	(setq engine/browser-function 'browse-url-firefox)
+	:init
+	(engine-mode t))
+#+end_src
+*** Initialize =ripgrep=
+**** Description
+Deadgrep.
+**** Code
+#+begin_src emacs-lisp
+  (use-package deadgrep
+	:straight t
+	:commands deadgrep)
+#+end_src
+*** Initialize =avy=
+**** Description
+M-s to jump to desired character.
+**** Code
+#+begin_src emacs-lisp
+  (use-package avy
+	:straight t
+	:bind
+	("M-s" . avy-goto-char))
+#+end_src
+*** Initialize =ag=
+**** Description
+The Silver Surfer - A code searching tool similar to ack, with a focus on speed.
+**** Code
+#+begin_src emacs-lisp
+  (defvar executable-ag-available?
+	(executable-find "ag"))
+
+  (use-package ag
+	:if executable-ag-available?
+	:init
+	(use-package wgrep-ag)
+	(setq-default ag-highlight-search t))
+#+end_src
+*** Initialize =deft=
+**** Description
+Deft is included for quicksearch of entire =~/org= directory.
+**** Code
+#+begin_src emacs-lisp
+  (when (file-directory-p "~/org")
+	(use-package deft
+	  :straight t
+	  :config
+	  (setq deft-directory org-directory
+			deft-recursive t
+			deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
+			deft-use-filename-as-title t)
+	  :bind
+	  ("C-c n d" . deft)))
 #+end_src
 ** News
 *** Initialize =elfeed=
@@ -1671,111 +1800,6 @@ Saves cursor location in buffers.
 	:defer nil
 	:config
 	(save-place-mode))
-#+end_src
-** Search
-*** Initialize =dictionary-mode=
-**** Description
-Quick lookup in a dictionary.
-**** Code
-#+begin_src emacs-lisp
-  (use-package dictionary
-	:straight t
-	:commands (dictionary-search)
-	:init
-	(global-set-key (kbd "C-c d") #'dictionary-search)
-	:config (setq dictionary-server "dict.org"))
-#+end_src
-*** Initialize =engine-mode=
-**** Description
-engine-mode is a global minor mode for Emacs that enables you to easily define search engines, bind them to keybindings, and query them from the comfort of your editor.
-**** Code
-#+begin_src emacs-lisp
-  (use-package engine-mode
-	:straight t
-	:config
-	(defengine google "https://google.com/search?q=%s" :keybinding "g"
-			   :docstring "Search Google.")
-	(defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :keybinding "i"
-			   :docstring "Search Google Images")
-	(defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m"
-			   :docstring "Search Google Maps.")
-	(defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d"
-			   :docstring "Search DuckDuckGo.")
-	(defengine qwant "https://www.qwant.com/?q=%s" :keybinding "q"
-			   :docstring "Search Qwant.")
-	(defengine wikipedia "https://en.wikipedia.org/wiki/Special:Search?search=%s" :keybinding "w"
-			   :docstring "Search Wikipedia.")
-	(defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y"
-			   :docstring "Search YouTube.")
-	(defengine twitter "https://twitter.com/search?q=%s" :keybinding "t"
-			   :docstring "Search Twitter.")
-	(defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h"
-			   :docstring "Search GitHub.")
-	(defengine melpa "https://melpa.org/#/?q=%s" :keybinding "p"
-			   :docstring "Search the Milkypostman's Emacs Lisp Package Archive.")
-	(defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "s"
-			   :docstring "Search Stack Overflow.")
-	(defengine wolfram-alpha "http://www.wolframalpha.com/input/?i=%s" :keybinding "a"
-			   :docstring "Search Wolfram Alpha.")
-	(defengine rfcs "http://pretty-rfc.herokuapp.com/search?q=%s" :keybinding "r"
-			   :docstring "Search RFC documents.")
-	(defengine ctan "http://www.ctan.org/search/?x=1&PORTAL=on&phrase=%s" :keybinding "c"
-			   :docstring "Search the Comprehensive TeX Archive Network")
-	(defengine project-gutenberg "http://www.gutenberg.org/ebooks/search/?query=%s" :keybinding "p"
-			   :docstring "Search Project Gutenberg.")
-	(engine/set-keymap-prefix (kbd "C-x /"))
-	(setq engine/browser-function 'browse-url-firefox)
-	:init
-	(engine-mode t))
-#+end_src
-*** Initialize =ripgrep=
-**** Description
-Deadgrep.
-**** Code
-#+begin_src emacs-lisp
-  (use-package deadgrep
-	:straight t
-	:commands deadgrep)
-#+end_src
-*** Initialize =avy=
-**** Description
-M-s to jump to desired character.
-**** Code
-#+begin_src emacs-lisp
-  (use-package avy
-	:straight t
-	:bind
-	("M-s" . avy-goto-char))
-#+end_src
-*** Initialize =ag=
-**** Description
-The Silver Surfer - A code searching tool similar to ack, with a focus on speed.
-**** Code
-#+begin_src emacs-lisp
-  (defvar executable-ag-available?
-	(executable-find "ag"))
-
-  (use-package ag
-	:if executable-ag-available?
-	:init
-	(use-package wgrep-ag)
-	(setq-default ag-highlight-search t))
-#+end_src
-*** Initialize =deft=
-**** Description
-Deft is included for quicksearch of entire =~/org= directory.
-**** Code
-#+begin_src emacs-lisp
-  (when (file-directory-p "~/org")
-	(use-package deft
-	  :straight t
-	  :config
-	  (setq deft-directory org-directory
-			deft-recursive t
-			deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
-			deft-use-filename-as-title t)
-	  :bind
-	  ("C-c n d" . deft)))
 #+end_src
 * Languages
 ** LSP

@@ -25,7 +25,10 @@ Enable lexical binding.
 
 #+end_src
 
-* Installation
+
+* Introduction
+
+URL: https://github.com/DiamondBond/emacs/blob/master/modules/mail.org
 
 /mu4e/ (/mu/) & /offlineimap/ to manage Email within Emacs.
 
@@ -36,6 +39,8 @@ Enable lexical binding.
 /offlineimap/ is the imap synchronization utility.
 
 NOTE: You'll need to comb through this document and replace all instances of my Email address with yours and my file-paths with your respective file-paths.
+
+* Installation
 
 ** 0. Prerequisites
 

@@ -1,0 +1,48 @@
+#+STARTUP: overview
+#+TITLE: Reddit Configuration
+#+AUTHOR: Diamond Bond
+#+LANGUAGE: en
+#+OPTIONS: num:nil
+
+* Header
+Enable lexical binding.
+#+begin_src emacs-lisp
+  ;;; reddit.el --- Reddit Configuration. -*- lexical-binding: t; -*-
+
+  ;; Copyright (C) 2022 Diamond Bond
+  ;; This file is NOT part of GNU Emacs.
+  ;; This file is free software.
+
+  ;; Author: Diamond Bond <diamondbond1@gmail.com>
+  ;; URL: https://github.com/diamondbond/emacs
+  ;; Package-Requires: ((emacs "28.1"))
+
+  ;;; Commentary:
+  ;; This file provides the md4rd configuration.
+
+  ;;; Code:
+
+#+end_src
+
+* =md4rd=
+
+** Description
+URL: https://github.com/ahungry/md4rd
+
+Reddit client within Emacs with oauth2 support.
+
+** Code
+#+begin_src emacs-lisp
+  (use-package md4rd
+	:straight t
+	:config
+	;; set subreddits
+	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure)))
+#+end_src
+
+* Footer
+#+begin_src emacs-lisp
+
+  (provide 'reddit)
+  ;;; reddit.el ends here
+#+end_src

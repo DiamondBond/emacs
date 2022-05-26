@@ -171,7 +171,7 @@ Configure gpg-email address & load oauth tokens.
 
   ;; load our oauth tokens if they exist
   (if (file-exists-p globals--secret-file)
-	  load-secrets())
+      (load-file globals--secret-file))
 #+end_src
 ** Performance
 *** Garbage collect when in minibuffer
@@ -1646,17 +1646,6 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 		  '(gnus-thread-sort-by-most-recent-date
 			(not gnus-thread-sort-by-number))))
 #+end_src
-*** Initialize =md4rd=
-**** Description
-Reddit client within Emacs with oauth2 support.
-**** Code
-#+begin_src emacs-lisp
-  (use-package md4rd
-	:straight t
-	:config
-	;; set subreddits
-	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure)))
-#+end_src
 ** IRC
 *** Initialize =erc=
 **** Description
@@ -2094,13 +2083,6 @@ Prettier formatter for JSX & TSX.
 	"Load file F if it exists."
 	(if (file-exists-p (expand-file-name f))
 		(load-file (expand-file-name f))))
-#+end_src
-*** Load secrets
-#+begin_src emacs-lisp
-  (defun load-secrets ()
-	"Load secrets."
-	(let ((secret globals--secret-file))
-	  (when (file-exists-p secret) (load-file secret))))
 #+end_src
 *** Lookup password
 #+begin_src emacs-lisp

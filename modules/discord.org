@@ -1,0 +1,64 @@
+#+STARTUP: overview
+#+TITLE: Discord Configuration
+#+AUTHOR: Diamond Bond
+#+LANGUAGE: en
+#+OPTIONS: num:nil
+
+* Header
+Enable lexical binding.
+#+begin_src emacs-lisp
+  ;;; discord.el --- Discord Configuration. -*- lexical-binding: t; -*-
+
+  ;; Copyright (C) 2022 Diamond Bond
+  ;; This file is NOT part of GNU Emacs.
+  ;; This file is free software.
+
+  ;; Author: Diamond Bond <diamondbond1@gmail.com>
+  ;; URL: https://github.com/diamondbond/emacs
+  ;; Package-Requires: ((emacs "28.1"))
+
+  ;;; Commentary:
+  ;; This file provides the elcord configuration.
+
+  ;;; Code:
+
+#+end_src
+
+* =elcord=
+
+** Description
+
+URL: https://github.com/Mstrodl/elcord
+
+Discord RPC for Emacs.
+=M-x elcord= to toggle.
+
+NOTE: Set =elcord-client-id= with your ID.
+
+** Code
+
+#+begin_src emacs-lisp
+  ;; load elcord
+  (use-package elcord
+	:straight t
+	:config
+	;; set api token
+	(setq elcord-client-id "978267848038297661")
+	;; set icon
+	(setq elcord-editor-icon "emacs_icon")
+	;; silence
+	(setq elcord-quiet t)
+	;; override buffer-details-format
+	(defun elcord-buffer-details-format ()
+	  "Return the buffer details string shown on discord."
+	  (format "%s" (buffer-name)))
+	;; handy alias to start elcord
+	(defalias 'discord 'elcord-mode))
+#+end_src
+
+* Footer
+#+begin_src emacs-lisp
+
+  (provide 'discord)
+  ;;; discord.el ends here
+#+end_src

@@ -1,19 +1,22 @@
 #+begin_src emacs-lisp
-;;; globals.el --- Global Configuration. -*- lexical-binding: t; -*-
+  ;;; globals.el --- Global Configuration. -*- lexical-binding: t; -*-
 
-;;; Commentary:
-;; This file provides the global configuration.
+  ;;; Commentary:
+  ;; This file provides the global configuration.
 
-;;; Code:
+  ;;; Code:
 
-(setq
- globals--banner-path  "img/gnusstorm-2.gif"            ; Banner
- globals--name         "Diamond Bond"                   ; Name
- globals--email        "diamondbond1@gmail.com"         ; Email
- globals--irc          "diamondbond"                    ; IRC
- globals--erc          '("diamondbond" "diamondbond_")  ; ERC
- )
+  (setq
+   globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
+   globals--name         "Diamond Bond"                       ; Name
+   globals--email        "diamondbond1@gmail.com"             ; Email
+   globals--irc          "diamondbond"                        ; IRC
+   globals--erc          '("diamondbond" "diamondbond_")      ; ERC
+   globals--auth-info      "~/.authinfo.gpg"                  ; Auth Info
+   globals--auth-sources  '("~/.authinfo" "~/.authinfo.gpg")  ; Auth Sources
+   globals--secret-file    "~/.secrets.el.gpg"                ; Secrets File
+   )
 
-(provide 'globals)
-;;; globals.el ends here
+  (provide 'globals)
+  ;;; globals.el ends here
 #+end_src

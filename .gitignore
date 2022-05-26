@@ -1,11 +1,5 @@
-/*
-etc/*
-
-!.gitignore
 !index.html
-!userconfig.org
 !userconfig.el
-!globals.org
 !globals.el
 
 !docs/
@@ -64,6 +58,7 @@ server/
 smex-items
 tramp
 transient/
+request/
 url/
 
 # compiled files

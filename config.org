@@ -153,11 +153,11 @@ Load global variables.
 #+end_src
 *** Authentication
 Set authinfo file location and authinfo expiry to never.
-Configure gpg-email address.
+Configure gpg-email address & load oauth tokens.
 #+begin_src emacs-lisp
-  ;; Load authinfo
-  (if (file-exists-p "~/.authinfo.gpg")
-	  (setq auth-sources '("~/.authinfo" "~/.authinfo.gpg")
+  ;; load authinfo
+  (if (file-exists-p globals--auth-info)
+	  (setq auth-sources '(globals--auth-sources)
 			auth-source-cache-expiry nil))
 
   ;; ask for encryption password once
@@ -168,6 +168,10 @@ Configure gpg-email address.
 
   ;; gpg-email
   (setq epa-file-encrypt-to '(globals--email))
+
+  ;; load our oauth tokens if they exist
+  (if (file-exists-p globals--secret-file)
+	  load-secrets())
 #+end_src
 ** Performance
 *** Garbage collect when in minibuffer
@@ -1651,10 +1655,7 @@ Reddit client within Emacs with oauth2 support.
 	:straight t
 	:config
 	;; set subreddits
-	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure))
-	;; load our oauth tokens if they exist
-	(if (file-exists-p "~/.secrets.el.gpg")
-		load-secrets()))
+	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure)))
 #+end_src
 ** IRC
 *** Initialize =erc=
@@ -2098,7 +2099,7 @@ Prettier formatter for JSX & TSX.
 #+begin_src emacs-lisp
   (defun load-secrets ()
 	"Load secrets."
-	(let ((secret "~/.secrets.el.gpg"))
+	(let ((secret globals--secret-file))
 	  (when (file-exists-p secret) (load-file secret))))
 #+end_src
 *** Lookup password

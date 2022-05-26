@@ -1,3 +1,13 @@
+
+# user files
+globals.el
+config.el
+custom.el
+userconfig.el
+globals.org
+userconfig.org
+emacs.html
+
 # basic files
 .DS_Store
 *~
@@ -37,6 +47,7 @@ places
 recentf
 semanticdb
 server/
+straight/*
 smex-items
 tramp
 transient/
@@ -48,12 +59,3 @@ url/
 *.fas
 *.dat
 *.eld
-
-# user files
-config.el
-custom.el
-userconfig.org
-userconfig.el
-emacs.html
-globals.org
-globals.el

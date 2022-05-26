@@ -47,7 +47,6 @@ places
 recentf
 semanticdb
 server/
-straight/*
 smex-items
 tramp
 transient/
@@ -59,3 +58,8 @@ url/
 *.fas
 *.dat
 *.eld
+
+* straight
+straight/build/*
+straight/repos/*
+straight/build-cache.el

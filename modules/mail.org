@@ -35,7 +35,7 @@ Enable lexical binding.
 
 /offlineimap/ is the imap synchronization utility.
 
-NOTE: You'll need to comb through this document and replace all instances of my email addresses or file-paths.
+NOTE: You'll need to comb through this document and replace all instances of my Email address with yours and my file-paths with your respective file-paths.
 
 ** 0. Prerequisites
 
@@ -156,7 +156,7 @@ These files will get automatically tangled to their respective locations.
 
 *** 2. Initialize mu
 
-Modify this defun to contain your $maildir & Email address.
+NOTE: Modify this defun to contain your $maildir & Email address.
 
 #+begin_src emacs-lisp
   (defun mu-setup/init-mu ()

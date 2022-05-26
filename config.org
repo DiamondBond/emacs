@@ -1294,12 +1294,6 @@ Vertical Interactive Completion.
 				("RET" . vertico-directory-enter)
 				("DEL" . vertico-directory-delete-char)
 				("M-DEL" . vertico-directory-delete-word)))
-
-  ;; persist history over Emacs restarts. Vertico sorts by history position.
-  (use-package savehist
-	:straight t
-	:init
-	(savehist-mode))
 #+end_src
 *** Initialize =orderless=
 **** Description
@@ -1801,6 +1795,16 @@ Saves cursor location in buffers.
 	:config
 	(save-place-mode))
 #+end_src
+*** Initialize =savehist=
+**** Description
+Persist history over Emacs restarts. Vertico sorts by history position.
+**** Code
+#+begin_src emacs-lisp
+  (use-package savehist
+	:straight t
+	:init
+	(savehist-mode))
+#+end_src
 * Languages
 ** LSP
 *** Description
@@ -2231,7 +2235,7 @@ Upgrades the Emacs configuration and its packages.
 	  "Upgrades this Emacs configuration and its packages."
 	  (interactive)
 	  (config/update)
-	  (config/upgrade-packages))
+	  (config/upgrade-packages)))
 #+end_src
 *** =config/github=
 Launches this Emacs' configuration GitHub page with default browser

@@ -45,19 +45,25 @@ Deno & typescript-language-server for Typescript (TS/TSX) support.
 
 * Files
 
+** Userconfig
+
+#+begin_quote
+~/.emacs.d/userconfig.org
+
+~/.emacs.d/globals.org
+#+end_quote
+
 ** Auth Files
 
 #+begin_quote
 ~/.authinfo.gpg
 
-~/.emacs.d/secrets-el.gpg
+~/.secrets-el.gpg
 
 ~/.emacs.d/network-security.data
 
 ~/.emacs.d/custom.el
 #+end_quote
-
-NOTE: 'auth-info' can be backed up and restored to/from ~/org with =M-x auth/backup= & =M-x auth/restore=.
 
 ** Dropbox Folders
 

@@ -50,9 +50,9 @@ Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencie
 
 ** Customization
 
-Edit =.emacs.d/globals.org= to change the default username & email address.
+Edit =.emacs.d/globals.org= to change the default username, email address & irc nicks.
 
-Edit =.emacs.d/userconfig.org= to add your custom settings (in "emacs-lisp" org-mode code blocks).
+Edit =.emacs.d/userconfig.org= to add your custom settings or override base settings.
 
 You may also edit =.emacs.d/config.org= directly, but your custom settings might be wiped out during an update.
 

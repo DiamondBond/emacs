@@ -28,6 +28,12 @@ Clone this repo:
   $ git clone https://github.com/diamondbond/emacs.git ~/.emacs.d
 #+end_src
 
+[[https://github.com/DiamondBond/bin/blob/master/auth-restore.sh][Restore auth]]:
+
+#+begin_src sh
+  $ auth-restore.sh
+#+end_src
+
 ** Icons
 
 If you care about fancy icons, install the fonts provided by [[https://github.com/domtronn/all-the-icons.el][all the icons]]:

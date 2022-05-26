@@ -72,7 +72,7 @@
  ("marginalia" . "26f2bd9ee7b63bcad6604108e2f565b34bc6083b")
  ("markdown-mode" . "4477f381de0068a04b55e198c32614793f67b38a")
  ("md4rd" . "6aa4fd6339d7fac78ce57e5d8821cd7009d21172")
- ("melpa" . "cfeec76e23c2f279149ac3d44dd5312a3084de58")
+ ("melpa" . "af5c1593052d63146e850683c461a760ab166033")
  ("modern-cpp-font-lock" . "43c6b68ff58fccdf9deef11674a172e4eaa8455c")
  ("modus-themes" . "cf4f308ad1e054d6a1aefa2c4f703c18ccfeeacf")
  ("mu" . "91dcd19dadecc93029fadf3b3b687fd4586ee173")

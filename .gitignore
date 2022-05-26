@@ -74,7 +74,7 @@ url/
 *.eld
 
 # straight.el
-straight/*
+#straight/*
 straight/build/*
 straight/repos/*
 straight/build-cache.el

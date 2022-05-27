@@ -203,10 +203,14 @@ https://emacs.stackexchange.com/questions/28736
 Offload custom-set-variables to a separate file.
 This keeps your init.el clean and you have the option to gitignore your custom.el if you see fit.
 #+begin_src emacs-lisp
+  ;; Set default custom file
   (setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
+
+  ;; Write to it if it does not exist
   (unless (file-exists-p custom-file)
 	(write-region "" nil custom-file))
-   ;;; Load custom file. Don't hide errors. Hide success message
+
+  ;; Load custom file. Don't hide errors. Hide success message
   (load custom-file nil t)
 #+end_src
 *** Bookmarks
@@ -933,13 +937,23 @@ An extensible emacs startup screen.
 	(defun init-edit ()
 	  "Edit initialization file."
 	  (interactive)
-	  (if (file-exists-p "~/.emacs.d/init.el")
-		  (find-file "~.emacs.d/init.el")))
+	  (if (file-exists-p (concat user-emacs-directory "init.el"))
+		  (find-file (concat user-emacs-directory "init.el"))))
 	(defun config-edit ()
 	  "Edit configuration file."
 	  (interactive)
-	  (if (file-exists-p "~/.emacs.d/config.org")
-		  (find-file "~/.emacs.d/config.org")))
+	  (if (file-exists-p (concat user-emacs-directory "config.org"))
+		  (find-file (concat user-emacs-directory "config.org"))))
+	(defun globals-edit ()
+	  "Edit globals configuration file."
+	  (interactive)
+	  (if (file-exists-p (concat user-emacs-directory "globals.org"))
+		  (find-file (concat user-emacs-directory "globals.org"))))
+	(defun userconfig-edit ()
+	  "Edit user configuration file."
+	  (interactive)
+	  (if (file-exists-p (concat user-emacs-directory "userconfig.org"))
+		  (find-file (concat user-emacs-directory "userconfig.org"))))
 	(when (file-directory-p "~/org")
 	  (defun notes-edit ()
 		"Edit notes file."
@@ -2233,15 +2247,9 @@ Prettier formatter for JSX & TSX.
 	(interactive)
 	(load-file (concat user-emacs-directory "init.el")))
 #+end_src
-*** =config/open=
-#+begin_src emacs-lisp
-  (defun config/open ()
-	"Open Emacs configuration for editing."
-	(interactive)
-	(find-file (expand-file-name "config.org" user-emacs-directory)))
-#+end_src
 *** =config/update=
 Updates the Emacs configuration.
+This is only supported if the Emacs configuration is installed under =~/.emacs.d=.
 #+begin_src emacs-lisp
   (when (file-directory-p "~/.emacs.d")
 	(defun config/update ()

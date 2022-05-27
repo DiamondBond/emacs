@@ -2,10 +2,6 @@
 
 globals.org
 userconfig.org
-#modules/discord.org
-#modules/evil.org
-#modules/mail.org
-#modules/reddit.org
 
 !docs/*
 !img/*

@@ -62,16 +62,17 @@
 ;; Load newer .elc or .el
 (setq load-prefer-newer t)
 
-;; Load org for tangling
-(straight-use-package 'org)
-
 ;; Tangle base configuration
-(when (file-readable-p "~/.emacs.d/config.org")
-  (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+(when (file-readable-p
+	   (concat user-emacs-directory "config.el"))
+  (load-file
+   (concat user-emacs-directory "config.el")))
 
 ;; Tangle user configuration
-(when (file-readable-p "~/.emacs.d/userconfig.org")
-  (org-babel-load-file (expand-file-name "~/.emacs.d/userconfig.org")))
+(when (file-readable-p
+	   (concat user-emacs-directory "userconfig.el"))
+  (load-file
+   (concat user-emacs-directory "userconfig.el")))
 
 ;; Garbage collect
 (garbage-collect)

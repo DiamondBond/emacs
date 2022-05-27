@@ -4,6 +4,7 @@
 #+DESCRIPTION: User specified configuration.
 #+LANGUAGE: en
 #+OPTIONS: num:nil
+#+PROPERTY: header-args :mkdirp yes :tangle yes :results silent :noweb yes
 
 * Header
 
@@ -37,8 +38,8 @@ The reddit module loads my secret file.
   ;; load reddit module
   (when (file-readable-p
 		 (concat user-emacs-directory "/modules"))
-	(org-babel-load-file
-	 (concat user-emacs-directory "/modules/reddit.org")))
+	(load-file
+	 (concat user-emacs-directory "/modules/reddit.el")))
 #+end_src
 
 ** =discord=
@@ -47,8 +48,8 @@ The reddit module loads my secret file.
   ;; load discord module
   (when (file-readable-p
 		 (concat user-emacs-directory "/modules"))
-	(org-babel-load-file
-	 (concat user-emacs-directory "/modules/discord.org")))
+	(load-file
+	 (concat user-emacs-directory "/modules/discord.el")))
 #+end_src
 
 ** =email=
@@ -57,8 +58,8 @@ The reddit module loads my secret file.
   ;; load email module
   (when (file-readable-p
 		 (concat user-emacs-directory "/modules"))
-	(org-babel-load-file
-	 (concat user-emacs-directory "/modules/mail.org")))
+	(load-file
+	 (concat user-emacs-directory "/modules/mail.el")))
 #+end_src
 
 * Functions

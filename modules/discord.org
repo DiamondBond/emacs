@@ -3,6 +3,7 @@
 #+AUTHOR: Diamond Bond
 #+LANGUAGE: en
 #+OPTIONS: num:nil
+#+PROPERTY: header-args :mkdirp yes :tangle yes :results silent :noweb yes
 
 * Header
 Enable lexical binding.

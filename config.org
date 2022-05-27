@@ -8,6 +8,7 @@
 #+SETUPFILE: resources/white.theme
 #+EXPORT_FILE_NAME: emacs.html
 #+OPTIONS: toc:2
+#+PROPERTY: header-args :mkdirp yes :tangle yes :results silent :noweb yes
 
 * Introduction
 
@@ -140,9 +141,9 @@ Load global variables.
 #+begin_src emacs-lisp
   ;; Tangle global configuration
   (when (file-readable-p
-		 (concat user-emacs-directory "globals.org"))
-	(org-babel-load-file
-	 (concat user-emacs-directory "globals.org")))
+		 (concat user-emacs-directory "globals.el"))
+	(load-file
+	 (concat user-emacs-directory "globals.el")))
 #+end_src
 ** Personal
 *** Identity
@@ -270,8 +271,8 @@ UTF-8 please.
 #+end_src
 *** Set default dir
 #+begin_src emacs-lisp
-  (setq default-directory "~")
-  (setq command-line-default-directory "~")
+  (setq default-directory "~/")
+  (setq command-line-default-directory "~/")
 #+end_src
 *** Set pager
 Essential for using shells in Emacs.
@@ -2033,7 +2034,10 @@ Ruby mode.
 #+begin_src emacs-lisp
   (use-package python-mode
 	:straight t
-	:hook (python-mode-hook . jedi:setup))
+	:config
+	(setq python-indent-offset standard-indent)
+	(setq python-indent-guess-indent-offset t)
+	(setq python-indent-guess-indent-offset-verbose nil))
 #+end_src
 ** Markdown
 *** Description

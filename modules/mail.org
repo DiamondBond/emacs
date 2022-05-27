@@ -3,7 +3,7 @@
 #+AUTHOR: Diamond Bond
 #+LANGUAGE: en
 #+OPTIONS: num:nil
-#+PROPERTY: header-args :mkdirp yes
+#+PROPERTY: header-args :mkdirp yes :tangle yes :results silent :noweb yes
 
 * Header
 Enable lexical binding.
@@ -46,13 +46,13 @@ NOTE: You'll need to comb through this document and replace all instances of my 
 *** 0.1 maildir
 Create your maildir in $HOME as ~/mail
 
-#+begin_src sh
+#+begin_src sh :tangle no
   mkdir -p ~/mail
 #+end_src
 
 *** 0.2 offlineimap
 
-#+begin_src sh
+#+begin_src sh :tangle no
   yay -S offlineimap
 #+end_src
 
@@ -108,7 +108,7 @@ M-x mu-setup/rebuild-mu-index
 These files will get automatically tangled to their respective locations.
 
 *** =~/.offlineimaprc=
-#+begin_src conf :tangle .offlineimaprc
+#+begin_src conf :tangle ~/.offlineimaprc
   [general]
   accounts = Gmail
   maxsyncaccounts = 1
@@ -136,7 +136,7 @@ These files will get automatically tangled to their respective locations.
 #+end_src
 
 *** =~/.offlineimaprc=
-#+begin_src python :tangle .offlineimap.py
+#+begin_src python :tangle ~/.offlineimap.py
   #!/usr/bin/python
   import re, os
 

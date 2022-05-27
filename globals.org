@@ -1,3 +1,4 @@
+#+PROPERTY: header-args :mkdirp yes :tangle yes :results silent :noweb yes
 #+begin_src emacs-lisp
   ;;; globals.el --- Global Configuration. -*- lexical-binding: t; -*-
 
@@ -6,6 +7,9 @@
 
   ;;; Code:
 
+#+end_src
+
+#+begin_src emacs-lisp
   (setq
    globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
    globals--name         "Diamond Bond"                       ; Name
@@ -15,6 +19,9 @@
    globals--auth-info      "~/.authinfo.gpg"                  ; Auth Info
    globals--auth-sources  '("~/.authinfo" "~/.authinfo.gpg")  ; Auth Sources
    )
+#+end_src
+
+#+begin_src emacs-lisp
 
   (provide 'globals)
   ;;; globals.el ends here

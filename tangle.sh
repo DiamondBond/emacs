@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# function to tangle .org files
+# tangle function
 function org-tangle () {
   emacs --batch -l org "$1" -f org-babel-tangle
 }

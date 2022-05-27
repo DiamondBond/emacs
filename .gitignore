@@ -12,6 +12,5 @@
 !README.org
 !config.org
 !early-init.el
-!globals.org
 !init.el
 !tangle.sh

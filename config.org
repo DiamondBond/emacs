@@ -1039,7 +1039,7 @@ Auto tangle org files on save.
   (use-package org-auto-tangle
 	:straight t
 	:defer t
-	:diminish org-auto-tangle
+	:diminish org-auto-tangle-mode
 	:hook (org-mode . org-auto-tangle-mode))
 #+end_src
 *** Initialize =yasnippet=

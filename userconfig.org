@@ -131,7 +131,6 @@ Define =startup-workflow=.
 	"Execute startup workflow."
 	(interactive)
 	(db/mu4e-refresh)
-	(elcord-mode)
 	(sync/news))
 #+end_src
 * Footer

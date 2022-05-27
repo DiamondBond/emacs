@@ -28,12 +28,6 @@ Clone this repo:
   $ git clone https://github.com/diamondbond/emacs.git ~/.emacs.d
 #+end_src
 
-[[https://github.com/DiamondBond/bin/blob/master/auth-restore.sh][Restore auth]]:
-
-#+begin_src sh
-  $ auth-restore.sh
-#+end_src
-
 [[https://github.com/DiamondBond/emacs/blob/master/tangle.sh][Tangle]]:
 
 #+begin_src sh

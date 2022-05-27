@@ -2,7 +2,7 @@
 
 # tangle function
 function org-tangle () {
-  emacs --batch -l org "$1" -f org-babel-tangle
+	emacs --batch -l org "$1" -f org-babel-tangle
 }
 
 # tangle base configuration

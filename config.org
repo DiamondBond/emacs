@@ -159,7 +159,7 @@ Configure gpg-email address & load oauth tokens.
 #+begin_src emacs-lisp
   ;; load authinfo
   (if (file-exists-p globals--auth-info)
-	  (setq auth-sources '(globals--auth-sources))
+	  (setq auth-sources globals--auth-sources)
 	(setq auth-source-cache-expiry nil))
 
   ;; ask for encryption password once

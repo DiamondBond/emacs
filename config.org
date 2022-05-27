@@ -600,6 +600,7 @@ Colors taken from =modus-operandi-list-colors=.
   ;; files
   (define-key z-map (kbd "n") 'notes-edit)
   (define-key z-map (kbd "c") 'config-edit)
+  (define-key z-map (kbd "i") 'inbox-edit)
   (define-key z-map (kbd "t") 'tasks-edit)
 
 #+end_src

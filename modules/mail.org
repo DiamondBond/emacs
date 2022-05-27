@@ -254,6 +254,7 @@ mu4e mail client.
 
 	;; go-to-inbox function
 	(defun db/go-to-inbox ()
+	  "View unread inbox."
 	  (interactive)
 	  (mu4e-headers-search db/mu4e-inbox-query))
 

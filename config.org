@@ -237,10 +237,6 @@ Auto-load any custom themes in =~/.emacs.d/themes=.
 	(setq custom-safe-themes t)
 	(add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory)))
 #+end_src
-*** Enable so-long-mode globally
-#+begin_src emacs-lisp
-  (global-so-long-mode) ;; handles long files.
-#+end_src
 *** Don't ask for confirmation when opening symlinked file
 #+begin_src emacs-lisp
   (setq vc-follow-symlinks t)
@@ -1043,6 +1039,20 @@ Auto tangle org files on save.
 	:diminish org-auto-tangle-mode
 	:hook (org-mode . org-auto-tangle-mode))
 #+end_src
+*** Initialize =so-long=
+**** Description
+So long to long lines.
+**** Code
+#+begin_src emacs-lisp
+  (use-package so-long
+	:defer t
+	:straight t
+	:bind
+	(:map so-long-mode-map
+		  ("C-s" . isearch-forward)
+		  ("C-r" . isearch-backward))
+	:config (global-so-long-mode 1))
+#+end_src
 *** Initialize =yasnippet=
 **** Description
 Yasnippet provides useful snippets.
@@ -1063,6 +1073,11 @@ Yasnippet provides useful snippets.
   (use-package yasnippet-snippets
 	:after yasnippet
 	:straight t)
+
+  (use-package consult-yasnippet
+	:straight t
+	:after (consult yasnippet)
+	:bind ("C-c y" . consult-yasnippet))
 #+end_src
 *** Initialize =flycheck=
 **** Description
@@ -1149,6 +1164,18 @@ The definitive Git porcelain for Emacs.
 #+begin_src emacs-lisp
   (use-package magit
 	:straight t)
+
+  ;; bindings to help improve the speed of magit
+  (use-package libgit :straight t)
+  (use-package magit-libgit :straight t)
+#+end_src
+*** Initialize =forge=
+**** Description
+Additional git interactions with Forge.
+**** Code
+#+begin_src emacs-lisp
+  (use-package forge
+	:straight t)
 #+end_src
 *** Initialize =autorevert=
 **** Description
@@ -1225,16 +1252,25 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
 #+begin_src emacs-lisp
   (use-package corfu
 	:straight t
+	:demand t
+	:bind (:map corfu-map
+				("<escape>". corfu-quit)
+				("<return>" . corfu-insert)
+				("C-h" . corfu-show-documentation)
+				("M-l" . 'corfu-show-location)
+				("RET" . nil)
+				("TAB" . corfu-next)
+				([tab] . corfu-next)
+				("S-TAB" . corfu-previous)
+				([backtab] . corfu-previous))
 	:custom
 	(corfu-auto t)
 	(corfu-auto-prefix 3)
 	(corfu-auto-delay 0)
 	(corfu-echo-documentation 0)
-	(corfu-quit-no-match 'separator)
 	(corfu-preview-current nil)
-	(define-key corfu-map (kbd "<escape>") #'corfu-quit)
-	(define-key corfu-map (kbd "C-h") #'corfu-show-documentation)
-	(define-key corfu-map (kbd "RET") nil)
+	(corfu-quit-no-match 'separator)
+	(corfu-separator ?\s) ;; Necessary for use with orderless
 	:init (global-corfu-mode)
 	:config
 	;; adapted from Corfu's manual.
@@ -1243,7 +1279,6 @@ Completion Overlay Region FUnction - Corfu enhances completion at point with a s
   Useful for prompts such as `eval-expression' and `shell-command'."
 	  (unless (bound-and-true-p vertico--input)
 		(corfu-mode 1)))
-
 	(add-hook 'minibuffer-setup-hook #'contrib/corfu-enable-always-in-minibuffer 1))
 #+end_src
 *** Initialize =cape=
@@ -1253,6 +1288,11 @@ Completion at point extensions.
 #+begin_src emacs-lisp
   (use-package cape
 	:straight t
+	:bind (("C-c p p" . completion-at-point)
+		   ("C-c p d" . cape-dabbrev)
+		   ("C-c p f" . cape-file)
+		   ("C-c p s" . cape-symbol)
+		   ("C-c p i" . cape-ispell))
 	:config
 	(setq cape-dabbrev-min-length 3)
 	(dolist (backend '( cape-symbol cape-keyword cape-file cape-dabbrev))
@@ -1396,9 +1436,11 @@ Emacs Mini-Buffer Actions Rooted in Keymaps
 	(add-to-list 'display-buffer-alist
 				 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
 				   nil
-				   (window-parameters (mode-line-format . none)))))
+				   (window-parameters (mode-line-format . none))))
+	:hook
+	(embark-collect-mode . consult-preview-at-point-mode)
+	(embark-collect-mode . embark-consult-preview-minor-mode))
 
-  ;; Consult users will also want the embark-consult package.
   (use-package embark-consult
 	:straight t
 	:after (embark consult)
@@ -1408,7 +1450,7 @@ Emacs Mini-Buffer Actions Rooted in Keymaps
 	:hook
 	(embark-collect-mode . consult-preview-at-point-mode))
 #+end_src
-*** Initialize =useful=
+*** Initialize Emacs Adjustments for Completion
 **** Description
 This is not a package but instead a set of useful configurations to be used when utilizing the aforementioned completion framework packages.
 **** Code
@@ -1445,9 +1487,26 @@ This is not a package but instead a set of useful configurations to be used when
 *** Initialize =all-the-icons=
 **** Description
 All the icons!
+**** Code
 #+begin_src emacs-lisp
   (use-package all-the-icons
-	:straight t)
+	:straight t
+	:config
+	(cl-defmacro db/all-the-icons--with(&key name)
+	  (let ((defun-fn (intern (concat "jf/all-the-icons--with-" name)))
+			(icon-fn (intern (concat "all-the-icons-" name)))
+			(docstring (concat "Displays an ICON from `all-the-icons-" name "'.")))
+		`(defun ,defun-fn (icon str &optional height v-adjust)
+		   ,docstring
+		   (s-concat (,icon-fn
+					  icon
+					  :v-adjust (or v-adjust 0)
+					  :height (or height 1))
+					 " " str))))
+	(db/all-the-icons--with :name "faicon")
+	(db/all-the-icons--with :name "material")
+	(db/all-the-icons--with :name "octicon")
+	(db/all-the-icons--with :name "alltheicon"))
 
   (use-package all-the-icons-completion
 	:after (marginalia all-the-icons)
@@ -1529,7 +1588,7 @@ engine-mode is a global minor mode for Emacs that enables you to easily define s
 	:init
 	(engine-mode t))
 #+end_src
-*** Initialize =ripgrep=
+*** Initialize =deadgrep=
 **** Description
 Deadgrep.
 **** Code
@@ -1547,20 +1606,6 @@ M-s to jump to desired character.
 	:straight t
 	:bind
 	("M-s" . avy-goto-char))
-#+end_src
-*** Initialize =ag=
-**** Description
-The Silver Surfer - A code searching tool similar to ack, with a focus on speed.
-**** Code
-#+begin_src emacs-lisp
-  (defvar executable-ag-available?
-	(executable-find "ag"))
-
-  (use-package ag
-	:if executable-ag-available?
-	:init
-	(use-package wgrep-ag)
-	(setq-default ag-highlight-search t))
 #+end_src
 *** Initialize =deft=
 **** Description

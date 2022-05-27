@@ -11,6 +11,7 @@ org-tangle globals.org
 org-tangle userconfig.org
 
 # tangle modules
+org-tangle modules/evil.org
 org-tangle modules/reddit.org
 org-tangle modules/discord.org
 org-tangle modules/mail.org

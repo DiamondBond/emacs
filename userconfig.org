@@ -30,6 +30,16 @@ Enable lexical binding.
 
 * Modules
 
+** =evil=
+
+#+begin_src emacs-lisp
+  ;; load evil module
+  (when (file-readable-p
+		 (concat user-emacs-directory "/modules"))
+	(load-file
+	 (concat user-emacs-directory "/modules/evil.el")))
+#+end_src
+
 ** =reddit=
 
 The reddit module loads my secret file.

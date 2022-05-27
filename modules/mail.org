@@ -281,7 +281,20 @@ Show alerts for unread emails.
 #+begin_src emacs-lisp
   (use-package mu4e-alert
 	:straight t
+	:init
+	(defun db/mu4e-notif ()
+	  "Display both mode line and desktop alerts for incoming new emails."
+	  (interactive)
+	  (mu4e-update-mail-and-index 1)        ; getting new emails is ran in the background
+	  (mu4e-alert-enable-mode-line-display) ; display new emails in mode-line
+	  (mu4e-alert-enable-notifications))    ; enable desktop notifications for new emails
+	(defun db/mu4e-refresh ()
+	  "Refresh emails every 300 seconds and display desktop alerts."
+	  (interactive)
+	  (mu4e t)                            ; start silently mu4e (mandatory for mu>=1.3.8)
+	  (run-with-timer 0 300 'db/mu4e-notif))
 	:after mu4e
+	:bind ("<f2>" . db/mu4e-refresh)  ; F2 turns Emacs into a mail client
 	:config
 	;; show unread emails from all inboxes
 	(setq mu4e-alert-interesting-mail-query db/mu4e-inbox-query)
@@ -289,6 +302,8 @@ Show alerts for unread emails.
 	;; show notifications for mails already notified
 	(setq mu4e-alert-notify-repeated-mails nil)
 
+	;; desktop alerts
+	(mu4e-alert-set-default-style 'libnotify)
 	;; auto-enable notifications when opening mu4e
 	(add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
 

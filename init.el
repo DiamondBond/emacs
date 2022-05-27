@@ -30,6 +30,10 @@
 			 '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
+;; Define when to check for package modifications,
+;; for improved straight.el startup time.
+(setq straight-check-for-modifications '(check-on-save find-when-checking))
+
 ;; Bootstrap straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file

@@ -5,11 +5,9 @@
 #+CREATOR: Emacs 28.1 (Org mode 9.5.3)
 #+OPTIONS: toc:2
 
-* Screenshot
+* Introduction
 
 [[./img/screenshot.png]]
-
-* Quote
 
 #+begin_quote
 
@@ -17,7 +15,7 @@ Simple Emacs configuration aimed at enhancing the default experience, akin to so
 
 #+end_quote
 
-* Preview
+** Preview
 
 [[https://diamondbond.neocities.org/emacs.html][The entire config file can be viewed here in HTML format]].
 
@@ -67,6 +65,7 @@ Edit =.emacs.d/globals.org= to change the default username, email address, nicks
 Edit =.emacs.d/userconfig.org= to add your custom settings and/or override base settings.
 
 You may also edit =.emacs.d/config.org= directly, but your custom settings might be wiped out during an update.
+
 
 * Usage
 

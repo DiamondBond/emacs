@@ -484,6 +484,11 @@ Dont accidentally delete all my bookmarks.
 #+begin_src emacs-lisp
   (defalias 'bookmark-delete-all 'bookmark-delete)
 #+end_src
+*** =sync/news=
+Sync Elfeed feeds/atom.
+#+begin_src emacs-lisp
+  (defalias 'sync/news 'elfeed-update)
+#+end_src
 ** Built-in
 *** Configure =browser=
 Set default browser.
@@ -2451,16 +2456,6 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	(interactive)
 	(switch-to-buffer (list-buffers-noselect))
 	(shrink-wrap))
-#+end_src
-** Syncing
-*** =sync/news=
-Sync Elfeed feeds/atom.
-#+begin_src emacs-lisp
-  (defun sync/news ()
-	"Sync elfeed."
-	(interactive)
-	(elfeed)
-	(elfeed-update))
 #+end_src
 ** Text Manipulation
 *** Next/Prev 15-lines

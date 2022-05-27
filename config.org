@@ -888,8 +888,10 @@ Add icons and subtree's to dired.
 	:config
 	(setq dired-open-extensions '(("png" . "nomacs")
 								  ("jpg" . "nomacs")
+								  ("gif" . "nomacs")
 								  ("mp4" . "mpv")
-								  ("mkv" . "mpv"))))
+								  ("mkv" . "mpv")
+								  ("webm" . "mpv"))))
 
   (use-package dired-hide-dotfiles
 	:straight t

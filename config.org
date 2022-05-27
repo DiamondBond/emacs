@@ -2201,6 +2201,7 @@ Prettier formatter for JSX & TSX.
 #+end_src
 ** Config
 *** =config/tangle=
+Executes [[https://github.com/DiamondBond/emacs/blob/master/tangle.sh][tangle.sh]].
 #+begin_src emacs-lisp
   (defun config/tangle ()
 	"Tangle Emacs configuration."
@@ -2210,10 +2211,13 @@ Prettier formatter for JSX & TSX.
 	  (async-shell-command "tangle.sh")))
 #+end_src
 *** =config/reload=
+Tangles & reloads the Emacs configuration.
 #+begin_src emacs-lisp
   (defun config/reload ()
 	"Reload Emacs configuration."
 	(interactive)
+	(config/tangle)
+	(sit-for 5)
 	(load-file (concat user-emacs-directory "init.el")))
 #+end_src
 *** =config/update=
@@ -2227,12 +2231,12 @@ This is only supported if the Emacs configuration is installed under =~/.emacs.d
 	  (async-shell-command "cd ~/.emacs.d; git pull")))
 #+end_src
 *** =config/upgrade=
-Upgrades the Emacs configuration and its packages.
+Upgrades packages using straight-pull-all.
 #+begin_src emacs-lisp
   (defalias 'config/upgrade 'straight-pull-all)
 #+end_src
 *** =config/github=
-Launches this Emacs' configuration GitHub page with default browser
+Launches this Emacs' configuration GitHub page with the default browser.
 #+begin_src emacs-lisp
   (defun config/github ()
 	"Launches this Emacs' configuration GitHub page in browser."

@@ -905,8 +905,8 @@ An extensible emacs startup screen.
 #+begin_src emacs-lisp
   (use-package dashboard
 	:straight t
-	:defer nil
 	:diminish dashboard-mode
+	:defer nil
 	:init
 	(add-hook 'dashboard-mode-hook (lambda () (setq show-trailing-whitespace nil)))
 	:preface

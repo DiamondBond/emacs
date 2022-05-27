@@ -15,7 +15,7 @@ Simple Emacs configuration aimed at enhancing the default experience, akin to so
 
 #+end_quote
 
-** Preview
+* Preview
 
 [[https://diamondbond.neocities.org/emacs.html][The entire config file can be viewed here in HTML format]].
 

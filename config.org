@@ -697,24 +697,33 @@ Heresy; Vim keybindings in Emacs.
 	(setq evil-want-keybinding nil)
 	(setq evil-want-C-u-scroll t)
 	:config
+	;; enable evil-mode
 	(evil-mode 1)
+
+	;; more granular undo with evil
+	(setq evil-want-fine-undo t)
+
 	;; set evil state on a per mode basis
+	;; insert
+	(evil-set-initial-state 'vterm-mode 'insert)
+	;; normal
 	(evil-set-initial-state 'messages-buffer-mode 'normal)
 	(evil-set-initial-state 'dashboard-mode 'normal)
 	(evil-set-initial-state 'mu4e-main-mode 'normal)
-	(evil-set-initial-state 'vterm-mode 'insert)
+	;; emacs
 	(evil-set-initial-state 'term-mode 'emacs)
 	(evil-set-initial-state 'eshell-mode 'emacs)
 	(evil-set-initial-state 'profiler-report-mode 'emacs)
 	(evil-set-initial-state 'inferior-scheme-mode 'emacs)
 	(evil-set-initial-state 'md4rd-mode 'emacs)
 	(evil-set-initial-state 'pdf-view-mode 'emacs)
-	;; more granular undo with evil
-	(setq evil-want-fine-undo t)
+	(evil-set-initial-state 'dictionary-mode ' emacs)
+
+	;; <tab> cycles org-mode visiblity
+	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
+
 	;; :q kills buffer
-	(evil-ex-define-cmd "q" 'delete-window)
-	;; org-cycle
-	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle))
+	(evil-ex-define-cmd "q" 'delete-window))
 #+end_src
 *** Initialize =org=
 **** Description

@@ -10,7 +10,7 @@
 
 #+begin_quote
 
-Simple Emacs configuration aimed at enhancing the default experience.
+Simple Emacs configuration aimed at enhancing the default experience, akin to something halfway between vanilla & doom whilst pandering towards literacy by default.
 
 #+end_quote
 

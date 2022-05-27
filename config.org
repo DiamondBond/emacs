@@ -291,6 +291,8 @@ Disable the annoying bell.
   (setq scroll-margin 0)
   (setq scroll-conservatively 100000)
   (setq scroll-preserve-screen-position 1)
+  (setq fast-but-imprecise-scrolling t)
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 #+end_src
 **** Enables pixel-scroll-precision-mode for Emacs 29+
 #+begin_src emacs-lisp

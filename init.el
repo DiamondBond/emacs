@@ -62,13 +62,13 @@
 ;; Load newer .elc or .el
 (setq load-prefer-newer t)
 
-;; Tangle base configuration
+;; Load base configuration
 (when (file-readable-p
 	   (concat user-emacs-directory "config.el"))
   (load-file
    (concat user-emacs-directory "config.el")))
 
-;; Tangle user configuration
+;; Load user configuration
 (when (file-readable-p
 	   (concat user-emacs-directory "userconfig.el"))
   (load-file

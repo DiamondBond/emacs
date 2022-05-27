@@ -1,77 +1,22 @@
-# ignore user configuration
-userconfig.org
+# ignore everything by default
+/*
 
-# elisp
-globals.el
-config.el
-custom.el
-userconfig.el
+# exclude what we want git to track
 
-# org-html-export
-emacs.html
+# folders
+!docs/*
+!img/*
+!modules/*
+!resources/*
+!snippets/*
 
-# org-roam
-org-roam.db
-
-# auth files
-authinfo
-authinfo.gpg
-.authinfo
-.authinfo.gpg
-secrets.el.gpg
-
-# compiled files
-*.elc
-*.lib
-*.fas
-*.dat
-*.eld
-
-# straight.el
-straight/build/*
-straight/repos/*
-straight/build-cache.el
-
-# modules
-modules/evil.el
-modules/mail.el
-modules/reddit.el
-modules/discord.el
-
-# emacs files that shouldn't be there
-.dap-breakpoints
-.org-id-locations
-.tern-port
-.yas-compiled-snippets.el
-.lsp-session*
-auto-save-list/
-cask/
-ede-projects.el
-elpa/
-eln-cache/
-eshell/
-history
-network-security.data
-places
-recentf
-semanticdb
-server/
-smex-items
-tramp
-transient/
-request/
-url/
-
-# misc files
-.DS_Store
-*~
-*.*~
-\#*
-.\#*
-.local/
-.extension/
-*.cache*
-*.log
-/modules/private
-test/.local*/
-test/result
+# files
+!straight/versions/default.el
+!.gitignore
+!LICENSE
+!README.org
+!config.org
+!early-init.el
+!globals.org
+!init.el
+!tangle.sh

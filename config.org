@@ -1271,18 +1271,13 @@ Vertical Interactive Completion.
 				("M-j" . vertico-next)
 				("M-k" . vertico-previous)
 				("C-f" . vertico-exit)
-				;; 		   ("M-j" . vertico-next)
-				;; 		   ("M-k" . vertico-previous)
 				:map minibuffer-local-map
 				("M-h" . backward-kill-word))
 	:custom
 	(vertico-cycle t)
+	(vertico-resize t)
 	:init
 	(vertico-mode)
-	;; Grow and shrink the Vertico minibuffer
-	(setq vertico-resize t)
-	;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-	(setq vertico-cycle t)
 	:config
 	(vertico-mouse-mode))
 
@@ -1302,7 +1297,6 @@ Vertical Interactive Completion.
 Provides an =orderless= completion style that divides the pattern into space-separated components.
 **** Code
 #+begin_src emacs-lisp
-  ;; enable vertico
   (use-package orderless
 	:straight t
 	:init

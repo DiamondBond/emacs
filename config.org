@@ -2200,6 +2200,15 @@ Prettier formatter for JSX & TSX.
 	  (vterm-send-return)))
 #+end_src
 ** Config
+*** =config/tangle=
+#+begin_src emacs-lisp
+  (defun config/tangle ()
+	"Tangle Emacs configuration."
+	(interactive)
+	(when (file-readable-p
+		   (concat user-emacs-directory "tangle.sh"))
+	  (async-shell-command "tangle.sh")))
+#+end_src
 *** =config/reload=
 #+begin_src emacs-lisp
   (defun config/reload ()

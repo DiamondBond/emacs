@@ -2200,7 +2200,7 @@ Prettier formatter for JSX & TSX.
 Executes [[https://github.com/DiamondBond/emacs/blob/master/tangle.sh][tangle.sh]].
 #+begin_src emacs-lisp
   (defun config/tangle ()
-	"Tangle Emacs configuration."
+	"Tangle this Emacs configuration."
 	(interactive)
 	(when (file-readable-p
 		   (concat user-emacs-directory "tangle.sh"))
@@ -2210,7 +2210,7 @@ Executes [[https://github.com/DiamondBond/emacs/blob/master/tangle.sh][tangle.sh
 Tangles & reloads the Emacs configuration.
 #+begin_src emacs-lisp
   (defun config/reload ()
-	"Reload Emacs configuration."
+	"Reload this Emacs configuration."
 	(interactive)
 	(config/tangle)
 	(load-file (concat user-emacs-directory "init.el")))

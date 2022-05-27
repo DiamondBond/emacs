@@ -1897,11 +1897,12 @@ Go-mode.
 	:mode "\\.go\\'"
 	:config
 	(defun db/go-mode-hook()
-	  ;;(setq-default tab-width 2)
+	  (setq-default tab-width 2)
 	  (add-hook 'before-save-hook 'gofmt-before-save)
 	  (set (make-local-variable 'compile-command)
 		   "go test"))
-	:hook ((go-mode . db/go-mode-hook)))
+	:hook ((go-mode . db/go-mode-hook))
+	:hook ((go-mode . subword-mode)))
 #+end_src
 ** Rust
 *** Description
@@ -1910,8 +1911,7 @@ Rust-mode.
 #+begin_src emacs-lisp
   (use-package rust-mode
 	:straight t
-	:mode "\\.rs\\'"
-	:hook ((go-mode . subword-mode)))
+	:mode "\\.rs\\'")
 #+end_src
 ** Lisp
 *** Common Lisp

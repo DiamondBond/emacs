@@ -1,9 +1,5 @@
-# allow user to maintain userconfig.org
+# ignore user configuration
 userconfig.org
-
-# dont ignore
-!docs/
-!README.org
 
 # elisp
 globals.el

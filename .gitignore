@@ -1,16 +1,11 @@
-# ignore everything by default
 /*
 
-# exclude what we want git to track
-
-# folders
 !docs/*
 !img/*
 !modules/*
 !resources/*
 !snippets/*
 
-# files
 !straight/versions/default.el
 !.gitignore
 !LICENSE

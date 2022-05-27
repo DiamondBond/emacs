@@ -11,7 +11,7 @@
 
 #+begin_quote
 
-Simple Emacs configuration aimed at enhancing the default experience, akin to something equidistant betwixt vanilla & doom.
+Simple Emacs configuration aimed at enhancing the default experience, akin to something equidistant between vanilla & doom.
 
 #+end_quote
 

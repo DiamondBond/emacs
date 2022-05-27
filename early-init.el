@@ -21,13 +21,16 @@
 (setq gc-cons-percentage-original gc-cons-percentage
 	  gc-cons-threshold-original gc-cons-threshold)
 (setq gc-cons-threshold most-positive-fixnum)
-(setq gc-cons-percentage 0.6)
+(setq gc-cons-percentage 0.5)
 
 ;; Silence compiler warnings
 (setq warning-minimum-level :emergency)
 (setq warning-suppress-types '((comp)))
 (setq comp-async-report-warnings-errors nil)
 (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local cl-functions))
+
+;; Warning: with 3, the compiler is free to perform dangerous optimizations.
+(setq-default native-comp-speed 3) ;; -O3
 
 ;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;
 ;; packages are compiled ahead-of-time when they are installed and site files

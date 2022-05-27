@@ -23,6 +23,7 @@
 
 ;;; For performance
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq process-adaptive-read-buffering nil)
 
 ;; Initialize melpa repo
 (require 'package)

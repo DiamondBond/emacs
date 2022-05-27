@@ -98,6 +98,30 @@ Sync Emacs configuration to neocities.
 		(async-shell-command "~/bin/sync-neocities.sh"))))
 #+end_src
 
+*** =auth/backup=
+
+Backup auth files.
+
+#+begin_src emacs-lisp
+  (when (file-readable-p "~/bin/auth-backup.sh")
+	(defun auth/backup ()
+	  "Backup auth."
+	  (interactive)
+	  (async-shell-command "~/bin/auth-backup.sh")))
+#+end_src
+
+*** =auth/restore=
+
+Restore auth files.
+
+#+begin_src emacs-lisp
+  (when (file-readable-p "~/bin/auth-restore.sh")
+	(defun auth/restore ()
+	  "Restore auth."
+	  (interactive)
+	  (async-shell-command "~/bin/auth-restore.sh")))
+#+end_src
+
 * Footer
 
 #+begin_src emacs-lisp

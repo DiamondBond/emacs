@@ -73,10 +73,18 @@ You may also edit =.emacs.d/config.org= directly, but your custom settings might
 
 This Emacs configuration will auto-tangle all the related configuration .org files on save via the [[https://github.com/yilkalargaw/org-auto-tangle][org-auto-tangle]] package.
 
+Add tangle.sh to =$PATH= in your =~/.bashrc= file:
+
+#+begin_src sh
+  PATH="$HOME/.emacs.d/bin:$PATH"
+#+end_src
+
+Now you can call tangle.sh from anywhere.
+
 I recommend adding this alias to your =~/.bash_aliases= file:
 
 #+begin_src sh
-  alias edaemon="cd ~/.emacs.d/bin; ./tangle.sh; cd ~/ && emacs --daemon"
+  alias edaemon="tangle.sh && emacs --daemon"
 #+end_src
 
 This will tangle any changes made and start the Emacs daemon.
@@ -89,7 +97,7 @@ Start Emacs with:
   $ edaemon
 #+end_src
 
-Connect to the Emacs daemon via =[[https://www.emacswiki.org/emacs/EmacsClient][emacsclient]]= with the following command:
+Connect to the Emacs daemon via =emacsclient= with the following command:
 
 #+begin_src sh
   $ emacsclient -c -n -a 'emacs'

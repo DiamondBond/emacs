@@ -443,6 +443,20 @@ Enable visual-line-mode in text buffers & org + md4rd.
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'md4rd-mode-hook 'visual-line-mode)
 #+end_src
+** Constants
+#+begin_src emacs-lisp
+  (defconst *sys/win32*
+	(eq system-type 'windows-nt)
+	"Are we running on a Windows/NT system?")
+
+  (defconst *sys/linux*
+	(eq system-type 'gnu/linux)
+	"Are we running on a GNU/Linux system?")
+
+  (defconst *sys/mac*
+	(eq system-type 'darwin)
+	"Are we running on a MacOS system?")
+#+end_src
 ** Aliases
 *** Basic
 Some basic aliases & transform yes-or-no into y-or-n.

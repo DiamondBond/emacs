@@ -1038,6 +1038,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	(diminish 'subword-mode)
 	(diminish 'visual-line-mode)
 	(diminish 'outline-mode)
+	(diminish 'gcmh-mode)
 	:config
 	;; diminish after mode is loaded
 	(eval-after-load "eldoc" '(diminish 'eldoc-mode))

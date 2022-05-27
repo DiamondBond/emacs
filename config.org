@@ -568,8 +568,8 @@ Colors taken from =modus-operandi-list-colors=.
   (define-key z-map (kbd "v") 'vterm)
 
   ;; modeline
-  (define-key z-map (kbd "b") 'display-battery-mode)
-  (define-key z-map (kbd "t") 'display-time-mode)
+  (define-key z-map (kbd "B") 'display-battery-mode)
+  (define-key z-map (kbd "T") 'display-time-mode)
 
   ;; functions
   (define-key z-map (kbd "*") 'quick-calc)
@@ -585,12 +585,11 @@ Colors taken from =modus-operandi-list-colors=.
   (define-key z-map (kbd "x") 'switch-to-buffer-other-frame)
   (define-key z-map (kbd "k") 'compile)
   (define-key z-map (kbd "e") 'eval-region)
+  (define-key z-map (kbd "b") 'browse-url)
 
   ;; auxiliary
   (define-key z-map (kbd "S") 'speedbar-frame-mode)
   (define-key z-map (kbd "y") 'yas-minor-mode)
-  (define-key z-map (kbd "i") 'consult-imenu)
-  (define-key z-map (kbd "I") 'imenu-list)
   (define-key z-map (kbd "9") 'switch-to-qemu-and-run)
   (define-key z-map (kbd "0") 'switch-to-qemu-and-paste)
 
@@ -601,6 +600,7 @@ Colors taken from =modus-operandi-list-colors=.
   ;; files
   (define-key z-map (kbd "n") 'notes-edit)
   (define-key z-map (kbd "c") 'config-edit)
+  (define-key z-map (kbd "t") 'tasks-edit)
 
 #+end_src
 ** global-map
@@ -1320,14 +1320,53 @@ Provides marginalia-mode which adds marginalia to the minibuffer completions.
 Provides practical commands based on the Emacs completion function =completing-read=.
 **** Code
 #+begin_src emacs-lisp
-  ;; Consult provides practical commands based on the Emacs completion function completing-read.
   (use-package consult
 	:straight t
 	:bind
-	(("M-y" . consult-yank-from-kill-ring)
-	 ("C-s" . consult-line)
+	(;; C-c bindings (mode-specific-map)
+	 ("C-c h" . consult-history)
+
+	 ;; ("C-c m" . consult-mode-command)
+	 ("C-c b" . consult-bookmark)
+	 ("C-c k" . consult-kmacro)
+
+	 ;; C-x bindings (ctl-x-map)
+	 ("C-x b" . consult-buffer)
+	 ("C-x M-:" . consult-complex-command)
+	 ("C-x 4 b" . consult-buffer-other-window)
+	 ("C-x 5 b" . consult-buffer-other-frame)
 	 ("C-x r b" . consult-bookmark)
-	 ("C-x b" . consult-buffer)))
+
+	 ;; M-g bindings (goto-map)
+	 ("M-g e" . consult-compile-error)
+	 ("M-g g" . consult-goto-line)
+	 ("M-g M-g" . consult-goto-line)
+	 ("M-g o" . consult-outline)
+	 ("M-g m" . consult-mark)
+	 ("M-g k" . consult-global-mark)
+	 ("M-g i" . consult-imenu)
+	 ("M-g I" . consult-imenu-multi)
+
+	 ;; M-s bindings (search-map)
+	 ("M-s f" . consult-find)
+	 ("M-s L" . consult-locate)
+	 ("M-s g" . consult-grep)
+	 ("M-s G" . consult-git-grep)
+	 ("M-s r" . consult-ripgrep)
+	 ("C-c f" . consult-ripgrep)
+	 ("M-s l" . consult-line)
+	 ("M-s m" . consult-multi-occur)
+	 ("M-s k" . consult-keep-lines)
+	 ("M-s u" . consult-focus-lines)
+
+	 ;; Customizations that map to ivy
+	 ("C-c r" . consult-recent-file)
+	 ("C-c o" . consult-file-externally)
+	 ("C-s" . consult-line)
+
+	 ;; Other custom bindings
+	 ("M-y" . consult-yank-from-kill-ring)
+	 ("<help> a" . consult-apropos)))
 #+end_src
 *** Initialize =embark=
 **** Description

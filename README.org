@@ -10,7 +10,7 @@
 
 #+begin_quote
 
-Simple Emacs configuration aimed at enhancing the default experience, akin to something halfway between vanilla & doom whilst pandering towards literacy by default.
+Simple Emacs configuration aimed at enhancing the default experience, akin to something halfway between vanilla & doom.
 
 #+end_quote
 
@@ -34,14 +34,14 @@ Clone this repo:
   $ auth-restore.sh
 #+end_src
 
-Tangle:
+[[https://github.com/DiamondBond/emacs/blob/master/tangle.sh][Tangle]]:
 
 #+begin_src sh
   $ cd ~/.emacs.d
   $ ./tangle.sh
 #+end_src
 
-*NOTE:* Please run tangle.sh whenever you edit a configuration's org file.
+*NOTE:* Please run tangle.sh whenever you edit a =.org= configuration file.
 
 ** Icons
 

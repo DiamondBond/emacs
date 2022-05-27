@@ -268,6 +268,9 @@ mu4e mail client.
 	;; don't ask to quit
 	(setq mu4e-confirm-quit nil)
 
+	;; define z-map keybind
+	(define-key z-map (kbd "M") 'mu4e)
+
 	;; start mu4e
 	(mu4e t))
 #+end_src

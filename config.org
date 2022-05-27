@@ -235,6 +235,10 @@ Auto-load any custom themes in =~/.emacs.d/themes=.
 	(setq custom-safe-themes t)
 	(add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory)))
 #+end_src
+*** Enable global-so-long-mode
+#+begin_src emacs-lisp
+  (global-so-long-mode) ;; handles long files.
+#+end_src
 *** Don't ask for confirmation when opening symlinked file
 #+begin_src emacs-lisp
   (setq vc-follow-symlinks t)
@@ -323,7 +327,7 @@ Set tabs & indents to 4sp.
   (setq-default indent-tabs-mode t)
   (setq-default electric-indent-inhibit nil)
   (setq backward-delete-char-untabify-method 'nil)
-  (electric-indent-mode t) ; Auto indentation
+  (electric-indent-mode t) ;; Auto indentation
 #+end_src
 *** Set C/C++ tabs & braces
 #+begin_src emacs-lisp
@@ -398,7 +402,7 @@ Keep the =menu-bar= enabled as it provides quick access to certain functions.
 #+end_src
 **** Configure fringe
 #+begin_src emacs-lisp
-  (fringe-mode nil) ; Default fringe-mode.
+  (fringe-mode nil) ;; Default fringe-mode.
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
   (setq-default indicate-empty-lines nil)
@@ -1507,9 +1511,9 @@ engine-mode is a global minor mode for Emacs that enables you to easily define s
 			   :docstring "Search YouTube.")
 	(defengine twitter "https://twitter.com/search?q=%s" :keybinding "t"
 			   :docstring "Search Twitter.")
-	(defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h"
+	(defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "G"
 			   :docstring "Search GitHub.")
-	(defengine melpa "https://melpa.org/#/?q=%s" :keybinding "p"
+	(defengine melpa "https://melpa.org/#/?q=%s" :keybinding "M"
 			   :docstring "Search the Milkypostman's Emacs Lisp Package Archive.")
 	(defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "s"
 			   :docstring "Search Stack Overflow.")

@@ -235,7 +235,7 @@ Auto-load any custom themes in =~/.emacs.d/themes=.
 	(setq custom-safe-themes t)
 	(add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory)))
 #+end_src
-*** Enable global-so-long-mode
+*** Enable so-long-mode globally
 #+begin_src emacs-lisp
   (global-so-long-mode) ;; handles long files.
 #+end_src

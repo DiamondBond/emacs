@@ -902,7 +902,7 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 **** Code
 #+begin_src emacs-lisp
   (use-package modus-themes
-	:straight t
+	:straight (:type git :host gitlab :repo "protesilaos/modus-themes" :branch "main")
 	:init
 	;; load the theme files before enabling a theme
 	(modus-themes-load-themes)

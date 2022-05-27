@@ -9,6 +9,8 @@ Declarative dependency listing for this Emacs configuration.
 ** System
 
 #+begin_quote
+gcc make
+autoreconf
 offlineimap
 fzf ripgrep ag
 clang clangd llvm

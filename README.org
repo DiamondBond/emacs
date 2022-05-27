@@ -34,6 +34,15 @@ Clone this repo:
   $ auth-restore.sh
 #+end_src
 
+Tangle:
+
+#+begin_src sh
+  $ cd ~/.emacs.d
+  $ ./tangle.sh
+#+end_src
+
+*NOTE:* Please rerun tangle.sh whenever you edit a configuration's org file.
+
 ** Icons
 
 If you care about fancy icons, install the fonts provided by [[https://github.com/domtronn/all-the-icons.el][all the icons]]:

@@ -9,6 +9,7 @@
 #+EXPORT_FILE_NAME: emacs.html
 #+OPTIONS: toc:2
 #+PROPERTY: header-args :mkdirp yes :tangle yes :results silent :noweb yes
+#+auto_tangle: t
 
 * Introduction
 
@@ -1032,16 +1033,14 @@ Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimit
 	:hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 ** Tools
-*** Initialize =auto-package-update=
-Manually update packages.
+*** Initialize =org-auto-tangle=
+Auto tangle org files on save.
 #+begin_src emacs-lisp
-  (use-package auto-package-update
+  (use-package org-auto-tangle
 	:straight t
-	:commands update-packages
-	:custom
-	(auto-package-update-delete-old-versions t)
-	:config
-	(auto-package-update-maybe))
+	:defer t
+	:diminish org-auto-tangle
+	:hook (org-mode . org-auto-tangle-mode))
 #+end_src
 *** Initialize =yasnippet=
 **** Description

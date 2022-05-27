@@ -78,7 +78,7 @@ You may also edit =.emacs.d/config.org= directly, but your custom settings might
 I recommend adding this alias to your =~/.bash_aliases= file:
 
 #+begin_src sh
-  alias edaemon="cd ~/.emacs.d/; ./tangle.sh && emacs --daemon"
+  alias edaemon="cd ~/.emacs.d/; ./tangle.sh; cd ~/ && emacs --daemon"
 #+end_src
 
 This will tangle any changes and start the Emacs daemon, you can then connect to the Emacs daemon via =emacsclient= with the following command:

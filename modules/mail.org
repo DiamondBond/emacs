@@ -187,6 +187,15 @@ NOTE: Modify this defun to contain your =maildir= & email address.
     (sit-for 5)
 	(mu-setup/rebuild-mu-index))
 #+end_src
+*** =sync/mail=
+Sync Email to local mail directory.
+#+begin_src emacs-lisp
+  (defun sync/mail ()
+	"Sync email."
+	(interactive)
+	(async-shell-command "offlineimap")
+	(mu4e-update-index))
+#+end_src
 ** Use-package
 *** Initialize =mu4e=
 **** Description

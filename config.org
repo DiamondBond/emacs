@@ -2351,17 +2351,8 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	(shrink-wrap))
 #+end_src
 ** Syncing
-*** =sync/mail=
-Sync Email to local mail directory.
-#+begin_src emacs-lisp
-  (defun sync/mail ()
-	"Sync email."
-	(interactive)
-	(async-shell-command "offlineimap")
-	(mu4e-update-index))
-#+end_src
 *** =sync/news=
-Sync Elfeed.
+Sync Elfeed feeds/atom.
 #+begin_src emacs-lisp
   (defun sync/news ()
 	"Sync elfeed."

@@ -472,13 +472,9 @@ Dont accidentally delete all my bookmarks.
 #+end_src
 ** Built-in
 *** Configure =browser=
-Firefox as default browser.
+Set default browser.
 #+begin_src emacs-lisp
-  ;; eww
-  ;; (setq browse-url-browser-function 'eww-browse-url)
-
-  ;; firefox
-  (setq browse-url-browser-function 'browse-url-firefox)
+  (setq browse-url-browser-function globals--browser)
 #+end_src
 *** Configure =proced=
 Auto-update proced every 5 seconds.
@@ -1488,7 +1484,7 @@ engine-mode is a global minor mode for Emacs that enables you to easily define s
 	(defengine project-gutenberg "http://www.gutenberg.org/ebooks/search/?query=%s" :keybinding "p"
 			   :docstring "Search Project Gutenberg.")
 	(engine/set-keymap-prefix (kbd "C-x /"))
-	(setq engine/browser-function 'browse-url-firefox)
+	(setq engine/browser-function globals--browser)
 	:init
 	(engine-mode t))
 #+end_src
@@ -2208,7 +2204,7 @@ Executes [[https://github.com/DiamondBond/emacs/blob/master/tangle.sh][tangle.sh
 	(interactive)
 	(when (file-readable-p
 		   (concat user-emacs-directory "tangle.sh"))
-	  (async-shell-command "tangle.sh")))
+	  (shell-command "tangle.sh")))
 #+end_src
 *** =config/reload=
 Tangles & reloads the Emacs configuration.
@@ -2217,7 +2213,6 @@ Tangles & reloads the Emacs configuration.
 	"Reload Emacs configuration."
 	(interactive)
 	(config/tangle)
-	(sit-for 5)
 	(load-file (concat user-emacs-directory "init.el")))
 #+end_src
 *** =config/update=
@@ -2228,20 +2223,17 @@ This is only supported if the Emacs configuration is installed under =~/.emacs.d
 	(defun config/update ()
 	  "Updates this Emacs configuration."
 	  (interactive)
-	  (async-shell-command "cd ~/.emacs.d; git pull")))
-#+end_src
-*** =config/upgrade=
-Upgrades packages using straight-pull-all.
-#+begin_src emacs-lisp
-  (defalias 'config/upgrade 'straight-pull-all)
+	  (shell-command "cd ~/.emacs.d; git pull")
+	  (straight-pull-all)
+	  (config/reload)))
 #+end_src
 *** =config/github=
-Launches this Emacs' configuration GitHub page with the default browser.
+Opens this Emacs configuration GitHub website.
 #+begin_src emacs-lisp
   (defun config/github ()
-	"Launches this Emacs' configuration GitHub page in browser."
+	"Opens this configurations GitHub website."
 	(interactive)
-	(browse-url-firefox "https://github.com/diamondbond/emacs"))
+	(browse-url "https://github.com/diamondbond/emacs"))
 #+end_src
 ** Insert
 *** Date

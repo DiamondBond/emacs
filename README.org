@@ -65,7 +65,7 @@ Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencie
 
 ** Customization
 
-Edit =.emacs.d/globals.org= to change the default username, email address & irc nicks.
+Edit =.emacs.d/globals.org= to change the default username, email address, nicks & browser.
 
 Edit =.emacs.d/userconfig.org= to add your custom settings and/or override base settings.
 
@@ -73,7 +73,7 @@ You may also edit =.emacs.d/config.org= directly, but your custom settings might
 
 * Usage
 
-** Running
+** AOT Tangling
 
 I recommend adding this alias to your =~/.bash_aliases= file:
 
@@ -81,23 +81,26 @@ I recommend adding this alias to your =~/.bash_aliases= file:
   alias edaemon="cd ~/.emacs.d/; ./tangle.sh; cd ~/ && emacs --daemon"
 #+end_src
 
-This will tangle any changes and start the Emacs daemon, you can then connect to the Emacs daemon via =emacsclient= with the following command:
+This will tangle any changes made and start the Emacs daemon.
+
+** Running
+
+You can start Emacs with:
 
 #+begin_src sh
-  emacsclient -c -n -a 'emacs'
+  $ edaemon
+#+end_src
+
+You can connect to the Emacs daemon via =[[https://www.emacswiki.org/emacs/EmacsClient][emacsclient]]= with the following command:
+
+#+begin_src sh
+  $ emacsclient -c -n -a 'emacs'
 #+end_src
 
 ** Updating
 
-Upgrade this Emacs configuration and its packages:
+Update this Emacs configuration and its packages:
 
 #+begin_src emacs-lisp
   M-x config/update
-  M-x config/reload
-  M-x config/upgrade
-  M-x kill-emacs
-#+end_src
-
-#+begin_src sh
-  $ emacs --daemon;
 #+end_src

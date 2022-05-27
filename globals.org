@@ -16,8 +16,9 @@
    globals--email        "diamondbond1@gmail.com"             ; Email
    globals--irc          "diamondbond"                        ; IRC
    globals--erc          '("diamondbond" "diamondbond_")      ; ERC
-   globals--auth-info      "~/.authinfo.gpg"                  ; Auth Info
-   globals--auth-sources  '("~/.authinfo" "~/.authinfo.gpg")  ; Auth Sources
+   globals--auth-info    "~/.authinfo.gpg"                    ; Auth Info
+   globals--auth-sources '("~/.authinfo" "~/.authinfo.gpg")   ; Auth Sources
+   globals--browser      'browse-url-firefox                  ; Browser
    )
 #+end_src
 

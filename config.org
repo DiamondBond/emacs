@@ -85,7 +85,7 @@ The implication is that someone should be able to install or copy code from this
 *** *modules*
 
 - [[https://github.com/DiamondBond/emacs/blob/master/modules/reddit.org][reddit]] - Reddit configuration
-- [[https://github.com/DiamondBond/emacs/blob/master/modules/discord.org][discord]] - Discord  configuration
+- [[https://github.com/DiamondBond/emacs/blob/master/modules/discord.org][discord]] - Discord configuration
 - [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][mail]] - Mail configuration
 
 * Header

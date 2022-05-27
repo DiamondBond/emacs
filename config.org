@@ -687,7 +687,6 @@ Garbage Collector Magic Hack - enforce a sneaky Garbage Collection strategy to m
 #+begin_src emacs-lisp
   (use-package gcmh
 	:straight t
-	:diminish 'gcmh-mode
 	:init
 	(setq gcmh-idle-delay 15
 		  gcmh-high-cons-threshold (* 16 1024 1024))  ; 16mb

@@ -54,7 +54,9 @@ NOTE: Set =elcord-client-id= with your ID.
 	(defun elcord-buffer-details-format ()
 	  "Return the buffer details string shown on discord."
 	  (format "%s" (buffer-name)))
-	;; handy alias to start elcord
+	;; keybind to start elcord
+	(define-key z-map (kbd "C-d") 'elcord-mode)
+	;; alias to start elcord
 	(defalias 'discord 'elcord-mode))
 #+end_src
 

@@ -263,7 +263,7 @@ UTF-8 please.
 #+end_src
 *** Set default dir
 #+begin_src emacs-lisp
-  (when (file-directory-p "~/org")
+  (when (file-directory-p "~/")
 	(setq default-directory "~/"))
 #+end_src
 *** Set pager
@@ -809,30 +809,32 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	("C-c l" . 'org-store-link)
 	("C-<f1>" . (lambda()(interactive)(show-all))))
 
-  (use-package org-roam
-	:straight t
-	:after org
-	:init
-	(setq org-roam-v2-ack t)
-	:custom
-	(when (file-directory-p "~/org")
-	  (org-roam-directory "~/org/roam"))
-	(org-id-link-to-org-use-id 'create-if-interactive)
-	:bind (("C-c n l" . org-roam-buffer-toggle)
-		   ("C-c n f" . org-roam-node-find)
-		   ("C-c n i" . org-roam-node-insert)
-		   :map org-mode-map
-		   ("C-M-i"    . completion-at-point))
-	:config
-	(org-roam-setup))
+  ;; enable org-roam when ~/org/roam exists
+  (when (file-directory-p "~/org/roam")
+	(use-package org-roam
+	  :straight t
+	  :after org
+	  :init
+	  (setq org-roam-v2-ack t)
+	  :custom
+	  (org-roam-directory "~/org/roam")
+	  (org-id-link-to-org-use-id 'create-if-interactive)
+	  :bind (("C-c n l" . org-roam-buffer-toggle)
+			 ("C-c n f" . org-roam-node-find)
+			 ("C-c n i" . org-roam-node-insert)
+			 :map org-mode-map
+			 ("C-M-i"    . completion-at-point))
+	  :config
+	  (org-roam-setup)))
 
-  (use-package org-download
-	:straight t
-	:after org
-	:config
-	(when (file-directory-p "~/org")
-	  (setq-default org-download-image-dir "~/org/img/dl"))
-	(add-hook 'dired-mode-hook 'org-download-enable))
+  ;; enable dnd images into org-mode & dired buffers
+  (when (file-directory-p "~/org")
+	(use-package org-download
+	  :straight t
+	  :after org
+	  :config
+	  (setq-default org-download-image-dir "~/org/img/download")
+	  (add-hook 'dired-mode-hook 'org-download-enable)))
 
   ;; reminders
   (use-package org-wild-notifier

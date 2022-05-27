@@ -571,7 +571,7 @@ Colors taken from =modus-operandi-list-colors=.
   (define-key z-map (kbd "f") 'find-file-other-frame)
   (define-key z-map (kbd "D") 'dashboard-refresh-buffer)
   (define-key z-map (kbd "d") 'dired-other-frame)
-  (define-key z-map (kbd "g") 'golden-ratio)
+  (define-key z-map (kbd "g") 'golden-ratio-mode)
   (define-key z-map (kbd "h") 'global-hl-line-mode)
   (define-key z-map (kbd "2") 'make-frame-command)
   (define-key z-map (kbd "o") 'olivetti-mode)

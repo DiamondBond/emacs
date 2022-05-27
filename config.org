@@ -139,8 +139,10 @@ Load global variables.
 *** Code
 #+begin_src emacs-lisp
   ;; Tangle global configuration
-  (when (file-readable-p "~/.emacs.d/globals.org")
-	(org-babel-load-file (expand-file-name "~/.emacs.d/globals.org")))
+  (when (file-readable-p
+		 (concat user-emacs-directory "globals.org"))
+	(org-babel-load-file
+	 (concat user-emacs-directory "globals.org")))
 #+end_src
 ** Personal
 *** Identity

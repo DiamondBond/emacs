@@ -1,8 +1,28 @@
 /*
 
-globals.org
-userconfig.org
+.cache/
+auto-save-list/
+config.el
+custom.el
+eln-cache/
+emacs.html
+forge-database.sqlite
+globals.el
+history
+modules/discord.el
+modules/evil.el
+modules/mail.el
+modules/reddit.el
+network-security.data
+places
+recentf
+straight/build-cache.el
+straight/build/
+straight/repos/
+transient/
+userconfig.el
 
+!bin/*
 !docs/*
 !img/*
 !modules/*
@@ -17,7 +37,50 @@ userconfig.org
 !README.org
 
 !config.org
+!userconfig.org
+!globals.org
 !early-init.el
 !init.el
 
 !bin/tangle.sh
+
+!modules/*.org
+
+.DS_Store
+*~
+*.*~
+\#*
+.\#*
+.local/
+.extension/
+*.cache*
+*.log
+/modules/private
+test/.local*/
+test/result
+
+# emacs tempfiles that shouldn't be there
+.dap-breakpoints
+.org-id-locations
+.tern-port
+.yas-compiled-snippets.el
+auto-save-list/
+cask/
+ede-projects.el
+elpa/
+eln-cache/
+network-security.data
+places
+semanticdb
+server/
+smex-items
+tramp
+transient/
+var/
+
+# compiled files
+*.elc
+*.lib
+*.fas
+*.dat
+*.eld

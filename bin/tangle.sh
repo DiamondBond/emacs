@@ -19,5 +19,12 @@ org-tangle modules/reddit.org
 org-tangle modules/discord.org
 org-tangle modules/mail.org
 
+if [ $# -eq 1 ]
+  then
+    source ~/bin/auth-restore.sh
+    echo "arguments supplied, restored authinfo backup."
+fi
+
+
 # exit
 exit 0

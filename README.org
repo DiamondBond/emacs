@@ -89,6 +89,8 @@ I recommend adding this alias to your =~/.bash_aliases= file:
 
 This will tangle any changes made and start the Emacs daemon.
 
+NOTE: call =tangle.sh= with arbitrary args to use [[https://github.com/DiamondBond/bin/blob/master/auth-restore.sh][M-x auth-restore]].
+
 ** Running
 
 Start Emacs with:

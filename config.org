@@ -229,6 +229,7 @@ Save bookmarks when Emacs quits.
 *** Load custom themes
 Auto-load any custom themes in =~/.emacs.d/themes=.
 #+begin_src emacs-lisp
+  (setq custom-safe-themes t)
   (when (file-exists-p (expand-file-name "themes/" user-emacs-directory))
 	(add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory)))
 #+end_src

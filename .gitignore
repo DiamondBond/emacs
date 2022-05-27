@@ -20,4 +20,4 @@ userconfig.org
 !early-init.el
 !init.el
 
-!tangle.sh
+!bin/tangle.sh

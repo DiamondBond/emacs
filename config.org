@@ -140,7 +140,7 @@ Enable lexical binding as opposed to the default dynamic binding because it is f
 Load global variables.
 *** Code
 #+begin_src emacs-lisp
-  ;; Tangle global configuration
+  ;; Load global configuration
   (when (file-readable-p
 		 (concat user-emacs-directory "globals.el"))
 	(load-file
@@ -2314,14 +2314,14 @@ Prettier formatter for JSX & TSX.
 #+end_src
 ** Config
 *** =config/tangle=
-Executes [[https://github.com/DiamondBond/emacs/blob/master/tangle.sh][tangle.sh]].
+Tangles Emacs configuration.
 #+begin_src emacs-lisp
   (defun config/tangle ()
 	"Tangle this Emacs configuration."
 	(interactive)
 	(when (file-readable-p
-		   (concat user-emacs-directory "tangle.sh"))
-	  (shell-command "tangle.sh")))
+		   (concat user-emacs-directory "bin/tangle.sh"))
+	  (shell-command "bin/tangle.sh")))
 #+end_src
 *** =config/reload=
 Tangles & reloads the Emacs configuration.

@@ -29,10 +29,10 @@ Clone this repo:
   $ git clone https://github.com/diamondbond/emacs.git ~/.emacs.d
 #+end_src
 
-[[https://github.com/DiamondBond/emacs/blob/master/tangle.sh][Tangle]]:
+[[https://github.com/DiamondBond/emacs/blob/master/tangle.sh][Tangle]:
 
 #+begin_src sh
-  $ cd ~/.emacs.d
+  $ cd ~/.emacs.d/bin
   $ ./tangle.sh
 #+end_src
 
@@ -76,7 +76,7 @@ This Emacs configuration will auto-tangle all the related configuration .org fil
 I recommend adding this alias to your =~/.bash_aliases= file:
 
 #+begin_src sh
-  alias edaemon="cd ~/.emacs.d/; ./tangle.sh; cd ~/ && emacs --daemon"
+  alias edaemon="cd ~/.emacs.d/bin; ./tangle.sh; cd ~/ && emacs --daemon"
 #+end_src
 
 This will tangle any changes made and start the Emacs daemon.

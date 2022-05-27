@@ -34,6 +34,7 @@ straight/repos/*
 straight/build-cache.el
 
 # modules
+modules/evil.el
 modules/mail.el
 modules/reddit.el
 modules/discord.el

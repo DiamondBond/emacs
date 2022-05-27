@@ -5,8 +5,11 @@
 #+CREATOR: Emacs 28.1 (Org mode 9.5.3)
 #+OPTIONS: toc:2
 
+* Screenshot
 
 [[./img/screenshot.png]]
+
+* Quote
 
 #+begin_quote
 

@@ -183,10 +183,6 @@ While the minibuffer is open, garbage collection will never occur, but once we m
   (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
   (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 #+end_src
-*** Garbage collect on focus-out
-#+begin_src emacs-lisp
-  (add-hook 'focus-out-hook #'garbage-collect)
-#+end_src
 *** Do not steal focus while doing async compilations
 #+begin_src emacs-lisp
   (setq warning-suppress-types '((comp)))
@@ -674,6 +670,19 @@ Utilize asynchronous processes whenever possible.
 	(async-bytecomp-package-mode 1)
 	(add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil))))
 #+end_src
+*** Initialize =gcmh=
+**** Description
+Garbage Collector Magic Hack - enforce a sneaky Garbage Collection strategy to minimize GC interference with user activity.
+**** Code
+#+begin_src emacs-lisp
+  (use-package gcmh
+	:straight t
+	:diminish 'gcmh-mode
+	:init
+	(setq gcmh-idle-delay 15
+		  gcmh-high-cons-threshold (* 16 1024 1024))  ; 16mb
+	:config (gcmh-mode))
+#+end_src
 *** Initialize =alert=
 **** Description
 Alert is a Growl-workalike for Emacs which uses a common notification interface.
@@ -864,9 +873,6 @@ Add icons and subtree's to dired.
 	:commands (dired dired-jump)
 	:bind ("C-x C-j" . dired-jump)
 	:custom ((dired-listing-switches "-agho --group-directories-first")))
-
-  (use-package dired-single
-	:commands (dired dired-jump))
 
   (use-package all-the-icons-dired
 	:straight t

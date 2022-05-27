@@ -26,7 +26,7 @@ Simple Emacs configuration aimed at enhancing the default experience, akin to so
 Clone this repo:
 
 #+begin_src sh
-  $ git clone https://github.com/diamondbond/emacs.git ~/.emacs.d
+  $ git clone https://github.com/diamondbond/emacs.git ~/.emacs.d --depth 1
 #+end_src
 
 [[https://github.com/DiamondBond/emacs/blob/master/tangle.sh][Tangle]:

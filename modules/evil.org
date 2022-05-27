@@ -54,7 +54,7 @@ Heresy; Vim keybindings in Emacs.
 	;; normal
 	(evil-set-initial-state 'messages-buffer-mode 'normal)
 	(evil-set-initial-state 'dashboard-mode 'normal)
-	(evil-set-initial-state 'mu4e-main-mode 'normal)
+	(evil-set-initial-state 'mu4e-main-mode 'emacs)
 	;; emacs
 	(evil-set-initial-state 'term-mode 'emacs)
 	(evil-set-initial-state 'eshell-mode 'emacs)

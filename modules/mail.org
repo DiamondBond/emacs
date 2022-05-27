@@ -182,7 +182,9 @@ NOTE: Modify this defun to contain your =maildir= & email address.
 	"Auto-magically configures 'mu'."
 	(interactive)
 	(mu-setup/build-mu-binary)
+	(sit-for 5)
 	(mu-setup/init-mu)
+    (sit-for 5)
 	(mu-setup/rebuild-mu-index))
 #+end_src
 ** Use-package

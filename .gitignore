@@ -1,4 +1,5 @@
 # allow user to maintain userconfig.org
+.gitignore
 
 # dont ignore
 !docs/

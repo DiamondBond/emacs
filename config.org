@@ -263,8 +263,7 @@ UTF-8 please.
 #+end_src
 *** Set default dir
 #+begin_src emacs-lisp
-  (when (file-directory-p "~/")
-	(setq default-directory "~/"))
+  (setq default-directory "~/")
 #+end_src
 *** Set pager
 Essential for using shells in Emacs.

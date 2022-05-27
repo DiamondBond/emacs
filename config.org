@@ -1897,7 +1897,7 @@ Go-mode.
 	:mode "\\.go\\'"
 	:config
 	(defun db/go-mode-hook()
-	  (setq-default tab-width 2)
+	  (setq tab-width 2)
 	  (add-hook 'before-save-hook 'gofmt-before-save)
 	  (set (make-local-variable 'compile-command)
 		   "go test"))

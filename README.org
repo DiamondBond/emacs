@@ -41,7 +41,7 @@ Tangle:
   $ ./tangle.sh
 #+end_src
 
-*NOTE:* Please rerun tangle.sh whenever you edit a configuration's org file.
+*NOTE:* Please run tangle.sh whenever you edit a configuration's org file.
 
 ** Icons
 

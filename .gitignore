@@ -1,11 +1,6 @@
-!index.html
-!userconfig.el
-!globals.el
-
+# dont ignore
 !docs/
-!.config
 !README.org
-!README.html
 
 # elisp
 globals.el
@@ -19,26 +14,29 @@ emacs.html
 # org-roam
 org-roam.db
 
-# misc files
-.DS_Store
-*~
-*.*~
-\#*
-.\#*
-.local/
-.extension/
-*.cache*
-*.log
-/modules/private
-test/.local*/
-test/result
-
 # auth files
 authinfo
 authinfo.gpg
 .authinfo
 .authinfo.gpg
 secrets.el.gpg
+
+# compiled files
+*.elc
+*.lib
+*.fas
+*.dat
+*.eld
+
+# straight.el
+straight/build/*
+straight/repos/*
+straight/build-cache.el
+
+# modules
+modules/mail.el
+modules/reddit.el
+modules/discord.el
 
 # emacs files that shouldn't be there
 .dap-breakpoints
@@ -64,19 +62,16 @@ transient/
 request/
 url/
 
-# compiled files
-*.elc
-*.lib
-*.fas
-*.dat
-*.eld
-
-# straight.el
-straight/build/*
-straight/repos/*
-straight/build-cache.el
-
-# modules
-modules/mail.el
-modules/reddit.el
-modules/discord.el
+# misc files
+.DS_Store
+*~
+*.*~
+\#*
+.\#*
+.local/
+.extension/
+*.cache*
+*.log
+/modules/private
+test/.local*/
+test/result

@@ -863,6 +863,15 @@ Add icons and subtree's to dired.
 	:hook (dired-mode . dired-hide-dotfiles-mode))
 #+end_src
 ** Visual
+*** Initialize =unicode-fonts=
+**** Description
+This is only useful when using DejaVu, Quivira or Symbola fonts.
+**** Code
+#+begin_src emacs-lisp
+  (use-package unicode-fonts
+	:straight t
+	:config (unicode-fonts-setup))
+#+end_src
 *** Initialize =modus-themes=
 **** Description
 Accessible themes for Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
@@ -1176,6 +1185,13 @@ Additional git interactions with Forge.
 #+begin_src emacs-lisp
   (use-package forge
 	:straight t)
+#+end_src
+*** Initialize =git-timemachine=
+**** Description
+Travel back and forth through a files history.
+**** Code
+#+begin_src emacs-lisp
+  (use-package git-timemachine :straight t)
 #+end_src
 *** Initialize =autorevert=
 **** Description

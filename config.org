@@ -1360,14 +1360,22 @@ Provides practical commands based on the Emacs completion function =completing-r
 	 ("M-s k" . consult-keep-lines)
 	 ("M-s u" . consult-focus-lines)
 
-	 ;; Customizations that map to ivy
+	 ;; Custom bindings that map to ivy
 	 ("C-c r" . consult-recent-file)
 	 ("C-c o" . consult-file-externally)
 	 ("C-s" . consult-line)
 
 	 ;; Other custom bindings
 	 ("M-y" . consult-yank-from-kill-ring)
-	 ("<help> a" . consult-apropos)))
+	 ("<help> a" . consult-apropos))
+
+	:init
+	;; Use Consult to select xref locations with preview
+	(setq xref-show-xrefs-function #'consult-xref
+		  xref-show-definitions-function #'consult-xref)
+
+	;; Updating the default to include "--ignore-case"
+	(setq consult-ripgrep-command "rg --null --line-buffered --color=ansi --max-columns=1000 --ignore-case --no-heading --line-number . -e ARG OPTS"))
 #+end_src
 *** Initialize =embark=
 **** Description

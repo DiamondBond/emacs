@@ -570,7 +570,6 @@ Colors taken from =modus-operandi-list-colors=.
   ;; general
   (define-key z-map (kbd "a") 'org-agenda)
   (define-key z-map (kbd "f") 'find-file-other-frame)
-  (define-key z-map (kbd "d") 'dired-other-frame)
   (define-key z-map (kbd "g") 'golden-ratio)
   (define-key z-map (kbd "h") 'global-hl-line-mode)
   (define-key z-map (kbd "2") 'make-frame-command)
@@ -594,7 +593,6 @@ Colors taken from =modus-operandi-list-colors=.
   (define-key z-map (kbd "U") 'undo-redo)
 
   ;; quick
-  (define-key z-map (kbd "C-1") 'display-buffer-other-frame)
   (define-key z-map (kbd "x") 'switch-to-buffer-other-frame)
   (define-key z-map (kbd "k") 'compile)
   (define-key z-map (kbd "e") 'eval-region)
@@ -605,9 +603,11 @@ Colors taken from =modus-operandi-list-colors=.
   (define-key z-map (kbd "y") 'yas-minor-mode)
   (define-key z-map (kbd "9") 'switch-to-qemu-and-run)
   (define-key z-map (kbd "0") 'switch-to-qemu-and-paste)
+  (define-key z-map (kbd "C-1") 'display-buffer-other-frame)
+  (define-key z-map (kbd "C-c") 'cfw:open-org-calendar)
+  (define-key z-map (kbd "C-d") 'dired-other-frame)
 
   ;; calendar
-  (define-key z-map (kbd "C-c") 'cfw:open-org-calendar)
   (define-key z-map (kbd ".") 'org-date-from-calendar)
 
   ;; files

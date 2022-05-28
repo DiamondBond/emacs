@@ -130,7 +130,6 @@ Define =startup-workflow=.
   (defun startup-workflow ()
 	"Execute startup workflow."
 	(interactive)
-	(forge-pull)
 	(sync/news)
 	(discord)
 	(db/mu4e-refresh))

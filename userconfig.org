@@ -122,18 +122,6 @@ Restore auth files.
 	  (async-shell-command "~/bin/auth-restore.sh")))
 #+end_src
 
-*** =startup-workflow=
-**** Description
-Define =startup-workflow=.
-**** Code
-#+begin_src emacs-lisp
-  (defun startup-workflow ()
-	"Execute startup workflow."
-	(interactive)
-	(sync/news)
-	(discord)
-	(db/mu4e-refresh))
-#+end_src
 * Footer
 
 #+begin_src emacs-lisp

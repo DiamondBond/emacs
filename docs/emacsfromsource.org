@@ -7,7 +7,7 @@ Clone the latest Emacs@HEAD sources:
 #+begin_src sh
 
   cd ~/git
-  git clone -b master git://git.sv.gnu.org/emacs.git
+  git clone -b master git://git.sv.gnu.org/emacs.git --depth 1
 
 #+end_src
 

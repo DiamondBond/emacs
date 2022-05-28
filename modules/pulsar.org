@@ -1,0 +1,30 @@
+* Initialize =pulsar=
+** Description
+This is a small package that temporarily highlights the current line after a given function is invoked.
+** Code
+#+begin_src emacs-lisp
+  (use-package pulsar
+	:straight (:type git :host gitlab :repo "protesilaos/pulsar" :branch "main")
+	:config
+
+	;; pulse on change
+	(setq pulsar-pulse-on-window-change t)
+	(setq pulsar-pulse t)
+
+	;; configure
+	(setq pulsar-delay 0.055)
+	(setq pulsar-iterations 10)
+	(setq pulsar-face 'pulsar-magenta)
+	(setq pulsar-highlight-face 'pulsar-yellow)
+
+	;; enable globally
+	(pulsar-global-mode 1)
+
+	;; integration with the `consult' package:
+	(add-hook 'consult-after-jump-hook #'pulsar-recenter-top)
+	(add-hook 'consult-after-jump-hook #'pulsar-reveal-entry)
+
+	;; integration with the built-in `imenu':
+	(add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
+	(add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry))
+#+end_src

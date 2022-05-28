@@ -1,0 +1,14 @@
+#+begin_src emacs-lisp
+
+(use-package helpful :demand t)
+(use-package hsluv :demand t)
+
+(use-package ct.el
+    :demand t
+    :straight (ct.el :type git :host github :repo "neeasade/ct.el"))
+
+(use-package tarps
+    :demand t
+    :straight (tarps :type git :host github :repo "neeasade/tarps"))
+
+#+end_src

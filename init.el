@@ -1,4 +1,4 @@
-;;; init.el --- Bootstrap -*- lexical-binding: t; -*-
+;;; init.el --- Initialization. -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022 Diamond Bond
 ;; This file is NOT part of GNU Emacs.
@@ -9,7 +9,7 @@
 ;; Package-Requires: ((emacs "28.1"))
 
 ;;; Commentary:
-;; This file provides the bootstrap configuration.
+;; This file provides the initialization configuration.
 
 ;;; Code:
 
@@ -21,7 +21,7 @@
   (setq file-name-handler-alist startup/file-name-handler-alist))
 (add-hook 'emacs-startup-hook 'startup/revert-file-name-handler-alist)
 
-;;; For performance
+;; For performance
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq process-adaptive-read-buffering nil)
 

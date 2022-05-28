@@ -23,35 +23,9 @@
 [[https://github.com/diamondbond/emacs][*Github*]] | [[https://raw.githubusercontent.com/DiamondBond/emacs/master/config.org][*Source*]]
 #+end_center
 
-** Principles
+** Preamble
 
-This configuration and all associated modules intend to follow the below priniciples.
-
-*** Performant
-
-Provides a responsive experience that adheres to form follows function principles.
-
-*** Reproducible
-
-Utilizes straight.el for reproducibility & increased stability.
-
-*** Literate
-
-Every elisp snippet is commented or documented.
-
-Provide verbose doc-strings and inline code commentary.
-
-*** Correct
-
-Aggressively utilizes best practices.
-
-Where possible, we will leverage built-in Emacs functionality instead of external packages.
-
-*** Modular
-
-The base configuration only sets up Emacs to have a cleaner presentation with sensible defaults.
-
-The implication is that someone should be able to install or copy code from this configuration into their own configuration or vice versa.
+/<wip>/
 
 ** Overview
 
@@ -59,11 +33,11 @@ The implication is that someone should be able to install or copy code from this
 
 *** *early-init.el*
 
-- [[https://github.com/DiamondBond/emacs/blob/master/early-init.el][early-bootstrap]] - Early bootstrap
+- [[https://github.com/DiamondBond/emacs/blob/master/early-init.el][early-init]] - Early Emacs initialization
 
 *** *init.el*
 
-- [[https://github.com/DiamondBond/emacs/blob/master/init.el][bootstrap]] - Bootstrap straight.el
+- [[https://github.com/DiamondBond/emacs/blob/master/init.el][init]] - Initialize Emacs & straight.el
 
 *** *config.org*
 

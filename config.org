@@ -2134,6 +2134,13 @@ Uses the completion-at-point interface for code completion.
   (use-package jupyter
 	:straight t)
 #+end_src
+** Wolfram
+*** Description
+xah-wolfram-mode is Major mode for editing Wolfram Language.
+#+begin_src emacs-lisp
+  (use-package xah-wolfram-mode
+	:straight (:type git :host github :repo "xahlee/xah-wolfram-mode" :branch "master"))
+#+end_src
 ** Markdown
 *** Description
 Markdown-mode & enable auto fill.

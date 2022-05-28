@@ -131,6 +131,7 @@ Define =startup-workflow=.
 	"Execute startup workflow."
 	(interactive)
 	(db/mu4e-refresh)
+	(forge-pull)
 	(sync/news))
 #+end_src
 * Footer

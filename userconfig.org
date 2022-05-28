@@ -130,10 +130,10 @@ Define =startup-workflow=.
   (defun startup-workflow ()
 	"Execute startup workflow."
 	(interactive)
-	(discord)
-	(db/mu4e-refresh)
 	(forge-pull)
-	(sync/news))
+	(sync/news)
+	(discord)
+	(db/mu4e-refresh))
 #+end_src
 * Footer
 

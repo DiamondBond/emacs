@@ -38,6 +38,8 @@ URL: https://github.com/DiamondBond/emacs/blob/master/modules/mail.org
 
 /offlineimap/ is the imap synchronization utility.
 
+Make sure you store your gmail app specific passwords in ~/.emacs.d/authinfo.gpg.
+
 mu4e and mu can be automatically compiled and installed with the defuns below in =functions=.
 There is no need to install either of these packages with your package manager, Emacs can handle the mail server components for you.
 

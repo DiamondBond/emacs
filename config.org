@@ -1031,6 +1031,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	(eval-after-load "dired" '(diminish 'all-the-icons-dired-mode))
 	(eval-after-load "magit" '(diminish 'auto-fill-mode ""))
 	(eval-after-load "magit" '(diminish 'with-editor-mode ""))
+	(eval-after-load "slime" '(diminish 'slime-autodoc-mode ""))
 	(eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode "")))
 #+end_src
 *** Initialize =golden-ratio=

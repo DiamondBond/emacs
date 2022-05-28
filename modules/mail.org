@@ -41,9 +41,9 @@ URL: https://github.com/DiamondBond/emacs/blob/master/modules/mail.org
 mu4e and mu can be automatically compiled and installed with the defuns below in =functions=.
 There is no need to install either of these packages with your package manager, Emacs can handle the mail server components for you.
 
-#+begin_src emacs-lisp
+#+begin_quote
   M-x mu-setup/automagic
-#+end_src
+#+end_quote
 
 NOTE: You'll need to comb through this document and replace all instances of my Email address with yours and my file-paths with your respective file-paths.
 

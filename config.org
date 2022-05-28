@@ -783,14 +783,13 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 			(lisp       . t)
 			(org        . t)
 			(python     . t)
+			(jupyter    . t)
 			(scheme     . t)
 			(shell      . t)
 			(C          . t)
-			(ein        . t)
 			(sql        . t)))
 
-	(org-babel-do-load-languages 'org-babel-load-languages
-								 '((shell . t)))
+	(org-babel-do-load-languages 'org-babel-load-languages)
 
 	;; org templates
 	(when (file-directory-p "~/org")
@@ -804,6 +803,13 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	("C-c c" . 'org-capture)
 	("C-c l" . 'org-store-link)
 	("C-<f1>" . (lambda()(interactive)(show-all))))
+
+  ;; enables asynchronous execution of org-babel src blocks
+  (use-package ob-async
+	:straight t
+	:after org
+	:config
+	(setq ob-async-no-async-languages-alist '("python" "jupyter-python")))
 
   ;; enable org-roam when ~/org/roam exists
   (when (file-directory-p "~/org/roam")
@@ -2109,6 +2115,7 @@ Ruby mode.
 #+end_src
 ** Python
 *** Description
+Python mode.
 *** Code
 #+begin_src emacs-lisp
   (use-package python-mode
@@ -2117,6 +2124,14 @@ Ruby mode.
 	(setq python-indent-offset standard-indent)
 	(setq python-indent-guess-indent-offset t)
 	(setq python-indent-guess-indent-offset-verbose nil))
+#+end_src
+** Jupyter
+*** Description
+Jupyter notebook mode.
+*** Code
+#+begin_src emacs-lisp
+  (use-package jupyter
+	:straight t)
 #+end_src
 ** Markdown
 *** Description

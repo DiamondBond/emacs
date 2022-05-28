@@ -21,6 +21,9 @@ NOTE: If you are intending to compile Emacs<=29 then omit the =--with-xinput2= f
 
 #+begin_src sh
 
+  # Navigate to the srcdir
+  cd ~/git/emacs
+
   # Run the auto-generation script
   ./autogen.sh
 

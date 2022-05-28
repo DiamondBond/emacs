@@ -372,23 +372,19 @@ Keep the =menu-bar= enabled as it provides quick access to certain functions.
 #+end_src
 **** Configure fringe
 #+begin_src emacs-lisp
-  (fringe-mode 6) ;; 75% default fringe-mode.
+  (fringe-mode 0) ;; disable fringes
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
   (setq-default indicate-empty-lines nil)
   (setq-default overflow-newline-into-fringe t)
 #+end_src
 **** Configure default-frame-alist
-Set frame size to 80x46.
-Place the scrollbar on the right side for when using x-toolkit=athena.
+Set frame size.
 #+begin_src emacs-lisp
-  (setq default-frame-alist
-		(if (display-graphic-p)
-			'((internal-border-width . 0)
-			  (font . "DejaVu Sans Mono-12")
-			  (width . 80)
-			  (height . 46)
-			  (vertical-scroll-bars . right))))
+  (set-frame-width nil 80)
+  (set-frame-height nil 46)
+  ;; (set-scroll-bar-mode 'right) ;; Enable right scrollbar for x-toolkit=athena
+  ;; (add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable toolbar
 #+end_src
 *** Modes
 **** Enable column-numbers-mode
@@ -1852,6 +1848,15 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	:straight t
 	:config
 	:hook (pdf-view-mode . pdf-view-restore-mode))
+#+end_src
+*** Initialize =academic=
+**** Description
+Presents you with a list of phrases organized by the topic or by the paper section that you are writing.
+Call =M-x academic-phrases= to get a list of phrases organized by topic, or call academic-phrases-by-section to browse the phrases by paper section and fill-in the blanks if required.
+**** Code
+#+begin_src emacs-lisp
+  (use-package academic-phrases
+	:straight t)
 #+end_src
 *** Initialize =writegood=
 **** Description

@@ -2127,8 +2127,7 @@ Python mode.
 #+end_src
 ** Jupyter
 *** Description
-Jupyter notebook repl & src blocks in org-mode.
-Also provides kernel interactions integrated with Emacs's built-in features.
+Jupyter notebook repl & src blocks in org-mode, also provides kernel interactions integrated with Emacs's built-in features.
 Uses the completion-at-point interface for code completion.
 *** Code
 #+begin_src emacs-lisp

@@ -380,8 +380,7 @@ Keep the =menu-bar= enabled as it provides quick access to certain functions.
 #+end_src
 **** Configure default-frame-alist
 Set frame size to 80x46.
-Place the scrollbar on the right side when using x-toolkit=athena.
-Optionally; enable toolbar when using x-toolkit=athena.
+Place the scrollbar on the right side for when using x-toolkit=athena.
 #+begin_src emacs-lisp
   (setq default-frame-alist
 		(if (display-graphic-p)
@@ -389,11 +388,7 @@ Optionally; enable toolbar when using x-toolkit=athena.
 			  (font . "DejaVu Sans Mono-12")
 			  (width . 80)
 			  (height . 46)
-			  ;; '(tool-bar-lines . 1)
 			  (vertical-scroll-bars . right))))
-
-  ;; (set-scroll-bar-mode 'right) ;; Enable right scrollbar
-  ;; (add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable toolbar
 #+end_src
 *** Modes
 **** Enable column-numbers-mode

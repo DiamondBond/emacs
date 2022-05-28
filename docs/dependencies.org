@@ -10,6 +10,7 @@ Declarative dependency listing for this Emacs configuration.
 
 #+begin_quote
 gcc make
+cmake ninja
 autoreconf
 offlineimap
 fzf ripgrep ag
@@ -25,6 +26,9 @@ gopls
 gnuplot
 prettier
 hunspell
+python
+java
+languagetool
 jupyter-notebook
 wolframengine wolframscript
 #+end_quote
@@ -33,9 +37,7 @@ For a complete list of system packages please view my [[https://github.com/Diamo
 
 ** Python
 
-We let lsp handle the python language server, these are just miscellaneous python-pip modules that I personally use.
-
-NOTE: python-rofi is handy for org-capture on a keybind.
+We let lsp handle the python language server.
 
 #+begin_src sh
   pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi

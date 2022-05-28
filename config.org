@@ -102,10 +102,10 @@ Enable lexical binding as opposed to the default dynamic binding because it is f
 ** Information
 #+begin_src emacs-lisp
   ;; Author: Diamond Bond <diamondbond1@gmail.com>
-  ;; Created: 29 Jun 2020
-  ;; Keywords: emacs configuration
-  ;; URL: https://github.com/diamondbond/emacs
+  ;; Version: nil
   ;; Package-Requires: ((emacs "28.1"))
+  ;; Keywords: emacs, configuration
+  ;; URL: https://github.com/diamondbond/emacs
 
 #+end_src
 
@@ -1888,6 +1888,27 @@ Synosaurus is a thesaurus frontend for Emacs with pluggable backends.
 #+begin_src emacs-lisp
   (use-package synosaurus
 	:straight t)
+#+end_src
+*** Initialize =langtool=
+**** Description
+Multilingual grammar, style, and spell checker with support for more than 30 languages.
+**** Code
+#+begin_src emacs-lisp
+  (use-package languagetool
+	:ensure t
+	:defer t
+	:commands (languagetool-check
+			   languagetool-clear-suggestions
+			   languagetool-correct-at-point
+			   languagetool-correct-buffer
+			   languagetool-set-language
+			   languagetool-server-mode
+			   languagetool-server-start
+			   languagetool-server-stop)
+	:config
+	(setq languagetool-java-arguments '("-Dfile.encoding=UTF-8")
+		  languagetool-console-command "~/.languagetool/languagetool-commandline.jar"
+		  languagetool-server-command "~/.languagetool/languagetool-server.jar"))
 #+end_src
 *** Initialize =olivetti=
 **** Description

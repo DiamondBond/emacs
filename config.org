@@ -372,17 +372,27 @@ Keep the =menu-bar= enabled as it provides quick access to certain functions.
 #+end_src
 **** Configure fringe
 #+begin_src emacs-lisp
-  (fringe-mode nil) ;; Default fringe-mode.
+  (fringe-mode 6) ;; 75% default fringe-mode.
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
   (setq-default indicate-empty-lines nil)
   (setq-default overflow-newline-into-fringe t)
 #+end_src
 **** Configure default-frame-alist
+Set frame size to 80x46.
 Place the scrollbar on the right side when using x-toolkit=athena.
 Optionally; enable toolbar when using x-toolkit=athena.
 #+begin_src emacs-lisp
-  (set-scroll-bar-mode 'right) ;; Enable right scrollbar
+  (setq default-frame-alist
+		(if (display-graphic-p)
+			'((internal-border-width . 0)
+			  (font . "DejaVu Sans Mono-12")
+			  (width . 80)
+			  (height . 46)
+			  ;; '(tool-bar-lines . 1)
+			  (vertical-scroll-bars . right))))
+
+  ;; (set-scroll-bar-mode 'right) ;; Enable right scrollbar
   ;; (add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable toolbar
 #+end_src
 *** Modes

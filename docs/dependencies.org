@@ -28,9 +28,9 @@ prettier
 hunspell
 python
 java
-languagetool
 jupyter-notebook
 wolframengine wolframscript
+sbcl quicklisp
 #+end_quote
 
 For a complete list of system packages please view my [[https://github.com/DiamondBond/dotfiles/blob/master/pacman.txt][pacman manifest]].
@@ -40,7 +40,7 @@ For a complete list of system packages please view my [[https://github.com/Diamo
 We let lsp handle the python language server.
 
 #+begin_src sh
-  pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi
+  pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi jupyter
 #+end_src
 
 ** NodeJS
@@ -50,6 +50,12 @@ Deno & typescript-language-server for Typescript (TS/TSX) support.
 #+begin_src sh
   sudo npm install -g deno typescript-language-server bash-language-server
 #+end_src
+
+** Quicklisp
+https://lisp-lang.org/learn/getting-started/
+
+** Mu for mu4e
+Will be autoinstalled by straight.el to =~/.emacs.d/straight/repos/mu/build/mu=.
 
 * Files
 

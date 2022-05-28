@@ -18,16 +18,10 @@
 #+end_center
 
 #+begin_center
-*[EMACS CONFIGURATION]*
+*[DIAMONDS EMACS]*
 
 [[https://github.com/diamondbond/emacs][*Github*]] | [[https://raw.githubusercontent.com/DiamondBond/emacs/master/config.org][*Source*]]
 #+end_center
-
-#+begin_quote
-
-Personally, I feel inspired whenever I open Emacs. Like a craftsman entering his workshop, I feel a realm of possibility open before me. I feel the comfort of an environment that has evolved over time to fit me perfectly – an assortment of packages and keybindings which help me bring ideas to life day after day. - Daniel Higginbotham
-
-#+end_quote
 
 ** Principles
 

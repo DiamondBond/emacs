@@ -25,6 +25,8 @@ gopls
 gnuplot
 prettier
 hunspell
+jupyter-notebook
+wolframengine wolframscript
 #+end_quote
 
 For a complete list of system packages please view my [[https://github.com/DiamondBond/dotfiles/blob/master/pacman.txt][pacman manifest]].

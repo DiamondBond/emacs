@@ -30,6 +30,7 @@ python
 java
 jupyter-notebook
 wolframengine wolframscript
+wolframlanguageforjupyter
 sbcl quicklisp
 #+end_quote
 

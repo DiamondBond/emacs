@@ -131,8 +131,7 @@ Personal helper function to execute common startup tasks.
 	"Execute startup workflow."
 	(interactive)
 	(db/mu4e-refresh)
-	(elfeed-update)
-	(elcord-mode))
+	(elfeed-update))
 #+end_src
 
 * Footer

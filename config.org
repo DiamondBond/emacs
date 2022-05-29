@@ -598,14 +598,15 @@ Colors taken from =modus-operandi-list-colors=.
   ;;---------------------------------------------------------------------
 
   ;; function
-  (global-set-key (kbd "<f9>") 'tab-bar-mode)
-  (global-set-key (kbd "S-<f9>") 'tab-line-mode)
   (global-set-key (kbd "<f5>") 'revert-buffer)
   (global-set-key (kbd "<f6>") 'menu-bar-mode)
   (global-set-key (kbd "<f7>") 'scroll-bar-mode)
-  (global-set-key (kbd "<f8>") 'tool-bar-mode)
-  (global-set-key (kbd "C-<f12>") 'linum-mode)
+  (global-set-key (kbd "<f8>") 'other-frame)
   (global-set-key (kbd "<f10>") 'compile)
+  (global-set-key (kbd "C-<f8>") 'tool-bar-mode)
+  (global-set-key (kbd "C-<f9>") 'tab-bar-mode)
+  (global-set-key (kbd "S-<f9>") 'tab-line-mode)
+  (global-set-key (kbd "C-<f12>") 'linum-mode)
 
   ;; windows
   (global-set-key (kbd "C-x w") 'elfeed)

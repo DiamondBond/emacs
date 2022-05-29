@@ -385,6 +385,7 @@ Enable right scroll-bar & set frame size.
   (add-to-list 'default-frame-alist '(width . 80))
   (add-to-list 'default-frame-alist '(height . 46))
   ;; (add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable toolbar
+  ;; (add-to-list 'default-frame-alist '(background-color . "honeydew"))
 #+end_src
 *** Modes
 **** Enable column-numbers-mode
@@ -475,7 +476,6 @@ Auto-update proced every 5 seconds.
 *** Configure =eshell=
 **** Description
 Improve eshell prompt and assign aliases, also setup some custom helper functions for easier use.
-Colors taken from =modus-operandi-list-colors=.
 **** Prompt
 #+begin_src emacs-lisp
   ;; set prompt

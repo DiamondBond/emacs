@@ -49,6 +49,12 @@ There is no need to install either of these packages with your package manager, 
 
 NOTE: You'll need to comb through this document and replace all instances of my Email address with yours and my file-paths with your respective file-paths.
 
+** Sources
+
+https://blog.leonardotamiano.xyz/posts/mu4e-setup/#part-2-configuring-mu4e
+https://f-santos.gitlab.io/2020-04-24-mu4e.html
+http://cachestocaches.com/2017/3/complete-guide-email-emacs-using-mu-and-/
+
 * Installation
 
 ** 0. Prerequisites
@@ -257,6 +263,31 @@ mu4e mail client.
 			("/[Gmail].Sent Mail" . ?s)
 			("/[Gmail].Trash"     . ?t)))
 
+	;; attachments go here
+	(setq mu4e-attachment-dir  "~/Downloads/MailAttachments")
+
+	;; modify behavior when putting something in the trash (T flag) so as
+	;; to make it sync to the remote server. This code deals with the bug
+	;; that, whenever a message is marked with the trash label T,
+	;; offlineimap wont sync it back to the gmail servers.
+	;;
+	;; NOTE: Taken from
+	;; http://cachestocaches.com/2017/3/complete-guide-email-emacs-using-mu-and-/
+	(defun remove-nth-element (nth list)
+	  (if (zerop nth) (cdr list)
+		(let ((last (nthcdr (1- nth) list)))
+		  (setcdr last (cddr last))
+		  list)))
+	(setq mu4e-marks (remove-nth-element 5 mu4e-marks))
+	(add-to-list 'mu4e-marks
+				 '(trash
+				   :char ("d" . "▼")
+				   :prompt "dtrash"
+				   :dyn-target (lambda (target msg) (mu4e-get-trash-folder msg))
+				   :action (lambda (docid msg target)
+							 (mu4e~proc-move docid
+											 (mu4e~mark-check-target target) "-N"))))
+
 	;; inbox-query
 	(setq db/mu4e-inbox-query
 		  "(maildir:/Inbox OR maildir:/INBOX) AND flag:unread")
@@ -303,13 +334,17 @@ Show alerts for unread emails.
 	  (mu4e t)                            ; start silently mu4e (mandatory for mu>=1.3.8)
 	  (run-with-timer 0 300 'db/mu4e-notif))
 	:after mu4e
-	;; :bind ("<f2>" . db/mu4e-refresh)  ; F2 turns Emacs into a mail client
+	:bind ("<f2>" . db/mu4e-refresh)  ; F2 turns Emacs into a mail client
 	:config
+
 	;; show unread emails from all inboxes
 	(setq mu4e-alert-interesting-mail-query db/mu4e-inbox-query)
 
 	;; show notifications for mails already notified
 	(setq mu4e-alert-notify-repeated-mails nil)
+
+	;; mode line alerts:
+	(add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
 
 	;; desktop alerts
 	(mu4e-alert-set-default-style 'libnotify)

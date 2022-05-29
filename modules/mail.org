@@ -303,7 +303,7 @@ Show alerts for unread emails.
 	  (mu4e t)                            ; start silently mu4e (mandatory for mu>=1.3.8)
 	  (run-with-timer 0 300 'db/mu4e-notif))
 	:after mu4e
-	:bind ("<f2>" . db/mu4e-refresh)  ; F2 turns Emacs into a mail client
+	;; :bind ("<f2>" . db/mu4e-refresh)  ; F2 turns Emacs into a mail client
 	:config
 	;; show unread emails from all inboxes
 	(setq mu4e-alert-interesting-mail-query db/mu4e-inbox-query)

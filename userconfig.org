@@ -122,6 +122,18 @@ Restore auth files.
 	  (async-shell-command "~/bin/auth-restore.sh")))
 #+end_src
 
+*** =db/startup=
+
+Personal helper function to execute common startup tasks.
+
+#+begin_src emacs-lisp
+  (defun db/startup ()
+	"Execute startup workflow."
+	(interactive)
+	(db/mu4e-refresh)
+	(elfeed-update))
+#+end_src
+
 * Footer
 
 #+begin_src emacs-lisp

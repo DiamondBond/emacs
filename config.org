@@ -742,22 +742,21 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 
 	;; org-src languages
 	(setq org-babel-load-languages
-		  '((awk        . t)
-			(calc       . t)
-			(css        . t)
-			(emacs-lisp . t)
-			(gnuplot    . t)
-			(haskell    . t)
-			(js         . t)
-			(lisp       . t)
-			(org        . t)
-			(python     . t)
-			(ein        . t)
-			(jupyter    . t)
-			(scheme     . t)
-			(shell      . t)
-			(C          . t)
-			(sql        . t)))
+		  '((awk         . t)
+			(calc        . t)
+			(css         . t)
+			(emacs-lisp  . t)
+			(gnuplot     . t)
+			(haskell     . t)
+			(js          . t)
+			(lisp        . t)
+			(org         . t)
+			(python      . t)
+			(jupyter     . t)
+			(scheme      . t)
+			(shell       . t)
+			(C           . t)
+			(sql         . t)))
 
 	(org-babel-do-load-languages 'org-babel-load-languages)
 
@@ -1177,6 +1176,113 @@ E2WM is a window manager for Emacs. It enables to customize the place of pop-up 
 	;; keybinds to start e2wm
 	(global-set-key (kbd "M-+") 'e2wm:start-management))
 #+end_src
+*** Initialize =treemacs=
+**** Description
+Tree layout file explorer.
+**** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package treemacs
+	:ensure t
+	:defer t
+	:init
+	(with-eval-after-load 'winum
+	  (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+	:config
+	(progn
+	  (setq treemacs-collapse-dirs                 (if (executable-find "python3") 3 0)
+			treemacs-deferred-git-apply-delay      0.5
+			treemacs-display-in-side-window        t
+			treemacs-eldoc-display                 t
+			treemacs-file-event-delay              5000
+			treemacs-file-follow-delay             0.2
+			treemacs-follow-after-init             t
+			treemacs-git-command-pipe              ""
+			treemacs-goto-tag-strategy             'refetch-index
+			treemacs-indentation                   2
+			treemacs-indentation-string            " "
+			treemacs-is-never-other-window         nil
+			treemacs-max-git-entries               5000
+			treemacs-missing-project-action        'ask
+			treemacs-no-png-images                 nil
+			treemacs-no-delete-other-windows       t
+			treemacs-project-follow-cleanup        nil
+			treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+			treemacs-recenter-distance             0.1
+			treemacs-recenter-after-file-follow    nil
+			treemacs-recenter-after-tag-follow     nil
+			treemacs-recenter-after-project-jump   'always
+			treemacs-recenter-after-project-expand 'on-distance
+			treemacs-show-cursor                   nil
+			treemacs-show-hidden-files             t
+			treemacs-silent-filewatch              nil
+			treemacs-silent-refresh                nil
+			treemacs-sorting                       'alphabetic-desc
+			treemacs-space-between-root-nodes      t
+			treemacs-tag-follow-cleanup            t
+			treemacs-tag-follow-delay              1.5
+			treemacs-width                         30)
+	  (treemacs-resize-icons 11)
+
+	  (treemacs-follow-mode t)
+	  (treemacs-filewatch-mode t)
+	  (treemacs-fringe-indicator-mode t)
+	  (pcase (cons (not (null (executable-find "git")))
+				   (not (null (executable-find "python3"))))
+		(`(t . t)
+		 (treemacs-git-mode 'deferred))
+		(`(t . _)
+		 (treemacs-git-mode 'simple))))
+	:bind
+	(:map global-map
+		  ("M-0"       . treemacs-select-window)
+		  ("C-x t 1"   . treemacs-delete-other-windows)
+		  ("C-x t t"   . treemacs)
+		  ("C-x t B"   . treemacs-bookmark)
+		  ("C-x t C-t" . treemacs-find-file)
+		  ("C-x t M-t" . treemacs-find-tag)))
+
+  (use-package treemacs-evil
+	:after treemacs evil
+	:ensure t)
+
+  (use-package treemacs-icons-dired
+	:after treemacs dired
+	:ensure t
+	:config (treemacs-icons-dired-mode))
+#+END_SRC
+*** Initialize =hydra=
+**** Description
+Hydra is a simple menu creator for keybindings.
+**** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package hydra
+	:ensure t)
+
+  (defhydra hydra-zoom ()
+	"
+	^Zoom^                 ^Other
+	^^^^^^^--------------------------
+	[_t_/_s_] zoom in/out  [_q_] quit
+	[_0_]^^   reset zoom
+	"
+	("t" text-scale-increase "zoom in")
+	("s" text-scale-decrease "zoom out")
+	("0" text-scale-adjust "reset")
+	("q" nil "finished" :exit t))
+
+  (defhydra windows-adjust-size ()
+	"
+  ^Zoom^                                ^Other
+  ^^^^^^^-----------------------------------------
+  [_t_/_s_] shrink/enlarge vertically   [_q_] quit
+  [_c_/_r_] shrink/enlarge horizontally
+  "
+	("q" nil :exit t)
+	("c" shrink-window-horizontally)
+	("t" enlarge-window)
+	("s" shrink-window)
+	("r" enlarge-window-horizontally))
+#+END_SRC
 ** Git
 *** Initialize =magit=
 **** Description
@@ -2117,13 +2223,12 @@ Elpy.
 	:init
 	(elpy-enable)
 	:config
+	;; configure python
 	(setq python-indent-offset standard-indent)
 	(setq python-indent-guess-indent-offset t)
-	(setq python-indent-guess-indent-offset-verbose nil))
-#+end_src
-** IPython
-#+begin_src emacs-lisp
-  (use-package ein :straight t)
+	(setq python-indent-guess-indent-offset-verbose nil)
+	;; configure elpy
+	(setq elpy-modules (delq 'elpy-module-flymake elpy-modules)))
 #+end_src
 ** Jupyter
 *** Description
@@ -2137,6 +2242,7 @@ Uses the completion-at-point interface for code completion.
 ** Wolfram
 *** Description
 xah-wolfram-mode is Major mode for editing Wolfram Language.
+*** Code
 #+begin_src emacs-lisp
   (use-package xah-wolfram-mode
 	:straight (:type git :host github :repo "xahlee/xah-wolfram-mode" :branch "master"))

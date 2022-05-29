@@ -63,6 +63,10 @@ Heresy; Vim keybindings in Emacs.
 	(evil-set-initial-state 'md4rd-mode 'emacs)
 	(evil-set-initial-state 'pdf-view-mode 'emacs)
 	(evil-set-initial-state 'dictionary-mode ' emacs)
+	;; e2wm
+	(evil-set-initial-state 'e2wm:def-plugin-history-list-mode 'emacs)
+	(evil-set-initial-state 'e2wm:def-plugin-files-mode 'emacs)
+	(evil-set-initial-state 'e2wm:def-plugin-imenu-mode 'emacs)
 
 	;; <tab> cycles org-mode visiblity
 	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)

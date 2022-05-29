@@ -372,7 +372,7 @@ Keep the =menu-bar= enabled as it provides quick access to certain functions.
 #+end_src
 **** Configure fringe
 #+begin_src emacs-lisp
-  (fringe-mode 0) ;; disable fringes
+  (fringe-mode nil) ;; default fringes
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
   (setq-default indicate-empty-lines nil)
@@ -383,7 +383,7 @@ Set frame size.
 #+begin_src emacs-lisp
   (set-frame-width nil 80)
   (set-frame-height nil 46)
-  ;; (set-scroll-bar-mode 'right) ;; Enable right scrollbar for x-toolkit=athena
+  (set-scroll-bar-mode 'right) ;; Enable right scrollbar for x-toolkit=athena
   ;; (add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable toolbar
 #+end_src
 *** Modes
@@ -1157,11 +1157,25 @@ Instant upload to 0x0.st
 *** Initialize =clm=
 **** Description
 Show event history and command history of some or all buffers.
+**** Description
+Log commands in a seperate buffer.
 **** Code
 #+begin_src emacs-lisp
   (use-package command-log-mode
 	:straight t
 	:diminish command-log-mode)
+#+end_src
+*** Initialize =e2wm=
+**** Description
+Equilibrium Emacs Window Manager.
+E2WM is a window manager for Emacs. It enables to customize the place of pop-up window, how the windows are split, how the buffers are located in the windows, keybinds to manipulate windows and buffers, etc.
+**** Code
+#+begin_src emacs-lisp
+  (use-package e2wm
+	:straight t
+	:config
+	;; keybinds to start e2wm
+	(global-set-key (kbd "M-+") 'e2wm:start-management))
 #+end_src
 ** Git
 *** Initialize =magit=
@@ -2095,11 +2109,13 @@ Ruby mode.
 #+end_src
 ** Python
 *** Description
-Python mode.
+Elpy.
 *** Code
 #+begin_src emacs-lisp
-  (use-package python-mode
+  (use-package elpy
 	:straight t
+	:init
+	(elpy-enable)
 	:config
 	(setq python-indent-offset standard-indent)
 	(setq python-indent-guess-indent-offset t)

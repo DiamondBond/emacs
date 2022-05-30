@@ -1385,6 +1385,14 @@ Butler for your buffers, presenting them to you in an organized way based on you
   (use-package bufler
 	:straight t)
 #+end_src
+*** Initialize =burly=
+**** Description
+Provides tools to save and restore frame and window configurations.
+**** Code
+#+begin_src emacs-lisp
+  (use-package burly
+	:straight t)
+#+end_src
 *** Initialize =undofu=
 **** Description
 Sane undo & redo.

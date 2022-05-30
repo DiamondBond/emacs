@@ -45,7 +45,7 @@ You can [[https://github.com/diamondbond/emacs#tangling][read more on tangling h
 
 ** Features
 
-- A strong performant & stable foundation with all possible optimizations applied.
+- A strong, performant & stable foundation with all possible optimizations applied.
 - Visually appealing without straying too far from the timeless Emacs appearance.
 - Icons used where possible (all-the-icons for dired, etc & kind-icon for completions) for improved visual perception and transmission of concepts/information to the user.
 - IDE-esque features (lsp, neotree, evil, completions, navigation, etc) for /most/ languages (for a full list of supported languages please view the [[https://github.com/DiamondBond/emacs/blob/master/config.org#languages][Languages section]]) along with the best git porcelain (magit) and forge integration.

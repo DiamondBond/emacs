@@ -4,6 +4,8 @@
 
 Declarative dependency listing for this Emacs configuration.
 
+NOTE: This is a WIP and some things may still be missing.
+
 * Packages
 
 ** System

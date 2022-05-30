@@ -60,6 +60,8 @@ You can [[https://github.com/diamondbond/emacs#tangling][read more on tangling h
 - Fully featured writing capabilities; spellcheck, dictionary & thesaurus lookup, flesch-kincaid reports, quick engine search, common academic phrases help and etc...
 - Complete search framework (deadgrep, deft & avy) for files & folders and characters within files.
 
+NOTE: For a true list of features please view the entire configuration, the aforementioned list is only some notable packages/features.
+
 ** Overview
 
 : CHRONOLOGICAL LOAD ORDER

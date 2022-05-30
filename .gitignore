@@ -1,27 +1,7 @@
+# ignore all by default
 /*
 
-.cache/
-auto-save-list/
-config.el
-custom.el
-eln-cache/
-emacs.html
-forge-database.sqlite
-globals.el
-history
-modules/discord.el
-modules/evil.el
-modules/mail.el
-modules/reddit.el
-network-security.data
-places
-recentf
-straight/build-cache.el
-straight/build/
-straight/repos/
-transient/
-userconfig.el
-
+# do not ignore (whitelist)
 !bin/*
 !docs/*
 !img/*
@@ -37,15 +17,50 @@ userconfig.el
 !README.org
 
 !config.org
-!userconfig.org
 !globals.org
-!early-init.el
-!init.el
 
 !bin/tangle.sh
 
 !modules/*.org
 
+# ignore userconfig.org
+userconfig.org
+
+# emacs state files
+places
+recentf
+history
+
+# straight.el related
+straight/build-cache.el
+straight/build/
+straight/repos/
+transient/
+
+# tangled files
+early-init.el
+init.el
+globals.el
+config.el
+userconfig.el
+custom.el
+
+# tangled modules
+modules/discord.el
+modules/evil.el
+modules/mail.el
+modules/reddit.el
+/modules/private
+
+# emacs generated misc
+.cache/
+auto-save-list/
+eln-cache/
+emacs.html
+forge-database.sqlite
+network-security.data
+
+# misc
 .DS_Store
 *~
 *.*~
@@ -55,7 +70,6 @@ userconfig.el
 .extension/
 *.cache*
 *.log
-/modules/private
 test/.local*/
 test/result
 
@@ -64,18 +78,14 @@ test/result
 .org-id-locations
 .tern-port
 .yas-compiled-snippets.el
-auto-save-list/
 cask/
 ede-projects.el
 elpa/
-eln-cache/
-network-security.data
 places
 semanticdb
 server/
 smex-items
 tramp
-transient/
 var/
 
 # compiled files

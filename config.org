@@ -1377,6 +1377,14 @@ Enable on the fly with M-x flyspell-mode.
 		  ispell-default-dictionary "en_US")
 	:bind (("M-<f7>" . flyspell-buffer)))
 #+end_src
+*** Initialize =bufler=
+**** Description
+Butler for your buffers, presenting them to you in an organized way based on your instructions.
+**** Code
+#+begin_src emacs-lisp
+  (use-package bufler
+	:straight t)
+#+end_src
 *** Initialize =undofu=
 **** Description
 Sane undo & redo.

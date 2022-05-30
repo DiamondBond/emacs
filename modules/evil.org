@@ -33,7 +33,6 @@ Enable lexical binding.
 Heresy; Vim keybindings in Emacs.
 
 ** Code
-
 #+begin_src emacs-lisp
   (use-package evil
 	:straight t
@@ -62,6 +61,7 @@ Heresy; Vim keybindings in Emacs.
 	(evil-set-initial-state 'nov-mode 'emacs)
 	(evil-set-initial-state 'term-mode 'emacs)
 	(evil-set-initial-state 'eshell-mode 'emacs)
+	(evil-set-initial-state 'bufler-list-mode 'emacs)
 	(evil-set-initial-state 'profiler-report-mode 'emacs)
 	(evil-set-initial-state 'inferior-scheme-mode 'emacs)
 	(evil-set-initial-state 'md4rd-mode 'emacs)

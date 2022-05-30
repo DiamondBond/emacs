@@ -66,7 +66,6 @@ Edit =.emacs.d/userconfig.org= to add your custom settings and/or override base 
 
 You may also edit =.emacs.d/config.org= directly, but your custom settings might be wiped out during an update.
 
-
 * Usage
 
 ** Tangling

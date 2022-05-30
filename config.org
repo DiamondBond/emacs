@@ -30,7 +30,7 @@ This document along with its auxiliary files, folders & dependencies (available 
 
 ** Usage
 
-Please feel free to import snippets from my configuration into your own configuration if you want or consider forking this repo & editing/maintaining it with your own customizations if you so desire (I accept pull requests!).
+Please feel free to import snippets from my configuration into your own configuration if you want or consider forking this repo & editing/maintaining it with your own customizations (I accept pull requests!).
 
 If you would like to use this configuration whilst pulling from upstream every once in a while then consider placing all your customizations in =userconfig.org= and adding that configuration file to your =.gitignore= within this directory so as to not conflict with upstream changes (although there should rarely ever be any changes to the userconfig.org unless absolutely necessary.)
 

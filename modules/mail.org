@@ -264,7 +264,7 @@ mu4e mail client.
 			("/[Gmail].Trash"     . ?t)))
 
 	;; attachments go here
-	(setq mu4e-attachment-dir  "~/Downloads/MailAttachments")
+	(setq mu4e-attachment-dir  "~/mail/attachments")
 
 	;; modify behavior when putting something in the trash (T flag) so as
 	;; to make it sync to the remote server. This code deals with the bug

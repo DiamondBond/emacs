@@ -243,46 +243,24 @@
 #+end_src
 * Base
 ** Header
-*** Specification
-Enable lexical binding as opposed to the default dynamic binding because it is faster and less error-prone.
 #+begin_src emacs-lisp
   ;;; config.el --- Configuration. -*- lexical-binding: t; -*-
 
-#+end_src
-
-*** Copyright
-#+begin_src emacs-lisp
   ;; Copyright (C) 2022 Diamond Bond
 
-#+end_src
-
-*** Information
-#+begin_src emacs-lisp
   ;; Author: Diamond Bond <diamondbond1@gmail.com>
   ;; Version: nil
   ;; Package-Requires: ((emacs "28.1"))
   ;; Keywords: emacs, configuration
   ;; URL: https://github.com/diamondbond/emacs
 
-#+end_src
-
-*** Disclaimer
-#+begin_src emacs-lisp
   ;; This file is not part of GNU Emacs.
 
   ;; This file is free software…
 
-#+end_src
-
-*** Commentary
-#+begin_src emacs-lisp
   ;;; Commentary:
   ;; This file provides the sanctioned configuration.
 
-#+end_src
-
-*** Delimiter
-#+begin_src emacs-lisp
   ;;; Code:
 
 #+end_src

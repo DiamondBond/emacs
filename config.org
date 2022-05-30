@@ -2729,7 +2729,7 @@ Prettier formatter for JSX & TSX.
 	(other-window 1))
   (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 #+end_src
-**** run-in-vterm
+*** run-in-vterm
 #+begin_src emacs-lisp
   (defun run-in-vterm-kill (process event)
 	"A process sentinel.  Kill PROCESS's buffer if it is live with arg EVENT."

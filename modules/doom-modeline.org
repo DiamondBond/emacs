@@ -1,0 +1,17 @@
+* Initialize =doom-modeline=
+** Description
+Doom modeline.
+** Code
+#+begin_src emacs-lisp :tangle no :export no
+(use-package doom-modeline
+  :init (doom-modeline-mode)
+  :config
+  (setq doom-modeline-buffer-file-name-style 'file-name ;; Just show file name (no path)
+        doom-modeline-enable-word-count t
+        doom-modeline-buffer-encoding nil
+        doom-modeline-icon t ;; Enable/disable all icons
+        doom-modeline-modal-icon nil ;; Icon for Evil mode
+        doom-modeline-major-mode-icon t
+        doom-modeline-major-mode-color-icon t
+        doom-modeline-bar-width 3))
+#+end_src

@@ -53,8 +53,11 @@ Heresy; Vim keybindings in Emacs.
 	(evil-set-initial-state 'vterm-mode 'insert)
 	;; normal
 	(evil-set-initial-state 'messages-buffer-mode 'normal)
-	(evil-set-initial-state 'dashboard-mode 'normal)
 	(evil-set-initial-state 'mu4e-main-mode 'emacs)
+	;; motion
+	(evil-set-initial-state 'dashboard-mode 'motion)
+	(evil-set-initial-state 'debugger-mode 'motion)
+	(evil-set-initial-state 'pdf-view-mode 'motion)
 	;; emacs
 	(evil-set-initial-state 'nov-mode 'emacs)
 	(evil-set-initial-state 'term-mode 'emacs)
@@ -74,6 +77,15 @@ Heresy; Vim keybindings in Emacs.
 
 	;; :q kills buffer
 	(evil-ex-define-cmd "q" 'delete-window))
+
+  (use-package evil-collection
+	:after evil
+	:config
+	(setq evil-collection-mode-list '(dired (custom cus-edit) (package-menu package) calc diff-mode))
+	(evil-collection-init)
+	;; A few of my own overrides/customizations
+	(evil-collection-define-key 'normal 'dired-mode-map
+								(kbd "RET") 'dired-find-alternate-file))
 #+end_src
 
 * Functions

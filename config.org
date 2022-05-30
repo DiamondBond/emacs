@@ -439,6 +439,17 @@ Disable the annoying bell.
 *** Configure scrolling
 **** Enables nice-scrolling for Emacs 28+
 #+begin_src emacs-lisp
+  (setq
+   ;; If the frame contains multiple windows, scroll the one under the cursor
+   ;; instead of the one that currently has keyboard focus.
+   mouse-wheel-follow-mouse 't
+   ;; Completely disable mouse wheel acceleration to avoid speeding away.
+   mouse-wheel-progressive-speed nil
+   ;; The most important setting of all! Make each scroll-event move 2 lines at
+   ;; a time (instead of 5 at default). Simply hold down shift to move twice as
+   ;; fast, or hold down control to move 3x as fast. Perfect for trackpads.
+   mouse-wheel-scroll-amount '(2 ((shift) . 4) ((control) . 6)))
+
   (setq scroll-margin 0)
   (setq scroll-conservatively 100000)
   (setq scroll-preserve-screen-position 1)
@@ -457,18 +468,12 @@ Disable the annoying bell.
 **** Enable paren-mode
 Show parent parentheses.
 #+begin_src emacs-lisp
-  (setq show-paren-delay 0
-		show-paren-style 'parenthesis)
+  (setq show-paren-delay 0.1
+		show-paren-style 'parenthesis
+		show-paren-highlight-openparen t
+		show-paren-when-point-inside-paren t
+		show-paren-when-point-in-periphery t)
   (show-paren-mode 1)
-#+end_src
-**** Enable bracket pair-matching
-Match brackets.
-#+begin_src emacs-lisp
-  (setq electric-pair-pairs '((?\{ . ?\})
-							  (?\( . ?\))
-							  (?\[ . ?\])
-							  (?\" . ?\")))
-  (electric-pair-mode t)
 #+end_src
 *** Indentation
 Set tabs & indents to 4sp.
@@ -490,6 +495,10 @@ Set tabs & indents to 4sp.
   (global-subword-mode 1)
   (add-hook 'c-mode-common-hook
 			(lambda () (subword-mode 1)))
+#+end_src
+*** One space to end sentences
+#+begin_src emacs-lisp
+  (setq sentence-end-double-space nil)
 #+end_src
 ** Display
 *** Appearance
@@ -1042,6 +1051,52 @@ Add icons and subtree's to dired.
 	:straight t
 	:hook (dired-mode . dired-hide-dotfiles-mode))
 #+end_src
+*** Initialize =smartparens=
+**** Description
+**** Code
+#+begin_src emacs-lisp
+  (use-package smartparens
+	:diminish smartparens-mode
+	:defer 1
+	:config
+	;; Load default smartparens rules for various languages
+	(require 'smartparens-config)
+	(setq sp-max-prefix-length 25)
+	(setq sp-max-pair-length 4)
+	(setq sp-highlight-pair-overlay nil
+		  sp-highlight-wrap-overlay nil
+		  sp-highlight-wrap-tag-overlay nil)
+
+	(with-eval-after-load 'evil
+	  (setq sp-show-pair-from-inside t)
+	  (setq sp-cancel-autoskip-on-backward-movement nil)
+	  (setq sp-pair-overlay-keymap (make-sparse-keymap)))
+
+	(let ((unless-list '(sp-point-before-word-p
+						 sp-point-after-word-p
+						 sp-point-before-same-p)))
+	  (sp-pair "'"  nil :unless unless-list)
+	  (sp-pair "\"" nil :unless unless-list))
+
+	;; In lisps ( should open a new form if before another parenthesis
+	(sp-local-pair sp-lisp-modes "(" ")" :unless '(:rem sp-point-before-same-p))
+
+	;; Don't do square-bracket space-expansion where it doesn't make sense to
+	(sp-local-pair '(emacs-lisp-mode org-mode markdown-mode gfm-mode)
+				   "[" nil :post-handlers '(:rem ("| " "SPC")))
+
+
+	(dolist (brace '("(" "{" "["))
+	  (sp-pair brace nil
+			   :post-handlers '(("||\n[i]" "RET") ("| " "SPC"))
+			   ;; Don't autopair opening braces if before a word character or
+			   ;; other opening brace. The rationale: it interferes with manual
+			   ;; balancing of braces, and is odd form to have s-exps with no
+			   ;; whitespace in between, e.g. ()()(). Insert whitespace if
+			   ;; genuinely want to start a new form in the middle of a word.
+			   :unless '(sp-point-before-word-p sp-point-before-same-p)))
+	(smartparens-global-mode t))
+#+end_src
 ** Visual
 *** Initialize =modus-themes=
 **** Description
@@ -1285,9 +1340,28 @@ Enable on the fly with M-x flyspell-mode.
   (use-package flyspell
 	:straight t
 	:config
+	(add-to-list 'ispell-skip-region-alist '("~" "~"))
+	(add-to-list 'ispell-skip-region-alist '("=" "="))
+	(add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_SRC" . "^#\\+END_SRC"))
+	(add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_EXPORT" . "^#\\+END_EXPORT"))
+	(add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_EXPORT" . "^#\\+END_EXPORT"))
+	(add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+	(dolist (mode '(;;org-mode-hook ;; slows down org-mode
+					mu4e-compose-mode-hook))
+	  (add-hook mode (lambda () (flyspell-mode 1))))
 	(setq ispell-program-name "hunspell"
 		  ispell-default-dictionary "en_US")
 	:bind (("M-<f7>" . flyspell-buffer)))
+#+end_src
+*** Initialize =undofu=
+**** Description
+Sane undo & redo.
+**** Code
+#+begin_src emacs-lisp
+  (use-package undo-fu
+	:config
+	(define-key evil-normal-state-map "u" 'undo-fu-only-undo)
+	(define-key evil-normal-state-map "U" 'undo-fu-only-redo))
 #+end_src
 *** Initialize =vterm=
 **** Description
@@ -1571,7 +1645,12 @@ Possible completion framework with 0.3s delay.
 	:init
 	(which-key-mode)
 	:config
-	(setq which-key-idle-delay 0.3))
+	(setq which-key-idle-delay 0.3)
+	(setq which-key-idle-delay 0.3)
+	(setq which-key-prefix-prefix "◉ ")
+	(setq which-key-sort-order 'which-key-key-order-alpha
+		  which-key-min-display-lines 2
+		  which-key-max-display-columns 4))
 #+end_src
 *** Initialize =switch-window=
 **** Description

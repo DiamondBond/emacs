@@ -2,7 +2,7 @@
 ** Description
 Doom modeline.
 ** Code
-#+begin_src emacs-lisp :tangle no :export no
+#+begin_src emacs-lisp
 (use-package doom-modeline
   :init (doom-modeline-mode)
   :config

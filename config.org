@@ -1356,12 +1356,10 @@ Enable on the fly with M-x flyspell-mode.
 *** Initialize =undofu=
 **** Description
 Sane undo & redo.
+See evil module for keybinds.
 **** Code
 #+begin_src emacs-lisp
-  (use-package undo-fu
-	:config
-	(define-key evil-normal-state-map "u" 'undo-fu-only-undo)
-	(define-key evil-normal-state-map "U" 'undo-fu-only-redo))
+  (use-package undo-fu)
 #+end_src
 *** Initialize =vterm=
 **** Description

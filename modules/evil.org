@@ -72,6 +72,10 @@ Heresy; Vim keybindings in Emacs.
 	(evil-set-initial-state 'e2wm:def-plugin-files-mode 'emacs)
 	(evil-set-initial-state 'e2wm:def-plugin-imenu-mode 'emacs)
 
+	;; undo (requires undo-fu)
+	(define-key evil-normal-state-map "u" 'undo-fu-only-undo)
+	(define-key evil-normal-state-map "U" 'undo-fu-only-redo)
+
 	;; <tab> cycles org-mode visiblity
 	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
 
@@ -85,7 +89,7 @@ Heresy; Vim keybindings in Emacs.
 	(evil-collection-init)
 	;; A few of my own overrides/customizations
 	(evil-collection-define-key 'normal 'dired-mode-map
-								(kbd "RET") 'dired-find-alternate-file))
+	  (kbd "RET") 'dired-find-alternate-file))
 #+end_src
 
 * Functions

@@ -1173,6 +1173,10 @@ E2WM is a window manager for Emacs. It enables to customize the place of pop-up 
   (use-package e2wm
 	:straight t
 	:config
+	;; configure e2wm dashboard
+	(setq e2wm:c-dashboard-plugins
+		  '((open :plugin-args (:command mu4e :buffer "*mail*"))
+			(open :plugin-args (:command eshell :buffer "*eshell*"))))
 	;; keybinds to start e2wm
 	(global-set-key (kbd "M-+") 'e2wm:start-management))
 #+end_src

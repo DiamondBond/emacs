@@ -19,7 +19,7 @@
 ;; A big contributor to startup times is garbage collection. We up the gc
 ;; threshold to temporarily prevent it from running, then reset it later.
 (setq gc-cons-percentage-original gc-cons-percentage
-	  gc-cons-threshold-original gc-cons-threshold)
+	      gc-cons-threshold-original gc-cons-threshold)
 (setq gc-cons-threshold most-positive-fixnum)
 (setq gc-cons-percentage 0.5)
 
@@ -48,9 +48,9 @@
 
 ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 (setq tool-bar-mode nil
-	  menu-bar-mode nil)
+	      menu-bar-mode nil)
 (when (fboundp 'set-scroll-bar-mode)
-  (set-scroll-bar-mode nil))
+      (set-scroll-bar-mode nil))
 
 ;; Resizing the Emacs frame can be a terribly expensive part of changing the
 ;; font. By inhibiting this, we easily halve startup times with fonts that are
@@ -70,7 +70,7 @@
 ;; this to `nil' in the past, but the `bidi-display-reordering's docs say that
 ;; is an undefined state and suggest this to be just as good:
 (setq-default bidi-display-reordering 'left-to-right
-			  bidi-paragraph-direction 'left-to-right)
+			      bidi-paragraph-direction 'left-to-right)
 
 ;; Disabling the BPA makes redisplay faster, but might produce incorrect display
 ;; reordering of bidirectional text with embedded parentheses and other bracket

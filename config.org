@@ -2590,20 +2590,20 @@ Improved Javascript editing mode.
 	:init
 	(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
 #+end_src
-** JSX
-*** Description
-A JSX major mode.
-*** Code
-#+begin_src emacs-lisp
-  (use-package rjsx-mode
-	:straight t)
-#+end_src
 ** Typescript
 *** Description
 TypeScript support for Emacs.
 *** Code
 #+begin_src emacs-lisp
   (use-package typescript-mode
+	:straight t)
+#+end_src
+** React JSX
+*** Description
+A JSX major mode.
+*** Code
+#+begin_src emacs-lisp
+  (use-package rjsx-mode
 	:straight t)
 #+end_src
 ** Web

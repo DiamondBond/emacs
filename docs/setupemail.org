@@ -17,6 +17,12 @@ Create your maildir in $HOME as ~/mail
   mkdir -p ~/mail
 #+end_src
 
+Also create your attachments dir in $HOME/$maildir/attachments
+
+#+begin_src sh
+  mkdir -p ~/mail/attachments
+#+end_src
+
 *** 0.2 offlineimap
 
 #+begin_src sh

@@ -32,6 +32,7 @@ jupyter-notebook
 wolframengine wolframscript
 wolframlanguageforjupyter
 sbcl quicklisp
+mpv
 #+end_quote
 
 For a complete list of system packages please view my [[https://github.com/DiamondBond/dotfiles/blob/master/pacman.txt][pacman manifest]].
@@ -41,7 +42,7 @@ For a complete list of system packages please view my [[https://github.com/Diamo
 We let lsp handle the python language server.
 
 #+begin_src sh
-  pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi jupyter
+  pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi jupyter grip
 #+end_src
 
 ** NodeJS

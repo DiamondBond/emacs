@@ -1469,6 +1469,32 @@ Hydra is a simple menu creator for keybindings.
 	("s" shrink-window)
 	("r" enlarge-window-horizontally))
 #+END_SRC
+*** Initialize =grip=
+**** Description
+Instant GitHub-flavored Markdown/Org preview using a grip subprocess.
+**** Code
+#+begin_src emacs-lisp
+  (use-package grip-mode
+	:straight t
+	:bind (:map markdown-mode-command-map
+				("g" . grip-mode)))
+#+end_src
+*** Initialize =mpv=
+**** Description
+Potpourri of helper functions to control a mpv process via its IPC interface.
+**** Code
+#+begin_src emacs-lisp
+  (use-package mpv
+	:straight t
+	:config
+	(org-add-link-type "mpv" #'mpv-play)
+	(defun org-mpv-complete-link (&optional arg)
+	  (replace-regexp-in-string
+	   "file:" "mpv:"
+	   (org-file-complete-link arg)
+	   t t))
+	(add-hook 'org-open-at-point-functions #'mpv-seek-to-position-at-point))
+#+end_src
 ** Git
 *** Initialize =magit=
 **** Description

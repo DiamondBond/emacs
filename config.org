@@ -24,7 +24,9 @@
 
 ** Preamble
 
-Welcome to my Emacs configuration. This document along with its auxiliary files, folders & dependencies (available [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencies.org][here]]) should entail a modern, feature-rich & complete Emacs operating system.
+Welcome to my Emacs configuration, this file is an accumulation of 2+ years worth of [[https://projects.csail.mit.edu/gsb/old-archive/gsb-archive/gsb2000-02-11.html][yak shaving]], I hope you learn something useful here.
+
+This document along with its auxiliary files, folders & dependencies (available [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencies.org][here]]) should entail a modern, feature-rich & complete Emacs operating system.
 
 ** Usage
 

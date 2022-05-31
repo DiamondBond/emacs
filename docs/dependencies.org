@@ -44,7 +44,7 @@ For a complete list of system packages please view my [[https://github.com/Diamo
 We let lsp handle the python language server.
 
 #+begin_src sh
-  pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi jupyter grip
+  pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi jupyter grip git-lines-graph
 #+end_src
 
 ** NodeJS

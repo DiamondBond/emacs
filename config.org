@@ -24,7 +24,7 @@
 
 ** Preamble
 
-Welcome to my Emacs configuration, this file is an ongoing accumulation of 2+ years worth of [[https://projects.csail.mit.edu/gsb/old-archive/gsb-archive/gsb2000-02-11.html][yak shaving]].
+Welcome to my Emacs configuration, this file is an ongoing accumulation of [[]][2+ years]] of [[https://projects.csail.mit.edu/gsb/old-archive/gsb-archive/gsb2000-02-11.html][yak shaving]].
 
 This document along with its auxiliary files, folders & dependencies (available [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencies.org][here]]) should entail a modern, feature-rich & complete Emacs operating system.
 
@@ -827,6 +827,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (global-set-key (kbd "s-C-<up>") 'enlarge-window)
   (global-set-key (kbd "C-x x") 'window-swap-states)
   (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
+  (global-set-key (kbd "C-x C-b") #'ibuffer-list-buffers)
 
   ;; next/prev
   (define-key global-map (kbd "C-S-n") #'next-15-lines)
@@ -1065,6 +1066,7 @@ Add icons and subtree's to dired.
 								  ("jpg" . "nomacs")
 								  ("gif" . "nomacs")
 								  ("mp4" . "mpv")
+								  ("pdf" . "zathura")
 								  ("mkv" . "mpv")
 								  ("webm" . "mpv"))))
 
@@ -1580,6 +1582,15 @@ Hydra is a simple menu creator for keybindings.
 	("s" shrink-window)
 	("r" enlarge-window-horizontally))
 #+END_SRC
+*** Initialize =tldr=
+**** Description
+tldr client within Emacs.
+**** Code
+#+begin_src emacs-lisp
+  (use-package tldr
+	:straight t
+	:defer 1)
+#+end_src
 *** Initialize =grip=
 **** Description
 Instant GitHub-flavored Markdown/Org preview using a grip subprocess.
@@ -1587,6 +1598,7 @@ Instant GitHub-flavored Markdown/Org preview using a grip subprocess.
 #+begin_src emacs-lisp
   (use-package grip-mode
 	:straight t
+	:defer 1
 	:bind (:map markdown-mode-command-map
 				("g" . grip-mode)))
 #+end_src
@@ -1597,6 +1609,7 @@ Potpourri of helper functions to control a mpv process via its IPC interface.
 #+begin_src emacs-lisp
   (use-package mpv
 	:straight t
+	:defer 1
 	:config
 	(org-add-link-type "mpv" #'mpv-play)
 	(defun org-mpv-complete-link (&optional arg)

@@ -1074,6 +1074,7 @@ Add icons and subtree's to dired.
 #+end_src
 *** Initialize =smartparens=
 **** Description
+Smart parentheses.
 **** Code
 #+begin_src emacs-lisp
   (use-package smartparens

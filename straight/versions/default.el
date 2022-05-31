@@ -131,6 +131,7 @@
  ("switch-window" . "8d9fe251d8d38b223d643df975876356ddfc1b98")
  ("synosaurus" . "14d34fc92a77c3a916b4d58400424c44ae99cd81")
  ("tablist" . "faab7a035ef2258cc4ea2182f67e3aedab7e2af9")
+ ("tldr.el" . "d3fd2a809a266c005915026799121c78e8b358f0")
  ("transient" . "2e4426fe8161893382f09b3f4635e152ee02488e")
  ("tree-mode" . "b06078826d5875d74b0e7b7ac47b0d0917610534")
  ("treemacs" . "68fd2ddab926e2a9e3948e64803abfd02d8c40cd")

@@ -1025,7 +1025,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	:straight t
 	:after org
 	:config
-	(setq org-wild-notifier-alert-time '(1 5 10 15 30 60))
+	(setq org-wild-notifier-alert-time '(5 10 15 30 60))
 	(setq org-wild-notifier-keyword-whitelist nil)
 	(setq org-wild-notifier-notification-title "*reminder*")
 	:init

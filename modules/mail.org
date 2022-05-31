@@ -238,9 +238,6 @@ mu4e mail client.
 	;; don't save message to Sent Messages, GMail/IMAP will take care of this
 	(setq mu4e-sent-messages-behavior 'delete)
 
-	;; view in browser
-	(add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
-
 	;; composing mail
 	(setq mu4e-compose-dont-reply-to-self t)
 

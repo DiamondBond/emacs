@@ -1702,7 +1702,6 @@ Possible completion framework with 0.3s delay.
 	(which-key-mode)
 	:config
 	(setq which-key-idle-delay 0.3)
-	(setq which-key-idle-delay 0.3)
 	;; (setq which-key-prefix-prefix "◉ ")
 	(setq which-key-sort-order 'which-key-key-order-alpha
 		  which-key-min-display-lines 2

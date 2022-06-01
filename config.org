@@ -1374,7 +1374,7 @@ An emacs minor mode for inputing math symbols and Unicode symbols.
 	( :repo "diamondbond/xah-math-input"
 	  :host github
 	  :type git
-	  :files ("*")))
+	  :files ("xah-math-input.el")))
 #+end_src
 *** Initialize =flycheck=
 **** Description

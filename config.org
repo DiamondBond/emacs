@@ -1062,7 +1062,9 @@ Add icons and subtree's to dired.
 	:straight (:type built-in)
 	:commands (dired dired-jump)
 	:bind ("C-x C-j" . dired-jump)
-	:custom ((dired-listing-switches "-agho --group-directories-first")))
+	:custom ((dired-listing-switches "-agho --group-directories-first"))
+	:config
+	(put 'dired-find-alternate-file 'disabled nil))
 
   (use-package all-the-icons-dired
 	:straight t

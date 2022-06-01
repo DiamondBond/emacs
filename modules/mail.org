@@ -182,7 +182,7 @@ NOTE: Modify this defun to contain your =maildir= & email address.
   (defun mu-setup/init-mu ()
 	"Initialize 'mu' db."
 	(interactive)
-	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu init --maildir=/home/diamond/mail/ --my-address=diamondbond1@gmail.com"))
+	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu init --maildir=~/mail/ --my-address=diamondbond1@gmail.com"))
 #+end_src
 
 *** 3. Rebuild mu index.

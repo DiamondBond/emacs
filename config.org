@@ -1300,7 +1300,7 @@ Colorize color names in buffers.
   (use-package rainbow-mode
 	:straight t
 	:diminish rainbow-mode
-	:hook prog-mode)
+	:hook (prog-mode . rainbow-mode))
 #+end_src
 *** Initialize =rainbow-delimiters=
 **** Description

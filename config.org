@@ -1377,6 +1377,16 @@ An emacs minor mode for inputing math symbols and Unicode symbols.
 	  :type git
 	  :files ("xah-math-input.el")))
 #+end_src
+*** Initialize =midnight=
+**** Description
+Clean buffer list at set time.
+**** Code
+#+begin_src emacs-lisp
+  (use-package midnight
+	:straight t
+	:config
+	(midnight-delay-set 'midnight-delay 3600) ;; 1am)
+#+end_src
 *** Initialize =flycheck=
 **** Description
 Modern on-the-fly syntax checking extension.

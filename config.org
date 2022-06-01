@@ -1383,9 +1383,10 @@ Clean buffer list at set time.
 **** Code
 #+begin_src emacs-lisp
   (use-package midnight
-	:straight t
+	:init
+	(midnight-mode)
 	:config
-	(midnight-delay-set 'midnight-delay 3600) ;; 1am)
+	(setq clean-buffer-list-delay-general 1))
 #+end_src
 *** Initialize =flycheck=
 **** Description

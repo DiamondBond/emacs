@@ -144,7 +144,7 @@
  ("web-mode" . "7d139a209a8f92cf1749fefccc917eda1985d1fe")
  ("with-editor" . "4ab8c6148bb2698ff793d4a8acdbd8d0d642e133")
  ("writegood-mode" . "d54eadeedb8bf3aa0e0a584c0a7373c69644f4b8")
- ("xah-math-input" . "af3214584d620d90a30d0af6af8a43a6ab85566d")
+ ("xah-math-input" . "cc43ca7ae0279f9fe3ac03cc4f61727d270c0c6f")
  ("xah-wolfram-mode" . "eee748bb597701047a1fd4aca6e5dc374442fb7a")
  ("xref" . "2ca3069ba71d8ff9b833c0da771b9bd8c6ea1a68")
  ("yaml.el" . "adb3e52a214a5154267085639f95a3ffae1ec2d3")

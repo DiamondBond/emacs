@@ -1361,6 +1361,18 @@ Yasnippet provides useful snippets.
 	:after (consult yasnippet)
 	:bind ("C-c y" . consult-yasnippet))
 #+end_src
+*** Initialize =xah-math-input=
+**** Description
+An emacs minor mode for inputing math symbols and Unicode symbols.
+**** Code
+#+begin_src emacs-lisp
+  (use-package xah-math-input
+	:straight
+	( :repo "diamondbond/xah-math-input"
+	  :host github
+	  :type git
+	  :files ("*")))
+#+end_src
 *** Initialize =flycheck=
 **** Description
 Modern on-the-fly syntax checking extension.
@@ -1391,103 +1403,6 @@ Enable on the fly with M-x flyspell-mode.
 	(setq ispell-program-name "hunspell"
 		  ispell-default-dictionary "en_US")
 	:bind (("M-<f7>" . flyspell-buffer)))
-#+end_src
-*** Initialize =bufler=
-**** Description
-Butler for your buffers, presenting them to you in an organized way based on your instructions.
-**** Code
-#+begin_src emacs-lisp
-  (use-package bufler
-	:straight t)
-#+end_src
-*** Initialize =burly=
-**** Description
-Provides tools to save and restore frame and window configurations.
-**** Code
-#+begin_src emacs-lisp
-  (use-package burly
-	:straight t)
-#+end_src
-*** Initialize =undofu=
-**** Description
-Sane undo & redo.
-See evil module for keybinds.
-**** Code
-#+begin_src emacs-lisp
-  (use-package undo-fu)
-#+end_src
-*** Initialize =vterm=
-**** Description
-Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
-**** Code
-#+begin_src emacs-lisp
-  (use-package vterm
-	:straight t
-	:custom (vterm-install t)
-	:config
-	(add-hook 'vterm-mode-hook
-			  (lambda () (global-hl-line-mode 0)))
-	(setq vterm-max-scrollback 10000))
-#+end_src
-*** Initialize =calfw=
-**** Description
-Calendar view in Emacs buffer.
-**** Code
-#+begin_src emacs-lisp
-  (use-package calfw
-	:straight t)
-#+end_src
-*** Initialize =htmlize=
-**** Description
-Used for exporting source code with syntax highlighting.
-**** Code
-#+begin_src emacs-lisp
-  (use-package htmlize
-	:straight t)
-#+end_src
-*** Initialize =crux=
-**** Description
-A Collection of Ridiculously Useful eXtensions.
-**** Code
-#+begin_src emacs-lisp
-  (use-package crux
-	:straight t)
-#+end_src
-*** Initialize =0x0=
-**** Description
-Instant upload to 0x0.st
-**** Code
-#+begin_src emacs-lisp
-  (use-package 0x0
-	:straight t
-	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
-#+end_src
-*** Initialize =clm=
-**** Description
-Show event history and command history of some or all buffers.
-**** Description
-Log commands in a seperate buffer.
-**** Code
-#+begin_src emacs-lisp
-  (use-package command-log-mode
-	:straight t
-	:diminish command-log-mode)
-#+end_src
-*** Initialize =e2wm=
-**** Description
-Equilibrium Emacs Window Manager.
-E2WM is a window manager for Emacs. It enables to customize the place of pop-up window, how the windows are split, how the buffers are located in the windows, keybinds to manipulate windows and buffers, etc.
-**** Code
-#+begin_src emacs-lisp
-  (use-package e2wm
-	:straight t
-	:config
-	;; configure e2wm dashboard
-	(setq e2wm:c-dashboard-plugins
-		  '((open :plugin-args (:command mu4e :buffer "*mail*"))
-			(open :plugin-args (:command eshell :buffer "*eshell*"))))
-	;; keybinds to start e2wm
-	(global-set-key (kbd "M-+") 'e2wm:start-management))
 #+end_src
 *** Initialize =treemacs=
 **** Description
@@ -1563,6 +1478,103 @@ Tree layout file explorer.
 	:ensure t
 	:config (treemacs-icons-dired-mode))
 #+END_SRC
+*** Initialize =htmlize=
+**** Description
+Used for exporting source code with syntax highlighting.
+**** Code
+#+begin_src emacs-lisp
+  (use-package htmlize
+	:straight t)
+#+end_src
+*** Initialize =bufler=
+**** Description
+Butler for your buffers, presenting them to you in an organized way based on your instructions.
+**** Code
+#+begin_src emacs-lisp
+  (use-package bufler
+	:straight t)
+#+end_src
+*** Initialize =burly=
+**** Description
+Provides tools to save and restore frame and window configurations.
+**** Code
+#+begin_src emacs-lisp
+  (use-package burly
+	:straight t)
+#+end_src
+*** Initialize =undofu=
+**** Description
+Sane undo & redo.
+See evil module for keybinds.
+**** Code
+#+begin_src emacs-lisp
+  (use-package undo-fu)
+#+end_src
+*** Initialize =vterm=
+**** Description
+Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
+**** Code
+#+begin_src emacs-lisp
+  (use-package vterm
+	:straight t
+	:custom (vterm-install t)
+	:config
+	(add-hook 'vterm-mode-hook
+			  (lambda () (global-hl-line-mode 0)))
+	(setq vterm-max-scrollback 10000))
+#+end_src
+*** Initialize =calfw=
+**** Description
+Calendar view in Emacs buffer.
+**** Code
+#+begin_src emacs-lisp
+  (use-package calfw
+	:straight t)
+#+end_src
+*** Initialize =crux=
+**** Description
+A Collection of Ridiculously Useful eXtensions.
+**** Code
+#+begin_src emacs-lisp
+  (use-package crux
+	:straight t)
+#+end_src
+*** Initialize =0x0=
+**** Description
+Instant upload to 0x0.st
+**** Code
+#+begin_src emacs-lisp
+  (use-package 0x0
+	:straight t
+	:commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
+#+end_src
+*** Initialize =clm=
+**** Description
+Show event history and command history of some or all buffers.
+**** Description
+Log commands in a seperate buffer.
+**** Code
+#+begin_src emacs-lisp
+  (use-package command-log-mode
+	:straight t
+	:diminish command-log-mode)
+#+end_src
+*** Initialize =e2wm=
+**** Description
+Equilibrium Emacs Window Manager.
+E2WM is a window manager for Emacs. It enables to customize the place of pop-up window, how the windows are split, how the buffers are located in the windows, keybinds to manipulate windows and buffers, etc.
+**** Code
+#+begin_src emacs-lisp
+  (use-package e2wm
+	:straight t
+	:config
+	;; configure e2wm dashboard
+	(setq e2wm:c-dashboard-plugins
+		  '((open :plugin-args (:command mu4e :buffer "*mail*"))
+			(open :plugin-args (:command eshell :buffer "*eshell*"))))
+	;; keybinds to start e2wm
+	(global-set-key (kbd "M-+") 'e2wm:start-management))
+#+end_src
 *** Initialize =hydra=
 **** Description
 Hydra is a simple menu creator for keybindings.

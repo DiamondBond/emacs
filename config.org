@@ -525,7 +525,8 @@ Set tabs & indents to 4sp.
 *** Appearance
 **** Set font
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(font . globals--font))
+  ;; (add-to-list 'default-frame-alist '(font . globals--font))
+  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
 #+end_src
 **** Set time format
 #+begin_src emacs-lisp

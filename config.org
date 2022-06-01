@@ -1379,7 +1379,7 @@ An emacs minor mode for inputing math symbols and Unicode symbols.
 #+end_src
 *** Initialize =midnight=
 **** Description
-Clean buffer list at set time.
+Clean buffer list at midnight.
 **** Code
 #+begin_src emacs-lisp
   (use-package midnight

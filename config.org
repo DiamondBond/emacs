@@ -836,6 +836,8 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (global-set-key (kbd "C-x C-b") #'ibuffer-list-buffers)
 
   ;; next/prev
+  (global-set-key (kbd "C-<tab>") 'next-buffer)
+  (global-set-key (kbd "C-<iso-lefttab>") 'previous-buffer)
   (define-key global-map (kbd "C-S-n") #'next-15-lines)
   (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 

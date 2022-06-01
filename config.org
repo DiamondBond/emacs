@@ -130,7 +130,7 @@ NOTE: Regarding GC; we up the GC at startup and lower it after initialization, w
   ;; Silence compiler warnings
   (setq warning-minimum-level :emergency)
   (setq warning-suppress-types '((comp)))
-  (setq comp-async-report-warnings-errors nil)
+  (setq native-comp-async-report-warnings-errors nil)
   (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local cl-functions))
 
   ;; Warning: with 3, the compiler is free to perform dangerous optimizations.

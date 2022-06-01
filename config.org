@@ -1400,7 +1400,7 @@ Enable on the fly with M-x flyspell-mode.
 	(add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_EXPORT" . "^#\\+END_EXPORT"))
 	(add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_EXPORT" . "^#\\+END_EXPORT"))
 	(add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
-	(dolist (mode '(;;org-mode-hook ;; slows down org-mode
+	(dolist (mode '(;; org-mode-hook ;; slows down org-mode
 					mu4e-compose-mode-hook))
 	  (add-hook mode (lambda () (flyspell-mode 1))))
 	(setq ispell-program-name "hunspell"

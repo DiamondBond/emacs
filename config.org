@@ -1044,6 +1044,14 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	:defer 2
 	:config
 	(setq cfw:org-agenda-schedule-args '(:timestamp :scheduled :deadline)))
+
+  ;; org agenda in browser
+  (use-package org-hyperscheduler
+	:straight
+	( :repo "dmitrym0/org-hyperscheduler"
+	  :host github
+	  :type git
+	  :files ("*")))
 #+end_src
 *** Initialize =dired=
 **** Description

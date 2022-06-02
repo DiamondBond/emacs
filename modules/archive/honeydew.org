@@ -8,16 +8,15 @@
 
 * Setup default-frame-alist
 #+begin_src emacs-lisp
-	(defun honeydew ()
-	  "Honeydew theme."
-	  (interactive)
-	  (setq default-frame-alist
-			(if (display-graphic-p)
-				'((internal-border-width . 0)
-				  (background-color . "honeydew")
-				  (font . "DejaVu Sans Mono-12")
-				  (width . 80)
-				  (height . 46)
-				  (vertical-scroll-bars . right))))
-  )
+  (defun honeydew ()
+	"Honeydew theme."
+	(interactive)
+	(setq default-frame-alist
+		  (if (display-graphic-p)
+			  '((internal-border-width . 0)
+				(background-color . "honeydew")
+				(font . "DejaVu Sans Mono-12")
+				(width . 80)
+				(height . 46)
+				(vertical-scroll-bars . right)))))
 #+end_src

@@ -38,7 +38,7 @@ This document along with its auxiliary files, folders & dependencies (available 
 - Full Email management capabilities.
 - News and infotainment aggregation (elfeed/gnus).
 - Media playback control (ncmpcpp/mpd & mpv).
-- Window management (e2wm & golden-ratio windows).
+- Window management (e2wm & golden-ratio).
 - Built in IRC configured.
 - Document viewing and editing support (PDF/Epub, etc) along with viewing helpers (olivetti & bionic reading modes).
 - Org-mode planning & scheduling as well as featureful notes and exporting them to a variety of formats.
@@ -458,7 +458,7 @@ Disable the annoying bell.
   (setq ring-bell-function 'ignore)
 #+end_src
 *** Configure scrolling
-**** Enables nice-scrolling for Emacs 28+
+**** Enable nice-scrolling (Emacs 28+)
 #+begin_src emacs-lisp
   (setq
    ;; If the frame contains multiple windows, scroll the one under the cursor
@@ -476,7 +476,7 @@ Disable the annoying bell.
   (setq scroll-preserve-screen-position 1)
   (setq fast-but-imprecise-scrolling t)
 #+end_src
-**** Enables pixel-scroll-precision-mode for Emacs 29+
+**** Enable pixel-scroll-precision-mode (Emacs 29+)
 #+begin_src emacs-lisp
   ;; (pixel-scroll-precision-mode)
 #+end_src

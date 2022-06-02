@@ -34,7 +34,7 @@ NOTE: If you are intending to compile Emacs<=29 then omit the =--with-xinput2= f
 
 ** Compiling
 
-Compile with n-1 cores and do native full ahead of time compilation.
+Compile with n-1 cores and do native compilation ahead of time.
 
 #+begin_src sh
 
@@ -47,7 +47,7 @@ NOTE: This may take awhile.
 
 ** Installing
 
-Finally install Emacs.
+Finally, install Emacs.
 
 #+begin_src sh
   sudo make install

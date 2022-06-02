@@ -1,0 +1,18 @@
+#+STARTUP: overview
+#+TITLE: Org Hyperscheduler Configuration
+#+AUTHOR: Diamond Bond
+#+LANGUAGE: en
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :mkdirp yes :tangle yes :results silent :noweb yes
+#+auto_tangle: t
+
+* Org-hyperscheduler
+#+begin_src emacs-lisp
+  ;; org agenda in browser
+  (use-package org-hyperscheduler
+	:straight
+	( :repo "dmitrym0/org-hyperscheduler"
+	  :host github
+	  :type git
+	  :files ("*")))
+#+end_src

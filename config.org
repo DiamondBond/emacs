@@ -2294,6 +2294,15 @@ Usage: irc.libera.chat
 	:config
 	(setq rcirc-auto-authenticate-flag t)
 	(setq rcirc-time-format "[%I:%M %p] ")
+
+	;; connect to Librea
+	(setq rcirc-server-alist
+		  '(("irc.libera.chat" :channels ("#emacs")
+			 :port 6697 :encryption tls)))
+
+	;; enable minor mode
+	(add-hook 'rcirc-mode-hook #'rcirc-track-minor-mode)
+	(add-hook 'rcirc-mode-hook #'rcirc-omit-mode)
 	(rcirc-track-minor-mode 1))
 #+end_src
 ** Documents

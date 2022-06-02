@@ -1,10 +1,10 @@
 #+TITLE: Dependencies
 #+LANGUAGE: en
 #+OPTIONS: num:nil toc:2
+#+SETUPFILE: resources/white.theme
+#+EXPORT_FILE_NAME: emacs.html
 
-Declarative dependency listing for this Emacs configuration.
-
-NOTE: This is a WIP and some things may still be missing.
+Declarative dependency listing for this Emacs configuration [WIP].
 
 * Packages
 
@@ -37,11 +37,17 @@ sbcl quicklisp
 mpv
 #+end_quote
 
-For a complete list of system packages please view my [[https://github.com/DiamondBond/dotfiles/blob/master/pacman.txt][pacman manifest]].
+pacman: [[https://github.com/DiamondBond/dotfiles/blob/master/pacman.txt][manifest]]
+apt:    <wip>
+rpm:    <wip>
+win:    <wip>
+mac:    <wip>
 
 ** Python
 
-We let lsp handle the python language server.
+LSP handles the python language server.
+
+Some useful python packages:
 
 #+begin_src sh
   pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi jupyter grip git-lines-graph
@@ -49,14 +55,24 @@ We let lsp handle the python language server.
 
 ** NodeJS
 
-Deno & typescript-language-server for Typescript (TS/TSX) support.
+Deno & typescript-language-server as well as prettier for Typescript (TS/TSX) support.
 
 #+begin_src sh
-  sudo npm install -g deno typescript-language-server bash-language-server
+  sudo npm install -g deno typescript-language-server bash-language-server prettier
 #+end_src
 
 ** Quicklisp
-https://lisp-lang.org/learn/getting-started/
+https://lisp-lang.org/learn/getting-started
+
+NOTE: on arch its easier to just `pacman -S sbcl quicklisp`
+
+#+begin_src sh
+  $ curl -o /tmp/ql.lisp http://beta.quicklisp.org/quicklisp.lisp
+  $ sbcl --no-sysinit --no-userinit --load /tmp/ql.lisp \
+	--eval '(quicklisp-quickstart:install :path "~/.quicklisp")' \
+	--eval '(ql:add-to-init-file)' \
+	--quit
+#+end_src
 
 ** Mu for mu4e
 Will be autoinstalled by straight.el to =~/.emacs.d/straight/repos/mu/build/mu=.
@@ -83,7 +99,7 @@ Will be autoinstalled by straight.el to =~/.emacs.d/straight/repos/mu/build/mu=.
 ~/.emacs.d/network-security.data
 #+end_quote
 
-** Dropbox Folders
+** Sync Folders
 
 Symlink ~/org & ~/pdf to their respective subdirs within ~/Dropbox.
 

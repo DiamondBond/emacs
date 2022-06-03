@@ -1662,8 +1662,8 @@ The definitive Git porcelain for Emacs.
 	:straight t)
 
   ;; bindings to help improve the speed of magit
-  (use-package libgit :straight t)
-  (use-package magit-libgit :straight t)
+  ;; (use-package libgit :straight t)
+  ;; (use-package magit-libgit :straight t)
 #+end_src
 *** Initialize =forge=
 **** Description

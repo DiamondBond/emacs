@@ -94,6 +94,7 @@
  ("markdown-mode" . "4477f381de0068a04b55e198c32614793f67b38a")
  ("md4rd" . "6aa4fd6339d7fac78ce57e5d8821cd7009d21172")
  ("melpa" . "40c73fda1fc5fd5cf01680838a9556fb3fa528cf")
+ ("mit" . "4e90e9ae815e89f3540fb9644e6016c663ef5765")
  ("modern-cpp-font-lock" . "43c6b68ff58fccdf9deef11674a172e4eaa8455c")
  ("modus-themes" . "467aab71377a6e1476dcab7ab5f2c55d1ffc28fe")
  ("mpv.el" . "4fd8baa508dbc1a6b42b4e40292c0dbb0f19c9b9")

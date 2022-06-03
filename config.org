@@ -2541,10 +2541,10 @@ Geiser - Scheme Lisp REPL.
   (use-package geiser
 	:straight t
 	:config
-	(setq geiser-active-implementations '(chez guile mit))
+	(setq geiser-active-implementations '(mit guile))
 	(setq geiser-chez-binary "chez")
 	(add-hook 'scheme-mode-hook 'geiser-mode)
-	(setq geiser-default-implementation 'chez))
+	(setq geiser-default-implementation 'mit))
 
   (use-package geiser-chez
 	:straight t

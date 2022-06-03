@@ -33,6 +33,8 @@ java
 jupyter-notebook
 wolframengine wolframscript
 wolframlanguageforjupyter
+mit-scheme
+chez-scheme
 sbcl quicklisp
 mpv
 #+end_quote

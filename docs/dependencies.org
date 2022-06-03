@@ -12,12 +12,12 @@ Declarative dependency listing for this Emacs configuration [WIP].
 
 #+begin_quote
 gcc make
-cmake ninja
+cmake ninja meson
 autoreconf
 offlineimap
 fzf ripgrep ag
 clang clangd llvm
-texlive-core texlive-bin texlive-science
+texlive-core texlive-bin texlive-science (ubuntu: texlive-latex-recommended)
 imagemagick
 editorconfig
 libjansson
@@ -66,8 +66,10 @@ Deno & typescript-language-server as well as prettier for Typescript (TS/TSX) su
 ** Quicklisp
 https://lisp-lang.org/learn/getting-started
 
-NOTE: on arch its easier to just `pacman -S sbcl quicklisp`
+ARCH: `pacman -S sbcl quicklisp`
+UBUNTU: `sudo apt install sbcl`
 
+** Upstream
 #+begin_src sh
   $ curl -o /tmp/ql.lisp http://beta.quicklisp.org/quicklisp.lisp
   $ sbcl --no-sysinit --no-userinit --load /tmp/ql.lisp \

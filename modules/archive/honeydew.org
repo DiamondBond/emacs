@@ -11,8 +11,10 @@
   (setq default-frame-alist
 		'((internal-border-width . 0)
 		  (background-color . "honeydew")
-		  (font . "Consolas-12")
+		  (font . "DejaVu Sans Mono-10")
 		  (width . 80)
 		  (height . 46)
+		  (left-fringe)
+		  (right-fringe)
 		  (vertical-scroll-bars . right)))
 #+end_src

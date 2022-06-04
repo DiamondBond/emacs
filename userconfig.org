@@ -71,6 +71,16 @@ Enable lexical binding.
 	 (concat user-emacs-directory "/modules/mail.el")))
 #+end_src
 
+** =honeydew=
+
+#+begin_src emacs-lisp
+  ;; load honeydew module
+  (when (file-directory-p
+		 (concat user-emacs-directory "/modules/archive"))
+	(load-file
+	 (concat user-emacs-directory "/modules/archive/honeydew.el")))
+#+end_src
+
 * Functions
 
 *** =sync/dotfiles=

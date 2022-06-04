@@ -2542,22 +2542,22 @@ Geiser - Scheme Lisp REPL.
 	:straight t
 	:config
 	(setq geiser-active-implementations '(mit guile))
-	(setq geiser-chez-binary "chez")
+	;; (setq geiser-chez-binary "chez")
 	(setq geiser-mit-binary "/usr/bin/mit-scheme")
 	(setq geiser-default-implementation 'mit)
-	(add-hook 'scheme-mode-hook 'geiser-mode))
+	(add-hook 'scheme-mode-hook 'geiser-mode)
+	(add-to-list 'auto-mode-alist
+				 '("\\.sls\\'" . scheme-mode)
+				 '("\\.sc\\'" . scheme-mode)))
 
   (use-package geiser-mit
 	:straight t
 	:after geiser)
 
-  (use-package geiser-chez
-	:straight t
-	:after geiser
-	:config
-	(add-to-list 'auto-mode-alist
-				 '("\\.sls\\'" . scheme-mode)
-				 '("\\.sc\\'" . scheme-mode)))
+  ;; (use-package geiser-chez
+  ;;   :straight t
+  ;;   :after geiser
+  ;;   :config
 
   (defun geiser-save ()
 	"Save geiser repl contents to input ring."

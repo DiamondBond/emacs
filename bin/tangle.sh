@@ -18,7 +18,7 @@ org-tangle modules/evil.org
 org-tangle modules/mail.org
 org-tangle modules/reddit.org
 org-tangle modules/discord.org
-org-tangle modules/honeydew.org
+#org-tangle modules/honeydew.org
 
 if [ $# -eq 1 ]
   then

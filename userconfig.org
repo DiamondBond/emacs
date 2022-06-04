@@ -73,7 +73,7 @@ Enable lexical binding.
 
 ** =honeydew=
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   ;; load honeydew module
   (when (file-directory-p
 		 (concat user-emacs-directory "/modules/archive"))

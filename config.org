@@ -1147,7 +1147,7 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	(modus-themes-bold-constructs t)
 	(modus-themes-region '(accented bg-only no-extend))
 	:config
-	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 *** Initialize =dashboard=
@@ -1211,8 +1211,8 @@ An extensible emacs startup screen.
 	(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
 	(setq dashboard-banner-logo-title "")
-	(setq dashboard-startup-banner 'official)
-	;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+	;; (setq dashboard-startup-banner 'official)
+	(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)

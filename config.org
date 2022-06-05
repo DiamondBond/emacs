@@ -124,8 +124,8 @@ NOTE: Regarding GC; we up the GC at startup and lower it after initialization, w
   ;; threshold to temporarily prevent it from running, then reset it later.
   (setq gc-cons-percentage-original gc-cons-percentage
 		gc-cons-threshold-original gc-cons-threshold)
-  (setq gc-cons-threshold most-positive-fixnum)
-  (setq gc-cons-percentage 0.5)
+  (setq gc-cons-threshold most-positive-fixnum
+		gc-cons-percentage 0.6)
 
   ;; Silence compiler warnings
   (setq warning-minimum-level :emergency)

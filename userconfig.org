@@ -41,6 +41,16 @@ Enable lexical binding.
 	 (concat user-emacs-directory "/modules/evil.el")))
 #+end_src
 
+** =email=
+
+#+begin_src emacs-lisp
+  ;; load email module
+  (when (file-directory-p
+		 (concat user-emacs-directory "/modules"))
+	(load-file
+	 (concat user-emacs-directory "/modules/mail.el")))
+#+end_src
+
 ** =reddit=
 
 #+begin_src emacs-lisp
@@ -59,16 +69,6 @@ Enable lexical binding.
 		 (concat user-emacs-directory "/modules"))
 	(load-file
 	 (concat user-emacs-directory "/modules/discord.el")))
-#+end_src
-
-** =email=
-
-#+begin_src emacs-lisp
-  ;; load email module
-  (when (file-directory-p
-		 (concat user-emacs-directory "/modules"))
-	(load-file
-	 (concat user-emacs-directory "/modules/mail.el")))
 #+end_src
 
 ** =laptop=

@@ -112,12 +112,14 @@ Update this Emacs configuration and upgrade its packages with:
   M-x config/update
 #+end_src
 
-** Quiting
+** Profiles
 
-Ask the Emacs daemon to gracefully exit with:
+There are currently two profiles built in (laptop & desktop) that you can load by symlinking their respective folder under =~/.emacs.d/modules/archive= to =~/.emacs.d/modules/=.
 
-#+begin_src emacs-lisp
-  M-x kill-emacs
+#+begin_src sh
+  $ cd ~/.emacs.d/modules
+  $ ln -s archive/desktop .
+  $ ln -s archive/laptop .
 #+end_src
 
 * Contributors

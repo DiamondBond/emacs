@@ -16,7 +16,7 @@
 #+begin_src emacs-lisp
   (setq
    globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
-   globals--font         "DejaVu Sans Mono 10"                ; Font
+   globals--font         "DejaVu Sans Mono 11"                ; Font
    globals--name         "Diamond Bond"                       ; Name
    globals--email        "diamondbond1@gmail.com"             ; Email
    globals--irc          "diamondbond"                        ; IRC

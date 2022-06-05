@@ -1,0 +1,14 @@
+#+STARTUP: overview
+#+TITLE: Desktop Configuration
+#+AUTHOR: Diamond Bond
+#+LANGUAGE: en
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :mkdirp yes :tangle yes :results silent :noweb yes
+#+auto_tangle: t
+
+* Setup default-frame-alist
+#+begin_src emacs-lisp
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (pixel-scroll-precision-mode)
+#+end_src

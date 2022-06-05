@@ -71,14 +71,24 @@ Enable lexical binding.
 	 (concat user-emacs-directory "/modules/mail.el")))
 #+end_src
 
-** =honeydew=
+** =laptop=
 
-#+begin_src emacs-lisp :tangle no
-  ;; load honeydew module
+#+begin_src emacs-lisp
+  ;; load laptop module
   (when (file-directory-p
-		 (concat user-emacs-directory "/modules/archive"))
+		 (concat user-emacs-directory "/modules/laptop"))
 	(load-file
-	 (concat user-emacs-directory "/modules/archive/honeydew.el")))
+	 (concat user-emacs-directory "/modules/laptop/laptop.el")))
+#+end_src
+
+** =desktop=
+
+#+begin_src emacs-lisp
+  ;; load desktop module
+  (when (file-directory-p
+		 (concat user-emacs-directory "/modules/desktop"))
+	(load-file
+	 (concat user-emacs-directory "/modules/desktop/desktop.el")))
 #+end_src
 
 * Functions

@@ -122,4 +122,4 @@ Ask the Emacs daemon to gracefully exit with:
 
 * Contributors
 
-@Wereket
+@wereket

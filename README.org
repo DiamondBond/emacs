@@ -119,3 +119,7 @@ Ask the Emacs daemon to gracefully exit with:
 #+begin_src emacs-lisp
   M-x kill-emacs
 #+end_src
+
+* Contributors
+
+@Wereket

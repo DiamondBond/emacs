@@ -8,8 +8,6 @@
 
 * Setup default-frame-alist
 #+begin_src emacs-lisp
-  (menu-bar-mode 1)
-  (scroll-bar-mode 1)
   (set-scroll-bar-mode 'right)
   ;; (add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable toolbar
 #+end_src

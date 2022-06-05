@@ -341,7 +341,7 @@ Configure gpg-email address & load oauth tokens.
   ;; ask for encryption password once
   (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
-  ;; gpg-email
+  ;; email to encrypt to
   (setq epa-file-encrypt-to '(globals--email))
 #+end_src
 ** Performance

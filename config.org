@@ -2949,6 +2949,11 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	(delete-other-windows)
 	(fit-frame-to-buffer))
 #+end_src
+
+Window Manager Keybinding:
+#+begin_src sh
+  emacsclient -c -n -e '(start-to-org-agenda)' &
+#+end_src
 *** Buffer-menu-in-new-frame
 #+begin_src emacs-lisp
   ;; https://stackoverflow.com/questions/12014036/emacs-make-frame-switch-buffer

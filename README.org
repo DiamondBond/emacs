@@ -6,18 +6,13 @@
 #+OPTIONS: toc:2
 
 * Introduction
-
+#+begin_center
 [[./img/screenshot.png]]
-
-#+begin_quote
-
-Simple Emacs configuration aimed at enhancing the default experience, akin to something equidistant between vanilla & doom.
-
-#+end_quote
+#+end_center
 
 * Preview
 
-[[https://diamondbond.neocities.org/emacs.html][The entire config file can be viewed here in HTML format]].
+[[https://diamondbond.neocities.org/emacs.html][The entire configuration can be viewed here in HTML format]].
 
 * Installation
 
@@ -48,7 +43,7 @@ If you care about fancy icons, install the fonts provided by [[https://github.co
 
 ** LSP
 
-Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mode][LSP]] package. For it to work properly, you need to install the appropriate [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]].
+Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mode][LSP]] package. For it to work properly, you need to install the appropriate [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]] although Emacs will prompt you to install them automatically upon encountering a file for that language.
 
 ** Email
 

@@ -1,0 +1,147 @@
+* lazy pkg dump
+
+pacman -Sy --needed filesystem msys2-runtime bash libreadline libiconv libarchive libgpgme libcurl pacman ncurses libintl
+
+pacman -Su autoconf autogen automake automake-wrapper diffutils git guile libgc libguile libltdl libunistring  make mingw-w64-x86_64-binutils mingw-w64-x86_64-bzip2 mingw-w64-x86_64-cairo mingw-w64-x86_64-crt-git mingw-w64-x86_64-dbus mingw-w64-x86_64-expat mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-gcc mingw-w64-x86_64-gcc-libs mingw-w64-x86_64-gdk-pixbuf2 mingw-w64-x86_64-gettext mingw-w64-x86_64-giflib mingw-w64-x86_64-glib2 mingw-w64-x86_64-gmp mingw-w64-x86_64-gnutls mingw-w64-x86_64-harfbuzz mingw-w64-x86_64-headers-git mingw-w64-x86_64-imagemagick mingw-w64-x86_64-isl mingw-w64-x86_64-libffi mingw-w64-x86_64-libgccjit mingw-w64-x86_64-libiconv  mingw-w64-x86_64-libjpeg-turbo mingw-w64-x86_64-libpng mingw-w64-x86_64-librsvg mingw-w64-x86_64-libtiff mingw-w64-x86_64-libwinpthread-git mingw-w64-x86_64-libxml2 mingw-w64-x86_64-mpc mingw-w64-x86_64-mpfr mingw-w64-x86_64-pango mingw-w64-x86_64-pixman mingw-w64-x86_64-winpthreads mingw-w64-x86_64-xpm-nox mingw-w64-x86_64-lcms2 mingw-w64-x86_64-xz mingw-w64-x86_64-zlib tar wget
+
+pacman -Sy\
+    --needed \
+    filesystem \
+    msys2-runtime \
+    bash \
+    libreadline \
+    libiconv \
+    libarchive \
+    libgpgme \
+    libcurl \
+    pacman \
+    ncurses \
+    libintl
+	
+pacman -Su \
+    autoconf \
+    autogen \
+    automake \
+    automake-wrapper \
+    diffutils \
+    git \
+    guile \
+    libgc \
+    libguile \
+    libidn-devel \
+    libltdl \
+    libnettle-devel \
+    libopenssl \
+    libp11-kit-devel \
+    libtasn1-devel \
+    libunistring \
+    make \
+    mingw-w64-x86_64-binutils \
+    mingw-w64-x86_64-bzip2 \
+    mingw-w64-x86_64-cairo \
+    mingw-w64-x86_64-crt-git \
+    mingw-w64-x86_64-dbus \
+    mingw-w64-x86_64-expat \
+    mingw-w64-x86_64-fontconfig \
+    mingw-w64-x86_64-freetype \
+    mingw-w64-x86_64-gcc \
+    mingw-w64-x86_64-gcc-libs \
+    mingw-w64-x86_64-gdk-pixbuf2 \
+    mingw-w64-x86_64-gettext \
+    mingw-w64-x86_64-giflib \
+    mingw-w64-x86_64-glib2 \
+    mingw-w64-x86_64-gmp \
+    mingw-w64-x86_64-gnutls \
+    mingw-w64-x86_64-harfbuzz \
+    mingw-w64-x86_64-headers-git \
+    mingw-w64-x86_64-imagemagick \
+    mingw-w64-x86_64-isl \
+    mingw-w64-x86_64-jansson \
+    mingw-w64-x86_64-libffi \
+    mingw-w64-x86_64-libgccjit \
+    mingw-w64-x86_64-libiconv \
+    mingw-w64-x86_64-libidn2 \
+    mingw-w64-x86_64-libjpeg-turbo \
+    mingw-w64-x86_64-libpng \
+    mingw-w64-x86_64-librsvg \
+    mingw-w64-x86_64-libsystre \
+    mingw-w64-x86_64-libtasn1 \
+    mingw-w64-x86_64-libtiff \
+    mingw-w64-x86_64-libunistring \
+    mingw-w64-x86_64-libwinpthread-git \
+    mingw-w64-x86_64-libxml2 \
+    mingw-w64-x86_64-mpc \
+    mingw-w64-x86_64-mpfr \
+    mingw-w64-x86_64-nettle \
+    mingw-w64-x86_64-p11-kit \
+    mingw-w64-x86_64-pango \
+    mingw-w64-x86_64-pixman \
+    mingw-w64-x86_64-winpthreads \
+    mingw-w64-x86_64-xpm-nox \
+    mingw-w64-x86_64-xz \
+    mingw-w64-x86_64-zlib \
+    mingw-w64-x86_64-jbigkit \
+    nano \
+    openssl \
+    pkgconf \
+    tar \
+    texinfo \
+    wget
+	
+pacman -S base-devel msys-devel gcc git
+
+pacman -S mingw-w64-x86_64-jansson \
+base-devel \
+mingw-w64-x86_64-toolchain \
+mingw-w64-x86_64-zlib \
+mingw-w64-x86_64-libpng \
+mingw-w64-x86_64-poppler \
+mingw-w64-x86_64-imagemagick
+
+
+* steps
+
+# mingw easy
+choco install msys2
+
+# fonts
+https://dejavu-fonts.github.io/Download.html
+or change to "Consolas 12" in globals.org
+
+# icons
+https://github.com/domtronn/all-the-icons.el
+download the zip and extract the fonts to C:\Windows\Fonts
+
+# emacs (w/ nativecomp)
+pacman -S mingw-w64-x86_64-emacs
+
+# vterm
+
+pacman -S cmake libtool mingw-w64-x86_64-libltdl 
+
+# libgit
+
+pacman -S mingw-w64-x86_64-libgit2
+
+# mu4e
+
+https://github.com/msys2-unofficial/MSYS2-packages/tree/master/mu
+
+pacman -S mingw-w64-meson
+pacman -S mingw-w64-i686-meson mingw-w64-i686-pkg-config
+pacman -S mingw-w64-x86_64-meson
+pacman -S mingw-w64-x86_64-xapian-core mingw-w64-x86_64-gmime
+
+# pdf-tools
+
+https://gist.github.com/justbur/afb5f605def2376eeffc643f7b7daae9
+
+pacman -S mingw-w64-x86_64-emacs-pdf-tools-server
+
+# offlineimap
+
+# aspell/hunspell
+pacman -S aspell mingw-w64-x86_64-hunspell mingw-w64-x86_64-hunspell-en
+
+# change org-babel-do-load-languages to shell
+https://emacs.stackexchange.com/questions/34928/org-babel-executeshell-wrong-number-of-arguments

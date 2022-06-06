@@ -1,0 +1,1 @@
+emacsclientw.exe -c -n -a 'emacs'

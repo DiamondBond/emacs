@@ -45,10 +45,11 @@ Enable lexical binding.
 
 #+begin_src emacs-lisp
   ;; load email module
-  (when (file-directory-p
-		 (concat user-emacs-directory "/modules"))
-	(load-file
-	 (concat user-emacs-directory "/modules/mail.el")))
+  (if (eq system-type 'gnu/linux)
+	  (when (file-directory-p
+			 (concat user-emacs-directory "/modules"))
+		(load-file
+		 (concat user-emacs-directory "/modules/mail.el"))))
 #+end_src
 
 ** =reddit=

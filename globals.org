@@ -32,9 +32,11 @@ Conditional statements to set font according to system-type & system-name.
 #+begin_src emacs-lisp
   (if (eq system-type 'gnu/linux)
 	  (if (string= (system-name) "nitro")
-		  (setq globals--font "DejaVu Sans Mono 11"))
-	(if (string= (system-name) "mb13")
-		(setq globals--font "DejaVu Sans Mono 10")))
+		  (setq globals--font "DejaVu Sans Mono 11")))
+
+  (if (eq system-type 'gnu/linux)
+	  (if (string= (system-name) "mb13")
+		  (setq globals--font "DejaVu Sans Mono 12")))
 
   (if (eq system-type 'windows-nt)
 	  (setq globals--font "Consolas 12"))

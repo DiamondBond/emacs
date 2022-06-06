@@ -9,6 +9,5 @@
 * Setup default-frame-alist
 #+begin_src emacs-lisp
   (set-scroll-bar-mode 'right)
-  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono 12"))
   ;; (add-to-list 'default-frame-alist '(tool-bar-lines . 1)) ;; Enable toolbar
 #+end_src

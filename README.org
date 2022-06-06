@@ -41,6 +41,9 @@ If you care about fancy icons, install the fonts provided by [[https://github.co
   M-x all-the-icons-install-fonts
 #+end_src
 
+*** Windows
+[[https://github.com/domtronn/all-the-icons.el/archive/refs/heads/master.zip][Download]] & extract to C:\Windows\Fonts
+
 ** LSP
 
 Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mode][LSP]] package. For it to work properly, you need to install the appropriate [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]] although Emacs will prompt you to install them automatically upon encountering a file for that language.
@@ -49,9 +52,16 @@ Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mo
 
 Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email setup documentation]] for this functionality.
 
+*** Windows
+Currently too much of a PITA to implement consistently.
+
 ** Dependencies
 
 Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencies.org][Dependencies documentation]].
+
+*** Windows
+
+Refer to the *WIP* [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsonwin.org][Windows Dependencies documentation]].
 
 ** Customization
 
@@ -85,6 +95,9 @@ This will tangle any changes made and start the Emacs daemon.
 
 NOTE: call =tangle.sh= with an arbitrary arg to use [[https://github.com/DiamondBond/bin/blob/master/auth-restore.sh][M-x auth-restore]].
 
+*** Windows
+Run =tangle.bat= instead of =tangle.sh=.
+
 ** Running
 
 Start Emacs with:
@@ -99,6 +112,10 @@ Connect to the Emacs daemon via =emacsclient= with the following command:
   $ emacsclient -c -n -a 'emacs'
 #+end_src
 
+*** Windows
+
+Run =daemon.bat= and wait for the Emacs daemon to start then run =summon.bat= to summon a frame.
+
 ** Updating
 
 Update this Emacs configuration and upgrade its packages with:
@@ -111,10 +128,11 @@ Update this Emacs configuration and upgrade its packages with:
 
 There are currently two profiles built in (laptop & desktop) that you can load by symlinking their respective folder under =~/.emacs.d/modules/archive= to =~/.emacs.d/modules/=.
 
+Example:
 #+begin_src sh
   $ cd ~/.emacs.d/modules
-  $ ln -s archive/desktop .
-  $ ln -s archive/laptop .
+  $ ln -s archive/desktop . # activate desktop profile
+  $ ln -s archive/laptop . # activate laptop profile
 #+end_src
 
 * Contributors

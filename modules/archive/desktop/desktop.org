@@ -9,4 +9,5 @@
 * Setup default-frame-alist
 #+begin_src emacs-lisp
   (pixel-scroll-precision-mode)
+  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono 11"))
 #+end_src

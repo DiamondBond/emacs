@@ -10,4 +10,18 @@
 #+begin_src emacs-lisp
   (if (eq system-type 'gnu/linux)
 	  (pixel-scroll-precision-mode))
+
+  (if (eq system-type 'windows-nt)
+	  (disable-theme 'modus-operandi))
+
+  (if (eq system-type 'windows-nt)
+	  (setq default-frame-alist
+			'((height . 46)
+			  (width . 80)
+			  (background-color . "honeydew")
+			  (internal-border-width . 0)
+			  (font . "Consolas 12")
+			  (vertical-scroll-bars . right)
+			  (left-fringe)
+			  (right-fringe))))
 #+end_src

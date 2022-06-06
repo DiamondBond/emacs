@@ -145,8 +145,12 @@ URL: https://gist.github.com/justbur/afb5f605def2376eeffc643f7b7daae9
 #+end_src
 
 *** sbcl & mit-scheme
-SBCL URL: https://tomrake.github.io/2020-03-15-sbcl-compile-under-ming64/
-MIT-SCHEME URL: https://download.racket-lang.org & https://docs.racket-lang.org/sicp-manual/Installation.html
+SBCL Bin: https://sourceforge.net/projects/sbcl/files/sbcl
+Compile SBCL: https://tomrake.github.io/2020-03-15-sbcl-compile-under-ming64/
+
+Racket: https://download.racket-lang.org
+Racket SICP Collection: https://docs.racket-lang.org/sicp-manual/Installation.html
+
 ** WIP
 
 *** mu4e

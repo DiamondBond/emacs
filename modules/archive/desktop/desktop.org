@@ -9,9 +9,5 @@
 * Setup default-frame-alist
 #+begin_src emacs-lisp
   (if (eq system-type 'gnu/linux)
-	  (pixel-scroll-precision-mode)
-	(add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono 11")))
-
-  (if (eq system-type 'windows-nt)
-	  (add-to-list 'default-frame-alist '(font . "Consolas 12")))
+	  (pixel-scroll-precision-mode))
 #+end_src

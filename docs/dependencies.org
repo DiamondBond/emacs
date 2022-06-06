@@ -28,6 +28,7 @@ gopls
 gnuplot
 prettier
 hunspell
+aspell
 python
 java
 jupyter-notebook

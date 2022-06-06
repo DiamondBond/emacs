@@ -1,4 +1,10 @@
+* warning
+Windows support is experimental currently.
+
 * lazy pkg dump
+Alot of this is probably repeated and/or unneeded.
+
+#+begin_src sh
 
 pacman -Sy --needed filesystem msys2-runtime bash libreadline libiconv libarchive libgpgme libcurl pacman ncurses libintl
 
@@ -17,7 +23,7 @@ pacman -Sy\
     pacman \
     ncurses \
     libintl
-	
+
 pacman -Su \
     autoconf \
     autogen \
@@ -87,7 +93,7 @@ pacman -Su \
     tar \
     texinfo \
     wget
-	
+
 pacman -S base-devel msys-devel gcc git
 
 pacman -S mingw-w64-x86_64-jansson \
@@ -98,50 +104,47 @@ mingw-w64-x86_64-libpng \
 mingw-w64-x86_64-poppler \
 mingw-w64-x86_64-imagemagick
 
+#+end_src
 
 * steps
 
-# mingw easy
+*** install mingw
+#+begin_src pwsh
 choco install msys2
+#+end_src
 
-# fonts
-https://dejavu-fonts.github.io/Download.html
-or change to "Consolas 12" in globals.org
+*** install emacs
+#+begin_src sh
+pacman -S mingw-w64-x86_64-emacs
+#+end_src
 
-# icons
+*** install icons
 https://github.com/domtronn/all-the-icons.el
 download the zip and extract the fonts to C:\Windows\Fonts
 
-# emacs (w/ nativecomp)
-pacman -S mingw-w64-x86_64-emacs
-
-# vterm
-
-pacman -S cmake libtool mingw-w64-x86_64-libltdl 
-
-# libgit
-
+*** install libgit support
+#+begin_src sh
 pacman -S mingw-w64-x86_64-libgit2
+#+end_src
 
-# mu4e
+*** install pdf-tool support
+URL: https://gist.github.com/justbur/afb5f605def2376eeffc643f7b7daae9
 
-https://github.com/msys2-unofficial/MSYS2-packages/tree/master/mu
-
-pacman -S mingw-w64-meson
-pacman -S mingw-w64-i686-meson mingw-w64-i686-pkg-config
-pacman -S mingw-w64-x86_64-meson
-pacman -S mingw-w64-x86_64-xapian-core mingw-w64-x86_64-gmime
-
-# pdf-tools
-
-https://gist.github.com/justbur/afb5f605def2376eeffc643f7b7daae9
-
+#+begin_src sh
 pacman -S mingw-w64-x86_64-emacs-pdf-tools-server
+#+end_src
 
-# offlineimap
+*** install aspell & en dictionary
+#+begin_src sh
+pacman -S aspell aspell6-en
+#+end_src
 
-# aspell/hunspell
-pacman -S aspell mingw-w64-x86_64-hunspell mingw-w64-x86_64-hunspell-en
+** WIP
 
-# change org-babel-do-load-languages to shell
-https://emacs.stackexchange.com/questions/34928/org-babel-executeshell-wrong-number-of-arguments
+*** mu4e
+more hassle than worth it currently to setup on Windows, just use a webmail client for now or Thunderbird.
+
+URL: https://github.com/msys2-unofficial/MSYS2-packages/tree/master/mu
+
+*** vterm
+vterm currently does not work under non posix environments like msys2 as it relies on termios.h, it may work under cygwin though.

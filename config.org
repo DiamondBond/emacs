@@ -675,15 +675,22 @@ Sync Elfeed feeds/atom.
 #+end_src
 ** Built-in
 *** Configure =browser=
-Set default browser.
+Set default browser for Unix-like environments.
 #+begin_src emacs-lisp
-  (setq browse-url-browser-function globals--browser)
+  (if (eq system-type 'gnu/linux)
+	  (setq browse-url-browser-function globals--browser))
+  (if (eq system-type 'darwin)
+	  (setq browse-url-browser-function globals--browser))
+#+end_src
 
+Set default browser as Firefox when on Windows.
+#+begin_src emacs-lisp
   (if (eq system-type 'windows-nt)
 	  (setq browse-url-firefox-program "C:/Program Files/Mozilla Firefox/firefox.exe")
 	(setq browse-url-generic-program "C:/Program Files/Mozilla Firefox/firefox.exe"
 		  browse-url-browser-function 'browse-url-generic))
 #+end_src
+
 *** Configure =proced=
 Auto-update proced every 5 seconds.
 #+begin_src emacs-lisp
@@ -1415,8 +1422,11 @@ Enable on the fly with M-x flyspell-mode.
 	(dolist (mode '(;; org-mode-hook ;; slows down org-mode
 					mu4e-compose-mode-hook))
 	  (add-hook mode (lambda () (flyspell-mode 1))))
-	(setq ispell-program-name "hunspell"
-		  ispell-default-dictionary "en_US")
+	(if (eq system-type 'gnu/linux)
+		(setq ispell-program-name "hunspell")
+	  (setq ispell-default-dictionary "en_US"))
+	(if (eq system-type 'windows-nt)
+		(setq ispell-program-name "aspell"))
 	:bind (("M-<f7>" . flyspell-buffer)))
 #+end_src
 *** Initialize =treemacs=

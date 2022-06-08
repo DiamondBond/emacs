@@ -38,6 +38,7 @@ mit-scheme
 chez-scheme
 sbcl quicklisp
 mpv
+wordnet
 #+end_quote
 
 pacman: [[https://github.com/DiamondBond/dotfiles/blob/master/pacman.txt][manifest]]

@@ -52,9 +52,6 @@ Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mo
 
 Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email setup documentation]] for this functionality.
 
-*** Windows
-Currently too much of a PITA to implement consistently.
-
 ** Dependencies
 
 Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencies.org][Dependencies documentation]].

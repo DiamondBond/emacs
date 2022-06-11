@@ -121,17 +121,10 @@ Update this Emacs configuration and upgrade its packages with:
   M-x config/update
 #+end_src
 
-** Profiles
-
-There are currently two profiles built in (laptop & desktop) that you can load by symlinking their respective folder under =~/.emacs.d/modules/archive= to =~/.emacs.d/modules/=.
-
-Example:
-#+begin_src sh
-  $ cd ~/.emacs.d/modules
-  $ ln -s archive/desktop . # activate desktop profile
-  $ ln -s archive/laptop . # activate laptop profile
-#+end_src
-
 * Contributors
 
 @wereket
+
+* Thanks to
+Nicolas Rougier - CSS
+Xah Lee - Packages

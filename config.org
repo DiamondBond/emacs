@@ -89,8 +89,7 @@ You can [[https://github.com/yilkalargaw/org-auto-tangle][read more on tangling 
 - [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][email]] - Email configuration
 - [[https://github.com/DiamondBond/emacs/blob/master/modules/reddit.org][reddit]] - Reddit configuration
 - [[https://github.com/DiamondBond/emacs/blob/master/modules/discord.org][discord]] - Discord configuration
-- [[https://github.com/DiamondBond/emacs/blob/master/modules/archive/laptop.org][laptop]] - Laptop configuration
-- [[https://github.com/DiamondBond/emacs/blob/master/modules/archive/desktop.org][desktop]] - Desktop Configuration
+- [[https://github.com/DiamondBond/emacs/blob/master/modules/archive/athena.org][athena]] - Athena configuration
 
 * Core
 ** Early-Init

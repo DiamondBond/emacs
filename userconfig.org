@@ -71,15 +71,6 @@ Enable lexical binding.
 	 (concat user-emacs-directory "/modules/mail.el")))
 #+end_src
 
-** =athena=
-
-#+begin_src emacs-lisp
-  (when (file-directory-p
-		 (concat user-emacs-directory "/modules"))
-	(load-file
-	 (concat user-emacs-directory "/modules/athena.el")))
-#+end_src
-
 * Functions
 
 *** =sync/dotfiles=

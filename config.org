@@ -583,6 +583,7 @@ Keep the =menu-bar= enabled as it provides quick access to certain functions.
 	  (tool-bar-mode -1))
   (if (fboundp 'scroll-bar-mode)
 	  (scroll-bar-mode 1))
+  (set-scroll-bar-mode 'right)
 #+end_src
 **** Global mode line
 https://amodernist.com/texts/emacs-global.html
@@ -1656,7 +1657,7 @@ Potpourri of helper functions to control a mpv process via its IPC interface.
 #+begin_src emacs-lisp
   (use-package mpv
 	:straight t
-	:defer 1
+	:defer 2
 	:config
 	(org-add-link-type "mpv" #'mpv-play)
 	(defun org-mpv-complete-link (&optional arg)

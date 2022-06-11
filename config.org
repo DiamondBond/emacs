@@ -569,6 +569,10 @@ Emacs will fill up the space reported by the window manager.
   (setq inhibit-startup-message t)
   (setq initial-scratch-message "")
 #+end_src
+**** Disable cursor blink
+#+begin_src emacs-lisp
+  (blink-cursor-mode -1)
+#+end_src
 **** Disable some gui elements
 Disable the =tool-bar= as it consumes too many pixels from our frame.
 Keep the =scroll-bar= enabled as it provides contextual information regarding your whereabouts in the buffer.
@@ -2363,7 +2367,6 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	(setq pdf-annot-activate-created-annotations t)
 	(define-pdf-cache-function pagelabels)
 	:hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
-		   (pdf-view-mode.hook . (lambda () (blink-cursor-mode -1)))
 		   (pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
 
   (use-package pdf-view-restore

@@ -14,17 +14,22 @@
   (if (eq system-type 'gnu/linux)
 	  (set-scroll-bar-mode 'right))
 
-  (if (eq system-type 'windows-nt)
-	  (disable-theme 'modus-operandi))
+  ;; (if (eq system-type 'windows-nt)
+  ;; 	(disable-theme 'modus-operandi))
 
-  (if (eq system-type 'windows-nt)
-	  (setq default-frame-alist
-			'((height . 46)
-			  (width . 80)
-			  (background-color . "honeydew")
-			  (internal-border-width . 0)
-			  (font . "Consolas 12")
-			  (vertical-scroll-bars . right)
-			  (left-fringe)
-			  (right-fringe))))
+  ;; (if (eq system-type 'windows-nt)
+  ;; 	(setq default-frame-alist
+  ;; 		  '((height . 46)
+  ;; 			(width . 80)
+  ;; 			(background-color . "honeydew")
+  ;; 			(internal-border-width . 0)
+  ;; 			(font . "Consolas 12")
+  ;; 			(vertical-scroll-bars . right)
+  ;; 			(left-fringe)
+  ;; 			(right-fringe))))
+
+  ;; (if (eq system-type 'windows-nt)
+  ;; 	(setq browse-url-firefox-program "C:/Program Files/Mozilla Firefox/firefox.exe"))
+  ;; (setq browse-url-generic-program "C:/Program Files/Mozilla Firefox/firefox.exe"
+  ;; 	  browse-url-browser-function 'browse-url-generic))
 #+end_src

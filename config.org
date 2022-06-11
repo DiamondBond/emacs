@@ -686,15 +686,6 @@ Set default browser for Unix-like environments.
   (if (eq system-type 'darwin)
 	  (setq browse-url-browser-function globals--browser))
 #+end_src
-
-Set default browser as Firefox when on Windows.
-#+begin_src emacs-lisp
-  (if (eq system-type 'windows-nt)
-	  (setq browse-url-firefox-program "C:/Program Files/Mozilla Firefox/firefox.exe")
-	(setq browse-url-generic-program "C:/Program Files/Mozilla Firefox/firefox.exe"
-		  browse-url-browser-function 'browse-url-generic))
-#+end_src
-
 *** Configure =proced=
 Auto-update proced every 5 seconds.
 #+begin_src emacs-lisp

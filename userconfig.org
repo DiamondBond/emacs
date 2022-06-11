@@ -41,17 +41,6 @@ Enable lexical binding.
 	 (concat user-emacs-directory "/modules/evil.el")))
 #+end_src
 
-** =email=
-
-#+begin_src emacs-lisp
-  ;; load email module
-  (if (eq system-type 'gnu/linux)
-	  (when (file-directory-p
-			 (concat user-emacs-directory "/modules"))
-		(load-file
-		 (concat user-emacs-directory "/modules/mail.el"))))
-#+end_src
-
 ** =reddit=
 
 #+begin_src emacs-lisp
@@ -72,24 +61,23 @@ Enable lexical binding.
 	 (concat user-emacs-directory "/modules/discord.el")))
 #+end_src
 
-** =laptop=
+** =email=
 
 #+begin_src emacs-lisp
-  ;; load laptop module
+  ;; load email module
   (when (file-directory-p
-		 (concat user-emacs-directory "/modules/laptop"))
+		 (concat user-emacs-directory "/modules"))
 	(load-file
-	 (concat user-emacs-directory "/modules/laptop/laptop.el")))
+	 (concat user-emacs-directory "/modules/mail.el")))
 #+end_src
 
-** =desktop=
+** =athena=
 
 #+begin_src emacs-lisp
-  ;; load desktop module
   (when (file-directory-p
-		 (concat user-emacs-directory "/modules/desktop"))
+		 (concat user-emacs-directory "/modules"))
 	(load-file
-	 (concat user-emacs-directory "/modules/desktop/desktop.el")))
+	 (concat user-emacs-directory "/modules/athena.el")))
 #+end_src
 
 * Functions
@@ -99,12 +87,11 @@ Enable lexical binding.
 Sync dotfiles to GitHub.
 
 #+begin_src emacs-lisp
-  (if (eq system-type 'gnu/linux)
-	  (when (file-readable-p "~/bin/sync-dotfiles.sh")
-		(defun sync/dotfiles ()
-		  "Sync dotfiles."
-		  (interactive)
-		  (async-shell-command "~/bin/sync-dotfiles.sh"))))
+  (when (file-readable-p "~/bin/sync-dotfiles.sh")
+	(defun sync/dotfiles ()
+	  "Sync dotfiles."
+	  (interactive)
+	  (async-shell-command "~/bin/sync-dotfiles.sh")))
 #+end_src
 
 *** =sync/neocities=
@@ -112,13 +99,12 @@ Sync dotfiles to GitHub.
 Sync Emacs configuration to neocities.
 
 #+begin_src emacs-lisp
-  (if (eq system-type 'gnu/linux)
-	  (when (file-readable-p "~/bin/sync-neocities.sh")
-		(defun sync/neocities ()
-		  "Sync neocities."
-		  (interactive)
-		  (save-window-excursion
-			(async-shell-command "~/bin/sync-neocities.sh")))))
+  (when (file-readable-p "~/bin/sync-neocities.sh")
+	(defun sync/neocities ()
+	  "Sync neocities."
+	  (interactive)
+	  (save-window-excursion
+		(async-shell-command "~/bin/sync-neocities.sh"))))
 #+end_src
 
 *** =auth/backup=
@@ -126,12 +112,11 @@ Sync Emacs configuration to neocities.
 Backup auth files.
 
 #+begin_src emacs-lisp
-  (if (eq system-type 'gnu/linux)
-	  (when (file-readable-p "~/bin/auth-backup.sh")
-		(defun auth/backup ()
-		  "Backup auth."
-		  (interactive)
-		  (async-shell-command "~/bin/auth-backup.sh"))))
+  (when (file-readable-p "~/bin/auth-backup.sh")
+	(defun auth/backup ()
+	  "Backup auth."
+	  (interactive)
+	  (async-shell-command "~/bin/auth-backup.sh")))
 #+end_src
 
 *** =auth/restore=
@@ -139,12 +124,11 @@ Backup auth files.
 Restore auth files.
 
 #+begin_src emacs-lisp
-  (if (eq system-type 'gnu/linux)
-	  (when (file-readable-p "~/bin/auth-restore.sh")
-		(defun auth/restore ()
-		  "Restore auth."
-		  (interactive)
-		  (async-shell-command "~/bin/auth-restore.sh"))))
+  (when (file-readable-p "~/bin/auth-restore.sh")
+	(defun auth/restore ()
+	  "Restore auth."
+	  (interactive)
+	  (async-shell-command "~/bin/auth-restore.sh")))
 #+end_src
 
 * Footer

@@ -125,6 +125,8 @@ Update this Emacs configuration and upgrade its packages with:
 
 @wereket
 
-* Thanks to
+* Thanks
+
 Nicolas Rougier - CSS
+
 Xah Lee - Packages

@@ -4,7 +4,7 @@
 #+EMAIL: diamondbond1@gmail.com
 #+LANGUAGE: en
 #+CREATOR: Emacs 28.1 (Org mode 9.5.3)
-#+STARTUP: inlineimages show2levels
+#+STARTUP: show2levels
 #+SETUPFILE: resources/white.theme
 #+EXPORT_FILE_NAME: emacs.html
 #+OPTIONS: toc:2
@@ -2997,7 +2997,7 @@ Window Manager Keybinding:
 	(switch-to-buffer (list-buffers-noselect))
 	(shrink-wrap))
 #+end_src
-** Text Manipulation
+** Markup
 *** Next/Prev 15-lines
 #+begin_src emacs-lisp
   (defun next-15-lines ()
@@ -3060,6 +3060,35 @@ Window Manager Keybinding:
 	  (open-line 1)
 	  (forward-line 1)
 	  (yank)))
+#+end_src
+*** =xah-space-to-newline=
+#+begin_src emacs-lisp
+  (defun xah-space-to-newline ()
+	"Replace space sequence to a newline char.
+  Works on current block or selection.
+
+  URL `http://xahlee.info/emacs/emacs/emacs_space_to_newline.html'
+  Version 2017-08-19"
+	(interactive)
+	(let* ( $p1 $p2 )
+	  (if (use-region-p)
+		  (progn
+			(setq $p1 (region-beginning))
+			(setq $p2 (region-end)))
+		(save-excursion
+		  (if (re-search-backward "\n[ \t]*\n" nil "move")
+			  (progn (re-search-forward "\n[ \t]*\n")
+					 (setq $p1 (point)))
+			(setq $p1 (point)))
+		  (re-search-forward "\n[ \t]*\n" nil "move")
+		  (skip-chars-backward " \t\n" )
+		  (setq $p2 (point))))
+	  (save-excursion
+		(save-restriction
+		  (narrow-to-region $p1 $p2)
+		  (goto-char (point-min))
+		  (while (re-search-forward " +" nil t)
+			(replace-match "\n" ))))))
 #+end_src
 *** =infu-bionic-reading=
 #+begin_src emacs-lisp

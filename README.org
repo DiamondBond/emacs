@@ -72,15 +72,15 @@ You may also edit =.emacs.d/config.org= directly, but your custom settings might
 
 ** Tangling
 
-This Emacs configuration will auto-tangle all the related configuration .org files on save via the [[https://github.com/yilkalargaw/org-auto-tangle][org-auto-tangle]] package.
+This Emacs configuration will auto-tangle all the related configuration .org files on save thanks to [[https://github.com/yilkalargaw/org-auto-tangle][org-auto-tangle]].
 
-Add tangle.sh to =$PATH= in your =~/.bashrc= file:
+Add tangle.sh to your =$PATH= in your =~/.bashrc= file:
 
 #+begin_src sh
   PATH="$HOME/.emacs.d/bin:$PATH"
 #+end_src
 
-Now you can call tangle.sh from anywhere.
+Now you can run tangle.sh from anywhere.
 
 I recommend adding this alias to your =~/.bash_aliases= file:
 
@@ -88,9 +88,9 @@ I recommend adding this alias to your =~/.bash_aliases= file:
   alias edaemon="tangle.sh && emacs --daemon"
 #+end_src
 
-This will tangle any changes made and start the Emacs daemon.
+This will tangle and start the Emacs daemon.
 
-NOTE: call =tangle.sh= with an arbitrary arg to use [[https://github.com/DiamondBond/bin/blob/master/auth-restore.sh][M-x auth-restore]].
+NOTE: call =tangle.sh= with an arbitrary argument to use [[https://github.com/DiamondBond/bin/blob/master/auth-restore.sh][M-x auth-restore]].
 
 *** Windows
 Run =tangle.bat= instead of =tangle.sh=.
@@ -129,4 +129,4 @@ Update this Emacs configuration and upgrade its packages with:
 
 Nicolas Rougier - CSS
 
-Xah Lee - Packages
+Xah Lee - wolfram-mode & math-input-mode

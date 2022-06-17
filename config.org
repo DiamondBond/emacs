@@ -992,12 +992,13 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 		(org-babel-do-load-languages 'org-babel-load-languages))
 
 	;; org templates
-	(when (file-directory-p "~/org")
-	  (setq org-capture-templates
-			'(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
-			   "* %?\n%a\nEntered on %U")
-			  ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
-			   "* %?\n%a\nEntered on %U"))))
+	(setq org-capture-templates
+		  '(("w" "Default" entry (file+headline "~/org/inbox.org" "Notes")
+			 "* %^{Title}\n\n  Source: %u, %c\n\n  %i" :empty-lines 1)
+			("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
+			 "* %?\n%a\nEntered on %U" :empty-lines 1)
+			("t" "Tasks" entry (file+olp+datetree "~/org/inbox.org" "Tasks")
+			 "* %?\n%a\nEntered on %U" :empty-lines 1)))
 
 	:bind
 	("C-c c" . 'org-capture)

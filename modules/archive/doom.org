@@ -6,7 +6,7 @@ Doom themes.
   (use-package doom-themes
 	:straight t
 	:config
-	(load-theme 'doom-dracula t))
+	(load-theme 'doom-one t))
 #+end_src
 * Initialize =doom-modeline=
 ** Description

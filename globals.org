@@ -16,7 +16,6 @@
 #+begin_src emacs-lisp
   (setq
    globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
-   globals--font         "DejaVu Sans Mono 10"                ; Font
    globals--name         "Diamond Bond"                       ; Name
    globals--email        "diamondbond1@gmail.com"             ; Email
    globals--irc          "diamondbond"                        ; IRC
@@ -27,16 +26,11 @@
    )
 #+end_src
 
-* Platform Fonts
-Conditional statements to set font according to system-type & system-name.
+* Font
+Set font according to system-type.
 #+begin_src emacs-lisp
   (if (eq system-type 'gnu/linux)
-	  (if (string= (system-name) "nitro")
-		  (setq globals--font "DejaVu Sans Mono 11")))
-
-  (if (eq system-type 'gnu/linux)
-	  (if (string= (system-name) "mb13")
-		  (setq globals--font "DejaVu Sans Mono 12")))
+	  (setq globals--font "DejaVu Sans Mono 12"))
 
   (if (eq system-type 'windows-nt)
 	  (setq globals--font "Consolas 12"))

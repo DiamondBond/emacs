@@ -10,18 +10,19 @@ Doom themes.
 #+end_src
 * Initialize =doom-modeline=
 ** Description
-Doom modeline.
+A fancy and fast mode-line inspired by minimalism design.
 ** Code
 #+begin_src emacs-lisp
-(use-package doom-modeline
-  :init (doom-modeline-mode)
-  :config
-  (setq doom-modeline-buffer-file-name-style 'file-name ;; Just show file name (no path)
-        doom-modeline-enable-word-count t
-        doom-modeline-buffer-encoding nil
-        doom-modeline-icon t ;; Enable/disable all icons
-        doom-modeline-modal-icon nil ;; Icon for Evil mode
-        doom-modeline-major-mode-icon t
-        doom-modeline-major-mode-color-icon t
-        doom-modeline-bar-width 3))
+  (use-package doom-modeline
+	:init (doom-modeline-mode)
+	:config
+	(setq doom-modeline-buffer-file-name-style 'file-name
+		  doom-modeline-enable-word-count t
+		  doom-modeline-buffer-encoding nil
+		  doom-modeline-icon t ;; Enable/disable all icons
+		  doom-modeline-modal-icon nil ;; Icon for Evil mode
+		  doom-modeline-hud t ;; Replaces scroll-bar
+		  doom-modeline-major-mode-icon t
+		  doom-modeline-major-mode-color-icon t
+		  doom-modeline-bar-width 3))
 #+end_src

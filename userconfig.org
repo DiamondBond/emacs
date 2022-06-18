@@ -90,7 +90,7 @@ Enable lexical binding.
 ** =gui=
 #+begin_src emacs-lisp
   ;; dashboard
-  (setq dashboard-startup-banner 'official)
+  ;; (setq dashboard-startup-banner 'official)
 
   ;; modeline
   (display-time-mode 1)

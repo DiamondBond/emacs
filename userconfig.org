@@ -87,15 +87,22 @@ Enable lexical binding.
 		  doom-modeline-bar-width 3))
 #+end_src
 
-** =disable-gui=
+** =gui=
 #+begin_src emacs-lisp
+  ;; dashboard
+  (setq dashboard-startup-banner 'official)
+
+  ;; modeline
+  (display-time-mode 1)
+  (display-battery-mode 1)
+
+  ;; disable bars
   (if (fboundp 'menu-bar-mode)
 	  (menu-bar-mode -1))
   (if (fboundp 'tool-bar-mode)
 	  (tool-bar-mode -1))
   (if (fboundp 'scroll-bar-mode)
 	  (scroll-bar-mode -1))
-  ;; (set-scroll-bar-mode 'right)
 #+end_src
 
 * Functions

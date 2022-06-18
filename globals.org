@@ -36,7 +36,7 @@ Conditional statements to set font according to system-type & system-name.
 
   (if (eq system-type 'gnu/linux)
 	  (if (string= (system-name) "mb13")
-		  (setq globals--font "DejaVu Sans Mono 14")))
+		  (setq globals--font "DejaVu Sans Mono 12")))
 
   (if (eq system-type 'windows-nt)
 	  (setq globals--font "Consolas 12"))

@@ -71,7 +71,29 @@ Enable lexical binding.
 	 (concat user-emacs-directory "/modules/mail.el")))
 #+end_src
 
+
+* Tweaks
+
+** =gui=
+#+begin_src emacs-lisp
+  ;; dashboard
+  ;; (setq dashboard-startup-banner 'official)
+
+  ;; modeline info
+  (display-time-mode 1)
+  (display-battery-mode 1)
+
+  ;; disable bars
+  (if (fboundp 'menu-bar-mode)
+	  (menu-bar-mode -1))
+  (if (fboundp 'tool-bar-mode)
+	  (tool-bar-mode -1))
+  (if (fboundp 'scroll-bar-mode)
+	  (scroll-bar-mode -1))
+#+end_src
+
 ** =doom-modeline=
+
 #+begin_src emacs-lisp
   (use-package doom-modeline
 	:init (doom-modeline-mode)
@@ -85,24 +107,6 @@ Enable lexical binding.
 		  doom-modeline-major-mode-icon t
 		  doom-modeline-major-mode-color-icon t
 		  doom-modeline-bar-width 3))
-#+end_src
-
-** =gui=
-#+begin_src emacs-lisp
-  ;; dashboard
-  ;; (setq dashboard-startup-banner 'official)
-
-  ;; modeline
-  (display-time-mode 1)
-  (display-battery-mode 1)
-
-  ;; disable bars
-  (if (fboundp 'menu-bar-mode)
-	  (menu-bar-mode -1))
-  (if (fboundp 'tool-bar-mode)
-	  (tool-bar-mode -1))
-  (if (fboundp 'scroll-bar-mode)
-	  (scroll-bar-mode -1))
 #+end_src
 
 * Functions

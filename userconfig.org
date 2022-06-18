@@ -71,6 +71,33 @@ Enable lexical binding.
 	 (concat user-emacs-directory "/modules/mail.el")))
 #+end_src
 
+** =doom-modeline=
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+	:init (doom-modeline-mode)
+	:config
+	(setq doom-modeline-buffer-file-name-style 'file-name
+		  doom-modeline-enable-word-count t
+		  doom-modeline-buffer-encoding nil
+		  doom-modeline-icon t ;; Enable/disable all icons
+		  doom-modeline-modal-icon nil ;; Icon for Evil mode
+		  doom-modeline-hud t ;; Replaces scroll-bar
+		  doom-modeline-major-mode-icon t
+		  doom-modeline-major-mode-color-icon t
+		  doom-modeline-bar-width 3))
+#+end_src
+
+** =disable-gui=
+#+begin_src emacs-lisp
+  (if (fboundp 'menu-bar-mode)
+	  (menu-bar-mode -1))
+  (if (fboundp 'tool-bar-mode)
+	  (tool-bar-mode -1))
+  (if (fboundp 'scroll-bar-mode)
+	  (scroll-bar-mode -1))
+  ;; (set-scroll-bar-mode 'right)
+#+end_src
+
 * Functions
 
 *** =sync/dotfiles=

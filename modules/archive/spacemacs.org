@@ -1,0 +1,10 @@
+* Initialize =spacemacs-themes=
+** Description
+Spacemacs themes.
+** Code
+#+begin_src emacs-lisp
+  (use-package spacemacs-theme
+	:straight t
+	:init
+	(load-theme 'spacemacs-light t))
+#+end_src

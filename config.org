@@ -1318,6 +1318,18 @@ Rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimit
 	:straight t
 	:hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
+*** Initialize =info-variable-pitch=
+**** Description
+Variable pitch text in info mode.
+**** Code
+#+begin_src emacs-lisp
+  (straight-use-package
+   '(info-variable-pitch
+	 :type git :host github
+	 :repo "kisaragi-hiu/info-variable-pitch"))
+
+  (add-hook 'Info-mode-hook #'info-variable-pitch-mode)
+#+end_src
 ** Tools
 *** Initialize =org-auto-tangle=
 Auto tangle org files on save.

@@ -6,11 +6,6 @@
 #+OPTIONS: toc:2
 
 * Introduction
-#+begin_center
-[[./img/screenshot.png]]
-#+end_center
-
-* Preview
 
 [[https://diamondbond.neocities.org/emacs.html][The entire configuration can be viewed here in HTML format]].
 

@@ -580,12 +580,12 @@ Keep the =menu-bar= enabled as it provides quick access to certain functions.
 2022-04-19: Disable all.
 #+begin_src emacs-lisp
   (if (fboundp 'menu-bar-mode)
-	  (menu-bar-mode -1))
+	  (menu-bar-mode 1))
   (if (fboundp 'tool-bar-mode)
 	  (tool-bar-mode -1))
   (if (fboundp 'scroll-bar-mode)
-	  (scroll-bar-mode -1))
-  ;; (set-scroll-bar-mode 'right)
+	  (scroll-bar-mode 1))
+  (set-scroll-bar-mode 'right)
 #+end_src
 **** Global mode line
 https://amodernist.com/texts/emacs-global.html
@@ -1151,7 +1151,7 @@ A fancy and fast mode-line inspired by minimalism design.
 **** Code
 #+begin_src emacs-lisp
   (use-package doom-modeline
-	:straight t
+	:disabled t
 	:init (doom-modeline-mode 1)
 	:config
 	(setq doom-modeline-buffer-file-name-style 'file-name

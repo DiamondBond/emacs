@@ -575,8 +575,6 @@ Emacs will fill up the space reported by the window manager.
 Disable the =tool-bar= as it consumes too many pixels from our frame.
 Keep the =scroll-bar= enabled as it provides contextual information regarding your whereabouts in the buffer.
 Keep the =menu-bar= enabled as it provides quick access to certain functions.
-
-2022-04-19: Disable all.
 #+begin_src emacs-lisp
   (if (fboundp 'menu-bar-mode)
 	  (menu-bar-mode 1))

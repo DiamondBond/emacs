@@ -1020,9 +1020,11 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	(require 'org-noter-pdftools))
 
   (use-package org-pdftools
+	:straight t
 	:hook (org-mode . org-pdftools-setup-link))
 
   (use-package org-noter-pdftools
+	:straight t
 	:after org-noter
 	:config
 	;; Add a function to ensure precise note is inserted

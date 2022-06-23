@@ -24,7 +24,7 @@
 
 ** Preamble
 
-This literate configuration along with its auxiliary files, folders & dependencies (specified [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencies.org][here]]) should result in a modern Emacs experience.
+This literate configuration along with its auxiliary files, folders & dependencies (specified [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencies.org][here]]) should result in my opinionated Emacs HCI.
 
 ** Features
 
@@ -32,30 +32,30 @@ This literate configuration along with its auxiliary files, folders & dependenci
 - Visually appealing without straying too far from the timeless Emacs appearance.
 - Iconography used where possible (all-the-icons in dired & kind-icon for completions)
 - IDE-esque features (lsp, neotree, evil, completions, navigation, git porcelain etc) for /most/ languages (for a full list of supported languages please view the [[https://github.com/DiamondBond/emacs/blob/master/config.org#languages][Languages section]]).
-- Modular completion framework around (corfu, cape, vertico, orderless, marginalia, consult & embark).
-- Email that doesn't suck.
+- Modular completion framework (corfu, cape, vertico, orderless, marginalia, consult & embark).
+- Email (mu4e & offlineimap)
 - IRC (erc & rcirc)
 - News and infotainment aggregation (elfeed/gnus).
 - Media playback control (ncmpcpp/mpd & mpv).
 - Advanced window management (golden-ratio & e2wm).
-- Document manipulation support (PDF/EPUB/HTML/LATEX/MD/ORG, etc) along with viewing aids (olivetti & bionic reading modes).
+- Document manipulation support (PDF/EPUB/HTML/LATEX/MD/ORG, etc) along with viewing aid (olivetti & bionic reading modes).
 - Org-mode planning & scheduling as well as featureful notes and exporting them to a variety of formats.
 - Fully featured writing capabilities; live preview, spellcheck, dictionary & thesaurus lookup, flesch-kincaid reports, quick engine search, common academic phrases helper and etc...
 - Complete search framework (deadgrep, deft & avy) for files & folders.
 
-NOTE: For a full list of features please view the entire configuration, the aforementioned list is only some notable packages/features.
+NOTE: For a full list of features please take time to view this configuration in its entirety, the aforementioned list is only some notable features/packages.
 
 ** Usage
 
-Please feel free to import snippets from my configuration into your own configuration if you want or consider forking this repo & maintaining it with your own customizations or send them my way via a pull request.
+Please feel free to import snippets from my configuration into your own configuration if you want or consider forking this repo & maintaining it with your own customizations or even send them my way via a pull request!
 
-If you would like to use this configuration whilst pulling from upstream every once in a while then consider placing all your customizations in =userconfig.org= & add =userconfig.org= to .gitignore.
+Please edit =globals.org= to your liking.
 
-Please edit =globals.org= to your liking and add it to your =.gitignore= as well.
+If you would like to use this configuration whilst pulling from upstream every once in a while, then consider placing all your customizations in =userconfig.org=.
 
 Make sure you visit this projects [[https://github.com/diamondbond/emacs][Github repo]] for documentation and other information if you are considering using this configuration on your own machine.
 
-NOTE: This configuration is tangled ahead of time for performance reasons and to remove the dependency on org-mode during bootstrap, as a result you will have to use =tangle.sh= in =~/.emacs.d/bin= after you make changes to any =*.org= configuration files.
+NOTE: This configuration is tangled ahead of time for imperative performance reasons and to remove the dependency on org-mode during bootstrap, as a result you will have to use =tangle.sh= in =~/.emacs.d/bin= after you make changes to any =*.org= configuration files.
 You can [[https://github.com/yilkalargaw/org-auto-tangle][read more on tangling here]].
 
 ** Overview
@@ -95,7 +95,7 @@ You can [[https://github.com/yilkalargaw/org-auto-tangle][read more on tangling 
 
 This section tangles out to =early-init.el=.
 
-Many performance optimizations and considerations have gone into designing this file, please refrain from editing it unless absolutely necessary.
+Many performance optimizations and careful consideration has gone into designing this early-init procedure, please refrain from editing, unless absolutely necessary.
 
 NOTE: Regarding GC; we up the GC at startup and lower it after initialization, we then let GCMH handle GC along with a helper function that is hooked onto the minibuffer enter/leave state that triggers further GC, all of this should result in unnoticeable GC during runtime.
 

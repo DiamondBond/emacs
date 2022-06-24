@@ -2509,6 +2509,15 @@ PDF Tools is, among other things, a replacement of DocView for PDF files. The ke
 	:config
 	:hook (pdf-view-mode . pdf-view-restore-mode))
 #+end_src
+*** Initialize =ox-hugo=
+**** Description
+Org exporter backend that exports Org to Hugo-compatible Markdown (Blackfriday) and also generates the front-matter (in TOML or YAML format).
+**** Code
+#+begin_src emacs-lisp
+  (use-package ox-hugo
+	:straight t
+	:after ox)
+#+end_src
 *** Initialize =academic=
 **** Description
 Presents you with a list of phrases organized by the topic or by the paper section that you are writing.

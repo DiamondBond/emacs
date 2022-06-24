@@ -151,7 +151,7 @@ These files will get automatically tangled to their respective locations.
   sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 #+end_src
 
-*** =~/.offlineimaprc=
+*** =~/.offlineimap.py=
 #+begin_src python :tangle ~/.offlineimap.py
   #!/usr/bin/python
   import re, os

@@ -1522,6 +1522,17 @@ An emacs minor mode for inputing math symbols and Unicode symbols.
 	  :type git
 	  :files ("xah-math-input.el")))
 #+end_src
+*** Initialize =smart-jump=
+**** Description
+Smartly go to definition leveraging several methods to do so.
+**** Code
+#+begin_src emacs-lisp
+  (use-package smart-jump
+	:straight t
+	:bind (("M-." . smart-jump-go)
+		   ("M-," . smart-jump-back)
+		   ("M-?" . smart-jump-references)))
+#+end_src
 *** Initialize =midnight=
 **** Description
 Clean buffer list at midnight.

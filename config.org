@@ -2680,12 +2680,13 @@ Go-mode.
 #+end_src
 ** Rust
 *** Description
-Rust-mode.
+Enhanced Rust mode with automatic LSP support.
 *** Code
 #+begin_src emacs-lisp
-  (use-package rust-mode
+  (use-package rustic
 	:straight t
-	:mode "\\.rs\\'")
+	:config
+	(setq rustic-format-on-save nil))
 #+end_src
 ** Lisp
 *** Common Lisp

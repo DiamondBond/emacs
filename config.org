@@ -502,7 +502,7 @@ Set tabs & indents to 4sp.
   (setq-default indent-tabs-mode t)
   (setq-default electric-indent-inhibit nil)
   (setq backward-delete-char-untabify-method 'nil)
-  (electric-indent-mode t) ;; Auto indentation
+  (electric-indent-mode -1) ;; Disable electric indentation
 #+end_src
 *** Set C/C++ tabs & braces
 #+begin_src emacs-lisp

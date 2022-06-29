@@ -2729,11 +2729,6 @@ Geiser - Scheme Lisp REPL.
 	:straight t
 	:after geiser)
 
-  ;; (use-package geiser-chez
-  ;;   :straight t
-  ;;   :after geiser
-  ;;   :config
-
   (defun geiser-save ()
 	"Save geiser repl contents to input ring."
 	(interactive)
@@ -2875,13 +2870,13 @@ Prettier formatter for JSX & TSX.
 *** Code
 #+begin_src emacs-lisp
   (use-package prettier-js
-	:straight t)
-
-  (add-hook 'web-mode-hook #'(lambda ()
-							   (enable-minor-mode
-								'("\\.jsx?\\'" . prettier-js-mode))
-							   (enable-minor-mode
-								'("\\.tsx?\\'" . prettier-js-mode))))
+	:straight t
+	:config
+	(add-hook 'web-mode-hook #'(lambda ()
+								 (enable-minor-mode
+								  '("\\.jsx?\\'" . prettier-js-mode))
+								 (enable-minor-mode
+								  '("\\.tsx?\\'" . prettier-js-mode)))))
 #+end_src
 * Functions
 ** Helper

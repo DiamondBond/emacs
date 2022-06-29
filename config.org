@@ -47,11 +47,11 @@ NOTE: For a full list of features please take time to view this configuration in
 
 ** Usage
 
-Please feel free to import snippets from my configuration into your own configuration if you want or consider forking this repo & maintaining it with your own customizations or even send them my way via a pull request!
+Please feel free to import snippets from my configuration into your own configuration if you want to or consider forking this repo & maintaining it with your own customizations.
 
-Please edit =globals.org= to your liking.
+Edit =globals.org= to your liking.
 
-If you would like to use this configuration whilst pulling from upstream every once in a while, then consider placing all your customizations in =userconfig.org=.
+If you would like to use this configuration whilst pulling from upstream, then consider placing all your customizations in =userconfig.org=.
 
 Make sure you visit this projects [[https://github.com/diamondbond/emacs][Github repo]] for documentation and other information if you are considering using this configuration on your own machine.
 
@@ -95,9 +95,9 @@ You can [[https://github.com/yilkalargaw/org-auto-tangle][read more on tangling 
 
 This section tangles out to =early-init.el=.
 
-Many performance optimizations and careful consideration has gone into designing this early-init procedure, please refrain from editing, unless absolutely necessary.
+Careful consideration regarding performance optimizations has gone into designing this early-init.
 
-NOTE: Regarding GC; we up the GC at startup and lower it after initialization, we then let GCMH handle GC along with a helper function that is hooked onto the minibuffer enter/leave state that triggers further GC, all of this should result in unnoticeable GC during runtime.
+NOTE: Regarding GC; we up the GC at startup and lower it after initialization, we let GCMH handle GC during normal usage along with a helper function that is hooked onto the minibuffer enter/leave state that triggers further GC, all of this should result in unnoticeable GC during runtime.
 
 #+begin_src emacs-lisp :tangle ./early-init.el
   ;;; early-init.el --- Early Initialization. -*- lexical-binding: t; -*-
@@ -177,7 +177,7 @@ NOTE: Regarding GC; we up the GC at startup and lower it after initialization, w
   ;; Disabling the BPA makes redisplay faster, but might produce incorrect display
   ;; reordering of bidirectional text with embedded parentheses and other bracket
   ;; characters whose 'paired-bracket' Unicode property is non-nil.
-  (setq bidi-inhibit-bpa t)  ; Emacs 27 only
+  (setq bidi-inhibit-bpa t)  ; Emacs 27+ only
 
   ;; MISC OPTIMIZATIONS ----
   (setq-default cursor-in-non-selected-windows nil)
@@ -220,6 +220,9 @@ This section tangles out to =init.el= and is considered feature complete as all 
   (setq read-process-output-max (* 1024 1024)) ;; 1mb
   (setq process-adaptive-read-buffering nil)
 
+  ;; Load newer .elc or .el
+  (setq load-prefer-newer t)
+
   ;; Initialize melpa repo
   (require 'package)
   (add-to-list 'package-archives
@@ -255,9 +258,6 @@ This section tangles out to =init.el= and is considered feature complete as all 
 	(straight-recipes-gnu-elpa-use-mirror t)
 	(straight-check-for-modifications nil))
 
-  ;; Load newer .elc or .el
-  (setq load-prefer-newer t)
-
   ;; Load base configuration
   (when (file-readable-p
 		 (concat user-emacs-directory "config.el"))
@@ -269,9 +269,6 @@ This section tangles out to =init.el= and is considered feature complete as all 
 		 (concat user-emacs-directory "userconfig.el"))
 	(load-file
 	 (concat user-emacs-directory "userconfig.el")))
-
-  ;; Garbage collect
-  (garbage-collect)
 
   ;; Restore original GC values
   (add-hook 'emacs-startup-hook

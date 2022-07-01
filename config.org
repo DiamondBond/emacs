@@ -2734,6 +2734,14 @@ Geiser - Scheme Lisp REPL.
 	(interactive)
 	(geiser-repl--write-input-ring))
 #+end_src
+*** SICP
+**** Description
+Structure & Interpretation of Computer Programs in TeXInfo format.
+**** Code
+#+begin_src emacs-lisp
+  (use-package sicp
+	:straight t)
+#+end_src
 ** JSON
 *** Description
 Syntax highlighting for json files.

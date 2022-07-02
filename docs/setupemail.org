@@ -8,6 +8,8 @@
 
 /offlineimap/ is the imap synchronization utility.
 
+[[https://www.djcbsoftware.nl/code/mu/mu4e/Installation.html][mu4e docs]]
+
 ** 0. Prerequisites
 
 *** 0.1 maildir

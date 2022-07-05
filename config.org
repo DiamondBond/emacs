@@ -957,6 +957,10 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 					  "DEFERRED"
 					  "CANCELLED")))
 
+	;; persist org-clock
+	(setq org-clock-persist 'history)
+	(org-clock-persistence-insinuate)
+
 	;; set org-refile targets
 	(when (file-directory-p "~/org")
 	  (setq org-refile-targets
@@ -978,9 +982,11 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 			(lisp        . t)
 			(org         . t)
 			(python      . t)
+			(ditaa       . t)
 			(jupyter     . t)
 			(scheme      . t)
 			(shell       . t)
+			(sh          . t)
 			(C           . t)
 			(sql         . t)))
 
@@ -1000,6 +1006,14 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	("C-c c" . 'org-capture)
 	("C-c l" . 'org-store-link)
 	("C-<f1>" . (lambda()(interactive)(show-all))))
+
+  ;; org-babel shell
+  (use-package ob-shell
+	:straight nil
+	:after org
+	:config
+	(setq org-babel-default-header-args:sh '((:results . "output")))
+	(setq org-babel-default-header-args:shell '((:results . "output"))))
 
   ;; enables asynchronous execution of org-babel src blocks
   (use-package ob-async
@@ -1038,7 +1052,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
 	(defun org-noter-set-start-location (&optional arg)
 	  "When opening a session with this document, go to the current location.
-  With a prefix ARG, remove start location."
+	  With a prefix ARG, remove start location."
 	  (interactive "P")
 	  (org-noter--with-valid-session
 	   (let ((inhibit-read-only t)

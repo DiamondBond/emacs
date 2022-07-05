@@ -1708,6 +1708,16 @@ Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based
 		(add-hook 'vterm-mode-hook
 				  (lambda () (global-hl-line-mode 0)))
 		(setq vterm-max-scrollback 10000)))
+
+  (if (eq system-type 'gnu/linux)
+	  (use-package multi-vterm
+		:straight t
+		:after vterm
+		:config
+		(add-hook 'vterm-mode-hook
+				  (lambda ()
+					;;(setq-local evil-insert-state-cursor 'box)
+					(evil-insert-state)))))
 #+end_src
 *** Initialize =calfw=
 **** Description

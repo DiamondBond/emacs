@@ -1328,7 +1328,7 @@ An extensible emacs startup screen.
 			   (nil
 				"Agenda"
 				"Open Org-Agenda"
-				(lambda (&rest _) (start-to-org-agenda))
+				(lambda (&rest _) (org-agenda))
 				'default)
 			   (nil
 				"Inbox"

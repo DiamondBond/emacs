@@ -1,3 +1,11 @@
+* Prerequisite
+#+begin_src emacs-lisp
+  (disable-theme 'modus-operandi)
+  (pulsar-global-mode 0)
+  (global-hl-line-mode 1)
+  (menu-bar-mode 0)
+  (scroll-bar-mode 0)
+#+end_src
 * Initialize =doom-themes=
 ** Description
 Doom themes.

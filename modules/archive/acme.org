@@ -1,0 +1,22 @@
+* Prerequisite
+#+begin_src emacs-lisp
+  (disable-theme 'modus-operandi)
+  ;;(pulsar-global-mode 0)
+  ;;(global-hl-line-mode 1)
+  (menu-bar-mode 0)
+  (scroll-bar-mode 0)
+#+end_src
+
+* Acme theme
+#+begin_src emacs-lisp
+(use-package acme-theme
+  :config
+  (load-theme 'acme t))
+#+end_src
+
+* Plan9 theme
+#+begin_src emacs-lisp
+(use-package plan9-theme
+  :config
+  (load-theme 'plan9 t))
+#+end_src

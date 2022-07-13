@@ -5,6 +5,8 @@
   ;;(global-hl-line-mode 1)
   (menu-bar-mode 0)
   (scroll-bar-mode 0)
+  (setq dashboard-startup-banner 'official)
+  ;; (dashboard-refresh-buffer)
 #+end_src
 
 * Leuven theme

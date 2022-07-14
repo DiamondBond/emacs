@@ -6,7 +6,7 @@ function org-tangle () {
 }
 
 # set cwd
-cd ~/.emacs.d/
+cd ~/.emacs.d/ || exit
 
 # tangle base configuration
 org-tangle config.org
@@ -24,7 +24,6 @@ if [ $# -eq 1 ]
     source ~/bin/auth-restore.sh
     echo "arguments supplied, restored authinfo backup."
 fi
-
 
 # exit
 exit 0

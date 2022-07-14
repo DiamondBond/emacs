@@ -3023,6 +3023,15 @@ Prettier formatter for JSX & TSX.
 		(vterm-send-return))))
 #+end_src
 ** Config
+*** =config/tangle=
+Tangles the Emacs configuration.
+#+begin_src emacs-lisp
+  (if (eq system-type 'gnu/linux)
+	  (defun config/tangle ()
+		"Tangles this Emacs configuration."
+		(interactive)
+		(shell-command "~/.emacs.d/bin/tangle.sh")))
+#+end_src
 *** =config/reload=
 Tangles & reloads the Emacs configuration.
 #+begin_src emacs-lisp
@@ -3030,6 +3039,7 @@ Tangles & reloads the Emacs configuration.
 	  (defun config/reload ()
 		"Reload this Emacs configuration."
 		(interactive)
+        (config/tangle)
 		(load-file (concat user-emacs-directory "init.el"))))
 #+end_src
 *** =config/update=

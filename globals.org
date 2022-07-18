@@ -27,14 +27,16 @@
    )
 #+end_src
 
-* Font
+* Platform Specific Fonts
 Set font according to system-name/system-type.
 #+begin_src emacs-lisp
-  (if (eq system-name 'mb13)
-	  (setq globals--font "DejaVu Sans Mono 14"))
+  (cond ((eq system-type 'windows-nt)
+		 (setq globals--font "Consolas 12"))
+		((eq system-type 'gnu/linux)
+		 (setq globals--font "DejaVu Sans Mono 12")))
 
-  (if (eq system-type 'windows-nt)
-	  (setq globals--font "Consolas 12"))
+  (if (string= (system-name) 'mb13)
+	  (setq globals--font "DejaVu Sans Mono 14"))
 #+end_src
 
 * Footer

@@ -581,6 +581,13 @@ Keep the =menu-bar= enabled as it provides quick access to certain functions.
 	  (scroll-bar-mode 1))
   (set-scroll-bar-mode 'right)
 #+end_src
+Disable =scroll-bar= & =menu-bar= when running on laptop.
+#+begin_src emacs-lisp
+  (if (string= (system-name) 'mb13)
+	  (menu-bar-mode 0))
+  (if (string= (system-name) 'mb13)
+	  (scroll-bar-mode 0))
+#+end_src
 **** Global mode line
 https://amodernist.com/texts/emacs-global.html
 #+begin_src emacs-lisp

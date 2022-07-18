@@ -568,25 +568,16 @@ Emacs will fill up the space reported by the window manager.
 #+begin_src emacs-lisp
   (blink-cursor-mode -1)
 #+end_src
-**** Disable some gui elements
-Disable the =tool-bar= as it consumes too many pixels from our frame.
-Keep the =scroll-bar= enabled as it provides contextual information regarding your whereabouts in the buffer.
-Keep the =menu-bar= enabled as it provides quick access to certain functions.
+**** Disable gui elements
+Disable =menu-bar=, =tool-bar= & =scroll-bar=.
 #+begin_src emacs-lisp
   (if (fboundp 'menu-bar-mode)
-	  (menu-bar-mode 1))
+	  (menu-bar-mode -1))
   (if (fboundp 'tool-bar-mode)
 	  (tool-bar-mode -1))
   (if (fboundp 'scroll-bar-mode)
 	  (scroll-bar-mode 1))
-  (set-scroll-bar-mode 'right)
-#+end_src
-Disable =scroll-bar= & =menu-bar= when running on laptop.
-#+begin_src emacs-lisp
-  (if (string= (system-name) 'mb13)
-	  (menu-bar-mode 0))
-  (if (string= (system-name) 'mb13)
-	  (scroll-bar-mode 0))
+  ;; (set-scroll-bar-mode 'right)
 #+end_src
 **** Global mode line
 https://amodernist.com/texts/emacs-global.html

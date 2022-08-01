@@ -576,7 +576,7 @@ Disable =menu-bar=, =tool-bar= & =scroll-bar=.
   (if (fboundp 'tool-bar-mode)
 	  (tool-bar-mode -1))
   (if (fboundp 'scroll-bar-mode)
-	  (scroll-bar-mode 1))
+	  (scroll-bar-mode -1))
   ;; (set-scroll-bar-mode 'right)
 #+end_src
 **** Global mode line

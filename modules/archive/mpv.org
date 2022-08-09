@@ -1,0 +1,24 @@
+#+STARTUP: overview
+#+TITLE: MPV Configuration
+#+AUTHOR: Diamond Bond
+#+LANGUAGE: en
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :mkdirp yes :tangle yes :results silent :noweb yes
+
+*** Initialize =mpv=
+**** Description
+Potpourri of helper functions to control a mpv process via its IPC interface.
+**** Code
+#+begin_src emacs-lisp
+  (use-package mpv
+	:straight t
+	:defer 3
+	:config
+	(org-add-link-type "mpv" #'mpv-play)
+	(defun org-mpv-complete-link (&optional arg)
+	  (replace-regexp-in-string
+	   "file:" "mpv:"
+	   (org-file-complete-link arg)
+	   t t))
+	(add-hook 'org-open-at-point-functions #'mpv-seek-to-position-at-point))
+#+end_src

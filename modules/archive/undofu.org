@@ -1,0 +1,15 @@
+#+STARTUP: overview
+#+TITLE: Undo-fu Configuration
+#+AUTHOR: Diamond Bond
+#+LANGUAGE: en
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :mkdirp yes :tangle yes :results silent :noweb yes
+
+*** Initialize =undofu=
+**** Description
+Sane undo & redo.
+See evil module for keybinds.
+**** Code
+#+begin_src emacs-lisp
+  (use-package undo-fu)
+#+end_src

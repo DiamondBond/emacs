@@ -1,0 +1,23 @@
+#+STARTUP: overview
+#+TITLE: Buffers Configuration
+#+AUTHOR: Diamond Bond
+#+LANGUAGE: en
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :mkdirp yes :tangle yes :results silent :noweb yes
+
+*** Initialize =bufler=
+**** Description
+Butler for your buffers, presenting them to you in an organized way based on your instructions.
+**** Code
+#+begin_src emacs-lisp
+  (use-package bufler
+	:straight t)
+#+end_src
+*** Initialize =burly=
+**** Description
+Provides tools to save and restore frame and window configurations.
+**** Code
+#+begin_src emacs-lisp
+  (use-package burly
+	:straight t)
+#+end_src

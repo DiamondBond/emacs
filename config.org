@@ -909,7 +909,7 @@ Alert is a Growl-workalike for Emacs which uses a common notification interface.
 **** Code
 #+begin_src emacs-lisp
   (use-package alert
-	:straight t
+	:disabled t
 	:config
 	(setq alert-fade-time 10)
 	(setq alert-default-style 'libnotify))
@@ -957,7 +957,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 
 	;; persist org-clock
 	(setq org-clock-persist 'history)
-	(org-clock-persistence-insinuate)
+	;; (org-clock-persistence-insinuate)
 
 	;; set org-refile targets
 	(when (file-directory-p "~/org")
@@ -1007,7 +1007,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 
   ;; org-babel shell
   (use-package ob-shell
-	:straight nil
+	:disabled t
 	:after org
 	:config
 	(setq org-babel-default-header-args:sh '((:results . "output")))
@@ -1015,25 +1015,25 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 
   ;; enables asynchronous execution of org-babel src blocks
   (use-package ob-async
-	:straight t
+	:disabled t
 	:after org
 	:config
 	(setq ob-async-no-async-languages-alist '("python" "jupyter-python")))
 
   (use-package org-noter
 	:after org
-	:straight t
+	:disabled t
 	:config (setq org-noter-default-notes-file-names '("noter.org")
 				  org-noter-notes-search-path '("~/org")
 				  org-noter-separate-notes-from-heading t)
 	(require 'org-noter-pdftools))
 
   (use-package org-pdftools
-	:straight t
+	:disabled t
 	:hook (org-mode . org-pdftools-setup-link))
 
   (use-package org-noter-pdftools
-	:straight t
+	:disabled t
 	:after org-noter
 	:config
 	;; Add a function to ensure precise note is inserted
@@ -1070,7 +1070,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
   ;; enable org-roam when ~/org/roam exists
   (when (file-directory-p "~/org/roam")
 	(use-package org-roam
-	  :straight t
+	  :disabled t
 	  :after org
 	  :init
 	  (setq org-roam-v2-ack t)
@@ -1097,7 +1097,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 
   ;; reminders
   (use-package org-wild-notifier
-	:straight t
+	:disabled t
 	:after org
 	:config
 	(setq org-wild-notifier-alert-time '(5 10 15 30 60))
@@ -1108,7 +1108,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 
   ;; display org schedules
   (use-package calfw-org
-	:straight t
+	:disabled t
 	:defer 2
 	:config
 	(setq cfw:org-agenda-schedule-args '(:timestamp :scheduled :deadline)))
@@ -1436,7 +1436,8 @@ Pulse highlight on demand or after select functions.
 (1 + √5) / 2 = 1.618.
 **** Code
 #+begin_src emacs-lisp
-  (use-package golden-ratio)
+  (use-package golden-ratio
+	:straight t)
 #+end_src
 *** Initialize =rainbow-mode=
 **** Description
@@ -1674,7 +1675,8 @@ Sane undo & redo.
 See evil module for keybinds.
 **** Code
 #+begin_src emacs-lisp
-  (use-package undo-fu)
+  (use-package undo-fu
+	:disabled t)
 #+end_src
 *** Initialize =vterm=
 **** Description
@@ -1706,7 +1708,7 @@ Calendar view in Emacs buffer.
 **** Code
 #+begin_src emacs-lisp
   (use-package calfw
-	:straight t)
+	:disabled t)
 #+end_src
 *** Initialize =crux=
 **** Description
@@ -1832,7 +1834,8 @@ Additional git interactions with Forge.
 Travel back and forth through a files history.
 **** Code
 #+begin_src emacs-lisp
-  (use-package git-timemachine :straight t)
+  (use-package git-timemachine
+	:straight t)
 #+end_src
 *** Initialize =autorevert=
 **** Description
@@ -1870,7 +1873,7 @@ Shows keyboard macros or latest interactive commands as Emacs lisp.
 **** Code
 #+begin_src emacs-lisp
   (use-package elmacro
-	:straight t)
+	:disabled t)
 #+end_src
 *** Initialize =which-key=
 **** Description
@@ -2394,7 +2397,7 @@ Gnus, or Gnus Network User Services, is a message reader which is part of GNU Em
 **** Description
 ERC is a powerful, modular, and extensible IRC client for Emacs.
 
-Usage: irc.rizon.net
+Server: irc.rizon.net
 **** Code
 #+begin_src emacs-lisp
   (use-package erc
@@ -2438,7 +2441,7 @@ Usage: irc.rizon.net
 **** Description
 Emacs' builtin irc client.
 
-Usage: irc.libera.chat
+Server: irc.libera.chat
 **** Code
 #+begin_src emacs-lisp
   (use-package rcirc

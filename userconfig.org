@@ -55,20 +55,20 @@ Enable lexical binding.
 
 #+begin_src emacs-lisp
   ;; load reddit module
-  (when (file-directory-p
-		 (concat user-emacs-directory "/modules"))
-	(load-file
-	 (concat user-emacs-directory "/modules/reddit.el")))
+  ;; (when (file-directory-p
+  ;; 	   (concat user-emacs-directory "/modules"))
+  ;;   (load-file
+  ;;    (concat user-emacs-directory "/modules/reddit.el")))
 #+end_src
 
 ** =discord=
 
 #+begin_src emacs-lisp
   ;; load discord module
-  (when (file-directory-p
-		 (concat user-emacs-directory "/modules"))
-	(load-file
-	 (concat user-emacs-directory "/modules/discord.el")))
+  ;; (when (file-directory-p
+  ;; 	   (concat user-emacs-directory "/modules"))
+  ;;   (load-file
+  ;;    (concat user-emacs-directory "/modules/discord.el")))
 #+end_src
 
 * Functions

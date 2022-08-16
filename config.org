@@ -1239,6 +1239,15 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
+*** Initialize =ef-themes=
+**** Description
+Minimum contrast ratio of 4.5:1 against the main background (WCAG AA standard).
+**** Code
+#+begin_src emacs-lisp
+  (use-package ef-themes
+	:disabled t
+	:straight (:type git :repo "https://git.sr.ht/~protesilaos/ef-themes"))
+#+end_src
 *** Initialize =dashboard=
 **** Description
 An extensible emacs startup screen.

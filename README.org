@@ -37,6 +37,7 @@ If you care about fancy icons, install the fonts provided by [[https://github.co
 #+end_src
 
 *** Windows
+
 [[https://github.com/domtronn/all-the-icons.el/archive/refs/heads/master.zip][Download]] & extract to C:\Windows\Fonts
 
 ** LSP

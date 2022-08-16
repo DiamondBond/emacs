@@ -24,7 +24,7 @@
 
 ** Preamble
 
-This literate configuration along with its auxiliary files, folders & dependencies (specified [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencies.org][here]]) should result in my opinionated Emacs HCI.
+This literate configuration along with its auxiliary files, folders & dependencies (specified [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencies.org][here]]) should result in an opinionated Emacs HCI.
 
 ** Features
 

@@ -1606,8 +1606,7 @@ Tree layout file explorer.
 **** Code
 #+BEGIN_SRC emacs-lisp
   (use-package treemacs
-	:ensure t
-	:defer t
+	:disabled t
 	:init
 	(with-eval-after-load 'winum
 	  (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
@@ -1667,11 +1666,11 @@ Tree layout file explorer.
 
   (use-package treemacs-evil
 	:after treemacs evil
-	:ensure t)
+	:disabled t)
 
   (use-package treemacs-icons-dired
 	:after treemacs dired
-	:ensure t
+	:disabled t
 	:config (treemacs-icons-dired-mode))
 #+END_SRC
 *** Initialize =htmlize=

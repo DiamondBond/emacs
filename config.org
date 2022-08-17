@@ -844,6 +844,10 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (define-key global-map (kbd "C-S-n") #'next-15-lines)
   (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 
+  ;; c-mode
+  (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
+  ;; (global-set-key "\C-m" 'newline-and-indent)
+
 #+end_src
 ** sane-map
 #+begin_src emacs-lisp

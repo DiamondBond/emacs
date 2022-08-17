@@ -1153,6 +1153,7 @@ Add icons and subtree's to dired.
 
   (use-package dired-hide-dotfiles
 	:straight t
+	:diminish dired-hide-dotfiles-mode
 	:hook (dired-mode . dired-hide-dotfiles-mode))
 #+end_src
 *** Initialize =smartparens=

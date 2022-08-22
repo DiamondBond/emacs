@@ -317,7 +317,7 @@ Show alerts for unread emails.
 **** Code
 #+begin_src emacs-lisp
   (use-package mu4e-alert
-	:straight t
+	:disabled t
 	:init
 	(defun db/mu4e-notif ()
 	  "Display both mode line and desktop alerts for incoming new emails."

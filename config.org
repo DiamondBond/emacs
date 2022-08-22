@@ -607,7 +607,7 @@ Show column number in modeline.
 #+end_src
 **** Enable global-highlight-line-mode
 #+begin_src emacs-lisp
-  ;; (global-hl-line-mode t)
+  (global-hl-line-mode t)
 #+end_src
 **** Enable prettify-symbols-mode
 #+begin_src emacs-lisp
@@ -1391,7 +1391,8 @@ Pulse highlight on demand or after select functions.
 **** Code
 #+begin_src emacs-lisp
   (use-package pulsar
-	:straight (pulsar :host gitlab :repo "protesilaos/pulsar")
+	:disabled t
+	;; :straight (pulsar :host gitlab :repo "protesilaos/pulsar")
 	:custom
 	(pulsar-pulse-functions ; Read the doc string for why not `setq'
 	 '(recenter-top-bottom

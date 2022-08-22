@@ -1,0 +1,14 @@
+* Prerequisite
+#+begin_src emacs-lisp
+  (disable-theme 'modus-operandi)
+#+end_src
+* Initialize =zenburn-theme=
+** Description
+Zenburn theme.
+** Code
+#+begin_src emacs-lisp
+(use-package zenburn-theme
+  :straight t
+  :config
+  (load-theme 'zenburn t))
+#+end_src

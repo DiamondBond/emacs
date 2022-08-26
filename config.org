@@ -785,7 +785,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (define-key z-map (kbd "W") 'elfeed)
   (define-key z-map (kbd "F") 'follow-mode)
   (define-key z-map (kbd "U") 'undo-redo)
-  (define-key z-map (kbd "I") 'consult-imenu)
+  (define-key z-map (kbd "i") 'consult-imenu)
 
   ;; quick
   (define-key z-map (kbd "x") 'switch-to-buffer-other-frame)
@@ -808,7 +808,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   ;; files
   (define-key z-map (kbd "n") 'notes-edit)
   (define-key z-map (kbd "c") 'config-edit)
-  (define-key z-map (kbd "i") 'inbox-edit)
+  (define-key z-map (kbd "I") 'inbox-edit)
   (define-key z-map (kbd "t") 'tasks-edit)
 
 #+end_src

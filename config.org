@@ -1493,7 +1493,7 @@ Minimap sidebar.
 **** Code
 #+begin_src emacs-lisp
   (use-package minimap
-	:straight t)
+	:disabled t)
 #+end_src
 ** Tools
 *** Initialize =org-auto-tangle=

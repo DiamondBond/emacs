@@ -779,7 +779,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 #+end_src
 * Use-package
 ** Core
-*** Initialize =elisp=
+*** Initialize =misc=
 **** Description
 Elisp enhancers.
 **** Code

@@ -10,7 +10,7 @@ cd ~/.emacs.d/ || exit
 
 # tangle base configuration
 org-tangle config.org
-org-tangle globals.org
+#org-tangle globals.org
 org-tangle userconfig.org
 
 # tangle modules

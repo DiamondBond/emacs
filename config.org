@@ -640,7 +640,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 **** Code
 #+begin_src emacs-lisp
   (use-package org
-	:straight t
+	:straight (:type built-in)
 	:config
 	;; sensible defaults
 	(setq initial-major-mode 'org-mode

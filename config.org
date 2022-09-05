@@ -846,7 +846,7 @@ Heresy; Vim keybindings in Emacs.
 	(evil-set-initial-state 'vterm-mode 'insert)
 	;; normal
 	(evil-set-initial-state 'messages-buffer-mode 'normal)
-	(evil-set-initial-state 'mu4e-main-mode 'emacs)
+	;; (evil-set-initial-state 'mu4e-main-mode 'emacs)
 	;; motion
 	(evil-set-initial-state 'dashboard-mode 'motion)
 	(evil-set-initial-state 'debugger-mode 'motion)
@@ -1177,9 +1177,9 @@ Enable on the fly with M-x flyspell-mode.
 	(add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_EXPORT" . "^#\\+END_EXPORT"))
 	(add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_EXPORT" . "^#\\+END_EXPORT"))
 	(add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
-	(dolist (mode '(;; org-mode-hook ;; slows down org-mode
-					mu4e-compose-mode-hook))
-	  (add-hook mode (lambda () (flyspell-mode 1))))
+	;; (dolist (mode '(;; org-mode-hook ;; slows down org-mode
+	;; 				  mu4e-compose-mode-hook))
+	;; 	(add-hook mode (lambda () (flyspell-mode 1))))
 	(if (eq system-type 'gnu/linux)
 		(setq ispell-program-name "hunspell"))
 	(if (eq system-type 'windows-nt)
@@ -1402,7 +1402,7 @@ Additional git interactions with Forge.
 **** Code
 #+begin_src emacs-lisp
   (use-package forge
-	:straight t)
+	:disabled t)
 #+end_src
 *** Initialize =git-timemachine=
 **** Description
@@ -1410,7 +1410,7 @@ Travel back and forth through a files history.
 **** Code
 #+begin_src emacs-lisp
   (use-package git-timemachine
-	:straight t)
+	:disabled t)
 #+end_src
 *** Initialize =autorevert=
 **** Description
@@ -2149,128 +2149,6 @@ Persist history over Emacs restarts. Vertico sorts by history position.
 	:straight t
 	:init
 	(savehist-mode))
-#+end_src
-** Email
-*** Initialise =mu4e=
-**** Description
-mu4e is an email client for Emacs. It's based on the mu email indexer/searcher. It's not information overload. It's filter failure. mu4e's mission is to be a better filter.
-**** Code
-#+begin_src emacs-lisp
-  (when (file-directory-p
-		 (concat user-emacs-directory "~/mail"))
-	(use-package mu4e
-	  :straight ( :host github
-				  :repo "djcb/mu"
-				  :branch "master"
-				  :files ("build/mu4e/*")
-				  :pre-build (("./autogen.sh") ("make")))
-	  :custom   (mu4e-mu-binary (expand-file-name "build/mu/mu" (straight--repos-dir "mu")))
-	  :config
-	  ;; default
-	  (require 'org-mu4e)
-	  (setq mu4e-maildir (expand-file-name "~/mail"))
-
-	  ;; set folders
-	  (setq mu4e-drafts-folder "/[Gmail].Drafts")
-	  (setq mu4e-sent-folder   "/[Gmail].Sent Mail")
-	  (setq mu4e-trash-folder  "/[Gmail].Trash")
-
-	  ;; don't save message to Sent Messages, GMail/IMAP will take care of this
-	  (setq mu4e-sent-messages-behavior 'delete)
-
-	  ;; composing mail
-	  (setq mu4e-compose-dont-reply-to-self t)
-
-	  ;; don't keep message buffers around
-	  (setq message-kill-buffer-on-exit t)
-
-	  ;; display options
-	  (setq mu4e-view-show-images t)
-	  (setq mu4e-view-show-addresses 't)
-
-	  ;; make sure that moving a message (like to Trash) causes the
-	  ;; message to get a new file name.  This helps to avoid the
-	  ;; dreaded "UID is N beyond highest assigned" error.
-	  ;; See this link for more info: https://stackoverflow.com/a/43461973
-	  (setq mu4e-change-filenames-when-moving t)
-
-	  ;; setup some handy shortcuts
-	  (setq mu4e-maildir-shortcuts
-			'(("/INBOX"             . ?i)
-			  ("/[Gmail].Sent Mail" . ?s)
-			  ("/[Gmail].Trash"     . ?t)))
-
-	  ;; attachments go here
-	  (setq mu4e-attachment-dir  "~/mail/attachments")
-
-	  ;; modify behavior when putting something in the trash (T flag) so as
-	  ;; to make it sync to the remote server. This code deals with the bug
-	  ;; that, whenever a message is marked with the trash label T,
-	  ;; offlineimap wont sync it back to the gmail servers.
-	  ;;
-	  ;; NOTE: Taken from
-	  ;; http://cachestocaches.com/2017/3/complete-guide-email-emacs-using-mu-and-/
-	  (defun remove-nth-element (nth list)
-		(if (zerop nth) (cdr list)
-		  (let ((last (nthcdr (1- nth) list)))
-			(setcdr last (cddr last))
-			list)))
-	  (setq mu4e-marks (remove-nth-element 5 mu4e-marks))
-	  (add-to-list 'mu4e-marks
-				   '(trash
-					 :char ("d" . "▼")
-					 :prompt "dtrash"
-					 :dyn-target (lambda (target msg) (mu4e-get-trash-folder msg))
-					 :action (lambda (docid msg target)
-							   (mu4e~proc-move docid
-											   (mu4e~mark-check-target target) "-N"))))
-
-	  ;; inbox-query
-	  (setq db/mu4e-inbox-query
-			"(maildir:/Inbox OR maildir:/INBOX) AND flag:unread")
-
-	  ;; go-to-inbox function
-	  (defun db/go-to-inbox ()
-		"View unread inbox."
-		(interactive)
-		(mu4e-headers-search db/mu4e-inbox-query))
-
-	  ;; allow for updating mail using 'U' in the main view:
-	  (setq mu4e-get-mail-command "offlineimap")
-
-	  ;; why would I want to leave my message open after I've sent it?
-	  (setq message-kill-buffer-on-exit t)
-	  ;; don't ask for a 'context' upon opening mu4e
-	  (setq mu4e-context-policy 'pick-first)
-	  ;; don't ask to quit
-	  (setq mu4e-confirm-quit nil)
-
-	  ;; define z-map keybind
-	  (define-key z-map (kbd "M") 'mu4e)
-
-	  ;; start mu4e
-	  (mu4e t)))
-#+end_src
-*** Initialize =smtpmail=
-**** Description
-Smtp mail within Emacs.
-**** Code
-#+begin_src emacs-lisp
-  (when (file-directory-p
-		 (concat user-emacs-directory "~/mail"))
-	(use-package smtpmail
-	  :straight t
-	  :config
-	  (setq message-send-mail-function 'smtpmail-send-it
-			starttls-use-gnutls t
-			smtpmail-starttls-credentials
-			'(("smtp.gmail.com" 587 nil nil))
-			smtpmail-auth-credentials
-			(expand-file-name "~/.authinfo.gpg")
-			smtpmail-default-smtp-server "smtp.gmail.com"
-			smtpmail-smtp-server "smtp.gmail.com"
-			smtpmail-smtp-service 587
-			smtpmail-debug-info t)))
 #+end_src
 * Languages
 ** LSP

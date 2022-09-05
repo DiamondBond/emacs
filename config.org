@@ -11,15 +11,6 @@
 #+PROPERTY: header-args :mkdirp yes :tangle yes :results silent :noweb yes
 #+auto_tangle: t
 
-#+begin_center
-
-[[./img/gnusstorm-2.gif]]
-
-*[DIAMOND'S EMACS]*
-
-[[https://github.com/diamondbond/emacs][*Github*]] | [[https://raw.githubusercontent.com/DiamondBond/emacs/master/config.org][*Source*]]
-#+end_center
-
 * Core
 ** Early-Init
 
@@ -230,14 +221,22 @@ This section tangles out to =init.el=.
 #+end_src
 ** Globals
 *** Description
-Load global variables.
+Define global variables.
 *** Code
 #+begin_src emacs-lisp
-  ;; Load global configuration
-  (when (file-readable-p
-		 (concat user-emacs-directory "globals.el"))
-	(load-file
-	 (concat user-emacs-directory "globals.el")))
+  ;; Set global configuration
+  (setq
+   globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
+   ;; globals--font         "DejaVu Sans Mono 12"                ; Font
+   globals--font         "Consolas 14"                		  ; Font
+   globals--name         "Diamond Bond"                       ; Name
+   globals--email        "diamondbond1@gmail.com"             ; Email
+   globals--irc          "diamondbond"                        ; IRC
+   globals--erc          '("diamondbond" "diamondbond_")      ; ERC
+   globals--auth-info    "~/.authinfo.gpg"                    ; Auth Info
+   globals--auth-sources '("~/.authinfo.gpg")                 ; Auth Sources
+   globals--browser      'browse-url-firefox                  ; Browser
+   )
 #+end_src
 ** Personal
 *** Identity
@@ -551,20 +550,6 @@ Enable visual-line-mode in text buffers & org + md4rd.
   (add-hook 'text-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'md4rd-mode-hook 'visual-line-mode)
-#+end_src
-** Constants
-#+begin_src emacs-lisp
-  (defconst *sys/win32*
-	(eq system-type 'windows-nt)
-	"Are we running on a Windows/NT system?")
-
-  (defconst *sys/linux*
-	(eq system-type 'gnu/linux)
-	"Are we running on a GNU/Linux system?")
-
-  (defconst *sys/mac*
-	(eq system-type 'darwin)
-	"Are we running on a MacOS system?")
 #+end_src
 ** Aliases
 *** Basic

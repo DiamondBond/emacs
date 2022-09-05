@@ -1065,15 +1065,6 @@ Variable pitch text in info mode.
   (add-hook 'Info-mode-hook #'info-variable-pitch-mode)
 #+end_src
 ** Tools
-*** Initialize =org-auto-tangle=
-Auto tangle org files on save.
-#+begin_src emacs-lisp
-  (use-package org-auto-tangle
-	:disabled t
-	:defer t
-	:diminish org-auto-tangle-mode
-	:hook (org-mode . org-auto-tangle-mode))
-#+end_src
 *** Initialize =so-long=
 **** Description
 So long to long lines.
@@ -1396,22 +1387,6 @@ Indication of local VCS changes.
   (use-package diff-hl
 	:straight t)
 #+end_src
-*** Initialize =forge=
-**** Description
-Additional git interactions with Forge.
-**** Code
-#+begin_src emacs-lisp
-  (use-package forge
-	:disabled t)
-#+end_src
-*** Initialize =git-timemachine=
-**** Description
-Travel back and forth through a files history.
-**** Code
-#+begin_src emacs-lisp
-  (use-package git-timemachine
-	:disabled t)
-#+end_src
 *** Initialize =autorevert=
 **** Description
 Autorevert hooked buffers & diminish auto-revert-mode.
@@ -1441,14 +1416,6 @@ Expand the word in the buffer before point as a dynamic abbrev, by searching for
 	;; swap M-/ and C-M-/
 	:bind (("M-/" . dabbrev-completion)
 		   ("C-M-/" . dabbrev-expand)))
-#+end_src
-*** Initialize =elmacro=
-**** Description
-Shows keyboard macros or latest interactive commands as Emacs lisp.
-**** Code
-#+begin_src emacs-lisp
-  (use-package elmacro
-	:disabled t)
 #+end_src
 *** Initialize =which-key=
 **** Description

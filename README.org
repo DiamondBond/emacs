@@ -27,9 +27,7 @@ If you care about fancy icons, install the fonts provided by [[https://github.co
   M-x all-the-icons-install-fonts
 #+end_src
 
-*** Windows
-
-[[https://github.com/domtronn/all-the-icons.el/archive/refs/heads/master.zip][Download]] & extract to C:\Windows\Fonts
+If you are using Windows then [[https://github.com/domtronn/all-the-icons.el/archive/refs/heads/master.zip][Download]] all-the-icons fonts & extract to C:\Windows\Fonts
 
 ** LSP
 
@@ -43,16 +41,12 @@ Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.
 
 Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencies.org][Dependencies documentation]].
 
-*** Windows
-
-Refer to the *WIP* [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsonwin.org][Windows Dependencies documentation]].
-
-* Contributors
-
-@wereket
+If you are on Windows then refer to the *WIP* [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsonwin.org][Windows Dependencies documentation]].
 
 * Thanks
 
 Nicolas Rougier - CSS
 
 Xah Lee - wolfram-mode & math-input-mode
+
+wereket - testing

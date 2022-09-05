@@ -15,7 +15,7 @@ org-tangle config.org
 
 # tangle modules
 #org-tangle modules/evil.org
-org-tangle modules/mail.org
+#org-tangle modules/mail.org
 #org-tangle modules/reddit.org
 #org-tangle modules/discord.org
 

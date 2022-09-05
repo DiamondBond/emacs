@@ -19,15 +19,6 @@ Clone this repo:
   $ git clone https://github.com/diamondbond/emacs.git ~/.emacs.d --depth 1
 #+end_src
 
-[[https://github.com/DiamondBond/emacs/blob/master/bin/tangle.sh][Tangle]]:
-
-#+begin_src sh
-  $ cd ~/.emacs.d/bin
-  $ ./tangle.sh
-#+end_src
-
-*NOTE:* Please run tangle.sh whenever you edit a =.org= configuration file.
-
 ** Icons
 
 If you care about fancy icons, install the fonts provided by [[https://github.com/domtronn/all-the-icons.el][all the icons]]:
@@ -55,67 +46,6 @@ Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencie
 *** Windows
 
 Refer to the *WIP* [[https://github.com/DiamondBond/emacs/blob/master/docs/emacsonwin.org][Windows Dependencies documentation]].
-
-** Customization
-
-Edit =.emacs.d/globals.org= to change the default username, email address, nicks & browser.
-
-Edit =.emacs.d/userconfig.org= to add your custom settings and/or override base settings.
-
-You may also edit =.emacs.d/config.org= directly, but your custom settings might be wiped out during an update.
-
-* Usage
-
-** Tangling
-
-This Emacs configuration will auto-tangle all the related configuration .org files on save thanks to [[https://github.com/yilkalargaw/org-auto-tangle][org-auto-tangle]].
-
-Add tangle.sh to your =$PATH= in your =~/.bashrc= file:
-
-#+begin_src sh
-  PATH="$HOME/.emacs.d/bin:$PATH"
-#+end_src
-
-Now you can run tangle.sh from anywhere.
-
-I recommend adding this alias to your =~/.bash_aliases= file:
-
-#+begin_src sh
-  alias edaemon="tangle.sh && emacs --daemon"
-#+end_src
-
-This will tangle and start the Emacs daemon.
-
-NOTE: call =tangle.sh= with an arbitrary argument to use [[https://github.com/DiamondBond/bin/blob/master/auth-restore.sh][M-x auth-restore]].
-
-*** Windows
-Run =tangle.bat= instead of =tangle.sh=.
-
-** Running
-
-Start Emacs with:
-
-#+begin_src sh
-  $ edaemon
-#+end_src
-
-Connect to the Emacs daemon via =emacsclient= with the following command:
-
-#+begin_src sh
-  $ emacsclient -c -n -a 'emacs'
-#+end_src
-
-*** Windows
-
-Run =daemon.bat= and wait for the Emacs daemon to start then run =summon.bat= to summon a frame.
-
-** Updating
-
-Update this Emacs configuration and upgrade its packages with:
-
-#+begin_src emacs-lisp
-  M-x config/update
-#+end_src
 
 * Contributors
 

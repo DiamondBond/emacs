@@ -181,12 +181,6 @@ This section tangles out to =init.el=.
 	(load-file
 	 (concat user-emacs-directory "config.el")))
 
-  ;; Load user configuration
-  (when (file-readable-p
-		 (concat user-emacs-directory "userconfig.el"))
-	(load-file
-	 (concat user-emacs-directory "userconfig.el")))
-
   ;; Restore original GC values
   (add-hook 'emacs-startup-hook
 			(lambda ()
@@ -908,8 +902,12 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 
 	:bind
 	("C-c c" . 'org-capture)
+	("C-c a" . 'org-agenda)
 	("C-c l" . 'org-store-link)
 	("C-<f1>" . (lambda()(interactive)(show-all))))
+
+  (use-package org-contrib
+	:straight t)
 
   ;; enable dnd images into org-mode & dired buffers
   (when (file-directory-p "~/org/img")
@@ -1005,6 +1003,68 @@ Smart parentheses.
 			   :unless '(sp-point-before-word-p sp-point-before-same-p)))
 	(smartparens-global-mode t))
 #+end_src
+*** Initialize =evil=
+**** Description
+Heresy; Vim keybindings in Emacs.
+**** Code
+#+begin_src emacs-lisp
+  (use-package evil
+	:straight t
+	:defer nil
+	:init
+	(setq evil-want-keybinding nil)
+	(setq evil-want-C-u-scroll t)
+	:config
+	;; enable evil-mode
+	(evil-mode 1)
+
+	;; more granular undo with evil
+	(setq evil-want-fine-undo t)
+
+	;; set evil state on a per mode basis
+	;; insert
+	(evil-set-initial-state 'vterm-mode 'insert)
+	;; normal
+	(evil-set-initial-state 'messages-buffer-mode 'normal)
+	(evil-set-initial-state 'mu4e-main-mode 'emacs)
+	;; motion
+	(evil-set-initial-state 'dashboard-mode 'motion)
+	(evil-set-initial-state 'debugger-mode 'motion)
+	(evil-set-initial-state 'pdf-view-mode 'motion)
+	;; emacs
+	(evil-set-initial-state 'nov-mode 'emacs)
+	(evil-set-initial-state 'term-mode 'emacs)
+	(evil-set-initial-state 'eshell-mode 'emacs)
+	(evil-set-initial-state 'bufler-list-mode 'emacs)
+	(evil-set-initial-state 'profiler-report-mode 'emacs)
+	(evil-set-initial-state 'inferior-scheme-mode 'emacs)
+	;; (evil-set-initial-state 'md4rd-mode 'emacs)
+	(evil-set-initial-state 'pdf-view-mode 'emacs)
+	(evil-set-initial-state 'dictionary-mode ' emacs)
+	;; e2wm
+	;; (evil-set-initial-state 'e2wm:def-plugin-history-list-mode 'emacs)
+	;; (evil-set-initial-state 'e2wm:def-plugin-files-mode 'emacs)
+	;; (evil-set-initial-state 'e2wm:def-plugin-imenu-mode 'emacs)
+
+	;; undo (requires undo-fu)
+	;; (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
+	;; (define-key evil-normal-state-map "U" 'undo-fu-only-redo)
+
+	;; <tab> cycles org-mode visiblity
+	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
+
+	;; :q kills buffer
+	(evil-ex-define-cmd "q" 'delete-window))
+
+  (use-package evil-collection
+	:after evil
+	:config
+	(setq evil-collection-mode-list '(dired (custom cus-edit) (package-menu package) calc diff-mode))
+	(evil-collection-init)
+	;; A few of my own overrides/customizations
+	(evil-collection-define-key 'normal 'dired-mode-map
+	  (kbd "RET") 'dired-find-alternate-file))
+#+end_src
 ** Visual
 *** Initialize =modus-themes=
 **** Description
@@ -1051,11 +1111,6 @@ An extensible emacs startup screen.
 	  (interactive)
 	  (if (file-exists-p (concat user-emacs-directory "globals.org"))
 		  (find-file (concat user-emacs-directory "globals.org"))))
-	(defun userconfig-edit ()
-	  "Edit user configuration file."
-	  (interactive)
-	  (if (file-exists-p (concat user-emacs-directory "userconfig.org"))
-		  (find-file (concat user-emacs-directory "userconfig.org"))))
 	(when (file-directory-p "~/org")
 	  (defun notes-edit ()
 		"Edit notes file."
@@ -1278,14 +1333,19 @@ Clean buffer list at midnight.
 	:config
 	(setq clean-buffer-list-delay-general 1))
 #+end_src
-*** Initialize =flycheck=
+*** Initialize =flymake=
 **** Description
 Modern on-the-fly syntax checking extension.
 **** Code
 #+begin_src emacs-lisp
-  (use-package flycheck
+  (use-package flymake
 	:straight t
-	:hook (prog-mode . flycheck-mode))
+	:config
+	;; Message navigation bindings
+	(with-eval-after-load 'flymake
+	  (define-key flymake-mode-map (kbd "C-c n") #'flymake-goto-next-error)
+	  (define-key flymake-mode-map (kbd "C-c p") #'flymake-goto-prev-error))
+	:hook (prog-mode . flymake-mode))
 #+end_src
 *** Initialize =flyspell=
 **** Description
@@ -1504,11 +1564,22 @@ The definitive Git porcelain for Emacs.
 **** Code
 #+begin_src emacs-lisp
   (use-package magit
-	:straight t)
+	:straight t
+	:config
+	;; Bind the `magit-status' command to a convenient key.
+	(global-set-key (kbd "C-c g") #'magit-status))
 
   ;; bindings to help improve the speed of magit
   ;; (use-package libgit :straight t)
   ;; (use-package magit-libgit :straight t)
+#+end_src
+*** Initialize =diff-hl=
+**** Description
+Indication of local VCS changes.
+**** Code
+#+begin_src emacs-lisp
+  (use-package diff-hl
+	:straight t)
 #+end_src
 *** Initialize =forge=
 **** Description
@@ -1719,6 +1790,7 @@ Provides practical commands based on the Emacs completion function =completing-r
 	:bind
 	(;; C-c bindings (mode-specific-map)
 	 ("C-c h" . consult-history)
+	 ("C-c j" . consult-line)
 
 	 ;; ("C-c m" . consult-mode-command)
 	 ("C-c b" . consult-bookmark)
@@ -1831,8 +1903,9 @@ This is not a package but instead a set of useful configurations to be used when
 	(setq enable-recursive-minibuffers t)
 
 	;; completion ignores case
-	(setq completion-ignore-case t)
-	(setq read-file-name-completion-ignore-case t)
+	(setq read-buffer-completion-ignore-case t
+		  read-file-name-completion-ignore-case t
+		  completion-ignore-case t)
 
 	;; allow Emacs to resize mini windows
 	(setq resize-mini-windows t))
@@ -2262,6 +2335,14 @@ Persist history over Emacs restarts. Vertico sorts by history position.
 	:init
 	(savehist-mode))
 #+end_src
+** Email
+#+begin_src emacs-lisp
+  ;; load email module
+  (when (file-directory-p
+		 (concat user-emacs-directory "~/mail"))
+	(load-file
+	 (concat user-emacs-directory "/modules/mail.el")))
+#+end_src
 * Languages
 ** LSP
 *** Description
@@ -2333,6 +2414,23 @@ Language Server Protocol, handles the following languages:
 	:hook (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred)))
 	:init (when (executable-find "python3")
 			(setq lsp-pyright-python-executable-cmd "python3")))
+#+end_src
+** Eglot
+*** Description
+Language Server Protocol with eglot.
+*** Code
+#+begin_src emacs-lisp
+  ;; LSP
+  (use-package eglot
+	:disabled t
+	:config
+	;; Enable LSP support by default in programming buffers
+	(add-hook 'prog-mode-hook #'eglot-ensure))
+
+  ;; Pop-up auto-completion
+  (use-package company
+	:disabled t
+	:hook (prog-mode . company-mode))
 #+end_src
 ** C/C++
 Default C/C++ mode is sufficient.
@@ -2501,12 +2599,14 @@ Markdown-mode & enable auto fill.
 Auctex for LaTeX.
 *** Code
 #+begin_src emacs-lisp
-  (use-package tex
-	:straight auctex
+  (use-package auctex
+	:straight t
 	:config
 	(setq TeX-auto-save t)
 	(setq TeX-parse-self t)
-	(setq-default TeX-master nil))
+	(setq-default TeX-master nil)
+	;; Enable LaTeX math support
+	(add-hook 'LaTeX-mode-map #'LaTeX-math-mode))
 #+end_src
 ** Javascript
 *** Description
@@ -2679,6 +2779,15 @@ Prettier formatter for JSX & TSX.
 		(vterm-send-string command)
 		(vterm-send-return))))
 #+end_src
+*** Yank Whole Buffer
+#+begin_src emacs-lisp
+  (defun yank-whole-buffer ()
+	"Yank whole buffer."
+	(interactive)
+	(save-excursion
+	  (mark-whole-buffer)
+	  (call-interactively 'evil-yank)))
+#+end_src
 ** Config
 *** =config/tangle=
 Tangles the Emacs configuration.
@@ -2718,6 +2827,43 @@ Opens this Emacs configuration GitHub website.
 	"Opens this configurations GitHub website."
 	(interactive)
 	(browse-url "https://github.com/diamondbond/emacs"))
+#+end_src
+*** =auth/backup=
+Backup auth files.
+#+begin_src emacs-lisp
+  (when (file-readable-p "~/bin/auth-backup.sh")
+	(defun auth/backup ()
+	  "Backup auth."
+	  (interactive)
+	  (async-shell-command "~/bin/auth-backup.sh")))
+#+end_src
+*** =auth/restore=
+Restore auth files.
+#+begin_src emacs-lisp
+  (when (file-readable-p "~/bin/auth-restore.sh")
+	(defun auth/restore ()
+	  "Restore auth."
+	  (interactive)
+	  (async-shell-command "~/bin/auth-restore.sh")))
+#+end_src
+*** =sync/dotfiles=
+Sync dotfiles to GitHub.
+#+begin_src emacs-lisp
+  (when (file-readable-p "~/bin/sync-dotfiles.sh")
+	(defun sync/dotfiles ()
+	  "Sync dotfiles."
+	  (interactive)
+	  (async-shell-command "~/bin/sync-dotfiles.sh")))
+#+end_src
+*** =sync/neocities=
+Sync Emacs configuration to neocities.
+#+begin_src emacs-lisp
+  (when (file-readable-p "~/bin/sync-neocities.sh")
+	(defun sync/neocities ()
+	  "Sync neocities."
+	  (interactive)
+	  (save-window-excursion
+		(async-shell-command "~/bin/sync-neocities.sh"))))
 #+end_src
 ** Insert
 *** Date

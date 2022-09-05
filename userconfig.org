@@ -35,10 +35,10 @@ Enable lexical binding.
 
 #+begin_src emacs-lisp
   ;; load evil module
-  (when (file-directory-p
-		 (concat user-emacs-directory "/modules"))
-	(load-file
-	 (concat user-emacs-directory "/modules/evil.el")))
+  ;; (when (file-directory-p
+  ;; 	   (concat user-emacs-directory "/modules"))
+  ;;   (load-file
+  ;;    (concat user-emacs-directory "/modules/evil.el")))
 #+end_src
 
 ** =email=

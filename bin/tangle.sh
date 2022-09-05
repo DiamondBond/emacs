@@ -11,10 +11,10 @@ cd ~/.emacs.d/ || exit
 # tangle base configuration
 org-tangle config.org
 #org-tangle globals.org
-org-tangle userconfig.org
+#org-tangle userconfig.org
 
 # tangle modules
-org-tangle modules/evil.org
+#org-tangle modules/evil.org
 org-tangle modules/mail.org
 #org-tangle modules/reddit.org
 #org-tangle modules/discord.org

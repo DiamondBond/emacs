@@ -20,84 +20,10 @@
 [[https://github.com/diamondbond/emacs][*Github*]] | [[https://raw.githubusercontent.com/DiamondBond/emacs/master/config.org][*Source*]]
 #+end_center
 
-* Introduction
-
-** Preamble
-
-This literate configuration along with its auxiliary files, folders & dependencies (specified [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencies.org][here]]) should result in an opinionated Emacs HCI.
-
-** Features
-
-- A strong, performant & stable foundation with optimizations applied.
-- Visually appealing without straying too far from the timeless Emacs appearance.
-- Iconography used where possible (all-the-icons in dired & kind-icon for completions)
-- IDE-esque features (lsp, neotree, evil, completions, navigation, git porcelain etc) for /most/ languages (for a full list of supported languages please view the [[https://github.com/DiamondBond/emacs/blob/master/config.org#languages][Languages section]]).
-- Modular completion framework (corfu, cape, vertico, orderless, marginalia, consult & embark).
-- Email (mu4e & offlineimap)
-- IRC (erc & rcirc)
-- News and infotainment aggregation (elfeed/gnus).
-- Media playback control (ncmpcpp/mpd & mpv).
-- Advanced window management (golden-ratio & e2wm).
-- Document manipulation support (PDF/EPUB/HTML/LATEX/MD/ORG, etc) along with viewing aid (olivetti & bionic reading modes).
-- Org-mode planning & scheduling as well as featureful notes and exporting them to a variety of formats.
-- Fully featured writing capabilities; live preview, spellcheck, dictionary & thesaurus lookup, flesch-kincaid reports, quick engine search, common academic phrases helper and etc...
-- Complete search framework (deadgrep, deft & avy) for files & folders.
-
-NOTE: For a full list of features please take time to view this configuration in its entirety, the aforementioned list is only some notable features/packages.
-
-** Usage
-
-Please feel free to import snippets from my configuration into your own configuration if you want to or consider forking this repo & maintaining it with your own customizations.
-
-Edit =globals.org= to your liking.
-
-If you would like to use this configuration whilst pulling from upstream, then consider placing all your customizations in =userconfig.org=.
-
-Make sure you visit this projects [[https://github.com/diamondbond/emacs][Github repo]] for documentation and other information if you are considering using this configuration on your own machine.
-
-NOTE: This configuration is tangled ahead of time for imperative performance reasons and to remove the dependency on org-mode during bootstrap, as a result you will have to use =tangle.sh= in =~/.emacs.d/bin= after you make changes to any =*.org= configuration files.
-You can [[https://github.com/yilkalargaw/org-auto-tangle][read more on tangling here]].
-
-** Overview
-
-: CHRONOLOGICAL LOAD ORDER
-
-*** *early-init.el*
-
-- [[https://github.com/DiamondBond/emacs/blob/master/early-init.el][early-init]] - Early initialization
-
-*** *init.el*
-
-- [[https://github.com/DiamondBond/emacs/blob/master/init.el][init]] - Initialize core & straight.el
-
-*** *config.org*
-
-- [[https://github.com/DiamondBond/emacs/blob/master/globals.org][globals]] - Global configuration
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#base][base]] - Base configuration
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#keybinds][keybinds]] - Keybinding maps
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#use-package][packages]] - Package manifest
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#languages][languages]] - Language manifest
-- [[https://github.com/DiamondBond/emacs/blob/master/config.org#functions][functions]] - Function definitions
-
-*** *userconfig.org*
-
-- [[https://github.com/DiamondBond/emacs/blob/master/userconfig.org][user]] - User configuration
-
-*** *modules*
-
-- [[https://github.com/DiamondBond/emacs/blob/master/modules/evil.org][evil]] - Evil configuration
-- [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][email]] - Email configuration
-- [[https://github.com/DiamondBond/emacs/blob/master/modules/reddit.org][reddit]] - Reddit configuration
-- [[https://github.com/DiamondBond/emacs/blob/master/modules/discord.org][discord]] - Discord configuration
-
 * Core
 ** Early-Init
 
 This section tangles out to =early-init.el=.
-
-Careful consideration regarding performance optimizations has gone into designing this early-init.
-
-NOTE: Regarding GC; we up the GC at startup and lower it after initialization, we let GCMH handle GC during normal usage along with a helper function that is hooked onto the minibuffer enter/leave state that triggers further GC, all of this should result in unnoticeable GC during runtime.
 
 #+begin_src emacs-lisp :tangle ./early-init.el
   ;;; early-init.el --- Early Initialization. -*- lexical-binding: t; -*-
@@ -190,7 +116,7 @@ NOTE: Regarding GC; we up the GC at startup and lower it after initialization, w
 #+end_src
 ** Init
 
-This section tangles out to =init.el= and is considered feature complete as all it needs to accomplish is handling the bootstrapping of straight.el and loading of the base & user configuration, along with restoring default GC parameters right after initialization.
+This section tangles out to =init.el=.
 
 #+BEGIN_SRC emacs-lisp :tangle ./init.el
   ;;; init.el --- Initialization. -*- lexical-binding: t; -*-
@@ -448,7 +374,7 @@ Essential for using shells in Emacs.
   (setenv "GPG_AGENT_INFO" nil)
 #+end_src
 *** Disable ring-bell
-Disable the annoying bell.
+Disable the bell.
 #+begin_src emacs-lisp
   (setq ring-bell-function 'ignore)
 #+end_src
@@ -909,17 +835,6 @@ Garbage Collector Magic Hack - enforce a sneaky Garbage Collection strategy to m
 		  gcmh-high-cons-threshold (* 16 1024 1024))  ; 16mb
 	:config (gcmh-mode))
 #+end_src
-*** Initialize =alert=
-**** Description
-Alert is a Growl-workalike for Emacs which uses a common notification interface.
-**** Code
-#+begin_src emacs-lisp
-  (use-package alert
-	:disabled t
-	:config
-	(setq alert-fade-time 10)
-	(setq alert-default-style 'libnotify))
-#+end_src
 *** Initialize =org=
 **** Description
 Sensible and well-defined org-mode configuration with org-capture support & notifications.
@@ -1011,87 +926,6 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	("C-c l" . 'org-store-link)
 	("C-<f1>" . (lambda()(interactive)(show-all))))
 
-  ;; org-babel shell
-  (use-package ob-shell
-	:disabled t
-	:after org
-	:config
-	(setq org-babel-default-header-args:sh '((:results . "output")))
-	(setq org-babel-default-header-args:shell '((:results . "output"))))
-
-  ;; enables asynchronous execution of org-babel src blocks
-  (use-package ob-async
-	:disabled t
-	:after org
-	:config
-	(setq ob-async-no-async-languages-alist '("python" "jupyter-python")))
-
-  (use-package org-noter
-	:after org
-	:disabled t
-	:config (setq org-noter-default-notes-file-names '("noter.org")
-				  org-noter-notes-search-path '("~/org")
-				  org-noter-separate-notes-from-heading t)
-	(require 'org-noter-pdftools))
-
-  (use-package org-pdftools
-	:disabled t
-	:hook (org-mode . org-pdftools-setup-link))
-
-  (use-package org-noter-pdftools
-	:disabled t
-	:after org-noter
-	:config
-	;; Add a function to ensure precise note is inserted
-	(defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
-	  (interactive "P")
-	  (org-noter--with-valid-session
-	   (let ((org-noter-insert-note-no-questions (if toggle-no-questions
-													 (not org-noter-insert-note-no-questions)
-												   org-noter-insert-note-no-questions))
-			 (org-pdftools-use-isearch-link t)
-			 (org-pdftools-use-freepointer-annot t))
-		 (org-noter-insert-note (org-noter--get-precise-info)))))
-
-	;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
-	(defun org-noter-set-start-location (&optional arg)
-	  "When opening a session with this document, go to the current location.
-	  With a prefix ARG, remove start location."
-	  (interactive "P")
-	  (org-noter--with-valid-session
-	   (let ((inhibit-read-only t)
-			 (ast (org-noter--parse-root))
-			 (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
-		 (with-current-buffer (org-noter--session-notes-buffer session)
-		   (org-with-wide-buffer
-			(goto-char (org-element-property :begin ast))
-			(if arg
-				(org-entry-delete nil org-noter-property-note-location)
-			  (org-entry-put nil org-noter-property-note-location
-							 (org-noter--pretty-print-location location))))))))
-
-	(with-eval-after-load 'pdf-annot
-	  (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
-
-  ;; enable org-roam when ~/org/roam exists
-  (when (file-directory-p "~/org/roam")
-	(use-package org-roam
-	  :disabled t
-	  :after org
-	  :init
-	  (setq org-roam-v2-ack t)
-	  :custom
-	  (org-roam-directory "~/org/roam")
-	  (org-roam-db-location "~/org/roam/org-roam.db")
-	  (org-id-link-to-org-use-id 'create-if-interactive)
-	  :bind (("C-c n l" . org-roam-buffer-toggle)
-			 ("C-c n f" . org-roam-node-find)
-			 ("C-c n i" . org-roam-node-insert)
-			 :map org-mode-map
-			 ("C-M-i"    . completion-at-point))
-	  :config
-	  (org-roam-setup)))
-
   ;; enable dnd images into org-mode & dired buffers
   (when (file-directory-p "~/org/img")
 	(use-package org-download
@@ -1100,24 +934,6 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	  :config
 	  (setq-default org-download-image-dir "~/org/img/download")
 	  (add-hook 'dired-mode-hook 'org-download-enable)))
-
-  ;; reminders
-  (use-package org-wild-notifier
-	:disabled t
-	:after org
-	:config
-	(setq org-wild-notifier-alert-time '(5 10 15 30 60))
-	(setq org-wild-notifier-keyword-whitelist nil)
-	(setq org-wild-notifier-notification-title "*reminder*")
-	:init
-	(org-wild-notifier-mode 1))
-
-  ;; display org schedules
-  (use-package calfw-org
-	:disabled t
-	:defer 2
-	:config
-	(setq cfw:org-agenda-schedule-args '(:timestamp :scheduled :deadline)))
 #+end_src
 *** Initialize =dired=
 **** Description
@@ -1205,29 +1021,6 @@ Smart parentheses.
 	(smartparens-global-mode t))
 #+end_src
 ** Visual
-*** Initialize =doom-modeline=
-**** Description
-A fancy and fast mode-line inspired by minimalism design.
-**** Code
-#+begin_src emacs-lisp
-  (use-package doom-modeline
-	:disabled t
-	:init (doom-modeline-mode 1)
-	:config
-	(setq doom-modeline-buffer-file-name-style 'file-name
-		  doom-modeline-enable-word-count t
-		  doom-modeline-buffer-encoding nil
-		  doom-modeline-buffer-state-icon nil
-		  ;; doom-modeline-height 30
-		  doom-modeline-icon t ;; Enable/disable all icons
-		  doom-modeline-modal-icon nil ;; Icon for Evil mode
-		  doom-modeline-hud t ;; Replaces scroll-bar
-		  doom-modeline-mu4e t
-		  doom-modeline-irc t
-		  doom-modeline-major-mode-icon t
-		  doom-modeline-major-mode-color-icon t
-		  doom-modeline-bar-width 3))
-#+end_src
 *** Initialize =modus-themes=
 **** Description
 Accessible themes for Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
@@ -1245,15 +1038,6 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	:config
 	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
-#+end_src
-*** Initialize =ef-themes=
-**** Description
-Minimum contrast ratio of 4.5:1 against the main background (WCAG AA standard).
-**** Code
-#+begin_src emacs-lisp
-  (use-package ef-themes
-	:disabled t
-	:straight (:type git :repo "https://git.sr.ht/~protesilaos/ef-themes"))
 #+end_src
 *** Initialize =dashboard=
 **** Description
@@ -1316,8 +1100,8 @@ An extensible emacs startup screen.
 	(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
 	(setq dashboard-banner-logo-title "")
-	;; (setq dashboard-startup-banner 'official)
-	(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+	(setq dashboard-startup-banner 'official)
+	;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)
@@ -1386,68 +1170,6 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	(eval-after-load "evil" '(diminish 'evil-collection-unimpaired-mode ""))
 	(eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode "")))
 #+end_src
-*** Initialize =pulsar=
-**** Description
-Pulse highlight on demand or after select functions.
-**** Code
-#+begin_src emacs-lisp
-  (use-package pulsar
-	:disabled t
-	;; :straight (pulsar :host gitlab :repo "protesilaos/pulsar")
-	:custom
-	(pulsar-pulse-functions ; Read the doc string for why not `setq'
-	 '(recenter-top-bottom
-	   move-to-window-line-top-bottom
-	   reposition-window
-	   bookmark-jump
-	   other-window
-	   delete-window
-	   delete-other-windows
-	   forward-page
-	   backward-page
-	   scroll-up-command
-	   scroll-down-command
-	   windmove-right
-	   windmove-left
-	   windmove-up
-	   windmove-down
-	   windmove-swap-states-right
-	   windmove-swap-states-left
-	   windmove-swap-states-up
-	   windmove-swap-states-down
-	   tab-new
-	   tab-close
-	   tab-next
-	   org-next-visible-heading
-	   org-previous-visible-heading
-	   org-forward-heading-same-level
-	   org-backward-heading-same-level
-	   outline-backward-same-level
-	   outline-forward-same-level
-	   outline-next-visible-heading
-	   outline-previous-visible-heading
-	   ace-window
-	   outline-up-heading))
-	:hook
-	(consult-after-jump . pulsar-recenter-top)
-	(consult-after-jump . pulsar-reveal-entry)
-	;; integration with the built-in `imenu':
-	(imenu-after-jump . pulsar-recenter-top)
-	(imenu-after-jump . pulsar-reveal-entry)
-	:config
-	(pulsar-global-mode 1)
-	(setq pulsar-face 'pulsar-generic
-		  pulsar-delay 0.05)
-	(defun jf/pulse (parg)
-	  "Pulse the current line.
-
-  If PARG (given as universal prefix), pulse between `point' and `mark'."
-	  (interactive "P")
-	  (if (car parg)
-		  (pulsar--pulse nil nil (point) (mark))
-		(pulsar-pulse-line)))
-	:bind (("C-x l" . jf/pulse)))
-#+end_src
 *** Initialize =golden-ratio=
 **** Description
 (1 + √5) / 2 = 1.618.
@@ -1486,14 +1208,6 @@ Variable pitch text in info mode.
 	 :repo "kisaragi-hiu/info-variable-pitch"))
 
   (add-hook 'Info-mode-hook #'info-variable-pitch-mode)
-#+end_src
-*** Initialize =minimap=
-**** Description
-Minimap sidebar.
-**** Code
-#+begin_src emacs-lisp
-  (use-package minimap
-	:disabled t)
 #+end_src
 ** Tools
 *** Initialize =org-auto-tangle=
@@ -1693,15 +1407,6 @@ Used for exporting source code with syntax highlighting.
   (use-package htmlize
 	:straight t)
 #+end_src
-*** Initialize =undofu=
-**** Description
-Sane undo & redo.
-See evil module for keybinds.
-**** Code
-#+begin_src emacs-lisp
-  (use-package undo-fu
-	:disabled t)
-#+end_src
 *** Initialize =vterm=
 **** Description
 Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library. As a result of using compiled code (instead of elisp), emacs-libvterm is fully capable, fast, and it can seamlessly handle large outputs.
@@ -1725,14 +1430,6 @@ Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based
 				  (lambda ()
 					;;(setq-local evil-insert-state-cursor 'box)
 					(evil-insert-state)))))
-#+end_src
-*** Initialize =calfw=
-**** Description
-Calendar view in Emacs buffer.
-**** Code
-#+begin_src emacs-lisp
-  (use-package calfw
-	:disabled t)
 #+end_src
 *** Initialize =crux=
 **** Description
@@ -1761,23 +1458,6 @@ Log commands in a seperate buffer.
   (use-package command-log-mode
 	:straight t
 	:diminish command-log-mode)
-#+end_src
-*** Initialize =e2wm=
-**** Description
-Equilibrium Emacs Window Manager.
-E2WM is a window manager for Emacs. It enables to customize the place of pop-up window, how the windows are split, how the buffers are located in the windows, keybinds to manipulate windows and buffers, etc.
-**** Code
-#+begin_src emacs-lisp
-  (use-package e2wm
-	:straight t
-	:config
-	;; configure e2wm dashboard
-	(if (eq system-type 'gnu/linux)
-		(setq e2wm:c-dashboard-plugins
-			  '((open :plugin-args (:command mu4e :buffer "*mail*"))
-				(open :plugin-args (:command eshell :buffer "*eshell*")))))
-	;; keybinds to start e2wm
-	(global-set-key (kbd "M-+") 'e2wm:start-management))
 #+end_src
 *** Initialize =hydra=
 **** Description

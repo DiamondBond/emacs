@@ -886,13 +886,24 @@ Smart parentheses.
 	(smartparens-global-mode t))
 #+end_src
 ** Visual
+*** Initialize =naysayer-theme=
+**** Description
+Naysayer theme.
+**** Code
+#+begin_src emacs-lisp
+  (use-package naysayer-theme
+	:straight (naysayer-theme :type git :host github :repo "diamondbond/naysayer-theme.el")
+	:config
+	(load-theme 'naysayer t))
+#+end_src
 *** Initialize =modus-themes=
 **** Description
 Accessible themes for Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
 **** Code
 #+begin_src emacs-lisp
   (use-package modus-themes
-	:straight (:type git :host gitlab :repo "protesilaos/modus-themes" :branch "main")
+	:disabled t
+	;; :straight (:type git :host gitlab :repo "protesilaos/modus-themes" :branch "main")
 	:init
 	;; load the theme files before enabling a theme
 	(modus-themes-load-themes)

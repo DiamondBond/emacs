@@ -808,7 +808,7 @@ Heresy; Vim keybindings in Emacs.
 	(evil-set-initial-state 'nov-mode 'emacs)
 	(evil-set-initial-state 'term-mode 'emacs)
 	(evil-set-initial-state 'eshell-mode 'emacs)
-	(evil-set-initial-state 'bufler-list-mode 'emacs)
+	;; (evil-set-initial-state 'bufler-list-mode 'emacs)
 	(evil-set-initial-state 'profiler-report-mode 'emacs)
 	(evil-set-initial-state 'inferior-scheme-mode 'emacs)
 	;; (evil-set-initial-state 'md4rd-mode 'emacs)
@@ -892,7 +892,8 @@ Naysayer theme.
 **** Code
 #+begin_src emacs-lisp
   (use-package naysayer-theme
-	:straight (naysayer-theme :type git :host github :repo "diamondbond/naysayer-theme.el")
+	:disabled t
+	;; :straight (naysayer-theme :type git :host github :repo "diamondbond/naysayer-theme.el")
 	:config
 	(load-theme 'naysayer t))
 #+end_src
@@ -902,15 +903,14 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 **** Code
 #+begin_src emacs-lisp
   (use-package modus-themes
-	:disabled t
-	;; :straight (:type git :host gitlab :repo "protesilaos/modus-themes" :branch "main")
+	:straight (:type git :host gitlab :repo "protesilaos/modus-themes" :branch "main")
 	:init
 	;; load the theme files before enabling a theme
 	(modus-themes-load-themes)
-	:custom
-	(modus-themes-italic-constructs t)
-	(modus-themes-bold-constructs t)
-	(modus-themes-region '(accented bg-only no-extend))
+	;; :custom
+	;; (modus-themes-italic-constructs t)
+	;; (modus-themes-bold-constructs t)
+	;; (modus-themes-region '(accented bg-only no-extend))
 	:config
 	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))

@@ -2152,6 +2152,7 @@ Language Server Protocol, handles the following languages:
 			ruby-mode       ; solargraph
 			web-mode        ; ts-ls/HTML/CSS
 			) . lsp-deferred)
+	((lsp-mode . lsp-enable-which-key-integration))
 	:commands (lsp lsp-deferred)
 	:config
 	(setq lsp-auto-guess-root t)

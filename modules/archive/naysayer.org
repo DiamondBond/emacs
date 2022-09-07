@@ -1,0 +1,15 @@
+* Prerequisite
+#+begin_src emacs-lisp
+  (disable-theme 'modus-operandi)
+  (global-hl-line-mode 1)
+#+end_src
+* Initialize =naysayer-theme=
+** Description
+Naysayer theme.
+** Code
+#+begin_src emacs-lisp
+  (use-package naysayer-theme
+	:straight (naysayer-theme :type git :host github :repo "diamondbond/naysayer-theme.el")
+	:config
+	(load-theme 'naysayer t))
+#+end_src

@@ -886,16 +886,13 @@ Smart parentheses.
 	(smartparens-global-mode t))
 #+end_src
 ** Visual
-*** Initialize =naysayer-theme=
+*** Initialize =ef-themes=
 **** Description
-Naysayer theme.
+Colourful and legible themes for GNU Emacs.
 **** Code
 #+begin_src emacs-lisp
-  (use-package naysayer-theme
-	:disabled t
-	;; :straight (naysayer-theme :type git :host github :repo "diamondbond/naysayer-theme.el")
-	:config
-	(load-theme 'naysayer t))
+  (use-package ef-themes
+	:straight (ef-themes :type git :host github :repo "protesilaos/ef-themes"))
 #+end_src
 *** Initialize =modus-themes=
 **** Description

@@ -2203,10 +2203,12 @@ Language Server Protocol, handles the following languages:
 Language Server Protocol with eglot.
 *** Code
 #+begin_src emacs-lisp
-  ;; LSP
+  ;; Eglot
   (use-package eglot
 	:disabled t
 	:config
+	(setq read-process-output-max (* 1024 1024))
+	(push :documentHighlightProvider eglot-ignored-server-capabilities)
 	;; Enable LSP support by default in programming buffers
 	(add-hook 'prog-mode-hook #'eglot-ensure))
 
@@ -2216,8 +2218,9 @@ Language Server Protocol with eglot.
 	:hook (prog-mode . company-mode))
 #+end_src
 ** C/C++
-Default C/C++ mode is sufficient.
-Add modern cpp syntax highlighting.
+*** Description
+Modern C++ syntax highlighting.
+*** Code
 #+begin_src emacs-lisp
   (use-package modern-cpp-font-lock
 	:straight t)

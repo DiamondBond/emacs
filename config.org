@@ -233,9 +233,9 @@ Show parent parentheses.
 *** Indentation
 Set tabs & indents to 4sp.
 #+begin_src emacs-lisp
+  (setq-default indent-tabs-mode t)
   (setq-default tab-width 4)
   (setq-default standard-indent 4)
-  (setq-default indent-tabs-mode t)
   (setq-default electric-indent-inhibit nil)
   (setq backward-delete-char-untabify-method 'nil)
   (electric-indent-mode -1) ;; Disable electric indentation
@@ -2159,6 +2159,7 @@ Language Server Protocol, handles the following languages:
 	(setq lsp-log-io nil)
 	(setq lsp-restart 'auto-restart)
 	(setq lsp-enable-symbol-highlighting nil)
+	(setq lsp-enable-indentation nil)
 	(setq lsp-enable-on-type-formatting nil)
 	(setq lsp-signature-auto-activate nil)
 	(setq lsp-signature-render-documentation nil)

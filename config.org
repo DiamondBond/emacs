@@ -904,10 +904,11 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	:init
 	;; load the theme files before enabling a theme
 	(modus-themes-load-themes)
-	;; :custom
+	:custom
 	;; (modus-themes-italic-constructs t)
 	;; (modus-themes-bold-constructs t)
-	;; (modus-themes-region '(accented bg-only no-extend))
+	(modus-themes-region '(accented bg-only no-extend))
+	(modus-themes-hl-line nil)
 	:config
 	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
@@ -2934,6 +2935,15 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	(push-mark)
 	(backward-word)
 	(delete-region (point) (mark)))
+#+end_src
+* Modules
+** Email
+#+begin_src emacs-lisp
+  ;; Load email module
+  (when (file-directory-p
+		 (concat user-emacs-directory "/modules"))
+	(org-babel-load-file
+	 (concat user-emacs-directory "/modules/mail.org")))
 #+end_src
 * Footer
 ** Goodbye

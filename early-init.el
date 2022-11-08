@@ -64,7 +64,7 @@
 
 ;; Emacs "updates" its ui more often than it needs to, so we slow it down
 ;; slightly from 0.5s:
-(setq idle-update-delay 1.0)
+;; (setq idle-update-delay 1.0)
 
 ;; Disable bidirectional text scanning for a modest performance boost. I've set
 ;; this to `nil' in the past, but the `bidi-display-reordering's docs say that

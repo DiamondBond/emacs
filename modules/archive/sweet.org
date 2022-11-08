@@ -1,0 +1,20 @@
+#+begin_src emacs-lisp
+  (use-package sweet-theme
+	:ensure t
+	:init
+	(load-theme 'sweet t))
+
+  (use-package doom-modeline
+	:ensure t
+	:config
+	(setq doom-modeline-buffer-file-name-style 'file-name
+		  doom-modeline-enable-word-count t
+		  doom-modeline-buffer-encoding nil
+		  doom-modeline-icon t ;; Enable/disable all icons
+		  doom-modeline-modal-icon nil ;; Icon for Evil mode
+		  doom-modeline-hud t ;; Replaces scroll-bar
+		  doom-modeline-major-mode-icon t
+		  doom-modeline-major-mode-color-icon t
+		  doom-modeline-bar-width 3)
+	:hook (after-init . doom-modeline-mode))
+#+end_src

@@ -311,11 +311,11 @@ Emacs will fill up the space reported by the window manager.
 Disable =tool-bar=.
 #+begin_src emacs-lisp
   (if (fboundp 'menu-bar-mode)
-	  (menu-bar-mode 1))
+	  (menu-bar-mode -1))
   (if (fboundp 'tool-bar-mode)
 	  (tool-bar-mode -1))
   (if (fboundp 'scroll-bar-mode)
-	  (scroll-bar-mode 1))
+	  (scroll-bar-mode -1))
   ;; (set-scroll-bar-mode 'right)
 #+end_src
 **** Global mode line
@@ -333,7 +333,7 @@ https://amodernist.com/texts/emacs-global.html
   (setq-default overflow-newline-into-fringe t)
 #+end_src
 **** Configure default-frame-alist
-Enable right scroll-bar & set frame size.
+Set frame size.
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(width . 80))
   (add-to-list 'default-frame-alist '(height . 46))
@@ -885,6 +885,33 @@ Smart parentheses.
 			   :unless '(sp-point-before-word-p sp-point-before-same-p)))
 	(smartparens-global-mode t))
 #+end_src
+*** Initialize =compile=
+**** Description
+Compilation buffer enhancements.
+**** Code
+#+begin_src emacs-lisp
+  (use-package compile
+	:straight t
+	:init
+	(setq compilation-ask-about-save nil
+		  compilation-scroll-output 'next-error
+		  ;; Don't stop on info or warnings.
+		  compilation-skip-threshold 2))
+
+  ;; Print elapsed time in compilation buffer
+  (make-variable-buffer-local 'my-compilation-start-time)
+
+  (add-hook 'compilation-start-hook #'my-compilation-start-hook)
+  (defun my-compilation-start-hook (proc)
+	(setq my-compilation-start-time (current-time)))
+
+  (add-hook 'compilation-finish-functions #'my-compilation-finish-function)
+  (defun my-compilation-finish-function (buf why)
+	(let* ((elapsed  (time-subtract nil my-compilation-start-time))
+		   (msg (format "Compilation took: %s" (format-time-string "%T.%N" elapsed t))))
+	  (save-excursion (goto-char (point-max)) (insert msg))
+	  (message "Compilation %s: %s" (string-trim-right why) msg)))
+#+end_src
 ** Visual
 *** Initialize =ef-themes=
 **** Description
@@ -964,8 +991,8 @@ An extensible emacs startup screen.
 	(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
 	(setq dashboard-banner-logo-title "")
-	(setq dashboard-startup-banner 'official)
-	;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+	;; (setq dashboard-startup-banner 'official)
+	(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)
@@ -1192,10 +1219,10 @@ Tree layout file explorer.
 **** Code
 #+BEGIN_SRC emacs-lisp
   (use-package treemacs
-	:disabled t
+	:straight t
 	:init
-	(with-eval-after-load 'winum
-	  (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+	(add-hook 'treemacs-mode-hook
+			  (lambda () (treemacs-resize-icons 15)))
 	:config
 	(progn
 	  (setq treemacs-collapse-dirs                 (if (executable-find "python3") 3 0)
@@ -1252,11 +1279,11 @@ Tree layout file explorer.
 
   (use-package treemacs-evil
 	:after treemacs evil
-	:disabled t)
+	:straight t)
 
   (use-package treemacs-icons-dired
 	:after treemacs dired
-	:disabled t
+	:straight t
 	:config (treemacs-icons-dired-mode))
 #+END_SRC
 *** Initialize =htmlize=
@@ -1277,6 +1304,8 @@ Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based
 		:straight t
 		:custom (vterm-install t)
 		:config
+		(setq vterm-always-compile-module t)
+		(setq vterm-buffer-name-string "vterm %s")
 		(add-hook 'vterm-mode-hook
 				  (lambda () (global-hl-line-mode 0)))
 		(setq vterm-max-scrollback 10000)))
@@ -1372,6 +1401,16 @@ Instant GitHub-flavored Markdown/Org preview using a grip subprocess.
 	:bind (:map markdown-mode-command-map
 				("g" . grip-mode)))
 #+end_src
+*** Initialize =realgud=
+**** Description
+The Grand "Cathedral" Debugger rewrite.
+**** Code
+#+begin_src emacs-lisp
+  (use-package realgud
+	:straight t
+	:config
+	(setq realgud-safe-mode nil))
+#+end_src
 ** Git
 *** Initialize =magit=
 **** Description
@@ -1460,6 +1499,50 @@ C-x o and pick window (a,s,d...)
 	([remap other-window] . switch-window))
 #+end_src
 ** Completion
+*** Initalize Completion Predicate
+**** Description
+This is not a package but instead a set of useful configurations to be used when utilizing the aforementioned completion framework packages.
+**** Code
+#+begin_src emacs-lisp
+  ;; a few more useful configurations...
+  (use-package emacs
+	:init
+	;; add prompt indicator to `completing-read-multiple'.
+	;; alternatively try `consult-completing-read-multiple'.
+	(defun crm-indicator (args)
+	  (cons (concat "[CRM] " (car args)) (cdr args)))
+	(advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+	;; do not allow the cursor in the minibuffer prompt
+	(setq minibuffer-prompt-properties
+		  '(read-only t cursor-intangible t face minibuffer-prompt))
+	(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+	;; Emacs 28: hide commands in M-x which do not work in the current mode.
+	;; Vertico commands are hidden in normal buffers.
+	(setq read-extended-command-predicate
+		  #'command-completion-default-include-p)
+
+	;; enable recursive minibuffers
+	(setq enable-recursive-minibuffers t)
+
+	;; completion ignores case
+	(setq read-buffer-completion-ignore-case t
+		  read-file-name-completion-ignore-case t
+		  completion-ignore-case t)
+
+	;; allow Emacs to resize mini windows
+	(setq resize-mini-windows t))
+#+end_src
+*** Initialize =gtags=
+**** Description
+GNU Global source code tagging system.
+**** Code
+#+begin_src emacs-lisp
+  (use-package gtags
+	:straight t)
+  (setq xref-prompt-for-identifier nil)
+#+end_src
 *** Initialize =corfu=
 **** Description
 Completion Overlay Region FUnction - Corfu enhances completion at point with a small completion popup. The current candidates are shown in a popup below or above the point. Corfu is the minimalistic completion-in-region counterpart of the Vertico minibuffer UI.
@@ -1665,41 +1748,6 @@ Emacs Mini-Buffer Actions Rooted in Keymaps
 	;; auto-updating embark collect buffer
 	:hook
 	(embark-collect-mode . consult-preview-at-point-mode))
-#+end_src
-*** Initialize Emacs Adjustments for Completion
-**** Description
-This is not a package but instead a set of useful configurations to be used when utilizing the aforementioned completion framework packages.
-**** Code
-#+begin_src emacs-lisp
-  ;; a few more useful configurations...
-  (use-package emacs
-	:init
-	;; add prompt indicator to `completing-read-multiple'.
-	;; alternatively try `consult-completing-read-multiple'.
-	(defun crm-indicator (args)
-	  (cons (concat "[CRM] " (car args)) (cdr args)))
-	(advice-add #'completing-read-multiple :filter-args #'crm-indicator)
-
-	;; do not allow the cursor in the minibuffer prompt
-	(setq minibuffer-prompt-properties
-		  '(read-only t cursor-intangible t face minibuffer-prompt))
-	(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
-
-	;; Emacs 28: hide commands in M-x which do not work in the current mode.
-	;; Vertico commands are hidden in normal buffers.
-	(setq read-extended-command-predicate
-		  #'command-completion-default-include-p)
-
-	;; enable recursive minibuffers
-	(setq enable-recursive-minibuffers t)
-
-	;; completion ignores case
-	(setq read-buffer-completion-ignore-case t
-		  read-file-name-completion-ignore-case t
-		  completion-ignore-case t)
-
-	;; allow Emacs to resize mini windows
-	(setq resize-mini-windows t))
 #+end_src
 *** Initialize =all-the-icons=
 **** Description
@@ -2453,6 +2501,47 @@ Prettier formatter for JSX & TSX.
 								 (enable-minor-mode
 								  '("\\.tsx?\\'" . prettier-js-mode)))))
 #+end_src
+** Java
+*** Description
+Java LSP & Debug Adapter Protocol.
+*** Code
+#+begin_src emacs-lisp
+  (use-package lsp-java
+	:straight t
+	:init
+	(setq lsp-java-vmargs
+		  (list
+		   "-noverify"
+		   "-Xmx3G"
+		   "-XX:+UseG1GC"
+		   "-XX:+UseStringDeduplication"
+		   )
+
+		  ;; Don't organise imports on save
+		  lsp-java-save-action-organize-imports nil
+
+		  ;; Fetch less results from the Eclipse server
+		  lsp-java-completion-max-results 30
+
+		  ;; Download 3rd party sources from Maven repo
+		  lsp-java-maven-download-sources t
+
+		  ;; Don't format my source code (I use Maven for enforcing my
+		  ;; coding style)
+		  lsp-java-format-enabled nil)
+	:config
+	(add-hook 'java-mode-hook #'lsp))
+
+  (use-package dap-mode
+	:straight t
+	:after lsp-mode
+	:config
+	(dap-mode t)
+	(setq dap-ui-locals-expand-depth 3)
+	(dap-ui-mode t)
+	(dap-tooltip-mode 1)
+	(tooltip-mode 1))
+#+end_src
 * Functions
 ** Helper
 *** Load if exists
@@ -2762,6 +2851,18 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	(shrink-wrap))
 #+end_src
 ** Markup
+*** Unfill
+#+begin_src emacs-lisp
+  (defun unfill-paragraph ()
+	(interactive)
+	(let ((fill-column (point-max)))
+	  (fill-paragraph nil)))
+
+  (defun unfill-region ()
+	(interactive)
+	(let ((fill-column (point-max)))
+	  (fill-region (region-beginning) (region-end) nil)))
+#+end_src
 *** Next/Prev 15-lines
 #+begin_src emacs-lisp
   (defun next-15-lines ()
@@ -2938,6 +3039,9 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 #+end_src
 * Modules
 ** Email
+*** Description
+mu4e [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email module]].
+*** Code
 #+begin_src emacs-lisp
   ;; Load email module
   (when (file-directory-p

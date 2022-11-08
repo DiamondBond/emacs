@@ -1,10 +1,10 @@
-#+TITLE: Diamond's Emacs Configuration
+#+TITLE: Diamond's Emacs Config
 #+DESCRIPTION: Eight Megabytes And Constantly Swapping
 #+AUTHOR: Diamond Bond
 #+EMAIL: diamondbond1@gmail.com
 #+LANGUAGE: en
 #+CREATOR: Emacs 28.2 (Org mode 9.5.5)
-#+STARTUP: show2levels
+#+STARTUP: show2levels inlineimages
 #+SETUPFILE: resources/white.theme
 #+EXPORT_FILE_NAME: emacs.html
 #+OPTIONS: toc:2

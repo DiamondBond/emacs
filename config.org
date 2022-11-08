@@ -1407,7 +1407,7 @@ The Grand "Cathedral" Debugger rewrite.
 **** Code
 #+begin_src emacs-lisp
   (use-package realgud
-	:straight t
+	:disabled t
 	:config
 	(setq realgud-safe-mode nil))
 #+end_src

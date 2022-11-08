@@ -7,6 +7,7 @@
   (use-package doom-modeline
 	:ensure t
 	:config
+	(setq doom-modeline-height 30)
 	(setq doom-modeline-buffer-file-name-style 'file-name
 		  doom-modeline-enable-word-count t
 		  doom-modeline-buffer-encoding nil
@@ -17,4 +18,7 @@
 		  doom-modeline-major-mode-color-icon t
 		  doom-modeline-bar-width 3)
 	:hook (after-init . doom-modeline-mode))
+
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
 #+end_src

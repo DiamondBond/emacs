@@ -18,7 +18,7 @@
   ;; Copyright (C) 2022 Diamond Bond
 
   ;; Author: Diamond Bond <diamondbond1@gmail.com>
-  ;; Version: nil
+  ;; Version: 1.0
   ;; Package-Requires: ((emacs "28.1"))
   ;; Keywords: emacs, configuration
   ;; URL: https://github.com/diamondbond/emacs
@@ -28,7 +28,7 @@
   ;; This file is free software…
 
   ;;; Commentary:
-  ;; This file provides the sanctioned configuration.
+  ;; This file provides the base configuration.
 
   ;;; Code:
 
@@ -311,11 +311,11 @@ Emacs will fill up the space reported by the window manager.
 Disable =tool-bar=.
 #+begin_src emacs-lisp
   (if (fboundp 'menu-bar-mode)
-	  (menu-bar-mode -1))
+	  (menu-bar-mode 1))
   (if (fboundp 'tool-bar-mode)
 	  (tool-bar-mode -1))
   (if (fboundp 'scroll-bar-mode)
-	  (scroll-bar-mode -1))
+	  (scroll-bar-mode 1))
   ;; (set-scroll-bar-mode 'right)
 #+end_src
 **** Global mode line

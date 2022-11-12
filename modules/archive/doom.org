@@ -24,7 +24,7 @@ A fancy and fast mode-line inspired by minimalism design.
   (use-package doom-modeline
 	:init (doom-modeline-mode)
 	:config
-	(setq doom-modeline-height 30)
+	(setq doom-modeline-height 35)
 	(setq doom-modeline-buffer-file-name-style 'file-name
 		  doom-modeline-enable-word-count t
 		  doom-modeline-buffer-encoding nil

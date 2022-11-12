@@ -311,11 +311,11 @@ Emacs will fill up the space reported by the window manager.
 Disable =tool-bar=.
 #+begin_src emacs-lisp
   (if (fboundp 'menu-bar-mode)
-	  (menu-bar-mode 1))
+	  (menu-bar-mode -1))
   (if (fboundp 'tool-bar-mode)
 	  (tool-bar-mode -1))
   (if (fboundp 'scroll-bar-mode)
-	  (scroll-bar-mode 1))
+	  (scroll-bar-mode -1))
   ;; (set-scroll-bar-mode 'right)
 #+end_src
 **** Global mode line
@@ -913,13 +913,36 @@ Compilation buffer enhancements.
 	  (message "Compilation %s: %s" (string-trim-right why) msg)))
 #+end_src
 ** Visual
+*** Initialize =doom-modeline=
+**** Description
+A fancy and fast mode-line inspired by minimalism design.
+**** Code
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+	:disabled t
+	:init (doom-modeline-mode)
+	:config
+	(setq doom-modeline-height 35)
+	(setq doom-modeline-buffer-file-name-style 'file-name
+		  doom-modeline-enable-word-count t
+		  doom-modeline-buffer-encoding nil
+		  doom-modeline-icon t ;; Enable/disable all icons
+		  doom-modeline-modal-icon nil ;; Icon for Evil mode
+		  doom-modeline-hud t ;; Replaces scroll-bar
+		  doom-modeline-major-mode-icon t
+		  doom-modeline-major-mode-color-icon t
+		  doom-modeline-bar-width 3))
+#+end_src
 *** Initialize =ef-themes=
 **** Description
 Colourful and legible themes for GNU Emacs.
 **** Code
 #+begin_src emacs-lisp
   (use-package ef-themes
-	:straight (ef-themes :type git :host github :repo "protesilaos/ef-themes"))
+	:straight t
+	:config
+	;; (load-theme 'ef-trio-light t)
+	)
 #+end_src
 *** Initialize =modus-themes=
 **** Description
@@ -1407,7 +1430,7 @@ The Grand "Cathedral" Debugger rewrite.
 **** Code
 #+begin_src emacs-lisp
   (use-package realgud
-	:disabled t
+	:straight t
 	:config
 	(setq realgud-safe-mode nil))
 #+end_src

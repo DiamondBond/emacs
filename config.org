@@ -913,26 +913,6 @@ Compilation buffer enhancements.
 	  (message "Compilation %s: %s" (string-trim-right why) msg)))
 #+end_src
 ** Visual
-*** Initialize =doom-modeline=
-**** Description
-A fancy and fast mode-line inspired by minimalism design.
-**** Code
-#+begin_src emacs-lisp
-  (use-package doom-modeline
-	:disabled t
-	:init (doom-modeline-mode)
-	:config
-	(setq doom-modeline-height 35)
-	(setq doom-modeline-buffer-file-name-style 'file-name
-		  doom-modeline-enable-word-count t
-		  doom-modeline-buffer-encoding nil
-		  doom-modeline-icon t ;; Enable/disable all icons
-		  doom-modeline-modal-icon nil ;; Icon for Evil mode
-		  doom-modeline-hud t ;; Replaces scroll-bar
-		  doom-modeline-major-mode-icon t
-		  doom-modeline-major-mode-color-icon t
-		  doom-modeline-bar-width 3))
-#+end_src
 *** Initialize =ef-themes=
 **** Description
 Colourful and legible themes for GNU Emacs.
@@ -1430,7 +1410,7 @@ The Grand "Cathedral" Debugger rewrite.
 **** Code
 #+begin_src emacs-lisp
   (use-package realgud
-	:straight t
+	:defer 1
 	:config
 	(setq realgud-safe-mode nil))
 #+end_src

@@ -2,6 +2,7 @@
 #+begin_src emacs-lisp
   (disable-theme 'modus-operandi)
   (global-hl-line-mode 1)
+  (setq dashboard-startup-banner 'official)
 #+end_src
 * Initialize =naysayer-theme=
 ** Description

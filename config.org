@@ -2857,11 +2857,13 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 *** Unfill
 #+begin_src emacs-lisp
   (defun unfill-paragraph ()
+	"Unfill current paragraph."
 	(interactive)
 	(let ((fill-column (point-max)))
 	  (fill-paragraph nil)))
 
   (defun unfill-region ()
+	"Unfill current region."
 	(interactive)
 	(let ((fill-column (point-max)))
 	  (fill-region (region-beginning) (region-end) nil)))

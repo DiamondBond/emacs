@@ -11,7 +11,7 @@
   (setq default-frame-alist
 		'((internal-border-width . 0)
 		  (background-color . "honeydew")
-		  (font . "DejaVu Sans Mono-10")
+		  (font . "DejaVu Sans Mono-14")
 		  (width . 80)
 		  (height . 46)
 		  (left-fringe)

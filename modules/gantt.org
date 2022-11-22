@@ -1,0 +1,17 @@
+#+STARTUP: overview
+#+TITLE: Gantt Chart Configuration
+#+AUTHOR: Diamond Bond
+#+LANGUAGE: en
+#+OPTIONS: num:nil
+#+PROPERTY: header-args :mkdirp yes :tangle yes :results silent :noweb yes
+
+* Gantt
+** Description
+GANTT Chart generator.
+** Code
+#+begin_src emacs-lisp
+  (straight-use-package
+   '(info-variable-pitch
+	 :type git :host github
+	 :repo "legalnonsense/elgantt"))
+#+end_src

@@ -10,8 +10,9 @@
 GANTT Chart generator.
 ** Code
 #+begin_src emacs-lisp
-  (straight-use-package
-   '(info-variable-pitch
-	 :type git :host github
-	 :repo "legalnonsense/elgantt"))
+  (use-package elgantt
+	:straight
+	( :repo "legalnonsense/elgantt"
+	  :host github
+	  :type git))
 #+end_src

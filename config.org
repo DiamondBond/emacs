@@ -2191,18 +2191,21 @@ Language Server Protocol, handles the following languages:
 	:init
 	;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
 	(setq lsp-keymap-prefix "C-c l")
-	:hook ((c-mode          ; clangd
-			c++-mode        ; clangd
-			c-or-c++-mode   ; clangd
-			js2-mode        ; ts-ls (tsserver wrapper)
-			js-mode         ; ts-ls (tsserver wrapper)
-			rjsx-mode       ; ts-ls (tsserver wrapper)
-			js-jsx-mode     ; ts-ls (tsserver wrapper)
-			typescript-mode ; ts-ls (tsserver wrapper)
-			python-mode     ; pyright
-			rust-mode       ; rust-analyzer
-			ruby-mode       ; solargraph
-			web-mode        ; ts-ls/HTML/CSS
+	:hook ((c-mode          	; clangd
+			c++-mode        	; clangd
+			c-or-c++-mode   	; clangd
+			js2-mode        	; ts-ls (tsserver wrapper)
+			js-mode         	; ts-ls (tsserver wrapper)
+			rjsx-mode       	; ts-ls (tsserver wrapper)
+			js-jsx-mode     	; ts-ls (tsserver wrapper)
+			typescript-mode 	; ts-ls (tsserver wrapper)
+			python-mode     	; pyright
+			rust-mode       	; rust-analyzer
+			ruby-mode       	; solargraph
+			web-mode        	; ts-ls/HTML/CSS
+			clojure-mode		; clojure
+			clojurescript-mode	; clojurescript
+			clojurec-mode		; clojurec
 			) . lsp-deferred)
 	((lsp-mode . lsp-enable-which-key-integration))
 	:commands (lsp lsp-deferred)
@@ -2248,8 +2251,7 @@ Language Server Protocol, handles the following languages:
 	:straight t
 	:after lsp
 	:hook (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred)))
-	:init (when (executable-find "python3")
-			(setq lsp-pyright-python-executable-cmd "python3")))
+	:init (setq lsp-pyright-python-executable-cmd "python3"))
 #+end_src
 ** Eglot
 *** Description
@@ -2405,6 +2407,12 @@ Python mode.
 	(setq python-indent-offset standard-indent)
 	(setq python-indent-guess-indent-offset t)
 	(setq python-indent-guess-indent-offset-verbose nil))
+
+  (use-package pyvenv
+	:demand t
+	:config
+	(setq pyvenv-workon "emacs")  ; Default venv
+	(pyvenv-tracking-mode 1))  ; Automatically use pyvenv-workon via dir-locals
 #+end_src
 ** Jupyter
 *** Description
@@ -2544,6 +2552,15 @@ Java LSP & Debug Adapter Protocol.
 	(dap-ui-mode t)
 	(dap-tooltip-mode 1)
 	(tooltip-mode 1))
+#+end_src
+** Clojure
+*** Description
+*** Code
+#+begin_src emacs-lisp
+  (use-package clojure-mode
+	:straight t)
+  (use-package cider
+	:straight t)
 #+end_src
 * Functions
 ** Helper

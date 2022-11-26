@@ -326,7 +326,7 @@ https://amodernist.com/texts/emacs-global.html
 #+end_src
 **** Configure fringe
 #+begin_src emacs-lisp
-  (fringe-mode nil) ;; default fringes
+  (fringe-mode 2)
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
   (setq-default indicate-empty-lines nil)
@@ -689,27 +689,24 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	(advice-add 'org-refile :after 'org-save-all-org-buffers)
 
 	;; org-src languages
-	(setq org-babel-load-languages
-		  '((awk         . t)
-			(calc        . t)
-			(css         . t)
-			(emacs-lisp  . t)
-			(gnuplot     . t)
-			(haskell     . t)
-			(js          . t)
-			(lisp        . t)
-			(org         . t)
-			(python      . t)
-			(ditaa       . t)
-			(jupyter     . t)
-			(scheme      . t)
-			(shell       . t)
-			(sh          . t)
-			(C           . t)
-			(sql         . t)))
-
-	(if (eq system-type 'gnu/linux)
-		(org-babel-do-load-languages 'org-babel-load-languages))
+	(org-babel-do-load-languages
+	 'org-babel-load-languages
+	 '((awk         . t)
+	   (calc        . t)
+	   (css         . t)
+	   (emacs-lisp  . t)
+	   (gnuplot     . t)
+	   (haskell     . t)
+	   (js          . t)
+	   (lisp        . t)
+	   (org         . t)
+	   (python      . t)
+	   (ditaa       . t)
+	   (jupyter     . t)
+	   (scheme      . t)
+	   (shell       . t)
+	   (C           . t)
+	   (sql         . t)))
 
 	;; org templates
 	(setq org-capture-templates
@@ -2401,7 +2398,8 @@ Python mode.
 	:config
 	(setq python-indent-offset standard-indent)
 	(setq python-indent-guess-indent-offset t)
-	(setq python-indent-guess-indent-offset-verbose nil))
+	(setq python-indent-guess-indent-offset-verbose nil)
+	(setq python-shell-interpreter "/usr/bin/python3"))
 
   (use-package pyvenv
 	:demand t

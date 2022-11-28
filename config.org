@@ -2418,7 +2418,8 @@ Python mode, venv & black formatter.
 	(setq python-indent-offset standard-indent)
 	(setq python-indent-guess-indent-offset t)
 	(setq python-indent-guess-indent-offset-verbose nil)
-	(setq python-shell-interpreter "/usr/bin/python3"))
+	(setq python-shell-interpreter "/usr/bin/python3")
+	(setq exec-path (cons "~/.local/bin" exec-path)))
 
   (use-package pyvenv
 	:straight t
@@ -2429,9 +2430,6 @@ Python mode, venv & black formatter.
   (use-package python-black
 	:straight t
 	:after python)
-	;; :config
-	;; (setq python-black-command "python3 -m black "))
-  ;; :hook (python-mode . python-black-on-save-mode-enable-dwim))
 #+end_src
 ** Jupyter
 *** Description

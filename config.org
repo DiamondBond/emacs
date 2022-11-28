@@ -774,6 +774,16 @@ Add icons and subtree's to dired.
 	:diminish dired-hide-dotfiles-mode
 	:hook (dired-mode . dired-hide-dotfiles-mode))
 #+end_src
+*** Initialize =direnv=
+**** Description
+Providing direnv integration which loads and unloads environment variables depending on the current directory.
+**** Code
+#+begin_src emacs-lisp
+  (use-package direnv
+	:straight t
+	:config
+	(direnv-mode))
+#+end_src
 *** Initialize =evil=
 **** Description
 Heresy; Vim keybindings in Emacs.
@@ -2399,7 +2409,7 @@ Ruby mode.
 #+end_src
 ** Python
 *** Description
-Python mode.
+Python mode, venv & black formatter.
 *** Code
 #+begin_src emacs-lisp
   (use-package python-mode
@@ -2411,10 +2421,17 @@ Python mode.
 	(setq python-shell-interpreter "/usr/bin/python3"))
 
   (use-package pyvenv
-	:demand t
+	:straight t
 	:config
 	(setq pyvenv-workon "emacs")  ; Default venv
 	(pyvenv-tracking-mode 1))  ; Automatically use pyvenv-workon via dir-locals
+
+  (use-package python-black
+	:straight t
+	:after python)
+	;; :config
+	;; (setq python-black-command "python3 -m black "))
+  ;; :hook (python-mode . python-black-on-save-mode-enable-dwim))
 #+end_src
 ** Jupyter
 *** Description

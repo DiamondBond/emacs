@@ -326,7 +326,7 @@ https://amodernist.com/texts/emacs-global.html
 #+end_src
 **** Configure fringe
 #+begin_src emacs-lisp
-  (fringe-mode 4)
+  (fringe-mode 2)
   (set-face-attribute 'fringe nil :background "#ffffff" :foreground "#ffffff")
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
@@ -2169,6 +2169,14 @@ Persist history over Emacs restarts. Vertico sorts by history position.
 	:straight t
 	:init
 	(savehist-mode))
+#+end_src
+*** Initialize =altcaps=
+**** Description
+The altcaps package helps you apply alternating letter casing to convey sarcasm or mockery.
+**** Code
+#+begin_src emacs-lisp
+  (use-package altcaps
+	:straight (:type git :host github :repo "protesilaos/altcaps" :branch "main"))
 #+end_src
 * Languages
 ** LSP

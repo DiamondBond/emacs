@@ -54,7 +54,7 @@ LSP handles the python language server.
 Some useful python packages:
 
 #+begin_src sh
-  pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi jupyter grip git-lines-graph
+  pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi jupyter grip git-lines-graph black
   pip install 'python-lsp-server[all]'
 #+end_src
 

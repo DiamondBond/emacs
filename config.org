@@ -3190,8 +3190,7 @@ mu4e [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email 
 #+end_src
 ** OpenAI
 *** Description
-Emacs front end for GPT APIs like OpenAI.
-aide.el - https://github.com/junjizhi/aide.el
+[[https://github.com/junjizhi/aide.el][aide.el]] is an Emacs front end for GPT APIs like OpenAI.
 *** Code
 #+begin_src emacs-lisp
   ;; Load aide module

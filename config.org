@@ -316,7 +316,7 @@ Disable =tool-bar=.
   (if (fboundp 'scroll-bar-mode)
 	  (scroll-bar-mode 1))
   ;; (set-scroll-bar-mode 'right)
-  ;; (setq tool-bar-style 'both)
+  (setq tool-bar-style 'both)
 #+end_src
 **** Global mode line
 https://amodernist.com/texts/emacs-global.html
@@ -3195,7 +3195,7 @@ mu4e [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email 
 #+begin_src emacs-lisp
   ;; Load aide module
   (when (file-directory-p
-		 (concat user-emacs-directory "/modules/aide.org"))
+		 (concat user-emacs-directory "/modules"))
 	(org-babel-load-file
 	 (concat user-emacs-directory "/modules/aide.org")))
 #+end_src

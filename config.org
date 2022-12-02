@@ -1417,6 +1417,16 @@ The Grand "Cathedral" Debugger rewrite.
 	:config
 	(setq realgud-safe-mode nil))
 #+end_src
+*** Initialize =elmacro=
+**** Description
+Convert keyboard macros or latest interactive commands as emacs lisp.
+**** Code
+#+begin_src emacs-lisp
+  (use-package elmacro
+	:disabled t
+	:init
+	(elmacro-mode))
+#+end_src
 ** Git
 *** Initialize =magit=
 **** Description
@@ -2188,6 +2198,55 @@ The altcaps package helps you apply alternating letter casing to convey sarcasm 
   (use-package altcaps
 	:straight (:type git :host github :repo "protesilaos/altcaps" :branch "main"))
 #+end_src
+*** Initialize =org-noter=
+**** Description
+org-noter: a synchronized org-mode document annotator
+org-pdftools: a custom org link type for pdf-tools
+**** Code
+#+begin_src emacs-lisp
+  (use-package org-noter
+	:straight t
+	:config
+	(require 'org-noter-pdftools))
+
+  (use-package org-pdftools
+	:straight t
+	:hook (org-mode . org-pdftools-setup-link))
+
+  (use-package org-noter-pdftools
+	:straight t
+	:after org-noter
+	:config
+	;; Add a function to ensure precise note is inserted
+	(defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
+	  (interactive "P")
+	  (org-noter--with-valid-session
+	   (let ((org-noter-insert-note-no-questions (if toggle-no-questions
+													 (not org-noter-insert-note-no-questions)
+												   org-noter-insert-note-no-questions))
+			 (org-pdftools-use-isearch-link t)
+			 (org-pdftools-use-freepointer-annot t))
+		 (org-noter-insert-note (org-noter--get-precise-info)))))
+
+	;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
+	(defun org-noter-set-start-location (&optional arg)
+	  "When opening a session with this document, go to the current location.
+	With a prefix ARG, remove start location."
+	  (interactive "P")
+	  (org-noter--with-valid-session
+	   (let ((inhibit-read-only t)
+			 (ast (org-noter--parse-root))
+			 (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
+		 (with-current-buffer (org-noter--session-notes-buffer session)
+		   (org-with-wide-buffer
+			(goto-char (org-element-property :begin ast))
+			(if arg
+				(org-entry-delete nil org-noter-property-note-location)
+			  (org-entry-put nil org-noter-property-note-location
+							 (org-noter--pretty-print-location location))))))))
+	(with-eval-after-load 'pdf-annot
+	  (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
+#+end_src
 * Languages
 ** LSP
 *** Description
@@ -2834,6 +2893,35 @@ Insert currently visiting buffer filename.
 		  (insert (if full-path filename (file-name-nondirectory filename)))
 		(error (format "Buffer %s is not visiting a file" (buffer-name buffer))))))
 #+end_src
+*** LaTeX spacer
+Insert LaTeX newline.
+#+begin_src emacs-lisp
+  (defun latex-spacer ()
+	"Inserts a LaTeX spacer org-export block at point."
+	(interactive)
+	(setq last-command-event 67108908)
+	(org-insert-structure-template "export")
+	(setq last-command-event 108)
+	(org-self-insert-command 1)
+	(setq last-command-event 97)
+	(org-self-insert-command 1)
+	(setq last-command-event 116)
+	(org-self-insert-command 1)
+	(setq last-command-event 101)
+	(org-self-insert-command 1)
+	(setq last-command-event 120)
+	(org-self-insert-command 1)
+	(setq last-command-event 13)
+	(org-return nil nil 1)
+	(setq last-command-event 92)
+	(org-self-insert-command 1)
+	(setq last-command-event 92)
+	(org-self-insert-command 1)
+	(setq last-command-event 126)
+	(org-self-insert-command 1)
+	(setq last-command-event 92)
+	(org-self-insert-command 1))
+#+end_src
 ** Launch
 *** Music
 Run ncmpcpp within vterm.
@@ -3076,6 +3164,18 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	(backward-word)
 	(delete-region (point) (mark)))
 #+end_src
+** Export
+*** =org-export-pdf=
+#+begin_src emacs-lisp
+  (when (file-readable-p "~/bin/org-pdf-export")
+	(defun org-export-pdf ()
+	  "Export as pdf using eisvogel LaTeX template."
+	  (lambda)
+	  (interactive)
+	  (org-latex-export-to-latex)
+	  (async-shell-command (concat "~/bin/org-pdf-export " buffer-file-name))
+	  (find-file (expand-file-name (concat (file-name-sans-extension buffer-file-name) ".pdf")))))
+#+end_src
 * Modules
 ** Email
 *** Description
@@ -3087,6 +3187,18 @@ mu4e [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email 
 		 (concat user-emacs-directory "/modules"))
 	(org-babel-load-file
 	 (concat user-emacs-directory "/modules/mail.org")))
+#+end_src
+** OpenAI
+*** Description
+Emacs front end for GPT APIs like OpenAI.
+aide.el - https://github.com/junjizhi/aide.el
+*** Code
+#+begin_src emacs-lisp
+  ;; Load aide module
+  (when (file-directory-p
+		 (concat user-emacs-directory "/modules/aide.org"))
+	(org-babel-load-file
+	 (concat user-emacs-directory "/modules/aide.org")))
 #+end_src
 * Footer
 ** Goodbye

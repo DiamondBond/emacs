@@ -326,7 +326,7 @@ https://amodernist.com/texts/emacs-global.html
 #+end_src
 **** Configure fringe
 #+begin_src emacs-lisp
-  (fringe-mode 2)
+  (fringe-mode 3)
   (set-face-attribute 'fringe nil :background "#ffffff" :foreground "#ffffff")
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
@@ -3187,17 +3187,6 @@ mu4e [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email 
 		 (concat user-emacs-directory "/modules"))
 	(org-babel-load-file
 	 (concat user-emacs-directory "/modules/mail.org")))
-#+end_src
-** OpenAI
-*** Description
-[[https://github.com/junjizhi/aide.el][aide.el]] is an Emacs front end for GPT APIs like OpenAI.
-*** Code
-#+begin_src emacs-lisp
-  ;; Load aide module
-  (when (file-directory-p
-		 (concat user-emacs-directory "/modules"))
-	(org-babel-load-file
-	 (concat user-emacs-directory "/modules/aide.org")))
 #+end_src
 * Footer
 ** Goodbye

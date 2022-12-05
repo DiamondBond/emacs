@@ -1427,6 +1427,14 @@ Convert keyboard macros or latest interactive commands as emacs lisp.
 	:init
 	(elmacro-mode))
 #+end_src
+*** Initialize =atomic-chrome=
+**** Description
+Allows you to edit text areas of the browser via Emacs.
+**** Code
+#+begin_src emacs-lisp
+  (use-package atomic-chrome
+	:straight t)
+#+end_src
 ** Git
 *** Initialize =magit=
 **** Description

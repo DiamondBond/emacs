@@ -327,7 +327,7 @@ https://amodernist.com/texts/emacs-global.html
 **** Configure fringe
 #+begin_src emacs-lisp
   (fringe-mode 3)
-  (set-face-attribute 'fringe nil :background "#ffffff" :foreground "#ffffff")
+  ;; (set-face-attribute 'fringe nil :background "#ffffff" :foreground "#ffffff")
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
   (setq-default indicate-empty-lines nil)

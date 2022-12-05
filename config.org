@@ -524,7 +524,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (define-key z-map (kbd "y") 'yas-minor-mode)
   (define-key z-map (kbd "9") 'switch-to-qemu-and-run)
   (define-key z-map (kbd "0") 'switch-to-qemu-and-paste)
-  (define-key z-map (kbd "C-1") 'display-buffer-other-frame)
+  (define-key z-map (kbd "C-1") 'consult-buffer-other-frame)
   (define-key z-map (kbd "C-c") 'calendar)
   (define-key z-map (kbd "C-d") 'dired-other-frame)
 

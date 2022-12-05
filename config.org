@@ -2213,16 +2213,16 @@ org-pdftools: a custom org link type for pdf-tools
 **** Code
 #+begin_src emacs-lisp
   (use-package org-noter
-	:straight t
+	:disabled t
 	:config
 	(require 'org-noter-pdftools))
 
   (use-package org-pdftools
-	:straight t
+	:disabled t
 	:hook (org-mode . org-pdftools-setup-link))
 
   (use-package org-noter-pdftools
-	:straight t
+	:disabled t
 	:after org-noter
 	:config
 	;; Add a function to ensure precise note is inserted

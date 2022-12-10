@@ -39,6 +39,7 @@ chez-scheme
 sbcl quicklisp
 mpv
 wordnet
+direnv
 #+end_quote
 
 pacman: [[https://github.com/DiamondBond/dotfiles/blob/master/pacman.txt][manifest]]

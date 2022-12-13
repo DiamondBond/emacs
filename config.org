@@ -648,6 +648,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 		  org-display-inline-images t
 		  org-redisplay-inline-images t
 		  org-image-actual-width nil
+		  org-hide-emphasis-markers t
 		  org-startup-with-inline-images "inlineimages"
 		  org-catch-invisible-edits 'smart
 		  org-pretty-entities t)
@@ -2631,7 +2632,7 @@ Java LSP & Debug Adapter Protocol.
 	:straight t
 	:after lsp-mode
 	:config
-	(dap-mode t)
+	(dap-auto-configure-mode)
 	(setq dap-ui-locals-expand-depth 3)
 	(dap-ui-mode t)
 	(dap-tooltip-mode 1)
@@ -2639,6 +2640,7 @@ Java LSP & Debug Adapter Protocol.
 #+end_src
 ** Clojure
 *** Description
+CIDER with Clojure.
 *** Code
 #+begin_src emacs-lisp
   (use-package clojure-mode

@@ -310,11 +310,11 @@ Emacs will fill up the space reported by the window manager.
 Disable =tool-bar=.
 #+begin_src emacs-lisp
   (if (fboundp 'menu-bar-mode)
-	  (menu-bar-mode -1))
+	  (menu-bar-mode 1))
   (if (fboundp 'tool-bar-mode)
 	  (tool-bar-mode -1))
   (if (fboundp 'scroll-bar-mode)
-	  (scroll-bar-mode -1))
+	  (scroll-bar-mode 1))
   ;; (set-scroll-bar-mode 'right)
   (setq tool-bar-style 'both)
 #+end_src

@@ -648,7 +648,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 		  org-display-inline-images t
 		  org-redisplay-inline-images t
 		  org-image-actual-width nil
-		  org-hide-emphasis-markers t
+		  org-hide-emphasis-markers nil
 		  org-startup-with-inline-images "inlineimages"
 		  org-catch-invisible-edits 'smart
 		  org-pretty-entities t)
@@ -1435,6 +1435,28 @@ Allows you to edit text areas of the browser via Emacs.
 #+begin_src emacs-lisp
   (use-package atomic-chrome
 	:straight t)
+#+end_src
+*** Initialize =chat-gpt=
+**** Description
+ChatGPT in Emacs.
+**** Code
+#+begin_src emacs-lisp
+  (use-package chatgpt
+	:straight (:host github :repo "joshcho/ChatGPT.el" :files ("dist" "*.el"))
+	:init
+	(setq chatgpt-repo-path "~/.emacs.d/straight/repos/ChatGPT.el/")
+	:bind ("C-c q" . chatgpt-query)
+	:config
+	(setq chatgpt-query-format-string-map '(
+											;; ChatGPT.el defaults
+											("doc" . "Please write the documentation for the following function.\n\n%s")
+											("bug" . "There is a bug in the following function, please help me fix it.\n\n%s")
+											("understand" . "What does the following function do?\n\n%s")
+											("improve" . "Please improve the following code.\n\n%s")
+											;; Misc
+											("define" . "Please define the following.\n\n%s")
+											("nil" . "%s")
+											)))
 #+end_src
 ** Git
 *** Initialize =magit=

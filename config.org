@@ -1449,13 +1449,15 @@ ChatGPT in Emacs.
 	:config
 	(setq chatgpt-query-format-string-map '(
 											;; ChatGPT.el defaults
-											("doc" . "Please write the documentation for the following function.\n\n%s")
-											("bug" . "There is a bug in the following function, please help me fix it.\n\n%s")
-											("understand" . "What does the following function do?\n\n%s")
+											("doc" . "Please write the documentation for the following code.\n\n%s")
+											("bug" . "There is a bug in the following code, please help me fix it.\n\n%s")
+											("understand" . "What does the following code do?\n\n%s")
 											("improve" . "Please improve the following code.\n\n%s")
 											;; Misc
 											("define" . "Please define the following.\n\n%s")
-											("nil" . "%s")
+											("explain" . "Please explain the following.\n\n%s")
+											("eli5" . "Explain like I am 5.\n\n%s")
+											("table" . "Explain in tabular form.\n\n%s")
 											)))
 #+end_src
 ** Git

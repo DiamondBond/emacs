@@ -8,8 +8,22 @@
 	 ("\\.mm\\'" . default)
 	 ("\\.x?html?\\'" . default)
 	 ("\\.pdf\\'" . emacs)))
- '(warning-suppress-log-types '((use-package) (browse-url) (comp)))
- '(warning-suppress-types '((use-package) (browse-url) (comp))))
+ '(warning-suppress-log-types
+   '(((flymake flymake))
+	 ((flymake flymake))
+	 ((flymake flymake))
+	 ((flymake flymake))
+	 (use-package)
+	 (browse-url)
+	 (comp)))
+ '(warning-suppress-types
+   '(((flymake flymake))
+	 ((flymake flymake))
+	 ((flymake flymake))
+	 ((flymake flymake))
+	 (use-package)
+	 (browse-url)
+	 (comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

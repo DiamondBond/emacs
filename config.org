@@ -1446,6 +1446,7 @@ ChatGPT in Emacs.
 	(setq chatgpt-repo-path "~/.emacs.d/straight/repos/ChatGPT.el/")
 	:bind ("C-c q" . chatgpt-query)
 	:config
+	(defalias 'chatgpt-start 'chatgpt-init)
 	(setq chatgpt-query-format-string-map '(
 											;; ChatGPT.el defaults
 											("doc" . "Please write the documentation for the following code.\n\n%s")

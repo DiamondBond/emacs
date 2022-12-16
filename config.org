@@ -1714,6 +1714,7 @@ Provides practical commands based on the Emacs completion function =completing-r
 	(;; C-c bindings (mode-specific-map)
 	 ("C-c h" . consult-history)
 	 ("C-c j" . consult-line)
+	 ("C-c D" . consult-flymake)
 
 	 ;; ("C-c m" . consult-mode-command)
 	 ("C-c b" . consult-bookmark)

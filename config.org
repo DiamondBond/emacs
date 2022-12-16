@@ -752,7 +752,7 @@ Add icons and subtree's to dired.
   (use-package all-the-icons-dired
 	:straight t
 	:diminish all-the-icons-dired-mode
-	:config
+	:after all-the-icons
 	:hook (dired-mode . (lambda ()
 						  (interactive)
 						  (unless (file-remote-p default-directory)

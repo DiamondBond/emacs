@@ -1,0 +1,19 @@
+* Prerequisite
+#+begin_src emacs-lisp
+  (disable-theme 'modus-operandi)
+  (global-hl-line-mode 0)
+  (setq dashboard-startup-banner 'official)
+  (read-mode/enable)
+#+end_src
+* Initialize =gruber-darker=
+** Description
+Gruber Darker color theme for Emacs by Jason Blevins.
+A darker variant of the Gruber Dark theme for BBEdit by John Gruber.
+Adapted for deftheme and extended by Alexey Kutepov a.k.a. rexim.
+** Code
+#+begin_src emacs-lisp
+  (use-package gruber-darker-theme
+	:straight t
+	:config
+	(load-theme 'gruber-darker t))
+#+end_src

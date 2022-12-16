@@ -271,10 +271,6 @@ Set tabs & indents to 4sp.
 #+begin_src emacs-lisp
   (setq-default fill-column 80)
 #+end_src
-**** Set linum format
-#+begin_src emacs-lisp
-  (setq linum-format "%4d ")
-#+end_src
 **** Show trailing whitespace
 #+begin_src emacs-lisp
   (add-hook 'prog-mode-hook

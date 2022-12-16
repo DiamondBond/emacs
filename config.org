@@ -1433,7 +1433,7 @@ Allows you to edit text areas of the browser via Emacs.
 **** Code
 #+begin_src emacs-lisp
   (use-package atomic-chrome
-	:straight t)
+	:disabled t)
 #+end_src
 *** Initialize =chat-gpt=
 **** Description

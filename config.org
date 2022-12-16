@@ -235,6 +235,9 @@ Set tabs & indents to 4sp.
   (setq-default indent-tabs-mode t)
   (setq-default tab-width 4)
   (setq-default standard-indent 4)
+  (setq-default indent-line-function 4)
+  (setq-default lisp-indent-offset nil)
+  (setq-default sgml-basic-offset 4)
   (setq-default electric-indent-inhibit nil)
   (setq backward-delete-char-untabify-method 'nil)
   (electric-indent-mode -1) ;; Disable electric indentation
@@ -246,7 +249,7 @@ Set tabs & indents to 4sp.
 #+end_src
 *** Enable subword-mode
 #+begin_src emacs-lisp
-  (global-subword-mode 1)
+  ;; (global-subword-mode t)
   (add-hook 'c-mode-common-hook
 			(lambda () (subword-mode 1)))
 #+end_src
@@ -553,7 +556,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (global-set-key (kbd "S-<f8>") 'tool-bar-mode)
   (global-set-key (kbd "S-<f9>") 'tab-bar-mode)
   (global-set-key (kbd "C-S-<f9>") 'tab-line-mode)
-  (global-set-key (kbd "S-<f12>") 'linum-mode)
+  (global-set-key (kbd "S-<f12>") 'display-line-numbers-mode)
 
   ;; windows
   (global-set-key (kbd "C-x w") 'elfeed)
@@ -1454,6 +1457,7 @@ ChatGPT in Emacs.
 											("understand" . "What does the following code do?\n\n%s")
 											("improve" . "Please improve the following code.\n\n%s")
 											;; Misc
+											("nil" . "%s")
 											("define" . "Please define the following.\n\n%s")
 											("explain" . "Please explain the following.\n\n%s")
 											("eli5" . "Explain like I am 5.\n\n%s")

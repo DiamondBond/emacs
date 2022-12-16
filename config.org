@@ -2377,11 +2377,24 @@ Language Server Protocol with eglot.
 #+end_src
 ** C/C++
 *** Description
-Modern C++ syntax highlighting.
+Modern C++ syntax highlighting & astyle formatter.
 *** Code
 #+begin_src emacs-lisp
   (use-package modern-cpp-font-lock
 	:straight t)
+
+  ;; astyle formatter function
+  (defun astyle-buffer (&optional justify)
+	"Format buffer using astyle --style=kr."
+	(interactive)
+	(let ((saved-line-number (line-number-at-pos)))
+	  (shell-command-on-region
+	   (point-min)
+	   (point-max)
+	   "astyle --style=kr"
+	   nil
+	   t)
+	  (goto-line saved-line-number)))
 #+end_src
 ** C#
 *** Description

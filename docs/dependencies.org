@@ -40,6 +40,7 @@ sbcl quicklisp
 mpv
 wordnet
 direnv
+astyle
 #+end_quote
 
 pacman: [[https://github.com/DiamondBond/dotfiles/blob/master/pacman.txt][manifest]]

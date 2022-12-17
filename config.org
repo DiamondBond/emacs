@@ -2594,10 +2594,20 @@ Improved Javascript editing mode.
 ** Typescript
 *** Description
 TypeScript support for Emacs.
+Prettier formatter for JSX & TSX.
 *** Code
 #+begin_src emacs-lisp
   (use-package typescript-mode
 	:straight t)
+
+  (use-package prettier-js
+	:straight t
+	:config
+	(add-hook 'web-mode-hook #'(lambda ()
+								 (enable-minor-mode
+								  '("\\.jsx?\\'" . prettier-js-mode))
+								 (enable-minor-mode
+								  '("\\.tsx?\\'" . prettier-js-mode)))))
 #+end_src
 ** React JSX
 *** Description
@@ -2620,20 +2630,6 @@ Web editing mode.
 	(setq web-mode-css-indent-offset 2)
 	:mode (("\\.html\\'" . web-mode))
 	:commands web-mode)
-#+end_src
-** Prettier
-*** Description
-Prettier formatter for JSX & TSX.
-*** Code
-#+begin_src emacs-lisp
-  (use-package prettier-js
-	:straight t
-	:config
-	(add-hook 'web-mode-hook #'(lambda ()
-								 (enable-minor-mode
-								  '("\\.jsx?\\'" . prettier-js-mode))
-								 (enable-minor-mode
-								  '("\\.tsx?\\'" . prettier-js-mode)))))
 #+end_src
 ** Java
 *** Description

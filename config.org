@@ -346,7 +346,7 @@ Show column number in modeline.
 #+end_src
 **** Enable global-highlight-line-mode
 #+begin_src emacs-lisp
-  (global-hl-line-mode nil)
+  (global-hl-line-mode 0)
 #+end_src
 **** Enable prettify-symbols-mode
 #+begin_src emacs-lisp

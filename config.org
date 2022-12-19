@@ -346,7 +346,7 @@ Show column number in modeline.
 #+end_src
 **** Enable global-highlight-line-mode
 #+begin_src emacs-lisp
-  (global-hl-line-mode 0)
+  (global-hl-line-mode t)
 #+end_src
 **** Enable prettify-symbols-mode
 #+begin_src emacs-lisp
@@ -948,7 +948,7 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	(modus-themes-region '(accented bg-only no-extend))
 	(modus-themes-hl-line nil)
 	:config
-	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 *** Initialize =catppuccin-theme=
@@ -957,9 +957,9 @@ Catppuccin for Emacs.
 **** Code
 #+begin_src emacs-lisp
   (use-package catppuccin-theme
-	:straight t
-	:config
-	(load-theme 'catppuccin t))
+	:straight t)
+	;; :config
+	;; (load-theme 'catppuccin t))
 #+end_src
 *** Initialize =dashboard=
 **** Description

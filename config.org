@@ -943,8 +943,8 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	;; load the theme files before enabling a theme
 	(modus-themes-load-themes)
 	:custom
-	;; (modus-themes-italic-constructs t)
-	;; (modus-themes-bold-constructs t)
+	(modus-themes-italic-constructs t)
+	(modus-themes-bold-constructs t)
 	(modus-themes-region '(accented bg-only no-extend))
 	(modus-themes-hl-line nil)
 	:config

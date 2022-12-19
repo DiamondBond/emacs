@@ -1,0 +1,18 @@
+* Prerequisite
+#+begin_src emacs-lisp
+  (disable-theme 'modus-operandi)
+  ;; (pulsar-global-mode 0)
+  (global-hl-line-mode 1)
+  (menu-bar-mode 0)
+  (scroll-bar-mode 0)
+#+end_src
+* Initialize =catppuccin-theme=
+** Description
+Catppuccin theme for Emacs.
+** Code
+#+begin_src emacs-lisp
+  (use-package catppuccin-theme
+	:straight t)
+	;; :config
+	;; (load-theme 'catppuccin t))
+#+end_src

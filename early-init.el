@@ -46,11 +46,21 @@
 ;; to skip the mtime checks on every *.elc file.
 (setq load-prefer-newer noninteractive)
 
+;; Initialise installed packages
+(setq package-enable-at-startup t)
+
+;; Allow loading from the package cache
+(defvar package-quickstart)
+(setq package-quickstart t)
+
 ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 (setq tool-bar-mode nil
 	  menu-bar-mode nil)
 (when (fboundp 'set-scroll-bar-mode)
   (set-scroll-bar-mode nil))
+
+;; Allow resizing the Emacs frame by individual pixels.
+(setq frame-resize-pixelwise t)
 
 ;; Resizing the Emacs frame can be a terribly expensive part of changing the
 ;; font. By inhibiting this, we easily halve startup times with fonts that are

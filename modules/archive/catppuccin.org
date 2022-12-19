@@ -12,7 +12,7 @@ Catppuccin theme for Emacs.
 ** Code
 #+begin_src emacs-lisp
   (use-package catppuccin-theme
-	:straight t)
-	;; :config
-	;; (load-theme 'catppuccin t))
+	:straight t
+	:config
+	(load-theme 'catppuccin t))
 #+end_src

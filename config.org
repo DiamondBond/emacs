@@ -2852,6 +2852,17 @@ Opens this Emacs configuration GitHub website.
 	(interactive)
 	(browse-url "https://github.com/diamondbond/emacs"))
 #+end_src
+*** =config/setup-fonts=
+Applies desired fonts.
+#+begin_src emacs-lisp
+  (defun config/setup-fonts ()
+	"Configure fonts."
+	(interactive)
+	(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy" :size 12.0 :dpi 144 :weight 'regular))
+	(set-face-attribute 'fixed-pitch nil :font (font-spec :family "Iosevka Comfy" :size 12.0 :dpi 144 :weight 'regular))
+	(set-face-attribute 'variable-pitch nil :font (font-spec :family "DejaVu Sans Mono" :size 12.0 :dpi 144 :weight 'medium))
+	(set-fontset-font t 'unicode "DejaVu Sans Mono"))
+#+end_src
 *** =auth/backup=
 Backup auth files.
 #+begin_src emacs-lisp

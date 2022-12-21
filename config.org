@@ -2316,7 +2316,7 @@ Language Server Protocol, handles the following languages:
 			clojurescript-mode	; clojurescript
 			clojurec-mode		; clojurec
 			) . lsp-deferred)
-	(lsp-completion-mode . my/lsp-mode-setup-completion)
+	((lsp-completion-mode . my/lsp-mode-setup-completion))
 	((lsp-mode . lsp-enable-which-key-integration))
 	:commands (lsp lsp-deferred)
 	:config

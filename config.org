@@ -1688,7 +1688,7 @@ Provides an =orderless= completion style that divides the pattern into space-sep
   (use-package orderless
 	:straight t
 	:init
-	(setq completion-styles '(orderless basic)
+	(setq completion-styles '(orderless partial-completion basic)
 		  completion-category-defaults nil
 		  completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
@@ -2292,9 +2292,14 @@ Language Server Protocol, handles the following languages:
 #+begin_src emacs-lisp
   (use-package lsp-mode
 	:straight t
+	:custom
+	(lsp-completion-provider :none) ;; we use Corfu!
 	:init
 	;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
 	(setq lsp-keymap-prefix "C-c l")
+	(defun my/lsp-mode-setup-completion ()
+	  (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+			'(orderless))) ;; Configure orderless
 	:hook ((c-mode          	; clangd
 			c++-mode        	; clangd
 			c-or-c++-mode   	; clangd
@@ -2311,6 +2316,7 @@ Language Server Protocol, handles the following languages:
 			clojurescript-mode	; clojurescript
 			clojurec-mode		; clojurec
 			) . lsp-deferred)
+	(lsp-completion-mode . my/lsp-mode-setup-completion)
 	((lsp-mode . lsp-enable-which-key-integration))
 	:commands (lsp lsp-deferred)
 	:config

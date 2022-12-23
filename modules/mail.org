@@ -182,7 +182,7 @@ NOTE: Modify this defun to contain your =maildir= & email address.
   (defun mu-setup/init-mu ()
 	"Initialize 'mu' db."
 	(interactive)
-	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu init --maildir=~/mail/ --my-address=diamondbond1@gmail.com"))
+	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu init --maildir=/home/diamond/mail/ --my-address=diamondbond1@gmail.com"))
 #+end_src
 
 *** 3. Rebuild mu index.
@@ -192,6 +192,7 @@ NOTE: Modify this defun to contain your =maildir= & email address.
 	(interactive)
 	(async-shell-command "~/.emacs.d/straight/repos/mu/build/mu/mu index"))
 #+end_src
+
 *** 4. Automagic setup
 #+begin_src emacs-lisp
   (defun mu-setup/automagic ()
@@ -203,6 +204,7 @@ NOTE: Modify this defun to contain your =maildir= & email address.
     (sit-for 5)
 	(mu-setup/rebuild-mu-index))
 #+end_src
+
 *** =sync/mail=
 Sync Email to local mail directory.
 #+begin_src emacs-lisp
@@ -222,9 +224,9 @@ mu4e mail client.
 	:straight ( :host github
 				:repo "djcb/mu"
 				:branch "master"
-				:files ("build/mu4e/*")
-				:pre-build (("./autogen.sh") ("make")))
-	:custom   (mu4e-mu-binary (expand-file-name "build/mu/mu" (straight--repos-dir "mu")))
+				:files ("build/mu4e/*"))
+	;; :pre-build (("./autogen.sh") ("make")))
+	:custom (mu4e-mu-binary "/usr/local/bin/mu")
 	:config
 	;; default
 	;; (require 'org-mu4e)
@@ -234,6 +236,7 @@ mu4e mail client.
 	(setq mu4e-drafts-folder "/[Gmail].Drafts")
 	(setq mu4e-sent-folder   "/[Gmail].Sent Mail")
 	(setq mu4e-trash-folder  "/[Gmail].Trash")
+	;; (setq mu4e-mu-home "~/.cache/mu")
 
 	;; don't save message to Sent Messages, GMail/IMAP will take care of this
 	(setq mu4e-sent-messages-behavior 'delete)

@@ -1955,7 +1955,8 @@ RSS reader for Emacs.
 			("https://www.ecb.europa.eu/rss/press.html" economics eu)
 			("https://drewdevault.com/blog/index.xml" drew devault)
 			("https://news.ycombinator.com/rss" ycombinator news)
-			("https://www.phoronix.com/rss.php" phoronix))))
+			("https://www.phoronix.com/rss.php" phoronix)))
+	(define-key evil-normal-state-map (kbd "RET") 'elfeed-search-show-entry))
 #+end_src
 *** Initialize =gnus=
 **** Description

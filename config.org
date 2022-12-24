@@ -556,6 +556,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 
   ;; windows
   (global-set-key (kbd "C-x w") 'elfeed)
+  (global-set-key (kbd "C-x W") 'elfeed-update)
   (global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
   (global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
   (global-set-key (kbd "s-C-<down>") 'shrink-window)

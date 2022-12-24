@@ -79,7 +79,8 @@ Configure gpg-email address & load oauth tokens.
 #+end_src
 ** Performance
 *** Garbage collect when in minibuffer
-While the minibuffer is open, garbage collection will never occur, but once we make a selection, or cancel, garbage collection will kick off immediately and then revert back to the default, sensible behavior.
+While the minibuffer is open, garbage collection will never occur, but once we make a selection,
+garbage collection will kick off immediately and then revert back to the default, sensible behavior.
 #+begin_src emacs-lisp
   (defun my-minibuffer-setup-hook ()
 	"Garbage collection will never occur."

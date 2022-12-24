@@ -2387,9 +2387,14 @@ Language Server Protocol with eglot.
 #+end_src
 ** C/C++
 *** Description
-Modern C++ syntax highlighting & astyle formatter.
+CCLS, Modern C++ syntax highlighting & astyle formatter.
 *** Code
 #+begin_src emacs-lisp
+  (use-package ccls
+	:straight t
+	:hook ((c-mode c++-mode objc-mode cuda-mode) .
+		   (lambda () (require 'ccls) (lsp))))
+
   (use-package modern-cpp-font-lock
 	:straight t)
 
@@ -2428,6 +2433,7 @@ Go-mode.
 	  (add-hook 'before-save-hook 'gofmt-before-save)
 	  (set (make-local-variable 'compile-command)
 		   "go test"))
+	:hook ((go-mode . lsp-deferred))
 	:hook ((go-mode . db/go-mode-hook))
 	:hook ((go-mode . subword-mode)))
 #+end_src
@@ -2436,8 +2442,17 @@ Go-mode.
 Enhanced Rust mode with automatic LSP support.
 *** Code
 #+begin_src emacs-lisp
-  (use-package rustic
+  (use-package rust-mode
 	:straight t
+	:mode "\\.rs\\'"
+	:init (setq rust-format-on-save t))
+
+  (use-package cargo
+	:straight t
+	:defer t)
+
+  (use-package rustic
+	:disabled t
 	:config
 	(setq rustic-format-on-save nil))
 #+end_src
@@ -2615,7 +2630,9 @@ Prettier formatter for JSX & TSX.
 
   (use-package tide
 	:hook (web-mode . my/activate-tide-mode)
-	:straight t)
+	:straight t
+	:config
+	(define-key evil-normal-state-map (kbd "M-.") 'tide-jump-to-definition))
 
   (use-package prettier-js
 	:straight t
@@ -2625,14 +2642,6 @@ Prettier formatter for JSX & TSX.
 								  '("\\.jsx?\\'" . prettier-js-mode))
 								 (enable-minor-mode
 								  '("\\.tsx?\\'" . prettier-js-mode)))))
-#+end_src
-** React JSX
-*** Description
-A JSX major mode.
-*** Code
-#+begin_src emacs-lisp
-  (use-package rjsx-mode
-	:straight t)
 #+end_src
 ** Web
 *** Description

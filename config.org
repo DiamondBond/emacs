@@ -550,8 +550,8 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (global-set-key (kbd "<f8>") 'other-frame)
   (global-set-key (kbd "<f10>") 'compile)
   (global-set-key (kbd "S-<f8>") 'tool-bar-mode)
-  (global-set-key (kbd "S-<f9>") 'tab-bar-mode)
-  (global-set-key (kbd "C-S-<f9>") 'tab-line-mode)
+  (global-set-key (kbd "<f9>") 'tab-bar-mode)
+  (global-set-key (kbd "S-<f9>") 'tab-line-mode)
   (global-set-key (kbd "S-<f12>") 'display-line-numbers-mode)
 
   ;; windows
@@ -1361,7 +1361,7 @@ Hydra is a simple menu creator for keybindings.
 **** Code
 #+BEGIN_SRC emacs-lisp
   (use-package hydra
-	:ensure t)
+	:straight t)
 
   (defhydra hydra-zoom ()
 	"
@@ -1469,6 +1469,7 @@ The definitive Git porcelain for Emacs.
 #+begin_src emacs-lisp
   (use-package magit
 	:straight t
+	:bind (("C-x g" . magit-status))
 	:config
 	;; Bind the `magit-status' command to a convenient key.
 	(global-set-key (kbd "C-c g") #'magit-status))
@@ -2601,11 +2602,19 @@ Improved Javascript editing mode.
 #+end_src
 ** Typescript
 *** Description
-TypeScript support for Emacs.
+Tide - TypeScript Interactive Development Environment.
 Prettier formatter for JSX & TSX.
 *** Code
 #+begin_src emacs-lisp
-  (use-package typescript-mode
+  (defun my/activate-tide-mode ()
+	"Use hl-identifier-mode only on js or ts buffers."
+	(when (and (stringp buffer-file-name)
+			   (string-match "\\.[tj]sx?\\'" buffer-file-name))
+	  (tide-setup)
+	  (tide-hl-identifier-mode)))
+
+  (use-package tide
+	:hook (web-mode . my/activate-tide-mode)
 	:straight t)
 
   (use-package prettier-js
@@ -2632,11 +2641,22 @@ Web editing mode.
 #+begin_src emacs-lisp
   (use-package web-mode
 	:straight t
-	:custom
+	:config
+	(setq web-mode-content-types-alist '(("jsx" . "\\.[jt]sx?\\'")))
 	(setq web-mode-markup-indent-offset 2)
-	(setq web-mode-code-indent-offset 2)
 	(setq web-mode-css-indent-offset 2)
-	:mode (("\\.html\\'" . web-mode))
+	(setq web-mode-code-indent-offset 2)
+	(setq web-mode-script-padding 2)
+	(setq web-mode-block-padding 2)
+	(setq web-mode-style-padding 2)
+	(setq web-mode-enable-auto-pairing t)
+	(setq web-mode-enable-auto-closing t)
+	(setq web-mode-enable-current-element-highlight t)
+	:mode (("\\.js\\'" . web-mode)
+		   ("\\.jsx\\'" .  web-mode)
+		   ("\\.ts\\'" . web-mode)
+		   ("\\.tsx\\'" . web-mode)
+		   ("\\.html\\'" . web-mode))
 	:commands web-mode)
 #+end_src
 ** Java

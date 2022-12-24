@@ -1446,6 +1446,8 @@ ChatGPT in Emacs.
 	:straight (:host github :repo "joshcho/ChatGPT.el" :files ("dist" "*.el"))
 	:init
 	(setq chatgpt-repo-path "~/.emacs.d/straight/repos/ChatGPT.el/")
+	(unless (boundp 'python-interpreter)
+	  (defvaralias 'python-interpreter 'python-shell-interpreter))
 	:bind ("C-c q" . chatgpt-query)
 	:config
 	(setq chatgpt-query-format-string-map '(

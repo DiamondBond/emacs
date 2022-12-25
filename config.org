@@ -705,7 +705,6 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	   (org         . t)
 	   (python      . t)
 	   (ditaa       . t)
-	   (jupyter     . t)
 	   (scheme      . t)
 	   (shell       . t)
 	   (C           . t)
@@ -1004,6 +1003,7 @@ An extensible emacs startup screen.
 	(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
 	(setq dashboard-banner-logo-title "")
+	;; (setq dashboard-center-content t)
 	;; (setq dashboard-startup-banner 'official)
 	(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
 	(setq dashboard-center-content t)
@@ -1390,15 +1390,6 @@ Hydra is a simple menu creator for keybindings.
 	("s" shrink-window)
 	("r" enlarge-window-horizontally))
 #+END_SRC
-*** Initialize =tldr=
-**** Description
-tldr client within Emacs.
-**** Code
-#+begin_src emacs-lisp
-  (use-package tldr
-	:straight t
-	:defer 1)
-#+end_src
 *** Initialize =grip=
 **** Description
 Instant GitHub-flavored Markdown/Org preview using a grip subprocess.
@@ -1409,61 +1400,6 @@ Instant GitHub-flavored Markdown/Org preview using a grip subprocess.
 	:defer 1
 	:bind (:map markdown-mode-command-map
 				("g" . grip-mode)))
-#+end_src
-*** Initialize =realgud=
-**** Description
-The Grand "Cathedral" Debugger rewrite.
-**** Code
-#+begin_src emacs-lisp
-  (use-package realgud
-	:disabled t
-	:config
-	(setq realgud-safe-mode nil))
-#+end_src
-*** Initialize =elmacro=
-**** Description
-Convert keyboard macros or latest interactive commands as emacs lisp.
-**** Code
-#+begin_src emacs-lisp
-  (use-package elmacro
-	:disabled t
-	:init
-	(elmacro-mode))
-#+end_src
-*** Initialize =atomic-chrome=
-**** Description
-Allows you to edit text areas of the browser via Emacs.
-**** Code
-#+begin_src emacs-lisp
-  (use-package atomic-chrome
-	:disabled t)
-#+end_src
-*** Initialize =chat-gpt=
-**** Description
-ChatGPT in Emacs.
-**** Code
-#+begin_src emacs-lisp
-  (use-package chatgpt
-	:straight (:host github :repo "joshcho/ChatGPT.el" :files ("dist" "*.el"))
-	:init
-	(setq chatgpt-repo-path "~/.emacs.d/straight/repos/ChatGPT.el/")
-	(unless (boundp 'python-interpreter)
-	  (defvaralias 'python-interpreter 'python-shell-interpreter))
-	:bind ("C-c q" . chatgpt-query)
-	:config
-	(setq chatgpt-query-format-string-map '(
-											;; ChatGPT.el defaults
-											("doc" . "Please write the documentation for the following code.\n\n%s")
-											("bug" . "There is a bug in the following code, please help me fix it.\n\n%s")
-											("understand" . "What does the following code do?\n\n%s")
-											("improve" . "Please improve the following code.\n\n%s")
-											;; Misc
-											("nil" . "%s")
-											("define" . "Please define the following.\n\n%s")
-											("explain" . "Please explain the following.\n\n%s")
-											("eli5" . "Explain like I am 5.\n\n%s")
-											("table" . "Explain in tabular form.\n\n%s")
-											)))
 #+end_src
 ** Git
 *** Initialize =magit=
@@ -2565,15 +2501,6 @@ Python mode, venv & black formatter.
 	:straight t
 	:after python)
 #+end_src
-** Jupyter
-*** Description
-Jupyter notebook repl & src blocks in org-mode, also provides kernel interactions integrated with Emacs's built-in features.
-Uses the completion-at-point interface for code completion.
-*** Code
-#+begin_src emacs-lisp
-  (use-package jupyter
-	:straight t)
-#+end_src
 ** Wolfram
 *** Description
 xah-wolfram-mode is Major mode for editing Wolfram Language.
@@ -2591,20 +2518,6 @@ Markdown-mode & enable auto fill.
 	:straight t
 	:mode "\\.md\\'"
 	:hook ((markdown-mode . auto-fill-mode)))
-#+end_src
-** LaTeX
-*** Description
-Auctex for LaTeX.
-*** Code
-#+begin_src emacs-lisp
-  (use-package auctex
-	:straight t
-	:config
-	(setq TeX-auto-save t)
-	(setq TeX-parse-self t)
-	(setq-default TeX-master nil)
-	;; Enable LaTeX math support
-	(add-hook 'LaTeX-mode-map #'LaTeX-math-mode))
 #+end_src
 ** Javascript
 *** Description

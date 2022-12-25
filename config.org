@@ -1557,8 +1557,9 @@ GNU Global source code tagging system.
 **** Code
 #+begin_src emacs-lisp
   (use-package gtags
-	:straight t)
-  (setq xref-prompt-for-identifier nil)
+	:straight t
+	:config
+	(setq xref-prompt-for-identifier nil))
 #+end_src
 *** Initialize =corfu=
 **** Description

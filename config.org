@@ -1400,6 +1400,33 @@ Instant GitHub-flavored Markdown/Org preview using a grip subprocess.
 	:bind (:map markdown-mode-command-map
 				("g" . grip-mode)))
 #+end_src
+*** Initialize =chatgpt=
+**** Description
+ChatGPT from within Emacs.
+**** Code
+#+begin_src emacs-lisp
+  (use-package chatgpt
+	:straight (:host github :repo "joshcho/ChatGPT.el" :files ("dist" "*.el"))
+	:init
+	(setq chatgpt-repo-path "~/.emacs.d/straight/repos/ChatGPT.el/")
+	(unless (boundp 'python-interpreter)
+	  (defvaralias 'python-interpreter 'python-shell-interpreter))
+	:bind ("C-c q" . chatgpt-query)
+	:config
+	(setq chatgpt-query-format-string-map '(
+											;; ChatGPT.el defaults
+											("doc" . "Please write the documentation for the following code.\n\n%s")
+											("bug" . "There is a bug in the following code, please help me fix it.\n\n%s")
+											("understand" . "What does the following code do?\n\n%s")
+											("improve" . "Please improve the following code.\n\n%s")
+											;; Misc
+											("nil" . "%s")
+											("define" . "Please define the following.\n\n%s")
+											("explain" . "Please explain the following.\n\n%s")
+											("eli5" . "Explain like I am 5.\n\n%s")
+											("table" . "Explain in tabular form.\n\n%s")
+											)))
+#+end_src
 ** Git
 *** Initialize =magit=
 **** Description

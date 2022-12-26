@@ -2834,10 +2834,10 @@ Opens this Emacs configuration GitHub website.
 	(interactive)
 	(browse-url "https://github.com/diamondbond/emacs"))
 #+end_src
-*** =config/setup-fonts=
-Applies desired fonts.
+*** =config/iosevka-fonts=
+Applies Iosevka fonts.
 #+begin_src emacs-lisp
-  (defun config/setup-fonts ()
+  (defun config/iosevka-fonts ()
 	"Configure fonts."
 	(interactive)
 	(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy" :size 12.0 :dpi 144 :weight 'regular))

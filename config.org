@@ -643,6 +643,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 #+begin_src emacs-lisp
   (use-package org
 	:straight (:type built-in)
+	:diminish org-indent-mode
 	:config
 	;; sensible defaults
 	(setq initial-major-mode 'org-mode

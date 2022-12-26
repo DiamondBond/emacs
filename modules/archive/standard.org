@@ -1,3 +1,5 @@
+#+PROPERTY: header-args :results silent :noweb yes
+
 * Prerequisite
 #+begin_src emacs-lisp
   (setq dashboard-startup-banner 'official)

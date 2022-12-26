@@ -1,0 +1,27 @@
+* Prerequisite
+#+begin_src emacs-lisp
+  (setq dashboard-startup-banner 'official)
+  (disable-theme 'modus-operandi)
+  (global-hl-line-mode 0)
+  (menu-bar-mode 0)
+  (scroll-bar-mode 0)
+#+end_src
+* standard-themes
+#+begin_src emacs-lisp
+  (use-package standard-themes
+	:straight (:type git :host gitlab :repo "protesilaos/standard-themes" :branch "main")
+	:init
+	(load-theme 'standard-light :no-confirm)
+	:config
+	(setq standard-themes-bold-constructs t
+		  standard-themes-italic-constructs t
+		  standard-themes-mixed-fonts t
+		  standard-themes-variable-pitch-ui t
+		  standard-themes-mode-line-accented nil
+		  ;; Accepts a symbol value:
+		  standard-themes-fringes 'subtle
+		  ;; The following accept lists of properties
+		  standard-themes-links '(neutral-underline)
+		  standard-themes-region '(no-extend neutral intense)
+		  standard-themes-prompts '(bold italic)))
+#+end_src

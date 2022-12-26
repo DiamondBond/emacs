@@ -2838,7 +2838,7 @@ Opens this Emacs configuration GitHub website.
 Applies Iosevka fonts.
 #+begin_src emacs-lisp
   (defun config/iosevka-fonts ()
-	"Configure fonts."
+	"Applies Iosevka fonts."
 	(interactive)
 	(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy" :size 12.0 :dpi 144 :weight 'regular))
 	(set-face-attribute 'fixed-pitch nil :font (font-spec :family "Iosevka Comfy" :size 12.0 :dpi 144 :weight 'regular))

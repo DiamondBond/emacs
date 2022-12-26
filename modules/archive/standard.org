@@ -8,6 +8,7 @@
   (menu-bar-mode 0)
   (scroll-bar-mode 0)
 #+end_src
+
 * standard-themes
 #+begin_src emacs-lisp
   (use-package standard-themes

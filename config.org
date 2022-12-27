@@ -41,7 +41,7 @@ Define global variables.
   ;; Set global configuration
   (setq
    globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
-   globals--font         "DejaVu Sans Mono 14"                ; Font
+   globals--font         "DejaVu Sans Mono 16"                ; Font
    globals--name         "Diamond Bond"                       ; Name
    globals--email        "diamondbond1@gmail.com"             ; Email
    globals--irc          "diamondbond"                        ; IRC
@@ -1071,6 +1071,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	(eval-after-load "magit" '(diminish 'auto-fill-mode ""))
 	(eval-after-load "magit" '(diminish 'with-editor-mode ""))
 	(eval-after-load "slime" '(diminish 'slime-autodoc-mode ""))
+	(eval-after-load "olivetti" '(diminish 'olivetti-mode ""))
 	(eval-after-load "evil" '(diminish 'evil-collection-unimpaired-mode ""))
 	(eval-after-load "mu4e" '(diminish 'overwrite-mode))
 	(eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode "")))

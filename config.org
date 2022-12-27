@@ -3228,10 +3228,10 @@ mu4e [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email 
 *** Code
 #+begin_src emacs-lisp
   ;; Load email module
-  (when (file-directory-p
-		 (concat user-emacs-directory "/modules"))
-	(org-babel-load-file
-	 (concat user-emacs-directory "/modules/mail.org")))
+  ;; (when (file-directory-p
+  ;; 	   (concat user-emacs-directory "/modules"))
+  ;;   (org-babel-load-file
+  ;;    (concat user-emacs-directory "/modules/mail.org")))
 #+end_src
 * Footer
 ** Goodbye

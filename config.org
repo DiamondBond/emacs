@@ -521,7 +521,6 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 
   ;; auxiliary
   (define-key z-map (kbd "S") 'speedbar-frame-mode)
-  (define-key z-map (kbd "y") 'yas-minor-mode)
   (define-key z-map (kbd "C-1") 'consult-buffer-other-frame)
   (define-key z-map (kbd "C-c") 'calendar)
   (define-key z-map (kbd "C-d") 'dired-other-frame)

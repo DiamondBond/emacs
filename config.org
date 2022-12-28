@@ -347,7 +347,7 @@ Show column number in modeline.
 #+end_src
 **** Enable global-highlight-line-mode
 #+begin_src emacs-lisp
-  (global-hl-line-mode t)
+  ;; (global-hl-line-mode t)
 #+end_src
 **** Enable prettify-symbols-mode
 #+begin_src emacs-lisp
@@ -931,8 +931,7 @@ Colourful and legible themes for GNU Emacs.
   (use-package ef-themes
 	:straight t
 	:config
-	;; (load-theme 'ef-trio-light t)
-	)
+	(load-theme 'ef-trio-light t))
 #+end_src
 *** Initialize =modus-themes=
 **** Description
@@ -950,7 +949,7 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	(modus-themes-region '(accented bg-only no-extend))
 	(modus-themes-hl-line nil)
 	:config
-	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 *** Initialize =dashboard=
@@ -1130,35 +1129,9 @@ So long to long lines.
 		  ("C-r" . isearch-backward))
 	:config (global-so-long-mode 1))
 #+end_src
-*** Initialize =yasnippet=
-**** Description
-Yasnippet provides useful snippets.
-**** Code
-#+begin_src emacs-lisp
-  (use-package yasnippet
-	:straight t
-	:diminish yas-minor-mode
-	:hook
-	((cc-mode c-lang-common cmake-mode c++-mode c-mode conf-unix-mode
-			  csharp-mode css-mode emacs-lisp-mode fundamental-mode git-commit-mode
-			  go-mode js-mode js2-mode html-mode makefile-mode makefile-automake-mode
-			  markdown-mode org-mode prog-mode python-mode rjsx-mode rust-mode text-mode
-			  typescript-mode web-mode) . yas-minor-mode)
-	:config
-	(yas-reload-all))
-
-  (use-package yasnippet-snippets
-	:after yasnippet
-	:straight t)
-
-  (use-package consult-yasnippet
-	:straight t
-	:after (consult yasnippet)
-	:bind ("C-c y" . consult-yasnippet))
-#+end_src
 *** Initialize =xah-math-input=
 **** Description
-An emacs minor mode for inputing math symbols and Unicode symbols.
+Emacs minor mode for inputting math symbols & Unicode symbols.
 **** Code
 #+begin_src emacs-lisp
   (use-package xah-math-input
@@ -1167,28 +1140,6 @@ An emacs minor mode for inputing math symbols and Unicode symbols.
 	  :host github
 	  :type git
 	  :files ("xah-math-input.el")))
-#+end_src
-*** Initialize =smart-jump=
-**** Description
-Smartly go to definition leveraging several methods to do so.
-**** Code
-#+begin_src emacs-lisp
-  (use-package smart-jump
-	:straight t
-	:bind (("M-." . smart-jump-go)
-		   ("M-," . smart-jump-back)
-		   ("M-?" . smart-jump-references)))
-#+end_src
-*** Initialize =midnight=
-**** Description
-Clean buffer list at midnight.
-**** Code
-#+begin_src emacs-lisp
-  (use-package midnight
-	:init
-	(midnight-mode)
-	:config
-	(setq clean-buffer-list-delay-general 1))
 #+end_src
 *** Initialize =flymake=
 **** Description
@@ -1349,48 +1300,13 @@ Instant upload to 0x0.st
 #+end_src
 *** Initialize =clm=
 **** Description
-Show event history and command history of some or all buffers.
-**** Description
 Log commands in a seperate buffer.
 **** Code
 #+begin_src emacs-lisp
   (use-package command-log-mode
-	:straight t
+	:disabled t
 	:diminish command-log-mode)
 #+end_src
-*** Initialize =hydra=
-**** Description
-Hydra is a simple menu creator for keybindings.
-**** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package hydra
-	:straight t)
-
-  (defhydra hydra-zoom ()
-	"
-	^Zoom^                 ^Other
-	^^^^^^^--------------------------
-	[_t_/_s_] zoom in/out  [_q_] quit
-	[_0_]^^   reset zoom
-	"
-	("t" text-scale-increase "zoom in")
-	("s" text-scale-decrease "zoom out")
-	("0" text-scale-adjust "reset")
-	("q" nil "finished" :exit t))
-
-  (defhydra windows-adjust-size ()
-	"
-  ^Zoom^                                ^Other
-  ^^^^^^^-----------------------------------------
-  [_t_/_s_] shrink/enlarge vertically   [_q_] quit
-  [_c_/_r_] shrink/enlarge horizontally
-  "
-	("q" nil :exit t)
-	("c" shrink-window-horizontally)
-	("t" enlarge-window)
-	("s" shrink-window)
-	("r" enlarge-window-horizontally))
-#+END_SRC
 *** Initialize =grip=
 **** Description
 Instant GitHub-flavored Markdown/Org preview using a grip subprocess.
@@ -1401,33 +1317,6 @@ Instant GitHub-flavored Markdown/Org preview using a grip subprocess.
 	:defer 1
 	:bind (:map markdown-mode-command-map
 				("g" . grip-mode)))
-#+end_src
-*** Initialize =chatgpt=
-**** Description
-ChatGPT from within Emacs.
-**** Code
-#+begin_src emacs-lisp
-  (use-package chatgpt
-	:straight (:host github :repo "joshcho/ChatGPT.el" :files ("dist" "*.el"))
-	:init
-	(setq chatgpt-repo-path "~/.emacs.d/straight/repos/ChatGPT.el/")
-	(unless (boundp 'python-interpreter)
-	  (defvaralias 'python-interpreter 'python-shell-interpreter))
-	:bind ("C-c q" . chatgpt-query)
-	:config
-	(setq chatgpt-query-format-string-map '(
-											;; ChatGPT.el defaults
-											("doc" . "Please write the documentation for the following code.\n\n%s")
-											("bug" . "There is a bug in the following code, please help me fix it.\n\n%s")
-											("understand" . "What does the following code do?\n\n%s")
-											("improve" . "Please improve the following code.\n\n%s")
-											;; Misc
-											("nil" . "%s")
-											("define" . "Please define the following.\n\n%s")
-											("explain" . "Please explain the following.\n\n%s")
-											("eli5" . "Explain like I am 5.\n\n%s")
-											("table" . "Explain in tabular form.\n\n%s")
-											)))
 #+end_src
 ** Git
 *** Initialize =magit=
@@ -1445,14 +1334,6 @@ The definitive Git porcelain for Emacs.
   ;; bindings to help improve the speed of magit
   ;; (use-package libgit :straight t)
   ;; (use-package magit-libgit :straight t)
-#+end_src
-*** Initialize =diff-hl=
-**** Description
-Indication of local VCS changes.
-**** Code
-#+begin_src emacs-lisp
-  (use-package diff-hl
-	:straight t)
 #+end_src
 *** Initialize =autorevert=
 **** Description
@@ -2203,55 +2084,6 @@ The altcaps package helps you apply alternating letter casing to convey sarcasm 
 #+begin_src emacs-lisp
   (use-package altcaps
 	:straight (:type git :host github :repo "protesilaos/altcaps" :branch "main"))
-#+end_src
-*** Initialize =org-noter=
-**** Description
-org-noter: a synchronized org-mode document annotator
-org-pdftools: a custom org link type for pdf-tools
-**** Code
-#+begin_src emacs-lisp
-  (use-package org-noter
-	:disabled t
-	:config
-	(require 'org-noter-pdftools))
-
-  (use-package org-pdftools
-	:disabled t
-	:hook (org-mode . org-pdftools-setup-link))
-
-  (use-package org-noter-pdftools
-	:disabled t
-	:after org-noter
-	:config
-	;; Add a function to ensure precise note is inserted
-	(defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
-	  (interactive "P")
-	  (org-noter--with-valid-session
-	   (let ((org-noter-insert-note-no-questions (if toggle-no-questions
-													 (not org-noter-insert-note-no-questions)
-												   org-noter-insert-note-no-questions))
-			 (org-pdftools-use-isearch-link t)
-			 (org-pdftools-use-freepointer-annot t))
-		 (org-noter-insert-note (org-noter--get-precise-info)))))
-
-	;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
-	(defun org-noter-set-start-location (&optional arg)
-	  "When opening a session with this document, go to the current location.
-	With a prefix ARG, remove start location."
-	  (interactive "P")
-	  (org-noter--with-valid-session
-	   (let ((inhibit-read-only t)
-			 (ast (org-noter--parse-root))
-			 (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
-		 (with-current-buffer (org-noter--session-notes-buffer session)
-		   (org-with-wide-buffer
-			(goto-char (org-element-property :begin ast))
-			(if arg
-				(org-entry-delete nil org-noter-property-note-location)
-			  (org-entry-put nil org-noter-property-note-location
-							 (org-noter--pretty-print-location location))))))))
-	(with-eval-after-load 'pdf-annot
-	  (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 #+end_src
 * Languages
 ** LSP
@@ -3220,18 +3052,6 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	  (org-latex-export-to-latex)
 	  (async-shell-command (concat "~/bin/org-pdf-export " buffer-file-name))
 	  (find-file (expand-file-name (concat (file-name-sans-extension buffer-file-name) ".pdf")))))
-#+end_src
-* Modules
-** Email
-*** Description
-mu4e [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email module]].
-*** Code
-#+begin_src emacs-lisp
-  ;; Load email module
-  ;; (when (file-directory-p
-  ;; 	   (concat user-emacs-directory "/modules"))
-  ;;   (org-babel-load-file
-  ;;    (concat user-emacs-directory "/modules/mail.org")))
 #+end_src
 * Footer
 ** Goodbye

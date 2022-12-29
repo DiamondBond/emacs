@@ -347,7 +347,7 @@ Show column number in modeline.
 #+end_src
 **** Enable global-highlight-line-mode
 #+begin_src emacs-lisp
-  (global-hl-line-mode t)
+  (global-hl-line-mode 0)
 #+end_src
 **** Enable prettify-symbols-mode
 #+begin_src emacs-lisp
@@ -2256,6 +2256,14 @@ Enhanced Rust mode with automatic LSP support.
 	(setq rustic-format-on-save nil))
 #+end_src
 ** Lisp
+*** Emacs Lisp
+**** Description
+Elisp formatter.
+**** Code
+#+begin_src emacs-lisp
+  (use-package elisp-format
+	:straight t)
+#+end_src
 *** Common Lisp
 **** Description
 SLIME - Common Lisp REPL.

@@ -7,6 +7,7 @@
   (global-hl-line-mode 1)
   (menu-bar-mode 0)
   (scroll-bar-mode 0)
+  (config/iosevka-fonts)
 #+end_src
 * Initialize =doom-themes=
 ** Description

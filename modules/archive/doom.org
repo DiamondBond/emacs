@@ -1,3 +1,5 @@
+#+PROPERTY: header-args :results silent :noweb yes
+
 * Prerequisite
 #+begin_src emacs-lisp
   (disable-theme 'modus-operandi)
@@ -14,7 +16,9 @@ Doom themes.
   (use-package doom-themes
 	:straight t
 	:config
-	(load-theme 'doom-one t))
+	;; (load-theme 'doom-one t)
+	(load-theme 'doom-dracula t)
+	)
 #+end_src
 * Initialize =doom-modeline=
 ** Description

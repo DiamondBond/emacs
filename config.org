@@ -41,7 +41,7 @@ Define global variables.
   ;; Set global configuration
   (setq
    globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
-   globals--font         "DejaVu Sans Mono 16"                ; Font
+   globals--font         "DejaVu Sans Mono 14"                ; Font
    globals--name         "Diamond Bond"                       ; Name
    globals--email        "diamondbond1@gmail.com"             ; Email
    globals--irc          "diamondbond"                        ; IRC
@@ -662,7 +662,8 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 			org-agenda-files (list "~/org/inbox.org"
 								   "~/org/tasks.org"
 								   "~/org/notes.org"
-								   "~/org/daily.org")
+								   "~/org/daily.org"
+								   "~/Work/TabletPOS/notes.org")
 			org-default-notes-file "~/org/inbox.org"
 			org-id-locations-file "~/org/.orgids"))
 
@@ -947,8 +948,30 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	(modus-themes-region '(accented bg-only no-extend))
 	(modus-themes-hl-line nil)
 	:config
-	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
+#+end_src
+*** Initialize =standard-themes=
+**** Description
+Enhanced default themes.
+**** Code
+#+begin_src emacs-lisp
+  (use-package standard-themes
+	:straight (:type git :host gitlab :repo "protesilaos/standard-themes" :branch "main")
+	:init
+	(load-theme 'standard-light :no-confirm)
+	:config
+	(setq standard-themes-bold-constructs t
+		  standard-themes-italic-constructs t
+		  standard-themes-mixed-fonts t
+		  standard-themes-variable-pitch-ui t
+		  standard-themes-mode-line-accented nil
+		  ;; Accepts a symbol value:
+		  standard-themes-fringes 'subtle
+		  ;; The following accept lists of properties
+		  standard-themes-links '(neutral-underline)
+		  standard-themes-region '(no-extend neutral intense)
+		  standard-themes-prompts '(bold italic)))
 #+end_src
 *** Initialize =dashboard=
 **** Description
@@ -1001,8 +1024,8 @@ An extensible emacs startup screen.
 	(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
 	(setq dashboard-banner-logo-title "")
-	;; (setq dashboard-startup-banner 'official)
-	(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+	(setq dashboard-startup-banner 'official)
+	;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info t)
@@ -2419,13 +2442,13 @@ Prettier formatter for JSX & TSX.
 	(define-key evil-normal-state-map (kbd "M-.") 'tide-jump-to-definition))
 
   (use-package prettier-js
-	:straight t
-	:config
-	(add-hook 'web-mode-hook #'(lambda ()
-								 (enable-minor-mode
-								  '("\\.jsx?\\'" . prettier-js-mode))
-								 (enable-minor-mode
-								  '("\\.tsx?\\'" . prettier-js-mode)))))
+	:straight t)
+  ;; :config
+  ;; (add-hook 'web-mode-hook #'(lambda ()
+  ;; 							   (enable-minor-mode
+  ;; 								'("\\.jsx?\\'" . prettier-js-mode))
+  ;; 							   (enable-minor-mode
+  ;; 								'("\\.tsx?\\'" . prettier-js-mode)))))
 #+end_src
 ** Web
 *** Description

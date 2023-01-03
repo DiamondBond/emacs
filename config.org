@@ -41,7 +41,7 @@ Define global variables.
   ;; Set global configuration
   (setq
    globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
-   globals--font         "DejaVu Sans Mono 14"                ; Font
+   globals--font         "DejaVu Sans Mono 16"                ; Font
    globals--name         "Diamond Bond"                       ; Name
    globals--email        "diamondbond1@gmail.com"             ; Email
    globals--irc          "diamondbond"                        ; IRC
@@ -207,7 +207,7 @@ Disable the bell.
 
   (setq scroll-margin 0)
   (setq scroll-conservatively 100000)
-  (setq scroll-preserve-screen-position 1)
+  (setq scroll-preserve-screen-position t)
   (setq fast-but-imprecise-scrolling t)
 #+end_src
 **** Enable pixel-scroll-precision-mode (Emacs 29+)
@@ -306,17 +306,28 @@ Emacs will fill up the space reported by the window manager.
 #+begin_src emacs-lisp
   (blink-cursor-mode -1)
 #+end_src
-**** Disable gui elements
-Disable =tool-bar=.
+**** Configure gui elements
 #+begin_src emacs-lisp
   (if (fboundp 'menu-bar-mode)
 	  (menu-bar-mode 1))
+
   (if (fboundp 'tool-bar-mode)
 	  (tool-bar-mode -1))
+  (setq tool-bar-style 'image)
+
   (if (fboundp 'scroll-bar-mode)
 	  (scroll-bar-mode 1))
   ;; (set-scroll-bar-mode 'right)
-  (setq tool-bar-style 'both)
+
+  ;; (setq tab-bar-show t)
+  ;; (tab-bar-mode 1)
+  ;; (tab-bar-history-mode 1)
+  ;; (display-time-mode 1)
+  (setq tab-bar-new-tab-choice "*dashboard*")
+
+  ;; time in tab-bar
+  ;; (add-to-list 'tab-bar-format 'tab-bar-format-align-right 'append)
+  ;; (add-to-list 'tab-bar-format 'tab-bar-format-global 'append)
 #+end_src
 **** Global mode line
 https://amodernist.com/texts/emacs-global.html
@@ -948,7 +959,7 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	(modus-themes-region '(accented bg-only no-extend))
 	(modus-themes-hl-line nil)
 	:config
-	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 *** Initialize =standard-themes=
@@ -958,8 +969,8 @@ Enhanced default themes.
 #+begin_src emacs-lisp
   (use-package standard-themes
 	:straight (:type git :host gitlab :repo "protesilaos/standard-themes" :branch "main")
-	:init
-	(load-theme 'standard-light :no-confirm)
+	;; :init
+	;; (load-theme 'standard-light :no-confirm)
 	:config
 	(setq standard-themes-bold-constructs t
 		  standard-themes-italic-constructs t

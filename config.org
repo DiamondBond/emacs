@@ -41,7 +41,7 @@ Define global variables.
   ;; Set global configuration
   (setq
    globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
-   globals--font         "DejaVu Sans Mono 16"                ; Font
+   globals--font         "DejaVu Sans Mono 14"                ; Font
    globals--name         "Diamond Bond"                       ; Name
    globals--email        "diamondbond1@gmail.com"             ; Email
    globals--irc          "diamondbond"                        ; IRC
@@ -309,14 +309,14 @@ Emacs will fill up the space reported by the window manager.
 **** Configure gui elements
 #+begin_src emacs-lisp
   (if (fboundp 'menu-bar-mode)
-	  (menu-bar-mode 1))
+	  (menu-bar-mode -1))
 
   (if (fboundp 'tool-bar-mode)
 	  (tool-bar-mode -1))
   (setq tool-bar-style 'image)
 
   (if (fboundp 'scroll-bar-mode)
-	  (scroll-bar-mode 1))
+	  (scroll-bar-mode -1))
   ;; (set-scroll-bar-mode 'right)
 
   ;; (setq tab-bar-show t)
@@ -337,7 +337,7 @@ https://amodernist.com/texts/emacs-global.html
 #+end_src
 **** Configure fringe
 #+begin_src emacs-lisp
-  (fringe-mode nil)
+  (fringe-mode 0)
   ;; (set-face-attribute 'fringe nil :background "#ffffff" :foreground "#ffffff")
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
@@ -942,6 +942,16 @@ Colourful and legible themes for GNU Emacs.
 	:config
 	;; (load-theme 'ef-trio-light t)
 	)
+#+end_src
+*** Initialize =vs-theme=
+**** Description
+VSCode dark theme.
+**** Code
+#+begin_src emacs-lisp
+  (use-package vs-dark-theme
+	:straight t
+	:config
+	(load-theme 'vs-dark t))
 #+end_src
 *** Initialize =modus-themes=
 **** Description

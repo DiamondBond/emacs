@@ -969,7 +969,7 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	(modus-themes-region '(accented bg-only no-extend))
 	(modus-themes-hl-line nil)
 	:config
-	(modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 *** Initialize =standard-themes=

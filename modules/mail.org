@@ -221,12 +221,13 @@ mu4e mail client.
 **** Code
 #+begin_src emacs-lisp
   (use-package mu4e
-	:straight ( :host github
-				:repo "djcb/mu"
-				:branch "master"
-				:files ("build/mu4e/*"))
+	:straight t
+	;; :straight ( :host github
+	;; 			  :repo "djcb/mu"
+	;; 			  :branch "master"
+	;; 			  :files ("build/mu4e/*"))
 	;; :pre-build (("./autogen.sh") ("make")))
-	:custom (mu4e-mu-binary "/usr/local/bin/mu")
+	;; :custom (mu4e-mu-binary "/usr/bin/mu")
 	:config
 	;; default
 	;; (require 'org-mu4e)

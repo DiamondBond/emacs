@@ -1156,6 +1156,16 @@ Variable pitch text in info mode.
 
   (add-hook 'Info-mode-hook #'info-variable-pitch-mode)
 #+end_src
+*** Initialize =minimap=
+**** Description
+Minimap sidebar.
+**** Code
+#+begin_src emacs-lisp
+  (use-package minimap
+	:straight t
+	:config
+	(setq minimap-window-location 'right))
+#+end_src
 ** Tools
 *** Initialize =so-long=
 **** Description

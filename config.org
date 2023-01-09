@@ -107,6 +107,11 @@ https://emacs.stackexchange.com/questions/28736
   (setq auto-window-vscroll nil)
 #+end_src
 ** Files
+*** Initial modes
+#+begin_src emacs-lisp
+  (setq-default initial-major-mode 'text-mode   ; Initial mode is text
+				default-major-mode 'text-mode)  ; Default mode is text
+#+end_src
 *** Custom
 Offload custom-set-variables to a separate file.
 This keeps your init.el clean and you have the option to gitignore your custom.el if you see fit.
@@ -312,7 +317,7 @@ Emacs will fill up the space reported by the window manager.
 	  (menu-bar-mode 1))
 
   (if (fboundp 'tool-bar-mode)
-	  (tool-bar-mode -1))
+	  (tool-bar-mode 0))
   (setq tool-bar-style 'image)
 
   (if (fboundp 'scroll-bar-mode)
@@ -337,7 +342,7 @@ https://amodernist.com/texts/emacs-global.html
 #+end_src
 **** Configure fringe
 #+begin_src emacs-lisp
-  (fringe-mode 0)
+  (fringe-mode nil)
   ;; (set-face-attribute 'fringe nil :background "#ffffff" :foreground "#ffffff")
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
@@ -654,7 +659,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	:diminish org-indent-mode
 	:config
 	;; sensible defaults
-	(setq initial-major-mode 'org-mode
+	(setq ;; initial-major-mode 'org-mode
 		  org-display-inline-images t
 		  org-redisplay-inline-images t
 		  org-image-actual-width nil
@@ -949,9 +954,9 @@ VSCode dark theme.
 **** Code
 #+begin_src emacs-lisp
   (use-package vs-dark-theme
-	:straight t
-	:config
-	(load-theme 'vs-dark t))
+	:straight t)
+  ;; :config
+  ;; (load-theme 'vs-dark t))
 #+end_src
 *** Initialize =modus-themes=
 **** Description
@@ -970,6 +975,7 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 	(modus-themes-hl-line nil)
 	:config
 	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+	(load-theme 'modus-operandi t)
 	:bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 *** Initialize =standard-themes=
@@ -1062,6 +1068,11 @@ An extensible emacs startup screen.
 				"Notes"
 				"Open Notes"
 				(lambda (&rest _) (notes-edit))
+				'default)
+			   (nil
+				"Scratch"
+				"Open Scratch Buffer"
+				(lambda (&rest _) (create-scratch-buffer))
 				'default)
 			   (nil
 				"Tasks"
@@ -1164,7 +1175,9 @@ Minimap sidebar.
   (use-package minimap
 	:straight t
 	:config
-	(setq minimap-window-location 'right))
+	(setq minimap-window-location 'right)
+	(setq minimap-width-fraction 0.05)
+	(setq minimap-minimum-width 20))
 #+end_src
 ** Tools
 *** Initialize =so-long=
@@ -3112,6 +3125,52 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	  (org-latex-export-to-latex)
 	  (async-shell-command (concat "~/bin/org-pdf-export " buffer-file-name))
 	  (find-file (expand-file-name (concat (file-name-sans-extension buffer-file-name) ".pdf")))))
+#+end_src
+*** =xah-backup=
+#+begin_src emacs-lisp
+  (defun xah-make-backup ()
+	"Make a backup copy of current file or dired marked files.
+  If in dired, backup current file or marked files.
+  The backup file name is in this format
+   x.html~2018-05-15_133429~
+   The last part is hour, minutes, seconds.
+  in the same dir. If such a file already exist, it's overwritten.
+  If the current buffer is not associated with a file, nothing's done.
+
+  URL `http://xahlee.info/emacs/emacs/elisp_make-backup.html'
+  Version 2018-05-15"
+	(interactive)
+	(let (($fname (buffer-file-name))
+		  ($date-time-format "%Y-%m-%d_%H%M%S"))
+	  (if $fname
+		  (let (($backup-name
+				 (concat $fname "~" (format-time-string $date-time-format) "~")))
+			(copy-file $fname $backup-name t)
+			(message (concat "Backup saved at: " $backup-name)))
+		(if (string-equal major-mode "dired-mode")
+			(progn
+			  (mapc (lambda ($x)
+					  (let (($backup-name
+							 (concat $x "~" (format-time-string $date-time-format) "~")))
+						(copy-file $x $backup-name t)))
+					(dired-get-marked-files))
+			  (message "marked files backed up"))
+		  (user-error "buffer not file nor dired")))))
+
+  (defun xah-make-backup-and-save ()
+	"Backup of current file and save, or backup dired marked files.
+  For detail, see `xah-make-backup'.
+  If the current buffer is not associated with a file nor dired, nothing's done.
+  URL `http://xahlee.info/emacs/emacs/elisp_make-backup.html'
+  Version 2015-10-14"
+	(interactive)
+	(if (buffer-file-name)
+		(progn
+		  (xah-make-backup)
+		  (when (buffer-modified-p)
+			(save-buffer)))
+	  (progn
+		(xah-make-backup))))
 #+end_src
 * Modules
 ** Email

@@ -109,8 +109,9 @@ https://emacs.stackexchange.com/questions/28736
 ** Files
 *** Initial modes
 #+begin_src emacs-lisp
-  (setq-default initial-major-mode 'text-mode   ; Initial mode is text
-				default-major-mode 'text-mode)  ; Default mode is text
+  (setq-default initial-major-mode 'fundamental-mode
+				default-major-mode 'text-mode)
+  (setq confirm-nonexistent-file-or-buffer nil)
 #+end_src
 *** Custom
 Offload custom-set-variables to a separate file.
@@ -151,6 +152,13 @@ Auto-load any custom themes in =~/.emacs.d/themes=.
 *** Don't ask for confirmation when opening symlinked file
 #+begin_src emacs-lisp
   (setq vc-follow-symlinks t)
+#+end_src
+*** Don't ask for confirmation when killing a buffer
+#+begin_src emacs-lisp
+  (setq confirm-kill-emacs nil)
+  (setq confirm-kill-processes nil)
+  (add-hook 'kill-buffer-query-functions
+			(lambda () (not-modified) t))
 #+end_src
 *** Disable automatic creation of backup files
 #+begin_src emacs-lisp
@@ -660,13 +668,13 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	:config
 	;; sensible defaults
 	(setq ;; initial-major-mode 'org-mode
-		  org-display-inline-images t
-		  org-redisplay-inline-images t
-		  org-image-actual-width nil
-		  org-hide-emphasis-markers nil
-		  org-startup-with-inline-images "inlineimages"
-		  org-catch-invisible-edits 'smart
-		  org-pretty-entities t)
+	 org-display-inline-images t
+	 org-redisplay-inline-images t
+	 org-image-actual-width nil
+	 org-hide-emphasis-markers nil
+	 org-startup-with-inline-images "inlineimages"
+	 org-catch-invisible-edits 'smart
+	 org-pretty-entities t)
 
 	;; indentation
 	(setq org-src-preserve-indentation nil

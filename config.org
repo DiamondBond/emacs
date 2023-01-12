@@ -334,7 +334,7 @@ Emacs will fill up the space reported by the window manager.
 
   ;; (setq tab-bar-show t)
   ;; (tab-bar-mode 1)
-  ;; (tab-bar-history-mode 1)
+  (tab-bar-history-mode 1)
   ;; (display-time-mode 1)
   (setq tab-bar-new-tab-choice "*dashboard*")
 

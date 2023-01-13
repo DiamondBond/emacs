@@ -340,7 +340,7 @@ Emacs will fill up the space reported by the window manager.
   ;; (set-scroll-bar-mode 'right)
 
   ;; tab bar
-  (tab-bar-mode 1)
+  ;; (tab-bar-mode 1)
   ;; (setq tab-bar-show 1)
   (tab-bar-history-mode 1)
   (setq tab-bar-history-limit 25)
@@ -589,7 +589,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (global-set-key (kbd "<f10>") 'compile)
   (global-set-key (kbd "S-<f8>") 'tool-bar-mode)
   (global-set-key (kbd "<f9>") 'tab-bar-mode)
-  (global-set-key (kbd "S-<f9>") 'tab-line-mode)
+  (global-set-key (kbd "S-<f9>") 'toggle-frame-tab-bar)
   (global-set-key (kbd "S-<f12>") 'display-line-numbers-mode)
 
   ;; windows
@@ -969,17 +969,6 @@ Compilation buffer enhancements.
 	  (message "Compilation %s: %s" (string-trim-right why) msg)))
 #+end_src
 ** Visual
-*** Initialize =ef-themes=
-**** Description
-Colourful and legible themes for GNU Emacs.
-**** Code
-#+begin_src emacs-lisp
-  (use-package ef-themes
-	:straight t
-	:config
-	;; (load-theme 'ef-trio-light t)
-	)
-#+end_src
 *** Initialize =vs-theme=
 **** Description
 VSCode dark theme.
@@ -999,6 +988,25 @@ Zenburn theme.
 	:straight t
 	:config
 	(load-theme 'zenburn t))
+#+end_src
+*** Initialize =spacemacs-theme=
+**** Description
+Spacemacs themes.
+**** Code
+#+begin_src emacs-lisp
+  (use-package spacemacs-theme
+	:straight t)
+#+end_src
+*** Initialize =ef-themes=
+**** Description
+Colourful and legible themes for GNU Emacs.
+**** Code
+#+begin_src emacs-lisp
+  (use-package ef-themes
+	:straight t
+	:config
+	;; (load-theme 'ef-trio-light t)
+	)
 #+end_src
 *** Initialize =modus-themes=
 **** Description
@@ -1093,8 +1101,8 @@ An extensible emacs startup screen.
 	(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
 	(setq dashboard-banner-logo-title nil)
-	(setq dashboard-startup-banner 'official)
-	;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+	;; (setq dashboard-startup-banner 'official)
+	(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info nil)
@@ -1215,6 +1223,7 @@ Minimap sidebar.
 #+begin_src emacs-lisp
   (use-package minimap
 	:straight t
+	:diminish minimap-mode
 	:config
 	(setq minimap-window-location 'right)
 	(setq minimap-width-fraction 0.05)
@@ -1457,7 +1466,22 @@ The definitive Git porcelain for Emacs.
 	:bind (("C-x g" . magit-status))
 	:config
 	;; Bind the `magit-status' command to a convenient key.
-	(global-set-key (kbd "C-c g") #'magit-status))
+	(global-set-key (kbd "C-c g") #'magit-status)
+
+	(defun parse-url (url)
+	  "convert a git remote location as a HTTP URL"
+	  (if (string-match "^http" url)
+		  url
+		(replace-regexp-in-string "\\(.*\\)@\\(.*\\):\\(.*\\)\\(\\.git?\\)"
+								  "https://\\2/\\3"
+								  url)))
+	(defun magit-open-repo ()
+	  "open remote repo URL"
+	  (interactive)
+	  (let ((url (magit-get "remote" "origin" "url")))
+		(progn
+		  (browse-url (parse-url url))
+		  (message "opening repo %s" url)))))
 
   ;; bindings to help improve the speed of magit
   ;; (use-package libgit :straight t)
@@ -1852,7 +1876,7 @@ engine-mode is a global minor mode for Emacs that enables you to easily define s
 			   :docstring "Search Google.")
 	(defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :keybinding "i"
 			   :docstring "Search Google Images")
-	(defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m"
+	(defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "M"
 			   :docstring "Search Google Maps.")
 	(defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d"
 			   :docstring "Search DuckDuckGo.")
@@ -1866,7 +1890,7 @@ engine-mode is a global minor mode for Emacs that enables you to easily define s
 			   :docstring "Search Twitter.")
 	(defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "G"
 			   :docstring "Search GitHub.")
-	(defengine melpa "https://melpa.org/#/?q=%s" :keybinding "M"
+	(defengine melpa "https://melpa.org/#/?q=%s" :keybinding "m"
 			   :docstring "Search the Milkypostman's Emacs Lisp Package Archive.")
 	(defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "s"
 			   :docstring "Search Stack Overflow.")

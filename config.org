@@ -40,7 +40,7 @@ Define global variables.
 #+begin_src emacs-lisp
   ;; Set global configuration
   (setq
-   globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
+   globals--banner-path  "img/Lisp_logo.png"                  ; Banner
    globals--font         "DejaVu Sans Mono 14"                ; Font
    globals--name         "Diamond Bond"                       ; Name
    globals--email        "diamondbond1@gmail.com"             ; Email
@@ -216,7 +216,7 @@ Disable the bell.
    ;; The most important setting of all! Make each scroll-event move 2 lines at
    ;; a time (instead of 5 at default). Simply hold down shift to move twice as
    ;; fast, or hold down control to move 3x as fast. Perfect for trackpads.
-   mouse-wheel-scroll-amount '(2 ((shift) . 4) ((control) . 6)))
+   mouse-wheel-scroll-amount '(2 ((shift) . 8) ((control) . 6)))
 
   (setq scroll-margin 0)
   (setq scroll-conservatively 100000)
@@ -231,6 +231,10 @@ Disable the bell.
 #+begin_src emacs-lisp
   (setq select-enable-clipboard t)
   (setq save-interprogram-paste-before-kill t)
+#+end_src
+*** Focus follows mouse
+#+begin_src emacs-lisp
+  ;; (setq mouse-autoselect-window t)
 #+end_src
 *** Pair matching
 **** Enable paren-mode
@@ -321,24 +325,30 @@ Emacs will fill up the space reported by the window manager.
 #+end_src
 **** Configure gui elements
 #+begin_src emacs-lisp
+  ;; menu bar
   (if (fboundp 'menu-bar-mode)
-	  (menu-bar-mode 1))
+	  (menu-bar-mode 0))
 
+  ;; tool bar
   (if (fboundp 'tool-bar-mode)
 	  (tool-bar-mode 0))
   (setq tool-bar-style 'image)
 
+  ;; scroll bar
   (if (fboundp 'scroll-bar-mode)
-	  (scroll-bar-mode 1))
-  (set-scroll-bar-mode 'right)
+	  (scroll-bar-mode 0))
+  ;; (set-scroll-bar-mode 'right)
 
-  ;; (setq tab-bar-show t)
-  ;; (tab-bar-mode 1)
+  ;; tab bar
+  (tab-bar-mode 1)
+  ;; (setq tab-bar-show 1)
   (tab-bar-history-mode 1)
-  ;; (display-time-mode 1)
+  (setq tab-bar-history-limit 25)
   (setq tab-bar-new-tab-choice "*dashboard*")
+  ;; (setq tab-bar-close-button-show nil)
 
   ;; time in tab-bar
+  ;; (display-time-mode 1)
   ;; (add-to-list 'tab-bar-format 'tab-bar-format-align-right 'append)
   ;; (add-to-list 'tab-bar-format 'tab-bar-format-global 'append)
 #+end_src
@@ -510,9 +520,11 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (define-key z-map (kbd "a") 'org-agenda)
   (define-key z-map (kbd "f") 'find-file-other-frame)
   (define-key z-map (kbd "g") 'golden-ratio)
-  (define-key z-map (kbd "h") 'global-hl-line-mode)
   (define-key z-map (kbd "2") 'make-frame-command)
+  (define-key z-map (kbd "1") 'vscode-mode)
+  (define-key z-map (kbd "0") 'vscode-kill)
   (define-key z-map (kbd "o") 'olivetti-mode)
+  (define-key z-map (kbd "r") 'recentf-delete)
   (define-key z-map (kbd "m") 'magit-status)
   (define-key z-map (kbd "w") 'eww)
 
@@ -531,11 +543,15 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (define-key z-map (kbd "D") 'dashboard-refresh-buffer)
   (define-key z-map (kbd "O") 'org-redisplay-inline-images)
   (define-key z-map (kbd "G") 'org-mark-ring-goto)
+  (define-key z-map (kbd "H") 'global-hl-line-mode)
   (define-key z-map (kbd "s") 'ispell-word)
   (define-key z-map (kbd "W") 'elfeed)
   (define-key z-map (kbd "F") 'follow-mode)
   (define-key z-map (kbd "U") 'undo-redo)
   (define-key z-map (kbd "i") 'consult-imenu)
+  (define-key z-map (kbd "l") 'minimap-mode)
+  (define-key z-map (kbd "h") 'treemacs)
+  (define-key z-map (kbd "p") 'prettier-js)
 
   ;; quick
   (define-key z-map (kbd "x") 'switch-to-buffer-other-frame)
@@ -545,7 +561,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 
   ;; auxiliary
   (define-key z-map (kbd "S") 'speedbar-frame-mode)
-  (define-key z-map (kbd "C-1") 'consult-buffer-other-frame)
+  (define-key z-map (kbd "2") 'consult-buffer-other-frame)
   (define-key z-map (kbd "C-c") 'calendar)
   (define-key z-map (kbd "C-d") 'dired-other-frame)
 
@@ -587,12 +603,22 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
   (global-set-key (kbd "C-x C-b") #'ibuffer-list-buffers)
 
+  ;; windmove
+  (global-set-key (kbd "s-k") 'windmove-up)
+  (global-set-key (kbd "s-j") 'windmove-down)
+  (global-set-key (kbd "s-h") 'windmove-left)
+  (global-set-key (kbd "s-l") 'windmove-right)
+
   ;; next/prev
   ;; (global-set-key (kbd "C-<tab>") 'next-buffer)
   ;; (global-set-key (kbd "C-<iso-lefttab>") 'previous-buffer)
   (global-set-key (kbd "C-<tab>") 'tab-next)
   (define-key global-map (kbd "C-S-n") #'next-15-lines)
   (define-key global-map (kbd "C-S-p") #'previous-15-lines)
+
+  ;; mouse
+  (global-set-key (kbd "<mouse-8>") 'previous-buffer)
+  (global-set-key (kbd "<mouse-9>") 'next-buffer)
 
   ;; c-mode
   ;; (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
@@ -735,11 +761,9 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 
 	;; org templates
 	(setq org-capture-templates
-		  '(("w" "Default" entry (file+headline "~/org/inbox.org" "Notes")
-			 "* %^{Title}\n\n  Source: %u, %c\n\n  %i" :empty-lines 1)
-			("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
+		  '(("i" "Inbox" entry (file+headline "~/org/inbox.org" "Inbox")
 			 "* %?\n%a\nEntered on %U" :empty-lines 1)
-			("t" "Tasks" entry (file+olp+datetree "~/org/inbox.org" "Tasks")
+			("t" "Tasks" entry (file+olp+datetree "~/org/tasks.org" "Tasks")
 			 "* %?\n%a\nEntered on %U" :empty-lines 1)))
 
 	:bind
@@ -966,6 +990,16 @@ VSCode dark theme.
   ;; :config
   ;; (load-theme 'vs-dark t))
 #+end_src
+*** Initialize =zenburn-theme=
+**** Description
+Zenburn theme.
+**** Code
+#+begin_src emacs-lisp
+  (use-package zenburn-theme
+	:straight t
+	:config
+	(load-theme 'zenburn t))
+#+end_src
 *** Initialize =modus-themes=
 **** Description
 Accessible themes for Emacs, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
@@ -1058,14 +1092,13 @@ An extensible emacs startup screen.
 	:config
 	(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
-	(setq dashboard-banner-logo-title "")
+	(setq dashboard-banner-logo-title nil)
 	(setq dashboard-startup-banner 'official)
 	;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
-	(setq dashboard-set-init-info t)
+	(setq dashboard-set-init-info nil)
 	(setq dashboard-set-footer nil)
-	(setq dashboard-set-navigator t)
 	(setq dashboard-set-navigator t)
 
 	;; set dashboard navigator buttons
@@ -1087,11 +1120,11 @@ An extensible emacs startup screen.
 				"Open Tasks"
 				(lambda (&rest _) (tasks-edit))
 				'default)
-			   (nil
-				"Agenda"
-				"Open Org-Agenda"
-				(lambda (&rest _) (org-agenda))
-				'default)
+			   ;; (nil
+			   ;;  "Agenda"
+			   ;;  "Open Org-Agenda"
+			   ;;  (lambda (&rest _) (org-agenda))
+			   ;;  'default)
 			   (nil
 				"Inbox"
 				"Open Inbox"
@@ -1185,7 +1218,29 @@ Minimap sidebar.
 	:config
 	(setq minimap-window-location 'right)
 	(setq minimap-width-fraction 0.05)
-	(setq minimap-minimum-width 20))
+	(setq minimap-minimum-width 20)
+	(setq minimap-hide-fringes t)
+	;; changing colors
+	(custom-set-faces
+	 '(minimap-active-region-background
+	   ((((background dark)) (:background "#545454545454"))
+		(t (:background "#cececececece")))
+	   "Face for the active region in the minimap.
+  By default, this is only a different background color."
+	   :group 'minimap)))
+  ;; automatically open minimap when editing jsx/tsx
+  ;; :hook (web-mode . minimap-mode))
+#+end_src
+*** Initialize =mlscroll=
+**** Description
+Modeline scrollbar.
+**** Code
+#+begin_src emacs-lisp
+  (use-package mlscroll
+	:disabled t
+	:config
+	;; truncate which-func, for default mode-line-format's
+	(setq mlscroll-shortfun-min-width 11))
 #+end_src
 ** Tools
 *** Initialize =so-long=
@@ -2604,13 +2659,13 @@ CIDER with Clojure.
 #+end_src
 *** Reading mode
 #+begin_src emacs-lisp
-  (defun read-mode/disable ()
+  (defun clutter ()
 	"Enable menubar & scrollbar."
 	(interactive)
 	(menu-bar-mode 1)
 	(scroll-bar-mode 1))
 
-  (defun read-mode/enable ()
+  (defun unclutter ()
 	"Disable menubar & scrollbar."
 	(interactive)
 	(menu-bar-mode -1)
@@ -2666,38 +2721,37 @@ CIDER with Clojure.
 #+end_src
 *** run-in-vterm
 #+begin_src emacs-lisp
-  (if (eq system-type 'gnu/linux)
-	  (defun run-in-vterm-kill (process event)
-		"A process sentinel.  Kill PROCESS's buffer if it is live with arg EVENT."
-		(let ((b (process-buffer process)))
-		  (and (buffer-live-p b)
-			   (kill-buffer b))))
+  (defun run-in-vterm-kill (process event)
+	"A process sentinel.  Kill PROCESS's buffer if it is live with arg EVENT."
+	(let ((b (process-buffer process)))
+	  (and (buffer-live-p b)
+		   (kill-buffer b))))
 
-	(defun run-in-vterm (command)
-	  "Execute string COMMAND in a new vterm.
+  (defun run-in-vterm (command)
+	"Execute string COMMAND in a new vterm.
 
-	  Interactively, prompt for COMMAND with the current buffer's file
-	  name supplied.  When called from Dired, supply the name of the
-	  file at point.
+	Interactively, prompt for COMMAND with the current buffer's file
+	name supplied.  When called from Dired, supply the name of the
+	file at point.
 
-	  Like `async-shell-command`, but run in a vterm for full terminal features.
+	Like `async-shell-command`, but run in a vterm for full terminal features.
 
-	  The new vterm buffer is named in the form `*foo bar.baz*`, the
-	  command and its arguments in earmuffs.
+	The new vterm buffer is named in the form `*foo bar.baz*`, the
+	command and its arguments in earmuffs.
 
-	  When the command terminates, the shell remains open, but when the
-	  shell exits, the buffer is killed."
-	  (interactive
-	   (list
-		(let* ((f (cond (buffer-file-name)
-						((eq major-mode 'dired-mode)
-						 (dired-get-filename nil t))))
-			   (filename (concat " " (shell-quote-argument (and f (file-relative-name f))))))
-		  (read-shell-command "Command: "))))
-	  (with-current-buffer (vterm (concat "*" command "*"))
-		(set-process-sentinel vterm--process #'run-in-vterm-kill)
-		(vterm-send-string command)
-		(vterm-send-return))))
+	When the command terminates, the shell remains open, but when the
+	shell exits, the buffer is killed."
+	(interactive
+	 (list
+	  (let* ((f (cond (buffer-file-name)
+					  ((eq major-mode 'dired-mode)
+					   (dired-get-filename nil t))))
+			 (filename (concat " " (shell-quote-argument (and f (file-relative-name f))))))
+		(read-shell-command "Command: "))))
+	(with-current-buffer (vterm (concat "*" command "*"))
+	  (set-process-sentinel vterm--process #'run-in-vterm-kill)
+	  (vterm-send-string command)
+	  (vterm-send-return)))
 #+end_src
 *** Yank Whole Buffer
 #+begin_src emacs-lisp
@@ -2707,6 +2761,36 @@ CIDER with Clojure.
 	(save-excursion
 	  (mark-whole-buffer)
 	  (call-interactively 'evil-yank)))
+#+end_src
+*** Open externally
+#+begin_src emacs-lisp
+  (defun open-in-external-app ()
+	"Open the file(s) at point with an external application."
+	(interactive)
+	(let ((file-list (dired-get-marked-files)))
+	  (mapc
+	   (lambda (file-path)
+		 (let ((process-connection-type nil))
+		   (start-process "" nil "xdg-open" file-path)))
+	   file-list)))
+#+end_src
+*** IDE mode
+#+begin_src emacs-lisp
+  (defun vscode-mode ()
+	"Tree & Minimap."
+	(interactive)
+	(treemacs)
+	(other-window 1)
+	(minimap-mode 1))
+
+  (defun vscode-kill ()
+	"Kill treemacs & minimap."
+	(interactive)
+	(treemacs)
+	(minimap-kill))
+
+  ;; automatically enable IDE mode when opening react files
+  ;; (add-hook 'web-mode-hook #'(lambda () (vscode-mode)))
 #+end_src
 ** Config
 *** =config/tangle=

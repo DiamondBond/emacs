@@ -1003,10 +1003,9 @@ Colourful and legible themes for GNU Emacs.
 **** Code
 #+begin_src emacs-lisp
   (use-package ef-themes
-	:straight t
-	:config
-	;; (load-theme 'ef-trio-light t)
-	)
+	:straight t)
+  ;; :config
+  ;; (load-theme 'ef-trio-light t))
 #+end_src
 *** Initialize =modus-themes=
 **** Description

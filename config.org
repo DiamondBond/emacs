@@ -3,7 +3,7 @@
 #+AUTHOR: Diamond Bond
 #+EMAIL: diamondbond1@gmail.com
 #+LANGUAGE: en
-#+CREATOR: Emacs 28.2 (Org mode 9.5.5)
+#+CREATOR: Emacs 29.0.60 (Org mode 9.6)
 #+STARTUP: show2levels inlineimages
 #+SETUPFILE: resources/white.theme
 #+EXPORT_FILE_NAME: emacs.html
@@ -149,6 +149,10 @@ Auto-load any custom themes in =~/.emacs.d/themes=.
 	(setq custom-safe-themes t)
 	(add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory)))
 #+end_src
+*** Buffer modified nil
+#+begin_src emacs-lisp
+  (set-buffer-modified-p nil)
+#+end_src
 *** Don't ask for confirmation when opening symlinked file
 #+begin_src emacs-lisp
   (setq vc-follow-symlinks t)
@@ -225,7 +229,7 @@ Disable the bell.
 #+end_src
 **** Enable pixel-scroll-precision-mode (Emacs 29+)
 #+begin_src emacs-lisp
-  ;; (pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode)
 #+end_src
 *** Enable external-bound copy-pasting
 #+begin_src emacs-lisp
@@ -325,27 +329,32 @@ Emacs will fill up the space reported by the window manager.
 #+end_src
 **** Configure gui elements
 #+begin_src emacs-lisp
-  ;; menu bar
+  ;; menu-bar
   (if (fboundp 'menu-bar-mode)
-	  (menu-bar-mode 0))
+	  (menu-bar-mode 1))
 
-  ;; tool bar
+  ;; tool-bar
   (if (fboundp 'tool-bar-mode)
 	  (tool-bar-mode 0))
   (setq tool-bar-style 'image)
 
-  ;; scroll bar
+  ;; scroll-bar
   (if (fboundp 'scroll-bar-mode)
-	  (scroll-bar-mode 0))
-  ;; (set-scroll-bar-mode 'right)
+	  (scroll-bar-mode 1))
+  ;; for athena
+  (set-scroll-bar-mode 'right)
 
   ;; tab bar
   ;; (tab-bar-mode 1)
-  ;; (setq tab-bar-show 1)
-  (tab-bar-history-mode 1)
+  ;; (setq tab-bar-show t)
+  ;; (tab-bar-history-mode 1)
   (setq tab-bar-history-limit 25)
   (setq tab-bar-new-tab-choice "*dashboard*")
   ;; (setq tab-bar-close-button-show nil)
+
+  ;; tab bar when using emacsclient
+  ;; (use-package emacs
+  ;;   :hook (server-after-make-frame . tab-bar-enable))
 
   ;; time in tab-bar
   ;; (display-time-mode 1)
@@ -588,7 +597,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (global-set-key (kbd "<f8>") 'other-frame)
   (global-set-key (kbd "<f10>") 'compile)
   (global-set-key (kbd "S-<f8>") 'tool-bar-mode)
-  (global-set-key (kbd "<f9>") 'tab-bar-mode)
+  (global-set-key (kbd "<f9>") 'tab-bar-toggle)
   (global-set-key (kbd "S-<f9>") 'toggle-frame-tab-bar)
   (global-set-key (kbd "S-<f12>") 'display-line-numbers-mode)
 
@@ -985,9 +994,9 @@ Zenburn theme.
 **** Code
 #+begin_src emacs-lisp
   (use-package zenburn-theme
-	:straight t
-	:config
-	(load-theme 'zenburn t))
+	:straight t)
+  ;; :config
+  ;; (load-theme 'zenburn t))
 #+end_src
 *** Initialize =spacemacs-theme=
 **** Description
@@ -1100,8 +1109,8 @@ An extensible emacs startup screen.
 	(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
 	(setq dashboard-banner-logo-title nil)
-	;; (setq dashboard-startup-banner 'official)
-	(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+	(setq dashboard-startup-banner 'official)
+	;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info nil)
@@ -2366,10 +2375,11 @@ CCLS, Modern C++ syntax highlighting & astyle formatter.
 ** C#
 *** Description
 CSharp mode.
+Note: csharp-mode is part of Emacs as of Emacs 29.
 *** Code
 #+begin_src emacs-lisp
   (use-package csharp-mode
-	:straight t)
+	:disabled t)
 #+end_src
 ** Go
 *** Description
@@ -2694,6 +2704,30 @@ CIDER with Clojure.
 	(menu-bar-mode -1)
 	(scroll-bar-mode -1))
 #+end_src
+*** Tab bar control
+#+begin_src emacs-lisp
+  (defun tab-bar-enable ()
+	"Enable tab-bar with history."
+	(interactive)
+	(tab-bar-mode 1)
+	(tab-bar-history-mode 1))
+
+  (defun tab-bar-disable ()
+	"Disable tab-bar."
+	(interactive)
+	(tab-bar-mode -1))
+
+  (defun tab-bar-toggle ()
+	"Toggle tab-bar."
+	(interactive)
+	(if (get 'tab-bar-toggle 'state)
+		(progn
+		  (tab-bar-disable)
+		  (put 'tab-bar-toggle 'state nil))
+	  (progn
+		(tab-bar-enable)
+		(put 'tab-bar-toggle 'state t))))
+#+end_src
 *** Erc handlers
 #+begin_src emacs-lisp
   (defun erc-start ()
@@ -2802,6 +2836,10 @@ CIDER with Clojure.
   (defun vscode-mode ()
 	"Tree & Minimap."
 	(interactive)
+	(config/dark)
+	(tab-bar-enable)
+	;; (scroll-bar-mode 1)
+	;; (set-scroll-bar-mode 'right)
 	(treemacs)
 	(other-window 1)
 	(minimap-mode 1))
@@ -2809,11 +2847,32 @@ CIDER with Clojure.
   (defun vscode-kill ()
 	"Kill treemacs & minimap."
 	(interactive)
+	(config/light)
+	(tab-bar-disable)
+	;; (scroll-bar-mode 0)
 	(treemacs)
 	(minimap-kill))
 
   ;; automatically enable IDE mode when opening react files
   ;; (add-hook 'web-mode-hook #'(lambda () (vscode-mode)))
+#+end_src
+*** Scroll-bar colors
+#+begin_src emacs-lisp
+  (defun scroll-bar/light ()
+	"Set scroll-bar to light color."
+	(interactive)
+	(custom-set-faces
+	 '(scroll-bar
+	   ((t
+		 (:background "gray"))))))
+
+  (defun scroll-bar/dark ()
+	"Set scroll-bar to dark color."
+	(interactive)
+	(custom-set-faces
+	 '(scroll-bar
+	   ((t
+		 (:background "gray30"))))))
 #+end_src
 ** Config
 *** =config/tangle=
@@ -2865,6 +2924,21 @@ Applies Iosevka fonts.
 	(set-face-attribute 'fixed-pitch nil :font (font-spec :family "Iosevka Comfy" :size 12.0 :dpi 144 :weight 'regular))
 	(set-face-attribute 'variable-pitch nil :font (font-spec :family "DejaVu Sans Mono" :size 12.0 :dpi 144 :weight 'medium))
 	(set-fontset-font t 'unicode "DejaVu Sans Mono"))
+#+end_src
+*** =config/dark=
+Applies dark theme.
+#+begin_src emacs-lisp
+  (defun config/dark ()
+	"Dark mode."
+	(interactive)
+	(scroll-bar/dark)
+	(load-theme 'zenburn t))
+
+  (defun config/light ()
+	"Light mode."
+	(interactive)
+	(scroll-bar/light)
+	(disable-all-themes))
 #+end_src
 *** =auth/backup=
 Backup auth files.

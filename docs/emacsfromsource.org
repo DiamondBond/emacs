@@ -23,7 +23,7 @@ Clone the latest Emacs@HEAD sources:
 
 Or alternatively download the [[https://www.gnu.org/software/emacs/download.html][latest Emacs stable release]].
 
-** Configuring
+** Configuring (28.2)
 
 Configure Emacs with native-comp, xinput2, imagemagick, harfbuzz, json, athena-toolkit with xaw3d-toolbars & O3 CFLAGS for some minor performance improvements.
 
@@ -42,6 +42,23 @@ NOTE: If you are intending to compile Emacs<=29 then omit the =--with-xinput2= f
 
   # Configure Emacs with Athena toolkit
   # ./configure --with-dbus --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-harfbuzz --without-compress-install --with-native-compilation --with-xinput2 CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
+
+#+end_src
+
+** Configuring (29)
+
+Configure Emacs with native-comp, xinput2, imagemagick, harfbuzz, json, athena-toolkit with xaw3d-toolbars & O3 CFLAGS for some minor performance improvements.
+
+#+begin_src sh
+
+  # Navigate to the srcdir
+  cd ~/git/emacs
+
+  # Run the auto-generation script
+  ./autogen.sh
+
+  # Configure Emacs with Athena toolkit
+  ./configure --with-dbus --with-webp --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=yes --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-sqlite3 --with-harfbuzz --without-compress-install --with-native-compilation --with-xinput2 CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
 
 #+end_src
 

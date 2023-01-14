@@ -285,6 +285,10 @@ Set tabs & indents to 4sp.
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist `(font . ,globals--font))
 #+end_src
+**** Load theme
+#+begin_src emacs-lisp
+  (load-theme 'modus-operandi t)
+#+end_src
 **** Set time format
 #+begin_src emacs-lisp
   (setq-default display-time-format "%I:%M %p")
@@ -331,7 +335,7 @@ Emacs will fill up the space reported by the window manager.
 #+begin_src emacs-lisp
   ;; menu-bar
   (if (fboundp 'menu-bar-mode)
-	  (menu-bar-mode 1))
+	  (menu-bar-mode 0))
 
   ;; tool-bar
   (if (fboundp 'tool-bar-mode)
@@ -353,8 +357,8 @@ Emacs will fill up the space reported by the window manager.
   ;; (setq tab-bar-close-button-show nil)
 
   ;; tab bar when using emacsclient
-  ;; (use-package emacs
-  ;;   :hook (server-after-make-frame . tab-bar-enable))
+  (use-package emacs
+	:hook (server-after-make-frame . tab-bar-enable))
 
   ;; time in tab-bar
   ;; (display-time-mode 1)
@@ -985,8 +989,6 @@ VSCode dark theme.
 #+begin_src emacs-lisp
   (use-package vs-dark-theme
 	:straight t)
-  ;; :config
-  ;; (load-theme 'vs-dark t))
 #+end_src
 *** Initialize =zenburn-theme=
 **** Description
@@ -995,8 +997,6 @@ Zenburn theme.
 #+begin_src emacs-lisp
   (use-package zenburn-theme
 	:straight t)
-  ;; :config
-  ;; (load-theme 'zenburn t))
 #+end_src
 *** Initialize =spacemacs-theme=
 **** Description
@@ -1013,8 +1013,6 @@ Colourful and legible themes for GNU Emacs.
 #+begin_src emacs-lisp
   (use-package ef-themes
 	:straight t)
-  ;; :config
-  ;; (load-theme 'ef-trio-light t))
 #+end_src
 *** Initialize =modus-themes=
 **** Description
@@ -2836,10 +2834,7 @@ CIDER with Clojure.
   (defun vscode-mode ()
 	"Tree & Minimap."
 	(interactive)
-	(config/dark)
 	(tab-bar-enable)
-	;; (scroll-bar-mode 1)
-	;; (set-scroll-bar-mode 'right)
 	(treemacs)
 	(other-window 1)
 	(minimap-mode 1))
@@ -2847,9 +2842,7 @@ CIDER with Clojure.
   (defun vscode-kill ()
 	"Kill treemacs & minimap."
 	(interactive)
-	(config/light)
 	(tab-bar-disable)
-	;; (scroll-bar-mode 0)
 	(treemacs)
 	(minimap-kill))
 
@@ -2931,14 +2924,15 @@ Applies dark theme.
   (defun config/dark ()
 	"Dark mode."
 	(interactive)
+	(disable-all-themes)
 	(scroll-bar/dark)
 	(load-theme 'zenburn t))
 
   (defun config/light ()
 	"Light mode."
 	(interactive)
-	(scroll-bar/light)
-	(disable-all-themes))
+	(disable-all-themes)
+	(scroll-bar/light))
 #+end_src
 *** =auth/backup=
 Backup auth files.

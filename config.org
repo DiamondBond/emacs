@@ -2900,10 +2900,10 @@ Opens this Emacs configuration GitHub website.
 	(interactive)
 	(if (get 'theme-toggle 'state)
 		(progn
-		  (config/light)
+		  (config/dark)
 		  (put 'theme-toggle 'state nil))
 	  (progn
-		(config/dark)
+		(config/light)
 		(put 'theme-toggle 'state t))))
 #+end_src
 *** =config/vscode=

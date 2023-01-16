@@ -733,7 +733,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 								   "~/org/tasks.org"
 								   "~/org/notes.org"
 								   "~/org/daily.org"
-								   "~/Work/TabletPOS/notes.org")
+								   "~/org/work-notes.org")
 			org-default-notes-file "~/org/inbox.org"
 			org-id-locations-file "~/org/.orgids"))
 

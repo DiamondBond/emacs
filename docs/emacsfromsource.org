@@ -47,12 +47,7 @@ NOTE: If you are intending to compile Emacs<=29 then omit the =--with-xinput2= f
 
 ** Configuring (29)
 
-Configure Emacs with native-comp, xinput2, imagemagick, harfbuzz, json, athena-toolkit with xaw3d-toolbars & O3 CFLAGS for some minor performance improvements.
-
 #+begin_src sh
-
-  # Navigate to the srcdir
-  cd ~/git/emacs
 
   # Run the auto-generation script
   ./autogen.sh

@@ -208,6 +208,11 @@ Disable the bell.
 #+begin_src emacs-lisp
   (setq ring-bell-function 'ignore)
 #+end_src
+*** Configure mouse
+#+begin_src emacs-lisp
+  (setq-default track-mouse nil)
+  ;; (mouse-avoidance-mode 'jump)
+#+end_src
 *** Configure scrolling
 **** Enable nice-scrolling (Emacs 28+)
 #+begin_src emacs-lisp
@@ -216,14 +221,14 @@ Disable the bell.
    ;; instead of the one that currently has keyboard focus.
    mouse-wheel-follow-mouse 't
    ;; Completely disable mouse wheel acceleration to avoid speeding away.
-   mouse-wheel-progressive-speed nil
-   ;; The most important setting of all! Make each scroll-event move 2 lines at
-   ;; a time (instead of 5 at default). Simply hold down shift to move twice as
-   ;; fast, or hold down control to move 3x as fast. Perfect for trackpads.
-   mouse-wheel-scroll-amount '(2 ((shift) . 8) ((control) . 6)))
+   mouse-wheel-progressive-speed nil)
+  ;; The most important setting of all! Make each scroll-event move 2 lines at
+  ;; a time (instead of 5 at default). Simply hold down shift to move twice as
+  ;; fast, or hold down control to move 3x as fast. Perfect for trackpads.
+  ;; mouse-wheel-scroll-amount '(2 ((shift) . 8) ((control) . 6)))
 
   (setq scroll-margin 0)
-  (setq scroll-conservatively 100000)
+  ;; (setq scroll-conservatively 100000)
   (setq scroll-preserve-screen-position t)
   (setq fast-but-imprecise-scrolling t)
 #+end_src
@@ -287,7 +292,7 @@ Set tabs & indents to 4sp.
 #+end_src
 **** Load theme
 #+begin_src emacs-lisp
-  (load-theme 'modus-operandi t)
+  ;; (load-theme 'modus-operandi t)
 #+end_src
 **** Set time format
 #+begin_src emacs-lisp
@@ -355,6 +360,7 @@ Emacs will fill up the space reported by the window manager.
   (setq tab-bar-history-limit 25)
   (setq tab-bar-new-tab-choice "*dashboard*")
   ;; (setq tab-bar-close-button-show nil)
+  ;; (setq tab-bar-new-button-show nil)
 
   ;; tab bar when using emacsclient
   (use-package emacs
@@ -534,8 +540,8 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (define-key z-map (kbd "f") 'find-file-other-frame)
   (define-key z-map (kbd "g") 'golden-ratio)
   (define-key z-map (kbd "2") 'make-frame-command)
-  (define-key z-map (kbd "1") 'vscode-mode)
-  (define-key z-map (kbd "0") 'vscode-kill)
+  (define-key z-map (kbd "1") 'config/vscode-mode)
+  (define-key z-map (kbd "0") 'config/vscode-kill)
   (define-key z-map (kbd "o") 'olivetti-mode)
   (define-key z-map (kbd "r") 'recentf-delete)
   (define-key z-map (kbd "m") 'magit-status)
@@ -600,6 +606,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (global-set-key (kbd "<f7>") 'scroll-bar-mode)
   (global-set-key (kbd "<f8>") 'other-frame)
   (global-set-key (kbd "<f10>") 'compile)
+  (global-set-key (kbd "S-<f5>") 'config/toggle-theme)
   (global-set-key (kbd "S-<f8>") 'tool-bar-mode)
   (global-set-key (kbd "<f9>") 'tab-bar-toggle)
   (global-set-key (kbd "S-<f9>") 'toggle-frame-tab-bar)
@@ -990,13 +997,27 @@ VSCode dark theme.
   (use-package vs-dark-theme
 	:straight t)
 #+end_src
+*** Initialize =doom-themes=
+**** Description
+Doom themes.
+**** Code
+#+begin_src emacs-lisp
+  (use-package doom-themes
+	:straight t)
+#+end_src
 *** Initialize =zenburn-theme=
 **** Description
 Zenburn theme.
 **** Code
 #+begin_src emacs-lisp
   (use-package zenburn-theme
-	:straight t)
+	:straight t
+	:config
+	(custom-set-faces
+	 '(scroll-bar
+	   ((t
+		 (:background "gray30")))))
+	(load-theme 'zenburn t))
 #+end_src
 *** Initialize =spacemacs-theme=
 **** Description
@@ -1020,19 +1041,20 @@ Accessible themes for Emacs, conforming with the highest standard for colour con
 **** Code
 #+begin_src emacs-lisp
   (use-package modus-themes
-	:straight (:type git :host gitlab :repo "protesilaos/modus-themes" :branch "main")
-	:init
+	:straight (:type built-in)
+	;; :straight (:type git :host gitlab :repo "protesilaos/modus-themes" :branch "main")
+	;; :init
 	;; load the theme files before enabling a theme
-	(modus-themes-load-themes)
+	;; (modus-themes-load-themes)
 	:custom
 	(modus-themes-italic-constructs t)
 	(modus-themes-bold-constructs t)
 	(modus-themes-region '(accented bg-only no-extend))
-	(modus-themes-hl-line nil)
-	:config
-	;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
-	;; (load-theme 'modus-operandi t)
-	:bind ("S-<f5>" . modus-themes-toggle))
+	(modus-themes-hl-line nil))
+  ;; :config
+  ;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+  ;; (load-theme 'modus-operandi t)
+  ;; :bind ("S-<f5>" . modus-themes-toggle))
 #+end_src
 *** Initialize =standard-themes=
 **** Description
@@ -1243,19 +1265,6 @@ Minimap sidebar.
 	   "Face for the active region in the minimap.
   By default, this is only a different background color."
 	   :group 'minimap)))
-  ;; automatically open minimap when editing jsx/tsx
-  ;; :hook (web-mode . minimap-mode))
-#+end_src
-*** Initialize =mlscroll=
-**** Description
-Modeline scrollbar.
-**** Code
-#+begin_src emacs-lisp
-  (use-package mlscroll
-	:disabled t
-	:config
-	;; truncate which-func, for default mode-line-format's
-	(setq mlscroll-shortfun-min-width 11))
 #+end_src
 ** Tools
 *** Initialize =so-long=
@@ -2688,20 +2697,6 @@ CIDER with Clojure.
 		(if (string-match (car my-pair) buffer-file-name)
 			(funcall (cdr my-pair)))))
 #+end_src
-*** Reading mode
-#+begin_src emacs-lisp
-  (defun clutter ()
-	"Enable menubar & scrollbar."
-	(interactive)
-	(menu-bar-mode 1)
-	(scroll-bar-mode 1))
-
-  (defun unclutter ()
-	"Disable menubar & scrollbar."
-	(interactive)
-	(menu-bar-mode -1)
-	(scroll-bar-mode -1))
-#+end_src
 *** Tab bar control
 #+begin_src emacs-lisp
   (defun tab-bar-enable ()
@@ -2753,6 +2748,7 @@ CIDER with Clojure.
 #+begin_src emacs-lisp
   (defun disable-all-themes ()
 	"Disable all active themes."
+	(interactive)
 	(dolist (i custom-enabled-themes)
 	  (disable-theme i)))
 #+end_src
@@ -2829,44 +2825,6 @@ CIDER with Clojure.
 		   (start-process "" nil "xdg-open" file-path)))
 	   file-list)))
 #+end_src
-*** IDE mode
-#+begin_src emacs-lisp
-  (defun vscode-mode ()
-	"Tree & Minimap."
-	(interactive)
-	(tab-bar-enable)
-	(treemacs)
-	(other-window 1)
-	(minimap-mode 1))
-
-  (defun vscode-kill ()
-	"Kill treemacs & minimap."
-	(interactive)
-	(tab-bar-disable)
-	(treemacs)
-	(minimap-kill))
-
-  ;; automatically enable IDE mode when opening react files
-  ;; (add-hook 'web-mode-hook #'(lambda () (vscode-mode)))
-#+end_src
-*** Scroll-bar colors
-#+begin_src emacs-lisp
-  (defun scroll-bar/light ()
-	"Set scroll-bar to light color."
-	(interactive)
-	(custom-set-faces
-	 '(scroll-bar
-	   ((t
-		 (:background "gray"))))))
-
-  (defun scroll-bar/dark ()
-	"Set scroll-bar to dark color."
-	(interactive)
-	(custom-set-faces
-	 '(scroll-bar
-	   ((t
-		 (:background "gray30"))))))
-#+end_src
 ** Config
 *** =config/tangle=
 Tangles the Emacs configuration.
@@ -2907,32 +2865,94 @@ Opens this Emacs configuration GitHub website.
 	(interactive)
 	(browse-url "https://github.com/diamondbond/emacs"))
 #+end_src
-*** =config/iosevka-fonts=
-Applies Iosevka fonts.
+*** =config/themes=
 #+begin_src emacs-lisp
-  (defun config/iosevka-fonts ()
-	"Applies Iosevka fonts."
+  (defun config/zenburn ()
+	"Zenburn mode."
 	(interactive)
-	(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy" :size 12.0 :dpi 144 :weight 'regular))
-	(set-face-attribute 'fixed-pitch nil :font (font-spec :family "Iosevka Comfy" :size 12.0 :dpi 144 :weight 'regular))
-	(set-face-attribute 'variable-pitch nil :font (font-spec :family "DejaVu Sans Mono" :size 12.0 :dpi 144 :weight 'medium))
-	(set-fontset-font t 'unicode "DejaVu Sans Mono"))
-#+end_src
-*** =config/dark=
-Applies dark theme.
-#+begin_src emacs-lisp
+	(disable-all-themes)
+	(scroll-bar/zenburn)
+	(load-theme 'zenburn t))
+
+  (defun config/dracula ()
+	"Dracula mode."
+	(interactive)
+	(disable-all-themes)
+	(scroll-bar/dracula)
+	(load-theme 'doom-dracula t))
+
   (defun config/dark ()
 	"Dark mode."
 	(interactive)
 	(disable-all-themes)
 	(scroll-bar/dark)
-	(load-theme 'zenburn t))
+	(load-theme 'modus-vivendi t))
 
   (defun config/light ()
 	"Light mode."
 	(interactive)
 	(disable-all-themes)
-	(scroll-bar/light))
+	(scroll-bar/light)
+	(load-theme 'modus-operandi t))
+
+  (defun config/toggle-theme ()
+	"Toggle theme."
+	(interactive)
+	(if (get 'theme-toggle 'state)
+		(progn
+		  (config/dracula)
+		  (put 'theme-toggle 'state nil))
+	  (progn
+		(config/zenburn)
+		(put 'theme-toggle 'state t))))
+#+end_src
+*** =config/vscode=
+#+begin_src emacs-lisp
+  (defun config/vscode-mode ()
+	"Tree & Minimap."
+	(interactive)
+	;; (config/dark)
+	(treemacs)
+	(other-window 1)
+	(minimap-mode 1))
+
+  (defun config/vscode-kill ()
+	"Kill treemacs & minimap."
+	(interactive)
+	;; (config/light)
+	(treemacs)
+	(treemacs-kill-buffer)
+	(minimap-kill))
+#+end_src
+*** =scroll-bar/colors=
+#+begin_src emacs-lisp
+  (defun scroll-bar/light ()
+	"Set scroll-bar to light color."
+	(custom-set-faces
+	 '(scroll-bar
+	   ((t
+		 (:background "gray"))))))
+
+  (defun scroll-bar/dark ()
+	"Set scroll-bar to dark color."
+	(custom-set-faces
+	 '(scroll-bar
+	   ((t
+		 (:background "black"))))))
+
+  (defun scroll-bar/zenburn ()
+	"Set scroll-bar to zenburn color."
+	(custom-set-faces
+	 '(scroll-bar
+	   ((t
+		 (:background "gray30"))))))
+
+  (defun scroll-bar/dracula ()
+	"Set scroll-bar to dracula color."
+	(custom-set-faces
+	 '(scroll-bar
+	   ((t
+		 (:background "#23242f"))))))
 #+end_src
 *** =auth/backup=
 Backup auth files.

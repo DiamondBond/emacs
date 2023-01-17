@@ -98,9 +98,21 @@ M-x mu-setup/automagic
 
 Compile mu & mu4e.
 
-#+begin_quote
-M-x mu-setup/build-mu-binary
-#+end_quote
+#+begin_src sh
+  mkdir -p ~/src; cd ~/src
+  git clone https://github.com/djcb/mu
+  ./autogen.sh && make
+  sudo make install
+#+end_src
+
+***** Tip: mu4e-binary
+
+Set as *mu4e-mu-binary*.
+
+#+begin_example
+$ whereis mu
+mu: /usr/local/bin/mu
+#+end_example
 
 **** Initialize mu
 
@@ -198,10 +210,10 @@ NOTE: Modify this defun to contain your =maildir= & email address.
   (defun mu-setup/automagic ()
 	"Auto-magically configures 'mu'."
 	(interactive)
-	(mu-setup/build-mu-binary)
-	(sit-for 5)
+	;; (mu-setup/build-mu-binary)
+	;; (sit-for 5)
 	(mu-setup/init-mu)
-    (sit-for 5)
+	;; (sit-for 5)
 	(mu-setup/rebuild-mu-index))
 #+end_src
 
@@ -227,7 +239,8 @@ mu4e mail client.
 	;; 			  :branch "master"
 	;; 			  :files ("build/mu4e/*"))
 	;; :pre-build (("./autogen.sh") ("make")))
-	;; :custom (mu4e-mu-binary "/usr/bin/mu")
+	:custom (mu4e-mu-binary "/usr/local/bin/mu")
+	:diminish mu4e-headers-mode
 	:config
 	;; default
 	;; (require 'org-mu4e)
@@ -311,6 +324,11 @@ mu4e mail client.
 
 	;; define z-map keybind
 	(define-key z-map (kbd "M") 'mu4e)
+
+	;; disable mu4e-modeline
+	(mu4e-modeline-mode -1)
+	(add-hook 'mu4e-main-mode-hook (lambda () (mu4e-modeline-mode -1)))
+	(add-hook 'dashboard-mode-hook (lambda () (mu4e-modeline-mode -1)))
 
 	;; start mu4e
 	(mu4e t))

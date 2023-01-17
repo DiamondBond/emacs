@@ -1268,7 +1268,7 @@ Minimap sidebar.
 	(custom-set-faces
 	 '(minimap-active-region-background
 	   ((((background dark)) (:background "#333333333333"))
-		(t (:background "#d9d9d9d9d9d9")))
+		(t (:background "#333333333333")))
 	   "Face for the active region in the minimap.
   By default, this is only a different background color."
 	   :group 'minimap)))
@@ -2900,6 +2900,7 @@ Opens this Emacs configuration GitHub website.
 	"Tree & Minimap."
 	(interactive)
 	;; (config/dark)
+	(scroll-bar-mode -1)
 	(treemacs)
 	(other-window 1)
 	(minimap-mode 1))
@@ -2908,6 +2909,7 @@ Opens this Emacs configuration GitHub website.
 	"Kill treemacs & minimap."
 	(interactive)
 	;; (config/light)
+	(scroll-bar-mode 1)
 	(treemacs)
 	(treemacs-kill-buffer)
 	(minimap-kill))
@@ -3433,10 +3435,10 @@ mu4e [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email 
 *** Code
 #+begin_src emacs-lisp
   ;; Load email module
-  ;; (when (file-directory-p
-  ;; 	   (concat user-emacs-directory "/modules"))
-  ;;   (org-babel-load-file
-  ;;    (concat user-emacs-directory "/modules/mail.org")))
+  (when (file-directory-p
+		 (concat user-emacs-directory "/modules"))
+	(org-babel-load-file
+	 (concat user-emacs-directory "/modules/mail.org")))
 #+end_src
 * Footer
 ** Goodbye

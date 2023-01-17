@@ -1572,7 +1572,7 @@ Possible completion framework with 0.3s delay.
 	(which-key-mode)
 	:config
 	(setq which-key-idle-delay 0.1)
-	(setq which-key-prefix-prefix "◉ ")
+	;; (setq which-key-prefix-prefix "◉ ")
 	(setq which-key-sort-order 'which-key-key-order-alpha
 		  which-key-min-display-lines 2
 		  which-key-max-display-columns 4))
@@ -1786,20 +1786,20 @@ Provides practical commands based on the Emacs completion function =completing-r
 	 ("M-g I" . consult-imenu-multi)
 
 	 ;; M-s bindings (search-map)
-	 ("M-s f" . consult-find)
-	 ("M-s L" . consult-locate)
-	 ("M-s g" . consult-grep)
-	 ("M-s G" . consult-git-grep)
-	 ("M-s r" . consult-ripgrep)
+	 ;; ("M-s f" . consult-find)
+	 ;; ("M-s L" . consult-locate)
+	 ;; ("M-s g" . consult-grep)
+	 ;; ("M-s G" . consult-git-grep)
+	 ;; ("M-s r" . consult-ripgrep)
+	 ;; ("M-s l" . consult-line)
+	 ;; ("M-s m" . consult-multi-occur)
+	 ;; ("M-s k" . consult-keep-lines)
+	 ;; ("M-s u" . consult-focus-lines)
 	 ("C-c f" . consult-ripgrep)
-	 ("M-s l" . consult-line)
-	 ("M-s m" . consult-multi-occur)
-	 ("M-s k" . consult-keep-lines)
-	 ("M-s u" . consult-focus-lines)
 
 	 ;; Custom bindings that map to ivy
 	 ("C-c r" . consult-recent-file)
-	 ("C-c o" . consult-file-externally)
+	 ;; ("C-c o" . consult-file-externally)
 	 ("C-s" . consult-line)
 
 	 ;; Other custom bindings

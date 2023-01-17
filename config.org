@@ -142,6 +142,10 @@ Save bookmarks when Emacs quits.
   (setq bookmark-save-flag 1)
   (setq bookmark-save-flag t)
 #+end_src
+**** Don't show bookmarks in fringe
+#+begin_src emacs-lisp
+  (setq bookmark-set-fringe-mark nil)
+#+end_src
 *** Load custom themes
 Auto-load any custom themes in =~/.emacs.d/themes=.
 #+begin_src emacs-lisp
@@ -348,6 +352,8 @@ Emacs will fill up the space reported by the window manager.
 	  (scroll-bar-mode 1))
   ;; for athena
   (set-scroll-bar-mode 'right)
+  ;; disable minibuffer scroll-bar
+  ;; (set-window-scroll-bars (minibuffer-window) nil nil)
 
   ;; tab bar
   ;; (tab-bar-mode 1)

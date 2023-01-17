@@ -5,6 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(org-file-apps
    '((auto-mode . emacs)
+	 (directory . emacs)
 	 ("\\.mm\\'" . default)
 	 ("\\.x?html?\\'" . default)
 	 ("\\.pdf\\'" . emacs)))

@@ -290,10 +290,6 @@ Set tabs & indents to 4sp.
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist `(font . ,globals--font))
 #+end_src
-**** Load theme
-#+begin_src emacs-lisp
-  ;; (load-theme 'modus-operandi t)
-#+end_src
 **** Set time format
 #+begin_src emacs-lisp
   (setq-default display-time-format "%I:%M %p")
@@ -1011,13 +1007,13 @@ Zenburn theme.
 **** Code
 #+begin_src emacs-lisp
   (use-package zenburn-theme
-	:straight t
-	:config
-	(custom-set-faces
-	 '(scroll-bar
-	   ((t
-		 (:background "gray30")))))
-	(load-theme 'zenburn t))
+	:straight t)
+  ;; :config
+  ;; (custom-set-faces
+  ;;  '(scroll-bar
+  ;; 	 ((t
+  ;; 	   (:background "gray30")))))
+  ;; (load-theme 'zenburn t))
 #+end_src
 *** Initialize =spacemacs-theme=
 **** Description
@@ -1063,8 +1059,8 @@ Enhanced default themes.
 #+begin_src emacs-lisp
   (use-package standard-themes
 	:straight (:type git :host gitlab :repo "protesilaos/standard-themes" :branch "main")
-	;; :init
-	;; (load-theme 'standard-light :no-confirm)
+	:init
+	(load-theme 'standard-dark :no-confirm)
 	:config
 	(setq standard-themes-bold-constructs t
 		  standard-themes-italic-constructs t
@@ -1076,7 +1072,11 @@ Enhanced default themes.
 		  ;; The following accept lists of properties
 		  standard-themes-links '(neutral-underline)
 		  standard-themes-region '(no-extend neutral intense)
-		  standard-themes-prompts '(bold italic)))
+		  standard-themes-prompts '(bold italic))
+	(custom-set-faces
+	 '(scroll-bar
+	   ((t
+		 (:background "gray20"))))))
 #+end_src
 *** Initialize =dashboard=
 **** Description
@@ -1194,6 +1194,7 @@ Diminish hides minor modes to prevent cluttering your mode line.
 	(eval-after-load "org" '(diminish 'org-indent-mode))
 	(eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
 	(eval-after-load "outline" '(diminish 'outline-minor-mode))
+	(eval-after-load "projectile" '(diminish 'projectile-mode))
 	(eval-after-load "dired" '(diminish 'dired-async-mode))
 	(eval-after-load "dired" '(diminish 'dired-hide-dotfiles-mode))
 	(eval-after-load "dired" '(diminish 'all-the-icons-dired-mode))
@@ -1260,13 +1261,31 @@ Minimap sidebar.
 	;; changing colors
 	(custom-set-faces
 	 '(minimap-active-region-background
-	   ((((background dark)) (:background "#545454545454"))
-		(t (:background "#cececececece")))
+	   ((((background dark)) (:background "#333333333333"))
+		(t (:background "#d9d9d9d9d9d9")))
 	   "Face for the active region in the minimap.
   By default, this is only a different background color."
 	   :group 'minimap)))
 #+end_src
 ** Tools
+*** Initalize =projectile=
+**** Description
+Project interaction library for Emacs.
+**** Code
+#+begin_src emacs-lisp
+  (use-package projectile
+	:straight t
+	:init
+	(setq projectile-sort-order 'recentf
+		  projectile-enable-caching t)
+	;; set projectile project path
+	(when (file-directory-p "~/git")
+	  (setq projectile-project-search-path '("~/git" "~/src" . 1)))
+	:bind (:map projectile-mode-map
+				("C-c p" . projectile-command-map))
+	:config
+	(projectile-mode +1))
+#+end_src
 *** Initialize =so-long=
 **** Description
 So long to long lines.
@@ -1394,6 +1413,10 @@ Tree layout file explorer.
 		  ("C-x t B"   . treemacs-bookmark)
 		  ("C-x t C-t" . treemacs-find-file)
 		  ("C-x t M-t" . treemacs-find-tag)))
+
+  (use-package treemacs-projectile
+	:straight t
+	:after treemacs)
 
   (use-package treemacs-evil
 	:after treemacs evil
@@ -1542,8 +1565,8 @@ Possible completion framework with 0.3s delay.
 	:init
 	(which-key-mode)
 	:config
-	(setq which-key-idle-delay 0.3)
-	;; (setq which-key-prefix-prefix "◉ ")
+	(setq which-key-idle-delay 0.1)
+	(setq which-key-prefix-prefix "◉ ")
 	(setq which-key-sort-order 'which-key-key-order-alpha
 		  which-key-min-display-lines 2
 		  which-key-max-display-columns 4))
@@ -2865,6 +2888,24 @@ Opens this Emacs configuration GitHub website.
 	(interactive)
 	(browse-url "https://github.com/diamondbond/emacs"))
 #+end_src
+*** =config/vscode=
+#+begin_src emacs-lisp
+  (defun config/vscode-mode ()
+	"Tree & Minimap."
+	(interactive)
+	;; (config/dark)
+	(treemacs)
+	(other-window 1)
+	(minimap-mode 1))
+
+  (defun config/vscode-kill ()
+	"Kill treemacs & minimap."
+	(interactive)
+	;; (config/light)
+	(treemacs)
+	(treemacs-kill-buffer)
+	(minimap-kill))
+#+end_src
 *** =config/themes=
 #+begin_src emacs-lisp
   (defun config/zenburn ()
@@ -2886,10 +2927,24 @@ Opens this Emacs configuration GitHub website.
 	(interactive)
 	(disable-all-themes)
 	(scroll-bar/dark)
-	(load-theme 'modus-vivendi t))
+	(load-theme 'standard-dark t))
 
   (defun config/light ()
 	"Light mode."
+	(interactive)
+	(disable-all-themes)
+	(scroll-bar/light)
+	(load-theme 'standard-light t))
+
+  (defun config/modus-operandi ()
+	"Dark modus."
+	(interactive)
+	(disable-all-themes)
+	(scroll-bar/dark)
+	(load-theme 'modus-vivendi t))
+
+  (defun config/modus-operandi ()
+	"Light modus."
 	(interactive)
 	(disable-all-themes)
 	(scroll-bar/light)
@@ -2906,24 +2961,6 @@ Opens this Emacs configuration GitHub website.
 		(config/light)
 		(put 'theme-toggle 'state t))))
 #+end_src
-*** =config/vscode=
-#+begin_src emacs-lisp
-  (defun config/vscode-mode ()
-	"Tree & Minimap."
-	(interactive)
-	;; (config/dark)
-	(treemacs)
-	(other-window 1)
-	(minimap-mode 1))
-
-  (defun config/vscode-kill ()
-	"Kill treemacs & minimap."
-	(interactive)
-	;; (config/light)
-	(treemacs)
-	(treemacs-kill-buffer)
-	(minimap-kill))
-#+end_src
 *** =scroll-bar/colors=
 #+begin_src emacs-lisp
   (defun scroll-bar/light ()
@@ -2933,12 +2970,13 @@ Opens this Emacs configuration GitHub website.
 	   ((t
 		 (:background "gray"))))))
 
+
   (defun scroll-bar/dark ()
 	"Set scroll-bar to dark color."
 	(custom-set-faces
 	 '(scroll-bar
 	   ((t
-		 (:background "black"))))))
+		 (:background "gray20"))))))
 
   (defun scroll-bar/zenburn ()
 	"Set scroll-bar to zenburn color."
@@ -2946,6 +2984,13 @@ Opens this Emacs configuration GitHub website.
 	 '(scroll-bar
 	   ((t
 		 (:background "gray30"))))))
+
+  (defun scroll-bar/black ()
+	"Set scroll-bar to black color."
+	(custom-set-faces
+	 '(scroll-bar
+	   ((t
+		 (:background "black"))))))
 
   (defun scroll-bar/dracula ()
 	"Set scroll-bar to dracula color."

@@ -1264,13 +1264,14 @@ Minimap sidebar.
 	(setq minimap-width-fraction 0.05)
 	(setq minimap-minimum-width 20)
 	(setq minimap-hide-fringes t)
+	(setq minimap-major-modes '(web-mode))
 	;; changing colors
 	(custom-set-faces
 	 '(minimap-active-region-background
 	   ((((background dark)) (:background "#333333333333"))
 		(t (:background "#333333333333")))
 	   "Face for the active region in the minimap.
-  By default, this is only a different background color."
+	By default, this is only a different background color."
 	   :group 'minimap)))
 #+end_src
 ** Tools

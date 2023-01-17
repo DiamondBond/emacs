@@ -155,7 +155,7 @@ Auto-load any custom themes in =~/.emacs.d/themes=.
 #+end_src
 *** Buffer modified nil
 #+begin_src emacs-lisp
-  (set-buffer-modified-p nil)
+  ;; (set-buffer-modified-p nil)
 #+end_src
 *** Don't ask for confirmation when opening symlinked file
 #+begin_src emacs-lisp

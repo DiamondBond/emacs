@@ -3127,7 +3127,7 @@ Sync dotfiles to GitHub.
 	  (async-shell-command "~/bin/sync-dotfiles.sh")))
 #+end_src
 *** =sync/neocities=
-Sync Emacs configuration to neocities.
+Sync neocities.
 #+begin_src emacs-lisp
   (when (file-readable-p "~/bin/sync-neocities.sh")
 	(defun sync/neocities ()
@@ -3135,6 +3135,16 @@ Sync Emacs configuration to neocities.
 	  (interactive)
 	  (save-window-excursion
 		(async-shell-command "~/bin/sync-neocities.sh"))))
+#+end_src
+*** =sync/blog=
+Sync blog to neocities.
+#+begin_src emacs-lisp
+  (when (file-readable-p "~/bin/sync-blog.sh")
+	(defun sync/blog ()
+	  "Sync blog."
+	  (interactive)
+	  (save-window-excursion
+		(async-shell-command "~/bin/sync-blog.sh"))))
 #+end_src
 *** =sync/irc=
 Connect to IRC.

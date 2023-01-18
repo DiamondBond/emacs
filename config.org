@@ -41,7 +41,7 @@ Define global variables.
   ;; Set global configuration
   (setq
    globals--banner-path  "img/Lisp_logo.png"                  ; Banner
-   globals--font         "DejaVu Sans Mono 14"                ; Font
+   globals--font         "DejaVu Sans Mono 11"                ; Font
    globals--name         "Diamond Bond"                       ; Name
    globals--email        "diamondbond1@gmail.com"             ; Email
    globals--irc          "diamondbond"                        ; IRC
@@ -347,7 +347,7 @@ Emacs will fill up the space reported by the window manager.
   (if (fboundp 'scroll-bar-mode)
 	  (scroll-bar-mode 1))
   ;; for athena
-  (set-scroll-bar-mode 'right)
+  ;; (set-scroll-bar-mode 'right)
   ;; disable minibuffer scroll-bar
   ;; (set-window-scroll-bars (minibuffer-window) nil nil)
 
@@ -377,7 +377,7 @@ https://amodernist.com/texts/emacs-global.html
 #+end_src
 **** Configure fringe
 #+begin_src emacs-lisp
-  (fringe-mode nil)
+  (fringe-mode 0)
   ;; (set-face-attribute 'fringe nil :background "#ffffff" :foreground "#ffffff")
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
@@ -605,10 +605,12 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (global-set-key (kbd "<f8>") 'other-frame)
   (global-set-key (kbd "<f10>") 'compile)
   (global-set-key (kbd "S-<f5>") 'config/toggle-theme)
+  (global-set-key (kbd "S-<f6>") 'config/toggle-fringe)
   (global-set-key (kbd "S-<f8>") 'tool-bar-mode)
   (global-set-key (kbd "<f9>") 'tab-bar-toggle)
   (global-set-key (kbd "S-<f9>") 'toggle-frame-tab-bar)
   (global-set-key (kbd "S-<f12>") 'display-line-numbers-mode)
+  (global-set-key (kbd "C-`") 'vterm-toggle)
 
   ;; windows
   (global-set-key (kbd "C-x w") 'elfeed)
@@ -674,6 +676,14 @@ Elisp enhancers.
   (use-package ts        :demand t) ; timestamps
   (use-package pcre2el   :demand t) ; sane regex
   (use-package hierarchy :demand t) ; hierarchy
+#+end_src
+*** Initialize =path=
+**** Description
+Make Emacs use the $PATH set up by the user's shell.
+**** Code
+#+begin_src emacs-lisp
+  (use-package exec-path-from-shell
+	:disabled t)
 #+end_src
 *** Initialize =async=
 **** Description
@@ -882,6 +892,7 @@ Heresy; Vim keybindings in Emacs.
 	(evil-set-initial-state 'nov-mode 'emacs)
 	(evil-set-initial-state 'term-mode 'emacs)
 	(evil-set-initial-state 'eshell-mode 'emacs)
+	(evil-set-initial-state 'Custom-mode 'emacs)
 	;; (evil-set-initial-state 'bufler-list-mode 'emacs)
 	(evil-set-initial-state 'profiler-report-mode 'emacs)
 	(evil-set-initial-state 'inferior-scheme-mode 'emacs)
@@ -1003,6 +1014,14 @@ Doom themes.
   (use-package doom-themes
 	:straight t)
 #+end_src
+*** Initialize =dracula-theme=
+**** Description
+Dracula theme.
+**** Code
+#+begin_src emacs-lisp
+  (use-package dracula-theme
+	:straight t)
+#+end_src
 *** Initialize =zenburn-theme=
 **** Description
 Zenburn theme.
@@ -1061,8 +1080,8 @@ Enhanced default themes.
 #+begin_src emacs-lisp
   (use-package standard-themes
 	:straight (:type git :host gitlab :repo "protesilaos/standard-themes" :branch "main")
-	:init
-	(load-theme 'standard-dark :no-confirm)
+	;; :init
+	;; (load-theme 'standard-dark :no-confirm)
 	:config
 	(setq standard-themes-bold-constructs t
 		  standard-themes-italic-constructs t
@@ -1074,11 +1093,12 @@ Enhanced default themes.
 		  ;; The following accept lists of properties
 		  standard-themes-links '(neutral-underline)
 		  standard-themes-region '(no-extend neutral intense)
-		  standard-themes-prompts '(bold italic))
-	(custom-set-faces
-	 '(scroll-bar
-	   ((t
-		 (:background "gray20"))))))
+		  standard-themes-prompts '(bold italic)))
+	;; (load-theme 'standard-dark t)
+	;; (custom-set-faces
+	;;  '(scroll-bar
+	;; 	 ((t
+	;; 	   (:foreground "dim gray" :background "black"))))))
 #+end_src
 *** Initialize =dashboard=
 **** Description
@@ -1214,7 +1234,9 @@ Diminish hides minor modes to prevent cluttering your mode line.
 **** Code
 #+begin_src emacs-lisp
   (use-package golden-ratio
-	:straight t)
+	:straight t
+	:config
+	(setq golden-ratio-exclude-modes '(treemacs-mode minimap-mode)))
 #+end_src
 *** Initialize =rainbow-mode=
 **** Description
@@ -1265,13 +1287,13 @@ Minimap sidebar.
 	(custom-set-faces
 	 '(minimap-active-region-background
 	   ((((background dark)) (:background "#333333333333"))
-		(t (:background "#333333333333")))
+		(t (:background "#cececececece")))
 	   "Face for the active region in the minimap.
 	By default, this is only a different background color."
 	   :group 'minimap)))
 #+end_src
 ** Tools
-*** Initalize =projectile=
+*** Initialize =projectile=
 **** Description
 Project interaction library for Emacs.
 **** Code
@@ -1287,7 +1309,18 @@ Project interaction library for Emacs.
 	:bind (:map projectile-mode-map
 				("C-c p" . projectile-command-map))
 	:config
+
 	(projectile-mode +1))
+#+end_src
+*** Initialize =ripgrep/silver=
+**** Description
+**** Code
+#+begin_src emacs-lisp
+  (use-package rg
+	:straight t)
+
+  (use-package ag
+	:straight t)
 #+end_src
 *** Initialize =so-long=
 **** Description
@@ -1458,6 +1491,30 @@ Emacs-libvterm (vterm) is fully-fledged terminal emulator inside GNU Emacs based
 				  (lambda ()
 					;;(setq-local evil-insert-state-cursor 'box)
 					(evil-insert-state)))))
+#+end_src
+*** Initialize =vterm-toggle=
+**** Description
+Toggle between vterm & focused buffer.
+**** Code
+#+begin_src emacs-lisp
+  (use-package vterm-toggle
+	:straight t
+	:config
+	;; popup
+	(setq vterm-toggle-fullscreen-p nil)
+	(add-to-list 'display-buffer-alist
+				 '((lambda (buffer-or-name _)
+					 (let ((buffer (get-buffer buffer-or-name)))
+					   (with-current-buffer buffer
+						 (or (equal major-mode 'vterm-mode)
+							 (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+				   (display-buffer-reuse-window display-buffer-at-bottom)
+				   ;;(display-buffer-reuse-window display-buffer-in-direction)
+				   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+				   ;;(direction . bottom)
+				   ;;(dedicated . t) ;dedicated is supported in emacs27
+				   (reusable-frames . visible)
+				   (window-height . 0.3))))
 #+end_src
 *** Initialize =crux=
 **** Description
@@ -2128,6 +2185,8 @@ Server: irc.rizon.net
 	(setq erc-kill-server-buffer-on-quit t)
 	;; open query buffers in the current window
 	(setq erc-query-display 'buffer)
+	;; disable track keybinds messages
+	(setq erc-track-enable-keybindings nil)
 	;; configure appearance
 	(setq erc-prompt " >")
 	;; load erc modules
@@ -2741,10 +2800,10 @@ CIDER with Clojure.
 	(interactive)
 	(if (get 'tab-bar-toggle 'state)
 		(progn
-		  (tab-bar-disable)
+		  (tab-bar-enable)
 		  (put 'tab-bar-toggle 'state nil))
 	  (progn
-		(tab-bar-enable)
+		(tab-bar-disable)
 		(put 'tab-bar-toggle 'state t))))
 #+end_src
 *** Erc handlers
@@ -2784,7 +2843,7 @@ CIDER with Clojure.
 	"Split and follow horizontally."
 	(interactive)
 	(split-window-below)
-	(balance-windows)
+	;; (balance-windows)
 	(other-window 1))
   (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
 
@@ -2792,7 +2851,7 @@ CIDER with Clojure.
 	"Split and follow vertically."
 	(interactive)
 	(split-window-right)
-	(balance-windows)
+	;; (balance-windows)
 	(other-window 1))
   (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 #+end_src
@@ -2896,8 +2955,6 @@ Opens this Emacs configuration GitHub website.
   (defun config/vscode-mode ()
 	"Tree & Minimap."
 	(interactive)
-	;; (config/dark)
-	(scroll-bar-mode -1)
 	(treemacs)
 	(other-window 1)
 	(minimap-mode 1))
@@ -2905,66 +2962,63 @@ Opens this Emacs configuration GitHub website.
   (defun config/vscode-kill ()
 	"Kill treemacs & minimap."
 	(interactive)
-	;; (config/light)
-	(scroll-bar-mode 1)
 	(treemacs)
 	(treemacs-kill-buffer)
 	(minimap-kill))
 #+end_src
 *** =config/themes=
 #+begin_src emacs-lisp
-  (defun config/zenburn ()
-	"Zenburn mode."
+  (defun config/light-theme ()
+	"Light theme."
 	(interactive)
 	(disable-all-themes)
-	(scroll-bar/zenburn)
-	(load-theme 'zenburn t))
+	(scroll-bar/light))
 
-  (defun config/dracula ()
-	"Dracula mode."
+  (defun config/dark-theme ()
+	"Dark theme."
 	(interactive)
 	(disable-all-themes)
-	(scroll-bar/dracula)
-	(load-theme 'doom-dracula t))
-
-  (defun config/dark ()
-	"Dark mode."
-	(interactive)
-	(disable-all-themes)
-	(scroll-bar/dark)
+	(scroll-bar/black)
 	(load-theme 'standard-dark t))
 
-  (defun config/light ()
-	"Light mode."
-	(interactive)
-	(disable-all-themes)
-	(scroll-bar/light)
-	(load-theme 'standard-light t))
-
-  (defun config/modus-operandi ()
-	"Dark modus."
-	(interactive)
-	(disable-all-themes)
-	(scroll-bar/dark)
-	(load-theme 'modus-vivendi t))
-
-  (defun config/modus-operandi ()
-	"Light modus."
+  (defun config/modus-theme-operandi ()
+	"Light modus theme."
 	(interactive)
 	(disable-all-themes)
 	(scroll-bar/light)
 	(load-theme 'modus-operandi t))
 
+  (defun config/modus-theme-vivendi ()
+	"Dark modus theme."
+	(interactive)
+	(disable-all-themes)
+	(scroll-bar/dark)
+	(load-theme 'modus-vivendi t))
+
   (defun config/toggle-theme ()
-	"Toggle theme."
+	"Toggle standard theme."
 	(interactive)
 	(if (get 'theme-toggle 'state)
 		(progn
-		  (config/dark)
+		  (config/light-theme)
 		  (put 'theme-toggle 'state nil))
 	  (progn
-		(config/light)
+		(config/dark-theme)
 		(put 'theme-toggle 'state t))))
+
+  (defun config/zenburn-theme ()
+	"Zenburn theme."
+	(interactive)
+	(disable-all-themes)
+	(scroll-bar/zenburn)
+	(load-theme 'zenburn t))
+
+  (defun config/dracula-theme ()
+	"Dracula theme."
+	(interactive)
+	(disable-all-themes)
+	(scroll-bar/dracula)
+	(load-theme 'dracula t))
 #+end_src
 *** =scroll-bar/colors=
 #+begin_src emacs-lisp
@@ -2973,36 +3027,48 @@ Opens this Emacs configuration GitHub website.
 	(custom-set-faces
 	 '(scroll-bar
 	   ((t
-		 (:background "gray"))))))
-
+		 (:foreground "#7E8182":background "#cecece"))))))
 
   (defun scroll-bar/dark ()
 	"Set scroll-bar to dark color."
 	(custom-set-faces
 	 '(scroll-bar
 	   ((t
-		 (:background "gray20"))))))
+		 (:foreground "dim gray" :background "gray20"))))))
 
   (defun scroll-bar/zenburn ()
 	"Set scroll-bar to zenburn color."
 	(custom-set-faces
 	 '(scroll-bar
 	   ((t
-		 (:background "gray30"))))))
+		 (:foreground "gray" :background "gray30"))))))
 
   (defun scroll-bar/black ()
 	"Set scroll-bar to black color."
 	(custom-set-faces
 	 '(scroll-bar
 	   ((t
-		 (:background "black"))))))
+		 (:foreground "dim gray" :background "black"))))))
 
   (defun scroll-bar/dracula ()
 	"Set scroll-bar to dracula color."
 	(custom-set-faces
 	 '(scroll-bar
 	   ((t
-		 (:background "#23242f"))))))
+		 (:foreground "#282A36" :background "#44475A"))))))
+#+end_src
+*** =config/toggle-fringe=
+#+begin_src emacs-lisp
+  (defun config/toggle-fringe ()
+	"Toggle fringe."
+	(interactive)
+	(if (get 'fringe-toggle 'state)
+		(progn
+		  (fringe-mode 0)
+		  (put 'fringe-toggle 'state nil))
+	  (progn
+		(fringe-mode nil)
+		(put 'fringe-toggle 'state t))))
 #+end_src
 *** =auth/backup=
 Backup auth files.
@@ -3040,6 +3106,15 @@ Sync Emacs configuration to neocities.
 	  (interactive)
 	  (save-window-excursion
 		(async-shell-command "~/bin/sync-neocities.sh"))))
+#+end_src
+*** =sync/irc=
+Connect to IRC.
+#+begin_src emacs-lisp
+  (defun sync/irc ()
+	"Connect to IRC."
+	(interactive)
+	(erc-start)
+	(rcirc 1))
 #+end_src
 ** Insert
 *** Date

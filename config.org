@@ -843,7 +843,9 @@ Add icons and subtree's to dired.
 								  ("mkv" . "mpv")
 								  ("webm" . "mpv")
 								  ("pdf" . "zathura")
-								  ("docx" . "libreoffice"))))
+								  ("docx" . "libreoffice")
+								  ("xlsx" . "libreoffice")
+								  ("pptx" . "libreoffice"))))
 
   (use-package dired-hide-dotfiles
 	:straight t

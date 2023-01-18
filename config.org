@@ -747,13 +747,13 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 
 	;; set org todo keywords
 	(setq org-todo-keywords
-		  '((sequence "TODO"
-					  "WIP"
+		  '((sequence "TODO(t)"
+					  "WIP(w!)"
 					  "WAITING"
 					  "|"
-					  "DONE"
+					  "DONE(d)"
 					  "DEFERRED"
-					  "CANCELLED")))
+					  "CANCELLED(c)")))
 
 	;; persist org-clock
 	(setq org-clock-persist 'history)
@@ -835,15 +835,15 @@ Add icons and subtree's to dired.
 							(all-the-icons-dired-mode)))))
 
   (use-package dired-open
-	:commands (dired dired-jump)
 	:config
 	(setq dired-open-extensions '(("png" . "nomacs")
 								  ("jpg" . "nomacs")
 								  ("gif" . "nomacs")
 								  ("mp4" . "mpv")
-								  ("pdf" . "zathura")
 								  ("mkv" . "mpv")
-								  ("webm" . "mpv"))))
+								  ("webm" . "mpv")
+								  ("pdf" . "zathura")
+								  ("docx" . "libreoffice"))))
 
   (use-package dired-hide-dotfiles
 	:straight t
@@ -919,9 +919,11 @@ Heresy; Vim keybindings in Emacs.
 	:config
 	(setq evil-collection-mode-list '(dired (custom cus-edit) (package-menu package) calc diff-mode))
 	(evil-collection-init)
-	;; A few of my own overrides/customizations
+	;; use dired-open
 	(evil-collection-define-key 'normal 'dired-mode-map
-	  (kbd "RET") 'dired-find-alternate-file))
+	  (kbd "RET") 'dired-find-alternate-file)
+	(evil-collection-define-key 'normal 'dired-mode-map
+	  (kbd "S-<return>") 'dired-open-file))
 #+end_src
 *** Initialize =smartparens=
 **** Description
@@ -1004,6 +1006,7 @@ VSCode dark theme.
 **** Code
 #+begin_src emacs-lisp
   (use-package vs-dark-theme
+	:defer 3
 	:straight t)
 #+end_src
 *** Initialize =doom-themes=
@@ -1012,6 +1015,7 @@ Doom themes.
 **** Code
 #+begin_src emacs-lisp
   (use-package doom-themes
+	:defer 3
 	:straight t)
 #+end_src
 *** Initialize =dracula-theme=
@@ -1020,6 +1024,7 @@ Dracula theme.
 **** Code
 #+begin_src emacs-lisp
   (use-package dracula-theme
+	:defer 3
 	:straight t)
 #+end_src
 *** Initialize =zenburn-theme=
@@ -1028,6 +1033,7 @@ Zenburn theme.
 **** Code
 #+begin_src emacs-lisp
   (use-package zenburn-theme
+	:defer 3
 	:straight t)
   ;; :config
   ;; (custom-set-faces
@@ -1042,6 +1048,7 @@ Spacemacs themes.
 **** Code
 #+begin_src emacs-lisp
   (use-package spacemacs-theme
+	:defer 3
 	:straight t)
 #+end_src
 *** Initialize =ef-themes=
@@ -1050,6 +1057,7 @@ Colourful and legible themes for GNU Emacs.
 **** Code
 #+begin_src emacs-lisp
   (use-package ef-themes
+	:defer 3
 	:straight t)
 #+end_src
 *** Initialize =modus-themes=
@@ -2909,6 +2917,26 @@ CIDER with Clojure.
 		 (let ((process-connection-type nil))
 		   (start-process "" nil "xdg-open" file-path)))
 	   file-list)))
+
+  (defun consult-file-externally (file)
+	"Open FILE externally using the default application of the system."
+	(interactive "fOpen externally: ")
+	(if (and (eq system-type 'windows-nt)
+			 (fboundp 'w32-shell-execute))
+		(w32-shell-execute "open" file)
+	  (call-process (pcase system-type
+					  ('darwin "open")
+					  ('cygwin "cygstart")
+					  (_ "xdg-open"))
+					nil 0 nil
+					(expand-file-name file))))
+
+  (defun dired-open-externally (&optional arg)
+	"Open marked or current file in operating system's default application."
+	(interactive "P")
+	(dired-map-over-marks
+	 (consult-file-externally (dired-get-filename))
+	 arg))
 #+end_src
 ** Config
 *** =config/tangle=

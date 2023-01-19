@@ -3508,7 +3508,7 @@ mu4e [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email 
 #+end_src
 ** Jira
 *** Description
-Jira integration module.
+Jira integration [[https://github.com/nyyManni/ejira#installation][module]].
 *** Code
 #+begin_src emacs-lisp
   ;; Load jira module

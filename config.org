@@ -749,7 +749,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 	;; set org todo keywords
 	(setq org-todo-keywords
 		  '((sequence "TODO(t)"
-					  "WIP(w!)"
+					  "WIP(w)"
 					  "WAITING"
 					  "|"
 					  "DONE(d)"
@@ -767,7 +767,7 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 			  ("~/org/tasks.org" :maxlevel . 1))))
 
 	;; save org buffers after refiling!
-	(advice-add 'org-refile :after 'org-save-all-org-buffers)
+	;; (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
 	;; org-src languages
 	(org-babel-do-load-languages

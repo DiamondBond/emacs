@@ -41,7 +41,7 @@ Define global variables.
   ;; Set global configuration
   (setq
    globals--banner-path  "img/Lisp_logo.png"                  ; Banner
-   globals--font         "DejaVu Sans Mono 11"                ; Font
+   globals--font         "Menlo 11"                           ; Font
    globals--name         "Diamond Bond"                       ; Name
    globals--email        "diamondbond1@gmail.com"             ; Email
    globals--irc          "diamondbond"                        ; IRC
@@ -345,9 +345,9 @@ Emacs will fill up the space reported by the window manager.
 
   ;; scroll-bar
   (if (fboundp 'scroll-bar-mode)
-	  (scroll-bar-mode 1))
+	  (scroll-bar-mode 0))
   ;; for athena
-  (set-scroll-bar-mode 'right)
+  ;; (set-scroll-bar-mode 'right)
   ;; disable minibuffer scroll-bar
   ;; (set-window-scroll-bars (minibuffer-window) nil nil)
 
@@ -361,8 +361,8 @@ Emacs will fill up the space reported by the window manager.
   ;; (setq tab-bar-new-button-show nil)
 
   ;; tab bar when using emacsclient
-  (use-package emacs
-	:hook (server-after-make-frame . tab-bar-enable))
+  ;; (use-package emacs
+  ;;   :hook (server-after-make-frame . tab-bar-enable))
 
   ;; time in tab-bar
   ;; (display-time-mode 1)
@@ -389,6 +389,10 @@ Set frame size.
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(width . 80))
   (add-to-list 'default-frame-alist '(height . 46))
+#+end_src
+**** Reverse video mode
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist '(reverse . t))
 #+end_src
 *** Modes
 **** Enable column-numbers-mode
@@ -604,7 +608,7 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   (global-set-key (kbd "<f7>") 'scroll-bar-mode)
   (global-set-key (kbd "<f8>") 'other-frame)
   (global-set-key (kbd "<f10>") 'compile)
-  (global-set-key (kbd "S-<f5>") 'config/toggle-theme)
+  (global-set-key (kbd "S-<f5>") 'open-treemacs)
   (global-set-key (kbd "S-<f6>") 'config/toggle-fringe)
   (global-set-key (kbd "S-<f8>") 'tool-bar-mode)
   (global-set-key (kbd "<f9>") 'tab-bar-toggle)
@@ -683,7 +687,7 @@ Make Emacs use the $PATH set up by the user's shell.
 **** Code
 #+begin_src emacs-lisp
   (use-package exec-path-from-shell
-	:disabled t)
+	:straight t)
 #+end_src
 *** Initialize =async=
 **** Description
@@ -745,6 +749,17 @@ Sensible and well-defined org-mode configuration with org-capture support & noti
 								   "~/org/work-notes.org")
 			org-default-notes-file "~/org/inbox.org"
 			org-id-locations-file "~/org/.orgids"))
+
+	(setq org-agenda-custom-commands
+		  '(("n" "Non-work"
+			 ;; Show all todos and everything due today, except work related tasks.
+			 ((agenda "")
+			  (todo "TODO"))
+			 ((org-agenda-files (remove "~/org/jira" org-agenda-files))))
+			("N" "Agenda and all TODOs"
+			 ((agenda #1="")
+			  (alltodo #1#)))))
+
 
 	;; set org todo keywords
 	(setq org-todo-keywords
@@ -1280,6 +1295,21 @@ Variable pitch text in info mode.
 
   (add-hook 'Info-mode-hook #'info-variable-pitch-mode)
 #+end_src
+*** Initialize =highlight-indent-guides=
+**** Description
+Highlights indentation levels.
+**** Code
+#+begin_src emacs-lisp
+  (use-package highlight-indent-guides
+	:straight t
+	:diminish highlight-indent-guides-mode
+	:config
+	(setq highlight-indent-guides-method 'character)
+	(add-hook 'typescript-mode-hook #'(lambda () (highlight-indent-guides-mode)))
+	(set-face-background 'highlight-indent-guides-odd-face "darkgray")
+	(set-face-background 'highlight-indent-guides-even-face "dimgray")
+	(set-face-foreground 'highlight-indent-guides-character-face "dimgray"))
+#+end_src
 *** Initialize =minimap=
 **** Description
 Minimap sidebar.
@@ -1293,15 +1323,15 @@ Minimap sidebar.
 	(setq minimap-width-fraction 0.05)
 	(setq minimap-minimum-width 20)
 	(setq minimap-hide-fringes t)
-	(setq minimap-major-modes '(web-mode))
-	;; changing colors
-	(custom-set-faces
-	 '(minimap-active-region-background
-	   ((((background dark)) (:background "#333333333333"))
-		(t (:background "#cececececece")))
-	   "Face for the active region in the minimap.
-	By default, this is only a different background color."
-	   :group 'minimap)))
+	(setq minimap-major-modes '(typescript-mode)))
+  ;; changing colors
+  (custom-set-faces
+   '(minimap-active-region-background
+	 ((((background dark)) (:background "#111111111111"))
+	  (t (:background "#cececececece")))
+	 "Face for the active region in the minimap.
+  By default, this is only a different background color."
+	 :group 'minimap))
 #+end_src
 ** Tools
 *** Initialize =projectile=
@@ -1320,7 +1350,6 @@ Project interaction library for Emacs.
 	:bind (:map projectile-mode-map
 				("C-c p" . projectile-command-map))
 	:config
-
 	(projectile-mode +1))
 #+end_src
 *** Initialize =ripgrep/silver=
@@ -2670,18 +2699,25 @@ Tide - TypeScript Interactive Development Environment.
 Prettier formatter for JSX & TSX.
 *** Code
 #+begin_src emacs-lisp
-  (defun my/activate-tide-mode ()
-	"Use hl-identifier-mode only on js or ts buffers."
-	(when (and (stringp buffer-file-name)
-			   (string-match "\\.[tj]sx?\\'" buffer-file-name))
-	  (tide-setup)
-	  (tide-hl-identifier-mode)))
+  (defun setup-tide-mode ()
+	(interactive)
+	(tide-setup)
+	;; (flycheck-mode +1)
+	;; (setq flycheck-check-syntax-automatically '(save mode-enabled))
+	(eldoc-mode +1)
+	(tide-hl-identifier-mode +1))
+
+  (use-package typescript-mode
+	:straight t
+	:mode (("\\.ts\\'" . typescript-mode)
+		   ("\\.tsx\\'" . typescript-mode)))
 
   (use-package tide
-	:hook (web-mode . my/activate-tide-mode)
 	:straight t
 	:config
 	(define-key evil-normal-state-map (kbd "M-.") 'tide-jump-to-definition))
+
+  (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
   (use-package prettier-js
 	:straight t)
@@ -2700,7 +2736,8 @@ Web editing mode.
   (use-package web-mode
 	:straight t
 	:config
-	(setq web-mode-content-types-alist '(("jsx" . "\\.[jt]sx?\\'")))
+	;; (setq web-mode-content-types-alist '(("jsx" . "\\.[jt]sx?\\'")))
+	(setq web-mode-content-types-alist '(("jsx" "html")))
 	(setq web-mode-markup-indent-offset 2)
 	(setq web-mode-css-indent-offset 2)
 	(setq web-mode-code-indent-offset 2)
@@ -2712,8 +2749,8 @@ Web editing mode.
 	(setq web-mode-enable-current-element-highlight t)
 	:mode (("\\.js\\'" . web-mode)
 		   ("\\.jsx\\'" .  web-mode)
-		   ("\\.ts\\'" . web-mode)
-		   ("\\.tsx\\'" . web-mode)
+		   ;; ("\\.ts\\'" . web-mode)
+		   ;; ("\\.tsx\\'" . web-mode)
 		   ("\\.html\\'" . web-mode))
 	:commands web-mode)
 #+end_src
@@ -2810,10 +2847,10 @@ CIDER with Clojure.
 	(interactive)
 	(if (get 'tab-bar-toggle 'state)
 		(progn
-		  (tab-bar-enable)
+		  (tab-bar-disable)
 		  (put 'tab-bar-toggle 'state nil))
 	  (progn
-		(tab-bar-disable)
+		(tab-bar-enable)
 		(put 'tab-bar-toggle 'state t))))
 #+end_src
 *** Erc handlers
@@ -2939,6 +2976,13 @@ CIDER with Clojure.
 	(dired-map-over-marks
 	 (consult-file-externally (dired-get-filename))
 	 arg))
+#+end_src
+*** Open treemacs
+#+begin_src emacs-lisp
+  (defun open-treemacs ()
+	(interactive)
+	(treemacs)
+	(other-window 1))
 #+end_src
 ** Config
 *** =config/tangle=

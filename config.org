@@ -1713,7 +1713,7 @@ This is not a package but instead a set of useful configurations to be used when
 		  #'command-completion-default-include-p)
 
 	;; enable recursive minibuffers
-	(setq enable-recursive-minibuffers t)
+	;; (setq enable-recursive-minibuffers t)
 
 	;; completion ignores case
 	(setq read-buffer-completion-ignore-case t
@@ -2703,7 +2703,7 @@ Prettier formatter for JSX & TSX.
 	(interactive)
 	(tide-setup)
 	;; (flycheck-mode +1)
-	;; (setq flycheck-check-syntax-automatically '(save mode-enabled))
+	(setq flycheck-check-syntax-automatically '(save mode-enabled))
 	(eldoc-mode +1)
 	(tide-hl-identifier-mode +1))
 

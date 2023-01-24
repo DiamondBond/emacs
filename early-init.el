@@ -53,6 +53,9 @@
 (defvar package-quickstart)
 (setq package-quickstart t)
 
+;; Fully redraw the display before processing queued input events
+(setq redisplay-dont-pause t)
+
 ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 (setq tool-bar-mode nil
 	  menu-bar-mode nil)
@@ -72,9 +75,8 @@
 ;; cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
 
-;; Emacs "updates" its ui more often than it needs to, so we slow it down
-;; slightly from 0.5s:
-;; (setq idle-update-delay 1.0)
+;; Update Emacs ui more frequently
+(setq idle-update-delay 0.1)
 
 ;; Disable bidirectional text scanning for a modest performance boost. I've set
 ;; this to `nil' in the past, but the `bidi-display-reordering's docs say that

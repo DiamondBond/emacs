@@ -1307,9 +1307,13 @@ Highlights indentation levels.
 	:config
 	(setq highlight-indent-guides-method 'character)
 	(add-hook 'typescript-mode-hook #'(lambda () (highlight-indent-guides-mode)))
-	(set-face-background 'highlight-indent-guides-odd-face "darkgray")
-	(set-face-background 'highlight-indent-guides-even-face "dimgray")
-	(set-face-foreground 'highlight-indent-guides-character-face "dimgray"))
+	(defun indent-guides-init-faces ()
+	  "Set indent-guides faces"
+	  (interactive)
+	  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
+	  (set-face-background 'highlight-indent-guides-even-face "dimgray")
+	  (set-face-foreground 'highlight-indent-guides-character-face "dimgray"))
+	(indent-guides-init-faces))
 #+end_src
 *** Initialize =minimap=
 **** Description
@@ -1665,7 +1669,7 @@ Possible completion framework with 0.3s delay.
 	:init
 	(which-key-mode)
 	:config
-	(setq which-key-idle-delay 0.1)
+	(setq which-key-idle-delay 0.3)
 	;; (setq which-key-prefix-prefix "◉ ")
 	(setq which-key-sort-order 'which-key-key-order-alpha
 		  which-key-min-display-lines 2

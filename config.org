@@ -918,14 +918,6 @@ Heresy; Vim keybindings in Emacs.
 	;; (evil-set-initial-state 'md4rd-mode 'emacs)
 	(evil-set-initial-state 'pdf-view-mode 'emacs)
 	(evil-set-initial-state 'dictionary-mode ' emacs)
-	;; e2wm
-	;; (evil-set-initial-state 'e2wm:def-plugin-history-list-mode 'emacs)
-	;; (evil-set-initial-state 'e2wm:def-plugin-files-mode 'emacs)
-	;; (evil-set-initial-state 'e2wm:def-plugin-imenu-mode 'emacs)
-
-	;; undo (requires undo-fu)
-	;; (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
-	;; (define-key evil-normal-state-map "U" 'undo-fu-only-redo)
 
 	;; <tab> cycles org-mode visiblity
 	(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
@@ -3546,7 +3538,7 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 * Modules
 ** Email
 *** Description
-mu4e [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email module]].
+[[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email module]].
 *** Code
 #+begin_src emacs-lisp
   ;; Load email module
@@ -3557,7 +3549,7 @@ mu4e [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email 
 #+end_src
 ** Jira
 *** Description
-Jira integration [[https://github.com/nyyManni/ejira#installation][module]].
+[[https://github.com/nyyManni/ejira#installation][Jira module]].
 *** Code
 #+begin_src emacs-lisp
   ;; Load jira module

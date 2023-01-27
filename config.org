@@ -426,7 +426,13 @@ Set frame size.
 #+end_src
 **** Reverse video mode
 #+begin_src emacs-lisp
-  ;; (add-to-list 'default-frame-alist '(reverse . t))
+  (add-to-list 'default-frame-alist '(reverse . t))
+
+  ;; also reverse scroll-bar
+  (custom-set-faces
+   '(scroll-bar
+	 ((t
+	   (:foreground "gray20" :background "black")))))
 #+end_src
 *** Modes
 **** Enable column-numbers-mode
@@ -1063,14 +1069,14 @@ Doom themes.
 **** Code
 #+begin_src emacs-lisp
   (use-package doom-themes
-	;; :defer 3
-	:straight t
-	:config
-	(load-theme 'doom-dark+ t)
-	(custom-set-faces
-	 '(scroll-bar
-	   ((t
-		 (:foreground "gray30" :background "gray15"))))))
+	:defer 3
+	:straight t)
+  ;; :config
+  ;; (load-theme 'doom-dark+ t)
+  ;; (custom-set-faces
+  ;;  '(scroll-bar
+  ;; 	 ((t
+  ;; 	   (:foreground "gray30" :background "gray15"))))))
 #+end_src
 *** Initialize =dracula-theme=
 **** Description

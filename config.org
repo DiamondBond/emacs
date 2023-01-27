@@ -351,6 +351,40 @@ Emacs will fill up the space reported by the window manager.
   ;; disable minibuffer scroll-bar
   ;; (set-window-scroll-bars (minibuffer-window) nil nil)
 
+  (defun update-scroll-bars ()
+	(interactive)
+	(mapc (lambda (win)
+			(set-window-scroll-bars win nil))
+		  (window-list))
+	(set-window-scroll-bars (selected-window) 14 'right))
+
+  (defun enable-local-scroll-bar ()
+	"Enable local buffer scroll bar."
+	(interactive)
+	(update-scroll-bars)
+	(add-hook 'window-configuration-change-hook 'update-scroll-bars)
+	(add-hook 'buffer-list-update-hook 'update-scroll-bars))
+
+  (defun disable-local-scroll-bar ()
+	"Disable local buffer scroll bar."
+	(interactive)
+	(remove-hook 'window-configuration-change-hook 'update-scroll-bars)
+	(remove-hook 'buffer-list-update-hook 'update-scroll-bars))
+
+  (defun local-scroll-bar-toggle ()
+	"Toggle local buffer scroll bar."
+	(interactive)
+	(if (get 'lscroll-bar-toggle 'state)
+		(progn
+		  (enable-local-scroll-bar)
+		  (put 'lscroll-bar-toggle 'state nil))
+	  (progn
+		(disable-local-scroll-bar)
+		(put 'lscroll-bar-toggle 'state t))))
+
+  ;; enable local scroll bar by default
+  (enable-local-scroll-bar)
+
   ;; tab bar
   ;; (tab-bar-mode 1)
   ;; (setq tab-bar-show t)
@@ -361,8 +395,8 @@ Emacs will fill up the space reported by the window manager.
   ;; (setq tab-bar-new-button-show nil)
 
   ;; tab bar when using emacsclient
-  ;; (use-package emacs
-  ;;   :hook (server-after-make-frame . tab-bar-enable))
+  (use-package emacs
+	:hook (server-after-make-frame . tab-bar-enable))
 
   ;; time in tab-bar
   ;; (display-time-mode 1)
@@ -392,7 +426,7 @@ Set frame size.
 #+end_src
 **** Reverse video mode
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(reverse . t))
+  ;; (add-to-list 'default-frame-alist '(reverse . t))
 #+end_src
 *** Modes
 **** Enable column-numbers-mode
@@ -605,12 +639,13 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   ;; function
   (global-set-key (kbd "<f5>") 'revert-buffer)
   (global-set-key (kbd "<f6>") 'menu-bar-mode)
-  (global-set-key (kbd "<f7>") 'scroll-bar-mode)
+  (global-set-key (kbd "<f7>") 'local-scroll-bar-toggle)
   (global-set-key (kbd "<f8>") 'other-frame)
   (global-set-key (kbd "<f10>") 'compile)
   (global-set-key (kbd "s-<f5>") 'config/toggle-theme)
   (global-set-key (kbd "S-<f5>") 'open-treemacs)
   (global-set-key (kbd "S-<f6>") 'config/toggle-fringe)
+  (global-set-key (kbd "S-<f7>") 'scroll-bar-mode)
   (global-set-key (kbd "S-<f8>") 'tool-bar-mode)
   (global-set-key (kbd "<f9>") 'tab-bar-toggle)
   (global-set-key (kbd "S-<f9>") 'toggle-frame-tab-bar)
@@ -688,7 +723,7 @@ Make Emacs use the $PATH set up by the user's shell.
 **** Code
 #+begin_src emacs-lisp
   (use-package exec-path-from-shell
-	:straight t)
+	:disabled t)
 #+end_src
 *** Initialize =async=
 **** Description
@@ -1011,7 +1046,7 @@ Compilation buffer enhancements.
 	  (message "Compilation %s: %s" (string-trim-right why) msg)))
 #+end_src
 ** Visual
-*** Initialize =vs-theme=
+*** Initialize =vs-dark-theme=
 **** Description
 VSCode dark theme.
 **** Code
@@ -1019,6 +1054,8 @@ VSCode dark theme.
   (use-package vs-dark-theme
 	:defer 3
 	:straight t)
+  ;; :config
+  ;; (load-theme 'vs-dark t))
 #+end_src
 *** Initialize =doom-themes=
 **** Description
@@ -1026,8 +1063,14 @@ Doom themes.
 **** Code
 #+begin_src emacs-lisp
   (use-package doom-themes
-	:defer 3
-	:straight t)
+	;; :defer 3
+	:straight t
+	:config
+	(load-theme 'doom-dark+ t)
+	(custom-set-faces
+	 '(scroll-bar
+	   ((t
+		 (:foreground "gray30" :background "gray15"))))))
 #+end_src
 *** Initialize =dracula-theme=
 **** Description
@@ -1050,7 +1093,7 @@ Zenburn theme.
   ;; (custom-set-faces
   ;;  '(scroll-bar
   ;; 	 ((t
-  ;; 	   (:background "gray30")))))
+  ;; 	   (:background "gray31")))))
   ;; (load-theme 'zenburn t))
 #+end_src
 *** Initialize =spacemacs-theme=
@@ -1131,6 +1174,22 @@ An extensible emacs startup screen.
 	:init
 	(add-hook 'dashboard-mode-hook (lambda () (setq show-trailing-whitespace nil)))
 	:preface
+	;; (defconst home-page-dir "~/.emacs.d/img")
+	;; (defconst home-banners-dir (join-path home-page-dir "banners"))
+	;; (defconst home-friday-gifs-dir (join-path home-banners-dir "fridays"))
+	;; (defun home--friday? ()
+	;;   "Return if today is friday.  () -> bool."
+	;;   (equal "Fri" (format-time-string "%a")))
+	;; (defun home/choose-gif ()
+	;;   "Chooses randomly a gif path from `home-banners-dir'.
+	;;  If today is a friday, it gets from `home-friday-gifs-dir'.
+	;;  \()->string"
+	;;  (let* ((dir (if (home--friday?)
+	;;				  home-friday-gifs-dir
+	;;				home-banners-dir))
+	;;		 (gifs (directory-files dir t ".*\\.gif$"))
+	;;		 (index (mod (random) (length gifs))))
+	;;	(nth index gifs)))
 	(defun init-edit ()
 	  "Edit initialization file."
 	  (interactive)
@@ -1172,6 +1231,10 @@ An extensible emacs startup screen.
 	(setq dashboard-banner-logo-title nil)
 	(setq dashboard-startup-banner 'official)
 	;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+	;; (setq dashboard-startup-banner  (if (display-graphic-p)
+	;; 									  (home/choose-gif)
+	;; 									(join-path home-banners-dir "text-banner.txt")))
+	;; (setq dashboard-startup-banner (join-path home-banners-dir "text-banner.txt"))
 	(setq dashboard-center-content t)
 	(setq dashboard-show-shortcuts nil)
 	(setq dashboard-set-init-info nil)
@@ -1302,9 +1365,9 @@ Highlights indentation levels.
 	(defun indent-guides-init-faces ()
 	  "Set indent-guides faces"
 	  (interactive)
-	  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
-	  (set-face-background 'highlight-indent-guides-even-face "dimgray")
-	  (set-face-foreground 'highlight-indent-guides-character-face "dimgray"))
+	  (set-face-background 'highlight-indent-guides-odd-face "gray30")
+	  (set-face-background 'highlight-indent-guides-even-face "gray30")
+	  (set-face-foreground 'highlight-indent-guides-character-face "gray30"))
 	(indent-guides-init-faces))
 #+end_src
 *** Initialize =minimap=
@@ -1324,8 +1387,8 @@ Minimap sidebar.
   ;; changing colors
   (custom-set-faces
    '(minimap-active-region-background
-	 ((((background dark)) (:background "#111111111111"))
-	  (t (:background "#cececececece")))
+	 ((((background dark)) (:background "#121212121212")) ;;#15
+	  (t (:background "#121212121212"))) ;;#ce
 	 "Face for the active region in the minimap.
   By default, this is only a different background color."
 	 :group 'minimap))
@@ -2811,6 +2874,12 @@ CIDER with Clojure.
 #+end_src
 * Functions
 ** Helper
+*** Join path
+#+begin_src emacs-lisp
+  (defun join-path (path filename)
+	"Concat path and file. Add '/' to the end of the path if necessary."
+	(concat path (if (string-match-p "/$" path) "" "/") filename))
+#+end_src
 *** Load if exists
 #+begin_src emacs-lisp
   (defun load-if-exists (f)
@@ -2844,10 +2913,10 @@ CIDER with Clojure.
 	(interactive)
 	(if (get 'tab-bar-toggle 'state)
 		(progn
-		  (tab-bar-disable)
+		  (tab-bar-enable)
 		  (put 'tab-bar-toggle 'state nil))
 	  (progn
-		(tab-bar-enable)
+		(tab-bar-disable)
 		(put 'tab-bar-toggle 'state t))))
 #+end_src
 *** Erc handlers
@@ -3095,6 +3164,7 @@ Opens this Emacs configuration GitHub website.
 #+begin_src emacs-lisp
   (defun scroll-bar/light ()
 	"Set scroll-bar to light color."
+	(interactive)
 	(custom-set-faces
 	 '(scroll-bar
 	   ((t
@@ -3102,6 +3172,7 @@ Opens this Emacs configuration GitHub website.
 
   (defun scroll-bar/dark ()
 	"Set scroll-bar to dark color."
+	(interactive)
 	(custom-set-faces
 	 '(scroll-bar
 	   ((t
@@ -3109,13 +3180,15 @@ Opens this Emacs configuration GitHub website.
 
   (defun scroll-bar/zenburn ()
 	"Set scroll-bar to zenburn color."
+	(interactive)
 	(custom-set-faces
 	 '(scroll-bar
 	   ((t
-		 (:foreground "gray" :background "gray30"))))))
+		 (:foreground "gray" :background "gray31"))))))
 
   (defun scroll-bar/black ()
 	"Set scroll-bar to black color."
+	(interactive)
 	(custom-set-faces
 	 '(scroll-bar
 	   ((t
@@ -3123,6 +3196,7 @@ Opens this Emacs configuration GitHub website.
 
   (defun scroll-bar/dracula ()
 	"Set scroll-bar to dracula color."
+	(interactive)
 	(custom-set-faces
 	 '(scroll-bar
 	   ((t

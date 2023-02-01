@@ -153,6 +153,12 @@ Auto-load any custom themes in =~/.emacs.d/themes=.
 	(setq custom-safe-themes t)
 	(add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory)))
 #+end_src
+*** Load custom lisp
+Auto-load any custom lisp in =~/.emacs.d/lisp=.
+#+begin_src emacs-lisp
+  (when (file-exists-p (expand-file-name "lisp/" user-emacs-directory))
+	(add-to-list 'load-path (expand-file-name "lisp/" user-emacs-directory)))
+#+end_src
 *** Don't ask for confirmation when opening symlinked file
 #+begin_src emacs-lisp
   (setq vc-follow-symlinks t)
@@ -376,14 +382,14 @@ Emacs will fill up the space reported by the window manager.
 	(interactive)
 	(if (get 'lscroll-bar-toggle 'state)
 		(progn
-		  (enable-local-scroll-bar)
+		  (disable-local-scroll-bar)
 		  (put 'lscroll-bar-toggle 'state nil))
 	  (progn
-		(disable-local-scroll-bar)
+		(enable-local-scroll-bar)
 		(put 'lscroll-bar-toggle 'state t))))
 
   ;; enable local scroll bar by default
-  (enable-local-scroll-bar)
+  ;; (enable-local-scroll-bar)
 
   ;; tab bar
   ;; (tab-bar-mode 1)
@@ -395,8 +401,8 @@ Emacs will fill up the space reported by the window manager.
   ;; (setq tab-bar-new-button-show nil)
 
   ;; tab bar when using emacsclient
-  (use-package emacs
-	:hook (server-after-make-frame . tab-bar-enable))
+  ;; (use-package emacs
+  ;; 	:hook (server-after-make-frame . tab-bar-enable))
 
   ;; time in tab-bar
   ;; (display-time-mode 1)
@@ -426,13 +432,13 @@ Set frame size.
 #+end_src
 **** Reverse video mode
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(reverse . t))
+  ;; (add-to-list 'default-frame-alist '(reverse . t))
 
-  ;; also reverse scroll-bar
-  (custom-set-faces
-   '(scroll-bar
-	 ((t
-	   (:foreground "gray20" :background "black")))))
+  ;; ;; also reverse scroll-bar
+  ;; (custom-set-faces
+  ;;  '(scroll-bar
+  ;;    ((t
+  ;; 	 (:foreground "gray20" :background "black")))))
 #+end_src
 *** Modes
 **** Enable column-numbers-mode
@@ -1078,6 +1084,26 @@ Doom themes.
   ;; 	 ((t
   ;; 	   (:foreground "gray30" :background "gray15"))))))
 #+end_src
+*** Initialize =doom-modeline=
+**** Description
+Doom modeline.
+**** Code
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+	;;:init (doom-modeline-mode)
+	:defer 3
+	:config
+	(setq doom-modeline-height 35)
+	(setq doom-modeline-buffer-file-name-style 'file-name
+		  doom-modeline-enable-word-count t
+		  doom-modeline-buffer-encoding nil
+		  doom-modeline-icon t ;; Enable/disable all icons
+		  doom-modeline-modal-icon nil ;; Icon for Evil mode
+		  doom-modeline-hud t ;; Replaces scroll-bar
+		  doom-modeline-major-mode-icon t
+		  doom-modeline-major-mode-color-icon t
+		  doom-modeline-bar-width 3))
+#+end_src
 *** Initialize =dracula-theme=
 **** Description
 Dracula theme.
@@ -1374,6 +1400,12 @@ Highlights indentation levels.
 	  (set-face-background 'highlight-indent-guides-odd-face "gray30")
 	  (set-face-background 'highlight-indent-guides-even-face "gray30")
 	  (set-face-foreground 'highlight-indent-guides-character-face "gray30"))
+	(defun vs-code-h-i-g ()
+	  "Set VSCode themed indent-guides faces"
+	  (interactive)
+	  (set-face-background 'highlight-indent-guides-odd-face "#404040")
+	  (set-face-background 'highlight-indent-guides-even-face "#404040")
+	  (set-face-foreground 'highlight-indent-guides-character-face "#404040"))
 	(indent-guides-init-faces))
 #+end_src
 *** Initialize =minimap=
@@ -1381,23 +1413,37 @@ Highlights indentation levels.
 Minimap sidebar.
 **** Code
 #+begin_src emacs-lisp
-  (use-package minimap
-	:straight t
-	:diminish minimap-mode
-	:config
-	(setq minimap-window-location 'right)
-	(setq minimap-width-fraction 0.05)
-	(setq minimap-minimum-width 20)
-	(setq minimap-hide-fringes t)
-	(setq minimap-major-modes '(typescript-mode)))
-  ;; changing colors
-  (custom-set-faces
-   '(minimap-active-region-background
-	 ((((background dark)) (:background "#121212121212")) ;;#15
-	  (t (:background "#121212121212"))) ;;#ce
-	 "Face for the active region in the minimap.
-  By default, this is only a different background color."
-	 :group 'minimap))
+	(use-package minimap
+	  :straight t
+	  :diminish minimap-mode
+	  :preface
+	  (defun dark-minimap ()
+		"Dark minimap."
+		(interactive)
+		(custom-set-faces
+		 '(minimap-active-region-background
+		   ((((background dark)) (:background "#121212121212")) ;;#15
+			(t (:background "#121212121212"))) ;;#ce
+		   "Face for the active region in the minimap.
+	  By default, this is only a different background color."
+		   :group 'minimap)))
+	  (defun light-minimap ()
+		"Light minimap."
+		(interactive)
+		(custom-set-faces
+		 '(minimap-active-region-background
+		   ((((background dark)) (:background "#151515151515"))
+			(t (:background "#cececececece"))) ;;#ce
+		   "Face for the active region in the minimap.
+	  By default, this is only a different background color."
+		   :group 'minimap)))
+	  :config
+	  (setq minimap-window-location 'right)
+	  (setq minimap-width-fraction 0.05)
+	  (setq minimap-minimum-width 15)
+	  (setq minimap-hide-fringes t)
+	  (setq minimap-major-modes '(typescript-mode))
+	  (light-minimap))
 #+end_src
 ** Tools
 *** Initialize =projectile=
@@ -1527,6 +1573,7 @@ Tree layout file explorer.
 			treemacs-recenter-after-tag-follow     nil
 			treemacs-recenter-after-project-jump   'always
 			treemacs-recenter-after-project-expand 'on-distance
+			treemacs-user-mode-line-format         'none
 			treemacs-show-cursor                   nil
 			treemacs-show-hidden-files             t
 			treemacs-silent-filewatch              nil
@@ -1535,7 +1582,7 @@ Tree layout file explorer.
 			treemacs-space-between-root-nodes      t
 			treemacs-tag-follow-cleanup            t
 			treemacs-tag-follow-delay              1.5
-			treemacs-width                         30)
+			treemacs-width                         25)
 	  (treemacs-resize-icons 11)
 
 	  (treemacs-follow-mode t)
@@ -2775,6 +2822,9 @@ Prettier formatter for JSX & TSX.
 
   (use-package typescript-mode
 	:straight t
+	:config
+	(with-eval-after-load "typescript-mode"
+	  (require 'ts-repl))
 	:mode (("\\.ts\\'" . typescript-mode)
 		   ("\\.tsx\\'" . typescript-mode)))
 
@@ -2786,6 +2836,7 @@ Prettier formatter for JSX & TSX.
   (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
   (use-package prettier-js
+	:after (typescript-mode)
 	:straight t)
   ;; :config
   ;; (add-hook 'web-mode-hook #'(lambda ()
@@ -3056,6 +3107,12 @@ CIDER with Clojure.
 	(treemacs)
 	(other-window 1))
 #+end_src
+*** Desktop restore
+#+begin_src emacs-lisp
+  (defun desktop-restore ()
+	(interactive)
+	(desktop-read "~/Desktop"))
+#+end_src
 ** Config
 *** =config/tangle=
 Tangles the Emacs configuration.
@@ -3101,13 +3158,30 @@ Opens this Emacs configuration GitHub website.
   (defun config/vscode-mode ()
 	"Tree & Minimap."
 	(interactive)
+	(disable-local-scroll-bar)
+	(tab-bar-enable)
+	;;(desktop-restore)
+	;;(config/vscode-theme)
+	(config/spacemacs-light-theme)
 	(treemacs)
 	(other-window 1)
-	(minimap-mode 1))
+	(minimap-mode 1)
+	(indent-guides-init-faces))
+  ;;(vs-code-h-i-g)
+  ;; open git porcelain
+  ;;(tab-switch "pos")
+  ;;(other-window 1)
+  ;;(vterm)
+  ;;(magit)
+  ;;(tab-switch "index.tsx"))
 
   (defun config/vscode-kill ()
 	"Kill treemacs & minimap."
 	(interactive)
+	(disable-all-themes)
+	(light-minimap)
+	(scroll-bar/light)
+	(doom-modeline-mode -1)
 	(treemacs)
 	(treemacs-kill-buffer)
 	(minimap-kill))
@@ -3118,6 +3192,8 @@ Opens this Emacs configuration GitHub website.
 	"Light theme."
 	(interactive)
 	(disable-all-themes)
+	(minimap-light)
+	(init-indent-guide-faces)
 	(scroll-bar/light))
 
   (defun config/dark-theme ()
@@ -3125,6 +3201,8 @@ Opens this Emacs configuration GitHub website.
 	(interactive)
 	(disable-all-themes)
 	(scroll-bar/black)
+	(minimap-dark)
+	(vs-code-h-i-g)
 	(load-theme 'standard-dark t))
 
   (defun config/modus-theme-operandi ()
@@ -3132,6 +3210,8 @@ Opens this Emacs configuration GitHub website.
 	(interactive)
 	(disable-all-themes)
 	(scroll-bar/light)
+	(minimap-light)
+	(init-indent-guide-faces)
 	(load-theme 'modus-operandi t))
 
   (defun config/modus-theme-vivendi ()
@@ -3139,6 +3219,7 @@ Opens this Emacs configuration GitHub website.
 	(interactive)
 	(disable-all-themes)
 	(scroll-bar/dark)
+	(minimap-dark)
 	(load-theme 'modus-vivendi t))
 
   (defun config/toggle-theme ()
@@ -3151,6 +3232,33 @@ Opens this Emacs configuration GitHub website.
 	  (progn
 		(config/dark-theme)
 		(put 'theme-toggle 'state t))))
+
+  (defun config/spacemacs-light-theme ()
+	"Spacemacs light theme."
+	(interactive)
+	(disable-all-themes)
+	(light-minimap)
+	(scroll-bar/light)
+	(doom-modeline-mode)
+	(load-theme 'spacemacs-light t))
+
+  (defun config/spacemacs-dark-theme ()
+	"Spacemacs dark theme."
+	(interactive)
+	(disable-all-themes)
+	(dark-minimap)
+	(scroll-bar/dark)
+	(doom-modeline-mode)
+	(load-theme 'spacemacs-dark t))
+
+  (defun config/vscode-theme ()
+	"VSCode theme."
+	(interactive)
+	(disable-all-themes)
+	(dark-minimap)
+	(scroll-bar/vscode)
+	(doom-modeline-mode)
+	(load-theme 'doom-dark+ t))
 
   (defun config/zenburn-theme ()
 	"Zenburn theme."
@@ -3207,6 +3315,14 @@ Opens this Emacs configuration GitHub website.
 	 '(scroll-bar
 	   ((t
 		 (:foreground "#282A36" :background "#44475A"))))))
+
+  (defun scroll-bar/vscode ()
+	"VSCode themed scrollbar."
+	(interactive)
+	(custom-set-faces
+	 '(scroll-bar
+	   ((t
+		 (:foreground "gray30" :background "gray15"))))))
 #+end_src
 *** =config/toggle-fringe=
 #+begin_src emacs-lisp

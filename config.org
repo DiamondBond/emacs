@@ -2970,10 +2970,10 @@ CIDER with Clojure.
 	(interactive)
 	(if (get 'tab-bar-toggle 'state)
 		(progn
-		  (tab-bar-enable)
+		  (tab-bar-disable)
 		  (put 'tab-bar-toggle 'state nil))
 	  (progn
-		(tab-bar-disable)
+		(tab-bar-enable)
 		(put 'tab-bar-toggle 'state t))))
 #+end_src
 *** Erc handlers
@@ -3161,13 +3161,13 @@ Opens this Emacs configuration GitHub website.
 	(disable-local-scroll-bar)
 	(tab-bar-enable)
 	;;(desktop-restore)
-	;;(config/vscode-theme)
-	(config/spacemacs-light-theme)
+	(config/vscode-theme)
+	;;(config/spacemacs-light-theme)
 	(treemacs)
 	(other-window 1)
 	(minimap-mode 1)
-	(indent-guides-init-faces))
-  ;;(vs-code-h-i-g)
+	;;(indent-guides-init-faces))
+	(vs-code-h-i-g))
   ;; open git porcelain
   ;;(tab-switch "pos")
   ;;(other-window 1)
@@ -3177,6 +3177,30 @@ Opens this Emacs configuration GitHub website.
 
   (defun config/vscode-kill ()
 	"Kill treemacs & minimap."
+	(interactive)
+	(disable-all-themes)
+	(light-minimap)
+	(scroll-bar/light)
+	(doom-modeline-mode -1)
+	(treemacs)
+	(treemacs-kill-buffer)
+	(minimap-kill))
+#+end_src
+*** =config/spacemacs=
+#+begin_src emacs-lisp
+  (defun config/spacemacs-mode ()
+	"Spacemacs mode."
+	(interactive)
+	(disable-local-scroll-bar)
+	(tab-bar-enable)
+	(config/spacemacs-light-theme)
+	(treemacs)
+	(other-window 1)
+	(minimap-mode 1)
+	(indent-guides-init-faces))
+
+  (defun config/spacemacs-kill ()
+	"Kill spacemacs mode."
 	(interactive)
 	(disable-all-themes)
 	(light-minimap)

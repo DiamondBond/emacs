@@ -13,6 +13,10 @@
 
 ;;; Code:
 
+;;---------------------------------------------------------------------
+;; CORE
+;;---------------------------------------------------------------------
+
 ;; Make emacs startup faster
 (defvar startup/file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
@@ -64,17 +68,10 @@
   (straight-recipes-gnu-elpa-use-mirror t)
   (straight-check-for-modifications nil))
 
-;; Load config.org
-;; (when (file-readable-p
-;; 	   (concat user-emacs-directory "config.org"))
-;;   (org-babel-load-file
-;;    (concat user-emacs-directory "config.org")))
-;; (when (file-readable-p
-;; 	   (concat user-emacs-directory "config.el"))
-;;   (load-file
-;;    (concat user-emacs-directory "config.el")))
+;;---------------------------------------------------------------------
+;; GLOBALS
+;;---------------------------------------------------------------------
 
-;; Set global configuration
 (setq
  globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
  globals--font         "Menlo 11"                           ; Font
@@ -95,6 +92,10 @@
 	  rcirc-default-nick      globals--irc
 	  rcirc-default-full-name globals--name)
 
+;;---------------------------------------------------------------------
+;; BASE
+;;---------------------------------------------------------------------
+
 ;; Load authinfo
 (if (file-exists-p globals--auth-info)
 	(setq auth-sources globals--auth-sources)
@@ -106,7 +107,7 @@
 ;; Email to encrypt to
 (setq epa-file-encrypt-to '(globals--email))
 
-;; gc
+;; Garbage collection minibuffer hack
 (defun my-minibuffer-setup-hook ()
   "Garbage collection will never occur."
   (setq gc-cons-threshold most-positive-fixnum))
@@ -288,7 +289,7 @@
 (setq window-resize-pixelwise t)
 (setq frame-resize-pixelwise t)
 
-;;(setq inhibit-startup-message t)
+(setq inhibit-startup-message t)
 (setq initial-scratch-message "")
 
 ;; Disable blinking cursor
@@ -348,17 +349,17 @@
 
 ;; tab bar
 ;;(tab-bar-enable)
-(tab-bar-mode 1)
-(setq tab-bar-show t)
-(tab-bar-history-mode 1)
+;; (tab-bar-mode 1)
+;; (setq tab-bar-show t)
+;; (tab-bar-history-mode 1)
 (setq tab-bar-history-limit 25)
-(setq tab-bar-new-tab-choice "*GNU Emacs*")
+;; (setq tab-bar-new-tab-choice "*GNU Emacs*")
 ;; (setq tab-bar-close-button-show nil)
 ;; (setq tab-bar-new-button-show nil)
 
 ;; tab bar when using emacsclient
-;; (use-package emacs
-;;   :hook (server-after-make-frame . tab-bar-enable))
+(use-package emacs
+  :hook (server-after-make-frame . tab-bar-enable))
 
 ;; time in tab-bar
 ;; (display-time-mode 1)
@@ -427,6 +428,8 @@
 
 (defalias 'sync/news 'elfeed-update)
 
+(defalias 'sync/work 'ejira-update-my-projects)
+
 ;; Set browser
 (if (eq system-type 'gnu/linux)
 	(setq browse-url-browser-function globals--browser))
@@ -480,15 +483,15 @@
 	(switch-to-buffer-other-window "*eshell*")))
 
 ;;---------------------------------------------------------------------
-;; keymap definition
+;; KEYBINDS
 ;;---------------------------------------------------------------------
 
 (define-prefix-command 'z-map)
 (global-set-key (kbd "C-1") 'z-map)
 
-;;---------------------------------------------------------------------
-;; private-map
-;;---------------------------------------------------------------------
+;;
+;; PRIVATE
+;;
 
 ;; general
 (define-key z-map (kbd "a") 'org-agenda)
@@ -548,9 +551,9 @@
 (define-key z-map (kbd "I") 'inbox-edit)
 (define-key z-map (kbd "t") 'tasks-edit)
 
-;;---------------------------------------------------------------------
-;; global-map
-;;---------------------------------------------------------------------
+;;
+;; GLOBAL
+;;
 
 ;; function
 (global-set-key (kbd "<f5>") 'revert-buffer)
@@ -597,21 +600,17 @@
 (global-set-key (kbd "<mouse-8>") 'previous-buffer)
 (global-set-key (kbd "<mouse-9>") 'next-buffer)
 
-;; c-mode
-;; (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
-;; (global-set-key "\C-m" 'newline-and-indent)
-
-;;---------------------------------------------------------------------
-;; sane-map
-;;---------------------------------------------------------------------
-
-;; Indent/De-indent selection by one tab length
+;; indent/de-indent selection by one tab length
 (global-set-key (kbd "C->") 'indent-rigidly-right-to-tab-stop)
 (global-set-key (kbd "C-<") 'indent-rigidly-left-to-tab-stop)
 
-;; Kill word without copying it to your clipboard
+;; kill word without copying it to your clipboard
 (global-set-key (kbd "M-DEL") 'sanemacs/backward-kill-word)
 (global-set-key (kbd "C-DEL") 'sanemacs/backward-kill-word)
+
+;;---------------------------------------------------------------------
+;; PACKAGES
+;;---------------------------------------------------------------------
 
 ;; Core packages
 (use-package fn        :demand t) ; function
@@ -914,8 +913,6 @@
 (use-package vs-dark-theme
   :defer 3
   :straight t)
-;; :config
-;; (load-theme 'vs-dark t))
 
 (use-package doom-themes
   :defer 3
@@ -964,21 +961,21 @@
   :defer 3
   :straight t)
 
-(use-package modus-themes
-  :straight (:type built-in)
-  ;; :straight (:type git :host gitlab :repo "protesilaos/modus-themes" :branch "main")
-  ;; :init
-  ;; load the theme files before enabling a theme
-  ;; (modus-themes-load-themes)
-  :custom
-  (modus-themes-italic-constructs t)
-  (modus-themes-bold-constructs t)
-  (modus-themes-region '(accented bg-only no-extend))
-  (modus-themes-hl-line nil))
-;; :config
-;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
-;; (load-theme 'modus-operandi t)
-;; :bind ("S-<f5>" . modus-themes-toggle))
+;; (use-package modus-themes
+;;   :straight (:type built-in)
+;;   ;; :straight (:type git :host gitlab :repo "protesilaos/modus-themes" :branch "main")
+;;   ;; :init
+;;   ;; load the theme files before enabling a theme
+;;   ;; (modus-themes-load-themes)
+;;   :custom
+;;   (modus-themes-italic-constructs t)
+;;   (modus-themes-bold-constructs t)
+;;   (modus-themes-region '(accented bg-only no-extend))
+;;   (modus-themes-hl-line nil))
+;; ;; :config
+;; ;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+;; ;; (load-theme 'modus-operandi t)
+;; ;; :bind ("S-<f5>" . modus-themes-toggle))
 
 (use-package standard-themes
   :straight (:type git :host gitlab :repo "protesilaos/standard-themes" :branch "main")
@@ -1003,7 +1000,7 @@
 ;; 	   (:foreground "dim gray" :background "black"))))))
 
 (use-package dashboard
-  :disabled t
+  :straight t
   :diminish dashboard-mode
   :defer nil
   :init
@@ -1071,8 +1068,8 @@
 			  (lambda (&rest _) (inbox-edit))
 			  'default)))))
 
-  ;;(setq tab-bar-new-tab-choice "*dashboard*")
-  ;;(define-key z-map (kbd "D") 'dashboard-refresh-buffer)
+  (setq tab-bar-new-tab-choice "*dashboard*")
+  (define-key z-map (kbd "D") 'dashboard-refresh-buffer)
 
   ;; setup dashboard
   (dashboard-setup-startup-hook))
@@ -1784,8 +1781,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 			 :docstring "Search Google.")
   (defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :keybinding "i"
 			 :docstring "Search Google Images")
-  (defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "M"
-			 :docstring "Search Google Maps.")
+  ;; (defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "M"
+  ;; 			 :docstring "Search Google Maps.")
   (defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d"
 			 :docstring "Search DuckDuckGo.")
   (defengine qwant "https://www.qwant.com/?q=%s" :keybinding "q"
@@ -2461,6 +2458,10 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 		cider-use-overlays nil ; echo area is fine
 		cider-repl-display-help-banner nil))
 
+;;---------------------------------------------------------------------
+;; FUNCTIONS
+;;---------------------------------------------------------------------
+
 (defun join-path (path filename)
   "Concat path and file. Add '/' to the end of the path if necessary."
   (concat path (if (string-match-p "/$" path) "" "/") filename))
@@ -3130,6 +3131,10 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 	(async-shell-command (concat "~/bin/org-pdf-export " buffer-file-name))
 	(find-file (expand-file-name (concat (file-name-sans-extension buffer-file-name) ".pdf")))))
 
+;;---------------------------------------------------------------------
+;; MODULES
+;;---------------------------------------------------------------------
+
 ;; Load email module
 ;; (when (file-directory-p
 ;; 	   (concat user-emacs-directory "/modules"))
@@ -3331,7 +3336,6 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
   (setq jiralib2-url              "https://sallypos.atlassian.net"
 		jiralib2-auth             'token
 		jiralib2-user-login-name  "diamondbond1@gmail.com"
-		jiralib2-token            "2cXAjqY48uWduoRscgO32116"
 
 		;; NOTE, this directory needs to be in `org-agenda-files'`
 		ejira-org-directory       "~/org/jira"
@@ -3350,10 +3354,6 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
   (when (file-readable-p "~/org/jira/jiralib2-token.el")
 	(load-file "~/org/jira/jiralib2-token.el"))
   :config
-
-  ;; sync alias
-  (defalias 'sync/work 'ejira-update-my-projects)
-
   ;; Tries to auto-set custom fields by looking into /editmeta
   ;; of an issue and an epic.
   (add-hook 'jiralib2-post-login-hook #'ejira-guess-epic-sprint-fields)
@@ -3380,7 +3380,7 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
   :defer 4)
 
 ;; Start server
-(server-start)
+;;(server-start)
 
 ;; Restore original GC values
 (add-hook 'emacs-startup-hook

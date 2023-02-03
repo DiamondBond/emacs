@@ -1385,7 +1385,8 @@
 	  (neotree-toggle)
 	  (neotree-show-file curr-name)))
   :custom
-  (neo-theme (if (display-graphic-p) 'icons 'arrow))
+  ;;(neo-theme (if (display-graphic-p) 'icons 'arrow))
+  (neo-theme 'icons)
   (neo-window-position 'left)
   (neo-window-width 30)
   (neo-show-hidden-files t))

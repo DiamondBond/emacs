@@ -40,7 +40,7 @@ Define global variables.
 #+begin_src emacs-lisp
   ;; Set global configuration
   (setq
-   globals--banner-path  "img/Lisp_logo.png"                  ; Banner
+   globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
    globals--font         "Menlo 11"                           ; Font
    globals--name         "Diamond Bond"                       ; Name
    globals--email        "diamondbond1@gmail.com"             ; Email
@@ -152,12 +152,6 @@ Auto-load any custom themes in =~/.emacs.d/themes=.
   (when (file-exists-p (expand-file-name "themes/" user-emacs-directory))
 	(setq custom-safe-themes t)
 	(add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory)))
-#+end_src
-*** Load custom lisp
-Auto-load any custom lisp in =~/.emacs.d/lisp=.
-#+begin_src emacs-lisp
-  (when (file-exists-p (expand-file-name "lisp/" user-emacs-directory))
-	(add-to-list 'load-path (expand-file-name "lisp/" user-emacs-directory)))
 #+end_src
 *** Don't ask for confirmation when opening symlinked file
 #+begin_src emacs-lisp
@@ -331,7 +325,7 @@ Emacs will fill up the space reported by the window manager.
 #+end_src
 **** Disable default startup screen
 #+begin_src emacs-lisp
-  (setq inhibit-startup-message t)
+  ;;(setq inhibit-startup-message t)
   (setq initial-scratch-message "")
 #+end_src
 **** Disable cursor blink
@@ -342,16 +336,17 @@ Emacs will fill up the space reported by the window manager.
 #+begin_src emacs-lisp
   ;; menu-bar
   (if (fboundp 'menu-bar-mode)
-	  (menu-bar-mode 0))
+	  (menu-bar-mode 1))
 
   ;; tool-bar
   (if (fboundp 'tool-bar-mode)
-	  (tool-bar-mode 0))
-  (setq tool-bar-style 'image)
+	  (tool-bar-mode 1))
+  ;;(setq tool-bar-style 'image)
 
   ;; scroll-bar
   (if (fboundp 'scroll-bar-mode)
-	  (scroll-bar-mode 0))
+	  (scroll-bar-mode 1))
+
   ;; for athena
   ;; (set-scroll-bar-mode 'right)
   ;; disable minibuffer scroll-bar
@@ -382,27 +377,28 @@ Emacs will fill up the space reported by the window manager.
 	(interactive)
 	(if (get 'lscroll-bar-toggle 'state)
 		(progn
-		  (disable-local-scroll-bar)
+		  (enable-local-scroll-bar)
 		  (put 'lscroll-bar-toggle 'state nil))
 	  (progn
-		(enable-local-scroll-bar)
+		(disable-local-scroll-bar)
 		(put 'lscroll-bar-toggle 'state t))))
 
   ;; enable local scroll bar by default
-  ;; (enable-local-scroll-bar)
+  (enable-local-scroll-bar)
 
   ;; tab bar
+  ;; (tab-bar-enable)
   ;; (tab-bar-mode 1)
   ;; (setq tab-bar-show t)
   ;; (tab-bar-history-mode 1)
   (setq tab-bar-history-limit 25)
-  (setq tab-bar-new-tab-choice "*dashboard*")
+  (setq tab-bar-new-tab-choice "*scratch*")
   ;; (setq tab-bar-close-button-show nil)
   ;; (setq tab-bar-new-button-show nil)
 
   ;; tab bar when using emacsclient
   ;; (use-package emacs
-  ;; 	:hook (server-after-make-frame . tab-bar-enable))
+  ;;   :hook (server-after-make-frame . tab-bar-enable))
 
   ;; time in tab-bar
   ;; (display-time-mode 1)
@@ -417,7 +413,7 @@ https://amodernist.com/texts/emacs-global.html
 #+end_src
 **** Configure fringe
 #+begin_src emacs-lisp
-  (fringe-mode 0)
+  (fringe-mode nil)
   ;; (set-face-attribute 'fringe nil :background "#ffffff" :foreground "#ffffff")
   (setq-default fringes-outside-margins nil)
   (setq-default indicate-buffer-boundaries nil)
@@ -432,7 +428,11 @@ Set frame size.
 #+end_src
 **** Reverse video mode
 #+begin_src emacs-lisp
-  ;; (add-to-list 'default-frame-alist '(reverse . t))
+  (defun reverse-video-mode ()
+	"Reverse video mode."
+	(interactive)
+	(add-to-list 'default-frame-alist '(reverse . t)))
+  ;;(reverse-video-mode)
 
   ;; ;; also reverse scroll-bar
   ;; (custom-set-faces
@@ -607,7 +607,6 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
 
   ;; functions
   (define-key z-map (kbd "*") 'quick-calc)
-  (define-key z-map (kbd "D") 'dashboard-refresh-buffer)
   (define-key z-map (kbd "O") 'org-redisplay-inline-images)
   (define-key z-map (kbd "G") 'org-mark-ring-goto)
   (define-key z-map (kbd "H") 'global-hl-line-mode)
@@ -651,13 +650,14 @@ Improve eshell prompt and assign aliases, also setup some custom helper function
   ;; function
   (global-set-key (kbd "<f5>") 'revert-buffer)
   (global-set-key (kbd "<f6>") 'menu-bar-mode)
-  (global-set-key (kbd "<f7>") 'local-scroll-bar-toggle)
+  (global-set-key (kbd "<f7>") 'scroll-bar-mode)
   (global-set-key (kbd "<f8>") 'other-frame)
   (global-set-key (kbd "<f10>") 'compile)
   (global-set-key (kbd "s-<f5>") 'config/toggle-theme)
-  (global-set-key (kbd "S-<f5>") 'open-treemacs)
+  (global-set-key (kbd "S-<f5>") 'neotree-toggle)
+  ;; (global-set-key (kbd "S-<f5>") 'open-treemacs)
   (global-set-key (kbd "S-<f6>") 'config/toggle-fringe)
-  (global-set-key (kbd "S-<f7>") 'scroll-bar-mode)
+  (global-set-key (kbd "S-<f7>") 'local-scroll-bar-toggle)
   (global-set-key (kbd "S-<f8>") 'tool-bar-mode)
   (global-set-key (kbd "<f9>") 'tab-bar-toggle)
   (global-set-key (kbd "S-<f9>") 'toggle-frame-tab-bar)
@@ -727,7 +727,9 @@ Elisp enhancers.
   (use-package a         :demand t) ; assoc lists
   (use-package ts        :demand t) ; timestamps
   (use-package pcre2el   :demand t) ; sane regex
-  (use-package hierarchy :demand t) ; hierarchy
+  ;;(use-package hierarchy :demand t) ; hierarchy
+  (use-package hierarchy
+	:straight (:type built-in))
 #+end_src
 *** Initialize =path=
 **** Description
@@ -1200,7 +1202,7 @@ An extensible emacs startup screen.
 **** Code
 #+begin_src emacs-lisp
   (use-package dashboard
-	:straight t
+	:disabled t
 	:diminish dashboard-mode
 	:defer nil
 	:init
@@ -1222,41 +1224,6 @@ An extensible emacs startup screen.
 	;;		 (gifs (directory-files dir t ".*\\.gif$"))
 	;;		 (index (mod (random) (length gifs))))
 	;;	(nth index gifs)))
-	(defun init-edit ()
-	  "Edit initialization file."
-	  (interactive)
-	  (if (file-exists-p (concat user-emacs-directory "init.el"))
-		  (find-file (concat user-emacs-directory "init.el"))))
-	(defun config-edit ()
-	  "Edit configuration file."
-	  (interactive)
-	  (if (file-exists-p (concat user-emacs-directory "config.org"))
-		  (find-file (concat user-emacs-directory "config.org"))))
-	(when (file-directory-p "~/org")
-	  (defun notes-edit ()
-		"Edit notes file."
-		(interactive)
-		(if (file-exists-p "~/org/notes.org")
-			(find-file "~/org/notes.org")))
-	  (defun tasks-edit ()
-		"Edit tasks file."
-		(interactive)
-		(if (file-exists-p "~/org/tasks.org")
-			(find-file "~/org/tasks.org")))
-	  (defun archive-edit ()
-		"Edit archive file."
-		(interactive)
-		(if (file-exists-p "~/org/archive.org")
-			(find-file "~/org/archive.org")))
-	  (defun inbox-edit ()
-		"Edit inbox file."
-		(interactive)
-		(if (file-exists-p "~/org/inbox.org")
-			(find-file "~/org/inbox.org"))))
-	(defun create-scratch-buffer ()
-	  "Create a scratch buffer."
-	  (interactive)
-	  (switch-to-buffer (get-buffer-create "*scratch*")))
 	:config
 	(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 	(setq dashboard-items '((recents . 5)))
@@ -1303,8 +1270,47 @@ An extensible emacs startup screen.
 				(lambda (&rest _) (inbox-edit))
 				'default)))))
 
+	;;(setq tab-bar-new-tab-choice "*dashboard*")
+	;;(define-key z-map (kbd "D") 'dashboard-refresh-buffer)
+
 	;; setup dashboard
 	(dashboard-setup-startup-hook))
+
+  (defun init-edit ()
+	"Edit initialization file."
+	(interactive)
+	(if (file-exists-p (concat user-emacs-directory "init.el"))
+		(find-file (concat user-emacs-directory "init.el"))))
+  (defun config-edit ()
+	"Edit configuration file."
+	(interactive)
+	(if (file-exists-p (concat user-emacs-directory "config.org"))
+		(find-file (concat user-emacs-directory "config.org"))))
+  (when (file-directory-p "~/org")
+	(defun notes-edit ()
+	  "Edit notes file."
+	  (interactive)
+	  (if (file-exists-p "~/org/notes.org")
+		  (find-file "~/org/notes.org")))
+	(defun tasks-edit ()
+	  "Edit tasks file."
+	  (interactive)
+	  (if (file-exists-p "~/org/tasks.org")
+		  (find-file "~/org/tasks.org")))
+	(defun archive-edit ()
+	  "Edit archive file."
+	  (interactive)
+	  (if (file-exists-p "~/org/archive.org")
+		  (find-file "~/org/archive.org")))
+	(defun inbox-edit ()
+	  "Edit inbox file."
+	  (interactive)
+	  (if (file-exists-p "~/org/inbox.org")
+		  (find-file "~/org/inbox.org"))))
+  (defun create-scratch-buffer ()
+	"Create a scratch buffer."
+	(interactive)
+	(switch-to-buffer (get-buffer-create "*scratch*")))
 #+end_src
 *** Initialize =diminish=
 **** Description
@@ -1512,7 +1518,9 @@ Modern on-the-fly syntax checking extension.
 	(with-eval-after-load 'flymake
 	  (define-key flymake-mode-map (kbd "C-c n") #'flymake-goto-next-error)
 	  (define-key flymake-mode-map (kbd "C-c p") #'flymake-goto-prev-error))
-	:hook (prog-mode . flymake-mode))
+	:hook ((c-mode
+			python-mode
+			emacs-lisp-mode) . flymake-mode))
 #+end_src
 *** Initialize =flyspell=
 **** Description
@@ -1544,7 +1552,7 @@ Tree layout file explorer.
 **** Code
 #+BEGIN_SRC emacs-lisp
   (use-package treemacs
-	:straight t
+	:disabled t
 	:init
 	(add-hook 'treemacs-mode-hook
 			  (lambda () (treemacs-resize-icons 15)))
@@ -1604,13 +1612,22 @@ Tree layout file explorer.
 		  ("C-x t M-t" . treemacs-find-tag)))
 
   (use-package treemacs-projectile
-	:straight t
+	:disabled t
 	:after treemacs)
 
   (use-package treemacs-evil
-	:after treemacs evil
+	:disabled treemacs evil
 	:straight t)
 #+END_SRC
+*** Initialize =neotree=
+#+begin_src emacs-lisp
+  (use-package neotree
+	:straight t
+	:after (projectile)
+	:custom
+	(neo-theme (if (display-graphic-p) 'icons 'arrow))
+	(neo-show-hidden-files t))
+#+end_src
 *** Initialize =htmlize=
 **** Description
 Used for exporting source code with syntax highlighting.
@@ -1889,11 +1906,11 @@ Completion at point extensions.
 #+begin_src emacs-lisp
   (use-package cape
 	:straight t
-	:bind (("C-c p p" . completion-at-point)
-		   ("C-c p d" . cape-dabbrev)
-		   ("C-c p f" . cape-file)
-		   ("C-c p s" . cape-symbol)
-		   ("C-c p i" . cape-ispell))
+	;; :bind (("C-c p p" . completion-at-point)
+	;; 		 ("C-c p d" . cape-dabbrev)
+	;; 		 ("C-c p f" . cape-file)
+	;; 		 ("C-c p s" . cape-symbol)
+	;; 		 ("C-c p i" . cape-ispell))
 	:config
 	(setq cape-dabbrev-min-length 3)
 	(dolist (backend '( cape-symbol cape-keyword cape-file cape-dabbrev))
@@ -2815,7 +2832,7 @@ Prettier formatter for JSX & TSX.
   (defun setup-tide-mode ()
 	(interactive)
 	(tide-setup)
-	;; (flycheck-mode +1)
+	(flycheck-mode +1)
 	(setq flycheck-check-syntax-automatically '(save mode-enabled))
 	(eldoc-mode +1)
 	(tide-hl-identifier-mode +1))
@@ -2877,7 +2894,7 @@ Java LSP & Debug Adapter Protocol.
 *** Code
 #+begin_src emacs-lisp
   (use-package lsp-java
-	:straight t
+	:disabled t
 	:init
 	(setq lsp-java-vmargs
 		  (list
@@ -2903,8 +2920,8 @@ Java LSP & Debug Adapter Protocol.
 	(add-hook 'java-mode-hook #'lsp))
 
   (use-package dap-mode
-	:straight t
-	:after lsp-mode
+	:disabled t
+	;;:after lsp-mode
 	:config
 	(dap-auto-configure-mode)
 	(setq dap-ui-locals-expand-depth 3)
@@ -3158,16 +3175,16 @@ Opens this Emacs configuration GitHub website.
   (defun config/vscode-mode ()
 	"Tree & Minimap."
 	(interactive)
-	(disable-local-scroll-bar)
+	;;(disable-local-scroll-bar)
 	(tab-bar-enable)
 	;;(desktop-restore)
-	(config/vscode-theme)
+	;;(config/vscode-theme)
 	;;(config/spacemacs-light-theme)
-	(treemacs)
+	(neotree-dir "~/src/pos")
 	(other-window 1)
 	(minimap-mode 1)
-	;;(indent-guides-init-faces))
-	(vs-code-h-i-g))
+	(indent-guides-init-faces))
+  ;;(vs-code-h-i-g))
   ;; open git porcelain
   ;;(tab-switch "pos")
   ;;(other-window 1)
@@ -3180,34 +3197,12 @@ Opens this Emacs configuration GitHub website.
 	(interactive)
 	(disable-all-themes)
 	(light-minimap)
-	(scroll-bar/light)
-	(doom-modeline-mode -1)
-	(treemacs)
-	(treemacs-kill-buffer)
-	(minimap-kill))
-#+end_src
-*** =config/spacemacs=
-#+begin_src emacs-lisp
-  (defun config/spacemacs-mode ()
-	"Spacemacs mode."
-	(interactive)
-	(disable-local-scroll-bar)
-	(tab-bar-enable)
-	(config/spacemacs-light-theme)
-	(treemacs)
-	(other-window 1)
-	(minimap-mode 1)
-	(indent-guides-init-faces))
-
-  (defun config/spacemacs-kill ()
-	"Kill spacemacs mode."
-	(interactive)
-	(disable-all-themes)
-	(light-minimap)
-	(scroll-bar/light)
-	(doom-modeline-mode -1)
-	(treemacs)
-	(treemacs-kill-buffer)
+	;;(scroll-bar/light)
+	(tab-bar-disable)
+	;;(doom-modeline-mode -1)
+	;; (treemacs)
+	;; (treemacs-kill-buffer)
+	(neotree-hide)
 	(minimap-kill))
 #+end_src
 *** =config/themes=
@@ -3355,10 +3350,10 @@ Opens this Emacs configuration GitHub website.
 	(interactive)
 	(if (get 'fringe-toggle 'state)
 		(progn
-		  (fringe-mode 0)
+		  (fringe-mode nil)
 		  (put 'fringe-toggle 'state nil))
 	  (progn
-		(fringe-mode nil)
+		(fringe-mode 0)
 		(put 'fringe-toggle 'state t))))
 #+end_src
 *** =auth/backup=
@@ -3756,6 +3751,16 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 	  (find-file (expand-file-name (concat (file-name-sans-extension buffer-file-name) ".pdf")))))
 #+end_src
 * Modules
+** TS-TSX
+*** Description
+TypeScript with the help of tree-sitter & REPL.
+*** Code
+#+begin_src emacs-lisp
+  ;; (load "~/.emacs.d/lisp/ts-tsx.el")
+  ;; (require 'ts-tsx)
+  ;; (load "~/.emacs.d/lisp/ts-repl.el")
+  ;; (require 'ts-repl)
+#+end_src
 ** Email
 *** Description
 [[https://github.com/DiamondBond/emacs/blob/master/modules/mail.org][Email module]].
@@ -3781,7 +3786,8 @@ Launches gnus and connects to news.gmane.io/emacs-devel.
 * Footer
 ** Goodbye
 #+begin_src emacs-lisp
+  (server-start)
 
-  ;;; config.el ends here
+	  ;;; config.el ends here
 
 #+end_src

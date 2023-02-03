@@ -7,7 +7,7 @@
 
 * Introduction
 
-[[https://diamondbond.neocities.org/emacs.html][The entire configuration can be viewed here in HTML format]].
+*OUTDATED* [[https://diamondbond.neocities.org/emacs.html][The entire configuration can be viewed here in HTML format]].
 
 * Installation
 

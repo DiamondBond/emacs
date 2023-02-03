@@ -268,7 +268,6 @@
 (add-to-list 'default-frame-alist `(font . ,globals--font))
 
 ;; Load theme
-(setq catppuccin-flavor 'macchiato)
 (load-theme 'catppuccin t)
 
 ;; Set time format

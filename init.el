@@ -263,6 +263,8 @@
 (setq sentence-end-double-space nil)
 
 ;; Set font
+;; (when (string= (system-name) "matebook")
+;; 	 (setq globals--font "Menlo 14"))
 (add-to-list 'default-frame-alist `(font . ,globals--font))
 
 ;; Set time format

@@ -1246,6 +1246,7 @@
   ;;(setq projectile-project-search-path '("~/src" . 1)))
   :config
   (global-set-key (kbd "C-c p p") 'projectile-switch-project)
+  (global-set-key (kbd "C-c p s") 'projectile-ag)
   (projectile-mode +1))
 
 (use-package rg

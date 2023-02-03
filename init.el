@@ -338,10 +338,10 @@
   (interactive)
   (if (get 'lscroll-bar-toggle 'state)
 	  (progn
-		(enable-local-scroll-bar)
+		(disable-local-scroll-bar)
 		(put 'lscroll-bar-toggle 'state nil))
 	(progn
-	  (disable-local-scroll-bar)
+	  (enable-local-scroll-bar)
 	  (put 'lscroll-bar-toggle 'state t))))
 
 ;; enable local scroll bar by default
@@ -2494,10 +2494,10 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (interactive)
   (if (get 'tab-bar-toggle 'state)
 	  (progn
-		(tab-bar-disable)
+		(tab-bar-enable)
 		(put 'tab-bar-toggle 'state nil))
 	(progn
-	  (tab-bar-enable)
+	  (tab-bar-disable)
 	  (put 'tab-bar-toggle 'state t))))
 
 (defun erc-start ()

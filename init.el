@@ -1240,14 +1240,14 @@
 
 (use-package projectile
   :straight t
+  ;; :bind (:map projectile-mode-map
+  ;; 			  ("C-c p" . projectile-command-map))
   :init
   (setq projectile-sort-order 'recentf
 		projectile-enable-caching t)
   ;; set projectile project path
-  (when (file-directory-p "~/git")
-	(setq projectile-project-search-path '("~/git" "~/src" . 1)))
-  ;; :bind (:map projectile-mode-map
-  ;; 			  ("C-c p" . projectile-command-map))
+  ;;(when (file-directory-p "~/src")
+  ;;(setq projectile-project-search-path '("~/src" . 1)))
   :config
   (global-set-key (kbd "C-c p p") 'projectile-switch-project)
   (projectile-mode +1))

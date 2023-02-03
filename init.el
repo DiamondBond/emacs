@@ -2823,25 +2823,25 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	(interactive)
 	(async-shell-command "~/bin/auth-restore.sh")))
 
-(when (file-readable-p "~/bin/sync-dotfiles.sh")
-  (defun sync/dotfiles ()
-	"Sync dotfiles."
-	(interactive)
-	(async-shell-command "~/bin/sync-dotfiles.sh")))
+;; (when (file-readable-p "~/bin/sync-dotfiles.sh")
+;;   (defun sync/dotfiles ()
+;; 	"Sync dotfiles."
+;; 	(interactive)
+;; 	(async-shell-command "~/bin/sync-dotfiles.sh")))
 
-(when (file-readable-p "~/bin/sync-neocities.sh")
-  (defun sync/neocities ()
-	"Sync neocities."
-	(interactive)
-	(save-window-excursion
-	  (async-shell-command "~/bin/sync-neocities.sh"))))
+;; (when (file-readable-p "~/bin/sync-neocities.sh")
+;;   (defun sync/neocities ()
+;; 	"Sync neocities."
+;; 	(interactive)
+;; 	(save-window-excursion
+;; 	  (async-shell-command "~/bin/sync-neocities.sh"))))
 
-(when (file-readable-p "~/bin/sync-blog.sh")
-  (defun sync/blog ()
-	"Sync blog."
-	(interactive)
-	(save-window-excursion
-	  (async-shell-command "~/bin/sync-blog.sh"))))
+;; (when (file-readable-p "~/bin/sync-blog.sh")
+;;   (defun sync/blog ()
+;; 	"Sync blog."
+;; 	(interactive)
+;; 	(save-window-excursion
+;; 	  (async-shell-command "~/bin/sync-blog.sh"))))
 
 (defun sync/irc ()
   "Connect to IRC."
@@ -3167,7 +3167,7 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
   (mu4e-update-index))
 
 (use-package mu4e
-  :disabled t
+  :straight t
   ;; :straight ( :host github
   ;; 			  :repo "djcb/mu"
   ;; 			  :branch "master"
@@ -3305,7 +3305,7 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
   (mu4e-alert-enable-notifications))
 
 (use-package smtpmail
-  :disabled t
+  :straight t
   :config
   (setq message-send-mail-function 'smtpmail-send-it
 		starttls-use-gnutls t
@@ -3324,11 +3324,9 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 ;;   (org-babel-load-file
 ;;    (concat user-emacs-directory "/modules/jira.org")))
 
-(defalias 'sync/work 'ejira-update-my-projects)
-
 (use-package ejira
-  :disabled t
-  ;;:straight (:type git :host github :repo "nyyManni/ejira" :branch "master")
+  :straight (:type git :host github :repo "nyyManni/ejira" :branch "master")
+  :defer 2
   :init
   (setq jiralib2-url              "https://sallypos.atlassian.net"
 		jiralib2-auth             'token
@@ -3350,8 +3348,12 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 									("Done"        . 4)))
   ;; Load jira token
   (when (file-readable-p "~/org/jira/jiralib2-token.el")
-	(load-file "~/org/jiralib2-token.el"))
+	(load-file "~/org/jira/jiralib2-token.el"))
   :config
+
+  ;; sync alias
+  (defalias 'sync/work 'ejira-update-my-projects)
+
   ;; Tries to auto-set custom fields by looking into /editmeta
   ;; of an issue and an epic.
   (add-hook 'jiralib2-post-login-hook #'ejira-guess-epic-sprint-fields)
@@ -3374,8 +3376,8 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 				 ((org-agenda-overriding-header "Assigned to me")))))))
 
 (use-package jira-markup-mode
-  :disabled t
-  :defer 2)
+  :straight t
+  :defer 4)
 
 ;; Start server
 (server-start)

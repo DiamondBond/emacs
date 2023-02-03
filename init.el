@@ -3268,9 +3268,9 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 
   ;; disable mu4e-modeline
   ;;(mu4e-modeline-mode -1)
-  (add-hook 'mu4e-main-mode-hook (lambda () (mu4e-modeline-mode -1)))
+  ;; (add-hook 'mu4e-main-mode-hook (lambda () (mu4e-modeline-mode -1)))
   ;;(add-hook 'dashboard-mode-hook (lambda () (mu4e-modeline-mode -1)))
-  (add-hook 'emacs-startup-hook (lambda () (mu4e-modeline-mode -1)))
+  ;; (add-hook 'emacs-startup-hook (lambda () (mu4e-modeline-mode -1)))
 
   ;; start mu4e
   (mu4e t))

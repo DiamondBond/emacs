@@ -10,10 +10,6 @@
 	 ("\\.x?html?\\'" . default)
 	 ("\\.pdf\\'" . emacs)))
  '(warning-suppress-log-types
-   '(((flymake flymake))
-	 ((flymake flymake))
-	 ((flymake flymake))
-	 ((flymake flymake))
-	 (use-package)
-	 (browse-url)
-	 (comp))))
+   '(((use-package)
+	  (browse-url)
+	  (comp)))))

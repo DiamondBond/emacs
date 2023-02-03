@@ -267,9 +267,6 @@
 ;; 	 (setq globals--font "Menlo 14"))
 (add-to-list 'default-frame-alist `(font . ,globals--font))
 
-;; Load theme
-(load-theme 'catppuccin t)
-
 ;; Set time format
 (setq-default display-time-format "%I:%M %p")
 
@@ -311,7 +308,7 @@
 
 ;; Scroll-bar
 (if (fboundp 'scroll-bar-mode)
-	(scroll-bar-mode 0))
+	(scroll-bar-mode 1))
 
 ;; for athena
 ;; (set-scroll-bar-mode 'right)
@@ -927,8 +924,8 @@
 ;; 	   (:foreground "gray30" :background "gray15"))))))
 
 (use-package doom-modeline
-  :init (doom-modeline-mode)
-  ;;:defer 3
+  ;;:init (doom-modeline-mode)
+  :defer 3
   :config
   (setq doom-modeline-height 35)
   (setq doom-modeline-buffer-file-name-style 'file-name

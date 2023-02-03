@@ -267,6 +267,9 @@
 ;; 	 (setq globals--font "Menlo 14"))
 (add-to-list 'default-frame-alist `(font . ,globals--font))
 
+;; Load theme
+(load-theme 'catppuccin t)
+
 ;; Set time format
 (setq-default display-time-format "%I:%M %p")
 
@@ -308,7 +311,7 @@
 
 ;; Scroll-bar
 (if (fboundp 'scroll-bar-mode)
-	(scroll-bar-mode 1))
+	(scroll-bar-mode 0))
 
 ;; for athena
 ;; (set-scroll-bar-mode 'right)
@@ -528,8 +531,6 @@
 (define-key z-map (kbd "F") 'follow-mode)
 (define-key z-map (kbd "U") 'undo-redo)
 (define-key z-map (kbd "i") 'consult-imenu)
-(define-key z-map (kbd "l") 'minimap-mode)
-(define-key z-map (kbd "h") 'treemacs)
 (define-key z-map (kbd "p") 'prettier-js)
 
 ;; quick
@@ -549,7 +550,7 @@
 
 ;; files
 (define-key z-map (kbd "n") 'notes-edit)
-(define-key z-map (kbd "c") 'init-edit) ;; used to be config-edit when i was using config.org
+(define-key z-map (kbd "c") 'init-edit)
 (define-key z-map (kbd "I") 'inbox-edit)
 (define-key z-map (kbd "t") 'tasks-edit)
 
@@ -566,7 +567,6 @@
 (global-set-key (kbd "s-<f5>") 'config/toggle-theme)
 (global-set-key (kbd "S-<f5>") 'neotree-toggle-project-dir)
 ;; (global-set-key (kbd "S-<f5>") 'open-treemacs)
-(global-set-key (kbd "S-<f6>") 'config/toggle-fringe)
 (global-set-key (kbd "S-<f7>") 'local-scroll-bar-toggle)
 (global-set-key (kbd "S-<f8>") 'other-frame)
 (global-set-key (kbd "<f9>") 'tab-bar-toggle)
@@ -927,8 +927,8 @@
 ;; 	   (:foreground "gray30" :background "gray15"))))))
 
 (use-package doom-modeline
-  ;;:init (doom-modeline-mode)
-  :defer 3
+  :init (doom-modeline-mode)
+  ;;:defer 3
   :config
   (setq doom-modeline-height 35)
   (setq doom-modeline-buffer-file-name-style 'file-name

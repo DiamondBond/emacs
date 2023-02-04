@@ -1524,7 +1524,8 @@
 	(let ((url (magit-get "remote" "origin" "url")))
 	  (progn
 		(browse-url (parse-url url))
-		(message "opening repo %s" url)))))
+		(message "opening repo %s" url))))
+  (defalias 'open-github 'magit-open-repo))
 
 ;; bindings to help improve the speed of magit
 ;; (use-package libgit :straight t)

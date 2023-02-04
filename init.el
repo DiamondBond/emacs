@@ -850,7 +850,7 @@
 (use-package evil-collection
   :after evil
   :config
-  (setq evil-collection-mode-list '(dired (custom cus-edit) (package-menu package) calc diff-mode))
+  (setq evil-collection-mode-list '(dired (custom cus-edit) (package-menu package) neotree calc diff-mode))
   (evil-collection-init)
   ;; use dired-open
   (evil-collection-define-key 'normal 'dired-mode-map
@@ -1049,7 +1049,10 @@
   ;;	(nth index gifs)))
   :config
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
-  (setq dashboard-items '((recents . 5)))
+  (setq dashboard-items '((projects . 5)
+						  (recents  . 5)
+						  (bookmarks . 5)
+						  (agenda . 5)))
   (setq dashboard-banner-logo-title nil)
   (setq dashboard-startup-banner 'official)
   ;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
@@ -1058,8 +1061,8 @@
   ;; 									(join-path home-banners-dir "text-banner.txt")))
   ;; (setq dashboard-startup-banner (join-path home-banners-dir "text-banner.txt"))
   (setq dashboard-center-content t)
-  (setq dashboard-show-shortcuts nil)
-  (setq dashboard-set-init-info t)
+  ;; (setq dashboard-show-shortcuts nil)
+  ;; (setq dashboard-set-init-info t)
   (setq dashboard-set-footer nil)
   (setq dashboard-set-navigator t)
 

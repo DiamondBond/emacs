@@ -1,6 +1,6 @@
 ;;; early-init.el --- Early Initialization. -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022 Diamond Bond
+;; Copyright (C) 2023 Diamond Bond
 ;; This file is NOT part of GNU Emacs.
 ;; This file is free software.
 

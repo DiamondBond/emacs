@@ -1,6 +1,6 @@
 ;;; init.el --- Initialization. -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022 Diamond Bond
+;; Copyright (C) 2023 Diamond Bond
 ;; This file is NOT part of GNU Emacs.
 ;; This file is free software.
 
@@ -204,20 +204,21 @@
 (setq-default track-mouse nil)
 ;; (mouse-avoidance-mode 'jump)
 
-;; Scroll settings
-(setq
- ;; If the frame contains multiple windows, scroll the one under the cursor
- ;; instead of the one that currently has keyboard focus.
- mouse-wheel-follow-mouse 't
- ;; Completely disable mouse wheel acceleration to avoid speeding away.
- mouse-wheel-progressive-speed nil)
-;; The most important setting of all! Make each scroll-event move 2 lines at
-;; a time (instead of 5 at default). Simply hold down shift to move twice as
-;; fast, or hold down control to move 3x as fast. Perfect for trackpads.
+;; Configure scrolling
+;; If the frame contains multiple windows, scroll the one under the cursor
+;; instead of the one that currently has keyboard focus.
+(setq mouse-wheel-follow-mouse 't
+	  ;; Completely disable mouse wheel acceleration to avoid speeding away.
+	  mouse-wheel-progressive-speed nil)
+
+;; Scroll wheel amount
 ;; mouse-wheel-scroll-amount '(2 ((shift) . 8) ((control) . 6)))
 
+;; Scroll margin
 (setq scroll-margin 0)
 ;; (setq scroll-conservatively 100000)
+
+;; Fast but imprecise scrolling
 (setq scroll-preserve-screen-position t)
 (setq fast-but-imprecise-scrolling t)
 
@@ -312,6 +313,7 @@
 
 ;; for athena
 ;; (set-scroll-bar-mode 'right)
+
 ;; disable minibuffer scroll-bar
 ;; (set-window-scroll-bars (minibuffer-window) nil nil)
 
@@ -346,11 +348,7 @@
 	  (enable-local-scroll-bar)
 	  (put 'lscroll-bar-toggle 'state t))))
 
-;; enable local scroll bar by default
-;;(enable-local-scroll-bar)
-
-;; tab bar
-;;(tab-bar-enable)
+;; Tab-bar
 ;; (tab-bar-mode 1)
 ;; (setq tab-bar-show t)
 ;; (tab-bar-history-mode 1)
@@ -359,26 +357,25 @@
 ;; (setq tab-bar-close-button-show nil)
 ;; (setq tab-bar-new-button-show nil)
 
-;; tab bar when using emacsclient
+;; Enable tab bar when using emacsclient
 (use-package emacs
   :hook (server-after-make-frame . tab-bar-enable))
 
-;; time in tab-bar
+;; Time in tab-bar
 ;; (display-time-mode 1)
 ;; (add-to-list 'tab-bar-format 'tab-bar-format-align-right 'append)
 ;; (add-to-list 'tab-bar-format 'tab-bar-format-global 'append)
-
 ;; (setq tab-bar-format '(tab-bar-format-global)
 ;; 	  tab-bar-mode t)
 
 ;; Configure fringe
 (fringe-mode nil)
-;;(fringe-mode 0)
-;; (set-face-attribute 'fringe nil :background "#ffffff" :foreground "#ffffff")
 (setq-default fringes-outside-margins nil)
 (setq-default indicate-buffer-boundaries nil)
 (setq-default indicate-empty-lines nil)
 (setq-default overflow-newline-into-fringe t)
+;; Set fringe color
+;; (set-face-attribute 'fringe nil :background "#ffffff" :foreground "#ffffff")
 
 ;; Set default frame-size
 (add-to-list 'default-frame-alist '(width . 80))
@@ -394,25 +391,24 @@
   (add-to-list 'default-frame-alist '(reverse . t)))
 ;;(reverse-video-mode)
 
-;; ;; also reverse scroll-bar
+;; ;; reverse scroll-bar color
 ;; (custom-set-faces
 ;;  '(scroll-bar
 ;;    ((t
 ;; 	 (:foreground "gray20" :background "black")))))
 
-;; Enable some modes
+;; Configure some modes
 (column-number-mode 1)
-
 (global-hl-line-mode 0)
-
 (global-prettify-symbols-mode t)
 
+;; Line number modes
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'text-mode-hook 'display-line-numbers-mode)
 
+;; Visual line mode
 (add-hook 'text-mode-hook 'visual-line-mode)
 (add-hook 'org-mode-hook 'visual-line-mode)
-;;(add-hook 'md4rd-mode-hook 'visual-line-mode)
 
 ;; Aliases
 (defalias 'first 'car)
@@ -425,14 +421,12 @@
 (defalias 'shrink-wrap 'fit-frame-to-buffer)
 
 (defalias 'recentf-delete-list 'recentf-edit-list)
-
 (defalias 'bookmark-delete-all 'bookmark-delete)
 
 (defalias 'sync/news 'elfeed-update)
-
 (defalias 'sync/work 'ejira-update-my-projects)
 
-;; Set browser
+;; Set browser depending on system
 (if (eq system-type 'gnu/linux)
 	(setq browse-url-browser-function globals--browser))
 (if (eq system-type 'darwin)
@@ -466,13 +460,15 @@
 (add-hook 'eshell-mode-hook
 		  (lambda () (global-hl-line-mode 0)))
 
+;; Eshell aliases
+(defalias 'open 'find-file-other-window)
+(defalias 'clean 'eshell/clear-scrollback)
+
+;; Eshell functions
 (defun eshell/clear-scrollback ()
   "Clear the scrollback content of the eshell window."
   (let ((inhibit-read-only t))
 	(erase-buffer)))
-
-(defalias 'open 'find-file-other-window)
-(defalias 'clean 'eshell/clear-scrollback)
 
 (defun eshell-other-window ()
   "Create or visit an eshell buffer."
@@ -624,11 +620,13 @@
 (use-package hierarchy
   :straight (:type built-in))
 
+;; Inherit path from shell
 (use-package exec-path-from-shell
   :straight t
   :config
   (exec-path-from-shell-initialize))
 
+;; Async
 (use-package async
   :straight t
   :demand t
@@ -638,6 +636,7 @@
   (async-bytecomp-package-mode 1)
   (add-to-list 'display-buffer-alist '("*Async Shell Command*" display-buffer-no-window (nil))))
 
+;; Garbage Collection Magic Hack
 (use-package gcmh
   :straight t
   :init
@@ -645,6 +644,7 @@
 		gcmh-high-cons-threshold (* 16 1024 1024))  ; 16mb
   :config (gcmh-mode))
 
+;; Org-mode - one mode to rule them all.
 (use-package org
   :straight (:type built-in)
   :diminish org-indent-mode
@@ -741,10 +741,11 @@
   ("C-c l" . 'org-store-link)
   ("C-<f1>" . (lambda()(interactive)(show-all))))
 
+;; Org-mode extras
 (use-package org-contrib
   :straight t)
 
-;; enable dnd images into org-mode & dired buffers
+;; Enable dnd images into org-mode & dired buffers
 (when (file-directory-p "~/org/img")
   (use-package org-download
 	:straight t
@@ -753,6 +754,7 @@
 	(setq-default org-download-image-dir "~/org/img/download")
 	(add-hook 'dired-mode-hook 'org-download-enable)))
 
+;; Dired
 (use-package dired
   :straight (:type built-in)
   :commands (dired dired-jump)
@@ -788,11 +790,13 @@
   :diminish dired-hide-dotfiles-mode
   :hook (dired-mode . dired-hide-dotfiles-mode))
 
+;; Direnv
 (use-package direnv
   :straight t
   :config
   (direnv-mode))
 
+;; EVIL
 (use-package evil
   :straight t
   :defer nil
@@ -834,6 +838,7 @@
   ;; :q kills buffer
   (evil-ex-define-cmd "q" 'delete-window))
 
+;; EVIL extras
 (use-package evil-collection
   :after evil
   :config
@@ -845,6 +850,7 @@
   (evil-collection-define-key 'normal 'dired-mode-map
 	(kbd "S-<return>") 'dired-open-file))
 
+;; Smart parentheses
 (use-package smartparens
   :diminish smartparens-mode
   :defer 1
@@ -887,6 +893,7 @@
 			 :unless '(sp-point-before-word-p sp-point-before-same-p)))
   (smartparens-global-mode t))
 
+;; Configure Emacs compile command
 (use-package compile
   :straight t
   :init
@@ -909,22 +916,29 @@
 	(save-excursion (goto-char (point-max)) (insert msg))
 	(message "Compilation %s: %s" (string-trim-right why) msg)))
 
+;;---------------------------------------------------------------------
+;; THEMES
+;;---------------------------------------------------------------------
+
 (use-package vs-dark-theme
   :defer 3
   :straight t)
 
+;; Doom themes
 (use-package doom-themes
+:disable t
   :defer 3
-  :straight t)
-;; :config
-;; (load-theme 'doom-dark+ t)
-;; (custom-set-faces
-;;  '(scroll-bar
-;; 	 ((t
-;; 	   (:foreground "gray30" :background "gray15"))))))
+:config
+(load-theme 'doom-dark+ t)
+(custom-set-faces
+ '(scroll-bar
+	 ((t
+	   (:foreground "gray30" :background "gray15"))))))
 
+;; Doom modeline
 (use-package doom-modeline
-  ;;:init (doom-modeline-mode)
+:disable t
+  :init (doom-modeline-mode)
   :defer 3
   :config
   (setq doom-modeline-height 35)
@@ -938,28 +952,28 @@
 		doom-modeline-major-mode-color-icon t
 		doom-modeline-bar-width 3))
 
+;; Dracula theme
 (use-package dracula-theme
   :defer 3
   :straight t)
 
+;; Zenburn theme
 (use-package zenburn-theme
   :defer 3
-  :straight t)
-;; :config
-;; (custom-set-faces
-;;  '(scroll-bar
-;; 	 ((t
-;; 	   (:background "gray31")))))
-;; (load-theme 'zenburn t))
+  :straight t
+  :config
+  (load-theme 'zenburn t)
+  (custom-set-faces
+   '(scroll-bar
+	 ((t
+	   (:background "gray31"))))))
 
+;; Spacemacs theme
 (use-package spacemacs-theme
-  :defer 3
-  :straight t)
+  :disable t
+  :defer 3)
 
-(use-package ef-themes
-  :defer 3
-  :straight t)
-
+;; Modus themes (integrated into Emacs28+)
 ;; (use-package modus-themes
 ;;   :straight (:type built-in)
 ;;   ;; :straight (:type git :host gitlab :repo "protesilaos/modus-themes" :branch "main")
@@ -976,8 +990,15 @@
 ;; ;; (load-theme 'modus-operandi t)
 ;; ;; :bind ("S-<f5>" . modus-themes-toggle))
 
+;; Prot's EF themes
+(use-package ef-themes
+  :defer 3
+  :straight t)
+
+;; Enhanced default themes
 (use-package standard-themes
-  :straight (:type git :host gitlab :repo "protesilaos/standard-themes" :branch "main")
+  :disable t
+  ;;:straight (:type git :host gitlab :repo "protesilaos/standard-themes" :branch "main")
   ;; :init
   ;; (load-theme 'standard-dark :no-confirm)
   :config
@@ -998,6 +1019,10 @@
 ;; 	 ((t
 ;; 	   (:foreground "dim gray" :background "black"))))))
 
+;;---------------------------------------------------------------------
+;; DASHBOARD
+;;---------------------------------------------------------------------
+
 (use-package dashboard
   :straight t
   :diminish dashboard-mode
@@ -1005,6 +1030,7 @@
   :init
   (add-hook 'dashboard-mode-hook (lambda () (setq show-trailing-whitespace nil)))
   :preface
+  ;; Random banner
   ;; (defconst home-page-dir "~/.emacs.d/img")
   ;; (defconst home-banners-dir (join-path home-page-dir "banners"))
   ;; (defconst home-friday-gifs-dir (join-path home-banners-dir "fridays"))
@@ -1073,6 +1099,7 @@
   ;; setup dashboard
   (dashboard-setup-startup-hook))
 
+;; Dashboard related functions
 (defun init-edit ()
   "Edit initialization file."
   (interactive)
@@ -1109,6 +1136,7 @@
   (interactive)
   (switch-to-buffer (get-buffer-create "*scratch*")))
 
+;; Clean up the modeline
 (use-package diminish
   :straight t
   :init
@@ -1141,10 +1169,10 @@
   (eval-after-load "mu4e" '(diminish 'mu4e-modeline-mode))
   (eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode "")))
 
+;; Golden ratio for windows
 (use-package golden-ratio
   :straight t
   :config
-  ;;(setq golden-ratio-exclude-modes '("minimap-sb-mode" "minimap-mode" "neotree-mode" "treemacs-mode"))
   (setq golden-ratio-exclude-modes '("bs-mode"
 									 "calc-mode"
 									 "ediff-mode"
@@ -1165,22 +1193,25 @@
 									 "minimap-sb-mode"
 									 "minimap-mode")))
 
+;; Colorize color-codes in prog-modes
 (use-package rainbow-mode
   :straight t
   :diminish rainbow-mode
   :hook (prog-mode . rainbow-mode))
 
+;; Highlight matching brackets
 (use-package rainbow-delimiters
   :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
 
+;; Make info-mode use variable-pitch fonts
 (straight-use-package
  '(info-variable-pitch
    :type git :host github
    :repo "kisaragi-hiu/info-variable-pitch"))
-
 (add-hook 'Info-mode-hook #'info-variable-pitch-mode)
 
+;; Highlight indent guidelines
 (use-package highlight-indent-guides
   :straight t
   :diminish highlight-indent-guides-mode
@@ -1201,6 +1232,7 @@
 	(set-face-foreground 'highlight-indent-guides-character-face "#404040"))
   (indent-guides-init-faces))
 
+;; Sublime-like minimap
 (use-package minimap
   :disabled t
   :diminish minimap-mode
@@ -1234,6 +1266,7 @@
   ;;(setq minimap-update-delay 0)
   (light-minimap))
 
+;; Project management
 (use-package projectile
   :straight t
   ;; :bind (:map projectile-mode-map
@@ -1249,12 +1282,16 @@
   (global-set-key (kbd "C-c p s") 'projectile-ag)
   (projectile-mode +1))
 
+;; Rip-grep
 (use-package rg
   :straight t)
 
+;; Silver-searcher
 (use-package ag
   :straight t)
 
+;; Replace fancy major modes with basic major mode
+;; when long lines are detected.
 (use-package so-long
   :defer t
   :straight t
@@ -1264,6 +1301,7 @@
 		("C-r" . isearch-backward))
   :config (global-so-long-mode 1))
 
+;; Input unicode symbols
 (use-package xah-math-input
   :straight
   ( :repo "diamondbond/xah-math-input"
@@ -1271,6 +1309,7 @@
 	:type git
 	:files ("xah-math-input.el")))
 
+;; Diagnostics for elisp
 (use-package flymake
   :straight t
   :config
@@ -1280,6 +1319,7 @@
 	(define-key flymake-mode-map (kbd "C-c p") #'flymake-goto-prev-error))
   :hook ((emacs-lisp-mode) . flymake-mode))
 
+;; Spellchecking
 (use-package flyspell
   :straight t
   :config
@@ -1298,6 +1338,7 @@
 	  (setq ispell-program-name "aspell"))
   :bind (("M-<f7>" . flyspell-buffer)))
 
+;; Tree file browser
 (use-package treemacs
   :disabled t
   :init
@@ -1366,6 +1407,7 @@
   :disabled treemacs evil
   :straight t)
 
+;; Neotree
 (use-package neotree
   :straight t
   :after (projectile)
@@ -1391,9 +1433,11 @@
   (neo-window-width 30)
   (neo-show-hidden-files t))
 
+;; Convert buffer text and decorations to HTML
 (use-package htmlize
   :straight t)
 
+;; VTerm
 (if (eq system-type 'gnu/linux)
 	(use-package vterm
 	  :straight t
@@ -1405,6 +1449,7 @@
 				(lambda () (global-hl-line-mode 0)))
 	  (setq vterm-max-scrollback 10000)))
 
+;; Mutliplex vterm
 (if (eq system-type 'gnu/linux)
 	(use-package multi-vterm
 	  :straight t
@@ -1415,10 +1460,12 @@
 				  ;;(setq-local evil-insert-state-cursor 'box)
 				  (evil-insert-state)))))
 
+;; Toggle vterm
 (use-package vterm-toggle
   :straight t
   :config
   (setq vterm-toggle-fullscreen-p nil))
+;; Dedicated size for vterm
 ;; (add-to-list 'display-buffer-alist
 ;; 			 '((lambda (buffer-or-name _)
 ;; 				 (let ((buffer (get-buffer buffer-or-name)))
@@ -1432,23 +1479,28 @@
 ;; 			   (reusable-frames . visible)
 ;; 			   (window-height . 0.3))))
 
+;; Collection of ridiculously useful extensions
 (use-package crux
   :straight t)
 
+;; File upload to 0x0
 (use-package 0x0
   :straight t
   :commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
 
+;; Show commands being used
 (use-package command-log-mode
   :disabled t
   :diminish command-log-mode)
 
+;; Live Github style markdown previw
 (use-package grip-mode
   :straight t
   :defer 1
   :bind (:map markdown-mode-command-map
 			  ("g" . grip-mode)))
 
+;; Magit - the best git porcelain
 (use-package magit
   :straight t
   :bind (("C-x g" . magit-status))
@@ -1475,6 +1527,7 @@
 ;; (use-package libgit :straight t)
 ;; (use-package magit-libgit :straight t)
 
+;; Autorevert - required by magit
 (use-package autorevert
   :straight t
   :after magit
@@ -1487,18 +1540,20 @@
 		  org-mode
 		  conf-mode) . auto-revert-mode))
 
-;; use dabbrev with Corfu!
+;; Use dabbrev with Corfu!
 (use-package dabbrev
   :straight t
   ;; swap M-/ and C-M-/
   :bind (("M-/" . dabbrev-completion)
 		 ("C-M-/" . dabbrev-expand)))
 
+;; Expand/highlight regions
 (use-package expand-region
   :ensure t
   :bind (("C-=" . er/expand-region)
 		 ("C--" . er/contract-region)))
 
+;; Display keybinds
 (use-package which-key
   :straight t
   :init
@@ -1510,6 +1565,7 @@
 		which-key-min-display-lines 2
 		which-key-max-display-columns 4))
 
+;; Switch windows quickly
 (use-package switch-window
   :straight t
   :config
@@ -1522,7 +1578,7 @@
   :bind
   ([remap other-window] . switch-window))
 
-;; a few more useful configurations...
+;; Completion pre-configuration
 (use-package emacs
   :init
   ;; add prompt indicator to `completing-read-multiple'.
@@ -1552,11 +1608,13 @@
   ;; allow Emacs to resize mini windows
   (setq resize-mini-windows t))
 
+;; GNU tags
 (use-package gtags
   :straight t
   :config
   (setq xref-prompt-for-identifier nil))
 
+;; Corfu completion
 (use-package corfu
   :straight t
   :demand t
@@ -1589,6 +1647,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	  (corfu-mode 1)))
   (add-hook 'minibuffer-setup-hook #'contrib/corfu-enable-always-in-minibuffer 1))
 
+;; Completion at point extensions
 (use-package cape
   :straight t
   ;; :bind (("C-c p p" . completion-at-point)
@@ -1601,7 +1660,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (dolist (backend '( cape-symbol cape-keyword cape-file cape-dabbrev))
 	(add-to-list 'completion-at-point-functions backend)))
 
-;; enable vertico
+;; Vertico minibuffer
 (use-package vertico
   :straight (:files (:defaults "extensions/*"))
   :bind (:map vertico-map
@@ -1620,7 +1679,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :config
   (vertico-mouse-mode))
 
-;; configure directory extension.
+;; Vertico directory extension
 (use-package vertico-directory
   :straight nil
   :load-path "straight/repos/vertico/extensions"
@@ -1631,6 +1690,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 			  ("DEL" . vertico-directory-delete-char)
 			  ("M-DEL" . vertico-directory-delete-word)))
 
+;; Completion style for matching regexps in any order
 (use-package orderless
   :straight t
   :init
@@ -1638,12 +1698,14 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 		completion-category-defaults nil
 		completion-category-overrides '((file (styles basic partial-completion)))))
 
+;; Completion annotations
 (use-package marginalia
   :straight t
   :after vertico
   :init
   (marginalia-mode))
 
+;; Consulting completing-read
 (use-package consult
   :straight t
   :bind
@@ -1702,6 +1764,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; Updating the default to include "--ignore-case"
   (setq consult-ripgrep-command "rg --null --line-buffered --color=ansi --max-columns=1000 --ignore-case --no-heading --line-number . -e ARG OPTS"))
 
+;; Act on minibuffer completions
 (use-package embark
   :straight t
   :bind
@@ -1721,6 +1784,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (embark-collect-mode . consult-preview-at-point-mode)
   (embark-collect-mode . embark-consult-preview-minor-mode))
 
+;; Emark & Consult integrations
 (use-package embark-consult
   :straight t
   :after (embark consult)
@@ -1730,6 +1794,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
+;; Fancy icons
 (use-package all-the-icons
   :straight t
   :config
@@ -1749,12 +1814,14 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (db/all-the-icons--with :name "octicon")
   (db/all-the-icons--with :name "alltheicon"))
 
+;; Fancy icons for completions
 (use-package all-the-icons-completion
   :after (marginalia all-the-icons)
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
   :init
   (all-the-icons-completion-mode))
 
+;; Corfu completion icons
 (use-package kind-icon
   :straight t
   :after corfu
@@ -1768,6 +1835,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
+;; Dictionary
 (use-package dictionary
   :straight t
   :commands (dictionary-search)
@@ -1775,6 +1843,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (global-set-key (kbd "C-c d") #'dictionary-search)
   :config (setq dictionary-server "dict.org"))
 
+;; Search engine
 (use-package engine-mode
   :straight t
   :config
@@ -1813,15 +1882,18 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :init
   (engine-mode t))
 
+;; Deadgrep
 (use-package deadgrep
   :straight t
   :commands deadgrep)
 
+;; Quick jump to any char on screen
 (use-package avy
   :straight t
   :bind
   ("M-s" . avy-goto-char))
 
+;; Deft - search ~/org quickly
 (when (file-directory-p "~/org")
   (use-package deft
 	:straight t
@@ -1833,6 +1905,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	:bind
 	("C-c n d" . deft)))
 
+;; RSS
 (use-package elfeed
   :straight t
   :config
@@ -1847,6 +1920,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 		  ("https://www.phoronix.com/rss.php" phoronix))))
 ;;(define-key evil-normal-state-map (kbd "RET") 'elfeed-search-show-entry))
 
+;; Mailing lists
 (use-package gnus
   :straight t
   :config
@@ -1928,6 +2002,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 		'(gnus-thread-sort-by-most-recent-date
 		  (not gnus-thread-sort-by-number))))
 
+;; Rizon IRC client
 (use-package erc
   :straight t
   :custom
@@ -1967,6 +2042,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (add-to-list 'erc-modules 'notifications)
   (add-to-list 'erc-modules 'spelling))
 
+;; Librea IRC client
 (use-package rcirc
   :defer
   :commands (irc rcirc)
@@ -1985,6 +2061,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (add-hook 'rcirc-mode-hook #'rcirc-omit-mode)
   (rcirc-track-minor-mode 1))
 
+;; Epub reader
 (use-package nov
   :straight t
   :defer nil
@@ -1996,6 +2073,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :mode ("\\.epub\\'" . nov-mode)
   :hook (nov-mode . nov-font-setup))
 
+;; PDF reader
 (use-package pdf-tools
   :straight t
   :defer nil
@@ -2014,44 +2092,58 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
 		 (pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
 
+;; Restore pdf view
 (use-package pdf-view-restore
   :after pdf-tools
   :straight t
   :config
   :hook (pdf-view-mode . pdf-view-restore-mode))
 
+;; Hugo markdown backend for org-export
 (use-package ox-hugo
-  :straight t
+  :disabled t
   :after ox)
 
+;; Academic phrases
 (use-package academic-phrases
+  :defer 4
   :straight t)
 
+;; Polish up writing on the fly
 (use-package writegood-mode
+  :defer 4
   :straight t)
 
+;; Thesaurus lookup
 (use-package synosaurus
   :straight t)
 
+;; Focus writing mode
 (use-package olivetti
   :straight t
   :init
   (setq olivetti-body-width .75))
 
+;; Save place in buffer
 (use-package saveplace
   :straight t
   :defer nil
   :config
   (save-place-mode))
 
+;; Save history
 (use-package savehist
   :straight t
   :init
   (savehist-mode))
 
-(use-package altcaps
-  :straight (:type git :host github :repo "protesilaos/altcaps" :branch "main"))
+;; mEmE pAcKaGe
+;; (use-package altcaps
+;;   :straight (:type git :host github :repo "protesilaos/altcaps" :branch "main"))
 
+;;---------------------------------------------------------------------
+;; LSP
+;;---------------------------------------------------------------------
 (use-package lsp-mode
   :straight t
   :custom
@@ -2157,11 +2249,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; Enable LSP support by default in programming buffers
   (add-hook 'prog-mode-hook #'eglot-ensure))
 
-;; Pop-up auto-completion
-(use-package company
-  :disabled t
-  :hook (prog-mode . company-mode))
-
+;; C/C++/C#
 (use-package ccls
   :straight t
   :hook ((c-mode c++-mode objc-mode cuda-mode) .
@@ -2186,6 +2274,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (use-package csharp-mode
   :disabled t)
 
+;; Go
 (use-package go-mode
   :straight t
   :mode "\\.go\\'"
@@ -2199,6 +2288,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :hook ((go-mode . db/go-mode-hook))
   :hook ((go-mode . subword-mode)))
 
+;; Rust
 (use-package rust-mode
   :straight t
   :mode "\\.rs\\'"
@@ -2213,15 +2303,18 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :config
   (setq rustic-format-on-save nil))
 
+;; Elisp
 (use-package elisp-format
   :straight t)
 
+;; CL
 (use-package slime
   :straight t
   :config
   (setq inferior-lisp-program "/usr/bin/sbcl")
   (setq slime-contribs '(slime-fancy slime-quicklisp)))
 
+;; Scheme
 (use-package geiser
   :straight t
   :config
@@ -2245,22 +2338,28 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (use-package sicp
   :straight t)
 
+;; JSON
 (use-package json-mode
   :straight t
   :mode ("\\.json\\'" . json-mode))
 
+;; CSV
 (use-package csv-mode
   :straight t
   :mode ("\\.csv\\'" . csv-mode))
 
+;; LUA
 (use-package lua-mode
   :straight t
   :config
   (setq lua-indent-level 2))
 
+;; Ruby
 (use-package ruby-mode
+  :defer 4
   :straight t)
 
+;; Python
 (use-package python-mode
   :straight t
   :config
@@ -2280,14 +2379,17 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :straight t
   :after python)
 
-(use-package xah-wolfram-mode
-  :straight (:type git :host github :repo "xahlee/xah-wolfram-mode" :branch "master"))
+;; Wolfram Mathematica
+;; (use-package xah-wolfram-mode
+;;   :straight (:type git :host github :repo "xahlee/xah-wolfram-mode" :branch "master"))
 
+;; Markdown
 (use-package markdown-mode
   :straight t
   :mode "\\.md\\'"
   :hook ((markdown-mode . auto-fill-mode)))
 
+;; JavaScript
 (use-package js2-mode
   :straight t
   :custom
@@ -2304,9 +2406,11 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1))
 
+;; React JS
 (use-package rjsx-mode
   :disabled t)
 
+;; Tree-sitter
 (use-package tree-sitter
   :straight t
   :config
@@ -2320,6 +2424,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :straight t
   :after tree-sitter)
 
+;; TypeScript
 (use-package typescript-mode
   :after tree-sitter
   :straight t
@@ -2367,6 +2472,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (define-key evil-normal-state-map (kbd "M-.") 'tide-jump-to-definition))
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
+;; Prettier formatter
 (use-package prettier-js
   :after (typescript-mode)
   :straight t)
@@ -2377,6 +2483,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;; 							   (enable-minor-mode
 ;; 								'("\\.tsx?\\'" . prettier-js-mode)))))
 
+;; Web mode (HTML)
 (use-package web-mode
   :straight t
   :config
@@ -2411,6 +2518,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 		 ("\\.html\\'" . web-mode))
   :commands web-mode)
 
+;; Java
 (use-package lsp-java
   :disabled t
   :init
@@ -2437,6 +2545,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :config
   (add-hook 'java-mode-hook #'lsp))
 
+;; Debug Adapter Protocol
 (use-package dap-mode
   :disabled t
   ;;:after lsp-mode
@@ -2447,11 +2556,14 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (dap-tooltip-mode 1)
   (tooltip-mode 1))
 
+;; Clojure
 (use-package clojure-mode
+  :defer 3
   :straight t)
 
 (use-package cider
   :straight t
+  :defer 3
   :config
   (setq cider-repl-result-prefix "λ"
 		cider-eval-result-prefix ""
@@ -2648,170 +2760,13 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (defun config/vscode-mode ()
   "Tree & Minimap."
   (interactive)
-  ;;(disable-local-scroll-bar)
-  ;;(tab-bar-enable)
-  ;;(desktop-restore)
-  ;;(config/vscode-theme)
-  ;;(config/spacemacs-light-theme)
   (neotree-toggle-project-dir)
   (other-window 1))
-;;(minimap-mode 1))
-;;(indent-guides-init-faces))
-;;(vs-code-h-i-g))
-;; open git porcelain
-;;(tab-switch "pos")
-;;(other-window 1)
-;;(vterm)
-;;(magit)
-;;(tab-switch "index.tsx"))
 
 (defun config/vscode-kill ()
   "Kill treemacs & minimap."
   (interactive)
-  ;;(disable-all-themes)
-  ;;(light-minimap)
-  ;;(scroll-bar/light)
-  ;;(tab-bar-disable)
-  ;;(doom-modeline-mode -1)
-  ;; (treemacs)
-  ;; (treemacs-kill-buffer)
   (neotree-hide))
-;;(minimap-kill))
-
-(defun config/light-theme ()
-  "Light theme."
-  (interactive)
-  (disable-all-themes)
-  (minimap-light)
-  (init-indent-guide-faces)
-  (scroll-bar/light))
-
-(defun config/dark-theme ()
-  "Dark theme."
-  (interactive)
-  (disable-all-themes)
-  (scroll-bar/black)
-  (minimap-dark)
-  (vs-code-h-i-g)
-  (load-theme 'standard-dark t))
-
-(defun config/modus-theme-operandi ()
-  "Light modus theme."
-  (interactive)
-  (disable-all-themes)
-  (scroll-bar/light)
-  (minimap-light)
-  (init-indent-guide-faces)
-  (load-theme 'modus-operandi t))
-
-(defun config/modus-theme-vivendi ()
-  "Dark modus theme."
-  (interactive)
-  (disable-all-themes)
-  (scroll-bar/dark)
-  (minimap-dark)
-  (load-theme 'modus-vivendi t))
-
-(defun config/toggle-theme ()
-  "Toggle standard theme."
-  (interactive)
-  (if (get 'theme-toggle 'state)
-	  (progn
-		(config/light-theme)
-		(put 'theme-toggle 'state nil))
-	(progn
-	  (config/dark-theme)
-	  (put 'theme-toggle 'state t))))
-
-(defun config/spacemacs-light-theme ()
-  "Spacemacs light theme."
-  (interactive)
-  (disable-all-themes)
-  (light-minimap)
-  (scroll-bar/light)
-  (doom-modeline-mode)
-  (load-theme 'spacemacs-light t))
-
-(defun config/spacemacs-dark-theme ()
-  "Spacemacs dark theme."
-  (interactive)
-  (disable-all-themes)
-  (dark-minimap)
-  (scroll-bar/dark)
-  (doom-modeline-mode)
-  (load-theme 'spacemacs-dark t))
-
-(defun config/vscode-theme ()
-  "VSCode theme."
-  (interactive)
-  (disable-all-themes)
-  (dark-minimap)
-  (scroll-bar/vscode)
-  (doom-modeline-mode)
-  (load-theme 'doom-dark+ t))
-
-(defun config/zenburn-theme ()
-  "Zenburn theme."
-  (interactive)
-  (disable-all-themes)
-  (scroll-bar/zenburn)
-  (load-theme 'zenburn t))
-
-(defun config/dracula-theme ()
-  "Dracula theme."
-  (interactive)
-  (disable-all-themes)
-  ;;(indent-guides-init-faces)
-  (scroll-bar/dracula)
-  (load-theme 'dracula t))
-
-(defun scroll-bar/light ()
-  "Set scroll-bar to light color."
-  (interactive)
-  (custom-set-faces
-   '(scroll-bar
-	 ((t
-	   (:foreground "#7E8182":background "#cecece"))))))
-
-(defun scroll-bar/dark ()
-  "Set scroll-bar to dark color."
-  (interactive)
-  (custom-set-faces
-   '(scroll-bar
-	 ((t
-	   (:foreground "dim gray" :background "gray20"))))))
-
-(defun scroll-bar/zenburn ()
-  "Set scroll-bar to zenburn color."
-  (interactive)
-  (custom-set-faces
-   '(scroll-bar
-	 ((t
-	   (:foreground "gray" :background "gray31"))))))
-
-(defun scroll-bar/black ()
-  "Set scroll-bar to black color."
-  (interactive)
-  (custom-set-faces
-   '(scroll-bar
-	 ((t
-	   (:foreground "dim gray" :background "black"))))))
-
-(defun scroll-bar/dracula ()
-  "Set scroll-bar to dracula color."
-  (interactive)
-  (custom-set-faces
-   '(scroll-bar
-	 ((t
-	   (:foreground "#282A36" :background "#44475A"))))))
-
-(defun scroll-bar/vscode ()
-  "VSCode themed scrollbar."
-  (interactive)
-  (custom-set-faces
-   '(scroll-bar
-	 ((t
-	   (:foreground "gray30" :background "gray15"))))))
 
 (when (file-readable-p "~/bin/auth-backup.sh")
   (defun auth/backup ()
@@ -2824,26 +2779,6 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	"Restore auth."
 	(interactive)
 	(async-shell-command "~/bin/auth-restore.sh")))
-
-;; (when (file-readable-p "~/bin/sync-dotfiles.sh")
-;;   (defun sync/dotfiles ()
-;; 	"Sync dotfiles."
-;; 	(interactive)
-;; 	(async-shell-command "~/bin/sync-dotfiles.sh")))
-
-;; (when (file-readable-p "~/bin/sync-neocities.sh")
-;;   (defun sync/neocities ()
-;; 	"Sync neocities."
-;; 	(interactive)
-;; 	(save-window-excursion
-;; 	  (async-shell-command "~/bin/sync-neocities.sh"))))
-
-;; (when (file-readable-p "~/bin/sync-blog.sh")
-;;   (defun sync/blog ()
-;; 	"Sync blog."
-;; 	(interactive)
-;; 	(save-window-excursion
-;; 	  (async-shell-command "~/bin/sync-blog.sh"))))
 
 (defun sync/irc ()
   "Connect to IRC."
@@ -2919,12 +2854,6 @@ With prefix argument, use FULL-PATH."
   (setq last-command-event 92)
   (org-self-insert-command 1))
 
-(if (eq system-type 'gnu/linux)
-	(defun music ()
-	  "Play music with ncmpcpp."
-	  (interactive)
-	  (run-in-vterm "ncmpcpp")))
-
 (defun emacs-devel ()
   "Read the Emacs-devel mailing list."
   (interactive)
@@ -2939,13 +2868,6 @@ With prefix argument, use FULL-PATH."
   (consult-line)
   (setq last-command-event 13)
   (gnus-browse-select-group nil))
-
-(defun start-to-org-agenda ()
-  "Launch shrink-wrapped 'org-agenda'."
-  (interactive)
-  (org-agenda nil "n")
-  (delete-other-windows)
-  (fit-frame-to-buffer))
 
 ;; https://stackoverflow.com/questions/12014036/emacs-make-frame-switch-buffer
 (defun get-buffer-menu-in-new-frame ()
@@ -3022,35 +2944,8 @@ With prefix argument, use FULL-PATH."
 	(forward-line 1)
 	(yank)))
 
-(defun xah-space-to-newline ()
-  "Replace space sequence to a newline char.
-Works on current block or selection.
-
-URL `http://xahlee.info/emacs/emacs/emacs_space_to_newline.html'
-Version 2017-08-19"
-  (interactive)
-  (let* ( $p1 $p2 )
-	(if (use-region-p)
-		(progn
-		  (setq $p1 (region-beginning))
-		  (setq $p2 (region-end)))
-	  (save-excursion
-		(if (re-search-backward "\n[ \t]*\n" nil "move")
-			(progn (re-search-forward "\n[ \t]*\n")
-				   (setq $p1 (point)))
-		  (setq $p1 (point)))
-		(re-search-forward "\n[ \t]*\n" nil "move")
-		(skip-chars-backward " \t\n" )
-		(setq $p2 (point))))
-	(save-excursion
-	  (save-restriction
-		(narrow-to-region $p1 $p2)
-		(goto-char (point-min))
-		(while (re-search-forward " +" nil t)
-		  (replace-match "\n" ))))))
-
+;; BIONIC reading mode by xahlee
 (defvar infu-bionic-reading-face nil "a face for `infu-bionic-reading-region'.")
-
 (setq infu-bionic-reading-face 'error)
 ;; try
 ;; 'bold
@@ -3095,6 +2990,7 @@ Version 2022-05-21"
 	  (comment-or-uncomment-region (line-beginning-position) (line-end-position))
 	(comment-dwim arg)))
 
+;; Convert camel to snake_case
 (defun camel-to-snake-case (arg)
   "Convert a camelCase word to snake_case.
 
@@ -3133,14 +3029,8 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 	(find-file (expand-file-name (concat (file-name-sans-extension buffer-file-name) ".pdf")))))
 
 ;;---------------------------------------------------------------------
-;; MODULES
+;; MAIL
 ;;---------------------------------------------------------------------
-
-;; Load email module
-;; (when (file-directory-p
-;; 	   (concat user-emacs-directory "/modules"))
-;;   (org-babel-load-file
-;;    (concat user-emacs-directory "/modules/mail.org")))
 
 (defun mu-setup/build-mu-binary ()
   "Compiles 'mu' binary."
@@ -3174,17 +3064,10 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 
 (use-package mu4e
   :straight t
-  ;; :straight ( :host github
-  ;; 			  :repo "djcb/mu"
-  ;; 			  :branch "master"
-  ;; 			  :files ("build/mu4e/*"))
-  ;; :pre-build (("./autogen.sh") ("make")))
   :custom (mu4e-mu-binary "/usr/local/bin/mu")
   :diminish mu4e-headers-mode
   :diminish mu4e-modeline-mode
   :config
-  ;; default
-  ;; (require 'org-mu4e)
   (setq mu4e-maildir (expand-file-name "~/mail"))
 
   ;; set folders
@@ -3209,7 +3092,6 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
   ;; make sure that moving a message (like to Trash) causes the
   ;; message to get a new file name.  This helps to avoid the
   ;; dreaded "UID is N beyond highest assigned" error.
-  ;; See this link for more info: https://stackoverflow.com/a/43461973
   (setq mu4e-change-filenames-when-moving t)
 
   ;; setup some handy shortcuts
@@ -3328,11 +3210,9 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 		smtpmail-smtp-service 587
 		smtpmail-debug-info t))
 
-;; Load jira module
-;; (when (file-directory-p
-;; 	   (concat user-emacs-directory "/modules"))
-;;   (org-babel-load-file
-;;    (concat user-emacs-directory "/modules/jira.org")))
+;;---------------------------------------------------------------------
+;; JIRA
+;;---------------------------------------------------------------------
 
 (use-package ejira
   :straight (:type git :host github :repo "nyyManni/ejira" :branch "master")
@@ -3382,10 +3262,11 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 
 (use-package jira-markup-mode
   :straight t
-  :defer 4)
+  :defer 6)
 
-;; Start server
-;;(server-start)
+;;---------------------------------------------------------------------
+;; END
+;;---------------------------------------------------------------------
 
 ;; Restore original GC values
 (add-hook 'emacs-startup-hook

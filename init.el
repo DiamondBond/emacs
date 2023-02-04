@@ -921,25 +921,25 @@
 ;;---------------------------------------------------------------------
 
 (use-package vs-dark-theme
-  :defer 3
-  :straight t)
+  :straight t
+  :defer 3)
 
 ;; Doom themes
 (use-package doom-themes
-:disable t
+  :disabled t
   :defer 3
-:config
-(load-theme 'doom-dark+ t)
-(custom-set-faces
- '(scroll-bar
+  :config
+  (load-theme 'doom-dark+ t)
+  (custom-set-faces
+   '(scroll-bar
 	 ((t
 	   (:foreground "gray30" :background "gray15"))))))
 
 ;; Doom modeline
 (use-package doom-modeline
-:disable t
-  :init (doom-modeline-mode)
+  :disabled t
   :defer 3
+  :init (doom-modeline-mode)
   :config
   (setq doom-modeline-height 35)
   (setq doom-modeline-buffer-file-name-style 'file-name
@@ -954,23 +954,23 @@
 
 ;; Dracula theme
 (use-package dracula-theme
-  :defer 3
-  :straight t)
+  :disabled t
+  :defer 3)
 
 ;; Zenburn theme
 (use-package zenburn-theme
   :defer 3
-  :straight t
-  :config
-  (load-theme 'zenburn t)
-  (custom-set-faces
-   '(scroll-bar
-	 ((t
-	   (:background "gray31"))))))
+  :straight t)
+;; :config
+;; (load-theme 'zenburn t)
+;; (custom-set-faces
+;;  '(scroll-bar
+;; 	 ((t
+;; 	   (:background "gray31"))))))
 
 ;; Spacemacs theme
 (use-package spacemacs-theme
-  :disable t
+  :disabled t
   :defer 3)
 
 ;; Modus themes (integrated into Emacs28+)
@@ -997,7 +997,7 @@
 
 ;; Enhanced default themes
 (use-package standard-themes
-  :disable t
+  :disabled t
   ;;:straight (:type git :host gitlab :repo "protesilaos/standard-themes" :branch "main")
   ;; :init
   ;; (load-theme 'standard-dark :no-confirm)

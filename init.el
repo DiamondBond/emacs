@@ -98,7 +98,9 @@
 
 ;; Load authinfo
 (if (file-exists-p globals--auth-info)
-	(setq auth-sources globals--auth-sources)
+	(use-package auth-source
+	  :no-require t
+	  :config (setq auth-sources globals--auth-sources))
   (setq auth-source-cache-expiry nil))
 
 ;; Ask for encryption password once
@@ -292,6 +294,7 @@
 (setq window-resize-pixelwise t)
 (setq frame-resize-pixelwise t)
 
+;; Inhibit startup screen
 (setq inhibit-startup-message t)
 (setq initial-scratch-message "")
 
@@ -300,11 +303,11 @@
 
 ;; Menu-bar
 (if (fboundp 'menu-bar-mode)
-	(menu-bar-mode 0))
+	(menu-bar-mode 1))
 
 ;; Tool-bar
 (if (fboundp 'tool-bar-mode)
-	(tool-bar-mode 0))
+	(tool-bar-mode 1))
 ;;(setq tool-bar-style 'image)
 
 ;; Scroll-bar
@@ -358,8 +361,8 @@
 ;; (setq tab-bar-new-button-show nil)
 
 ;; Enable tab bar when using emacsclient
-(use-package emacs
-  :hook (server-after-make-frame . tab-bar-enable))
+;; (use-package emacs
+;;   :hook (server-after-make-frame . tab-bar-enable))
 
 ;; Time in tab-bar
 ;; (display-time-mode 1)
@@ -1059,7 +1062,7 @@
   ;; (setq dashboard-startup-banner (join-path home-banners-dir "text-banner.txt"))
   (setq dashboard-center-content t)
   (setq dashboard-show-shortcuts nil)
-  (setq dashboard-set-init-info nil)
+  (setq dashboard-set-init-info t)
   (setq dashboard-set-footer nil)
   (setq dashboard-set-navigator t)
 
@@ -2064,7 +2067,6 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;; Epub reader
 (use-package nov
   :straight t
-  :defer nil
   :config
   (defun nov-font-setup ()
 	(face-remap-add-relative 'variable-pitch :family "Liberation Serif"
@@ -2076,7 +2078,6 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;; PDF reader
 (use-package pdf-tools
   :straight t
-  :defer nil
   :commands (pdf-view-mode pdf-tools-install)
   :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
   :load-path "site-lisp/pdf-tools/lisp"
@@ -2272,7 +2273,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	(goto-line saved-line-number)))
 
 (use-package csharp-mode
-  :disabled t)
+  :disabled t
+  :defer 5)
 
 ;; Go
 (use-package go-mode
@@ -2296,7 +2298,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 (use-package cargo
   :straight t
-  :defer t)
+  :defer 3)
 
 (use-package rustic
   :disabled t
@@ -2606,10 +2608,10 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (interactive)
   (if (get 'tab-bar-toggle 'state)
 	  (progn
-		(tab-bar-enable)
+		(tab-bar-disable)
 		(put 'tab-bar-toggle 'state nil))
 	(progn
-	  (tab-bar-disable)
+	  (tab-bar-enable)
 	  (put 'tab-bar-toggle 'state t))))
 
 (defun erc-start ()
@@ -3199,7 +3201,7 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 (use-package smtpmail
   :straight t
   :config
-  (setq message-send-mail-function 'smtpmail-send-it
+  (setq message-send-mail-function 'async-smtpmail-send-it
 		starttls-use-gnutls t
 		smtpmail-starttls-credentials
 		'(("smtp.gmail.com" 587 nil nil))

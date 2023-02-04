@@ -522,9 +522,9 @@
 ;; functions
 (define-key z-map (kbd "M") 'mu4e)
 (define-key z-map (kbd "D") 'dashboard-refresh-buffer)
+;;(define-key z-map (kbd "D") 'scratch-buffer)
 (define-key z-map (kbd "L") 'minimap/refresh)
 (define-key z-map (kbd "*") 'quick-calc)
-(define-key z-map (kbd "D") 'scratch-buffer)
 (define-key z-map (kbd "O") 'org-redisplay-inline-images)
 (define-key z-map (kbd "G") 'org-mark-ring-goto)
 (define-key z-map (kbd "H") 'global-hl-line-mode)
@@ -2805,6 +2805,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (disable-all-themes)
   ;; configure frame
   (light-minimap)
+  (setq dashboard-startup-banner 'official)
   ;; load theme
   ;; (load-theme nil)
   (indent-guides-init-faces)
@@ -2817,6 +2818,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (disable-all-themes)
   ;; configure frame
   (dark-minimap)
+  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
   ;; load theme
   (load-theme 'vscode-dark-plus t)
   (indent-guides-dark-faces)

@@ -62,18 +62,17 @@
 ;; Configure straight.el
 (use-package straight
   :custom
-  (straight-check-for-modifications '(check-on-save find-when-checking))
   (straight-use-package-by-default t)
   (straight-vc-git-default-clone-depth 1)
   (straight-recipes-gnu-elpa-use-mirror t)
-  (straight-check-for-modifications nil))
+  (straight-check-for-modifications '(check-on-save find-when-checking)))
+;;(straight-check-for-modifications nil))
 
 ;;---------------------------------------------------------------------
 ;; GLOBALS
 ;;---------------------------------------------------------------------
 
 (setq
- globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
  globals--font         "Menlo 11"                           ; Font
  globals--name         "Diamond Bond"                       ; Name
  globals--email        "diamondbond1@gmail.com"             ; Email
@@ -82,8 +81,10 @@
  globals--auth-info    "~/.authinfo.gpg"                    ; Auth Info
  globals--auth-sources '("~/.authinfo.gpg")                 ; Auth Sources
  globals--browser      'browse-url-firefox                  ; Browser
+ globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
  )
 
+;; apply globals
 (setq user-full-name globals--name
 	  user-mail-address globals--email
 	  erc-nick globals--erc
@@ -123,7 +124,6 @@
 
 ;; Disable warnings
 (setq warning-suppress-types '((comp)))
-
 (setq ad-redefinition-action 'accept)
 
 ;; Disable auto-window-vscroll
@@ -150,11 +150,10 @@
 (when (file-directory-p "~/org")
   (if (file-exists-p "~/org/bookmarks")
 	  (setq bookmark-default-file "~/org/bookmarks")))
-
-(setq bookmark-save-flag 1)
-(setq bookmark-save-flag t)
-
+;; Hide bookmark marker in fringe
 (setq bookmark-set-fringe-mark nil)
+;; Save bookmarks everytime they are modified
+(setq bookmark-save-flag 1)
 
 ;; Load any custom themes
 (when (file-exists-p (expand-file-name "themes/" user-emacs-directory))
@@ -167,10 +166,12 @@
 ;; Kill buffer settings
 (setq confirm-kill-emacs nil)
 (setq confirm-kill-processes nil)
-(add-hook 'kill-buffer-query-functions
-		  (lambda () (not-modified) t))
+;; Prevent 'Buffer <name> modified; kill anyway?'
+;; (add-hook 'kill-buffer-query-functions
+;; 		  (lambda () (not-modified) t))
+;; Not recommended - potentially causes slowdowns.
 
-;; Backup settings
+;; Disable backups
 (setq-default backup-inhibited t)
 (setq make-backup-files nil)
 (setq auto-save-default nil)
@@ -181,7 +182,7 @@
 (add-hook 'before-save-hook
 		  'delete-trailing-whitespace)
 
-;; Locale/Lang settings
+;; UTF-8 rules
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
 (setq locale-coding-system 'utf-8)
@@ -190,13 +191,12 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
-;; Default dirs
+;; Set default dirs
 (setq default-directory "~/")
 (setq command-line-default-directory "~/")
 
 ;; Environment settings
 (setenv "PAGER" "cat")
-
 (setenv "GPG_AGENT_INFO" nil)
 
 ;; Disable bell
@@ -307,7 +307,7 @@
 
 ;; Tool-bar
 (if (fboundp 'tool-bar-mode)
-	(tool-bar-mode 1))
+	(tool-bar-mode 0))
 ;;(setq tool-bar-style 'image)
 
 ;; Scroll-bar
@@ -498,13 +498,16 @@
 (define-key z-map (kbd "a") 'org-agenda)
 (define-key z-map (kbd "f") 'find-file-other-frame)
 (define-key z-map (kbd "g") 'golden-ratio)
-(define-key z-map (kbd "2") 'make-frame-command)
-(define-key z-map (kbd "1") 'config/vscode-mode)
-(define-key z-map (kbd "0") 'config/vscode-kill)
 (define-key z-map (kbd "o") 'olivetti-mode)
 (define-key z-map (kbd "r") 'recentf-delete-list)
 (define-key z-map (kbd "m") 'magit-status)
 (define-key z-map (kbd "w") 'eww)
+(define-key z-map (kbd "k") 'tab-bar-toggle)
+(define-key z-map (kbd "l") 'minimap/toggle)
+(define-key z-map (kbd "h") 'neotree/toggle)
+(define-key z-map (kbd "0") 'config/vscode-kill)
+(define-key z-map (kbd "1") 'config/vscode-mode)
+(define-key z-map (kbd "2") 'make-frame-command)
 
 ;; os-specific
 (if (eq system-type 'gnu/linux)
@@ -517,6 +520,9 @@
 (define-key z-map (kbd "T") 'display-time-mode)
 
 ;; functions
+(define-key z-map (kbd "M") 'mu4e)
+(define-key z-map (kbd "D") 'dashboard-refresh-buffer)
+(define-key z-map (kbd "L") 'minimap/refresh)
 (define-key z-map (kbd "*") 'quick-calc)
 (define-key z-map (kbd "D") 'scratch-buffer)
 (define-key z-map (kbd "O") 'org-redisplay-inline-images)
@@ -560,8 +566,7 @@
 (global-set-key (kbd "<f7>") 'scroll-bar-mode)
 (global-set-key (kbd "<f8>") 'tool-bar-mode)
 (global-set-key (kbd "<f10>") 'compile)
-(global-set-key (kbd "s-<f5>") 'config/toggle-theme)
-(global-set-key (kbd "S-<f5>") 'neotree-toggle-project-dir)
+(global-set-key (kbd "S-<f5>") 'config/toggle-theme)
 ;; (global-set-key (kbd "S-<f5>") 'open-treemacs)
 (global-set-key (kbd "S-<f7>") 'local-scroll-bar-toggle)
 (global-set-key (kbd "S-<f8>") 'other-frame)
@@ -927,22 +932,20 @@
   :straight t
   :defer 3)
 
+(use-package vscode-dark-plus-theme
+  :straight t
+  :defer 3)
+
 ;; Doom themes
 (use-package doom-themes
-  :disabled t
-  :defer 3
-  :config
-  (load-theme 'doom-dark+ t)
-  (custom-set-faces
-   '(scroll-bar
-	 ((t
-	   (:foreground "gray30" :background "gray15"))))))
+  :straight t
+  :defer 3)
 
 ;; Doom modeline
 (use-package doom-modeline
-  :disabled t
+  :straight t
   :defer 3
-  :init (doom-modeline-mode)
+  ;;:init (doom-modeline-mode)
   :config
   (setq doom-modeline-height 35)
   (setq doom-modeline-buffer-file-name-style 'file-name
@@ -964,12 +967,6 @@
 (use-package zenburn-theme
   :defer 3
   :straight t)
-;; :config
-;; (load-theme 'zenburn t)
-;; (custom-set-faces
-;;  '(scroll-bar
-;; 	 ((t
-;; 	   (:background "gray31"))))))
 
 ;; Spacemacs theme
 (use-package spacemacs-theme
@@ -1097,7 +1094,6 @@
 			  'default)))))
 
   (setq tab-bar-new-tab-choice "*dashboard*")
-  (define-key z-map (kbd "D") 'dashboard-refresh-buffer)
 
   ;; setup dashboard
   (dashboard-setup-startup-hook))
@@ -1227,7 +1223,7 @@
 	(set-face-background 'highlight-indent-guides-odd-face "gray30")
 	(set-face-background 'highlight-indent-guides-even-face "gray30")
 	(set-face-foreground 'highlight-indent-guides-character-face "gray30"))
-  (defun vs-code-h-i-g ()
+  (defun indent-guides-dark-faces ()
 	"Set VSCode themed indent-guides faces"
 	(interactive)
 	(set-face-background 'highlight-indent-guides-odd-face "#404040")
@@ -1237,7 +1233,7 @@
 
 ;; Sublime-like minimap
 (use-package minimap
-  :disabled t
+  :straight t
   :diminish minimap-mode
   :preface
   (defun dark-minimap ()
@@ -1260,12 +1256,33 @@
 	   "Face for the active region in the minimap.
   By default, this is only a different background color."
 	   :group 'minimap)))
+  (defun minimap/enable ()
+	"Enable minimap."
+	(interactive)
+	(minimap-mode t)
+	(put 'minimap-toggle 'state t))
+  (defun minimap/disable ()
+	"Disable minimap."
+	(interactive)
+	(minimap-kill)
+	(put 'minimap-toggle 'state nil))
+  (defun minimap/toggle ()
+	"Toggle minimap."
+	(interactive)
+	(if (get 'minimap-toggle 'state)
+		(minimap/disable)
+	  (minimap/enable)))
+  (defun minimap/refresh ()
+	"Refresh minimap."
+	(interactive)
+	(minimap/disable)
+	(minimap/enable))
   :config
   (setq minimap-window-location 'right)
   (setq minimap-width-fraction 0.05)
   (setq minimap-minimum-width 15)
   (setq minimap-hide-fringes t)
-  (setq minimap-major-modes '(typescript-mode))
+  (setq minimap-major-modes '(typescript-mode typescriptreact-mode))
   ;;(setq minimap-update-delay 0)
   (light-minimap))
 
@@ -1429,6 +1446,23 @@
 	(let ((curr-name (buffer-file-name)))
 	  (neotree-toggle)
 	  (neotree-show-file curr-name)))
+  (defun neotree/show ()
+	"Show neotree."
+	(interactive)
+	(neotree-toggle-project-dir)
+	(put 'neotree-toggle 'state t)
+	(other-window 1))
+  (defun neotree/hide ()
+	"Hide neotree."
+	(interactive)
+	(neotree-hide)
+	(put 'neotree-toggle 'state nil))
+  (defun neotree/toggle ()
+	"Toggle neotree."
+	(interactive)
+	(if (get 'neotree-toggle 'state)
+		(neotree/hide)
+	  (neotree/show)))
   :custom
   ;;(neo-theme (if (display-graphic-p) 'icons 'arrow))
   (neo-theme 'icons)
@@ -1493,7 +1527,8 @@
 
 ;; Show commands being used
 (use-package command-log-mode
-  :disabled t
+  :straight t
+  :defer 5
   :diminish command-log-mode)
 
 ;; Live Github style markdown previw
@@ -2597,23 +2632,21 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   "Enable tab-bar with history."
   (interactive)
   (tab-bar-mode 1)
-  (tab-bar-history-mode 1))
+  (tab-bar-history-mode 1)
+  (put 'tab-bar-toggle 'state t))
 
 (defun tab-bar-disable ()
   "Disable tab-bar."
   (interactive)
-  (tab-bar-mode -1))
+  (tab-bar-mode -1)
+  (put 'tab-bar-toggle 'state nil))
 
 (defun tab-bar-toggle ()
   "Toggle tab-bar."
   (interactive)
   (if (get 'tab-bar-toggle 'state)
-	  (progn
-		(tab-bar-disable)
-		(put 'tab-bar-toggle 'state nil))
-	(progn
-	  (tab-bar-enable)
-	  (put 'tab-bar-toggle 'state t))))
+	  (tab-bar-disable)
+	(tab-bar-enable)))
 
 (defun erc-start ()
   "Start ERC and connect to Rizon."
@@ -2735,16 +2768,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (desktop-read "~/Desktop"))
 
 (if (eq system-type 'gnu/linux)
-	(defun config/tangle ()
-	  "Tangles this Emacs configuration."
-	  (interactive)
-	  (shell-command "~/.emacs.d/bin/tangle.sh")))
-
-(if (eq system-type 'gnu/linux)
 	(defun config/reload ()
 	  "Reload this Emacs configuration."
 	  (interactive)
-	  (config/tangle)
 	  (load-file (concat user-emacs-directory "init.el"))))
 
 (when (file-directory-p "~/.emacs.d")
@@ -2760,17 +2786,6 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (interactive)
   (browse-url "https://github.com/diamondbond/emacs"))
 
-(defun config/vscode-mode ()
-  "Tree & Minimap."
-  (interactive)
-  (neotree-toggle-project-dir)
-  (other-window 1))
-
-(defun config/vscode-kill ()
-  "Kill treemacs & minimap."
-  (interactive)
-  (neotree-hide))
-
 (when (file-readable-p "~/bin/auth-backup.sh")
   (defun auth/backup ()
 	"Backup auth."
@@ -2782,6 +2797,67 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	"Restore auth."
 	(interactive)
 	(async-shell-command "~/bin/auth-restore.sh")))
+
+(defun config/light-theme ()
+  "Light theme."
+  (interactive)
+  ;; disable all themes
+  (disable-all-themes)
+  ;; configure frame
+  (light-minimap)
+  ;; load theme
+  ;; (load-theme nil)
+  (indent-guides-init-faces)
+  (put 'theme-toggle 'state nil))
+
+(defun config/dark-theme ()
+  "Dark theme."
+  (interactive)
+  ;; disable all themes
+  (disable-all-themes)
+  ;; configure frame
+  (dark-minimap)
+  ;; load theme
+  (load-theme 'vscode-dark-plus t)
+  (indent-guides-dark-faces)
+  (put 'theme-toggle 'state t))
+
+(defun config/toggle-theme ()
+  "Toggle theme."
+  (interactive)
+  (if (get 'theme-toggle 'state)
+	  (progn
+		(config/light-theme)
+		(put 'theme-toggle 'state nil))
+	(progn
+	  (config/dark-theme)
+	  (put 'theme-toggle 'state t))))
+
+(defvar vscode-mode-first-run t)
+(defun config/vscode-mode ()
+  "Emulate vscode."
+  (interactive)
+  (when vscode-mode-first-run
+	(setq vscode-mode-first-run nil)
+	(when (yes-or-no-p "Load VSCode theme?")
+	  (progn
+		(config/dark-theme))))
+  (fringe-mode 0)
+  (scroll-bar-mode 0)
+  (menu-bar-mode 0)
+  (tab-bar-enable)
+  (neotree/show)
+  (minimap/enable))
+
+(defun config/vscode-kill ()
+  "Kill vscode emulation."
+  (interactive)
+  (fringe-mode nil)
+  (scroll-bar-mode 1)
+  (menu-bar-mode 1)
+  (tab-bar-disable)
+  (neotree/hide)
+  (minimap/disable))
 
 (defun sync/irc ()
   "Connect to IRC."
@@ -3148,9 +3224,6 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
   ;; don't ask to quit
   (setq mu4e-confirm-quit nil)
 
-  ;; define z-map keybind
-  (define-key z-map (kbd "M") 'mu4e)
-
   ;; disable mu4e-modeline
   ;;(mu4e-modeline-mode -1)
 
@@ -3276,5 +3349,8 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 		  (lambda ()
 			(setq gc-cons-threshold gc-cons-threshold-original)
 			(setq gc-cons-percentage gc-cons-percentage-original)))
+
+;; Unless running as daemon
+;; (server-start)
 
 ;;; init.el ends here

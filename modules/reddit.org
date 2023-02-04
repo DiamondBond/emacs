@@ -27,7 +27,6 @@ Enable lexical binding.
 #+end_src
 
 * =md4rd=
-
 ** Description
 URL: https://github.com/ahungry/md4rd
 
@@ -40,7 +39,9 @@ Reddit client within Emacs with oauth2 support.
 	:config
 	;; set subreddits
 	(setq md4rd-subs-active '(emacs linux lisp+Common_Lisp prolog clojure))
-	(load-if-exists "~/.emacs.d/secrets.el.gpg"))
+	(load-if-exists "~/.emacs.d/secrets.el.gpg")
+	;;(add-hook 'md4rd-mode-hook 'visual-line-mode)
+	)
 #+end_src
 
 * Footer

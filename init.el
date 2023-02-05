@@ -1062,9 +1062,9 @@
   ;; (setq dashboard-startup-banner (join-path home-banners-dir "text-banner.txt"))
   (setq dashboard-center-content t)
   ;; (setq dashboard-show-shortcuts nil)
-  ;; (setq dashboard-set-init-info t)
-  (setq dashboard-set-footer nil)
-  (setq dashboard-set-navigator t)
+  ;; (setq dashboard-set-init-info nil) ;; hide init info
+  (setq dashboard-set-footer nil) ;; hide footer
+  (setq dashboard-set-navigator t) ;; show nav
 
   ;; set dashboard navigator buttons
   (when (file-directory-p "~/org")
@@ -1302,7 +1302,9 @@
   ;;(setq projectile-project-search-path '("~/src" . 1)))
   :config
   (global-set-key (kbd "C-c p p") 'projectile-switch-project)
+  (global-set-key (kbd "C-c p b") 'consult-project-buffer)
   (global-set-key (kbd "C-c p s") 'projectile-ag)
+  (global-set-key (kbd "C-c p !") 'projectile-run-shell-command-in-root)
   (projectile-mode +1))
 
 ;; Rip-grep
@@ -2823,7 +2825,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (dark-minimap)
   (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
   ;; load theme
-  (load-theme 'vscode-dark-plus t)
+  ;;(load-theme 'vscode-dark-plus t)
+  (load-theme 'modus-vivendi t)
   (indent-guides-dark-faces)
   (put 'theme-toggle 'state t))
 
@@ -3344,6 +3347,29 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 (use-package jira-markup-mode
   :straight t
   :defer 6)
+
+;;---------------------------------------------------------------------
+;; CGPT
+;;---------------------------------------------------------------------
+
+(use-package chatgpt
+  :straight (:host github :repo "joshcho/ChatGPT.el" :files ("dist" "*.el"))
+  :init
+  (require 'python)
+  (setq chatgpt-repo-path "~/.emacs.d/straight/repos/ChatGPT.el/")
+  :config
+  (setq chatgpt-query-format-string-map '(
+										  ;; ChatGPT.el defaults
+										  ("nil" . "%s")
+										  ("doc" . "Please write the documentation for the following function.\n\n%s")
+										  ("bug" . "There is a bug in the following function, please help me fix it.\n\n%s")
+										  ("understand" . "What does the following function do?\n\n%s")
+										  ("improve" . "Please improve the following code.\n\n%s")))
+  (defun chatgpt-session-expired ()
+	"Fix expired login."
+	(interactive)
+	(async-shell-command "pkill ms-playwright/firefox && chatgpt install"))
+  :bind ("C-c q" . chatgpt-query))
 
 ;;---------------------------------------------------------------------
 ;; END

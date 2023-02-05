@@ -58,6 +58,12 @@ Some useful python packages:
 #+begin_src sh
   pip3 install pyflakes isort nose pytest pygifsicle nose2 httpserver future pandas numpy matplotlib python-rofi jupyter grip git-lines-graph black epc orjson sexpdata six
   pip install 'python-lsp-server[all]'
+
+  # for chatgpt.el
+  pip install epc rich playwright
+  pip install git+https://github.com/mmabrouk/chatgpt-wrapper
+  playwright install
+  chatgpt install
 #+end_src
 
 ** NodeJS

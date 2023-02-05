@@ -856,7 +856,18 @@
   (evil-collection-define-key 'normal 'dired-mode-map
 	(kbd "RET") 'dired-find-alternate-file)
   (evil-collection-define-key 'normal 'dired-mode-map
-	(kbd "S-<return>") 'dired-open-file))
+	(kbd "S-<return>") 'dired-open-file)
+  (evil-collection-define-key 'normal 'elfeed-search-mode-map
+	(kbd "RET") 'elfeed-search-show-entry)
+  (evil-collection-define-key 'normal 'elfeed-show-mode-map
+	(kbd "S-<return>") 'elfeed-show-visit
+	(kbd "SPC") 'scroll-up-command
+	(kbd "S-SPC") 'scroll-down-command
+	(kbd "C-j") 'elfeed-show-next
+	(kbd "C-k") 'elfeed-show-prev
+	"go" 'elfeed-show-visit
+	"gr" 'elfeed-show-refresh
+	"q" 'elfeed-kill-buffer))
 
 ;; Smart parentheses
 (use-package smartparens
@@ -1051,7 +1062,7 @@
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (setq dashboard-items '((projects . 5)
 						  (recents  . 5)
-						  (bookmarks . 5)
+						  (bookmarks . 3)
 						  (agenda . 5)))
   (setq dashboard-banner-logo-title nil)
   (setq dashboard-startup-banner 'official)
@@ -2262,6 +2273,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :hook (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred)))
   :init (setq lsp-pyright-python-executable-cmd "python3"))
 
+;; (straight-use-package
+;;  '(lsp-tailwindcss :type git :host github :repo "merrickluo/lsp-tailwindcss"))
+
 ;; (use-package yasnippet
 ;;   :straight t
 ;;   :diminish yas-minor-mode
@@ -2809,6 +2823,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; disable all themes
   (disable-all-themes)
   ;; configure frame
+  (fringe-mode nil)
   (light-minimap)
   (setq dashboard-startup-banner 'official)
   ;; load theme
@@ -2822,11 +2837,12 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; disable all themes
   (disable-all-themes)
   ;; configure frame
+  (fringe-mode 0)
   (dark-minimap)
   (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
   ;; load theme
-  ;;(load-theme 'vscode-dark-plus t)
-  (load-theme 'modus-vivendi t)
+  (load-theme 'vscode-dark-plus t)
+  ;;(load-theme 'modus-vivendi t)
   (indent-guides-dark-faces)
   (put 'theme-toggle 'state t))
 
@@ -2850,7 +2866,6 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	(when (yes-or-no-p "Load VSCode theme?")
 	  (progn
 		(config/dark-theme))))
-  (fringe-mode 0)
   (scroll-bar-mode 0)
   (menu-bar-mode 0)
   (tab-bar-enable)
@@ -2860,7 +2875,6 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (defun config/vscode-kill ()
   "Kill vscode emulation."
   (interactive)
-  (fringe-mode nil)
   (scroll-bar-mode 1)
   (menu-bar-mode 1)
   (tab-bar-disable)

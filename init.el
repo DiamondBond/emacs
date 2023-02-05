@@ -3368,7 +3368,8 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
   (defun chatgpt-session-expired ()
 	"Fix expired login."
 	(interactive)
-	(async-shell-command "pkill ms-playwright/firefox && chatgpt install"))
+	(async-shell-command "pkill ms-playwright/firefox")
+	(run-in-vterm "chatgpt install"))
   :bind ("C-c q" . chatgpt-query))
 
 ;;---------------------------------------------------------------------

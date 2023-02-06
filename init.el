@@ -935,6 +935,11 @@
 	(save-excursion (goto-char (point-max)) (insert msg))
 	(message "Compilation %s: %s" (string-trim-right why) msg)))
 
+(use-package emojify
+  :straight t
+  :config
+  (setq emojify-emoji-styles '(unicode)))
+
 ;;---------------------------------------------------------------------
 ;; THEMES
 ;;---------------------------------------------------------------------
@@ -1060,7 +1065,7 @@
   ;;	(nth index gifs)))
   :config
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
-  (setq dashboard-items '((projects . 5)
+  (setq dashboard-items '((projects . 3)
 						  (recents  . 5)
 						  (bookmarks . 3)
 						  (agenda . 5)))
@@ -2159,7 +2164,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 ;; Academic phrases
 (use-package academic-phrases
-  :defer 4
+  :defer 5
   :straight t)
 
 ;; Polish up writing on the fly

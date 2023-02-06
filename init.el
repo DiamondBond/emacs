@@ -935,8 +935,15 @@
 	(save-excursion (goto-char (point-max)) (insert msg))
 	(message "Compilation %s: %s" (string-trim-right why) msg)))
 
+;; Docsets
+(use-package dash-docs
+  :straight t
+  :defer 5)
+
+;; Unicode emoji
 (use-package emojify
   :straight t
+  :defer 6
   :config
   (setq emojify-emoji-styles '(unicode)))
 

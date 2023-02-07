@@ -1072,8 +1072,8 @@
   ;;	(nth index gifs)))
   :config
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
-  (setq dashboard-items '((projects . 3)
-						  (recents  . 5)
+  (setq dashboard-items '((recents  . 5)
+						  (projects . 3)
 						  (bookmarks . 3)
 						  (agenda . 5)))
   (setq dashboard-banner-logo-title nil)

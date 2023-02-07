@@ -76,7 +76,7 @@
 (advice-add #'x-apply-session-resources :override #'ignore)
 
 ;; Update Emacs ui more frequently
-(setq idle-update-delay 0.1)
+;; (setq idle-update-delay 0.25)
 
 ;; Disable bidirectional text scanning for a modest performance boost. I've set
 ;; this to `nil' in the past, but the `bidi-display-reordering's docs say that

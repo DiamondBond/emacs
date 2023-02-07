@@ -2473,7 +2473,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (interactive)
   (tide-setup)
   (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (setq flycheck-check-syntax-automatically '(save))
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1))
 

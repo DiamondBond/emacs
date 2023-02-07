@@ -336,9 +336,19 @@
 		(window-list))
   (set-window-scroll-bars (selected-window) 14 'right))
 
+(defun kill-scroll-bars ()
+  (interactive)
+  (mapc (lambda (win)
+		  (set-window-scroll-bars win nil))
+		(window-list))
+  (set-window-scroll-bars (selected-window) 0 'right))
+
 (defun enable-local-scroll-bar ()
   "Enable local buffer scroll bar."
   (interactive)
+  (put 'lscroll-bar-toggle 'state nil)
+  (redisplay t)
+  (force-window-update nil)
   (update-scroll-bars)
   (add-hook 'window-configuration-change-hook 'update-scroll-bars)
   (add-hook 'buffer-list-update-hook 'update-scroll-bars))
@@ -346,6 +356,10 @@
 (defun disable-local-scroll-bar ()
   "Disable local buffer scroll bar."
   (interactive)
+  (put 'lscroll-bar-toggle 'state t)
+  (redisplay t)
+  (force-window-update nil)
+  (kill-scroll-bars)
   (remove-hook 'window-configuration-change-hook 'update-scroll-bars)
   (remove-hook 'buffer-list-update-hook 'update-scroll-bars))
 
@@ -353,15 +367,8 @@
   "Toggle local buffer scroll bar."
   (interactive)
   (if (get 'lscroll-bar-toggle 'state)
-	  (progn
-		(disable-local-scroll-bar)
-		(put 'lscroll-bar-toggle 'state nil))
-	(progn
 	  (enable-local-scroll-bar)
-	  (put 'lscroll-bar-toggle 'state t))))
-
-;; enable local-scroll-bar
-(enable-local-scroll-bar)
+	(disable-local-scroll-bar)))
 
 ;; Tab-bar
 ;; (tab-bar-mode 1)
@@ -374,7 +381,8 @@
 
 ;; Enable tab bar when using emacsclient
 (use-package emacs
-  :hook (server-after-make-frame . tab-bar-enable))
+  :hook (server-after-make-frame . tab-bar-enable)
+  :hook (server-after-make-frame . enable-local-scroll-bar))
 
 ;; Time in tab-bar
 ;; (display-time-mode 1)
@@ -384,7 +392,7 @@
 ;; 	  tab-bar-mode t)
 
 ;; Configure fringe
-(fringe-mode nil)
+(fringe-mode 0) ;; default=nil
 (setq-default fringes-outside-margins nil)
 (setq-default indicate-buffer-boundaries nil)
 (setq-default indicate-empty-lines nil)
@@ -409,11 +417,23 @@
   (add-to-list 'default-frame-alist '(reverse . t)))
 ;;(reverse-video-mode)
 
-;; ;; reverse scroll-bar color
-(custom-set-faces
- '(scroll-bar
-   ((t
-	 (:foreground "#2f3133" :background "#1e1e1e")))))
+;; normal scroll-bar
+(defun light-sb ()
+  "Default scroll-bar."
+  (interactive)
+  (custom-set-faces
+   '(scroll-bar
+	 ((t
+	   (:foreground nil :background nil))))))
+
+;; dark scroll-bar
+(defun dark-sb ()
+  "Dark styled scroll-bar."
+  (interactive)
+  (custom-set-faces
+   '(scroll-bar
+	 ((t
+	   (:foreground "#2f3133" :background "#1e1e1e"))))))
 
 ;; Configure some modes
 (column-number-mode 1)
@@ -841,8 +861,8 @@
   ;; (setq evil-undo-system "undo-redo")
   (define-key evil-normal-state-map (kbd "U") 'undo-redo)
 
-;; horizontal movement crosses lines
-(setq-default evil-cross-lines t)
+  ;; horizontal movement crosses lines
+  (setq-default evil-cross-lines t)
 
   ;; set evil state on a per mode basis
   ;; insert
@@ -1194,7 +1214,6 @@
   ;; diminish as mode is already loaded
   (diminish 'auto-revert-mode "")
   (diminish 'abbrev-mode "")
-  (diminish 'subword-mode)
   (diminish 'visual-line-mode)
   (diminish 'outline-mode)
   (diminish 'gcmh-mode)
@@ -1208,6 +1227,7 @@
   (eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
   (eval-after-load "outline" '(diminish 'outline-minor-mode))
   (eval-after-load "projectile" '(diminish 'projectile-mode))
+  (eval-after-load "typescript-mode" '(diminish 'subword-mode))
   (eval-after-load "dired" '(diminish 'dired-async-mode))
   (eval-after-load "dired" '(diminish 'dired-hide-dotfiles-mode))
   (eval-after-load "dired" '(diminish 'all-the-icons-dired-mode))
@@ -1216,8 +1236,8 @@
   (eval-after-load "slime" '(diminish 'slime-autodoc-mode ""))
   (eval-after-load "olivetti" '(diminish 'olivetti-mode ""))
   (eval-after-load "evil" '(diminish 'evil-collection-unimpaired-mode ""))
-  (eval-after-load "mu4e" '(diminish 'overwrite-mode))
-  (eval-after-load "mu4e" '(diminish 'mu4e-modeline-mode))
+  (eval-after-load "mu4e" '(diminish 'overwrite-mode ""))
+  (eval-after-load "mu4e" '(diminish 'mu4e-modeline-mode ""))
   (eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode "")))
 
 ;; Golden ratio for windows
@@ -2496,9 +2516,11 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
+  (subword-mode 1)
   (flycheck-mode +1)
   (setq flycheck-check-syntax-automatically '(save))
   (eldoc-mode +1)
+  (diminish 'subword-mode "")
   (tide-hl-identifier-mode +1))
 
 ;; React JS
@@ -2859,10 +2881,10 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (disable-all-themes)
   ;; configure frame
   (fringe-mode nil)
+  (light-sb)
   (light-minimap)
   (kind-icon-reset-cache)
   (setq dashboard-startup-banner 'official)
-  ;; load theme
   ;; (load-theme nil)
   (indent-guides-init-faces)
   (put 'theme-toggle 'state nil))
@@ -2874,10 +2896,10 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (disable-all-themes)
   ;; configure frame
   (fringe-mode 0)
+  (dark-sb)
   (dark-minimap)
   (kind-icon-reset-cache)
   (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
-  ;; load theme
   (load-theme 'vscode-dark-plus t)
   ;;(load-theme 'modus-vivendi t)
   (indent-guides-dark-faces)

@@ -312,7 +312,7 @@
 
 ;; Menu-bar
 (if (fboundp 'menu-bar-mode)
-	(menu-bar-mode 1))
+	(menu-bar-mode 0))
 
 ;; Tool-bar
 (if (fboundp 'tool-bar-mode)
@@ -321,7 +321,7 @@
 
 ;; Scroll-bar
 (if (fboundp 'scroll-bar-mode)
-	(scroll-bar-mode 1))
+	(scroll-bar-mode 0))
 
 ;; for athena
 ;; (set-scroll-bar-mode 'right)
@@ -360,6 +360,9 @@
 	  (enable-local-scroll-bar)
 	  (put 'lscroll-bar-toggle 'state t))))
 
+;; enable local-scroll-bar
+(enable-local-scroll-bar)
+
 ;; Tab-bar
 ;; (tab-bar-mode 1)
 ;; (setq tab-bar-show t)
@@ -370,8 +373,8 @@
 ;; (setq tab-bar-new-button-show nil)
 
 ;; Enable tab bar when using emacsclient
-;; (use-package emacs
-;;   :hook (server-after-make-frame . tab-bar-enable))
+(use-package emacs
+  :hook (server-after-make-frame . tab-bar-enable))
 
 ;; Time in tab-bar
 ;; (display-time-mode 1)
@@ -407,10 +410,10 @@
 ;;(reverse-video-mode)
 
 ;; ;; reverse scroll-bar color
-;; (custom-set-faces
-;;  '(scroll-bar
-;;    ((t
-;; 	 (:foreground "gray20" :background "black")))))
+(custom-set-faces
+ '(scroll-bar
+   ((t
+	 (:foreground "#2f3133" :background "#1e1e1e")))))
 
 ;; Configure some modes
 (column-number-mode 1)

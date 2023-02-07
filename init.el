@@ -2864,12 +2864,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   "Toggle theme."
   (interactive)
   (if (get 'theme-toggle 'state)
-	  (progn
-		(config/light-theme)
-		(put 'theme-toggle 'state nil))
-	(progn
-	  (config/dark-theme)
-	  (put 'theme-toggle 'state t))))
+	  (config/light-theme)
+	(config/dark-theme)))
 
 (defvar vscode-mode-first-run t)
 (defun config/vscode-mode ()
@@ -2880,8 +2876,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	(when (yes-or-no-p "Load VSCode theme?")
 	  (progn
 		(config/dark-theme))))
-  (scroll-bar-mode 0)
-  (menu-bar-mode 0)
+  ;; (scroll-bar-mode 0)
+  ;; (menu-bar-mode 0)
   (tab-bar-enable)
   (neotree/show)
   (minimap/enable))
@@ -2889,8 +2885,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (defun config/vscode-kill ()
   "Kill vscode emulation."
   (interactive)
-  (scroll-bar-mode 1)
-  (menu-bar-mode 1)
+  ;; (scroll-bar-mode 1)
+  ;; (menu-bar-mode 1)
   (tab-bar-disable)
   (neotree/hide)
   (minimap/disable))

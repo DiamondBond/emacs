@@ -2837,6 +2837,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; configure frame
   (fringe-mode nil)
   (light-minimap)
+  (kind-icon-reset-cache)
   (setq dashboard-startup-banner 'official)
   ;; load theme
   ;; (load-theme nil)
@@ -2851,6 +2852,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; configure frame
   (fringe-mode 0)
   (dark-minimap)
+  (kind-icon-reset-cache)
   (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
   ;; load theme
   (load-theme 'vscode-dark-plus t)

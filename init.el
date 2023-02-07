@@ -307,6 +307,9 @@
 ;; Disable blinking cursor
 (blink-cursor-mode -1)
 
+;; Stretch cursor
+(setq x-stretch-cursor t)
+
 ;; Menu-bar
 (if (fboundp 'menu-bar-mode)
 	(menu-bar-mode 1))
@@ -830,6 +833,13 @@
 
   ;; more granular undo with evil
   (setq evil-want-fine-undo t)
+
+  ;; evil-redo
+  ;; (setq evil-undo-system "undo-redo")
+  (define-key evil-normal-state-map (kbd "U") 'undo-redo)
+
+;; horizontal movement crosses lines
+(setq-default evil-cross-lines t)
 
   ;; set evil state on a per mode basis
   ;; insert

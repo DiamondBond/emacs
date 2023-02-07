@@ -574,6 +574,8 @@
 (global-set-key (kbd "S-<f9>") 'toggle-frame-tab-bar)
 (global-set-key (kbd "S-<f12>") 'display-line-numbers-mode)
 (global-set-key (kbd "C-`") 'vterm-toggle)
+(global-set-key (kbd "C-c t t") 'neotree/toggle)
+(global-set-key (kbd "C-c t m") 'minimap/toggle)
 
 ;; windows
 (global-set-key (kbd "C-x w") 'elfeed)
@@ -2485,6 +2487,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :config
   ;; activate tree-sitter on any buffer containing code for which it has a parser available
   (global-tree-sitter-mode)
+  ;; toggle tree-sitter-debug-mode with `C-c t d`
+  (global-set-key (kbd "C-c t d") 'tree-sitter-debug-mode)
   ;; you can easily see the difference tree-sitter-hl-mode makes for python, ts or tsx
   ;; by switching on and off
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
@@ -2515,11 +2519,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;; :mode (("\\.ts\\'" . typescript-mode)
 ;; 		 ("\\.tsx\\'" . typescript-mode)))
 
-;; https://github.com/orzechowskid/tsi.el/
 ;; great tree-sitter-based indentation for typescript/tsx, css, json
 (use-package tsi
   :after tree-sitter
-  ;;:quelpa (tsi :fetcher github :repo "orzechowskid/tsi.el")
   :straight (:type git :host github :repo "orzechowskid/tsi.el")
   ;; define autoload definitions which when actually invoked will cause package to be loaded
   :commands (tsi-typescript-mode tsi-json-mode tsi-css-mode)
@@ -2873,18 +2875,18 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	(when (yes-or-no-p "Load VSCode theme?")
 	  (progn
 		(config/dark-theme))))
-  (scroll-bar-mode 0)
-  (menu-bar-mode 0)
-  (tab-bar-enable)
+  ;;(scroll-bar-mode 0)
+  ;;(menu-bar-mode 0)
+  ;;(tab-bar-enable)
   (neotree/show)
   (minimap/enable))
 
 (defun config/vscode-kill ()
   "Kill vscode emulation."
   (interactive)
-  (scroll-bar-mode 1)
-  (menu-bar-mode 1)
-  (tab-bar-disable)
+  ;;(scroll-bar-mode 1)
+  ;;(menu-bar-mode 1)
+  ;;(tab-bar-disable)
   (neotree/hide)
   (minimap/disable))
 

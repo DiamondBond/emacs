@@ -110,6 +110,9 @@
 ;; Email to encrypt to
 (setq epa-file-encrypt-to '(globals--email))
 
+;; Set GC threshold
+(setq lsp-cons-threshold 100000000)
+
 ;; Garbage collection minibuffer hack
 (defun my-minibuffer-setup-hook ()
   "Garbage collection will never occur."
@@ -117,7 +120,7 @@
 
 (defun my-minibuffer-exit-hook ()
   "Garbage collection will kick off immediately."
-  (setq gc-cons-threshold gc-cons-threshold-original))
+  (setq gc-cons-threshold lsp-cons-threshold)) ;; or gc-cons-threshold-original
 
 (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
 (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
@@ -387,6 +390,9 @@
 ;; Set default frame background
 ;;(add-to-list 'default-frame-alist '(background-color . "honeydew"))
 
+;; Disable vsync
+(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+
 ;; Reverse video mode
 (defun reverse-video-mode ()
   "Reverse video mode."
@@ -652,7 +658,9 @@
   :init
   (setq gcmh-idle-delay 15
 		gcmh-high-cons-threshold (* 16 1024 1024))  ; 16mb
-  :config (gcmh-mode))
+  :config
+  (setq gc-cons-threshold lsp-cons-threshold)
+  (gcmh-mode 1))
 
 ;; Org-mode - one mode to rule them all.
 (use-package org
@@ -3400,12 +3408,9 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 ;;---------------------------------------------------------------------
 
 ;; Restore original GC values
-(add-hook 'emacs-startup-hook
-		  (lambda ()
-			(setq gc-cons-threshold gc-cons-threshold-original)
-			(setq gc-cons-percentage gc-cons-percentage-original)))
-
-;; Unless running as daemon
-;; (server-start)
+;; (add-hook 'emacs-startup-hook
+;; 		  (lambda ()
+;; 			(setq gc-cons-threshold lsp-cons-threshold)
+;; 			(setq gc-cons-percentage gc-cons-percentage-original)))
 
 ;;; init.el ends here

@@ -2783,20 +2783,17 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 				  (expand-file-name file))))
 
 (defun dired-open-externally (&optional arg)
-  "Open marked or current file in operating system's default application."
+  "Open marked or current file (ARG) in operating system's default application."
   (interactive "P")
   (dired-map-over-marks
    (consult-file-externally (dired-get-filename))
    arg))
 
 (defun open-treemacs ()
+  "Open treemacs."
   (interactive)
   (treemacs)
   (other-window 1))
-
-(defun desktop-restore ()
-  (interactive)
-  (desktop-read "~/Desktop"))
 
 (if (eq system-type 'gnu/linux)
 	(defun config/reload ()
@@ -2876,8 +2873,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	(when (yes-or-no-p "Load VSCode theme?")
 	  (progn
 		(config/dark-theme))))
-  ;; (scroll-bar-mode 0)
-  ;; (menu-bar-mode 0)
+  (scroll-bar-mode 0)
+  (menu-bar-mode 0)
   (tab-bar-enable)
   (neotree/show)
   (minimap/enable))
@@ -2885,8 +2882,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (defun config/vscode-kill ()
   "Kill vscode emulation."
   (interactive)
-  ;; (scroll-bar-mode 1)
-  ;; (menu-bar-mode 1)
+  (scroll-bar-mode 1)
+  (menu-bar-mode 1)
   (tab-bar-disable)
   (neotree/hide)
   (minimap/disable))

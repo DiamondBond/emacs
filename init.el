@@ -587,10 +587,10 @@
 (global-set-key (kbd "C-x C-b") #'ibuffer-list-buffers)
 
 ;; windmove
-(global-set-key (kbd "s-k") 'windmove-up)
-(global-set-key (kbd "s-j") 'windmove-down)
-(global-set-key (kbd "s-h") 'windmove-left)
-(global-set-key (kbd "s-l") 'windmove-right)
+(global-set-key (kbd "M-k") 'windmove-up)
+(global-set-key (kbd "M-j") 'windmove-down)
+(global-set-key (kbd "M-h") 'windmove-left)
+(global-set-key (kbd "M-l") 'windmove-right)
 
 ;; next/prev
 ;; (global-set-key (kbd "C-<tab>") 'next-buffer)

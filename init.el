@@ -113,6 +113,9 @@
 ;; Set GC threshold
 (setq lsp-cons-threshold 100000000)
 
+;; Do not GC during startup
+(setq gc-cons-threshold most-positive-fixnum)
+
 ;; Garbage collection minibuffer hack
 (defun my-minibuffer-setup-hook ()
   "Garbage collection will never occur."
@@ -3407,10 +3410,10 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 ;; END
 ;;---------------------------------------------------------------------
 
-;; Restore original GC values
-;; (add-hook 'emacs-startup-hook
-;; 		  (lambda ()
-;; 			(setq gc-cons-threshold lsp-cons-threshold)
-;; 			(setq gc-cons-percentage gc-cons-percentage-original)))
+;; Restore desired GC values
+(add-hook 'emacs-startup-hook
+		  (lambda ()
+			(setq gc-cons-threshold lsp-cons-threshold)
+			(setq gc-cons-percentage gc-cons-percentage-original)))
 
 ;;; init.el ends here

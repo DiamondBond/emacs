@@ -9,7 +9,4 @@
 	 ("\\.mm\\'" . default)
 	 ("\\.x?html?\\'" . default)
 	 ("\\.pdf\\'" . emacs)))
- '(warning-suppress-log-types
-   '(((use-package)
-	  (browse-url)
-	  (comp)))))
+ '(warning-suppress-log-types '(((use-package) (browse-url) (comp)))))

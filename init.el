@@ -40,7 +40,7 @@
 
 ;; Define when to check for package modifications,
 ;; for improved straight.el startup time.
-(setq straight-check-for-modifications '(check-on-save find-when-checking))
+(setq straight-check-for-modifications '(check-on-save))
 
 ;; Bootstrap straight.el
 (defvar bootstrap-version)
@@ -65,7 +65,7 @@
   (straight-use-package-by-default t)
   (straight-vc-git-default-clone-depth 1)
   (straight-recipes-gnu-elpa-use-mirror t)
-  (straight-check-for-modifications '(check-on-save find-when-checking)))
+  (straight-check-for-modifications '(check-on-save)))
 ;;(straight-check-for-modifications nil))
 
 ;;---------------------------------------------------------------------
@@ -392,7 +392,7 @@
 ;; 	  tab-bar-mode t)
 
 ;; Configure fringe
-(fringe-mode 0) ;; default=nil
+(fringe-mode nil)
 (setq-default fringes-outside-margins nil)
 (setq-default indicate-buffer-boundaries nil)
 (setq-default indicate-empty-lines nil)
@@ -615,13 +615,20 @@
 ;; windows
 (global-set-key (kbd "C-x w") 'elfeed)
 (global-set-key (kbd "C-x W") 'elfeed-update)
-(global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
-(global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "s-C-<down>") 'shrink-window)
-(global-set-key (kbd "s-C-<up>") 'enlarge-window)
 (global-set-key (kbd "C-x x") 'window-swap-states)
 (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 (global-set-key (kbd "C-x C-b") #'ibuffer-list-buffers)
+
+;; window resizing
+(global-set-key (kbd "s-C-<up>") 'enlarge-window)
+(global-set-key (kbd "s-C-<down>") 'shrink-window)
+(global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
+;; hjkl
+(global-set-key (kbd "s-C-k") 'enlarge-window)
+(global-set-key (kbd "s-C-j") 'shrink-window)
+(global-set-key (kbd "s-C-h") 'shrink-window-horizontally)
+(global-set-key (kbd "s-C-l") 'enlarge-window-horizontally)
 
 ;; windmove
 (global-set-key (kbd "s-k") 'windmove-up)
@@ -1228,6 +1235,8 @@
   (eval-after-load "outline" '(diminish 'outline-minor-mode))
   (eval-after-load "projectile" '(diminish 'projectile-mode))
   (eval-after-load "typescript-mode" '(diminish 'subword-mode))
+  (eval-after-load "js-mode" '(diminish 'subword-mode))
+  (eval-after-load "js2-mode" '(diminish 'subword-mode))
   (eval-after-load "dired" '(diminish 'dired-async-mode))
   (eval-after-load "dired" '(diminish 'dired-hide-dotfiles-mode))
   (eval-after-load "dired" '(diminish 'all-the-icons-dired-mode))
@@ -1288,6 +1297,8 @@
   :diminish highlight-indent-guides-mode
   :config
   (setq highlight-indent-guides-method 'character)
+  (add-hook 'js-mode-hook #'(lambda () (highlight-indent-guides-mode)))
+  (add-hook 'js2-mode-hook #'(lambda () (highlight-indent-guides-mode)))
   (add-hook 'typescript-mode-hook #'(lambda () (highlight-indent-guides-mode)))
   (defun indent-guides-init-faces ()
 	"Set indent-guides faces"
@@ -1354,7 +1365,8 @@
   (setq minimap-width-fraction 0.05)
   (setq minimap-minimum-width 15)
   (setq minimap-hide-fringes t)
-  (setq minimap-major-modes '(typescript-mode typescriptreact-mode))
+  ;;(setq minimap-major-modes '(typescript-mode typescriptreact-mode js-mode js2-mode))
+  (setq minimap-major-modes '(prog-mode))
   ;;(setq minimap-update-delay 0)
   (light-minimap))
 
@@ -1653,6 +1665,20 @@
 		  org-mode
 		  conf-mode) . auto-revert-mode))
 
+(use-package git-gutter
+  :straight t
+  :hook (prog-mode . git-gutter-mode)
+  :diminish (git-gutter-mode)
+  :config
+  (setq git-gutter:update-interval 0.02))
+
+(use-package git-gutter-fringe
+  :straight t
+  :config
+  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+
 ;; Use dabbrev with Corfu!
 (use-package dabbrev
   :straight t
@@ -1837,6 +1863,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
    ("C-x 4 b" . consult-buffer-other-window)
    ("C-x 5 b" . consult-buffer-other-frame)
    ("C-x r b" . consult-bookmark)
+   ("C-x p b" . consult-project-buffer)
 
    ;; M-g bindings (goto-map)
    ("M-g e" . consult-compile-error)
@@ -2505,13 +2532,26 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :hook ((markdown-mode . auto-fill-mode)))
 
 ;; JavaScript
+(use-package js-mode
+  :straight (:type built-in)
+  :init
+  (add-hook 'js-mode-hook 'subword-mode)
+  :mode (("\\.js\\'" . js-mode)))
+
 (use-package js2-mode
   :straight t
   :custom
   (js-indent-level 2)
   (js2-basic-offset 2)
-  :init
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+  :config
+  (setq js2-strict-missing-semi-warning nil)
+  (setq js2-mode-show-strict-warnings nil)
+  ;; override js2-error
+  (custom-set-faces
+   '(js2-error ((t (:foreground nil :weight normal)))))
+  ;; just for JS linting
+  (add-hook 'js-mode-hook 'js2-minor-mode))
+;;:mode (("\\.js\\'" . js2-mode)))
 
 (defun setup-tide-mode ()
   (interactive)
@@ -2586,8 +2626,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (use-package tide
   :straight t
   :config
+  (add-hook 'typescript-mode-hook #'setup-tide-mode)
   (define-key evil-normal-state-map (kbd "M-.") 'tide-jump-to-definition))
-(add-hook 'typescript-mode-hook #'setup-tide-mode)
 
 ;; Prettier formatter
 (use-package prettier-js
@@ -2628,8 +2668,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 						'(javascript-jshint json-jsonlist)))
   ;; enable eslint
   (flycheck-add-mode 'javascript-eslint 'web-mode)
-  :mode (("\\.js\\'" . web-mode)
-		 ("\\.jsx\\'" .  web-mode)
+  :mode (;;("\\.js\\'" . web-mode)
+		 ;;("\\.jsx\\'" .  web-mode)
 		 ;;("\\.ts\\'" . web-mode)
 		 ;;("\\.tsx\\'" . web-mode)
 		 ("\\.html\\'" . web-mode))
@@ -2880,7 +2920,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; disable all themes
   (disable-all-themes)
   ;; configure frame
-  (fringe-mode nil)
+  ;;(fringe-mode nil)
   (light-sb)
   (light-minimap)
   (kind-icon-reset-cache)
@@ -2895,7 +2935,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; disable all themes
   (disable-all-themes)
   ;; configure frame
-  (fringe-mode 0)
+  ;;(fringe-mode 0)
   (dark-sb)
   (dark-minimap)
   (kind-icon-reset-cache)

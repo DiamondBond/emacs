@@ -630,9 +630,11 @@
 (global-set-key (kbd "C-`") 'vterm-toggle)
 (global-set-key (kbd "C-/") 'comment-or-uncomment-region)
 (global-set-key (kbd "C-S-b") 'neotree/toggle)
+(global-set-key (kbd "C-S-m") 'minimap/toggle)
 (global-set-key (kbd "C-c t t") 'neotree/toggle)
 (global-set-key (kbd "C-c t m") 'minimap/toggle)
 (global-set-key (kbd "C-S-SPC") 'pop-to-mark-command)
+(global-set-key (kbd "C-S-i") 'prettier-js)
 
 ;; windows
 (global-set-key (kbd "C-x w") 'elfeed)

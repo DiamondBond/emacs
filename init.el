@@ -363,7 +363,16 @@
   (put 'lscroll-bar-toggle 'state nil)
   (redisplay t)
   (force-window-update nil)
+  ;; apply theme
+  (if (get 'theme-toggle 'state)
+	  (progn
+		(dark-sb)
+		(dark-size-scroll-bars))
+	(progn
+	  (light-sb)
+	  (light-size-scroll-bars)))
   (update-scroll-bars)
+  (message "Enabled local scroll-bar.")
   (add-hook 'window-configuration-change-hook 'update-scroll-bars)
   (add-hook 'buffer-list-update-hook 'update-scroll-bars))
 
@@ -374,6 +383,7 @@
   (redisplay t)
   (force-window-update nil)
   (kill-scroll-bars)
+  (message "Disabled local scroll-bar.")
   (remove-hook 'window-configuration-change-hook 'update-scroll-bars)
   (remove-hook 'buffer-list-update-hook 'update-scroll-bars))
 
@@ -1048,10 +1058,11 @@
   :defer 3
   ;;:init (doom-modeline-mode)
   :config
-  (setq doom-modeline-height 35)
+  (setq doom-modeline-height 26)
   (setq doom-modeline-buffer-file-name-style 'file-name
 		doom-modeline-enable-word-count t
 		doom-modeline-buffer-encoding nil
+		doom-modeline-buffer-modification-icon nil ;; Save icon
 		doom-modeline-icon t ;; Enable/disable all icons
 		doom-modeline-modal-icon nil ;; Icon for Evil mode
 		doom-modeline-hud t ;; Replaces scroll-bar
@@ -2967,7 +2978,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (set-face-attribute 'mode-line nil
 					  :box `(:line-width -1 :color "#2A2A2A" :style nil))
   (set-face-attribute 'mode-line-inactive nil
-					  :box `(:line-width -1 :color "#1E1E1E" :style nil)))
+					  :box `(:line-width -1 :color "#1F1F1F" :style nil)))
 
 (defun config/light-theme ()
   "Light theme."
@@ -2976,13 +2987,14 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (disable-all-themes)
   ;; configure frame
   ;;(fringe-mode nil)
-  (light-sb)
+  (scroll-bar-mode 1)
   (light-minimap)
   (kind-icon-reset-cache)
   (setq dashboard-startup-banner 'official)
   ;; load light theme
   ;;(load-theme 'modus-operandi t)
   (light-modeline)
+  (doom-modeline-mode 0)
   ;;(indent-guides-init-faces)
   (put 'theme-toggle 'state nil))
 
@@ -2993,13 +3005,15 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (disable-all-themes)
   ;; configure frame
   ;;(fringe-mode 0)
-  (dark-sb)
+  ;;(dark-sb)
+  (scroll-bar-mode 0)
   (dark-minimap)
   (kind-icon-reset-cache)
   (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
   ;; load dark theme
   (load-theme 'vscode-dark-plus t)
   (dark-modeline)
+  (doom-modeline-mode 1)
   ;;(indent-guides-dark-faces)
   (put 'theme-toggle 'state t))
 

@@ -3542,6 +3542,12 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
   :init
   (require 'python)
   (setq chatgpt-repo-path "~/.emacs.d/straight/repos/ChatGPT.el/")
+  :preface
+  (defun chatgpt-session-expired ()
+	"Fix expired login."
+	(interactive)
+	(async-shell-command "pkill ms-playwright/firefox")
+	(run-in-vterm "chatgpt install"))
   :config
   (setq chatgpt-query-format-string-map '(
 										  ;; ChatGPT.el defaults
@@ -3550,11 +3556,6 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 										  ("bug" . "There is a bug in the following function, please help me fix it.\n\n%s")
 										  ("understand" . "What does the following function do?\n\n%s")
 										  ("improve" . "Please improve the following code.\n\n%s")))
-  (defun chatgpt-session-expired ()
-	"Fix expired login."
-	(interactive)
-	(async-shell-command "pkill ms-playwright/firefox")
-	(run-in-vterm "chatgpt install"))
   :bind ("C-c q" . chatgpt-query))
 
 ;;---------------------------------------------------------------------

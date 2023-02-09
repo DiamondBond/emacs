@@ -125,8 +125,8 @@
   "Garbage collection will kick off immediately."
   (setq gc-cons-threshold lsp-cons-threshold)) ;; or gc-cons-threshold-original
 
-(add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
-(add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
+;;(add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
+;;(add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 
 ;; Disable warnings
 (setq warning-suppress-types '((comp)))
@@ -379,7 +379,7 @@
 ;; (setq tab-bar-close-button-show nil)
 ;; (setq tab-bar-new-button-show nil)
 
-;; Enable tab bar when using emacsclient
+;; Enable tab-bar & local scroll-bar when using emacsclient
 (use-package emacs
   :hook (server-after-make-frame . tab-bar-enable)
   :hook (server-after-make-frame . enable-local-scroll-bar))
@@ -392,7 +392,7 @@
 ;; 	  tab-bar-mode t)
 
 ;; Configure fringe
-(fringe-mode nil)
+(fringe-mode '(8 . 0))
 (setq-default fringes-outside-margins nil)
 (setq-default indicate-buffer-boundaries nil)
 (setq-default indicate-empty-lines nil)
@@ -609,8 +609,11 @@
 (global-set-key (kbd "S-<f9>") 'toggle-frame-tab-bar)
 (global-set-key (kbd "S-<f12>") 'display-line-numbers-mode)
 (global-set-key (kbd "C-`") 'vterm-toggle)
+(global-set-key (kbd "C-/") 'comment-or-uncomment-region)
+(global-set-key (kbd "C-S-b") 'neotree/toggle)
 (global-set-key (kbd "C-c t t") 'neotree/toggle)
 (global-set-key (kbd "C-c t m") 'minimap/toggle)
+(global-set-key (kbd "C-S-SPC") 'pop-to-mark-command)
 
 ;; windows
 (global-set-key (kbd "C-x w") 'elfeed)
@@ -903,7 +906,7 @@
 (use-package evil-collection
   :after evil
   :config
-  (setq evil-collection-mode-list '(dired (custom cus-edit) (package-menu package) neotree calc diff-mode))
+  (setq evil-collection-mode-list '(dired (custom cus-edit) (package-menu package) magit neotree calc diff-mode))
   (evil-collection-init)
   ;; use dired-open
   (evil-collection-define-key 'normal 'dired-mode-map
@@ -1235,8 +1238,7 @@
   (eval-after-load "outline" '(diminish 'outline-minor-mode))
   (eval-after-load "projectile" '(diminish 'projectile-mode))
   (eval-after-load "typescript-mode" '(diminish 'subword-mode))
-  (eval-after-load "js-mode" '(diminish 'subword-mode))
-  (eval-after-load "js2-mode" '(diminish 'subword-mode))
+  (eval-after-load "js2-mode" '(diminish 'subword-mode ""))
   (eval-after-load "dired" '(diminish 'dired-async-mode))
   (eval-after-load "dired" '(diminish 'dired-hide-dotfiles-mode))
   (eval-after-load "dired" '(diminish 'all-the-icons-dired-mode))
@@ -1293,7 +1295,7 @@
 
 ;; Highlight indent guidelines
 (use-package highlight-indent-guides
-  :straight t
+  :disabled t
   :diminish highlight-indent-guides-mode
   :config
   (setq highlight-indent-guides-method 'character)
@@ -1629,8 +1631,7 @@
   :straight t
   :bind (("C-x g" . magit-status))
   :config
-  ;; Bind the `magit-status' command to a convenient key.
-  (global-set-key (kbd "C-c g") #'magit-status)
+  (evil-define-key 'normal magit-mode-map (kbd "K") #'magit-discard)
 
   (defun parse-url (url)
 	"convert a git remote location as a HTTP URL"
@@ -1639,14 +1640,13 @@
 	  (replace-regexp-in-string "\\(.*\\)@\\(.*\\):\\(.*\\)\\(\\.git?\\)"
 								"https://\\2/\\3"
 								url)))
-  (defun magit-open-repo ()
+  (defun open-github ()
 	"open remote repo URL"
 	(interactive)
 	(let ((url (magit-get "remote" "origin" "url")))
 	  (progn
 		(browse-url (parse-url url))
-		(message "opening repo %s" url))))
-  (defalias 'open-github 'magit-open-repo))
+		(message "opening repo %s" url)))))
 
 ;; bindings to help improve the speed of magit
 ;; (use-package libgit :straight t)
@@ -1763,6 +1763,8 @@
 			  ("C-h" . corfu-show-documentation)
 			  ("M-l" . 'corfu-show-location)
 			  ("RET" . nil)
+			  ("M-j" . corfu-next)
+			  ("M-k" . corfu-previous)
 			  ("TAB" . corfu-next)
 			  ([tab] . corfu-next)
 			  ("S-TAB" . corfu-previous)
@@ -1770,7 +1772,7 @@
   :custom
   (corfu-auto t)
   (corfu-auto-prefix 3)
-  (corfu-auto-delay 0)
+  (corfu-auto-delay 0.2)
   (corfu-echo-documentation 0)
   (corfu-preview-current nil)
   (corfu-quit-no-match 'separator)
@@ -1789,11 +1791,11 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;; Completion at point extensions
 (use-package cape
   :straight t
-  ;; :bind (("C-c p p" . completion-at-point)
-  ;; 		 ("C-c p d" . cape-dabbrev)
-  ;; 		 ("C-c p f" . cape-file)
-  ;; 		 ("C-c p s" . cape-symbol)
-  ;; 		 ("C-c p i" . cape-ispell))
+  :bind (("M-i" . completion-at-point)
+		 ("C-c x d" . cape-dabbrev)
+		 ("C-c x f" . cape-file)
+		 ("C-c x s" . cape-symbol)
+		 ("C-c x i" . cape-ispell))
   :config
   (setq cape-dabbrev-min-length 3)
   (dolist (backend '( cape-symbol cape-keyword cape-file cape-dabbrev))
@@ -1809,7 +1811,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 			  ("M-k" . vertico-previous)
 			  ("C-f" . vertico-exit)
 			  :map minibuffer-local-map
-			  ("M-h" . backward-kill-word))
+			  ("M-h" . backward-kill-word)
+			  ("M-l" . kill-word))
   :custom
   (vertico-cycle t)
   (vertico-resize t)
@@ -2315,9 +2318,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (setq lsp-auto-guess-root t)
   (setq lsp-log-io nil)
   (setq lsp-restart 'auto-restart)
-  (setq lsp-ui-sideline-show-diagnostics t)
-  (setq lsp-ui-sideline-show-hover t)
-  (setq lsp-ui-sideline-show-code-actions t)
+  (setq lsp-ui-sideline-show-diagnostics nil)
+  (setq lsp-ui-sideline-show-hover nil)
+  (setq lsp-ui-sideline-show-code-actions nil)
   (setq lsp-enable-symbol-highlighting nil)
   (setq lsp-enable-indentation nil)
   (setq lsp-enable-on-type-formatting nil)
@@ -2535,11 +2538,14 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (use-package js-mode
   :straight (:type built-in)
   :init
+  (with-eval-after-load 'subword
+	(diminish 'subword-mode))
   (add-hook 'js-mode-hook 'subword-mode)
   :mode (("\\.js\\'" . js-mode)))
 
 (use-package js2-mode
   :straight t
+  :diminish (js2-mode js2-minor-mode)
   :custom
   (js-indent-level 2)
   (js2-basic-offset 2)
@@ -2570,6 +2576,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;; Tree-sitter
 (use-package tree-sitter
   :straight t
+  :diminish (tree-sitter-mode)
   :config
   ;; activate tree-sitter on any buffer containing code for which it has a parser available
   (global-tree-sitter-mode)
@@ -2914,6 +2921,29 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	(interactive)
 	(async-shell-command "~/bin/auth-restore.sh")))
 
+(defun light-modeline()
+  "Default modeline."
+  (interactive)
+  (set-face-foreground 'mode-line "black")
+  (set-face-background 'mode-line "grey75")
+  (set-face-foreground 'mode-line-inactive "grey20")
+  (set-face-background 'mode-line-inactive "grey90")
+  (set-face-attribute 'mode-line nil
+					  :box `(:line-width -1 :color nil :style released-button))
+  (set-face-attribute 'mode-line-inactive nil
+					  :box `(:line-width -1 :color "grey75" :style nil)))
+(defun dark-modeline()
+  "Dark modeline."
+  (interactive)
+  (set-face-foreground 'mode-line "white")
+  (set-face-background 'mode-line "#181818")
+  (set-face-foreground 'mode-line-inactive "ivory")
+  (set-face-background 'mode-line-inactive "#1E1E1E")
+  (set-face-attribute 'mode-line nil
+					  :box `(:line-width -1 :color "#2A2A2A" :style nil))
+  (set-face-attribute 'mode-line-inactive nil
+					  :box `(:line-width -1 :color "#1E1E1E" :style nil)))
+
 (defun config/light-theme ()
   "Light theme."
   (interactive)
@@ -2925,8 +2955,10 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (light-minimap)
   (kind-icon-reset-cache)
   (setq dashboard-startup-banner 'official)
-  ;; (load-theme nil)
-  (indent-guides-init-faces)
+  ;; load light theme
+  ;;(load-theme 'modus-operandi t)
+  (light-modeline)
+  ;;(indent-guides-init-faces)
   (put 'theme-toggle 'state nil))
 
 (defun config/dark-theme ()
@@ -2940,9 +2972,10 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (dark-minimap)
   (kind-icon-reset-cache)
   (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+  ;; load dark theme
   (load-theme 'vscode-dark-plus t)
-  ;;(load-theme 'modus-vivendi t)
-  (indent-guides-dark-faces)
+  (dark-modeline)
+  ;;(indent-guides-dark-faces)
   (put 'theme-toggle 'state t))
 
 (defun config/toggle-theme ()

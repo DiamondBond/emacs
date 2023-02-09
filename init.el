@@ -329,13 +329,13 @@
 ;; disable minibuffer scroll-bar
 ;; (set-window-scroll-bars (minibuffer-window) nil nil)
 
-(defun fix-scroll-bars ()
+(defun dark-size-scroll-bars ()
   (interactive)
   (mapc (lambda (win)
 		  (set-window-scroll-bars win 14 'right))
 		(window-list)))
 
-(defun reset-scroll-bars ()
+(defun light-size-scroll-bars ()
   (interactive)
   (redisplay t)
   (force-window-update nil)
@@ -435,9 +435,9 @@
 (defun light-sb ()
   "Default scroll-bar."
   (interactive)
-  (remove-hook 'window-configuration-change-hook 'fix-scroll-bars)
-  (remove-hook 'buffer-list-update-hook 'fix-scroll-bars)
-  (reset-scroll-bars)
+  (remove-hook 'window-configuration-change-hook 'dark-size-scroll-bars)
+  (remove-hook 'buffer-list-update-hook 'dark-size-scroll-bars)
+  (light-size-scroll-bars)
   (custom-set-faces
    '(scroll-bar
 	 ((t
@@ -447,8 +447,9 @@
 (defun dark-sb ()
   "Dark scroll-bar."
   (interactive)
-  (add-hook 'window-configuration-change-hook 'fix-scroll-bars)
-  (add-hook 'buffer-list-update-hook 'fix-scroll-bars)
+  (add-hook 'window-configuration-change-hook 'dark-size-scroll-bars)
+  (add-hook 'buffer-list-update-hook 'dark-size-scroll-bars)
+  (dark-size-scroll-bars)
   (custom-set-faces
    '(scroll-bar
 	 ((t

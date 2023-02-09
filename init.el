@@ -1250,6 +1250,10 @@
   (interactive)
   (switch-to-buffer (get-buffer-create "*scratch*")))
 
+;;---------------------------------------------------------------------
+;; VISUAL
+;;---------------------------------------------------------------------
+
 ;; Clean up the modeline
 (use-package diminish
   :straight t
@@ -1349,7 +1353,7 @@
 	(set-face-foreground 'highlight-indent-guides-character-face "#404040"))
   (indent-guides-init-faces))
 
-;; Sublime-like minimap
+;; Minimap
 (use-package minimap
   :straight t
   :diminish minimap-mode
@@ -1479,7 +1483,7 @@
 	  (setq ispell-program-name "aspell"))
   :bind (("M-<f7>" . flyspell-buffer)))
 
-;; Tree file browser
+;; Treemacs - depreciated in favor of neotree
 (use-package treemacs
   :disabled t
   :init
@@ -1700,6 +1704,7 @@
 		  org-mode
 		  conf-mode) . auto-revert-mode))
 
+;; Git diff
 (use-package git-gutter
   :straight t
   :hook (prog-mode . git-gutter-mode)
@@ -1707,6 +1712,7 @@
   :config
   (setq git-gutter:update-interval 0.02))
 
+;; Git diff in the fringe
 (use-package git-gutter-fringe
   :straight t
   :config
@@ -1788,7 +1794,7 @@
   :config
   (setq xref-prompt-for-identifier nil))
 
-;; Corfu completion
+;; Corfu completion framework
 (use-package corfu
   :straight t
   :demand t
@@ -1836,7 +1842,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (dolist (backend '( cape-symbol cape-keyword cape-file cape-dabbrev))
 	(add-to-list 'completion-at-point-functions backend)))
 
-;; Vertico minibuffer
+;; Vertico minibuffer completions
 (use-package vertico
   :straight (:files (:defaults "extensions/*"))
   :bind (:map vertico-map
@@ -2029,8 +2035,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 			 :docstring "Search Google.")
   (defengine google-images "https://www.google.com/search?tbm=isch&q=%s" :keybinding "i"
 			 :docstring "Search Google Images")
-  ;; (defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "M"
-  ;; 			 :docstring "Search Google Maps.")
+  (defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "M"
+			 :docstring "Search Google Maps.")
   (defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d"
 			 :docstring "Search DuckDuckGo.")
   (defengine qwant "https://www.qwant.com/?q=%s" :keybinding "q"
@@ -2075,6 +2081,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (when (file-directory-p "~/org")
   (use-package deft
 	:straight t
+	:defer 3
 	:config
 	(setq deft-directory org-directory
 		  deft-recursive t
@@ -2086,6 +2093,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;; RSS
 (use-package elfeed
   :straight t
+  :defer 2
   :config
   (setq elfeed-feeds
 		'(("https://www.archlinux.org/feeds/news/" archlinux)
@@ -2101,6 +2109,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;; Mailing lists
 (use-package gnus
   :straight t
+  :defer 2
   :config
   ;; make Gnus startup faster
   (setq gnus-check-new-newsgroups nil
@@ -2183,6 +2192,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;; Rizon IRC client
 (use-package erc
   :straight t
+  :defer 2
   :custom
   (erc-autojoin-timing 'ident)
   (erc-autojoin-channels-alist '(("irc.rizon.net" "#rice")))
@@ -2222,7 +2232,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 ;; Librea IRC client
 (use-package rcirc
-  :defer
+  :defer 2
   :commands (irc rcirc)
   :ensure nil
   :config
@@ -2313,7 +2323,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :init
   (savehist-mode))
 
-;; mEmE pAcKaGe
+;; aLtCaPs
 ;; (use-package altcaps
 ;;   :straight (:type git :host github :repo "protesilaos/altcaps" :branch "main"))
 
@@ -2396,9 +2406,17 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :hook (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred)))
   :init (setq lsp-pyright-python-executable-cmd "python3"))
 
+;; LSP Tailwind-CSS
 ;; (straight-use-package
 ;;  '(lsp-tailwindcss :type git :host github :repo "merrickluo/lsp-tailwindcss"))
 
+;; (use-package lsp-bridge
+;;   :straight (:type git :host github :repo "manateelazycat/lsp-bridge" :branch "master")
+;;   :files (:defaults ".py .tsx .js .cpp .c" "langserver" "acm")
+;;   :init
+;;   (global-lsp-bridge-mode))
+
+;; YaSnippet
 ;; (use-package yasnippet
 ;;   :straight t
 ;;   :diminish yas-minor-mode
@@ -2413,22 +2431,16 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;; (use-package auto-yasnippet
 ;;   :disabled t)
 
-;; (use-package lsp-bridge
-;;   :straight (:type git :host github :repo "manateelazycat/lsp-bridge" :branch "master")
-;;   :files (:defaults ".py .tsx .js .cpp .c" "langserver" "acm")
-;;   :init
-;;   (global-lsp-bridge-mode))
-
 ;; Eglot
-(use-package eglot
-  :disabled t
-  :config
-  (setq read-process-output-max (* 1024 1024))
-  (push :documentHighlightProvider eglot-ignored-server-capabilities)
-  ;; Enable LSP support by default in programming buffers
-  (add-hook 'prog-mode-hook #'eglot-ensure))
+;; (use-package eglot
+;;   :disabled t
+;;   :config
+;;   (setq read-process-output-max (* 1024 1024))
+;;   (push :documentHighlightProvider eglot-ignored-server-capabilities)
+;;   ;; Enable LSP support by default in programming buffers
+;;   (add-hook 'prog-mode-hook #'eglot-ensure))
 
-;; C/C++/C#
+;; C/C++
 (use-package ccls
   :straight t
   :hook ((c-mode c++-mode objc-mode cuda-mode) .
@@ -2450,6 +2462,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	 t)
 	(goto-line saved-line-number)))
 
+;; C#
 (use-package csharp-mode
   :disabled t
   :defer 5)
@@ -2485,7 +2498,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 ;; Elisp
 (use-package elisp-autofmt
-  :straight t)
+  :straight t
+  :commands (elisp-autofmt-mode elisp-autofmt-buffer))
 
 ;; CL
 (use-package slime
@@ -2506,6 +2520,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 			   '("\\.sls\\'" . scheme-mode)
 			   '("\\.sc\\'" . scheme-mode)))
 
+;; MIT Scheme
 (use-package geiser-mit
   :straight t
   :after geiser)
@@ -2515,6 +2530,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (interactive)
   (geiser-repl--write-input-ring))
 
+;; SICP
 (use-package sicp
   :straight t)
 
@@ -2549,12 +2565,14 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (setq python-shell-interpreter "/usr/bin/python3")
   (setq exec-path (cons "~/.local/bin" exec-path)))
 
+;; Python env management
 (use-package pyvenv
   :straight t
   :config
   (setq pyvenv-workon "emacs")  ; Default venv
   (pyvenv-tracking-mode 1))  ; Automatically use pyvenv-workon via dir-locals
 
+;; Python formatter
 (use-package python-black
   :straight t
   :after python)
@@ -2625,6 +2643,18 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :straight t
   :after tree-sitter)
 
+;; great tree-sitter-based indentation for typescript/tsx, css, json
+(use-package tsi
+  :after tree-sitter
+  :straight (:type git :host github :repo "orzechowskid/tsi.el")
+  ;; define autoload definitions which when actually invoked will cause package to be loaded
+  :commands (tsi-typescript-mode tsi-json-mode tsi-css-mode)
+  :init
+  (add-hook 'typescript-mode-hook (lambda () (tsi-typescript-mode 1)))
+  (add-hook 'json-mode-hook (lambda () (tsi-json-mode 1)))
+  (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
+  (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1))))
+
 ;; TypeScript
 (use-package typescript-mode
   :after tree-sitter
@@ -2647,29 +2677,17 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;; :mode (("\\.ts\\'" . typescript-mode)
 ;; 		 ("\\.tsx\\'" . typescript-mode)))
 
-;; great tree-sitter-based indentation for typescript/tsx, css, json
-(use-package tsi
-  :after tree-sitter
-  :straight (:type git :host github :repo "orzechowskid/tsi.el")
-  ;; define autoload definitions which when actually invoked will cause package to be loaded
-  :commands (tsi-typescript-mode tsi-json-mode tsi-css-mode)
-  :init
-  (add-hook 'typescript-mode-hook (lambda () (tsi-typescript-mode 1)))
-  (add-hook 'json-mode-hook (lambda () (tsi-json-mode 1)))
-  (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
-  (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1))))
-
-;; Add node_modules to PATH
-(use-package add-node-modules-path
-  :straight t
-  :hook ((typescript-mode . add-node-modules-path)))
-
 ;; TypeScript IDE
 (use-package tide
   :straight t
   :config
   (add-hook 'typescript-mode-hook #'setup-tide-mode)
   (define-key evil-normal-state-map (kbd "M-.") 'tide-jump-to-definition))
+
+;; Add node_modules to PATH
+(use-package add-node-modules-path
+  :straight t
+  :hook ((typescript-mode . add-node-modules-path)))
 
 ;; Prettier formatter
 (use-package prettier-js

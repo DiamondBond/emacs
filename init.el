@@ -1632,6 +1632,8 @@
   :bind (("C-x g" . magit-status))
   :config
   (evil-define-key 'normal magit-mode-map (kbd "K") #'magit-discard)
+  (evil-define-key 'normal magit-mode-map (kbd "C-<tab>") #'tab-next)
+  (evil-define-key 'normal magit-mode-map (kbd "C-<iso-lefttab>") #'tab-prev)
 
   (defun parse-url (url)
 	"convert a git remote location as a HTTP URL"

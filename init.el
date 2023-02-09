@@ -2484,7 +2484,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (setq rustic-format-on-save nil))
 
 ;; Elisp
-(use-package elisp-format
+(use-package elisp-autofmt
   :straight t)
 
 ;; CL

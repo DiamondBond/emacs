@@ -18,3 +18,18 @@
 		  (right-fringe)
 		  (vertical-scroll-bars . right)))
 #+end_src
+
+* Newer default-frame-alist
+#+begin_src emacs-lisp
+  (setq default-frame-alist
+		'((tab-bar-lines . 1)
+		  (inhibit-double-buffering . t)
+		  (height . 46)
+		  (width . 80)
+		  (internal-border-width . 0)
+		  (background-color . "honeydew")
+		  (font . "Menlo 11")
+		  (vertical-scroll-bars)
+		  (left-fringe . 8)
+		  (right-fringe . 0)))
+#+end_src

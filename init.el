@@ -321,13 +321,27 @@
 
 ;; Scroll-bar
 (if (fboundp 'scroll-bar-mode)
-	(scroll-bar-mode 0))
+	(scroll-bar-mode 1))
 
 ;; for athena
 ;; (set-scroll-bar-mode 'right)
 
 ;; disable minibuffer scroll-bar
 ;; (set-window-scroll-bars (minibuffer-window) nil nil)
+
+(defun fix-scroll-bars ()
+  (interactive)
+  (mapc (lambda (win)
+		  (set-window-scroll-bars win 14 'right))
+		(window-list)))
+
+(defun reset-scroll-bars ()
+  (interactive)
+  (redisplay t)
+  (force-window-update nil)
+  (mapc (lambda (win)
+		  (set-window-scroll-bars win 15 'right))
+		(window-list)))
 
 (defun update-scroll-bars ()
   (interactive)
@@ -381,8 +395,8 @@
 
 ;; Enable tab-bar & local scroll-bar when using emacsclient
 (use-package emacs
-  :hook (server-after-make-frame . tab-bar-enable)
-  :hook (server-after-make-frame . enable-local-scroll-bar))
+  ;;:hook (server-after-make-frame . enable-local-scroll-bar)
+  :hook (server-after-make-frame . tab-bar-enable))
 
 ;; Time in tab-bar
 ;; (display-time-mode 1)
@@ -417,10 +431,13 @@
   (add-to-list 'default-frame-alist '(reverse . t)))
 ;;(reverse-video-mode)
 
-;; normal scroll-bar
+;; light scroll-bar
 (defun light-sb ()
   "Default scroll-bar."
   (interactive)
+  (remove-hook 'window-configuration-change-hook 'fix-scroll-bars)
+  (remove-hook 'buffer-list-update-hook 'fix-scroll-bars)
+  (reset-scroll-bars)
   (custom-set-faces
    '(scroll-bar
 	 ((t
@@ -428,8 +445,10 @@
 
 ;; dark scroll-bar
 (defun dark-sb ()
-  "Dark styled scroll-bar."
+  "Dark scroll-bar."
   (interactive)
+  (add-hook 'window-configuration-change-hook 'fix-scroll-bars)
+  (add-hook 'buffer-list-update-hook 'fix-scroll-bars)
   (custom-set-faces
    '(scroll-bar
 	 ((t
@@ -1129,7 +1148,7 @@
   :config
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (setq dashboard-items '((recents  . 5)
-						  (projects . 3)
+						  (projects . 5)
 						  (bookmarks . 3)
 						  (agenda . 5)))
   (setq dashboard-banner-logo-title nil)
@@ -2934,6 +2953,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 					  :box `(:line-width -1 :color nil :style released-button))
   (set-face-attribute 'mode-line-inactive nil
 					  :box `(:line-width -1 :color "grey75" :style nil)))
+
 (defun dark-modeline()
   "Dark modeline."
   (interactive)

@@ -405,8 +405,8 @@
 
 ;; Enable tab-bar & local scroll-bar when using emacsclient
 (use-package emacs
-  ;;:hook (server-after-make-frame . enable-local-scroll-bar)
   :hook (server-after-make-frame . tab-bar-enable))
+;;:hook (server-after-make-frame . enable-local-scroll-bar)
 
 ;; Time in tab-bar
 ;; (display-time-mode 1)
@@ -416,7 +416,7 @@
 ;; 	  tab-bar-mode t)
 
 ;; Configure fringe
-(fringe-mode '(8 . 0))
+;;(fringe-mode '(8 . 0))
 (setq-default fringes-outside-margins nil)
 (setq-default indicate-buffer-boundaries nil)
 (setq-default indicate-empty-lines nil)
@@ -1058,7 +1058,7 @@
   :defer 3
   ;;:init (doom-modeline-mode)
   :config
-  (setq doom-modeline-height 26)
+  (setq doom-modeline-height 28)
   (setq doom-modeline-buffer-file-name-style 'file-name
 		doom-modeline-enable-word-count t
 		doom-modeline-buffer-encoding nil
@@ -1163,8 +1163,8 @@
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (setq dashboard-items '((recents  . 5)
 						  (projects . 5)
-						  (bookmarks . 3)
-						  (agenda . 5)))
+						  (bookmarks . 3)))
+  ;;(agenda . 2)))
   (setq dashboard-banner-logo-title nil)
   (setq dashboard-startup-banner 'official)
   ;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
@@ -2991,6 +2991,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (light-minimap)
   (kind-icon-reset-cache)
   (setq dashboard-startup-banner 'official)
+  (if (string-equal (buffer-name) "*dashboard*")
+	  (dashboard-refresh-buffer))
   ;; load light theme
   ;;(load-theme 'modus-operandi t)
   (light-modeline)
@@ -3010,6 +3012,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (dark-minimap)
   (kind-icon-reset-cache)
   (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+  (if (string-equal (buffer-name) "*dashboard*")
+	  (dashboard-refresh-buffer))
   ;; load dark theme
   (load-theme 'vscode-dark-plus t)
   (dark-modeline)

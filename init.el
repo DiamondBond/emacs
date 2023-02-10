@@ -312,7 +312,7 @@
 
 ;; Menu-bar
 (if (fboundp 'menu-bar-mode)
-	(menu-bar-mode 0))
+	(menu-bar-mode 1))
 
 ;; Tool-bar
 (if (fboundp 'tool-bar-mode)
@@ -404,9 +404,9 @@
 ;; (setq tab-bar-new-button-show nil)
 
 ;; Enable tab-bar & local scroll-bar when using emacsclient
-(use-package emacs
-  :hook (server-after-make-frame . tab-bar-enable))
-;;:hook (server-after-make-frame . enable-local-scroll-bar)
+;; (use-package emacs
+;;   :hook (server-after-make-frame . tab-bar-enable)
+;;   :hook (server-after-make-frame . enable-local-scroll-bar))
 
 ;; Time in tab-bar
 ;; (display-time-mode 1)
@@ -635,8 +635,8 @@
 ;; (global-set-key (kbd "S-<f5>") 'open-treemacs)
 (global-set-key (kbd "S-<f7>") 'local-scroll-bar-toggle)
 (global-set-key (kbd "S-<f8>") 'other-frame)
-(global-set-key (kbd "<f9>") 'tab-bar-toggle)
-(global-set-key (kbd "S-<f9>") 'toggle-frame-tab-bar)
+(global-set-key (kbd "<f9>") 'toggle-centaur-tabs)
+(global-set-key (kbd "S-<f9>") 'tab-bar-toggle)
 (global-set-key (kbd "S-<f12>") 'display-line-numbers-mode)
 (global-set-key (kbd "C-`") 'vterm-toggle)
 (global-set-key (kbd "C-/") 'comment-or-uncomment-region)
@@ -674,7 +674,7 @@
 ;; next/prev
 ;; (global-set-key (kbd "C-<tab>") 'next-buffer)
 ;; (global-set-key (kbd "C-<iso-lefttab>") 'previous-buffer)
-(global-set-key (kbd "C-<tab>") 'tab-next)
+;;(global-set-key (kbd "C-<tab>") 'tab-next)
 (define-key global-map (kbd "C-S-n") #'next-15-lines)
 (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 
@@ -1254,6 +1254,155 @@
 ;; VISUAL
 ;;---------------------------------------------------------------------
 
+;; Centaur Tabs
+(use-package centaur-tabs
+  :straight t
+  :preface
+  (defun enable-centaur-tabs ()
+	(interactive)
+	(centaur-tabs-mode -1)
+	(centaur-tabs-mode)
+	(centaur-tabs-headline-match))
+  (defun disable-centaur-tabs ()
+	(interactive)
+	(centaur-tabs-mode -1))
+  (defun toggle-centaur-tabs ()
+	(interactive)
+	(if (get 'centaur-tabs-toggle 'state)
+		(disable-centaur-tabs)
+	  (enable-centaur-tabs)))
+  :hook
+  ;;(dashboard-mode . centaur-tabs-local-mode)
+  ;;(term-mode . centaur-tabs-local-mode)
+  (calendar-mode . centaur-tabs-local-mode)
+  (org-agenda-mode . centaur-tabs-local-mode)
+  :config
+  (centaur-tabs-group-by-projectile-project) ;;for https://github.com/ema2159/centaur-tabs/issues/181#issuecomment-1075806796
+  (centaur-tabs-headline-match)
+  (setq centaur-tabs-style "bar"
+		centaur-tabs-height 22
+		centaur-tabs-set-icons nil
+		centaur-tabs-plain-icons nil
+		;;centaur-tabs-gray-out-icons #'buffer
+		centaur-tabs-set-bar #'under
+		x-underline-at-descent-line t
+		;;centaur-tabs-close-button "×"
+		;;centaur-tabs-modified-marker "•"
+		;;centaur-tabs-show-new-tab-button t
+		;;centaur-tabs-show-count t
+		centaur-tabs-show-navigation-buttons t)
+  (defun centaur-tabs-buffer-groups ()
+	"`centaur-tabs-buffer-groups' control buffers' group rules.
+
+Group centaur-tabs with mode if buffer is derived from `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
+All buffer name start with * will group to \"Emacs\".
+Other buffer group by `centaur-tabs-get-group-name' with project name."
+	(list
+	 (cond
+	  ((or (string-equal "*" (substring (buffer-name) 0 1))
+		   (memq major-mode '(magit-process-mode
+							  magit-status-mode
+							  magit-diff-mode
+							  magit-log-mode
+							  magit-file-mode
+							  magit-blob-mode
+							  magit-blame-mode
+							  )))
+	   "Emacs")
+	  ((derived-mode-p 'prog-mode)
+	   "Editing")
+	  ((derived-mode-p 'dired-mode)
+	   "Dired")
+	  ((memq major-mode '(vterm-mode
+						  term-mode))
+	   "VTerm")
+	  ((memq major-mode '(helpful-mode
+						  help-mode))
+	   "Help")
+	  ((memq major-mode '(org-mode
+						  org-agenda-clockreport-mode
+						  org-src-mode
+						  org-agenda-mode
+						  org-beamer-mode
+						  org-indent-mode
+						  org-bullets-mode
+						  org-cdlatex-mode
+						  org-agenda-log-mode
+						  diary-mode))
+	   "OrgMode")
+	  (t
+	   (centaur-tabs-get-group-name (current-buffer))))))
+  (defun centaur-tabs-hide-tab (x)
+	"Do no to show buffer X in tabs."
+	(let ((name (format "%s" x)))
+	  (or
+	   ;; Current window is not dedicated window.
+	   (window-dedicated-p (selected-window))
+
+	   ;; Buffer name not match below blacklist.
+	   (string-prefix-p "*epc" name)
+	   (string-prefix-p "*helm" name)
+	   (string-prefix-p "*Helm" name)
+	   (string-prefix-p "*Compile-Log*" name)
+	   (string-prefix-p "*lsp" name)
+	   (string-prefix-p "*company" name)
+	   (string-prefix-p "*Flycheck" name)
+	   (string-prefix-p "*tramp" name)
+	   (string-prefix-p " *Mini" name)
+	   (string-prefix-p "*help" name)
+	   (string-prefix-p "*straight" name)
+	   (string-prefix-p " *temp" name)
+	   (string-prefix-p "*Help" name)
+	   (string-prefix-p "*mybuf" name)
+
+	   (string-prefix-p "*doom" name)
+	   (string-prefix-p "*scratch*" name)
+	   (string-prefix-p "*Messages" name)
+
+	   ;; cpp
+	   (string-prefix-p "*clangd" name)
+	   (string-prefix-p "*clangd::stderr" name)
+	   (string-prefix-p "*ccls*" name)
+	   (string-prefix-p "*ccls::stderr*" name)
+	   (string-prefix-p "*format-all-errors*" name)
+
+	   ;; bash
+	   (string-prefix-p "*bash-ls*" name)
+	   (string-prefix-p "*bash-ls::stderr*" name)
+
+	   ;; org
+	   (string-prefix-p "*Org Preview LaTeX Output*" name)
+	   (string-prefix-p "*elfeed-log*" name)
+
+	   ;; python
+	   (string-prefix-p "*pyright*" name)
+	   (string-prefix-p "*pyright::stderr*" name)
+
+	   ;; other
+	   (string-prefix-p "*Native-compile-Log*" name)
+	   (string-prefix-p "*httpd*" name)
+	   (string-prefix-p "*Shell Command Output" name)
+
+	   ;; Is not magit buffer.
+	   (and (string-prefix-p "magit" name)
+			(not (file-name-extension name)))
+	   )))
+
+  ;; Binds
+  (global-set-key (kbd "C-x t 2") 'centaur-tabs--create-new-tab)
+  (global-set-key (kbd "C-x t 0") 'kill-buffer-and-window)
+  (global-set-key (kbd "C-x t t") 'centaur-tabs-ace-jump)
+  (global-set-key (kbd "C-<tab>") 'centaur-tabs-forward)
+  (global-set-key (kbd "C-<iso-lefttab>") 'centaur-tabs-backward))
+
+;; Automatically enable centaur-tabs
+;; (if (daemonp)
+;; 	(add-hook 'after-make-frame-functions
+;; 			  (lambda (frame)
+;; 				(with-selected-frame frame
+;; 				  (enable-centaur-tabs)))
+;; 			  (enable-centaur-tabs)))
+
 ;; Clean up the modeline
 (use-package diminish
   :straight t
@@ -1669,8 +1818,10 @@
   :bind (("C-x g" . magit-status))
   :config
   (evil-define-key 'normal magit-mode-map (kbd "K") #'magit-discard)
-  (evil-define-key 'normal magit-mode-map (kbd "C-<tab>") #'tab-next)
-  (evil-define-key 'normal magit-mode-map (kbd "C-<iso-lefttab>") #'tab-prev)
+  ;;(evil-define-key 'normal magit-mode-map (kbd "C-<tab>") #'tab-next)
+  ;;(evil-define-key 'normal magit-mode-map (kbd "C-<iso-lefttab>") #'tab-prev)
+  (evil-define-key 'normal magit-mode-map (kbd "C-<tab>") #'centaur-tabs-forward)
+  (evil-define-key 'normal magit-mode-map (kbd "C-<iso-lefttab>") #'centaur-tabs-backward)
 
   (defun parse-url (url)
 	"convert a git remote location as a HTTP URL"
@@ -2544,23 +2695,23 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (defun setup-goal ()
   ;; if we are in a gc file, change indent settings for GOAL
   (when (and (stringp buffer-file-name)
-             (string-match "\\.gc\\'" buffer-file-name))
-    (put 'with-pp      'common-lisp-indent-function 0)
-    (put 'while        'common-lisp-indent-function 1)
-    (put 'rlet         'common-lisp-indent-function 1)
-    (put 'until        'common-lisp-indent-function 1)
-    (put 'countdown    'common-lisp-indent-function 1)
-    (put 'defun-debug  'common-lisp-indent-function 2)
-    (put 'defenum      'common-lisp-indent-function 2)
+			 (string-match "\\.gc\\'" buffer-file-name))
+	(put 'with-pp      'common-lisp-indent-function 0)
+	(put 'while        'common-lisp-indent-function 1)
+	(put 'rlet         'common-lisp-indent-function 1)
+	(put 'until        'common-lisp-indent-function 1)
+	(put 'countdown    'common-lisp-indent-function 1)
+	(put 'defun-debug  'common-lisp-indent-function 2)
+	(put 'defenum      'common-lisp-indent-function 2)
 
-    ;; disable slime
-    (slime-mode -1)
+	;; disable slime
+	(slime-mode -1)
 
-    ;; indent for common lisp, this makes if's look nicer
-    (custom-set-variables '(lisp-indent-function 'common-lisp-indent-function))
-    (autoload 'common-lisp-indent-function "cl-indent" "Common Lisp indent.")
-    ;; use spaces, not tabs
-    (setq-default indent-tabs-mode nil)))
+	;; indent for common lisp, this makes if's look nicer
+	(custom-set-variables '(lisp-indent-function 'common-lisp-indent-function))
+	(autoload 'common-lisp-indent-function "cl-indent" "Common Lisp indent.")
+	;; use spaces, not tabs
+	(setq-default indent-tabs-mode nil)))
 
 ;; JSON
 (use-package json-mode
@@ -3033,7 +3184,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (disable-all-themes)
   ;; configure frame
   ;;(fringe-mode nil)
+  (menu-bar-mode 1)
   (scroll-bar-mode 1)
+  (disable-centaur-tabs)
   (light-minimap)
   (kind-icon-reset-cache)
   (setq dashboard-startup-banner 'official)
@@ -3054,7 +3207,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; configure frame
   ;;(fringe-mode 0)
   ;;(dark-sb)
+  (menu-bar-mode 0)
   (scroll-bar-mode 0)
+  (enable-centaur-tabs)
   (dark-minimap)
   (kind-icon-reset-cache)
   (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))

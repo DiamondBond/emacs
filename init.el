@@ -1285,13 +1285,13 @@
 		centaur-tabs-height 22
 		centaur-tabs-set-icons nil
 		centaur-tabs-plain-icons nil
-		;;centaur-tabs-gray-out-icons #'buffer
+		;; centaur-tabs-gray-out-icons #'buffer
 		centaur-tabs-set-bar #'under
 		x-underline-at-descent-line t
-		;;centaur-tabs-close-button "×"
-		;;centaur-tabs-modified-marker "•"
-		;;centaur-tabs-show-new-tab-button t
-		;;centaur-tabs-show-count t
+		;; centaur-tabs-close-button "×"
+		;; centaur-tabs-modified-marker "•"
+		;; centaur-tabs-show-new-tab-button t
+		;; centaur-tabs-show-count t
 		centaur-tabs-show-navigation-buttons t)
   (defun centaur-tabs-buffer-groups ()
 	"`centaur-tabs-buffer-groups' control buffers' group rules.
@@ -3221,7 +3221,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (enable-centaur-tabs)
   (dark-minimap)
   (kind-icon-reset-cache)
-  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+  ;;(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+  (setq dashboard-startup-banner 'logo)
   (if (string-equal (buffer-name) "*dashboard*")
 	  (dashboard-refresh-buffer))
   ;; load dark theme
@@ -3771,6 +3772,11 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 ;;---------------------------------------------------------------------
 ;; END
 ;;---------------------------------------------------------------------
+
+;; config/dark
+(add-hook 'emacs-startup-hook
+		  (lambda () (config/dark-theme)
+			(auto-enable-centaur-tabs)))
 
 ;; Restore desired GC values
 (add-hook 'emacs-startup-hook

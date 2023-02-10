@@ -1260,11 +1260,13 @@
   :preface
   (defun enable-centaur-tabs ()
 	(interactive)
+	(put 'centaur-tabs-toggle 'state t)
 	(centaur-tabs-mode -1)
 	(centaur-tabs-mode)
 	(centaur-tabs-headline-match))
   (defun disable-centaur-tabs ()
 	(interactive)
+	(put 'centaur-tabs-toggle 'state nil)
 	(centaur-tabs-mode -1))
   (defun toggle-centaur-tabs ()
 	(interactive)
@@ -1315,7 +1317,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 	   "Dired")
 	  ((memq major-mode '(vterm-mode
 						  term-mode))
-	   "VTerm")
+	   "Term")
 	  ((memq major-mode '(helpful-mode
 						  help-mode))
 	   "Help")
@@ -1378,6 +1380,11 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 	   (string-prefix-p "*pyright*" name)
 	   (string-prefix-p "*pyright::stderr*" name)
 
+	   ;; typescript
+	   (string-prefix-p "*tide-server*" name)
+	   (string-prefix-p "*ts-ls*" name)
+	   (string-prefix-p "*ts-ls::stderr*" name)
+
 	   ;; other
 	   (string-prefix-p "*Native-compile-Log*" name)
 	   (string-prefix-p "*httpd*" name)
@@ -1396,12 +1403,14 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   (global-set-key (kbd "C-<iso-lefttab>") 'centaur-tabs-backward))
 
 ;; Automatically enable centaur-tabs
-;; (if (daemonp)
-;; 	(add-hook 'after-make-frame-functions
-;; 			  (lambda (frame)
-;; 				(with-selected-frame frame
-;; 				  (enable-centaur-tabs)))
-;; 			  (enable-centaur-tabs)))
+(defun auto-enable-centaur-tabs ()
+  (interactive)
+  (if (daemonp)
+	  (add-hook 'after-make-frame-functions
+				(lambda (frame)
+				  (with-selected-frame frame
+					(enable-centaur-tabs)))
+				(enable-centaur-tabs))))
 
 ;; Clean up the modeline
 (use-package diminish

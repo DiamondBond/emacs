@@ -81,7 +81,7 @@
  globals--auth-info    "~/.authinfo.gpg"                    ; Auth Info
  globals--auth-sources '("~/.authinfo.gpg")                 ; Auth Sources
  globals--browser      'browse-url-firefox                  ; Browser
- globals--banner-path  "img/gnusstorm-2.gif"                ; Banner
+ globals--banner-path  "img/spacemacs-logo.png"             ; Banner
  )
 
 ;; apply globals
@@ -1140,6 +1140,7 @@
   :diminish dashboard-mode
   :defer nil
   :init
+  (add-hook 'after-init-hook 'dashboard-refresh-buffer)
   (add-hook 'dashboard-mode-hook (lambda () (setq show-trailing-whitespace nil)))
   :preface
   ;; Random banner
@@ -1166,15 +1167,14 @@
 						  (bookmarks . 3)))
   ;;(agenda . 2)))
   (setq dashboard-banner-logo-title nil)
-  (setq dashboard-startup-banner 'official)
-  ;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+  ;; (setq dashboard-startup-banner 'official)
+  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
   ;; (setq dashboard-startup-banner  (if (display-graphic-p)
   ;; 									  (home/choose-gif)
   ;; 									(join-path home-banners-dir "text-banner.txt")))
-  ;; (setq dashboard-startup-banner (join-path home-banners-dir "text-banner.txt"))
   (setq dashboard-center-content t)
   ;; (setq dashboard-show-shortcuts nil)
-  ;; (setq dashboard-set-init-info nil) ;; hide init info
+  (setq dashboard-set-init-info nil) ;; hide init info
   (setq dashboard-set-footer nil) ;; hide footer
   (setq dashboard-set-navigator t) ;; show nav
 
@@ -1296,9 +1296,9 @@
   (defun centaur-tabs-buffer-groups ()
 	"`centaur-tabs-buffer-groups' control buffers' group rules.
 
-Group centaur-tabs with mode if buffer is derived from `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
-All buffer name start with * will group to \"Emacs\".
-Other buffer group by `centaur-tabs-get-group-name' with project name."
+  Group centaur-tabs with mode if buffer is derived from `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
+  All buffer name start with * will group to \"Emacs\".
+  Other buffer group by `centaur-tabs-get-group-name' with project name."
 	(list
 	 (cond
 	  ((or (string-equal "*" (substring (buffer-name) 0 1))
@@ -1318,6 +1318,9 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 	  ((memq major-mode '(vterm-mode
 						  term-mode))
 	   "Term")
+	  ((memq major-mode '(erc-mode
+						  rcirc-mode))
+	   "IRC")
 	  ((memq major-mode '(helpful-mode
 						  help-mode))
 	   "Help")
@@ -1346,18 +1349,19 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 	   (string-prefix-p "*helm" name)
 	   (string-prefix-p "*Helm" name)
 	   (string-prefix-p "*Compile-Log*" name)
+	   (string-prefix-p "*Semantic SymRef*" name)
 	   (string-prefix-p "*lsp" name)
 	   (string-prefix-p "*company" name)
 	   (string-prefix-p "*Flycheck" name)
+	   (string-prefix-p "*Flymake" name)
 	   (string-prefix-p "*tramp" name)
 	   (string-prefix-p " *Mini" name)
 	   (string-prefix-p "*help" name)
 	   (string-prefix-p "*straight" name)
 	   (string-prefix-p " *temp" name)
 	   (string-prefix-p "*Help" name)
-	   (string-prefix-p "*mybuf" name)
 
-	   (string-prefix-p "*doom" name)
+	   (string-prefix-p "*direnv*" name)
 	   (string-prefix-p "*scratch*" name)
 	   (string-prefix-p "*Messages" name)
 
@@ -1399,6 +1403,9 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   (global-set-key (kbd "C-x t 2") 'centaur-tabs--create-new-tab)
   (global-set-key (kbd "C-x t 0") 'kill-buffer-and-window)
   (global-set-key (kbd "C-x t t") 'centaur-tabs-ace-jump)
+  (global-set-key (kbd "C-x t h") 'centaur-tabs-move-current-tab-to-left)
+  (global-set-key (kbd "C-x t l") 'centaur-tabs-move-current-tab-to-right)
+
   (global-set-key (kbd "C-<tab>") 'centaur-tabs-forward)
   (global-set-key (kbd "C-<iso-lefttab>") 'centaur-tabs-backward))
 
@@ -3221,8 +3228,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (enable-centaur-tabs)
   (dark-minimap)
   (kind-icon-reset-cache)
-  ;;(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
-  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
   (if (string-equal (buffer-name) "*dashboard*")
 	  (dashboard-refresh-buffer))
   ;; load dark theme
@@ -3239,15 +3245,15 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	  (config/light-theme)
 	(config/dark-theme)))
 
-(defvar vscode-mode-first-run t)
+;; (defvar vscode-mode-first-run t)
 (defun config/vscode-mode ()
   "Emulate vscode."
   (interactive)
-  (when vscode-mode-first-run
-	(setq vscode-mode-first-run nil)
-	(when (yes-or-no-p "Load VSCode theme?")
-	  (progn
-		(config/dark-theme))))
+  ;; (when vscode-mode-first-run
+  ;; 	(setq vscode-mode-first-run nil)
+  ;; 	(when (yes-or-no-p "Load VSCode theme?")
+  ;; 	  (progn
+  ;; 		(config/dark-theme))))
   ;;(scroll-bar-mode 0)
   ;;(menu-bar-mode 0)
   ;;(tab-bar-enable)

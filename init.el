@@ -1049,12 +1049,12 @@
 ;;---------------------------------------------------------------------
 
 (use-package vs-dark-theme
-  :straight t
+  :disabled t
   :defer 3)
 
 (use-package vscode-dark-plus-theme
-  :straight t
-  :defer 3)
+  :straight t)
+  ;; :defer 1)
 
 ;; Doom themes
 (use-package doom-themes
@@ -1064,7 +1064,7 @@
 ;; Doom modeline
 (use-package doom-modeline
   :straight t
-  :defer 3
+  ;; :defer 1
   ;;:init (doom-modeline-mode)
   :config
   (setq doom-modeline-height 28)
@@ -1088,8 +1088,8 @@
 
 ;; Zenburn theme
 (use-package zenburn-theme
-  :defer 3
-  :straight t)
+  :disabled t
+  :defer 3)
 
 ;; Spacemacs theme
 (use-package spacemacs-theme

@@ -20,10 +20,23 @@
   (display-time-mode 1)
   ;; Also take a look at display-time-format and format-time-string
 
+  ;; Alt-Tab setup
+  (defvar exwm-workspace-previous-index nil "The previous active workspace index.")
+  (advice-add 'exwm-workspace-switch :before #'exwm-workspace--current-to-previous-index)
+
   ;; Launch apps that will run in the background
   (efs/run-in-background "nm-applet")
   (efs/run-in-background "pasystray")
   (efs/run-in-background "blueman-applet"))
+
+;; Alt-Tab functions
+(defun exwm-workspace--current-to-previous-index (_x)
+  (setq exwm-workspace-previous-index exwm-workspace-current-index))
+(defun exwm-workspace-switch-to-previous ()
+  (interactive)
+  "Switch to the previous active workspace."
+  (let ((index exwm-workspace-previous-index))
+	(exwm-workspace-switch index)))
 
 (defun efs/exwm-update-class ()
   (exwm-workspace-rename-buffer exwm-class-name))
@@ -129,20 +142,6 @@
   (interactive)
   (let ((selected-app (completing-read "Run a command: " (counsel-linux-apps-list))))
 	(counsel-linux-app-action selected-app)))
-
-;; exwm alt-tab like functionality
-(defvar exwm-workspace-previous-index nil "The previous active workspace index.")
-
-(defun exwm-workspace--current-to-previous-index (_x)
-  (setq exwm-workspace-previous-index exwm-workspace-current-index))
-
-(advice-add 'exwm-workspace-switch :before #'exwm-workspace--current-to-previous-index)
-
-(defun exwm-workspace-switch-to-previous ()
-  (interactive)
-  "Switch to the previous active workspace."
-  (let ((index exwm-workspace-previous-index))
-	(exwm-workspace-switch index)))
 
 (use-package exwm
   :straight t

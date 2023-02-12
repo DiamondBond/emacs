@@ -130,6 +130,20 @@
   (let ((selected-app (completing-read "Run a command: " (counsel-linux-apps-list))))
 	(counsel-linux-app-action selected-app)))
 
+;; exwm alt-tab like functionality
+(defvar exwm-workspace-previous-index nil "The previous active workspace index.")
+
+(defun exwm-workspace--current-to-previous-index (_x)
+  (setq exwm-workspace-previous-index exwm-workspace-current-index))
+
+(advice-add 'exwm-workspace-switch :before #'exwm-workspace--current-to-previous-index)
+
+(defun exwm-workspace-switch-to-previous ()
+  (interactive)
+  "Switch to the previous active workspace."
+  (let ((index exwm-workspace-previous-index))
+	(exwm-workspace-switch index)))
+
 (use-package exwm
   :straight t
   :diminish exwm
@@ -243,9 +257,9 @@
   ;; functions
   (exwm-input-set-key (kbd "s-f") 'statf)
   (exwm-input-set-key (kbd "s-x") 'app-launcher)
-  (exwm-input-set-key (kbd "s-S-x") 'x11-fav-launcher)
+  (exwm-input-set-key (kbd "s-X") 'x11-fav-launcher)
+  (exwm-input-set-key (kbd "M-<tab>") 'exwm-workspace-switch-to-previous)
   (exwm-input-set-key (kbd "C-s-SPC") 'efs/read-desktop-notification)
-  (exwm-input-set-key (kbd "s-<f12>") (lambda () (interactive) (start-process "" nil "systemctl suspend ")))
 
   ;; start exwm
   (exwm-enable))

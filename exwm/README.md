@@ -14,4 +14,15 @@ pasystray
 blueman
 picom
 dunst
+mpd mpc ncmpcpp
+```
+
+DE Deps:
+https://github.com/DamienCassou/desktop-environment#configuration
+```
+amixer
+brightnessctl
+scrot
+slock
+playerctl
 ```

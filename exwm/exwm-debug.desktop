@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=EXWM (Debug)
+Comment=Emacs Window Manager (Debug Init)
+Exec=sh /home/diamond/.emacs.d/exwm/start-exwm-debug.sh
+TryExec=sh
+Type=Application
+X-LightDM-DesktopName=exwm
+DesktopNames=exwm

@@ -399,6 +399,8 @@
 ;; (setq tab-bar-show t)
 ;; (tab-bar-history-mode 1)
 (setq tab-bar-history-limit 25)
+(setq tab-bar-new-button-show nil)
+(setq tab-bar-close-button-show nil)
 ;; (setq tab-bar-new-tab-choice "*GNU Emacs*")
 ;; (setq tab-bar-close-button-show nil)
 ;; (setq tab-bar-new-button-show nil)
@@ -635,9 +637,10 @@
 ;; (global-set-key (kbd "S-<f5>") 'open-treemacs)
 (global-set-key (kbd "S-<f7>") 'local-scroll-bar-toggle)
 (global-set-key (kbd "S-<f8>") 'other-frame)
-(global-set-key (kbd "<f9>") 'toggle-centaur-tabs)
-(global-set-key (kbd "S-<f9>") 'tab-bar-toggle)
+(global-set-key (kbd "<f9>") 'tab-bar-toggle)
+;;(global-set-key (kbd "S-<f9>") 'toggle-centaur-tabs)
 (global-set-key (kbd "S-<f12>") 'display-line-numbers-mode)
+(global-set-key (kbd "s-b") 'switch-to-buffer)
 (global-set-key (kbd "C-`") 'vterm-toggle)
 (global-set-key (kbd "C-/") 'comment-or-uncomment-region)
 (global-set-key (kbd "C-S-b") 'neotree/toggle)
@@ -659,6 +662,7 @@
 (global-set-key (kbd "s-C-<down>") 'shrink-window)
 (global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
+
 ;; hjkl
 (global-set-key (kbd "s-C-k") 'enlarge-window)
 (global-set-key (kbd "s-C-j") 'shrink-window)
@@ -670,6 +674,11 @@
 (global-set-key (kbd "s-j") 'windmove-down)
 (global-set-key (kbd "s-h") 'windmove-left)
 (global-set-key (kbd "s-l") 'windmove-right)
+
+(global-set-key (kbd "s-K") 'windmove-swap-states-up)
+(global-set-key (kbd "s-J") 'windmove-swap-states-down)
+(global-set-key (kbd "s-H") 'windmove-swap-states-left)
+(global-set-key (kbd "s-L") 'windmove-swap-states-right)
 
 ;; next/prev
 ;; (global-set-key (kbd "C-<tab>") 'next-buffer)
@@ -1068,6 +1077,8 @@
 		doom-modeline-hud t ;; Replaces scroll-bar
 		doom-modeline-major-mode-icon t
 		doom-modeline-major-mode-color-icon t
+		;; doom-modeline-time nil
+		;; doom-modeline-battery nil
 		doom-modeline-bar-width 3))
 
 ;; Dracula theme
@@ -1164,7 +1175,7 @@
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (setq dashboard-items '((recents  . 5)
 						  (projects . 5)
-						  (bookmarks . 3)))
+						  (bookmarks . 5)))
   ;;(agenda . 2)))
   (setq dashboard-banner-logo-title nil)
   ;; (setq dashboard-startup-banner 'official)
@@ -1256,7 +1267,7 @@
 
 ;; Centaur Tabs
 (use-package centaur-tabs
-  :straight t
+  :disabled t
   :preface
   (defun enable-centaur-tabs ()
 	(interactive)
@@ -1407,7 +1418,8 @@
   (global-set-key (kbd "C-x t l") 'centaur-tabs-move-current-tab-to-right)
 
   (global-set-key (kbd "C-<tab>") 'centaur-tabs-forward)
-  (global-set-key (kbd "C-<iso-lefttab>") 'centaur-tabs-backward))
+  (global-set-key (kbd "C-<iso-lefttab>") 'centaur-tabs-backward)
+  )
 
 ;; Automatically enable centaur-tabs
 (defun auto-enable-centaur-tabs ()
@@ -3006,7 +3018,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   "Enable tab-bar with history."
   (interactive)
   (tab-bar-mode 1)
-  (tab-bar-history-mode 1)
+  ;;(tab-bar-history-mode 1)
   (put 'tab-bar-toggle 'state t))
 
 (defun tab-bar-disable ()
@@ -3191,7 +3203,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (set-face-attribute 'mode-line nil
 					  :box `(:line-width -1 :color "#2A2A2A" :style nil))
   (set-face-attribute 'mode-line-inactive nil
-					  :box `(:line-width -1 :color "#1F1F1F" :style nil)))
+					  :box `(:line-width -1 :color "#2A2A2A" :style nil))) ;;1F1F1F
 
 (defun config/light-theme ()
   "Light theme."
@@ -3202,7 +3214,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;;(fringe-mode nil)
   (menu-bar-mode 1)
   (scroll-bar-mode 1)
-  (disable-centaur-tabs)
+  ;;(disable-centaur-tabs)
   (light-minimap)
   (kind-icon-reset-cache)
   (setq dashboard-startup-banner 'official)
@@ -3210,6 +3222,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	  (dashboard-refresh-buffer))
   ;; load light theme
   ;;(load-theme 'modus-operandi t)
+  ;;(light-tabline)
   (light-modeline)
   (doom-modeline-mode 0)
   ;;(indent-guides-init-faces)
@@ -3225,7 +3238,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;;(dark-sb)
   (menu-bar-mode 0)
   (scroll-bar-mode 0)
-  (enable-centaur-tabs)
+  ;;(enable-centaur-tabs)
   (dark-minimap)
   (kind-icon-reset-cache)
   (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
@@ -3233,6 +3246,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	  (dashboard-refresh-buffer))
   ;; load dark theme
   (load-theme 'vscode-dark-plus t)
+  ;;(dark-tabline)
   (dark-modeline)
   (doom-modeline-mode 1)
   ;;(indent-guides-dark-faces)
@@ -3776,18 +3790,24 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
   :bind ("C-c q" . chatgpt-query))
 
 ;;---------------------------------------------------------------------
-;; END
+;; LOAD THEME
 ;;---------------------------------------------------------------------
 
 ;; config/dark
 (add-hook 'emacs-startup-hook
-		  (lambda () (config/dark-theme)
-			(auto-enable-centaur-tabs)))
+		  (lambda () (config/dark-theme)))
+
+;;---------------------------------------------------------------------
+;; END
+;;---------------------------------------------------------------------
 
 ;; Restore desired GC values
 (add-hook 'emacs-startup-hook
 		  (lambda ()
 			(setq gc-cons-threshold lsp-cons-threshold)
 			(setq gc-cons-percentage gc-cons-percentage-original)))
+
+;; Start server
+(server-start)
 
 ;;; init.el ends here

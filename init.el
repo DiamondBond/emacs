@@ -3107,6 +3107,10 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	(vterm-send-string command)
 	(vterm-send-return)))
 
+(defun ncmpcpp ()
+  (interactive)
+  (run-in-vterm "ncmpcpp"))
+
 (defun yank-whole-buffer ()
   "Yank whole buffer."
   (interactive)

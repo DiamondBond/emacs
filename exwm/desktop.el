@@ -25,8 +25,11 @@
   (advice-add 'exwm-workspace-switch :before #'exwm-workspace--current-to-previous-index)
 
   ;; Launch apps that will run in the background
+  ;; TODO: add dropbox for matebook
   (efs/run-in-background "nm-applet")
-  (efs/run-in-background "pasystray")
+  (when (string= (system-name) "matebook")
+	(progn
+	  (efs/run-in-background "pasystray")))
   (when (string= (system-name) "matebook")
 	(progn
 	  (efs/run-in-background "blueman-applet"))))

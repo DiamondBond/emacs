@@ -190,6 +190,11 @@
 	(progn
 	  (start-process-shell-command "xrandr" nil "xrandr --output HDMI-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output eDP-1-1 --off --output DP-1-1 --off")))
 
+  ;; Disable mouse accel
+  (when (string= (system-name) "nitro")
+	(progn
+	  (start-process-shell-command "bash" nil "bash -ic ~/bin/kmaccel")))
+
   ;; Set the wallpaper after changing the resolution
   ;;(efs/set-wallpaper)
 

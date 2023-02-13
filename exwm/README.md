@@ -6,6 +6,7 @@ sudo systemctl restart gdm
 
 Dependencies:
 ```
+arandr
 xss-lock
 nm-applet
 pasystray
@@ -27,5 +28,10 @@ playerctl
 
 Ubuntu:
 ```
-sudo apt install -y xss-lock network-manager pasystray blueman picom dunst mpd mpc ncmpcpp alsa-utils brightnessctl scrot slock playerctl
+sudo apt install -y arandr xss-lock network-manager pasystray blueman picom dunst mpd mpc ncmpcpp alsa-utils brightnessctl scrot slock playerctl
+```
+
+```
+cp ~/.emacs.d/exwm/dunstrc ~/.config/dunst/dunstrc
+cp ~/.emacs.d/exwm/picom.conf ~/.config/picom.conf
 ```

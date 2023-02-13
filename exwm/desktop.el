@@ -27,7 +27,9 @@
   ;; Launch apps that will run in the background
   (efs/run-in-background "nm-applet")
   (efs/run-in-background "pasystray")
-  (efs/run-in-background "blueman-applet"))
+  (when (string= (system-name) "matebook")
+	(progn
+	  (efs/run-in-background "blueman-applet"))))
 
 ;; Alt-Tab functions
 (defun exwm-workspace--current-to-previous-index (_x)
@@ -181,7 +183,12 @@
   ;; Set the screen resolution (update this to be the correct resolution for your screen!)
   (require 'exwm-randr)
   (exwm-randr-enable)
-  (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 2160x1440 --pos 0x0 --rotate normal")
+  (when (string= (system-name) "matebook")
+	(progn
+	  (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 2160x1440 --pos 0x0 --rotate normal")))
+  (when (string= (system-name) "nitro")
+	(progn
+	  (start-process-shell-command "xrandr" nil "xrandr --output HDMI-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output eDP-1-1 --off --output DP-1-1 --off")))
 
   ;; Set the wallpaper after changing the resolution
   ;;(efs/set-wallpaper)
@@ -245,7 +252,7 @@
 					(number-sequence 0 9))))
 
   ;; app search
-  (exwm-input-set-key (kbd "s-SPC") 'counsel-linux-app)
+  (exwm-input-set-key (kbd "s-x") 'counsel-linux-app)
 
   ;; app hotkeys
   (exwm-input-set-key (kbd "s-<return>") 'app/xterm)
@@ -255,8 +262,8 @@
 
   ;; functions
   (exwm-input-set-key (kbd "s-f") 'statf)
-  (exwm-input-set-key (kbd "s-x") 'app-launcher)
-  (exwm-input-set-key (kbd "s-X") 'x11-fav-launcher)
+  (exwm-input-set-key (kbd "s-X") 'app-launcher)
+  ;;(exwm-input-set-key (kbd "s-X") 'x11-fav-launcher)
   ;; (exwm-input-set-key (kbd "M-<tab>") 'exwm-workspace-switch-to-previous)
   (exwm-input-set-key (kbd "s-<tab>") 'exwm-workspace-switch-to-previous)
   (exwm-input-set-key (kbd "C-s-SPC") 'efs/read-desktop-notification)

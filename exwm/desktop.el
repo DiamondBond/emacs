@@ -13,7 +13,10 @@
   (exwm-workspace-switch 1)
 
   ;; Show battery status in the mode line
-  (display-battery-mode 1)
+
+  (when (string= (system-name) "matebook")
+	(progn
+	  (display-battery-mode 1)))
 
   ;; Show the time and date in modeline
   (setq display-time-day-and-date t)
@@ -32,7 +35,8 @@
 	  (efs/run-in-background "pasystray")))
   (when (string= (system-name) "matebook")
 	(progn
-	  (efs/run-in-background "blueman-applet"))))
+	  (efs/run-in-background "blueman-applet")))
+  )
 
 ;; Alt-Tab functions
 (defun exwm-workspace--current-to-previous-index (_x)
@@ -68,14 +72,11 @@
 	 (exwm-layout-toggle-mode-line))
 	("Blueman-manager" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))
-	("gnome-calendar" (exwm-floating-toggle-floating)
-	 (exwm-layout-toggle-mode-line))
-	("gnome-calculator" (exwm-floating-toggle-floating)
-	 (exwm-layout-toggle-mode-line))
+	("gnome-calendar" (exwm-floating-toggle-floating))
+	("gnome-calculator" (exwm-floating-toggle-floating))
 	("Gnome-terminal" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))
-	("Gnome-system-monitor" (exwm-floating-toggle-floating)
-	 (exwm-layout-toggle-mode-line))
+	("Gnome-system-monitor" (exwm-floating-toggle-floating))
 	("Pavucontrol" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))
 	("Transmission-gtk" (exwm-floating-toggle-floating)
@@ -90,8 +91,7 @@
 	;;  (exwm-layout-toggle-mode-line))
 	("Gpick" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))
-	("Cheese" (exwm-floating-toggle-floating)
-	 (exwm-layout-toggle-mode-line))
+	("Cheese" (exwm-floating-toggle-floating))
 	("mpv" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))))
 
@@ -189,6 +189,9 @@
   (when (string= (system-name) "matebook")
 	(progn
 	  (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 2160x1440 --pos 0x0 --rotate normal")))
+  (when (string= (system-name) "matebook")
+	(progn
+	  (start-process-shell-command "bash" nil "bash -ic ~/.emacs.d/exwm/disable-touchscreen.sh")))
   (when (string= (system-name) "nitro")
 	(progn
 	  (start-process-shell-command "xrandr" nil "xrandr --output HDMI-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output eDP-1-1 --off --output DP-1-1 --off")))
@@ -219,6 +222,14 @@
 		  ?\C-u
 		  ?\C-h
 		  ?\C-1
+		  ?\s-h
+		  ?\s-j
+		  ?\s-k
+		  ?\s-l
+		  ?\s-H
+		  ?\s-J
+		  ?\s-K
+		  ?\s-L
 		  ?\M-x
 		  ?\M-`
 		  ?\M-&
@@ -235,6 +246,9 @@
 		`(
 		  ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
 		  ([?\s-r] . exwm-reset)
+
+		  ;; Toggle exwm-mode
+		  ([?\s-z] . exwm-input-toggle-keyboard)
 
 		  ;; Move between windows
 		  ;; ([s-left] . windmove-left)
@@ -261,6 +275,7 @@
 
   ;; app search
   (exwm-input-set-key (kbd "s-x") 'counsel-linux-app)
+  (exwm-input-set-key (kbd "s-SPC") 'counsel-linux-app)
 
   ;; app hotkeys
   (exwm-input-set-key (kbd "s-<return>") 'app/xterm)
@@ -271,10 +286,12 @@
   ;; functions
   (exwm-input-set-key (kbd "s-f") 'statf)
   (exwm-input-set-key (kbd "s-X") 'app-launcher)
-  ;;(exwm-input-set-key (kbd "s-X") 'x11-fav-launcher)
+  ;; (exwm-input-set-key (kbd "s-X") 'x11-fav-launcher)
   ;; (exwm-input-set-key (kbd "M-<tab>") 'exwm-workspace-switch-to-previous)
+  (exwm-input-set-key (kbd "s-g") 'app/calculator)
   (exwm-input-set-key (kbd "s-<tab>") 'exwm-workspace-switch-to-previous)
   (exwm-input-set-key (kbd "C-s-SPC") 'efs/read-desktop-notification)
+  (exwm-input-set-key (kbd "M-`") 'exwm-floating-hide)
 
   ;; start exwm
   (exwm-enable))
@@ -398,10 +415,20 @@
   (interactive)
   (start-process-shell-command "xterm" nil "xterm"))
 
+(defun app/calculator ()
+  "Gnome Calculator"
+  (interactive)
+  (start-process-shell-command "gnome-calculator" nil "gnome-calculator"))
+
 (defun app/pavucontrol ()
   "Pavucontrol"
   (interactive)
   (start-process-shell-command "pauvcontrol" nil "pavucontrol"))
+
+(defun app/arandr ()
+  "Arandr"
+  (interactive)
+  (start-process-shell-command "arandr" nil "arandr"))
 
 (defun app/firefox ()
   "Firefox"
@@ -438,7 +465,9 @@
 						 app/code
 						 app/gsm
 						 app/xterm
+						 app/calculator
 						 app/pavucontrol
+						 app/arandr
 						 app/firefox
 						 app/thunderbird
 						 app/chromium

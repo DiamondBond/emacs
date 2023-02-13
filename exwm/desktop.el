@@ -1,19 +1,13 @@
-(defun efs/run-in-background (command)
+(defun run-in-background (command)
   (let ((command-parts (split-string command "[ ]+")))
 	(apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
 
-(defun efs/set-wallpaper ()
-  (interactive)
-  ;; NOTE: You will need to update this to a valid background path!
-  (start-process-shell-command
-   "feh" nil  "feh --bg-scale /home/diamond/Pictures/Wallpapers/vnc.png"))
-
+;; EXWM Init
 (defun efs/exwm-init-hook ()
   ;; Make workspace 1 be the one where we land at startup
   (exwm-workspace-switch 1)
 
   ;; Show battery status in the mode line
-
   (when (string= (system-name) "matebook")
 	(progn
 	  (display-battery-mode 1)))
@@ -21,19 +15,18 @@
   ;; Show the time and date in modeline
   (setq display-time-day-and-date t)
   (display-time-mode 1)
-  ;; Also take a look at display-time-format and format-time-string
 
   ;; Alt-Tab setup
   (defvar exwm-workspace-previous-index nil "The previous active workspace index.")
   (advice-add 'exwm-workspace-switch :before #'exwm-workspace--current-to-previous-index)
 
   ;; Launch apps that will run in the background
-  (efs/run-in-background "nm-applet")
+  (run-in-background "nm-applet")
   (when (string= (system-name) "matebook")
 	(progn
-	  (efs/run-in-background "pasystray")
-	  (efs/run-in-background "blueman-applet")
-	  (efs/run-in-background "flatpak run com.dropbox.Client")))
+	  (run-in-background "pasystray")
+	  (run-in-background "blueman-applet")
+	  (run-in-background "flatpak run com.dropbox.Client")))
   )
 
 ;; Alt-Tab functions
@@ -45,6 +38,7 @@
   (let ((index exwm-workspace-previous-index))
 	(exwm-workspace-switch index)))
 
+;; EXWM Functions
 (defun efs/exwm-update-class ()
   (exwm-workspace-rename-buffer exwm-class-name))
 
@@ -52,15 +46,6 @@
 (defun efs/exwm-update-title ()
   (pcase exwm-class-name
 	("Firefox" (exwm-workspace-rename-buffer (format "Firefox: %s" exwm-title)))))
-
-;; This function isn't currently used, only serves as an example how to
-;; position a window
-(defun efs/position-window ()
-  (let* ((pos (frame-position))
-		 (pos-x (car pos))
-		 (pos-y (cdr pos)))
-
-	(exwm-floating-move (- pos-x) (- pos-y))))
 
 (defun efs/configure-window-by-class ()
   (interactive)
@@ -89,6 +74,7 @@
 	("mpv" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))))
 
+;; Misc Functions
 (defun rofi-linux-app ()
   (interactive)
   (start-process-shell-command
@@ -122,8 +108,8 @@
 		 (delete ".."
 				 (delete "."
 						 (append
-						  (file-expand-wildcards "/usr/share/applications/*.desktop")
 						  (file-expand-wildcards "/var/lib/flatpak/exports/share/applications/*.desktop")
+						  (file-expand-wildcards "/usr/share/applications/*.desktop")
 						  (file-expand-wildcards "~/.local/share/applications/*.desktop"))))))
 	(dolist (file (cl-set-difference files (append (mapcar 'car counsel-linux-apps-alist)
 												   counsel-linux-apps-faulty)
@@ -142,6 +128,7 @@
   (let ((selected-app (completing-read "Run a command: " (counsel-linux-apps-list))))
 	(counsel-linux-app-action selected-app)))
 
+;; EXWM
 (use-package exwm
   :straight t
   :diminish exwm
@@ -173,7 +160,6 @@
   ;; Display all EXWM buffers in every workspace buffer list
   (setq exwm-workspace-show-all-buffers t)
 
-  ;; NOTE: Uncomment this option if you want to detach the minibuffer!
   ;; Detach the minibuffer (show it with exwm-workspace-toggle-minibuffer)
   ;;(setq exwm-workspace-minibuffer-position 'top)
 
@@ -192,9 +178,6 @@
   (when (string= (system-name) "nitro")
 	(progn
 	  (start-process-shell-command "bash" nil "bash -ic ~/bin/kmaccel")))
-
-  ;; Set the wallpaper after changing the resolution
-  ;;(efs/set-wallpaper)
 
   ;; Load the system tray before exwm-init
   (require 'exwm-systemtray)
@@ -243,10 +226,10 @@
 		  ([?\s-z] . exwm-input-toggle-keyboard)
 
 		  ;; Move between windows
-		  ;; ([s-left] . windmove-left)
-		  ;; ([s-right] . windmove-right)
-		  ;; ([s-up] . windmove-up)
-		  ;; ([s-down] . windmove-down)
+		  ([s-left] . windmove-left)
+		  ([s-right] . windmove-right)
+		  ([s-up] . windmove-up)
+		  ([s-down] . windmove-down)
 
 		  ;; Launch applications via shell command
 		  ([?\s-&] . (lambda (command)
@@ -265,29 +248,30 @@
 						  (exwm-workspace-switch-create ,i))))
 					(number-sequence 0 9))))
 
-  ;; app search
+  ;; App Search
   (exwm-input-set-key (kbd "s-x") 'counsel-linux-app)
   (exwm-input-set-key (kbd "s-SPC") 'counsel-linux-app)
 
-  ;; app hotkeys
+  ;; App Hotkeys
   (exwm-input-set-key (kbd "s-<return>") 'app/xterm)
   (exwm-input-set-key (kbd "s-W") 'app/firefox)
   (exwm-input-set-key (kbd "s-E") 'app/files)
   (exwm-input-set-key (kbd "s-P") 'app/pavucontrol)
 
-  ;; functions
+  ;; Functions
   (exwm-input-set-key (kbd "s-f") 'statf)
   (exwm-input-set-key (kbd "s-X") 'app-launcher)
   ;; (exwm-input-set-key (kbd "s-X") 'x11-fav-launcher)
-  ;; (exwm-input-set-key (kbd "M-<tab>") 'exwm-workspace-switch-to-previous)
   (exwm-input-set-key (kbd "s-g") 'app/calculator)
   (exwm-input-set-key (kbd "s-<tab>") 'exwm-workspace-switch-to-previous)
+  ;; (exwm-input-set-key (kbd "M-<tab>") 'exwm-workspace-switch-to-previous)
   (exwm-input-set-key (kbd "C-s-SPC") 'efs/read-desktop-notification)
   (exwm-input-set-key (kbd "M-`") 'exwm-floating-hide)
 
-  ;; start exwm
+  ;; Start EXWM
   (exwm-enable))
 
+;; DE
 (use-package desktop-environment
   :straight t
   :after exwm
@@ -309,7 +293,7 @@
 			 ;; Screenshot
 			 (,(kbd "S-<print>") . ,(function desktop-environment-screenshot-part))
 			 (,(kbd "<print>") . ,(function desktop-environment-screenshot))
-			 ;; Replace s-l (default: screen lock) with windmove-right
+			 ;; Replace s-l (default: screen-lock) with windmove-right
 			 (,(kbd "s-l") . ,(function windmove-right))
 			 ;; Screen locking
 			 (,(kbd "s-<f2>") . ,(function desktop-environment-lock-screen))
@@ -336,31 +320,7 @@
   (desktop-environment-brightness-normal-increment "5%+")
   (desktop-environment-brightness-normal-decrement "5%-"))
 
-;; Polybar
-;; (defvar efs/polybar-process nil
-;;   "Holds the process of the running Polybar instance, if any")
-
-;; (defun efs/kill-panel ()
-;;   (interactive)
-;;   (when efs/polybar-process
-;;     (ignore-errors
-;;       (kill-process efs/polybar-process)))
-;;   (setq efs/polybar-process nil))
-
-;; (defun efs/start-panel ()
-;;   (interactive)
-;;   (efs/kill-panel)
-;;   (setq efs/polybar-process (start-process-shell-command "polybar" nil "polybar panel")))
-
-;; (defun efs/send-polybar-hook (module-name hook-index)
-;;   (start-process-shell-command "polybar-msg" nil (format "polybar-msg hook %s %s" module-name hook-index)))
-
-;; (defun efs/send-polybar-exwm-workspace ()
-;;   (efs/send-polybar-hook "exwm-workspace" 1))
-
-;; ;; Update panel indicator when workspace changes
-;; (add-hook 'exwm-workspace-switch-hook #'efs/send-polybar-exwm-workspace)
-
+;; Notifications
 (defun efs/read-desktop-notification ()
   "Dismiss desktop notification."
   (interactive)
@@ -456,8 +416,7 @@
 (defun app-launcher ()
   "Select and run an app function using `'completing-read`'."
   (interactive)
-  (let ((app-functions '(
-						 app/files
+  (let ((app-functions '(app/files
 						 app/terminal
 						 app/code
 						 app/gsm
@@ -470,12 +429,8 @@
 						 app/thunderbird
 						 app/chromium
 						 app/telegram
-						 app/discord
-						 )))
-	(funcall (intern (completing-read "Select an app: "
-									  app-functions
-									  nil
-									  t)))))
+						 app/discord)))
+	(funcall (intern (completing-read "Select an app: " app-functions nil t)))))
 
 (provide 'desktop)
 ;;; desktop.el ends here

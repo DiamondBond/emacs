@@ -418,6 +418,11 @@
   (interactive)
   (start-process-shell-command "gnome-calculator" nil "gnome-calculator"))
 
+(defun app/calendar ()
+  "Gnome Calendar"
+  (interactive)
+  (start-process-shell-command "gnome-calendar" nil "gnome-calendar"))
+
 (defun app/pavucontrol ()
   "Pavucontrol"
   (interactive)
@@ -464,6 +469,7 @@
 						 app/gsm
 						 app/xterm
 						 app/calculator
+						 app/calendar
 						 app/pavucontrol
 						 app/arandr
 						 app/firefox

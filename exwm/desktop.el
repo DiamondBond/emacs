@@ -257,7 +257,8 @@
   (exwm-input-set-key (kbd "s-f") 'statf)
   (exwm-input-set-key (kbd "s-x") 'app-launcher)
   (exwm-input-set-key (kbd "s-X") 'x11-fav-launcher)
-  (exwm-input-set-key (kbd "M-<tab>") 'exwm-workspace-switch-to-previous)
+  ;; (exwm-input-set-key (kbd "M-<tab>") 'exwm-workspace-switch-to-previous)
+  (exwm-input-set-key (kbd "s-<tab>") 'exwm-workspace-switch-to-previous)
   (exwm-input-set-key (kbd "C-s-SPC") 'efs/read-desktop-notification)
 
   ;; start exwm

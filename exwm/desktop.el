@@ -69,30 +69,25 @@
 	 (exwm-layout-toggle-mode-line))
 	("Blueman-manager" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))
-	("gnome-calendar" (exwm-floating-toggle-floating)
-	 (exwm-layout-toggle-mode-line))
-	("gnome-calculator" (exwm-floating-toggle-floating)
-	 (exwm-layout-toggle-mode-line))
+	("gnome-calendar" (exwm-floating-toggle-floating))
+	("gnome-calculator" (exwm-floating-toggle-floating))
 	("Gnome-terminal" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))
-	("Gnome-system-monitor" (exwm-floating-toggle-floating)
-	 (exwm-layout-toggle-mode-line))
+	("Gnome-system-monitor" (exwm-floating-toggle-floating))
 	("Pavucontrol" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))
 	("Transmission-gtk" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))
 	("TelegramDesktop" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))
-	("org.gnome.Nautilus" (exwm-floating-toggle-floating)
-	 (exwm-layout-toggle-mode-line))
+	("org.gnome.Nautilus" (exwm-floating-toggle-floating))
 	("Image Lounge" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))
 	;; ("nomacs" (exwm-floating-toggle-floating)
 	;;  (exwm-layout-toggle-mode-line))
 	("Gpick" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))
-	("Cheese" (exwm-floating-toggle-floating)
-	 (exwm-layout-toggle-mode-line))
+	("Cheese" (exwm-floating-toggle-floating))
 	("mpv" (exwm-floating-toggle-floating)
 	 (exwm-layout-toggle-mode-line))))
 
@@ -286,6 +281,7 @@
   (exwm-input-set-key (kbd "s-X") 'app-launcher)
   ;; (exwm-input-set-key (kbd "s-X") 'x11-fav-launcher)
   ;; (exwm-input-set-key (kbd "M-<tab>") 'exwm-workspace-switch-to-previous)
+  (exwm-input-set-key (kbd "s-g") 'app/calculator)
   (exwm-input-set-key (kbd "s-<tab>") 'exwm-workspace-switch-to-previous)
   (exwm-input-set-key (kbd "C-s-SPC") 'efs/read-desktop-notification)
   (exwm-input-set-key (kbd "M-`") 'exwm-floating-hide)
@@ -412,6 +408,11 @@
   (interactive)
   (start-process-shell-command "xterm" nil "xterm"))
 
+(defun app/calculator ()
+  "Gnome Calculator"
+  (interactive)
+  (start-process-shell-command "gnome-calculator" nil "gnome-calculator"))
+
 (defun app/pavucontrol ()
   "Pavucontrol"
   (interactive)
@@ -457,6 +458,7 @@
 						 app/code
 						 app/gsm
 						 app/xterm
+						 app/calculator
 						 app/pavucontrol
 						 app/arandr
 						 app/firefox

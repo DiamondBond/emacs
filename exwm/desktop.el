@@ -223,6 +223,14 @@
 		  ?\C-u
 		  ?\C-h
 		  ?\C-1
+		  ?\s-h
+		  ?\s-j
+		  ?\s-k
+		  ?\s-l
+		  ?\s-H
+		  ?\s-J
+		  ?\s-K
+		  ?\s-L
 		  ?\M-x
 		  ?\M-`
 		  ?\M-&
@@ -280,6 +288,7 @@
   ;; (exwm-input-set-key (kbd "M-<tab>") 'exwm-workspace-switch-to-previous)
   (exwm-input-set-key (kbd "s-<tab>") 'exwm-workspace-switch-to-previous)
   (exwm-input-set-key (kbd "C-s-SPC") 'efs/read-desktop-notification)
+  (exwm-input-set-key (kbd "M-`") 'exwm-floating-hide)
 
   ;; start exwm
   (exwm-enable))

@@ -28,7 +28,6 @@
   (advice-add 'exwm-workspace-switch :before #'exwm-workspace--current-to-previous-index)
 
   ;; Launch apps that will run in the background
-  ;; TODO: add dropbox for matebook
   (efs/run-in-background "nm-applet")
   (when (string= (system-name) "matebook")
 	(progn
@@ -36,6 +35,9 @@
   (when (string= (system-name) "matebook")
 	(progn
 	  (efs/run-in-background "blueman-applet")))
+  (when (string= (system-name) "matebook")
+	(progn
+	  (efs/run-in-background "flatpak run com.dropbox.Client")))
   )
 
 ;; Alt-Tab functions

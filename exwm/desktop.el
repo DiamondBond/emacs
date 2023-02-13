@@ -243,6 +243,9 @@
 		  ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
 		  ([?\s-r] . exwm-reset)
 
+		  ;; Toggle exwm-mode
+		  ([?\s-z] . exwm-input-toggle-keyboard)
+
 		  ;; Move between windows
 		  ;; ([s-left] . windmove-left)
 		  ;; ([s-right] . windmove-right)

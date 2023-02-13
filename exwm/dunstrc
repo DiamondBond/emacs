@@ -1,0 +1,50 @@
+[global]
+width = 300
+height = 300
+origin = top-right
+offset = 5x5
+monitor = 0
+follow = mouse
+indicate_hidden = yes
+shrink = yes
+separator_height = 0
+padding = 5
+horizontal_padding = 10
+frame_width = 1
+frame_color = "#2a2a2a"
+sort = no
+idle_threshold = 120
+font = Menlo 11
+line_height = 2
+markup = full
+format = %s\n%b
+#format = "<b>%s</b>\n%b"
+alignment = center
+show_age_threshold = 60
+word_wrap = no
+ignore_newline = no
+stack_duplicates = false
+hide_duplicate_count = yes
+show_indicators = no
+icon_position = off
+sticky_history = yes
+history_length = 20
+browser = firefox
+always_run_script = true
+title = Dunst
+class = Dunst
+
+[urgency_low]
+timeout = 3
+background = "#181818"
+foreground = "#ffffff"
+
+[urgency_normal]
+timeout = 6
+background = "#181818"
+foreground = "#ffffff"
+
+[urgency_critical]
+timeout = 0
+background = "#181818"
+foreground = "#ffffff"

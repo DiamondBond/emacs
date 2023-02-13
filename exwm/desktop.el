@@ -13,7 +13,10 @@
   (exwm-workspace-switch 1)
 
   ;; Show battery status in the mode line
-  (display-battery-mode 1)
+
+  (when (string= (system-name) "matebook")
+	(progn
+	  (display-battery-mode 1)))
 
   ;; Show the time and date in modeline
   (setq display-time-day-and-date t)
@@ -29,7 +32,8 @@
   (efs/run-in-background "pasystray")
   (when (string= (system-name) "matebook")
 	(progn
-	  (efs/run-in-background "blueman-applet"))))
+	  (efs/run-in-background "blueman-applet")))
+  )
 
 ;; Alt-Tab functions
 (defun exwm-workspace--current-to-previous-index (_x)

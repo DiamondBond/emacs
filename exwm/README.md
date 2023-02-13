@@ -1,5 +1,3 @@
-https://github.com/daviwil/emacs-from-scratch/blob/219c060e1bd695948c7691955a12a5dcaf3a9530/show-notes/Emacs-Desktop-01.org
-
 Link:
 ```
 sudo ln -f ~/.emacs.d/exwm/exwm.desktop /usr/share/xsessions/exwm.desktop
@@ -25,4 +23,9 @@ brightnessctl
 scrot
 slock
 playerctl
+```
+
+Ubuntu:
+```
+sudo apt install -y xss-lock network-manager pasystray blueman picom dunst mpd mpc ncmpcpp alsa-utils brightnessctl scrot slock playerctl
 ```

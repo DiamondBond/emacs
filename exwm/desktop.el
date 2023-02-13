@@ -408,6 +408,11 @@
   (interactive)
   (start-process-shell-command "pauvcontrol" nil "pavucontrol"))
 
+(defun app/arandr ()
+  "Arandr"
+  (interactive)
+  (start-process-shell-command "arandr" nil "arandr"))
+
 (defun app/firefox ()
   "Firefox"
   (interactive)
@@ -444,6 +449,7 @@
 						 app/gsm
 						 app/xterm
 						 app/pavucontrol
+						 app/arandr
 						 app/firefox
 						 app/thunderbird
 						 app/chromium

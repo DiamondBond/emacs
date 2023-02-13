@@ -190,6 +190,9 @@
   (when (string= (system-name) "matebook")
 	(progn
 	  (start-process-shell-command "xrandr" nil "xrandr --output eDP-1 --primary --mode 2160x1440 --pos 0x0 --rotate normal")))
+  (when (string= (system-name) "matebook")
+	(progn
+	  (start-process-shell-command "bash" nil "bash -ic ~/.emacs.d/exwm/disable-touchscreen.sh")))
   (when (string= (system-name) "nitro")
 	(progn
 	  (start-process-shell-command "xrandr" nil "xrandr --output HDMI-0 --primary --mode 2560x1440 --pos 0x0 --rotate normal --output eDP-1-1 --off --output DP-1-1 --off")))

@@ -8,9 +8,6 @@ xset s off & # Disables screen saver
 # Xresources
 [[ -f ~/.Xresources ]] && xrdb ~/.Xresources & # Merge Xresources
 
-# Disable touchscreen
-xinput | grep 'ELAN224A' | grep 'pointer' | grep -Po 'id=\d+' | cut -d= -f2 | xargs xinput disable &
-
 # Run the screen compositor
 picom &
 

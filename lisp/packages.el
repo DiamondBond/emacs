@@ -554,7 +554,7 @@
 
 ;; Centaur Tabs
 (use-package centaur-tabs
-  :disabled t
+  :straight t
   :preface
   (defun enable-centaur-tabs ()
 	(interactive)
@@ -703,9 +703,18 @@
   (global-set-key (kbd "C-x t t") 'centaur-tabs-ace-jump)
   (global-set-key (kbd "C-x t h") 'centaur-tabs-move-current-tab-to-left)
   (global-set-key (kbd "C-x t l") 'centaur-tabs-move-current-tab-to-right)
+  (global-set-key (kbd "C-x t C-w") 'kill-buffer-and-window)
+  (global-set-key (kbd "C-x t <left>") 'centaur-tabs-backward)
+  (global-set-key (kbd "C-x t <right>") 'centaur-tabs-forward)
+  (global-set-key (kbd "C-x t C-<left>") 'centaur-tabs-move-current-tab-to-left)
+  (global-set-key (kbd "C-x t C-<right>") 'centaur-tabs-move-current-tab-to-right)
 
-  ;;(global-set-key (kbd "C-<tab>") 'centaur-tabs-forward)
-  ;;(global-set-key (kbd "C-<iso-lefttab>") 'centaur-tabs-backward)
+  (global-set-key (kbd "C-<tab>") 'centaur-tabs-forward)
+  (global-set-key (kbd "C-<iso-lefttab>") 'centaur-tabs-backward)
+
+  ;; Magit Binds
+  (evil-define-key 'normal magit-mode-map (kbd "C-<tab>") #'centaur-tabs-forward)
+  (evil-define-key 'normal magit-mode-map (kbd "C-<iso-lefttab>") #'centaur-tabs-backward)
   )
 
 ;; Automatically enable centaur-tabs
@@ -717,6 +726,7 @@
 				  (with-selected-frame frame
 					(enable-centaur-tabs)))
 				(enable-centaur-tabs))))
+(auto-enable-centaur-tabs)
 
 ;; Clean up the modeline
 (use-package diminish
@@ -1142,8 +1152,6 @@
   (evil-define-key 'normal magit-mode-map (kbd "K") #'magit-discard)
   (evil-define-key 'normal magit-mode-map (kbd "C-<tab>") #'tab-next)
   (evil-define-key 'normal magit-mode-map (kbd "C-<iso-lefttab>") #'tab-prev)
-  ;; (evil-define-key 'normal magit-mode-map (kbd "C-<tab>") #'centaur-tabs-forward)
-  ;; (evil-define-key 'normal magit-mode-map (kbd "C-<iso-lefttab>") #'centaur-tabs-backward)
 
   (defun parse-url (url)
 	"convert a git remote location as a HTTP URL"

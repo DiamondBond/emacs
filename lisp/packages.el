@@ -141,6 +141,10 @@
 (use-package org-contrib
   :straight t)
 
+(use-package org-present
+  :straight t
+  :defer 5)
+
 ;; Enable dnd images into org-mode & dired buffers
 (when (file-directory-p "~/org/img")
   (use-package org-download
@@ -709,6 +713,7 @@
   (global-set-key (kbd "C-x t C-<left>") 'centaur-tabs-move-current-tab-to-left)
   (global-set-key (kbd "C-x t C-<right>") 'centaur-tabs-move-current-tab-to-right)
 
+  (global-set-key (kbd "S-<f9>") 'toggle-centaur-tabs)
   (global-set-key (kbd "C-<tab>") 'centaur-tabs-forward)
   (global-set-key (kbd "C-<iso-lefttab>") 'centaur-tabs-backward)
 

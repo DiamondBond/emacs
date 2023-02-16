@@ -82,7 +82,6 @@
 (global-set-key (kbd "S-<f7>") 'local-scroll-bar-toggle)
 (global-set-key (kbd "S-<f8>") 'other-frame)
 (global-set-key (kbd "<f9>") 'tab-bar-toggle)
-;;(global-set-key (kbd "S-<f9>") 'toggle-centaur-tabs)
 (global-set-key (kbd "S-<f12>") 'display-line-numbers-mode)
 (global-set-key (kbd "s-b") 'switch-to-buffer)
 (global-set-key (kbd "C-`") 'vterm-toggle)

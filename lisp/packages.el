@@ -369,18 +369,18 @@
 		;; doom-modeline-battery nil
 		doom-modeline-bar-width 3))
 
-;; Dracula theme
-(use-package dracula-theme
-  :disabled t
-  :defer 3)
-
 ;; Zenburn theme
 (use-package zenburn-theme
-  :disabled t
+  :straight t
   :defer 3)
 
 ;; Spacemacs theme
 (use-package spacemacs-theme
+  :straight t
+  :defer 3)
+
+;; Dracula theme
+(use-package dracula-theme
   :disabled t
   :defer 3)
 

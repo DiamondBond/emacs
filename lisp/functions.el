@@ -630,6 +630,12 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
   (interactive)
   (add-to-list 'default-frame-alist '(reverse . t)))
 
+(defun remove-reverse-video-mode ()
+  "Remove 'reverse . t' from `default-frame-alist`."
+  (interactive)
+  (when (assq 'reverse default-frame-alist)
+	(setq default-frame-alist (assq-delete-all 'reverse default-frame-alist))))
+
 ;; Eshell functions
 (defun eshell/clear-scrollback ()
   "Clear the scrollback content of the eshell window."

@@ -731,7 +731,7 @@
 				  (with-selected-frame frame
 					(enable-centaur-tabs)))
 				(enable-centaur-tabs))))
-(auto-enable-centaur-tabs)
+;; (auto-enable-centaur-tabs)
 
 ;; Clean up the modeline
 (use-package diminish

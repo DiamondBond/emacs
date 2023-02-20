@@ -660,6 +660,7 @@
 	   (string-prefix-p "*Helm" name)
 	   (string-prefix-p "*Compile-Log*" name)
 	   (string-prefix-p "*Semantic SymRef*" name)
+	   (string-prefix-p "*copilot events*" name)
 	   (string-prefix-p "*lsp" name)
 	   (string-prefix-p "*company" name)
 	   (string-prefix-p "*Flycheck" name)
@@ -701,6 +702,7 @@
 
 	   ;; other
 	   (string-prefix-p "*Native-compile-Log*" name)
+	   (string-prefix-p "*Async-Native" name)
 	   (string-prefix-p "*httpd*" name)
 	   (string-prefix-p "*Shell Command Output" name)
 

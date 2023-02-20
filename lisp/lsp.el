@@ -303,7 +303,7 @@
   (setq js2-mode-show-strict-warnings nil)
   ;; override js2-error
   (custom-set-faces
-   '(js2-error ((t (:foreground nil :weight normal)))))
+   '(js2-error ((t (:foreground unspecified :weight normal)))))
   ;; just for JS linting
   (add-hook 'js-mode-hook 'js2-minor-mode))
 ;;:mode (("\\.js\\'" . js2-mode)))

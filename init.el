@@ -123,22 +123,22 @@
 ;; MAIL
 ;;---------------------------------------------------------------------
 
-(when (file-readable-p "~/.emacs.d/lisp/mail.el")
-  (load-file "~/.emacs.d/lisp/mail.el"))
+;; (when (file-readable-p "~/.emacs.d/lisp/mail.el")
+;;   (load-file "~/.emacs.d/lisp/mail.el"))
 
 ;;---------------------------------------------------------------------
 ;; JIRA
 ;;---------------------------------------------------------------------
 
-(when (file-readable-p "~/.emacs.d/lisp/jira.el")
-  (load-file "~/.emacs.d/lisp/jira.el"))
+;; (when (file-readable-p "~/.emacs.d/lisp/jira.el")
+;;   (load-file "~/.emacs.d/lisp/jira.el"))
 
 ;;---------------------------------------------------------------------
 ;; CGPT
 ;;---------------------------------------------------------------------
 
-(when (file-readable-p "~/.emacs.d/lisp/cgpt.el")
-  (load-file "~/.emacs.d/lisp/cgpt.el"))
+;; (when (file-readable-p "~/.emacs.d/lisp/cgpt.el")
+;;   (load-file "~/.emacs.d/lisp/cgpt.el"))
 
 ;;---------------------------------------------------------------------
 ;; COPILOT
@@ -151,9 +151,8 @@
 ;; LOAD THEME
 ;;---------------------------------------------------------------------
 
-;; config/dark
-(add-hook 'emacs-startup-hook
-		  (lambda () (config/dark-theme)))
+;; (add-hook 'emacs-startup-hook
+;; 		  (lambda () (config/dark-theme)))
 
 ;;---------------------------------------------------------------------
 ;; END

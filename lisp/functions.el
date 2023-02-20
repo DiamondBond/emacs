@@ -231,6 +231,30 @@
   ;;(indent-guides-init-faces)
   (put 'theme-toggle 'state nil))
 
+(defun config/spacemacs-light-theme ()
+  "Spacemacs light theme."
+  (interactive)
+  ;; disable all themes
+  (disable-all-themes)
+  ;; configure frame
+  ;;(fringe-mode 0)
+  ;;(dark-sb)
+  (menu-bar-mode 0)
+  ;; (scroll-bar-mode 0)
+  ;;(enable-centaur-tabs)
+  (light-minimap)
+  (kind-icon-reset-cache)
+  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+  (if (string-equal (buffer-name) "*dashboard*")
+	  (dashboard-refresh-buffer))
+  ;; load dark theme
+  (load-theme 'spacemacs-light t)
+  ;; (dark-tabline)
+  ;; (light-modeline)
+  (doom-modeline-mode 1)
+  ;;(indent-guides-dark-faces)
+  (put 'theme-toggle 'state t))
+
 (defun config/dark-theme ()
   "Dark theme."
   (interactive)
@@ -240,7 +264,7 @@
   ;;(fringe-mode 0)
   ;;(dark-sb)
   (menu-bar-mode 0)
-  (scroll-bar-mode 0)
+  ;; (scroll-bar-mode 0)
   ;;(enable-centaur-tabs)
   (dark-minimap)
   (kind-icon-reset-cache)
@@ -274,7 +298,7 @@
   ;;(scroll-bar-mode 0)
   ;;(menu-bar-mode 0)
   ;;(tab-bar-enable)
-  (neotree/show)
+  (open-treemacs)
   (minimap/enable))
 
 (defun config/vscode-kill ()
@@ -283,7 +307,7 @@
   ;;(scroll-bar-mode 1)
   ;;(menu-bar-mode 1)
   ;;(tab-bar-disable)
-  (neotree/hide)
+  (treemacs)
   (minimap/disable))
 
 (defun sync/irc ()

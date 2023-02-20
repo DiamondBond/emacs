@@ -381,7 +381,14 @@
   :straight t
   :defer 3)
 
-;; Spacemacs theme
+;; Sanityinc themes
+(use-package color-theme-sanityinc-tomorrow
+  :straight t
+  :defer 3)
+;; :config
+;; (load-theme 'sanityinc-tomorrow-bright t))
+
+;; Spacemacs themes
 (use-package spacemacs-theme
   :straight t
   :defer 3)
@@ -473,8 +480,8 @@
 						  (bookmarks . 5)))
   ;;(agenda . 2)))
   (setq dashboard-banner-logo-title nil)
-  ;; (setq dashboard-startup-banner 'official)
-  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+  (setq dashboard-startup-banner 'official)
+  ;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
   ;; (setq dashboard-startup-banner  (if (display-graphic-p)
   ;; 									  (home/choose-gif)
   ;; 									(join-path home-banners-dir "text-banner.txt")))
@@ -595,6 +602,7 @@
 		;; centaur-tabs-show-new-tab-button t
 		;; centaur-tabs-show-count t
 		centaur-tabs-show-navigation-buttons t)
+  (setq centaur-tabs-set-close-button nil)
   (defun centaur-tabs-buffer-groups ()
 	"`centaur-tabs-buffer-groups' control buffers' group rules.
 
@@ -713,7 +721,7 @@
   (global-set-key (kbd "C-x t C-<left>") 'centaur-tabs-move-current-tab-to-left)
   (global-set-key (kbd "C-x t C-<right>") 'centaur-tabs-move-current-tab-to-right)
 
-  (global-set-key (kbd "S-<f9>") 'toggle-centaur-tabs)
+  ;; (global-set-key (kbd "S-<f9>") 'toggle-centaur-tabs)
   (global-set-key (kbd "C-<tab>") 'centaur-tabs-forward)
   (global-set-key (kbd "C-<iso-lefttab>") 'centaur-tabs-backward)
 
@@ -969,9 +977,9 @@
 	  (setq ispell-program-name "aspell"))
   :bind (("M-<f7>" . flyspell-buffer)))
 
-;; Treemacs - depreciated in favor of neotree
+;; Treemacs
 (use-package treemacs
-  :disabled t
+  :straight t
   :init
   (add-hook 'treemacs-mode-hook
 			(lambda () (treemacs-resize-icons 15)))
@@ -1009,8 +1017,9 @@
 		  treemacs-space-between-root-nodes      t
 		  treemacs-tag-follow-cleanup            t
 		  treemacs-tag-follow-delay              1.5
-		  treemacs-width                         25)
-	(treemacs-resize-icons 11)
+		  treemacs-width-is-initially-locked     nil)
+	;; treemacs-width                         35)
+	;; (treemacs-resize-icons 11)
 
 	(treemacs-follow-mode t)
 	(treemacs-filewatch-mode t)
@@ -1030,17 +1039,23 @@
 		("C-x t C-t" . treemacs-find-file)
 		("C-x t M-t" . treemacs-find-tag)))
 
+(use-package treemacs-all-the-icons
+  :straight t
+  :after treemacs
+  :config
+  (treemacs-load-theme "all-the-icons"))
+
 (use-package treemacs-projectile
-  :disabled t
+  :straight t
   :after treemacs)
 
 (use-package treemacs-evil
-  :disabled treemacs evil
+  ;; :disabled treemacs evil
   :straight t)
 
 ;; Neotree
 (use-package neotree
-  :straight t
+  :disabled t
   :after (projectile)
   :preface
   (defun neotree-show-file (&optional buff-name)

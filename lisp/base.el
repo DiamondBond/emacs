@@ -218,7 +218,7 @@
 (blink-cursor-mode -1)
 
 ;; Stretch cursor
-(setq x-stretch-cursor t)
+;; (setq x-stretch-cursor t)
 
 ;; Menu-bar
 (if (fboundp 'menu-bar-mode)
@@ -307,7 +307,7 @@
 
 (defalias 'shrink-wrap 'fit-frame-to-buffer)
 
-(defalias 'recentf-delete-list 'recentf-edit-list)
+;;(defalias 'recentf-delete-list 'recentf-edit-list)
 (defalias 'bookmark-delete-all 'bookmark-delete)
 
 (defalias 'sync/news 'elfeed-update)

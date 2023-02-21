@@ -532,5 +532,5 @@
   :mode
   ("\\.bnf\\'" . ebnf-mode))
 
-(provide 'lsp)
-;;; lsp.el ends here
+(provide 'languages)
+;;; languages.el ends here

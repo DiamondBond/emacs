@@ -275,8 +275,8 @@
   (load-theme 'spacemacs-light t)
   (doom-modeline-mode 1))
 
-(defun config/lensor-min-theme ()
-  "Lensor-min theme."
+(defun config/lensor-theme ()
+  "Lensor theme."
   (interactive)
   ;; disable all themes
   (disable-all-themes)

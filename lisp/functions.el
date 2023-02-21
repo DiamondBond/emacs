@@ -231,30 +231,6 @@
   ;;(indent-guides-init-faces)
   (put 'theme-toggle 'state nil))
 
-(defun config/spacemacs-light-theme ()
-  "Spacemacs light theme."
-  (interactive)
-  ;; disable all themes
-  (disable-all-themes)
-  ;; configure frame
-  ;;(fringe-mode 0)
-  ;;(dark-sb)
-  (menu-bar-mode 0)
-  ;; (scroll-bar-mode 0)
-  ;;(enable-centaur-tabs)
-  (light-minimap)
-  (kind-icon-reset-cache)
-  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
-  (if (string-equal (buffer-name) "*dashboard*")
-	  (dashboard-refresh-buffer))
-  ;; load dark theme
-  (load-theme 'spacemacs-light t)
-  ;; (dark-tabline)
-  ;; (light-modeline)
-  (doom-modeline-mode 1)
-  ;;(indent-guides-dark-faces)
-  (put 'theme-toggle 'state t))
-
 (defun config/dark-theme ()
   "Dark theme."
   (interactive)
@@ -285,6 +261,32 @@
   (if (get 'theme-toggle 'state)
 	  (config/light-theme)
 	(config/dark-theme)))
+
+(defun config/spacemacs-light-theme ()
+  "Spacemacs light theme."
+  (interactive)
+  (disable-all-themes)
+  (menu-bar-mode 0)
+  (light-minimap)
+  (kind-icon-reset-cache)
+  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+  (if (string-equal (buffer-name) "*dashboard*")
+	  (dashboard-refresh-buffer))
+  (load-theme 'spacemacs-light t)
+  (doom-modeline-mode 1))
+
+(defun config/lensor-min-theme ()
+  "Lensor-min theme."
+  (interactive)
+  ;; disable all themes
+  (disable-all-themes)
+  ;; configure frame
+  ;; (menu-bar-mode 0)
+  ;; (scroll-bar-mode 0)
+  (dark-minimap)
+  (kind-icon-reset-cache)
+  ;; load lensor-min theme
+  (load-theme 'lensor-min t))
 
 ;; (defvar vscode-mode-first-run t)
 (defun config/vscode-mode ()

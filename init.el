@@ -154,12 +154,8 @@
 ;; LOAD THEME
 ;;---------------------------------------------------------------------
 
-;; (add-hook 'emacs-startup-hook
-;; 		  (lambda () (config/dark-theme)))
-
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'lensor-min t)
-(setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+(add-hook 'emacs-startup-hook
+		  (lambda () (config/lensor-min-theme)))
 
 ;;---------------------------------------------------------------------
 ;; END

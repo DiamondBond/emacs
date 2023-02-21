@@ -1380,7 +1380,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (use-package orderless
   :straight t
   :init
-  (setq completion-styles '(orderless partial-completion basic)
+  (setq completion-styles '(orderless) ;; partial-completion basic)
 		completion-category-defaults nil
 		completion-category-overrides '((file (styles basic partial-completion)))))
 

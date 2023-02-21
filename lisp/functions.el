@@ -281,7 +281,7 @@
   ;; disable all themes
   (disable-all-themes)
   ;; configure frame
-  ;; (menu-bar-mode 0)
+  (menu-bar-mode 0)
   ;; (scroll-bar-mode 0)
   (dark-minimap)
   (kind-icon-reset-cache)

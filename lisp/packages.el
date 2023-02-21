@@ -1589,9 +1589,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	(setq deft-directory org-directory
 		  deft-recursive t
 		  deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
-		  deft-use-filename-as-title t)
-	:bind
-	("C-c n d" . deft)))
+		  deft-use-filename-as-title t)))
+;; :bind
+;; ("C-c n d" . deft)))
 
 ;; RSS
 (use-package elfeed

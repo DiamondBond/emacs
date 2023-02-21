@@ -115,7 +115,15 @@
 		 (lambda () (require 'ccls) (lsp))))
 
 (use-package modern-cpp-font-lock
-  :straight t)
+  :straight t
+  :hook
+  ((c++-mode) . #'modern-c++-font-lock-mode))
+
+;;; cmake-font-lock
+;; Better syntax highlighting for CMake scripts.
+;; https://github.com/Lindydancer/cmake-font-lock
+(use-package cmake-font-lock
+  :defer t)
 
 ;; astyle formatter function
 (defun astyle-buffer (&optional justify)
@@ -283,6 +291,12 @@
   :mode "\\.md\\'"
   :hook ((markdown-mode . auto-fill-mode)))
 
+;; FlyCheck
+(use-package flycheck
+  :straight t
+  :bind (:map flycheck-mode-map
+			  ("C-c n" . flycheck-next-error)
+			  ("C-c p" . flycheck-previous-error)))
 ;; JavaScript
 (use-package js-mode
   :straight (:type built-in)
@@ -483,6 +497,40 @@
 		cider-connection-message-fn nil ; cute, but no!
 		cider-use-overlays nil ; echo area is fine
 		cider-repl-display-help-banner nil))
+
+;;; GNU Assembly (GAS)
+;; asm-mode is a built-in, but it has a terrible,
+;; terrible comment command that must be rebound.
+(use-package asm-mode
+  :straight t
+  ;; :pin manual
+  ;; :ensure nil
+  :bind
+  (:map asm-mode-map
+		(";" . nil)
+		(":" . self-insert-command))
+  :mode
+  ("\\.s\\|.S\\'" . asm-mode))
+;; The above regexp matches .emacs, we have to explicitly handle it.
+;; Add .emacs to auto-mode-alist.
+(add-to-list 'auto-mode-alist '("\\.emacs\\'" . emacs-lisp-mode))
+
+;;; Netwide Assembly (NASM)
+;; https://nasm.us/
+(use-package nasm-mode
+  :straight t
+  :bind
+  (:map nasm-mode-map
+		(";" . self-insert-command))
+  :mode
+  ("\\.nasm\\|.asm\\'" . nasm-mode))
+
+;;; EBNF -- Extended Backus-Naur Form
+;; https://github.com/nverno/ebnf-mode
+(use-package ebnf-mode
+  :straight t
+  :mode
+  ("\\.bnf\\'" . ebnf-mode))
 
 (provide 'lsp)
 ;;; lsp.el ends here

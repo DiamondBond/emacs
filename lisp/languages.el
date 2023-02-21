@@ -49,8 +49,8 @@
   (setq lsp-enable-snippet nil)
   (setq lsp-enable-completion-at-point t)
   ;;(setq read-process-output-max (* 1024 1024)) ;; 1MB
-  (setq completion-styles '(orderless)
-		completion-category-defaults nil)
+  ;; (setq completion-styles '(orderless)
+  ;; 		completion-category-defaults nil)
   (setq lsp-idle-delay 0.5)
   (setq lsp-clients-typescript-server "typescript-language-server"
 		lsp-clients-typescript-server-args '("--stdio"))

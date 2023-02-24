@@ -282,10 +282,10 @@
   (disable-all-themes)
   ;; configure frame
   (menu-bar-mode 0)
-  (scroll-bar-mode 0)
+  ;; (scroll-bar-mode 0)
   ;; (lensor-sb)
   (dark-minimap)
-  (dark-modeline)
+  ;; (dark-modeline)
   (kind-icon-reset-cache)
   ;; load lensor-min theme
   (load-theme 'lensor-min t))

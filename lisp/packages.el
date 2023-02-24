@@ -565,7 +565,7 @@
 
 ;; Centaur Tabs
 (use-package centaur-tabs
-  :straight t
+  :disabled t
   :preface
   (defun enable-centaur-tabs ()
 	(interactive)

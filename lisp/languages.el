@@ -498,22 +498,22 @@
 		cider-use-overlays nil ; echo area is fine
 		cider-repl-display-help-banner nil))
 
-;;; GNU Assembly (GAS)
-;; asm-mode is a built-in, but it has a terrible,
-;; terrible comment command that must be rebound.
-(use-package asm-mode
-  :straight t
-  ;; :pin manual
-  ;; :ensure nil
-  :bind
-  (:map asm-mode-map
-		(";" . nil)
-		(":" . self-insert-command))
-  :mode
-  ("\\.s\\|.S\\'" . asm-mode))
-;; The above regexp matches .emacs, we have to explicitly handle it.
-;; Add .emacs to auto-mode-alist.
-(add-to-list 'auto-mode-alist '("\\.emacs\\'" . emacs-lisp-mode))
+;; ;;; GNU Assembly (GAS)
+;; ;; asm-mode is a built-in, but it has a terrible,
+;; ;; terrible comment command that must be rebound.
+;; (use-package asm-mode
+;;   :straight t
+;;   ;; :pin manual
+;;   ;; :ensure nil
+;;   :bind
+;;   (:map asm-mode-map
+;; 		(";" . nil)
+;; 		(":" . self-insert-command))
+;;   :mode
+;;   ("\\.s\\|.S\\'" . asm-mode))
+;; ;; The above regexp matches .emacs, we have to explicitly handle it.
+;; ;; Add .emacs to auto-mode-alist.
+;; (add-to-list 'auto-mode-alist '("\\.emacs\\'" . emacs-lisp-mode))
 
 ;;; Netwide Assembly (NASM)
 ;; https://nasm.us/

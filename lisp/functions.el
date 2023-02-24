@@ -282,8 +282,10 @@
   (disable-all-themes)
   ;; configure frame
   (menu-bar-mode 0)
-  ;; (scroll-bar-mode 0)
+  (scroll-bar-mode 0)
+  ;; (lensor-sb)
   (dark-minimap)
+  (dark-modeline)
   (kind-icon-reset-cache)
   ;; load lensor-min theme
   (load-theme 'lensor-min t))
@@ -649,6 +651,18 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
    '(scroll-bar
 	 ((t
 	   (:foreground "#2f3133" :background "#1e1e1e"))))))
+
+;; lensor scroll-bar
+(defun lensor-sb ()
+  "Lensor scroll-bar."
+  (interactive)
+  (add-hook 'window-configuration-change-hook 'dark-size-scroll-bars)
+  (add-hook 'buffer-list-update-hook 'dark-size-scroll-bars)
+  (dark-size-scroll-bars)
+  (custom-set-faces
+   '(scroll-bar
+	 ((t
+	   (:foreground "#515456" :background "#161718"))))))
 
 ;; Reverse video mode
 (defun reverse-video-mode ()

@@ -5,6 +5,7 @@
   ;; (add-hook 'prog-mode-hook 'copilot-mode)
   ;; (add-hook 'tree-sitter-mode-hook 'copilot-mode)
   (add-hook 'typescript-mode-hook 'copilot-mode)
+  (add-hook 'typescriptreact-mode-hook 'copilot-mode)
   (add-hook 'c-mode-common-hook 'copilot-mode)
   (add-hook 'go-mode-hook 'copilot-mode)
   (add-hook 'python-mode-hook 'copilot-mode)

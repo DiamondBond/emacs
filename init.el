@@ -76,7 +76,7 @@
 ;;---------------------------------------------------------------------
 
 (setq
- globals--font         "Menlo 11"                           ; Font
+ globals--font         "Menlo 10"                           ; Font
  globals--name         "Diamond Bond"                       ; Name
  globals--email        "diamondbond1@gmail.com"             ; Email
  globals--irc          "diamondbond"                        ; IRC
@@ -158,8 +158,8 @@
 ;; LOAD THEME
 ;;---------------------------------------------------------------------
 
-(add-hook 'emacs-startup-hook
-		  (lambda () (config/lensor-theme)))
+;; (add-hook 'emacs-startup-hook
+;; 		  (lambda () (config/lensor-theme)))
 
 ;;---------------------------------------------------------------------
 ;; END

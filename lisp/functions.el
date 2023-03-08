@@ -218,6 +218,7 @@
   (menu-bar-mode 1)
   (scroll-bar-mode 1)
   ;;(disable-centaur-tabs)
+  ;; (light-sb)
   (light-minimap)
   (kind-icon-reset-cache)
   (setq dashboard-startup-banner 'official)
@@ -226,8 +227,8 @@
   ;; load light theme
   ;;(load-theme 'modus-operandi t)
   ;;(light-tabline)
-  (light-modeline)
-  (doom-modeline-mode 0)
+  ;; (light-modeline)
+  ;; (doom-modeline-mode 0)
   ;;(indent-guides-init-faces)
   (put 'theme-toggle 'state nil))
 
@@ -238,8 +239,12 @@
   (disable-all-themes)
   ;; configure frame
   ;;(fringe-mode 0)
-  ;;(dark-sb)
+  ;; (when (string= (system-name) "nitro")
+  ;; 	(progn
+  ;; 	  (dark-sb)
+  ;; 	  ))
   (menu-bar-mode 0)
+  (scroll-bar-mode 0)
   ;; (scroll-bar-mode 0)
   ;;(enable-centaur-tabs)
   (dark-minimap)
@@ -248,10 +253,11 @@
   (if (string-equal (buffer-name) "*dashboard*")
 	  (dashboard-refresh-buffer))
   ;; load dark theme
-  (load-theme 'vscode-dark-plus t)
+  ;; (load-theme 'vscode-dark-plus t)
+  (load-theme 'modus-vivendi t)
   ;;(dark-tabline)
-  (dark-modeline)
-  (doom-modeline-mode 1)
+  ;; (dark-modeline)
+  ;; (doom-modeline-mode 1)
   ;;(indent-guides-dark-faces)
   (put 'theme-toggle 'state t))
 
@@ -272,8 +278,8 @@
   (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
   (if (string-equal (buffer-name) "*dashboard*")
 	  (dashboard-refresh-buffer))
-  (load-theme 'spacemacs-light t)
-  (doom-modeline-mode 1))
+  (load-theme 'spacemacs-light t))
+  ;; (doom-modeline-mode 1))
 
 (defun config/lensor-theme ()
   "Lensor theme."
@@ -281,11 +287,14 @@
   ;; disable all themes
   (disable-all-themes)
   ;; configure frame
-  (menu-bar-mode 0)
+  ;; (menu-bar-mode 0)
   ;; (scroll-bar-mode 0)
-  ;; (lensor-sb)
-  (dark-minimap)
-  ;; (dark-modeline)
+  ;; (when (string= (system-name) "nitro")
+  ;; 	(progn
+  ;; 	  (lensor-sb)
+  ;; 	  ;; (dark-modeline)
+  ;; 	  ))
+  ;; (dark-minimap)
   (kind-icon-reset-cache)
   ;; load lensor-min theme
   (load-theme 'lensor-min t))
@@ -299,8 +308,8 @@
   ;; 	(when (yes-or-no-p "Load VSCode theme?")
   ;; 	  (progn
   ;; 		(config/dark-theme))))
-  ;;(scroll-bar-mode 0)
-  ;;(menu-bar-mode 0)
+  ;; (scroll-bar-mode 0)
+  ;; (menu-bar-mode 0)
   ;;(tab-bar-enable)
   (open-treemacs)
   (minimap/enable))

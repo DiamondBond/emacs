@@ -232,7 +232,6 @@
   (evil-set-initial-state 'term-mode 'emacs)
   (evil-set-initial-state 'eshell-mode 'emacs)
   (evil-set-initial-state 'Custom-mode 'emacs)
-  ;; (evil-set-initial-state 'bufler-list-mode 'emacs)
   (evil-set-initial-state 'profiler-report-mode 'emacs)
   (evil-set-initial-state 'inferior-scheme-mode 'emacs)
   ;; (evil-set-initial-state 'md4rd-mode 'emacs)
@@ -358,7 +357,7 @@
 
 ;; Doom modeline
 (use-package doom-modeline
-  :straight t
+  :disabled t
   ;; :defer 1
   ;;:init (doom-modeline-mode)
   :config
@@ -480,8 +479,8 @@
 						  (bookmarks . 5)))
   ;;(agenda . 2)))
   (setq dashboard-banner-logo-title nil)
-  ;; (setq dashboard-startup-banner 'official)
-  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+  (setq dashboard-startup-banner 'official)
+  ;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
   ;; (setq dashboard-startup-banner  (if (display-graphic-p)
   ;; 									  (home/choose-gif)
   ;; 									(join-path home-banners-dir "text-banner.txt")))
@@ -763,6 +762,8 @@
   (eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
   (eval-after-load "outline" '(diminish 'outline-minor-mode))
   (eval-after-load "projectile" '(diminish 'projectile-mode))
+  (eval-after-load "rust-mode" '(diminish 'lsp-lens-mode))
+  ;; (eval-after-load "rust-mode" '(diminish 'flycheck-mode))
   (eval-after-load "typescript-mode" '(diminish 'subword-mode))
   (eval-after-load "js2-mode" '(diminish 'subword-mode ""))
   (eval-after-load "dired" '(diminish 'dired-async-mode))
@@ -1190,6 +1191,9 @@
 		(browse-url (parse-url url))
 		(message "opening repo %s" url)))))
 
+(use-package magit-todos
+  :straight t)
+
 ;; bindings to help improve the speed of magit
 ;; (use-package libgit :straight t)
 ;; (use-package magit-libgit :straight t)
@@ -1336,10 +1340,10 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (use-package cape
   :straight t
   :bind (("M-i" . completion-at-point)
-		 ("C-c x d" . cape-dabbrev)
-		 ("C-c x f" . cape-file)
-		 ("C-c x s" . cape-symbol)
-		 ("C-c x i" . cape-ispell))
+		 ("C-c C-c d" . cape-dabbrev)
+		 ("C-c C-c f" . cape-file)
+		 ("C-c C-c s" . cape-symbol)
+		 ("C-c C-c i" . cape-ispell))
   :config
   (setq cape-dabbrev-min-length 3)
   (dolist (backend '( cape-symbol cape-keyword cape-file cape-dabbrev))

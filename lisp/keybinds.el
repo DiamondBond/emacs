@@ -57,6 +57,7 @@
 (define-key z-map (kbd "2") 'consult-buffer-other-frame)
 (define-key z-map (kbd "C-c") 'calendar)
 (define-key z-map (kbd "C-d") 'dired-other-frame)
+(define-key z-map (kbd "C-1") 'display-buffer-other-frame)
 
 ;; calendar
 (define-key z-map (kbd ".") 'org-date-from-calendar)

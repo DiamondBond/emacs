@@ -1192,7 +1192,7 @@
 		(message "opening repo %s" url)))))
 
 (use-package magit-todos
-  :straight t)
+  :disabled t)
 
 ;; bindings to help improve the speed of magit
 ;; (use-package libgit :straight t)

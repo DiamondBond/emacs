@@ -215,8 +215,8 @@
   (disable-all-themes)
   ;; configure frame
   ;;(fringe-mode nil)
-  (menu-bar-mode 1)
-  (scroll-bar-mode 1)
+  ;; (menu-bar-mode 1)
+  ;; (scroll-bar-mode 1)
   ;;(disable-centaur-tabs)
   ;; (light-sb)
   (light-minimap)
@@ -243,8 +243,8 @@
   ;; 	(progn
   ;; 	  (dark-sb)
   ;; 	  ))
-  (menu-bar-mode 0)
-  (scroll-bar-mode 0)
+  ;; (menu-bar-mode 0)
+  ;; (scroll-bar-mode 0)
   ;; (scroll-bar-mode 0)
   ;;(enable-centaur-tabs)
   (dark-minimap)
@@ -253,8 +253,8 @@
   (if (string-equal (buffer-name) "*dashboard*")
 	  (dashboard-refresh-buffer))
   ;; load dark theme
-  ;; (load-theme 'vscode-dark-plus t)
-  (load-theme 'modus-vivendi t)
+  (load-theme 'vscode-dark-plus t)
+  ;; (load-theme 'modus-vivendi t)
   ;;(dark-tabline)
   ;; (dark-modeline)
   ;; (doom-modeline-mode 1)

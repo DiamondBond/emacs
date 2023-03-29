@@ -52,8 +52,11 @@ NOTE: If you are intending to compile Emacs<=29 then omit the =--with-xinput2= f
   # Run the auto-generation script
   ./autogen.sh
 
+  # Configure Emacs with Gtk3 toolkit
+  ./configure --with-dbus --with-webp --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=gtk3 --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-sqlite3 --with-harfbuzz --without-compress-install --with-native-compilation --with-xinput2 --with-tree-sitter CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
+
   # Configure Emacs with Athena toolkit
-  ./configure --with-dbus --with-webp --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x=gtk3 --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-sqlite3 --with-harfbuzz --without-compress-install --with-native-compilation --with-xinput2 --with-tree-sitter CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
+  ./configure --with-dbus --with-webp --with-gif --with-jpeg --with-png --with-rsvg --with-tiff --with-xft --with-xpm --with-gpm=no --disable-silent-rules --with-modules --with-file-notification=inotify --with-mailutils --with-x-toolkit=athena --without-gconf --without-gsettings --with-lcms2 --with-imagemagick --with-xml2 --with-json --with-sqlite3 --with-harfbuzz --without-compress-install --with-native-compilation --with-xinput2 --with-tree-sitter CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer -flto -fno-semantic-interposition"
 
 #+end_src
 

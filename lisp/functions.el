@@ -221,7 +221,8 @@
   ;; (light-sb)
   (light-minimap)
   (kind-icon-reset-cache)
-  (setq dashboard-startup-banner 'official)
+  ;; (setq dashboard-startup-banner 'official)
+  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
   (if (string-equal (buffer-name) "*dashboard*")
 	  (dashboard-refresh-buffer))
   ;; load light theme
@@ -253,8 +254,8 @@
   (if (string-equal (buffer-name) "*dashboard*")
 	  (dashboard-refresh-buffer))
   ;; load dark theme
-  (load-theme 'vscode-dark-plus t)
-  ;; (load-theme 'modus-vivendi t)
+  ;; (load-theme 'vscode-dark-plus t)
+  (load-theme 'modus-vivendi t)
   ;;(dark-tabline)
   ;; (dark-modeline)
   ;; (doom-modeline-mode 1)

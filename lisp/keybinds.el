@@ -78,7 +78,7 @@
 (global-set-key (kbd "<f7>") 'scroll-bar-mode)
 (global-set-key (kbd "<f8>") 'tool-bar-mode)
 (global-set-key (kbd "<f10>") 'compile)
-(global-set-key (kbd "S-<f5>") 'config/toggle-theme)
+;; (global-set-key (kbd "S-<f5>") 'config/toggle-theme)
 ;; (global-set-key (kbd "S-<f5>") 'open-treemacs)
 (global-set-key (kbd "S-<f7>") 'local-scroll-bar-toggle)
 (global-set-key (kbd "S-<f8>") 'other-frame)

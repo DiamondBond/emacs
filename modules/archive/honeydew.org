@@ -22,14 +22,13 @@
 * Newer default-frame-alist
 #+begin_src emacs-lisp
   (setq default-frame-alist
-		'((tab-bar-lines . 1)
-		  (inhibit-double-buffering . t)
+		'((inhibit-double-buffering . t)
 		  (height . 46)
 		  (width . 80)
 		  (internal-border-width . 0)
 		  (background-color . "honeydew")
-		  (font . "Menlo 11")
-		  (vertical-scroll-bars)
-		  (left-fringe . 8)
-		  (right-fringe . 0)))
+		  (font . "Menlo 10")
+		  (vertical-scroll-bars . right)
+		  (left-fringe)
+		  (right-fringe)))
 #+end_src

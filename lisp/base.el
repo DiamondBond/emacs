@@ -343,9 +343,12 @@
 ;; Do not highlight prompt
 (setq eshell-highlight-prompt nil)
 
+;; Kill eshell zombie processes
+(setq eshell-kill-processes-on-exit t)
+
 ;; Disable global highlight
 (add-hook 'eshell-mode-hook
-		  (lambda () (global-hl-line-mode 0)))
+		  (lambda () (hl-line-mode 0)))
 
 ;; Eshell aliases
 (defalias 'open 'find-file-other-window)

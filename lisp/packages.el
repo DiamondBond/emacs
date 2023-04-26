@@ -398,21 +398,26 @@
   :defer 3)
 
 ;; Modus themes (integrated into Emacs28+)
-;; (use-package modus-themes
-;;   :straight (:type built-in)
-;;   ;; :straight (:type git :host gitlab :repo "protesilaos/modus-themes" :branch "main")
-;;   ;; :init
-;;   ;; load the theme files before enabling a theme
-;;   ;; (modus-themes-load-themes)
-;;   :custom
-;;   (modus-themes-italic-constructs t)
-;;   (modus-themes-bold-constructs t)
-;;   (modus-themes-region '(accented bg-only no-extend))
-;;   (modus-themes-hl-line nil))
-;; ;; :config
-;; ;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
-;; ;; (load-theme 'modus-operandi t)
-;; ;; :bind ("S-<f5>" . modus-themes-toggle))
+(use-package modus-themes
+  ;; :straight (:type built-in)
+  :straight (:type git :host gitlab :repo "protesilaos/modus-themes" :branch "main")
+  :init
+  ;; load the theme files before enabling a theme
+  ;; (modus-themes-load-themes)
+  ;; (load-theme 'modus-operandi t)
+  ;; (load-theme 'modus-operandi :no-confirm)
+  :custom
+  (modus-themes-italic-constructs t)
+  (modus-themes-bold-constructs t)
+  (modus-themes-region '(accented bg-only no-extend))
+  (modus-themes-common-palette-overrides
+		'((bg-region bg-magenta-intense)
+		  (fg-region fg-main)))
+  ;; (modus-themes-hl-line nil)
+  ;; :config
+  ;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+  ;; (load-theme 'modus-operandi t)
+  :bind ("S-<f5>" . modus-themes-toggle))
 
 ;; Prot's EF themes
 (use-package ef-themes
@@ -479,8 +484,8 @@
 						  (bookmarks . 5)))
   ;;(agenda . 2)))
   (setq dashboard-banner-logo-title nil)
-  ;; (setq dashboard-startup-banner 'official)
-  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
+  (setq dashboard-startup-banner 'official)
+  ;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
   ;; (setq dashboard-startup-banner  (if (display-graphic-p)
   ;; 									  (home/choose-gif)
   ;; 									(join-path home-banners-dir "text-banner.txt")))
@@ -1833,6 +1838,12 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;; aLtCaPs
 ;; (use-package altcaps
 ;;   :straight (:type git :host github :repo "protesilaos/altcaps" :branch "main"))
+
+;; Hima theme
+;; (use-package hima
+;;   :straight (:type git :host github :repo "meain/hima-theme" :branch "master")
+;;   :init
+;;   (load-theme 'hima t))
 
 (provide 'packages)
 ;;; packages.el ends here

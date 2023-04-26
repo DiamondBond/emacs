@@ -151,15 +151,15 @@
 ;; COPILOT
 ;;---------------------------------------------------------------------
 
-(when (file-readable-p "~/.emacs.d/lisp/copilot.el")
-  (load-file "~/.emacs.d/lisp/copilot.el"))
+;; (when (file-readable-p "~/.emacs.d/lisp/copilot.el")
+;;   (load-file "~/.emacs.d/lisp/copilot.el"))
 
 ;;---------------------------------------------------------------------
 ;; LOAD THEME
 ;;---------------------------------------------------------------------
 
 ;; (add-hook 'emacs-startup-hook
-;; 		  (lambda () (config/lensor-theme)))
+;; 		  (lambda () (reverse-video-mode)))
 
 ;;---------------------------------------------------------------------
 ;; END

@@ -300,6 +300,20 @@
   ;; load lensor-min theme
   (load-theme 'lensor-min t))
 
+(defun config/honeydew-theme ()
+  "Apply honeydew theme."
+  (interactive)
+  (setq default-frame-alist
+		'((inhibit-double-buffering . t)
+		  (height . 46)
+		  (width . 80)
+		  (internal-border-width . 0)
+		  (background-color . "honeydew")
+		  (font . "Menlo 10")
+		  (vertical-scroll-bars . right)
+		  (left-fringe)
+		  (right-fringe))))
+
 ;; (defvar vscode-mode-first-run t)
 (defun config/vscode-mode ()
   "Emulate vscode."

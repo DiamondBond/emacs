@@ -84,7 +84,7 @@
  globals--auth-info    "~/.authinfo.gpg"                    ; Auth Info
  globals--auth-sources '("~/.authinfo.gpg")                 ; Auth Src
  globals--browser      'browse-url-firefox                  ; Browser
- globals--banner-path  "img/spacemacs-logo.png"             ; Banner
+ globals--banner-path  "img/gnu.png"                        ; Banner
  )
 
 ;;---------------------------------------------------------------------

@@ -227,7 +227,7 @@
 ;; Tool-bar
 (if (fboundp 'tool-bar-mode)
 	(tool-bar-mode 0))
-;;(setq tool-bar-style 'image)
+;; (setq tool-bar-style 'image)
 
 ;; Scroll-bar
 (if (fboundp 'scroll-bar-mode)

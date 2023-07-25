@@ -222,7 +222,7 @@
 
 ;; Menu-bar
 (if (fboundp 'menu-bar-mode)
-	(menu-bar-mode 1))
+	(menu-bar-mode 0))
 
 ;; Tool-bar
 (if (fboundp 'tool-bar-mode)
@@ -231,7 +231,7 @@
 
 ;; Scroll-bar
 (if (fboundp 'scroll-bar-mode)
-	(scroll-bar-mode 1))
+	(scroll-bar-mode 0))
 
 ;; for athena
 ;; (set-scroll-bar-mode 'right)
@@ -263,7 +263,7 @@
 ;; 	  tab-bar-mode t)
 
 ;; Configure fringe
-;;(fringe-mode '(8 . 0))
+;; (fringe-mode '(8 . 0))
 (setq-default fringes-outside-margins nil)
 (setq-default indicate-buffer-boundaries nil)
 (setq-default indicate-empty-lines nil)

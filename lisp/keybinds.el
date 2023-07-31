@@ -125,16 +125,18 @@
 (global-set-key (kbd "s-H") 'windmove-swap-states-left)
 (global-set-key (kbd "s-L") 'windmove-swap-states-right)
 
-(global-set-key (kbd "M-<kp-begin>") 'execute-extended-command)
-(global-set-key (kbd "M-<kp-up>") 'windmove-up)
-(global-set-key (kbd "M-<kp-down>") 'windmove-down)
-(global-set-key (kbd "M-<kp-left>") 'windmove-left)
-(global-set-key (kbd "M-<kp-right>") 'windmove-right)
+(global-set-key (kbd "M-s-<left>")  'windmove-left)
+(global-set-key (kbd "M-s-<right>") 'windmove-right)
+(global-set-key (kbd "M-s-<up>")    'windmove-up)
+(global-set-key (kbd "M-s-<down>")  'windmove-down)
 
-(global-set-key (kbd "M-S-<kp-up>") 'windmove-swap-states-up)
-(global-set-key (kbd "M-S-<kp-down>") 'windmove-swap-states-down)
-(global-set-key (kbd "M-S-<kp-left>") 'windmove-swap-states-left)
-(global-set-key (kbd "M-S-<kp-right>") 'windmove-swap-states-right)
+(global-set-key (kbd "M-S-s-<left>")  'windmove-swap-states-left)
+(global-set-key (kbd "M-S-s-<right>") 'windmove-swap-states-right)
+(global-set-key (kbd "M-S-s-<up>")    'windmove-swap-states-up)
+(global-set-key (kbd "M-S-s-<down>")  'windmove-swap-states-down)
+
+(global-set-key (kbd "M-o") #'other-window)
+(global-set-key (kbd "M-O") #'other-frame)
 
 ;; next/prev
 ;; (global-set-key (kbd "C-<tab>") 'next-buffer)

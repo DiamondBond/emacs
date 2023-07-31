@@ -347,6 +347,8 @@
   (global-set-key (kbd "C-c t d") 'tree-sitter-debug-mode)
   ;; you can easily see the difference tree-sitter-hl-mode makes for python, ts or tsx
   ;; by switching on and off
+  ;; deepen tree-sitter's reach
+  (setq treesit-font-lock-level 4)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 (use-package tree-sitter-langs

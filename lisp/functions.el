@@ -326,6 +326,8 @@
   ;; (scroll-bar-mode 0)
   ;; (menu-bar-mode 0)
   ;;(tab-bar-enable)
+  (load-theme 'vscode-dark-plus t)
+  (enable-centaur-tabs)
   (open-treemacs)
   (minimap/enable))
 
@@ -335,6 +337,7 @@
   ;;(scroll-bar-mode 1)
   ;;(menu-bar-mode 1)
   ;;(tab-bar-disable)
+  (disable-centaur-tabs)
   (treemacs)
   (minimap/disable))
 

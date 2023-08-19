@@ -377,25 +377,21 @@
 
 ;; Zenburn theme
 (use-package zenburn-theme
-  :straight t
-  :defer 3)
+  :disabled t)
 
 ;; Sanityinc themes
 (use-package color-theme-sanityinc-tomorrow
-  :straight t
-  :defer 3)
+  :disabled t)
 ;; :config
 ;; (load-theme 'sanityinc-tomorrow-bright t))
 
 ;; Spacemacs themes
 (use-package spacemacs-theme
-  :straight t
-  :defer 3)
+  :disabled t)
 
 ;; Dracula theme
 (use-package dracula-theme
-  :disabled t
-  :defer 3)
+  :disabled t)
 
 ;; Modus themes (integrated into Emacs28+)
 (use-package modus-themes
@@ -569,7 +565,7 @@
 
 ;; Centaur Tabs
 (use-package centaur-tabs
-  :disabled t
+  :straight t
   :preface
   (defun enable-centaur-tabs ()
 	(interactive)
@@ -596,15 +592,16 @@
   (centaur-tabs-headline-match)
   (setq centaur-tabs-style "bar"
 		centaur-tabs-height 22
-		centaur-tabs-set-icons nil
+		centaur-tabs-icon-scale-factor 0.8
+		centaur-tabs-set-icons t
 		centaur-tabs-plain-icons nil
 		;; centaur-tabs-gray-out-icons #'buffer
 		centaur-tabs-set-bar #'under
 		x-underline-at-descent-line t
-		;; centaur-tabs-close-button "×"
-		;; centaur-tabs-modified-marker "•"
-		;; centaur-tabs-show-new-tab-button t
-		;; centaur-tabs-show-count t
+		centaur-tabs-close-button "×"
+		centaur-tabs-modified-marker "•"
+		centaur-tabs-show-new-tab-button t
+		centaur-tabs-show-count t
 		centaur-tabs-show-navigation-buttons t)
   (setq centaur-tabs-set-close-button nil)
   (defun centaur-tabs-buffer-groups ()
@@ -727,7 +724,7 @@
   (global-set-key (kbd "C-x t C-<left>") 'centaur-tabs-move-current-tab-to-left)
   (global-set-key (kbd "C-x t C-<right>") 'centaur-tabs-move-current-tab-to-right)
 
-  ;; (global-set-key (kbd "S-<f9>") 'toggle-centaur-tabs)
+  (global-set-key (kbd "S-<f9>") 'toggle-centaur-tabs)
   (global-set-key (kbd "C-<tab>") 'centaur-tabs-forward)
   (global-set-key (kbd "C-<iso-lefttab>") 'centaur-tabs-backward)
 
@@ -854,6 +851,27 @@
 	(set-face-background 'highlight-indent-guides-even-face "#404040")
 	(set-face-foreground 'highlight-indent-guides-character-face "#404040"))
   (indent-guides-init-faces))
+
+;; Indent Bars
+(use-package indent-bars
+  :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
+  :preface
+  (defun setup-tabs-bars ()
+	"Disable indent tabs."
+	(interactive)
+	(indent-tabs-mode 0)
+	(indent-bars-mode))
+  :config
+  (setq
+   indent-bars-pattern "."
+   indent-bars-width-frac 0.1
+   indent-bars-pad-frac 0.25
+   indent-bars-color-by-depth nil
+   indent-bars-color '(highlight :face-bg t :blend 0.2)
+   indent-bars-highlight-current-depth '(:face default :blend 0.4)))
+  ;; :hook
+  ;; ((typescript-mode typescriptreact-mode) . setup-tabs-bars)
+  ;; ((prog-mode typescriptreact-mode) . indent-bars-mode))
 
 ;; Minimap
 (use-package minimap
@@ -1133,7 +1151,7 @@
 
 ;; Toggle vterm
 (use-package vterm-toggle
-  :straight t
+  :disabled t
   :config
   (setq vterm-toggle-fullscreen-p nil))
 ;; Dedicated size for vterm

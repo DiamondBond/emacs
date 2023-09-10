@@ -222,7 +222,7 @@
 
 ;; Menu-bar
 (if (fboundp 'menu-bar-mode)
-	(menu-bar-mode 0))
+	(menu-bar-mode 1))
 
 ;; Tool-bar
 (if (fboundp 'tool-bar-mode)
@@ -231,7 +231,7 @@
 
 ;; Scroll-bar
 (if (fboundp 'scroll-bar-mode)
-	(scroll-bar-mode 0))
+	(scroll-bar-mode 1))
 
 ;; for athena
 ;; (set-scroll-bar-mode 'right)

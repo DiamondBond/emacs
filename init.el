@@ -171,8 +171,9 @@
 			(setq gc-cons-threshold lsp-cons-threshold)
 			(setq gc-cons-percentage gc-cons-percentage-original)))
 
-;; Dark
-(reverse-video-mode)
+;; (reverse-video-mode)
+
+(load-theme 'modus-operandi t)
 
 ;; Start server
 ;; (server-start)

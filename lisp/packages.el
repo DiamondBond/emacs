@@ -565,7 +565,7 @@
 
 ;; Centaur Tabs
 (use-package centaur-tabs
-  :straight t
+  :disabled t
   :preface
   (defun enable-centaur-tabs ()
 	(interactive)
@@ -854,7 +854,8 @@
 
 ;; Indent Bars
 (use-package indent-bars
-  :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
+  ;; :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
+  :disabled t
   :preface
   (defun setup-tabs-bars ()
 	"Disable indent tabs."
@@ -1151,7 +1152,7 @@
 
 ;; Toggle vterm
 (use-package vterm-toggle
-  :disabled t
+  :straight t
   :config
   (setq vterm-toggle-fullscreen-p nil))
 ;; Dedicated size for vterm

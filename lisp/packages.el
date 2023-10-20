@@ -203,12 +203,16 @@
   :init
   (setq evil-want-keybinding nil)
   (setq evil-want-C-u-scroll t)
+  :custom
+  (evil-symbol-word-search t)
   :config
   ;; enable evil-mode
   (evil-mode 1)
 
   ;; more granular undo with evil
   (setq evil-want-fine-undo t)
+
+  (setq sentence-end-double-space nil)
 
   ;; evil-redo
   ;; (setq evil-undo-system "undo-redo")
@@ -754,7 +758,7 @@
   (diminish 'visual-line-mode)
   (diminish 'outline-mode)
   (diminish 'gcmh-mode)
-  :config
+  ;; :config
   ;; diminish after mode is loaded
   (eval-after-load "eldoc" '(diminish 'eldoc-mode))
   (eval-after-load "c-mode" '(diminish 'c-mode))

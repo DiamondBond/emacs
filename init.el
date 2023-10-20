@@ -76,7 +76,7 @@
 ;;---------------------------------------------------------------------
 
 (setq
- globals--font         "Menlo 10"                           ; Font
+ globals--font         "Menlo 11"                           ; Font
  globals--name         "Diamond Bond"                       ; Name
  globals--email        "diamondbond1@gmail.com"             ; Email
  globals--irc          "diamondbond"                        ; IRC
@@ -171,11 +171,7 @@
 			(setq gc-cons-threshold lsp-cons-threshold)
 			(setq gc-cons-percentage gc-cons-percentage-original)))
 
+;; Reverse video
 ;; (reverse-video-mode)
-
-(load-theme 'modus-operandi t)
-
-;; Start server
-;; (server-start)
 
 ;;; init.el ends here

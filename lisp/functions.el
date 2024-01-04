@@ -159,14 +159,6 @@
 	  (interactive)
 	  (load-file (concat user-emacs-directory "init.el"))))
 
-(when (file-directory-p "~/.emacs.d")
-  (defun config/update ()
-	"Updates this Emacs configuration."
-	(interactive)
-	(shell-command "cd ~/.emacs.d; git pull")
-	(straight-pull-all)
-	(config/reload)))
-
 (defun config/github ()
   "Opens this configurations GitHub website."
   (interactive)
@@ -183,166 +175,6 @@
 	"Restore auth."
 	(interactive)
 	(async-shell-command "~/bin/auth-restore.sh")))
-
-(defun light-modeline()
-  "Default modeline."
-  (interactive)
-  (set-face-foreground 'mode-line "black")
-  (set-face-background 'mode-line "grey75")
-  (set-face-foreground 'mode-line-inactive "grey20")
-  (set-face-background 'mode-line-inactive "grey90")
-  (set-face-attribute 'mode-line nil
-					  :box `(:line-width -1 :color nil :style released-button))
-  (set-face-attribute 'mode-line-inactive nil
-					  :box `(:line-width -1 :color "grey75" :style nil)))
-
-(defun dark-modeline()
-  "Dark modeline."
-  (interactive)
-  (set-face-foreground 'mode-line "white")
-  (set-face-background 'mode-line "#181818")
-  (set-face-foreground 'mode-line-inactive "ivory")
-  (set-face-background 'mode-line-inactive "#1E1E1E")
-  (set-face-attribute 'mode-line nil
-					  :box `(:line-width -1 :color "#2A2A2A" :style nil))
-  (set-face-attribute 'mode-line-inactive nil
-					  :box `(:line-width -1 :color "#2A2A2A" :style nil))) ;;1F1F1F
-
-(defun config/light-theme ()
-  "Light theme."
-  (interactive)
-  ;; disable all themes
-  (disable-all-themes)
-  ;; configure frame
-  ;;(fringe-mode nil)
-  ;; (menu-bar-mode 1)
-  ;; (scroll-bar-mode 1)
-  ;;(disable-centaur-tabs)
-  ;; (light-sb)
-  (light-minimap)
-  (kind-icon-reset-cache)
-  ;; (setq dashboard-startup-banner 'official)
-  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
-  (if (string-equal (buffer-name) "*dashboard*")
-	  (dashboard-refresh-buffer))
-  ;; load light theme
-  ;;(load-theme 'modus-operandi t)
-  ;;(light-tabline)
-  ;; (light-modeline)
-  ;; (doom-modeline-mode 0)
-  ;;(indent-guides-init-faces)
-  (put 'theme-toggle 'state nil))
-
-(defun config/dark-theme ()
-  "Dark theme."
-  (interactive)
-  ;; disable all themes
-  (disable-all-themes)
-  ;; configure frame
-  ;;(fringe-mode 0)
-  ;; (when (string= (system-name) "nitro")
-  ;; 	(progn
-  ;; 	  (dark-sb)
-  ;; 	  ))
-  ;; (menu-bar-mode 0)
-  ;; (scroll-bar-mode 0)
-  ;; (scroll-bar-mode 0)
-  ;;(enable-centaur-tabs)
-  (dark-minimap)
-  (kind-icon-reset-cache)
-  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
-  (if (string-equal (buffer-name) "*dashboard*")
-	  (dashboard-refresh-buffer))
-  ;; load dark theme
-  ;; (load-theme 'vscode-dark-plus t)
-  (load-theme 'modus-vivendi t)
-  ;;(dark-tabline)
-  ;; (dark-modeline)
-  ;; (doom-modeline-mode 1)
-  ;;(indent-guides-dark-faces)
-  (put 'theme-toggle 'state t))
-
-(defun config/toggle-theme ()
-  "Toggle theme."
-  (interactive)
-  (if (get 'theme-toggle 'state)
-	  (config/light-theme)
-	(config/dark-theme)))
-
-(defun config/spacemacs-light-theme ()
-  "Spacemacs light theme."
-  (interactive)
-  (disable-all-themes)
-  (menu-bar-mode 0)
-  (light-minimap)
-  (kind-icon-reset-cache)
-  (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
-  (if (string-equal (buffer-name) "*dashboard*")
-	  (dashboard-refresh-buffer))
-  (load-theme 'spacemacs-light t))
-  ;; (doom-modeline-mode 1))
-
-(defun config/lensor-theme ()
-  "Lensor theme."
-  (interactive)
-  ;; disable all themes
-  (disable-all-themes)
-  ;; configure frame
-  ;; (menu-bar-mode 0)
-  ;; (scroll-bar-mode 0)
-  ;; (when (string= (system-name) "nitro")
-  ;; 	(progn
-  ;; 	  (lensor-sb)
-  ;; 	  ;; (dark-modeline)
-  ;; 	  ))
-  ;; (dark-minimap)
-  (kind-icon-reset-cache)
-  ;; load lensor-min theme
-  (load-theme 'lensor-min t))
-
-(defun config/honeydew-theme ()
-  "Apply honeydew theme."
-  (interactive)
-  (setq default-frame-alist
-		'((inhibit-double-buffering . t)
-		  (height . 46)
-		  (width . 80)
-		  (internal-border-width . 0)
-		  (background-color . "honeydew")
-		  (font . "Menlo 10")
-		  (vertical-scroll-bars . right)
-		  (left-fringe)
-		  (right-fringe))))
-
-;; (defvar vscode-mode-first-run t)
-(defun config/vscode-mode ()
-  "Emulate vscode."
-  (interactive)
-  ;; (when vscode-mode-first-run
-  ;; 	(setq vscode-mode-first-run nil)
-  ;; 	(when (yes-or-no-p "Load VSCode theme?")
-  ;; 	  (progn
-  ;; 		(config/dark-theme))))
-  ;; (scroll-bar-mode 0)
-  ;; (menu-bar-mode 0)
-  ;;(tab-bar-enable)
-  (disable-all-themes)
-  (load-theme 'vscode-dark-plus t)
-  ;; (enable-centaur-tabs)
-  (open-treemacs)
-  (minimap/enable))
-
-(defun config/vscode-kill ()
-  "Kill vscode emulation."
-  (interactive)
-  ;;(scroll-bar-mode 1)
-  ;;(menu-bar-mode 1)
-  ;;(tab-bar-disable)
-  ;; (disable-centaur-tabs)
-  (disable-all-themes)
-  (load-theme 'modus-operandi t)
-  (treemacs)
-  (minimap/disable))
 
 (defun sync/irc ()
   "Connect to IRC."
@@ -592,108 +424,6 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 	(async-shell-command (concat "~/bin/org-pdf-export " buffer-file-name))
 	(find-file (expand-file-name (concat (file-name-sans-extension buffer-file-name) ".pdf")))))
 
-;; Scroll bar functions
-(defun dark-size-scroll-bars ()
-  (interactive)
-  (mapc (lambda (win)
-		  (set-window-scroll-bars win 14 'right))
-		(window-list)))
-
-(defun light-size-scroll-bars ()
-  (interactive)
-  (redisplay t)
-  (force-window-update nil)
-  (mapc (lambda (win)
-		  (set-window-scroll-bars win 15 'right))
-		(window-list)))
-
-(defun update-scroll-bars ()
-  (interactive)
-  (mapc (lambda (win)
-		  (set-window-scroll-bars win nil))
-		(window-list))
-  (set-window-scroll-bars (selected-window) 14 'right))
-
-(defun kill-scroll-bars ()
-  (interactive)
-  (mapc (lambda (win)
-		  (set-window-scroll-bars win nil))
-		(window-list))
-  (set-window-scroll-bars (selected-window) 0 'right))
-
-(defun enable-local-scroll-bar ()
-  "Enable local buffer scroll bar."
-  (interactive)
-  (put 'lscroll-bar-toggle 'state nil)
-  (redisplay t)
-  (force-window-update nil)
-  ;; apply theme
-  (if (get 'theme-toggle 'state)
-	  (progn
-		(dark-sb)
-		(dark-size-scroll-bars))
-	(progn
-	  (light-sb)
-	  (light-size-scroll-bars)))
-  (update-scroll-bars)
-  (message "Enabled local scroll-bar.")
-  (add-hook 'window-configuration-change-hook 'update-scroll-bars)
-  (add-hook 'buffer-list-update-hook 'update-scroll-bars))
-
-(defun disable-local-scroll-bar ()
-  "Disable local buffer scroll bar."
-  (interactive)
-  (put 'lscroll-bar-toggle 'state t)
-  (redisplay t)
-  (force-window-update nil)
-  (kill-scroll-bars)
-  (message "Disabled local scroll-bar.")
-  (remove-hook 'window-configuration-change-hook 'update-scroll-bars)
-  (remove-hook 'buffer-list-update-hook 'update-scroll-bars))
-
-(defun local-scroll-bar-toggle ()
-  "Toggle local buffer scroll bar."
-  (interactive)
-  (if (get 'lscroll-bar-toggle 'state)
-	  (enable-local-scroll-bar)
-	(disable-local-scroll-bar)))
-
-;; light scroll-bar
-(defun light-sb ()
-  "Default scroll-bar."
-  (interactive)
-  (remove-hook 'window-configuration-change-hook 'dark-size-scroll-bars)
-  (remove-hook 'buffer-list-update-hook 'dark-size-scroll-bars)
-  (light-size-scroll-bars)
-  (custom-set-faces
-   '(scroll-bar
-	 ((t
-	   (:foreground nil :background nil))))))
-
-;; dark scroll-bar
-(defun dark-sb ()
-  "Dark scroll-bar."
-  (interactive)
-  (add-hook 'window-configuration-change-hook 'dark-size-scroll-bars)
-  (add-hook 'buffer-list-update-hook 'dark-size-scroll-bars)
-  (dark-size-scroll-bars)
-  (custom-set-faces
-   '(scroll-bar
-	 ((t
-	   (:foreground "#2f3133" :background "#1e1e1e"))))))
-
-;; lensor scroll-bar
-(defun lensor-sb ()
-  "Lensor scroll-bar."
-  (interactive)
-  (add-hook 'window-configuration-change-hook 'dark-size-scroll-bars)
-  (add-hook 'buffer-list-update-hook 'dark-size-scroll-bars)
-  (dark-size-scroll-bars)
-  (custom-set-faces
-   '(scroll-bar
-	 ((t
-	   (:foreground "#515456" :background "#161718"))))))
-
 ;; Reverse video mode
 (defun reverse-video-mode ()
   "Reverse video mode."
@@ -721,6 +451,21 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 		(other-window 1)
 		(eshell))
 	(switch-to-buffer-other-window "*eshell*")))
+
+(defun dm-wrap-region ()
+  "Wrap text region to 80 columns."
+  (interactive)
+  (if (use-region-p)
+	  (let ((start (region-beginning))
+			(end (region-end)))
+		(save-excursion
+		  (goto-char start)
+		  (while (< (point) end)
+			(let ((line-end (save-excursion (end-of-line) (point))))
+			  (fill-region (point) line-end 80)
+			  (goto-char line-end))))
+		(message "Text wrapped to 80 columns in the selected region."))
+	(message "No active region. Please select a region to wrap.")))
 
 (provide 'functions)
 ;;; functions.el ends here

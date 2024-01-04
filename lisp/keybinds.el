@@ -16,8 +16,6 @@
 (define-key z-map (kbd "k") 'tab-bar-toggle)
 (define-key z-map (kbd "l") 'minimap/toggle)
 (define-key z-map (kbd "h") 'open-treemacs)
-(define-key z-map (kbd "0") 'config/vscode-kill)
-(define-key z-map (kbd "1") 'config/vscode-mode)
 (define-key z-map (kbd "2") 'make-frame-command)
 
 ;; os-specific
@@ -78,9 +76,7 @@
 (global-set-key (kbd "<f7>") 'scroll-bar-mode)
 (global-set-key (kbd "<f8>") 'tool-bar-mode)
 (global-set-key (kbd "<f10>") 'compile)
-;; (global-set-key (kbd "S-<f5>") 'config/toggle-theme)
 ;; (global-set-key (kbd "S-<f5>") 'open-treemacs)
-(global-set-key (kbd "S-<f7>") 'local-scroll-bar-toggle)
 (global-set-key (kbd "S-<f8>") 'other-frame)
 (global-set-key (kbd "<f9>") 'tab-bar-toggle)
 (global-set-key (kbd "S-<f9>") 'toggle-frame-tab-bar)

@@ -76,7 +76,7 @@
 ;;---------------------------------------------------------------------
 
 (setq
- globals--font         "Menlo 11"                           ; Font
+ globals--font         "Menlo 10"                           ; Font
  globals--name         "Diamond Bond"                       ; Name
  globals--email        "diamondbond1@gmail.com"             ; Email
  globals--irc          "diamondbond"                        ; IRC
@@ -141,11 +141,11 @@
 ;;   (load-file "~/.emacs.d/lisp/jira.el"))
 
 ;;---------------------------------------------------------------------
-;; CGPT
+;; GPT
 ;;---------------------------------------------------------------------
 
-;; (when (file-readable-p "~/.emacs.d/lisp/cgpt.el")
-;;   (load-file "~/.emacs.d/lisp/cgpt.el"))
+(when (file-readable-p "~/.emacs.d/lisp/gpt.el")
+  (load-file "~/.emacs.d/lisp/gpt.el"))
 
 ;;---------------------------------------------------------------------
 ;; COPILOT
@@ -170,8 +170,5 @@
 		  (lambda ()
 			(setq gc-cons-threshold lsp-cons-threshold)
 			(setq gc-cons-percentage gc-cons-percentage-original)))
-
-;; Reverse video
-;; (reverse-video-mode)
 
 ;;; init.el ends here

@@ -8,9 +8,6 @@
 ;; URL: https://github.com/diamondbond/emacs
 ;; Package-Requires: ((emacs "29"))
 
-;;; Commentary:
-;; Utilitarian Emacs Configuration.
-
 ;;; Code:
 
 ;;---------------------------------------------------------------------
@@ -146,20 +143,6 @@
 
 (when (file-readable-p "~/.emacs.d/lisp/gpt.el")
   (load-file "~/.emacs.d/lisp/gpt.el"))
-
-;;---------------------------------------------------------------------
-;; COPILOT
-;;---------------------------------------------------------------------
-
-;; (when (file-readable-p "~/.emacs.d/lisp/copilot.el")
-;;   (load-file "~/.emacs.d/lisp/copilot.el"))
-
-;;---------------------------------------------------------------------
-;; LOAD THEME
-;;---------------------------------------------------------------------
-
-;; (add-hook 'emacs-startup-hook
-;; 		  (lambda () (reverse-video-mode)))
 
 ;;---------------------------------------------------------------------
 ;; END

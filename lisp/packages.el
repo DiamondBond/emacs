@@ -480,8 +480,7 @@
   :config
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (setq dashboard-items '((recents  . 5)
-						  (projects . 5)
-						  (bookmarks . 5)))
+						  (projects . 5)))
   ;;(agenda . 2)))
   (setq dashboard-banner-logo-title nil)
   (setq dashboard-startup-banner 'official)

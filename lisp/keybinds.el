@@ -29,7 +29,7 @@
 (define-key z-map (kbd "T") 'display-time-mode)
 
 ;; functions
-(define-key z-map (kbd "M") 'mu4e)
+;; (define-key z-map (kbd "M") 'mu4e)
 (define-key z-map (kbd "D") 'dashboard-refresh-buffer)
 ;; (define-key z-map (kbd "D") 'scratch-buffer)
 (define-key z-map (kbd "L") 'minimap/refresh)

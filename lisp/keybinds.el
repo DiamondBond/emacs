@@ -56,6 +56,8 @@
 (define-key z-map (kbd "C-c") 'calendar)
 (define-key z-map (kbd "C-d") 'dired-other-frame)
 (define-key z-map (kbd "C-1") 'display-buffer-other-frame)
+(define-key z-map (kbd "1") 'vscode-mode-on)
+(define-key z-map (kbd "0") 'vscode-mode-off)
 
 ;; calendar
 (define-key z-map (kbd ".") 'org-date-from-calendar)

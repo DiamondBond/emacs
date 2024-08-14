@@ -494,6 +494,13 @@
   (setq dashboard-set-footer nil) ;; hide footer
   (setq dashboard-set-navigator t) ;; show nav
 
+  (setq dashboard-startupify-list '(dashboard-insert-banner
+									dashboard-insert-newline
+									dashboard-insert-banner-title
+									dashboard-insert-newline
+									dashboard-insert-navigator
+									dashboard-insert-items))
+
   ;; set dashboard navigator buttons
   (when (file-directory-p "~/org")
 	(setq dashboard-navigator-buttons

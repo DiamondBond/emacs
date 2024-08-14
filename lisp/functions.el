@@ -467,5 +467,19 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 		(message "Text wrapped to 80 columns in the selected region."))
 	(message "No active region. Please select a region to wrap.")))
 
+(defun vscode-mode-on ()
+  "Emulate VSCode."
+  (interactive)
+  (scroll-bar-mode -1)
+  (open-treemacs)
+  (minimap/enable))
+
+(defun vscode-mode-off ()
+  "Become Emacs."
+  (interactive)
+  (scroll-bar-mode 1)
+  (treemacs)
+  (minimap/disable))
+
 (provide 'functions)
 ;;; functions.el ends here

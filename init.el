@@ -73,7 +73,7 @@
 ;;---------------------------------------------------------------------
 
 (setq
- globals--font         "Menlo 10"                           ; Font
+ globals--font         "Menlo 11"                           ; Font
  globals--name         "Diamond Bond"                       ; Name
  globals--email        "diamondbond1@gmail.com"             ; Email
  globals--irc          "diamondbond"                        ; IRC
@@ -141,8 +141,14 @@
 ;; GPT
 ;;---------------------------------------------------------------------
 
-(when (file-readable-p "~/.emacs.d/lisp/gpt.el")
-  (load-file "~/.emacs.d/lisp/gpt.el"))
+;; (when (file-readable-p "~/.emacs.d/lisp/gpt.el")
+;;   (load-file "~/.emacs.d/lisp/gpt.el"))
+
+;;---------------------------------------------------------------------
+;; THEME
+;;---------------------------------------------------------------------
+
+(modus-themes-select 'modus-vivendi)
 
 ;;---------------------------------------------------------------------
 ;; END

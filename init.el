@@ -141,8 +141,8 @@
 ;; GPT
 ;;---------------------------------------------------------------------
 
-;; (when (file-readable-p "~/.emacs.d/lisp/gpt.el")
-;;   (load-file "~/.emacs.d/lisp/gpt.el"))
+(when (file-readable-p "~/.emacs.d/lisp/gpt.el")
+  (load-file "~/.emacs.d/lisp/gpt.el"))
 
 ;;---------------------------------------------------------------------
 ;; THEME

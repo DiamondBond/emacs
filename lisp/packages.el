@@ -412,12 +412,12 @@
   (modus-themes-region '(accented bg-only no-extend))
   (modus-themes-common-palette-overrides
 		'((bg-region bg-magenta-intense)
-		  (fg-region fg-main)))
+		  (fg-region fg-main))))
   ;; (modus-themes-hl-line nil)
   ;; :config
   ;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
   ;; (load-theme 'modus-operandi t)
-  :bind ("S-<f5>" . modus-themes-toggle))
+  ;; :bind ("S-<f5>" . modus-themes-toggle))
 
 ;; Prot's EF themes
 (use-package ef-themes

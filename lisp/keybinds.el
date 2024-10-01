@@ -73,6 +73,7 @@
 ;;
 
 ;; function
+(global-set-key (kbd "S-<f5>") 'load-theme-based-on-system-theme)
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f6>") 'menu-bar-mode)
 (global-set-key (kbd "<f7>") 'scroll-bar-mode)

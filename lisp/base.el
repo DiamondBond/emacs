@@ -234,7 +234,7 @@
 	(scroll-bar-mode 1))
 
 ;; for athena
-(set-scroll-bar-mode 'right)
+;; (set-scroll-bar-mode 'right)
 
 ;; disable minibuffer scroll-bar
 ;; (set-window-scroll-bars (minibuffer-window) nil nil)

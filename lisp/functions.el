@@ -481,5 +481,14 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
   (treemacs)
   (minimap/disable))
 
+(defun load-theme-based-on-system-theme ()
+  "Load a theme based on GNOME dark mode preference."
+  (interactive)
+  (let* ((color-scheme (string-trim (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")))
+		 (dark-mode (string-equal color-scheme "'prefer-dark'")))
+	(if dark-mode
+		(modus-themes-select 'modus-vivendi)
+	  (modus-themes-select 'modus-operandi))))
+
 (provide 'functions)
 ;;; functions.el ends here

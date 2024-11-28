@@ -43,12 +43,6 @@ direnv
 astyle
 #+end_quote
 
-pacman: [[https://github.com/DiamondBond/dotfiles/blob/master/pacman.txt][manifest]]
-apt:    <wip>
-rpm:    <wip>
-win:    <wip>
-mac:    <wip>
-
 ** Python
 
 LSP handles the python language server.

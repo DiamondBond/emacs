@@ -29,10 +29,6 @@ If you are using Windows then [[https://github.com/domtronn/all-the-icons.el/arc
 
 Most IDE-like features are provided by the [[https://github.com/emacs-lsp/lsp-mode][LSP]] package. For it to work properly, you need to install the appropriate [[https://github.com/emacs-lsp/lsp-mode#supported-languages][language servers]] although Emacs will prompt you to install them automatically upon encountering a file for that language.
 
-** Email
-
-Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/setupemail.org][Email setup documentation]] for this functionality.
-
 ** Dependencies
 
 Refer to the [[https://github.com/DiamondBond/emacs/blob/master/docs/dependencies.org][Dependencies documentation]].

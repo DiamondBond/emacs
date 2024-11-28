@@ -127,7 +127,7 @@
 ;; THEME
 ;;---------------------------------------------------------------------
 
-(load-theme-based-on-system-theme)
+;; (load-theme-based-on-system-theme)
 
 ;;---------------------------------------------------------------------
 ;; MAIL
@@ -147,8 +147,8 @@
 ;; GPT
 ;;---------------------------------------------------------------------
 
-(when (file-readable-p "~/.emacs.d/lisp/gpt.el")
-  (load-file "~/.emacs.d/lisp/gpt.el"))
+;; (when (file-readable-p "~/.emacs.d/lisp/gpt.el")
+;;   (load-file "~/.emacs.d/lisp/gpt.el"))
 
 ;;---------------------------------------------------------------------
 ;; END

@@ -73,7 +73,7 @@
 ;;---------------------------------------------------------------------
 
 (setq
- globals--font         "Menlo 11"                           ; Font
+ globals--font         "Menlo 10"                           ; Font
  globals--name         "Diamond Bond"                       ; Name
  globals--email        "diamondbond1@gmail.com"             ; Email
  globals--irc          "diamondbond"                        ; IRC
@@ -128,6 +128,9 @@
 ;;---------------------------------------------------------------------
 
 ;; (load-theme-based-on-system-theme)
+
+;; Reverse video mode
+;; (reverse-video-mode)
 
 ;;---------------------------------------------------------------------
 ;; MAIL

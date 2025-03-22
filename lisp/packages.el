@@ -783,7 +783,7 @@
   (eval-after-load "dired" '(diminish 'all-the-icons-dired-mode))
   (eval-after-load "magit" '(diminish 'auto-fill-mode ""))
   (eval-after-load "magit" '(diminish 'with-editor-mode ""))
-  (eval-after-load "slime" '(diminish 'slime-autodoc-mode ""))
+  ;; (eval-after-load "slime" '(diminish 'slime-autodoc-mode ""))
   (eval-after-load "olivetti" '(diminish 'olivetti-mode ""))
   (eval-after-load "evil" '(diminish 'evil-collection-unimpaired-mode ""))
   (eval-after-load "mu4e" '(diminish 'overwrite-mode ""))

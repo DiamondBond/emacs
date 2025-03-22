@@ -16,7 +16,7 @@
 		  rjsx-mode       	; ts-ls (tsserver wrapper)
 		  js-jsx-mode     	; ts-ls (tsserver wrapper)
 		  typescript-mode 	; ts-ls (tsserver wrapper)
-		  python-mode     	; pyright
+		  ;; python-mode     	; pyright
 		  rust-mode       	; rust-analyzer
 		  ruby-mode       	; solargraph
 		  web-mode        	; ts-ls/HTML/CSS
@@ -68,11 +68,11 @@
   (setq lsp-ui-sideline-show-code-actions t)
   (setq lsp-ui-sideline-delay 0.05))
 
-(use-package lsp-pyright
-  :straight t
-  :after lsp
-  :hook (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred)))
-  :init (setq lsp-pyright-python-executable-cmd "python3"))
+;; (use-package lsp-pyright
+;;   :straight t
+;;   :after lsp
+;;   :hook (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred)))
+;;   :init (setq lsp-pyright-python-executable-cmd "python3"))
 
 ;; LSP Tailwind-CSS
 ;; (straight-use-package
@@ -260,21 +260,21 @@
   :straight t)
 
 ;; Python
-(use-package python-mode
-  :straight t
-  :config
-  (setq python-indent-offset standard-indent)
-  (setq python-indent-guess-indent-offset t)
-  (setq python-indent-guess-indent-offset-verbose nil)
-  (setq python-shell-interpreter "/usr/bin/python3")
-  (setq exec-path (cons "~/.local/bin" exec-path)))
+;; (use-package python-mode
+;;   :straight t
+;;   :config
+;;   (setq python-indent-offset standard-indent)
+;;   (setq python-indent-guess-indent-offset t)
+;;   (setq python-indent-guess-indent-offset-verbose nil)
+;;   (setq python-shell-interpreter "/usr/bin/python3")
+;;   (setq exec-path (cons "~/.local/bin" exec-path)))
 
 ;; Python env management
-(use-package pyvenv
-  :straight t
-  :config
-  (setq pyvenv-workon "emacs")  ; Default venv
-  (pyvenv-tracking-mode 1))  ; Automatically use pyvenv-workon via dir-locals
+;; (use-package pyvenv
+;;   :straight t
+;;   :config
+;;   (setq pyvenv-workon "emacs")  ; Default venv
+;;   (pyvenv-tracking-mode 1))  ; Automatically use pyvenv-workon via dir-locals
 
 ;; Python formatter
 (use-package python-black

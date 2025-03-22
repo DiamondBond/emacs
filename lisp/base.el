@@ -276,13 +276,13 @@
 (add-to-list 'default-frame-alist '(height . 46))
 
 ;; Set default frame background
-;;(add-to-list 'default-frame-alist '(background-color . "honeydew"))
+;; (add-to-list 'default-frame-alist '(background-color . "honeydew"))
 
 ;; Disable vsync
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
 ;; Reverse video mode
-;;(reverse-video-mode)
+;; (reverse-video-mode)
 
 ;; Configure some modes
 (column-number-mode 1)

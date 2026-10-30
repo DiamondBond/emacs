@@ -649,7 +649,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 ;; Fancy icons (glyphs come from any installed Nerd Font)
 (use-package nerd-icons
-  :custom (nerd-icons-font-family "SauceCodePro Nerd Font Mono"))
+  :custom (nerd-icons-font-family "SauceCodePro Nerd Font"))
 
 (use-package nerd-icons-completion
   :after marginalia

@@ -45,7 +45,7 @@
   :straight (:type built-in)
   :custom
   (c-ts-mode-indent-style 'linux)
-  (c-ts-mode-indent-offset tab-width)
+  (c-ts-indent-offset tab-width)
   :hook (c-ts-base-mode . subword-mode))
 
 ;; astyle formatter function
@@ -64,7 +64,7 @@
 ;; Go
 (use-package go-ts-mode
   :straight (:type built-in)
-  :custom (go-ts-mode-indent-offset 2)
+  :custom (go-ts-indent-offset 2)
   :config
   (defun db/go-mode-hook()
 	(setq tab-width 2)
@@ -80,7 +80,6 @@
   :hook (rust-ts-mode . db/eglot-format-on-save))
 
 (use-package cargo
-  :straight t
   :defer 3)
 
 ;; JavaScript
@@ -94,40 +93,27 @@
 
 ;; Add node_modules to PATH
 (use-package add-node-modules-path
-  :straight t
   :hook ((typescript-ts-base-mode . add-node-modules-path)))
 
 ;; Prettier formatter
 (use-package prettier-js
-  :after (typescript-ts-mode)
-  :straight t)
+  :after (typescript-ts-mode))
 
 ;; Web mode (HTML)
 (use-package web-mode
-  :straight t
-  :config
-  (setq web-mode-content-types-alist '(("html" . "\\.html\\'")))
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-script-padding 2)
-  (setq web-mode-block-padding 2)
-  (setq web-mode-style-padding 2)
-  (setq web-mode-enable-auto-pairing t)
-  (setq web-mode-enable-auto-closing t)
-  (setq web-mode-enable-current-element-highlight t)
-
-  ;; adjust web-mode indent
-  (defun web-mode-init-hook ()
-	"Hooks for Web mode.  Adjust indent."
-	(setq web-mode-markup-indent-offset 4))
-  (add-hook 'web-mode-hook 'web-mode-init-hook)
-  :mode ("\\.html\\'" . web-mode)
-  :commands web-mode)
+  :mode "\\.html\\'"
+  :custom
+  (web-mode-css-indent-offset 2)
+  (web-mode-code-indent-offset 2)
+  (web-mode-script-padding 2)
+  (web-mode-block-padding 2)
+  (web-mode-style-padding 2)
+  (web-mode-enable-auto-pairing t)
+  (web-mode-enable-auto-closing t)
+  (web-mode-enable-current-element-highlight t))
 
 ;; Python formatter
 (use-package python-black
-  :straight t
   :after python)
 
 ;; Lua
@@ -137,24 +123,20 @@
 
 ;; Elisp
 (use-package elisp-autofmt
-  :straight t
   :commands (elisp-autofmt-mode elisp-autofmt-buffer))
 
 ;; Markdown
 (use-package markdown-mode
-  :straight t
   :mode "\\.md\\'"
   :custom (markdown-fontify-code-blocks-natively t))
 
 ;; CSV
 (use-package csv-mode
-  :straight t
   :mode ("\\.csv\\'" . csv-mode))
 
 ;; Netwide Assembly (NASM)
 ;; https://nasm.us/
 (use-package nasm-mode
-  :straight t
   :bind
   (:map nasm-mode-map
 		(";" . self-insert-command))
@@ -164,7 +146,6 @@
 ;; EBNF -- Extended Backus-Naur Form
 ;; https://github.com/nverno/ebnf-mode
 (use-package ebnf-mode
-  :straight t
   :mode
   ("\\.bnf\\'" . ebnf-mode))
 

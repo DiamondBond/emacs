@@ -779,7 +779,7 @@
   (eval-after-load "projectile" '(diminish 'projectile-mode))
   (eval-after-load "rust-mode" '(diminish 'lsp-lens-mode))
   ;; (eval-after-load "rust-mode" '(diminish 'flycheck-mode))
-  (eval-after-load "typescript-mode" '(diminish 'subword-mode))
+  (eval-after-load "typescript-ts-mode" '(diminish 'subword-mode))
   (eval-after-load "js2-mode" '(diminish 'subword-mode ""))
   (eval-after-load "dired" '(diminish 'dired-async-mode))
   (eval-after-load "dired" '(diminish 'dired-hide-dotfiles-mode))
@@ -850,7 +850,7 @@
   (setq highlight-indent-guides-method 'character)
   (add-hook 'js-mode-hook #'(lambda () (highlight-indent-guides-mode)))
   (add-hook 'js2-mode-hook #'(lambda () (highlight-indent-guides-mode)))
-  (add-hook 'typescript-mode-hook #'(lambda () (highlight-indent-guides-mode)))
+  (add-hook 'typescript-ts-base-mode-hook #'(lambda () (highlight-indent-guides-mode)))
   (defun indent-guides-init-faces ()
 	"Set indent-guides faces"
 	(interactive)

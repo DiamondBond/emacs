@@ -16,7 +16,7 @@
 		  js-mode         	; ts-ls (tsserver wrapper)
 		  rjsx-mode       	; ts-ls (tsserver wrapper)
 		  js-jsx-mode     	; ts-ls (tsserver wrapper)
-		  typescript-mode 	; ts-ls (tsserver wrapper)
+		  typescript-ts-base-mode ; ts-ls (tsserver wrapper)
 		  ;; python-mode     	; pyright
 		  rust-mode       	; rust-analyzer
 		  ruby-mode       	; solargraph
@@ -239,11 +239,6 @@
 	;; use spaces, not tabs
 	(setq-default indent-tabs-mode nil)))
 
-;; JSON
-(use-package json-mode
-  :straight t
-  :mode ("\\.json\\'" . json-mode))
-
 ;; CSV
 (use-package csv-mode
   :straight t
@@ -337,56 +332,20 @@
 (use-package rjsx-mode
   :disabled t)
 
-;; Tree-sitter
-(use-package tree-sitter
-  :straight t
-  :diminish (tree-sitter-mode)
-  :config
-  ;; activate tree-sitter on any buffer containing code for which it has a parser available
-  (global-tree-sitter-mode)
-  ;; toggle tree-sitter-debug-mode with `C-c t d`
-  (global-set-key (kbd "C-c t d") 'tree-sitter-debug-mode)
-  ;; you can easily see the difference tree-sitter-hl-mode makes for python, ts or tsx
-  ;; by switching on and off
-  ;; deepen tree-sitter's reach
-  (setq treesit-font-lock-level 4)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+;; Tree-sitter (built-in). Grammars install to ~/.emacs.d/tree-sitter/ on
+;; first use. Only these ts-modes are enabled; other languages keep their
+;; classic modes so their hooks (lsp, ccls, gofmt...) keep firing.
+;; .ts/.tsx open in typescript-ts-mode/tsx-ts-mode out of the box.
+(use-package treesit
+  :straight (:type built-in)
+  :custom
+  (treesit-auto-install-grammar 'always)
+  (treesit-font-lock-level 4)
+  (treesit-enabled-modes '(typescript-ts-mode tsx-ts-mode json-ts-mode css-ts-mode))
+  :bind ("C-c t d" . treesit-explore-mode))
 
-;; Keep grammars out of straight/build: a bin/json.so there shadows json.el
-;; when straight byte-compiles packages, breaking every (require 'json).
-;; Not compiled, since compiling downloads grammars into the default dir.
-(use-package tree-sitter-langs
-  :straight (:build (:not compile))
-  :after tree-sitter
-  :custom (tree-sitter-langs-grammar-dir
-		   (expand-file-name "tree-sitter-langs/" user-emacs-directory)))
-
-;; great tree-sitter-based indentation for typescript/tsx, css, json
-(use-package tsi
-  :after tree-sitter
-  :straight (:type git :host github :repo "orzechowskid/tsi.el")
-  ;; define autoload definitions which when actually invoked will cause package to be loaded
-  :commands (tsi-typescript-mode tsi-json-mode tsi-css-mode)
-  :init
-  (add-hook 'typescript-mode-hook (lambda () (tsi-typescript-mode 1)))
-  (add-hook 'json-mode-hook (lambda () (tsi-json-mode 1)))
-  (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
-  (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1))))
-
-;; TypeScript
-(use-package typescript-mode
-  :after tree-sitter
-  :straight t
-  :config
-  (define-derived-mode typescriptreact-mode typescript-mode
-	"TSX")
-
-  ;; use our derived mode for tsx files
-  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
-  ;; by default, typescript-mode is mapped to the treesitter typescript parser
-  ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
-  (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx))
-  (add-hook 'typescriptreact-mode-hook #'setup-tide-mode))
+;; TypeScript (typescript-ts-base-mode covers both .ts and .tsx)
+(add-hook 'typescript-ts-base-mode-hook #'setup-tide-mode)
 
 ;; load ts-repl with ts-mode
 ;;(with-eval-after-load "typescript-mode"
@@ -399,17 +358,16 @@
 (use-package tide
   :straight t
   :config
-  (add-hook 'typescript-mode-hook #'setup-tide-mode)
   (define-key evil-normal-state-map (kbd "M-.") 'tide-jump-to-definition))
 
 ;; Add node_modules to PATH
 (use-package add-node-modules-path
   :straight t
-  :hook ((typescript-mode . add-node-modules-path)))
+  :hook ((typescript-ts-base-mode . add-node-modules-path)))
 
 ;; Prettier formatter
 (use-package prettier-js
-  :after (typescript-mode)
+  :after (typescript-ts-mode)
   :straight t)
 ;; :config
 ;; (add-hook 'web-mode-hook #'(lambda ()

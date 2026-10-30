@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; Core packages
 (use-package fn        :demand t) ; function
 (use-package s         :demand t) ; string
@@ -398,10 +399,12 @@
   :disabled t)
 
 ;; Modus themes (integrated into Emacs28+)
+;; The 2024 gitlab checkout errors on Emacs 31 (face inheritance cycle).
 (use-package modus-themes
-  ;; :straight (:type built-in)
-  :straight (:type git :host gitlab :repo "protesilaos/modus-themes" :branch "main")
+  :straight (:type built-in)
+  :no-require t
   :init
+  (require-theme 'modus-themes)
   ;; load the theme files before enabling a theme
   ;; (modus-themes-load-themes)
   ;; (load-theme 'modus-operandi t)
@@ -509,27 +512,27 @@
 			  "Notes"
 			  "Open Notes"
 			  (lambda (&rest _) (notes-edit))
-			  'default)
+			  default)
 			 (nil
 			  "Scratch"
 			  "Open Scratch Buffer"
 			  (lambda (&rest _) (create-scratch-buffer))
-			  'default)
+			  default)
 			 (nil
 			  "Tasks"
 			  "Open Tasks"
 			  (lambda (&rest _) (tasks-edit))
-			  'default)
+			  default)
 			 ;; (nil
 			 ;;  "Agenda"
 			 ;;  "Open Org-Agenda"
 			 ;;  (lambda (&rest _) (org-agenda))
-			 ;;  'default)
+			 ;;  default)
 			 (nil
 			  "Inbox"
 			  "Open Inbox"
 			  (lambda (&rest _) (inbox-edit))
-			  'default)))))
+			  default)))))
 
   (setq tab-bar-new-tab-choice "*dashboard*")
 
@@ -1141,9 +1144,9 @@
 (if (eq system-type 'gnu/linux)
 	(use-package vterm
 	  :straight t
-	  :custom (vterm-install t)
+	  ;; Must be set before load, or the daemon blocks on a y-or-n-p
+	  :custom (vterm-always-compile-module t)
 	  :config
-	  (setq vterm-always-compile-module t)
 	  (setq vterm-buffer-name-string "vterm %s")
 	  (add-hook 'vterm-mode-hook
 				(lambda () (global-hl-line-mode 0)))

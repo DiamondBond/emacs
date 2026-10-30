@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; Apply globals
 (setq user-full-name globals--name
 	  user-mail-address globals--email

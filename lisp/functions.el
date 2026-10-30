@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (defun join-path (path filename)
   "Concat path and file. Add '/' to the end of the path if necessary."
   (concat path (if (string-match-p "/$" path) "" "/") filename))

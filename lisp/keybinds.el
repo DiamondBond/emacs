@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (define-prefix-command 'z-map)
 (global-set-key (kbd "C-1") 'z-map)
 

@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (use-package lsp-mode
   :straight t
   :custom
@@ -351,9 +352,14 @@
   (setq treesit-font-lock-level 4)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
+;; Keep grammars out of straight/build: a bin/json.so there shadows json.el
+;; when straight byte-compiles packages, breaking every (require 'json).
+;; Not compiled, since compiling downloads grammars into the default dir.
 (use-package tree-sitter-langs
-  :straight t
-  :after tree-sitter)
+  :straight (:build (:not compile))
+  :after tree-sitter
+  :custom (tree-sitter-langs-grammar-dir
+		   (expand-file-name "tree-sitter-langs/" user-emacs-directory)))
 
 ;; great tree-sitter-based indentation for typescript/tsx, css, json
 (use-package tsi

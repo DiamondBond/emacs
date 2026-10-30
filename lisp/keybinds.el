@@ -41,7 +41,6 @@
 
 ;; quick
 (define-key z-map (kbd "x") 'switch-to-buffer-other-frame)
-(define-key z-map (kbd "k") 'compile)
 (define-key z-map (kbd "e") 'eval-region)
 (define-key z-map (kbd "b") 'browse-url)
 

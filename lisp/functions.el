@@ -89,6 +89,20 @@
 	(vterm-send-string command)
 	(vterm-send-return)))
 
+(defun claude-here ()
+  "Switch to Claude Code for the current project, starting it in vterm if needed."
+  (interactive)
+  (let* ((default-directory (if-let* ((project (project-current)))
+								(project-root project)
+							  default-directory))
+		 (name (format "*claude %s*" (abbreviate-file-name default-directory))))
+	(if (get-buffer name)
+		(switch-to-buffer name)
+	  (let ((vterm-shell "claude"))
+		(with-current-buffer (vterm name)
+		  ;; Claude sets the terminal title; keep our name so we find it again
+		  (setq-local vterm-buffer-name-string nil))))))
+
 (defun ncmpcpp ()
   (interactive)
   (run-in-vterm "ncmpcpp"))

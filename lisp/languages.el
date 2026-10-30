@@ -90,7 +90,7 @@
 (use-package markdown-mode
   :straight t
   :mode "\\.md\\'"
-  :hook ((markdown-mode . auto-fill-mode)))
+  :custom (markdown-fontify-code-blocks-natively t))
 
 ;; JavaScript
 (use-package js

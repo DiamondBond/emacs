@@ -389,9 +389,9 @@
 	(if (file-exists-p "~/org/inbox.org")
 		(find-file "~/org/inbox.org"))))
 (defun create-scratch-buffer ()
-  "Create a scratch buffer."
+  "Open the persistent scratch file `globals--scratch'."
   (interactive)
-  (switch-to-buffer (get-buffer-create "*scratch*")))
+  (find-file globals--scratch))
 
 ;; Clean up the modeline
 (use-package diminish
@@ -584,6 +584,7 @@
 (use-package magit
   :straight t
   :bind (("C-x g" . magit-status))
+  :custom (magit-diff-refine-hunk 'all)
   :config
   (evil-define-key 'normal magit-mode-map (kbd "K") #'magit-discard)
   (evil-define-key 'normal magit-mode-map (kbd "C-<tab>") #'tab-next)

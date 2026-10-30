@@ -82,6 +82,7 @@
  globals--auth-info    "~/.authinfo.gpg"                    ; Auth Info
  globals--auth-sources '("~/.authinfo.gpg")                 ; Auth Src
  globals--browser      'browse-url-firefox                  ; Browser
+ globals--scratch      "~/org/scratch.md"                   ; Scratch
  )
 
 ;;---------------------------------------------------------------------

@@ -75,6 +75,15 @@
 (setq auto-revert-verbose nil)
 (global-auto-revert-mode 1)
 
+;; Auto-save the scratch file so notes survive kill-emacs
+(setq auto-save-visited-predicate
+	  (lambda () (equal buffer-file-name (expand-file-name globals--scratch))))
+(auto-save-visited-mode 1)
+(add-hook 'kill-emacs-hook
+		  (lambda ()
+			(when-let* ((buf (find-buffer-visiting globals--scratch)))
+			  (with-current-buffer buf (save-buffer)))))
+
 ;; Delete whitespace on save
 (add-hook 'before-save-hook
 		  'delete-trailing-whitespace)

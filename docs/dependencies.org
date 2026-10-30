@@ -11,41 +11,29 @@ Declarative dependency listing for this Emacs configuration [WIP].
 ** System
 
 #+begin_quote
-gcc make
-cmake ninja meson
-autoreconf
-offlineimap
-fzf ripgrep ag
+gcc make cmake (vterm module, tree-sitter grammars)
+ripgrep
 clang clangd llvm
 texlive-core texlive-bin texlive-science (ubuntu: texlive-latex-recommended)
 imagemagick
-editorconfig
-libjansson
-rust-all cargo
-nodejs npm
+rust cargo rust-analyzer
+nodejs npm typescript-language-server
 libxml2
-gopls
+go gopls
 gnuplot
 prettier
 hunspell
 aspell
 python
-java
-jupyter-notebook
-wolframengine wolframscript
-wolframlanguageforjupyter
-mit-scheme
-chez-scheme
-sbcl quicklisp
-mpv
-wordnet
+ttf-sourcecodepro-nerd
+mpv nomacs zathura
 direnv
 astyle
 #+end_quote
 
 ** Python
 
-LSP handles the python language server.
+Black formats Python (=python-black=).
 
 Some useful python packages:
 
@@ -56,39 +44,17 @@ Some useful python packages:
 
 ** NodeJS
 
-Deno & typescript-language-server as well as prettier for Typescript (TS/TSX) support.
+typescript-language-server for eglot, prettier for formatting TS/TSX.
 
 #+begin_src sh
-  sudo npm install -g deno typescript-language-server bash-language-server prettier
+  sudo pacman -S typescript-language-server prettier
 #+end_src
-
-** Quicklisp
-https://lisp-lang.org/learn/getting-started
-
-ARCH: `pacman -S sbcl quicklisp`
-UBUNTU: `sudo apt install sbcl`
-
-** Upstream
-#+begin_src sh
-  $ curl -o /tmp/ql.lisp http://beta.quicklisp.org/quicklisp.lisp
-  $ sbcl --no-sysinit --no-userinit --load /tmp/ql.lisp \
-	--eval '(quicklisp-quickstart:install :path "~/.quicklisp")' \
-	--eval '(ql:add-to-init-file)' \
-	--quit
-#+end_src
-
-** Mu for mu4e
-Will be autoinstalled by straight.el to =~/.emacs.d/straight/repos/mu/build/mu=.
 
 * Files
 
-** Userconfig
+** Custom
 
 #+begin_quote
-~/.emacs.d/userconfig.org
-
-~/.emacs.d/globals.org
-
 ~/.emacs.d/custom.el
 #+end_quote
 

@@ -66,6 +66,9 @@
   (straight-recipes-gnu-elpa-use-mirror t)
   (straight-check-for-modifications '(check-on-save)))
 
+;; Config modules live in lisp/
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+
 ;;---------------------------------------------------------------------
 ;; GLOBALS
 ;;---------------------------------------------------------------------
@@ -85,36 +88,31 @@
 ;; BASE
 ;;---------------------------------------------------------------------
 
-(when (file-readable-p "~/.emacs.d/lisp/base.el")
-  (load-file "~/.emacs.d/lisp/base.el"))
+(require 'base)
 
 ;;---------------------------------------------------------------------
 ;; KEYBINDS
 ;;---------------------------------------------------------------------
 
-(when (file-readable-p "~/.emacs.d/lisp/keybinds.el")
-  (load-file "~/.emacs.d/lisp/keybinds.el"))
+(require 'keybinds)
 
 ;;---------------------------------------------------------------------
 ;; PACKAGES
 ;;---------------------------------------------------------------------
 
-(when (file-readable-p "~/.emacs.d/lisp/packages.el")
-  (load-file "~/.emacs.d/lisp/packages.el"))
+(require 'packages)
 
 ;;---------------------------------------------------------------------
 ;; LANGUAGES
 ;;---------------------------------------------------------------------
 
-(when (file-readable-p "~/.emacs.d/lisp/languages.el")
-  (load-file "~/.emacs.d/lisp/languages.el"))
+(require 'languages)
 
 ;;---------------------------------------------------------------------
 ;; FUNCTIONS
 ;;---------------------------------------------------------------------
 
-(when (file-readable-p "~/.emacs.d/lisp/functions.el")
-  (load-file "~/.emacs.d/lisp/functions.el"))
+(require 'functions)
 
 ;;=====================================================================
 ;;============================== MODULES ==============================

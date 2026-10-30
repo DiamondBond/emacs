@@ -103,8 +103,6 @@
   (define-key evil-normal-state-map (kbd "U") 'undo-redo)
 
   ;; set evil state on a per mode basis
-  ;; insert
-  (evil-set-initial-state 'vterm-mode 'insert)
   ;; normal
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   ;; motion
@@ -113,6 +111,7 @@
   ;; emacs
   (evil-set-initial-state 'nov-mode 'emacs)
   (evil-set-initial-state 'term-mode 'emacs)
+  (evil-set-initial-state 'vterm-mode 'emacs) ; Esc reaches the terminal
   (evil-set-initial-state 'eshell-mode 'emacs)
   (evil-set-initial-state 'Custom-mode 'emacs)
   (evil-set-initial-state 'profiler-report-mode 'emacs)

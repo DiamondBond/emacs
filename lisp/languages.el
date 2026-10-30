@@ -17,13 +17,9 @@
 		  rjsx-mode       	; ts-ls (tsserver wrapper)
 		  js-jsx-mode     	; ts-ls (tsserver wrapper)
 		  typescript-ts-base-mode ; ts-ls (tsserver wrapper)
-		  ;; python-mode     	; pyright
 		  rust-mode       	; rust-analyzer
 		  ruby-mode       	; solargraph
 		  web-mode        	; ts-ls/HTML/CSS
-		  clojure-mode		; clojure
-		  clojurescript-mode	; clojurescript
-		  clojurec-mode		; clojurec
 		  ) . lsp-deferred)
   ((lsp-completion-mode . my/lsp-mode-setup-completion))
   ((lsp-mode . lsp-enable-which-key-integration))
@@ -49,9 +45,6 @@
   (setq lsp-enable-imenu nil)
   (setq lsp-enable-snippet nil)
   (setq lsp-enable-completion-at-point t)
-  ;;(setq read-process-output-max (* 1024 1024)) ;; 1MB
-  ;; (setq completion-styles '(orderless)
-  ;; 		completion-category-defaults nil)
   (setq lsp-idle-delay 0.5)
   (setq lsp-clients-typescript-server "typescript-language-server"
 		lsp-clients-typescript-server-args '("--stdio"))
@@ -68,46 +61,6 @@
   (setq lsp-ui-doc-border (face-foreground 'default))
   (setq lsp-ui-sideline-show-code-actions t)
   (setq lsp-ui-sideline-delay 0.05))
-
-;; (use-package lsp-pyright
-;;   :straight t
-;;   :after lsp
-;;   :hook (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred)))
-;;   :init (setq lsp-pyright-python-executable-cmd "python3"))
-
-;; LSP Tailwind-CSS
-;; (straight-use-package
-;;  '(lsp-tailwindcss :type git :host github :repo "merrickluo/lsp-tailwindcss"))
-
-;; (use-package lsp-bridge
-;;   :straight (:type git :host github :repo "manateelazycat/lsp-bridge" :branch "master")
-;;   :files (:defaults ".py .tsx .js .cpp .c" "langserver" "acm")
-;;   :init
-;;   (global-lsp-bridge-mode))
-
-;; YaSnippet
-;; (use-package yasnippet
-;;   :straight t
-;;   :diminish yas-minor-mode
-;;   :config
-;;   ;;(setq yas-snippet-dirs '("~/emacs.d/snippets/"))
-;;   (yas-reload-all))
-
-;; (use-package yasnippet-snippets
-;;   :defer 4
-;;   :straight t)
-
-;; (use-package auto-yasnippet
-;;   :disabled t)
-
-;; Eglot
-;; (use-package eglot
-;;   :disabled t
-;;   :config
-;;   (setq read-process-output-max (* 1024 1024))
-;;   (push :documentHighlightProvider eglot-ignored-server-capabilities)
-;;   ;; Enable LSP support by default in programming buffers
-;;   (add-hook 'prog-mode-hook #'eglot-ensure))
 
 ;; C/C++
 (use-package ccls
@@ -139,11 +92,6 @@
 	 t)
 	(goto-line saved-line-number)))
 
-;; C#
-(use-package csharp-mode
-  :disabled t
-  :defer 5)
-
 ;; Go
 (use-package go-mode
   :straight t
@@ -168,76 +116,10 @@
   :straight t
   :defer 3)
 
-(use-package rustic
-  :disabled t
-  :config
-  (setq rustic-format-on-save nil))
-
 ;; Elisp
 (use-package elisp-autofmt
   :straight t
   :commands (elisp-autofmt-mode elisp-autofmt-buffer))
-
-;; CL
-(use-package slime
-  :straight t
-  :config
-  (setq inferior-lisp-program "/usr/bin/sbcl")
-  (setq slime-contribs '(slime-fancy slime-quicklisp)))
-
-;; Scheme
-(use-package geiser
-  :straight t
-  :config
-  (setq geiser-active-implementations '(mit guile))
-  (setq geiser-mit-binary "/usr/bin/mit-scheme")
-  (setq geiser-default-implementation 'mit)
-  (add-hook 'scheme-mode-hook 'geiser-mode)
-  (add-to-list 'auto-mode-alist
-			   '("\\.sls\\'" . scheme-mode)
-			   '("\\.sc\\'" . scheme-mode)))
-
-;; MIT Scheme
-(use-package geiser-mit
-  :straight t
-  :after geiser)
-
-(defun geiser-save ()
-  "Save geiser repl contents to input ring."
-  (interactive)
-  (geiser-repl--write-input-ring))
-
-;; SICP
-(use-package sicp
-  :straight t)
-
-;; GOAL
-(define-derived-mode goal-mode lisp-mode
-  "GOAL")
-;; make gc files use our derived mode
-(add-to-list 'auto-mode-alist '("\\.gc?\\'" . goal-mode))
-;; run setup-goal when we enter lisp mode
-(add-hook 'goal-mode-hook 'setup-goal)
-(defun setup-goal ()
-  ;; if we are in a gc file, change indent settings for GOAL
-  (when (and (stringp buffer-file-name)
-			 (string-match "\\.gc\\'" buffer-file-name))
-	(put 'with-pp      'common-lisp-indent-function 0)
-	(put 'while        'common-lisp-indent-function 1)
-	(put 'rlet         'common-lisp-indent-function 1)
-	(put 'until        'common-lisp-indent-function 1)
-	(put 'countdown    'common-lisp-indent-function 1)
-	(put 'defun-debug  'common-lisp-indent-function 2)
-	(put 'defenum      'common-lisp-indent-function 2)
-
-	;; disable slime
-	(slime-mode -1)
-
-	;; indent for common lisp, this makes if's look nicer
-	(custom-set-variables '(lisp-indent-function 'common-lisp-indent-function))
-	(autoload 'common-lisp-indent-function "cl-indent" "Common Lisp indent.")
-	;; use spaces, not tabs
-	(setq-default indent-tabs-mode nil)))
 
 ;; CSV
 (use-package csv-mode
@@ -255,31 +137,10 @@
   :defer 4
   :straight t)
 
-;; Python
-;; (use-package python-mode
-;;   :straight t
-;;   :config
-;;   (setq python-indent-offset standard-indent)
-;;   (setq python-indent-guess-indent-offset t)
-;;   (setq python-indent-guess-indent-offset-verbose nil)
-;;   (setq python-shell-interpreter "/usr/bin/python3")
-;;   (setq exec-path (cons "~/.local/bin" exec-path)))
-
-;; Python env management
-;; (use-package pyvenv
-;;   :straight t
-;;   :config
-;;   (setq pyvenv-workon "emacs")  ; Default venv
-;;   (pyvenv-tracking-mode 1))  ; Automatically use pyvenv-workon via dir-locals
-
 ;; Python formatter
 (use-package python-black
   :straight t
   :after python)
-
-;; Wolfram Mathematica
-;; (use-package xah-wolfram-mode
-;;   :straight (:type git :host github :repo "xahlee/xah-wolfram-mode" :branch "master"))
 
 ;; Markdown
 (use-package markdown-mode
@@ -316,7 +177,6 @@
    '(js2-error ((t (:foreground unspecified :weight normal)))))
   ;; just for JS linting
   (add-hook 'js-mode-hook 'js2-minor-mode))
-;;:mode (("\\.js\\'" . js2-mode)))
 
 (defun setup-tide-mode ()
   (interactive)
@@ -327,10 +187,6 @@
   (eldoc-mode +1)
   (diminish 'subword-mode "")
   (tide-hl-identifier-mode +1))
-
-;; React JS
-(use-package rjsx-mode
-  :disabled t)
 
 ;; Tree-sitter (built-in). Grammars install to ~/.emacs.d/tree-sitter/ on
 ;; first use. Only these ts-modes are enabled; other languages keep their
@@ -347,13 +203,6 @@
 ;; TypeScript (typescript-ts-base-mode covers both .ts and .tsx)
 (add-hook 'typescript-ts-base-mode-hook #'setup-tide-mode)
 
-;; load ts-repl with ts-mode
-;;(with-eval-after-load "typescript-mode"
-;;(require 'ts-repl)))
-;;(flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
-;; :mode (("\\.ts\\'" . typescript-mode)
-;; 		 ("\\.tsx\\'" . typescript-mode)))
-
 ;; TypeScript IDE
 (use-package tide
   :straight t
@@ -369,13 +218,6 @@
 (use-package prettier-js
   :after (typescript-ts-mode)
   :straight t)
-;; :config
-;; (add-hook 'web-mode-hook #'(lambda ()
-;; 							   (enable-minor-mode
-;; 								'("\\.jsx?\\'" . prettier-js-mode))
-;; 							   (enable-minor-mode
-;; 								'("\\.tsx?\\'" . prettier-js-mode)))))
-
 ;; Web mode (HTML)
 (use-package web-mode
   :straight t
@@ -405,81 +247,8 @@
   ;; enable eslint
   (flycheck-add-mode 'javascript-eslint 'web-mode)
   :mode (;;("\\.js\\'" . web-mode)
-		 ;;("\\.jsx\\'" .  web-mode)
-		 ;;("\\.ts\\'" . web-mode)
-		 ;;("\\.tsx\\'" . web-mode)
 		 ("\\.html\\'" . web-mode))
   :commands web-mode)
-
-;; Java
-(use-package lsp-java
-  :disabled t
-  :init
-  (setq lsp-java-vmargs
-		(list
-		 "-noverify"
-		 "-Xmx3G"
-		 "-XX:+UseG1GC"
-		 "-XX:+UseStringDeduplication"
-		 )
-
-		;; Don't organise imports on save
-		lsp-java-save-action-organize-imports nil
-
-		;; Fetch less results from the Eclipse server
-		lsp-java-completion-max-results 30
-
-		;; Download 3rd party sources from Maven repo
-		lsp-java-maven-download-sources t
-
-		;; Don't format my source code (I use Maven for enforcing my
-		;; coding style)
-		lsp-java-format-enabled nil)
-  :config
-  (add-hook 'java-mode-hook #'lsp))
-
-;; Debug Adapter Protocol
-(use-package dap-mode
-  :disabled t
-  ;;:after lsp-mode
-  :config
-  (dap-auto-configure-mode)
-  (setq dap-ui-locals-expand-depth 3)
-  (dap-ui-mode t)
-  (dap-tooltip-mode 1)
-  (tooltip-mode 1))
-
-;; Clojure
-(use-package clojure-mode
-  :defer 3
-  :straight t)
-
-(use-package cider
-  :straight t
-  :defer 3
-  :config
-  (setq cider-repl-result-prefix "λ"
-		cider-eval-result-prefix ""
-		cider-connection-message-fn nil ; cute, but no!
-		cider-use-overlays nil ; echo area is fine
-		cider-repl-display-help-banner nil))
-
-;; ;;; GNU Assembly (GAS)
-;; ;; asm-mode is a built-in, but it has a terrible,
-;; ;; terrible comment command that must be rebound.
-;; (use-package asm-mode
-;;   :straight t
-;;   ;; :pin manual
-;;   ;; :ensure nil
-;;   :bind
-;;   (:map asm-mode-map
-;; 		(";" . nil)
-;; 		(":" . self-insert-command))
-;;   :mode
-;;   ("\\.s\\|.S\\'" . asm-mode))
-;; ;; The above regexp matches .emacs, we have to explicitly handle it.
-;; ;; Add .emacs to auto-mode-alist.
-;; (add-to-list 'auto-mode-alist '("\\.emacs\\'" . emacs-lisp-mode))
 
 ;;; Netwide Assembly (NASM)
 ;; https://nasm.us/

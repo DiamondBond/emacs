@@ -66,7 +66,6 @@
   (straight-vc-git-default-clone-depth 1)
   (straight-recipes-gnu-elpa-use-mirror t)
   (straight-check-for-modifications '(check-on-save)))
-;;(straight-check-for-modifications nil))
 
 ;;---------------------------------------------------------------------
 ;; GLOBALS
@@ -81,7 +80,6 @@
  globals--auth-info    "~/.authinfo.gpg"                    ; Auth Info
  globals--auth-sources '("~/.authinfo.gpg")                 ; Auth Src
  globals--browser      'browse-url-firefox                  ; Browser
- globals--banner-path  "img/gnu.png"                        ; Banner
  )
 
 ;;---------------------------------------------------------------------
@@ -128,23 +126,6 @@
 ;;---------------------------------------------------------------------
 
 (load-theme-based-on-system-theme)
-
-;; Reverse video mode
-;; (reverse-video-mode)
-
-;;---------------------------------------------------------------------
-;; MAIL
-;;---------------------------------------------------------------------
-
-;; (when (file-readable-p "~/.emacs.d/lisp/mail.el")
-;;   (load-file "~/.emacs.d/lisp/mail.el"))
-
-;;---------------------------------------------------------------------
-;; JIRA
-;;---------------------------------------------------------------------
-
-;; (when (file-readable-p "~/.emacs.d/lisp/jira.el")
-;;   (load-file "~/.emacs.d/lisp/jira.el"))
 
 ;;---------------------------------------------------------------------
 ;; END

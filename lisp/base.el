@@ -83,10 +83,6 @@
 ;; Kill buffer settings
 (setq confirm-kill-emacs nil)
 (setq confirm-kill-processes nil)
-;; Prevent 'Buffer <name> modified; kill anyway?'
-;; (add-hook 'kill-buffer-query-functions
-;; 		  (lambda () (not-modified) t))
-;; Not recommended - potentially causes slowdowns.
 
 ;; Disable backups
 (setq-default backup-inhibited t)
@@ -121,7 +117,6 @@
 
 ;; Disable motion events from mouse
 (setq-default track-mouse nil)
-;; (mouse-avoidance-mode 'jump)
 
 ;; Configure scrolling
 ;; If the frame contains multiple windows, scroll the one under the cursor
@@ -130,12 +125,8 @@
 	  ;; Completely disable mouse wheel acceleration to avoid speeding away.
 	  mouse-wheel-progressive-speed nil)
 
-;; Scroll wheel amount
-;; mouse-wheel-scroll-amount '(2 ((shift) . 8) ((control) . 6)))
-
 ;; Scroll margin
 (setq scroll-margin 0)
-;; (setq scroll-conservatively 100000)
 
 ;; Fast but imprecise scrolling
 (setq scroll-preserve-screen-position t)
@@ -147,9 +138,6 @@
 ;; Clipboard settings
 (setq select-enable-clipboard t)
 (setq save-interprogram-paste-before-kill t)
-
-;; Auto-select window on hover (Focus follows mouse)
-;; (setq mouse-autoselect-window t)
 
 ;; Enable & configure show-paren-mode
 (setq show-paren-delay 0.1
@@ -175,7 +163,6 @@
 (setq c-basic-offset tab-width)
 
 ;; Enable subword mode in C mode
-;; (global-subword-mode t)
 (add-hook 'c-mode-common-hook
 		  (lambda () (subword-mode 1)))
 
@@ -183,8 +170,6 @@
 (setq sentence-end-double-space nil)
 
 ;; Set font
-;; (when (string= (system-name) "matebook")
-;; 	 (setq globals--font "Menlo 14"))
 (add-to-list 'default-frame-alist `(font . ,globals--font))
 
 ;; Set time format
@@ -218,9 +203,6 @@
 ;; Disable blinking cursor
 (blink-cursor-mode -1)
 
-;; Stretch cursor
-;; (setq x-stretch-cursor t)
-
 ;; Menu-bar
 (if (fboundp 'menu-bar-mode)
 	(menu-bar-mode 1))
@@ -228,62 +210,27 @@
 ;; Tool-bar
 (if (fboundp 'tool-bar-mode)
 	(tool-bar-mode 0))
-;; (setq tool-bar-style 'image)
 
 ;; Scroll-bar
 (if (fboundp 'scroll-bar-mode)
 	(scroll-bar-mode 1))
 
-;; for athena
-;; (set-scroll-bar-mode 'right)
-
-;; disable minibuffer scroll-bar
-;; (set-window-scroll-bars (minibuffer-window) nil nil)
-
 ;; Tab-bar
-;; (tab-bar-mode 1)
-;; (setq tab-bar-show t)
-;; (tab-bar-history-mode 1)
 (setq tab-bar-history-limit 25)
 (setq tab-bar-new-button-show nil)
 (setq tab-bar-close-button-show nil)
-;; (setq tab-bar-new-tab-choice "*GNU Emacs*")
-;; (setq tab-bar-close-button-show nil)
-;; (setq tab-bar-new-button-show nil)
-
-;; Enable tab-bar & local scroll-bar when using emacsclient
-;; (use-package emacs
-;;   :hook (server-after-make-frame . tab-bar-enable)
-;;   :hook (server-after-make-frame . enable-local-scroll-bar))
-
-;; Time in tab-bar
-;; (display-time-mode 1)
-;; (add-to-list 'tab-bar-format 'tab-bar-format-align-right 'append)
-;; (add-to-list 'tab-bar-format 'tab-bar-format-global 'append)
-;; (setq tab-bar-format '(tab-bar-format-global)
-;; 	  tab-bar-mode t)
-
 ;; Configure fringe
-;; (fringe-mode '(8 . 0))
 (setq-default fringes-outside-margins nil)
 (setq-default indicate-buffer-boundaries nil)
 (setq-default indicate-empty-lines nil)
 (setq-default overflow-newline-into-fringe t)
-;; Set fringe color
-;; (set-face-attribute 'fringe nil :background "#ffffff" :foreground "#ffffff")
 
 ;; Set default frame-size
 (add-to-list 'default-frame-alist '(width . 80))
 (add-to-list 'default-frame-alist '(height . 46))
 
-;; Set default frame background
-;; (add-to-list 'default-frame-alist '(background-color . "honeydew"))
-
 ;; Disable vsync
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
-
-;; Reverse video mode
-;; (reverse-video-mode)
 
 ;; Configure some modes
 (column-number-mode 1)
@@ -308,11 +255,9 @@
 
 (defalias 'shrink-wrap 'fit-frame-to-buffer)
 
-;;(defalias 'recentf-delete-list 'recentf-edit-list)
 (defalias 'bookmark-delete-all 'bookmark-delete)
 
 (defalias 'sync/news 'elfeed-update)
-(defalias 'sync/work 'ejira-update-my-projects)
 
 ;; Set browser depending on system
 (if (eq system-type 'gnu/linux)

@@ -2,95 +2,13 @@
 /*
 
 # do not ignore (whitelist)
-!bin/*
-!docs/*
-!img/*
-!modules/*
-!resources/*
-!snippets/*
-
-!straight/versions/default.el
-
 !.gitignore
-
+!CLAUDE.md
 !LICENSE
 !README.org
-
-!config.org
-globals.org
-
-!bin/tangle.sh
-
-!modules/*.org
-
-# ignore userconfig.org
-userconfig.org
-
-# emacs state files
-places
-recentf
-history
-
-# straight.el related
-straight/build-cache.el
-straight/build/
-straight/repos/
-transient/
-
-# tangled files
-early-init.el
-init.el
-globals.el
-config.el
-userconfig.el
-custom.el
-
-# tangled modules
-modules/discord.el
-modules/evil.el
-modules/mail.el
-modules/reddit.el
-/modules/private
-
-# emacs generated misc
-.cache/
-auto-save-list/
-eln-cache/
-emacs.html
-forge-database.sqlite
-network-security.data
-
-# misc
-.DS_Store
-*~
-*.*~
-\#*
-.\#*
-.local/
-.extension/
-*.cache*
-*.log
-test/.local*/
-test/result
-
-# emacs tempfiles that shouldn't be there
-.dap-breakpoints
-.org-id-locations
-.tern-port
-.yas-compiled-snippets.el
-cask/
-ede-projects.el
-elpa/
-places
-semanticdb
-server/
-smex-items
-tramp
-var/
-
-# compiled files
-*.elc
-*.lib
-*.fas
-*.dat
-*.eld
+!early-init.el
+!init.el
+!custom.el
+!bin/
+!docs/
+!lisp/

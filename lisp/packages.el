@@ -1,17 +1,4 @@
 ;;; -*- lexical-binding: t; -*-
-;; Core packages
-(use-package fn        :demand t) ; function
-(use-package s         :demand t) ; string
-(use-package f         :demand t) ; file
-(use-package ht        :demand t) ; hash table
-(use-package dash      :demand t) ; lists
-(use-package a         :demand t) ; assoc lists
-(use-package ts        :demand t) ; timestamps
-(use-package pcre2el   :demand t) ; sane regex
-;;(use-package hierarchy :demand t) ; hierarchy
-(use-package hierarchy
-  :straight (:type built-in))
-
 ;; Inherit path from shell
 (use-package exec-path-from-shell
   :straight t
@@ -95,7 +82,6 @@
 
   ;; persist org-clock
   (setq org-clock-persist 'history)
-  ;; (org-clock-persistence-insinuate)
 
   ;; set org-refile targets
   (when (file-directory-p "~/org")
@@ -103,8 +89,6 @@
 		  '(("~/org/archive.org" :maxlevel . 1)
 			("~/org/tasks.org" :maxlevel . 1))))
 
-  ;; save org buffers after refiling!
-  ;; (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
   ;; org-src languages
   (org-babel-do-load-languages
@@ -216,7 +200,6 @@
   (setq sentence-end-double-space nil)
 
   ;; evil-redo
-  ;; (setq evil-undo-system "undo-redo")
   (define-key evil-normal-state-map (kbd "U") 'undo-redo)
 
   ;; horizontal movement crosses lines
@@ -227,7 +210,6 @@
   (evil-set-initial-state 'vterm-mode 'insert)
   ;; normal
   (evil-set-initial-state 'messages-buffer-mode 'normal)
-  ;; (evil-set-initial-state 'mu4e-main-mode 'emacs)
   ;; motion
   (evil-set-initial-state 'dashboard-mode 'motion)
   (evil-set-initial-state 'debugger-mode 'motion)
@@ -239,7 +221,6 @@
   (evil-set-initial-state 'Custom-mode 'emacs)
   (evil-set-initial-state 'profiler-report-mode 'emacs)
   (evil-set-initial-state 'inferior-scheme-mode 'emacs)
-  ;; (evil-set-initial-state 'md4rd-mode 'emacs)
   (evil-set-initial-state 'pdf-view-mode 'emacs)
   (evil-set-initial-state 'dictionary-mode ' emacs)
 
@@ -253,7 +234,7 @@
 (use-package evil-collection
   :after evil
   :config
-  (setq evil-collection-mode-list '(dired (custom cus-edit) (package-menu package) magit neotree calc diff-mode))
+  (setq evil-collection-mode-list '(dired (custom cus-edit) (package-menu package) magit calc diff-mode))
   (evil-collection-init)
   ;; use dired-open
   (evil-collection-define-key 'normal 'dired-mode-map
@@ -338,65 +319,17 @@
 	(save-excursion (goto-char (point-max)) (insert msg))
 	(message "Compilation %s: %s" (string-trim-right why) msg)))
 
-;; Docsets
-(use-package dash-docs
-  :straight t
-  :defer 5)
-
 ;;---------------------------------------------------------------------
 ;; THEMES
 ;;---------------------------------------------------------------------
 
-(use-package vs-dark-theme
-  :disabled t
-  :defer 3)
-
 (use-package vscode-dark-plus-theme
   :straight t)
-;; :defer 1)
 
 ;; Doom themes
 (use-package doom-themes
   :straight t
   :defer 3)
-
-;; Doom modeline
-(use-package doom-modeline
-  :disabled t
-  ;; :defer 1
-  ;;:init (doom-modeline-mode)
-  :config
-  (setq doom-modeline-height 28)
-  (setq doom-modeline-buffer-file-name-style 'file-name
-		doom-modeline-enable-word-count t
-		doom-modeline-buffer-encoding nil
-		doom-modeline-buffer-modification-icon nil ;; Save icon
-		doom-modeline-icon t ;; Enable/disable all icons
-		doom-modeline-modal-icon nil ;; Icon for Evil mode
-		doom-modeline-hud t ;; Replaces scroll-bar
-		doom-modeline-major-mode-icon t
-		doom-modeline-major-mode-color-icon t
-		;; doom-modeline-time nil
-		;; doom-modeline-battery nil
-		doom-modeline-bar-width 3))
-
-;; Zenburn theme
-(use-package zenburn-theme
-  :disabled t)
-
-;; Sanityinc themes
-(use-package color-theme-sanityinc-tomorrow
-  :disabled t)
-;; :config
-;; (load-theme 'sanityinc-tomorrow-bright t))
-
-;; Spacemacs themes
-(use-package spacemacs-theme
-  :disabled t)
-
-;; Dracula theme
-(use-package dracula-theme
-  :disabled t)
 
 ;; Modus themes (integrated into Emacs28+)
 ;; The 2024 gitlab checkout errors on Emacs 31 (face inheritance cycle).
@@ -405,10 +338,6 @@
   :no-require t
   :init
   (require-theme 'modus-themes)
-  ;; load the theme files before enabling a theme
-  ;; (modus-themes-load-themes)
-  ;; (load-theme 'modus-operandi t)
-  ;; (load-theme 'modus-operandi :no-confirm)
   :custom
   (modus-themes-italic-constructs t)
   (modus-themes-bold-constructs t)
@@ -416,40 +345,11 @@
   (modus-themes-common-palette-overrides
 		'((bg-region bg-magenta-intense)
 		  (fg-region fg-main))))
-  ;; (modus-themes-hl-line nil)
-  ;; :config
-  ;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
-  ;; (load-theme 'modus-operandi t)
-  ;; :bind ("S-<f5>" . modus-themes-toggle))
 
 ;; Prot's EF themes
 (use-package ef-themes
   :defer 3
   :straight t)
-
-;; Enhanced default themes
-(use-package standard-themes
-  :disabled t
-  ;;:straight (:type git :host gitlab :repo "protesilaos/standard-themes" :branch "main")
-  ;; :init
-  ;; (load-theme 'standard-dark :no-confirm)
-  :config
-  (setq standard-themes-bold-constructs t
-		standard-themes-italic-constructs t
-		standard-themes-mixed-fonts t
-		standard-themes-variable-pitch-ui t
-		standard-themes-mode-line-accented nil
-		;; Accepts a symbol value:
-		standard-themes-fringes 'subtle
-		;; The following accept lists of properties
-		standard-themes-links '(neutral-underline)
-		standard-themes-region '(no-extend neutral intense)
-		standard-themes-prompts '(bold italic)))
-;; (load-theme 'standard-dark t)
-;; (custom-set-faces
-;;  '(scroll-bar
-;; 	 ((t
-;; 	   (:foreground "dim gray" :background "black"))))))
 
 ;;---------------------------------------------------------------------
 ;; DASHBOARD
@@ -463,36 +363,13 @@
   (add-hook 'after-init-hook 'dashboard-refresh-buffer)
   (add-hook 'dashboard-mode-hook (lambda () (setq show-trailing-whitespace nil)))
   :preface
-  ;; Random banner
-  ;; (defconst home-page-dir "~/.emacs.d/img")
-  ;; (defconst home-banners-dir (join-path home-page-dir "banners"))
-  ;; (defconst home-friday-gifs-dir (join-path home-banners-dir "fridays"))
-  ;; (defun home--friday? ()
-  ;;   "Return if today is friday.  () -> bool."
-  ;;   (equal "Fri" (format-time-string "%a")))
-  ;; (defun home/choose-gif ()
-  ;;   "Chooses randomly a gif path from `home-banners-dir'.
-  ;;  If today is a friday, it gets from `home-friday-gifs-dir'.
-  ;;  \()->string"
-  ;;  (let* ((dir (if (home--friday?)
-  ;;				  home-friday-gifs-dir
-  ;;				home-banners-dir))
-  ;;		 (gifs (directory-files dir t ".*\\.gif$"))
-  ;;		 (index (mod (random) (length gifs))))
-  ;;	(nth index gifs)))
   :config
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (setq dashboard-items '((recents  . 5)
 						  (projects . 5)))
-  ;;(agenda . 2)))
   (setq dashboard-banner-logo-title nil)
   (setq dashboard-startup-banner 'official)
-  ;; (setq dashboard-startup-banner (expand-file-name globals--banner-path user-emacs-directory))
-  ;; (setq dashboard-startup-banner  (if (display-graphic-p)
-  ;; 									  (home/choose-gif)
-  ;; 									(join-path home-banners-dir "text-banner.txt")))
   (setq dashboard-center-content t)
-  ;; (setq dashboard-show-shortcuts nil)
   (setq dashboard-set-init-info nil) ;; hide init info
   (setq dashboard-set-footer nil) ;; hide footer
   (setq dashboard-set-navigator t) ;; show nav
@@ -523,11 +400,6 @@
 			  "Open Tasks"
 			  (lambda (&rest _) (tasks-edit))
 			  default)
-			 ;; (nil
-			 ;;  "Agenda"
-			 ;;  "Open Org-Agenda"
-			 ;;  (lambda (&rest _) (org-agenda))
-			 ;;  default)
 			 (nil
 			  "Inbox"
 			  "Open Inbox"
@@ -545,11 +417,6 @@
   (interactive)
   (if (file-exists-p (concat user-emacs-directory "init.el"))
 	  (find-file (concat user-emacs-directory "init.el"))))
-(defun config-edit ()
-  "Edit configuration file."
-  (interactive)
-  (if (file-exists-p (concat user-emacs-directory "config.org"))
-	  (find-file (concat user-emacs-directory "config.org"))))
 (when (file-directory-p "~/org")
   (defun notes-edit ()
 	"Edit notes file."
@@ -576,187 +443,6 @@
   (interactive)
   (switch-to-buffer (get-buffer-create "*scratch*")))
 
-;; Centaur Tabs
-(use-package centaur-tabs
-  :disabled t
-  :preface
-  (defun enable-centaur-tabs ()
-	(interactive)
-	(put 'centaur-tabs-toggle 'state t)
-	(centaur-tabs-mode -1)
-	(centaur-tabs-mode)
-	(centaur-tabs-headline-match))
-  (defun disable-centaur-tabs ()
-	(interactive)
-	(put 'centaur-tabs-toggle 'state nil)
-	(centaur-tabs-mode -1))
-  (defun toggle-centaur-tabs ()
-	(interactive)
-	(if (get 'centaur-tabs-toggle 'state)
-		(disable-centaur-tabs)
-	  (enable-centaur-tabs)))
-  :hook
-  ;;(dashboard-mode . centaur-tabs-local-mode)
-  ;;(term-mode . centaur-tabs-local-mode)
-  (calendar-mode . centaur-tabs-local-mode)
-  (org-agenda-mode . centaur-tabs-local-mode)
-  :config
-  (centaur-tabs-group-by-projectile-project) ;;for https://github.com/ema2159/centaur-tabs/issues/181#issuecomment-1075806796
-  (centaur-tabs-headline-match)
-  (setq centaur-tabs-style "bar"
-		centaur-tabs-height 22
-		centaur-tabs-icon-scale-factor 0.8
-		centaur-tabs-set-icons t
-		centaur-tabs-plain-icons nil
-		;; centaur-tabs-gray-out-icons #'buffer
-		centaur-tabs-set-bar #'under
-		x-underline-at-descent-line t
-		centaur-tabs-close-button "×"
-		centaur-tabs-modified-marker "•"
-		centaur-tabs-show-new-tab-button t
-		centaur-tabs-show-count t
-		centaur-tabs-show-navigation-buttons t)
-  (setq centaur-tabs-set-close-button nil)
-  (defun centaur-tabs-buffer-groups ()
-	"`centaur-tabs-buffer-groups' control buffers' group rules.
-
-  Group centaur-tabs with mode if buffer is derived from `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
-  All buffer name start with * will group to \"Emacs\".
-  Other buffer group by `centaur-tabs-get-group-name' with project name."
-	(list
-	 (cond
-	  ((or (string-equal "*" (substring (buffer-name) 0 1))
-		   (memq major-mode '(magit-process-mode
-							  magit-status-mode
-							  magit-diff-mode
-							  magit-log-mode
-							  magit-file-mode
-							  magit-blob-mode
-							  magit-blame-mode
-							  )))
-	   "Emacs")
-	  ((derived-mode-p 'prog-mode)
-	   "Editing")
-	  ((derived-mode-p 'dired-mode)
-	   "Dired")
-	  ((memq major-mode '(vterm-mode
-						  term-mode))
-	   "Term")
-	  ((memq major-mode '(erc-mode
-						  rcirc-mode))
-	   "IRC")
-	  ((memq major-mode '(helpful-mode
-						  help-mode))
-	   "Help")
-	  ((memq major-mode '(org-mode
-						  org-agenda-clockreport-mode
-						  org-src-mode
-						  org-agenda-mode
-						  org-beamer-mode
-						  org-indent-mode
-						  org-bullets-mode
-						  org-cdlatex-mode
-						  org-agenda-log-mode
-						  diary-mode))
-	   "OrgMode")
-	  (t
-	   (centaur-tabs-get-group-name (current-buffer))))))
-  (defun centaur-tabs-hide-tab (x)
-	"Do no to show buffer X in tabs."
-	(let ((name (format "%s" x)))
-	  (or
-	   ;; Current window is not dedicated window.
-	   (window-dedicated-p (selected-window))
-
-	   ;; Buffer name not match below blacklist.
-	   (string-prefix-p "*epc" name)
-	   (string-prefix-p "*helm" name)
-	   (string-prefix-p "*Helm" name)
-	   (string-prefix-p "*Compile-Log*" name)
-	   (string-prefix-p "*Semantic SymRef*" name)
-	   (string-prefix-p "*copilot events*" name)
-	   (string-prefix-p "*lsp" name)
-	   (string-prefix-p "*company" name)
-	   (string-prefix-p "*Flycheck" name)
-	   (string-prefix-p "*Flymake" name)
-	   (string-prefix-p "*tramp" name)
-	   (string-prefix-p " *Mini" name)
-	   (string-prefix-p "*help" name)
-	   (string-prefix-p "*straight" name)
-	   (string-prefix-p " *temp" name)
-	   (string-prefix-p "*Help" name)
-
-	   (string-prefix-p "*direnv*" name)
-	   (string-prefix-p "*scratch*" name)
-	   (string-prefix-p "*Messages" name)
-
-	   ;; cpp
-	   (string-prefix-p "*clangd" name)
-	   (string-prefix-p "*clangd::stderr" name)
-	   (string-prefix-p "*ccls*" name)
-	   (string-prefix-p "*ccls::stderr*" name)
-	   (string-prefix-p "*format-all-errors*" name)
-
-	   ;; bash
-	   (string-prefix-p "*bash-ls*" name)
-	   (string-prefix-p "*bash-ls::stderr*" name)
-
-	   ;; org
-	   (string-prefix-p "*Org Preview LaTeX Output*" name)
-	   (string-prefix-p "*elfeed-log*" name)
-
-	   ;; python
-	   (string-prefix-p "*pyright*" name)
-	   (string-prefix-p "*pyright::stderr*" name)
-
-	   ;; typescript
-	   (string-prefix-p "*tide-server*" name)
-	   (string-prefix-p "*ts-ls*" name)
-	   (string-prefix-p "*ts-ls::stderr*" name)
-
-	   ;; other
-	   (string-prefix-p "*Native-compile-Log*" name)
-	   (string-prefix-p "*Async-Native" name)
-	   (string-prefix-p "*httpd*" name)
-	   (string-prefix-p "*Shell Command Output" name)
-
-	   ;; Is not magit buffer.
-	   (and (string-prefix-p "magit" name)
-			(not (file-name-extension name)))
-	   )))
-
-  ;; Binds
-  (global-set-key (kbd "C-x t 2") 'centaur-tabs--create-new-tab)
-  (global-set-key (kbd "C-x t 0") 'kill-buffer-and-window)
-  (global-set-key (kbd "C-x t t") 'centaur-tabs-ace-jump)
-  (global-set-key (kbd "C-x t h") 'centaur-tabs-move-current-tab-to-left)
-  (global-set-key (kbd "C-x t l") 'centaur-tabs-move-current-tab-to-right)
-  (global-set-key (kbd "C-x t C-w") 'kill-buffer-and-window)
-  (global-set-key (kbd "C-x t <left>") 'centaur-tabs-backward)
-  (global-set-key (kbd "C-x t <right>") 'centaur-tabs-forward)
-  (global-set-key (kbd "C-x t C-<left>") 'centaur-tabs-move-current-tab-to-left)
-  (global-set-key (kbd "C-x t C-<right>") 'centaur-tabs-move-current-tab-to-right)
-
-  (global-set-key (kbd "S-<f9>") 'toggle-centaur-tabs)
-  (global-set-key (kbd "C-<tab>") 'centaur-tabs-forward)
-  (global-set-key (kbd "C-<iso-lefttab>") 'centaur-tabs-backward)
-
-  ;; Magit Binds
-  (evil-define-key 'normal magit-mode-map (kbd "C-<tab>") #'centaur-tabs-forward)
-  (evil-define-key 'normal magit-mode-map (kbd "C-<iso-lefttab>") #'centaur-tabs-backward)
-  )
-
-;; Automatically enable centaur-tabs
-(defun auto-enable-centaur-tabs ()
-  (interactive)
-  (if (daemonp)
-	  (add-hook 'after-make-frame-functions
-				(lambda (frame)
-				  (with-selected-frame frame
-					(enable-centaur-tabs)))
-				(enable-centaur-tabs))))
-;; (auto-enable-centaur-tabs)
-
 ;; Clean up the modeline
 (use-package diminish
   :straight t
@@ -767,7 +453,6 @@
   (diminish 'visual-line-mode)
   (diminish 'outline-mode)
   (diminish 'gcmh-mode)
-  ;; :config
   ;; diminish after mode is loaded
   (eval-after-load "eldoc" '(diminish 'eldoc-mode))
   (eval-after-load "c-mode" '(diminish 'c-mode))
@@ -778,7 +463,6 @@
   (eval-after-load "outline" '(diminish 'outline-minor-mode))
   (eval-after-load "projectile" '(diminish 'projectile-mode))
   (eval-after-load "rust-mode" '(diminish 'lsp-lens-mode))
-  ;; (eval-after-load "rust-mode" '(diminish 'flycheck-mode))
   (eval-after-load "typescript-ts-mode" '(diminish 'subword-mode))
   (eval-after-load "js2-mode" '(diminish 'subword-mode ""))
   (eval-after-load "dired" '(diminish 'dired-async-mode))
@@ -786,36 +470,11 @@
   (eval-after-load "dired" '(diminish 'all-the-icons-dired-mode))
   (eval-after-load "magit" '(diminish 'auto-fill-mode ""))
   (eval-after-load "magit" '(diminish 'with-editor-mode ""))
-  ;; (eval-after-load "slime" '(diminish 'slime-autodoc-mode ""))
   (eval-after-load "olivetti" '(diminish 'olivetti-mode ""))
   (eval-after-load "evil" '(diminish 'evil-collection-unimpaired-mode ""))
   (eval-after-load "mu4e" '(diminish 'overwrite-mode ""))
   (eval-after-load "mu4e" '(diminish 'mu4e-modeline-mode ""))
   (eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode "")))
-
-;; Golden ratio for windows
-(use-package golden-ratio
-  :straight t
-  :config
-  (setq golden-ratio-exclude-modes '("bs-mode"
-									 "calc-mode"
-									 "ediff-mode"
-									 "dired-mode"
-									 "gud-mode"
-									 "gdb-locals-mode"
-									 "gdb-registers-mode"
-									 "gdb-breakpoints-mode"
-									 "gdb-threads-mode"
-									 "gdb-frames-mode"
-									 "gdb-inferior-io-mode"
-									 "gud-mode"
-									 "gdb-inferior-io-mode"
-									 "gdb-disassembly-mode"
-									 "gdb-memory-mode"
-									 "restclient-mode"
-									 "speedbar-mode"
-									 "minimap-sb-mode"
-									 "minimap-mode")))
 
 ;; Colorize color-codes in prog-modes
 (use-package rainbow-mode
@@ -828,146 +487,18 @@
   :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;; Unicode emoji
-(use-package emojify
-  :straight t
-  :defer 6
-  :config
-  (setq emojify-emoji-styles '(unicode)))
-
-;; Make info-mode use variable-pitch fonts
-(straight-use-package
- '(info-variable-pitch
-   :type git :host github
-   :repo "kisaragi-hiu/info-variable-pitch"))
-(add-hook 'Info-mode-hook #'info-variable-pitch-mode)
-
-;; Highlight indent guidelines
-(use-package highlight-indent-guides
-  :disabled t
-  :diminish highlight-indent-guides-mode
-  :config
-  (setq highlight-indent-guides-method 'character)
-  (add-hook 'js-mode-hook #'(lambda () (highlight-indent-guides-mode)))
-  (add-hook 'js2-mode-hook #'(lambda () (highlight-indent-guides-mode)))
-  (add-hook 'typescript-ts-base-mode-hook #'(lambda () (highlight-indent-guides-mode)))
-  (defun indent-guides-init-faces ()
-	"Set indent-guides faces"
-	(interactive)
-	(set-face-background 'highlight-indent-guides-odd-face "gray30")
-	(set-face-background 'highlight-indent-guides-even-face "gray30")
-	(set-face-foreground 'highlight-indent-guides-character-face "gray30"))
-  (defun indent-guides-dark-faces ()
-	"Set VSCode themed indent-guides faces"
-	(interactive)
-	(set-face-background 'highlight-indent-guides-odd-face "#404040")
-	(set-face-background 'highlight-indent-guides-even-face "#404040")
-	(set-face-foreground 'highlight-indent-guides-character-face "#404040"))
-  (indent-guides-init-faces))
-
-;; Indent Bars
-(use-package indent-bars
-  ;; :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
-  :disabled t
-  :preface
-  (defun setup-tabs-bars ()
-	"Disable indent tabs."
-	(interactive)
-	(indent-tabs-mode 0)
-	(indent-bars-mode))
-  :config
-  (setq
-   indent-bars-pattern "."
-   indent-bars-width-frac 0.1
-   indent-bars-pad-frac 0.25
-   indent-bars-color-by-depth nil
-   indent-bars-color '(highlight :face-bg t :blend 0.2)
-   indent-bars-highlight-current-depth '(:face default :blend 0.4)))
-  ;; :hook
-  ;; ((typescript-mode typescriptreact-mode) . setup-tabs-bars)
-  ;; ((prog-mode typescriptreact-mode) . indent-bars-mode))
-
-;; Minimap
-(use-package minimap
-  :straight t
-  :diminish minimap-mode
-  :preface
-  (defun dark-minimap ()
-	"Dark minimap."
-	(interactive)
-	(custom-set-faces
-	 '(minimap-active-region-background
-	   ((((background dark)) (:background "#121212121212")) ;;#15
-		(t (:background "#121212121212"))) ;;#ce
-	   "Face for the active region in the minimap.
-  By default, this is only a different background color."
-	   :group 'minimap)))
-  (defun light-minimap ()
-	"Light minimap."
-	(interactive)
-	(custom-set-faces
-	 '(minimap-active-region-background
-	   ((((background dark)) (:background "#151515151515"))
-		(t (:background "#d9d9d9d9d9d9"))) ;;#ce
-	   "Face for the active region in the minimap.
-  By default, this is only a different background color."
-	   :group 'minimap)))
-  (defun minimap/enable ()
-	"Enable minimap."
-	(interactive)
-	(minimap-mode t)
-	(put 'minimap-toggle 'state t))
-  (defun minimap/disable ()
-	"Disable minimap."
-	(interactive)
-	(minimap-kill)
-	(put 'minimap-toggle 'state nil))
-  (defun minimap/toggle ()
-	"Toggle minimap."
-	(interactive)
-	(if (get 'minimap-toggle 'state)
-		(minimap/disable)
-	  (minimap/enable)))
-  (defun minimap/refresh ()
-	"Refresh minimap."
-	(interactive)
-	(minimap/disable)
-	(minimap/enable))
-  :config
-  (setq minimap-window-location 'right)
-  (setq minimap-width-fraction 0.05)
-  (setq minimap-minimum-width 15)
-  (setq minimap-hide-fringes t)
-  ;;(setq minimap-major-modes '(typescript-mode typescriptreact-mode js-mode js2-mode))
-  (setq minimap-major-modes '(prog-mode))
-  ;;(setq minimap-update-delay 0)
-  (light-minimap))
-
 ;; Project management
 (use-package projectile
   :straight t
-  ;; :bind (:map projectile-mode-map
-  ;; 			  ("C-c p" . projectile-command-map))
   :init
   (setq projectile-sort-order 'recentf
 		projectile-enable-caching t)
-  ;; set projectile project path
-  ;;(when (file-directory-p "~/src")
-  ;;(setq projectile-project-search-path '("~/src" . 1)))
   :config
   (global-set-key (kbd "C-c p p") 'projectile-switch-project)
   (global-set-key (kbd "C-c p b") 'consult-project-buffer)
-  (global-set-key (kbd "C-c p s") 'projectile-ag)
+  (global-set-key (kbd "C-c p s") 'consult-ripgrep)
   (global-set-key (kbd "C-c p !") 'projectile-run-shell-command-in-root)
   (projectile-mode +1))
-
-;; Rip-grep
-(use-package rg
-  :straight t)
-
-;; Silver-searcher
-(use-package ag
-  :straight t)
 
 ;; Replace fancy major modes with basic major mode
 ;; when long lines are detected.
@@ -1008,9 +539,6 @@
   (add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_EXPORT" . "^#\\+END_EXPORT"))
   (add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_EXPORT" . "^#\\+END_EXPORT"))
   (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
-  ;; (dolist (mode '(;; org-mode-hook ;; slows down org-mode
-  ;; 				  mu4e-compose-mode-hook))
-  ;; 	(add-hook mode (lambda () (flyspell-mode 1))))
   (if (eq system-type 'gnu/linux)
 	  (setq ispell-program-name "hunspell"))
   (if (eq system-type 'windows-nt)
@@ -1058,8 +586,6 @@
 		  treemacs-tag-follow-cleanup            t
 		  treemacs-tag-follow-delay              1.5
 		  treemacs-width-is-initially-locked     nil)
-	;; treemacs-width                         35)
-	;; (treemacs-resize-icons 11)
 
 	(treemacs-follow-mode t)
 	(treemacs-filewatch-mode t)
@@ -1090,51 +616,7 @@
   :after treemacs)
 
 (use-package treemacs-evil
-  ;; :disabled treemacs evil
   :straight t)
-
-;; Neotree
-(use-package neotree
-  :disabled t
-  :after (projectile)
-  :preface
-  (defun neotree-show-file (&optional buff-name)
-	"Show current file in neotree if it is open and there is a project open."
-	(interactive)
-	(let ((project-dir (projectile-project-root))
-		  (file-name (or buff-name (buffer-file-name))))
-	  (when (and project-dir (neo-global--window-exists-p))
-		(neotree-dir project-dir)
-		(neotree-find file-name))))
-  (defun neotree-toggle-project-dir ()
-	"Toggle NeoTree using the project root (if any) and find file."
-	(interactive)
-	(let ((curr-name (buffer-file-name)))
-	  (neotree-toggle)
-	  (neotree-show-file curr-name)))
-  (defun neotree/show ()
-	"Show neotree."
-	(interactive)
-	(neotree-toggle-project-dir)
-	(put 'neotree-toggle 'state t)
-	(other-window 1))
-  (defun neotree/hide ()
-	"Hide neotree."
-	(interactive)
-	(neotree-hide)
-	(put 'neotree-toggle 'state nil))
-  (defun neotree/toggle ()
-	"Toggle neotree."
-	(interactive)
-	(if (get 'neotree-toggle 'state)
-		(neotree/hide)
-	  (neotree/show)))
-  :custom
-  ;;(neo-theme (if (display-graphic-p) 'icons 'arrow))
-  (neo-theme 'icons)
-  (neo-window-position 'left)
-  (neo-window-width 30)
-  (neo-show-hidden-files t))
 
 ;; Convert buffer text and decorations to HTML
 (use-package htmlize
@@ -1160,7 +642,6 @@
 	  :config
 	  (add-hook 'vterm-mode-hook
 				(lambda ()
-				  ;;(setq-local evil-insert-state-cursor 'box)
 				  (evil-insert-state)))))
 
 ;; Toggle vterm
@@ -1168,41 +649,6 @@
   :straight t
   :config
   (setq vterm-toggle-fullscreen-p nil))
-;; Dedicated size for vterm
-;; (add-to-list 'display-buffer-alist
-;; 			 '((lambda (buffer-or-name _)
-;; 				 (let ((buffer (get-buffer buffer-or-name)))
-;; 				   (with-current-buffer buffer
-;; 					 (or (equal major-mode 'vterm-mode)
-;; 						 (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-;; 			   ;;(display-buffer-reuse-window display-buffer-at-bottom)
-;; 			   ;;(display-buffer-reuse-window display-buffer-in-direction)
-;; 			   ;;(direction . bottom)
-;; 			   ;;(dedicated . t) ;dedicated is supported in emacs27
-;; 			   (reusable-frames . visible)
-;; 			   (window-height . 0.3))))
-
-;; Collection of ridiculously useful extensions
-(use-package crux
-  :straight t)
-
-;; File upload to 0x0
-(use-package 0x0
-  :straight t
-  :commands (0x0-dwim 0x0-popup 0x0-upload-file 0x0-upload-text))
-
-;; Show commands being used
-(use-package command-log-mode
-  :straight t
-  :defer 5
-  :diminish command-log-mode)
-
-;; Live Github style markdown previw
-(use-package grip-mode
-  :straight t
-  :defer 1
-  :bind (:map markdown-mode-command-map
-			  ("g" . grip-mode)))
 
 ;; Magit - the best git porcelain
 (use-package magit
@@ -1227,13 +673,6 @@
 	  (progn
 		(browse-url (parse-url url))
 		(message "opening repo %s" url)))))
-
-(use-package magit-todos
-  :disabled t)
-
-;; bindings to help improve the speed of magit
-;; (use-package libgit :straight t)
-;; (use-package magit-libgit :straight t)
 
 ;; Autorevert - required by magit
 (use-package autorevert
@@ -1284,7 +723,6 @@
   (which-key-mode)
   :config
   (setq which-key-idle-delay 0.3)
-  ;; (setq which-key-prefix-prefix "◉ ")
   (setq which-key-sort-order 'which-key-key-order-alpha
 		which-key-min-display-lines 2
 		which-key-max-display-columns 4))
@@ -1321,8 +759,6 @@
   (setq read-extended-command-predicate
 		#'command-completion-default-include-p)
 
-  ;; enable recursive minibuffers
-  ;; (setq enable-recursive-minibuffers t)
 
   ;; completion ignores case
   (setq read-buffer-completion-ignore-case t
@@ -1331,12 +767,6 @@
 
   ;; allow Emacs to resize mini windows
   (setq resize-mini-windows t))
-
-;; GNU tags
-(use-package gtags
-  :straight t
-  :config
-  (setq xref-prompt-for-identifier nil))
 
 ;; Corfu completion framework
 (use-package corfu
@@ -1441,7 +871,6 @@ Useful for prompts such as `eval-expression' and `shell-command'."
    ("C-c j" . consult-line)
    ("C-c D" . consult-flymake)
 
-   ;; ("C-c m" . consult-mode-command)
    ("C-c b" . consult-bookmark)
    ("C-c k" . consult-kmacro)
 
@@ -1463,21 +892,10 @@ Useful for prompts such as `eval-expression' and `shell-command'."
    ("M-g i" . consult-imenu)
    ("M-g I" . consult-imenu-multi)
 
-   ;; M-s bindings (search-map)
-   ;; ("M-s f" . consult-find)
-   ;; ("M-s L" . consult-locate)
-   ;; ("M-s g" . consult-grep)
-   ;; ("M-s G" . consult-git-grep)
-   ;; ("M-s r" . consult-ripgrep)
-   ;; ("M-s l" . consult-line)
-   ;; ("M-s m" . consult-multi-occur)
-   ;; ("M-s k" . consult-keep-lines)
-   ;; ("M-s u" . consult-focus-lines)
    ("C-c f" . consult-ripgrep)
 
    ;; Custom bindings that map to ivy
    ("C-c r" . consult-recent-file)
-   ;; ("C-c o" . consult-file-externally)
    ("C-s" . consult-line)
 
    ;; Other custom bindings
@@ -1524,23 +942,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 ;; Fancy icons
 (use-package all-the-icons
-  :straight t
-  :config
-  (cl-defmacro db/all-the-icons--with(&key name)
-	(let ((defun-fn (intern (concat "jf/all-the-icons--with-" name)))
-		  (icon-fn (intern (concat "all-the-icons-" name)))
-		  (docstring (concat "Displays an ICON from `all-the-icons-" name "'.")))
-	  `(defun ,defun-fn (icon str &optional height v-adjust)
-		 ,docstring
-		 (s-concat (,icon-fn
-					icon
-					:v-adjust (or v-adjust 0)
-					:height (or height 1))
-				   " " str))))
-  (db/all-the-icons--with :name "faicon")
-  (db/all-the-icons--with :name "material")
-  (db/all-the-icons--with :name "octicon")
-  (db/all-the-icons--with :name "alltheicon"))
+  :straight t)
 
 ;; Fancy icons for completions
 (use-package all-the-icons-completion
@@ -1610,11 +1012,6 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :init
   (engine-mode t))
 
-;; Deadgrep
-(use-package deadgrep
-  :straight t
-  :commands deadgrep)
-
 ;; Quick jump to any char on screen
 (use-package avy
   :straight t
@@ -1631,8 +1028,6 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 		  deft-recursive t
 		  deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
 		  deft-use-filename-as-title t)))
-;; :bind
-;; ("C-c n d" . deft)))
 
 ;; RSS
 (use-package elfeed
@@ -1648,7 +1043,6 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 		  ("https://drewdevault.com/blog/index.xml" drew devault)
 		  ("https://news.ycombinator.com/rss" ycombinator news)
 		  ("https://www.phoronix.com/rss.php" phoronix))))
-;;(define-key evil-normal-state-map (kbd "RET") 'elfeed-search-show-entry))
 
 ;; Mailing lists
 (use-package gnus
@@ -1829,25 +1223,6 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :config
   :hook (pdf-view-mode . pdf-view-restore-mode))
 
-;; Hugo markdown backend for org-export
-(use-package ox-hugo
-  :disabled t
-  :after ox)
-
-;; Academic phrases
-(use-package academic-phrases
-  :defer 5
-  :straight t)
-
-;; Polish up writing on the fly
-(use-package writegood-mode
-  :defer 4
-  :straight t)
-
-;; Thesaurus lookup
-(use-package synosaurus
-  :straight t)
-
 ;; Focus writing mode
 (use-package olivetti
   :straight t
@@ -1866,16 +1241,6 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :straight t
   :init
   (savehist-mode))
-
-;; aLtCaPs
-;; (use-package altcaps
-;;   :straight (:type git :host github :repo "protesilaos/altcaps" :branch "main"))
-
-;; Hima theme
-;; (use-package hima
-;;   :straight (:type git :host github :repo "meain/hima-theme" :branch "master")
-;;   :init
-;;   (load-theme 'hima t))
 
 (provide 'packages)
 ;;; packages.el ends here

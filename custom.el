@@ -14,5 +14,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(js2-error ((t (:foreground unspecified :weight normal))))
- '(minimap-active-region-background ((((background dark)) (:background "#151515151515")) (t (:background "#d9d9d9d9d9d9"))) nil :group))
+ '(js2-error ((t (:foreground unspecified :weight normal)))))

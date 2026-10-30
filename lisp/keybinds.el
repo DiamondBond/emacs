@@ -9,15 +9,11 @@
 ;; general
 (define-key z-map (kbd "a") 'org-agenda)
 (define-key z-map (kbd "f") 'find-file-other-frame)
-(define-key z-map (kbd "g") 'golden-ratio)
 (define-key z-map (kbd "o") 'olivetti-mode)
 (define-key z-map (kbd "r") 'recentf-edit-list)
 (define-key z-map (kbd "m") 'magit-status)
 (define-key z-map (kbd "w") 'eww)
-(define-key z-map (kbd "k") 'tab-bar-toggle)
-(define-key z-map (kbd "l") 'minimap/toggle)
 (define-key z-map (kbd "h") 'open-treemacs)
-(define-key z-map (kbd "2") 'make-frame-command)
 
 ;; os-specific
 (if (eq system-type 'gnu/linux)
@@ -30,10 +26,7 @@
 (define-key z-map (kbd "T") 'display-time-mode)
 
 ;; functions
-;; (define-key z-map (kbd "M") 'mu4e)
 (define-key z-map (kbd "D") 'dashboard-refresh-buffer)
-;; (define-key z-map (kbd "D") 'scratch-buffer)
-(define-key z-map (kbd "L") 'minimap/refresh)
 (define-key z-map (kbd "*") 'quick-calc)
 (define-key z-map (kbd "O") 'org-redisplay-inline-images)
 (define-key z-map (kbd "G") 'org-mark-ring-goto)
@@ -57,8 +50,6 @@
 (define-key z-map (kbd "C-c") 'calendar)
 (define-key z-map (kbd "C-d") 'dired-other-frame)
 (define-key z-map (kbd "C-1") 'display-buffer-other-frame)
-(define-key z-map (kbd "1") 'vscode-mode-on)
-(define-key z-map (kbd "0") 'vscode-mode-off)
 
 ;; calendar
 (define-key z-map (kbd ".") 'org-date-from-calendar)
@@ -80,7 +71,6 @@
 (global-set-key (kbd "<f7>") 'scroll-bar-mode)
 (global-set-key (kbd "<f8>") 'tool-bar-mode)
 (global-set-key (kbd "<f10>") 'compile)
-;; (global-set-key (kbd "S-<f5>") 'open-treemacs)
 (global-set-key (kbd "S-<f8>") 'other-frame)
 (global-set-key (kbd "<f9>") 'tab-bar-toggle)
 (global-set-key (kbd "S-<f9>") 'toggle-frame-tab-bar)
@@ -89,9 +79,7 @@
 (global-set-key (kbd "C-`") 'vterm-toggle)
 (global-set-key (kbd "C-/") 'comment-or-uncomment-region)
 (global-set-key (kbd "C-S-b") 'open-treemacs)
-(global-set-key (kbd "C-S-m") 'minimap/toggle)
 (global-set-key (kbd "C-c t t") 'open-treemacs)
-(global-set-key (kbd "C-c t m") 'minimap/toggle)
 (global-set-key (kbd "C-S-SPC") 'pop-to-mark-command)
 (global-set-key (kbd "C-S-i") 'prettier-js)
 
@@ -139,9 +127,6 @@
 (global-set-key (kbd "M-O") #'other-frame)
 
 ;; next/prev
-;; (global-set-key (kbd "C-<tab>") 'next-buffer)
-;; (global-set-key (kbd "C-<iso-lefttab>") 'previous-buffer)
-;;(global-set-key (kbd "C-<tab>") 'tab-next)
 (define-key global-map (kbd "C-S-n") #'next-15-lines)
 (define-key global-map (kbd "C-S-p") #'previous-15-lines)
 

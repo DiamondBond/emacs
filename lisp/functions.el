@@ -1,24 +1,8 @@
 ;;; -*- lexical-binding: t; -*-
-(defun join-path (path filename)
-  "Concat path and file. Add '/' to the end of the path if necessary."
-  (concat path (if (string-match-p "/$" path) "" "/") filename))
-
-(defun load-if-exists (f)
-  "Load file F if it exists."
-  (if (file-exists-p (expand-file-name f))
-	  (load-file (expand-file-name f))))
-
-(defun enable-minor-mode (my-pair)
-  "Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
-  (if (buffer-file-name)
-	  (if (string-match (car my-pair) buffer-file-name)
-		  (funcall (cdr my-pair)))))
-
 (defun tab-bar-enable ()
   "Enable tab-bar with history."
   (interactive)
   (tab-bar-mode 1)
-  ;;(tab-bar-history-mode 1)
   (put 'tab-bar-toggle 'state t))
 
 (defun tab-bar-disable ()
@@ -63,7 +47,6 @@
   "Split and follow horizontally."
   (interactive)
   (split-window-below)
-  ;; (balance-windows)
   (other-window 1))
 (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
 
@@ -71,7 +54,6 @@
   "Split and follow vertically."
   (interactive)
   (split-window-right)
-  ;; (balance-windows)
   (other-window 1))
 (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 
@@ -192,18 +174,6 @@
   (interactive)
   (insert (get-date)))
 
-(defun insert-org-link-template ()
-  "Insert org link template at point."
-  (interactive)
-  (setq last-command-event 91)
-  (org-self-insert-command 1)
-  (setq last-command-event 91)
-  (org-self-insert-command 1)
-  (setq last-command-event 'right)
-  (right-char 1)
-  (setq last-command-event 91)
-  (org-self-insert-command 1))
-
 (defun insert-wild-notifier-template ()
   "Insert WILD_NOTIFIER_NOTIFY_BEFORE template at point."
   (interactive)
@@ -224,47 +194,6 @@ With prefix argument, use FULL-PATH."
 	(if filename
 		(insert (if full-path filename (file-name-nondirectory filename)))
 	  (error (format "Buffer %s is not visiting a file" (buffer-name buffer))))))
-
-(defun latex-spacer ()
-  "Inserts a LaTeX spacer org-export block at point."
-  (interactive)
-  (setq last-command-event 67108908)
-  (org-insert-structure-template "export")
-  (setq last-command-event 108)
-  (org-self-insert-command 1)
-  (setq last-command-event 97)
-  (org-self-insert-command 1)
-  (setq last-command-event 116)
-  (org-self-insert-command 1)
-  (setq last-command-event 101)
-  (org-self-insert-command 1)
-  (setq last-command-event 120)
-  (org-self-insert-command 1)
-  (setq last-command-event 13)
-  (org-return nil nil 1)
-  (setq last-command-event 92)
-  (org-self-insert-command 1)
-  (setq last-command-event 92)
-  (org-self-insert-command 1)
-  (setq last-command-event 126)
-  (org-self-insert-command 1)
-  (setq last-command-event 92)
-  (org-self-insert-command 1))
-
-(defun emacs-devel ()
-  "Read the Emacs-devel mailing list."
-  (interactive)
-  (setq last-command-event 121)
-  (gnus nil)
-  (setq last-command-event 121)
-  (execute-extended-command nil "gnus" "gnus")
-  (setq last-command-event 13)
-  (gnus-group-browse-foreign-server
-   `(nntp "news.gmane.io"))
-  (setq last-command-event 13)
-  (consult-line)
-  (setq last-command-event 13)
-  (gnus-browse-select-group nil))
 
 ;; https://stackoverflow.com/questions/12014036/emacs-make-frame-switch-buffer
 (defun get-buffer-menu-in-new-frame ()
@@ -340,39 +269,6 @@ With prefix argument, use FULL-PATH."
 	(open-line 1)
 	(forward-line 1)
 	(yank)))
-
-;; BIONIC reading mode by xahlee
-(defvar infu-bionic-reading-face nil "a face for `infu-bionic-reading-region'.")
-(setq infu-bionic-reading-face 'error)
-;; try
-;; 'bold
-;; 'error
-;; 'warning
-;; 'highlight
-;; or any value of M-x list-faces-display
-
-(defun infu-bionic-reading-buffer ()
-  "Bold the first few chars of every word in current buffer.
-Version 2022-05-21"
-  (interactive)
-  (infu-bionic-reading-region (point-min) (point-max)))
-
-(defun infu-bionic-reading-region (Begin End)
-  "Bold the first few chars of every word in region.
-Version 2022-05-21"
-  (interactive "r")
-  (let (xBounds xWordBegin xWordEnd  )
-	(save-restriction
-	  (narrow-to-region Begin End)
-	  (goto-char (point-min))
-	  (while (forward-word)
-		;; bold the first half of the word to the left of cursor
-		(setq xBounds (bounds-of-thing-at-point 'word))
-		(setq xWordBegin (car xBounds))
-		(setq xWordEnd (cdr xBounds))
-		(setq xBoldEndPos (+ xWordBegin (1+ (/ (- xWordEnd xWordBegin) 2))))
-		(put-text-property xWordBegin xBoldEndPos
-						   'font-lock-face infu-bionic-reading-face)))))
 
 ;; Original idea from
 ;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
@@ -467,20 +363,6 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 			  (goto-char line-end))))
 		(message "Text wrapped to 80 columns in the selected region."))
 	(message "No active region. Please select a region to wrap.")))
-
-(defun vscode-mode-on ()
-  "Emulate VSCode."
-  (interactive)
-  (scroll-bar-mode -1)
-  (open-treemacs)
-  (minimap/enable))
-
-(defun vscode-mode-off ()
-  "Become Emacs."
-  (interactive)
-  (scroll-bar-mode 1)
-  (treemacs)
-  (minimap/disable))
 
 (defun load-theme-based-on-system-theme ()
   "Load a theme based on GNOME dark mode preference."

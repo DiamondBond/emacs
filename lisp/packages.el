@@ -292,9 +292,8 @@
   :custom
   (modus-themes-italic-constructs t)
   (modus-themes-bold-constructs t)
-  (modus-themes-common-palette-overrides
-		'((bg-region bg-magenta-intense)
-		  (fg-region fg-main))))
+  (modus-themes-common-palette-overrides '((bg-region bg-magenta-intense)
+										   (fg-region fg-main))))
 
 ;; Prot's EF themes
 (use-package ef-themes
@@ -617,7 +616,8 @@
   (define-fringe-bitmap 'db/diff-hl-bar [224] nil nil '(center repeated))
   (define-fringe-bitmap 'db/diff-hl-delete [128 192 224 240] nil nil 'bottom)
   (setq diff-hl-fringe-bmp-function
-		(lambda (type _pos) (if (eq type 'delete) 'db/diff-hl-delete 'db/diff-hl-bar)))
+		(lambda (type _pos)
+		  (if (eq type 'delete) 'db/diff-hl-delete 'db/diff-hl-bar)))
   (diff-hl-flydiff-mode))
 
 ;; Use dabbrev with Corfu!

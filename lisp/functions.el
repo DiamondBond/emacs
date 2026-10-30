@@ -90,7 +90,7 @@
 	(vterm-send-return)))
 
 (defun claude-here ()
-  "Switch to Claude Code for the current project, starting it in vterm if needed."
+  "Switch to Claude Code for this project, starting it in vterm if needed."
   (interactive)
   (let* ((default-directory (if-let* ((project (project-current)))
 								(project-root project)

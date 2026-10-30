@@ -52,10 +52,8 @@
 ;; Save bookmarks everytime they are modified
 (setq bookmark-save-flag 1)
 
-;; Load any custom themes
-(when (file-exists-p (expand-file-name "themes/" user-emacs-directory))
-  (setq custom-safe-themes t)
-  (add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory)))
+;; Trust installed themes (load-theme without a confirmation prompt)
+(setq custom-safe-themes t)
 
 ;; Enable vc symlinks
 (setq vc-follow-symlinks t)
@@ -250,7 +248,6 @@
 (setq use-short-answers t)
 
 (defalias 'shrink-wrap 'fit-frame-to-buffer)
-
 
 (defalias 'sync/news 'elfeed-update)
 

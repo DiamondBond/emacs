@@ -131,6 +131,10 @@
 	  show-paren-when-point-in-periphery t)
 (show-paren-mode 1)
 
+;; Auto-pair brackets and quotes, but not right before a word
+(setq electric-pair-inhibit-predicate #'electric-pair-conservative-inhibit)
+(electric-pair-mode 1)
+
 ;; Tabs & indents settings (highly controversial)
 (setq-default indent-tabs-mode t)
 (setq-default tab-width 4)

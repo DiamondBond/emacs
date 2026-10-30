@@ -1,83 +1,35 @@
 ;;; -*- lexical-binding: t; -*-
-(use-package lsp-mode
-  :straight t
+(use-package eglot
+  :straight (:type built-in)
+  :hook ((c-ts-base-mode            ; clangd
+		  go-ts-mode                ; gopls
+		  rust-ts-mode              ; rust-analyzer
+		  js-ts-mode                ; typescript-language-server
+		  typescript-ts-base-mode)  ; typescript-language-server
+		 . eglot-ensure)
   :custom
-  (lsp-completion-provider :none) ;; we use Corfu!
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  (defun my/lsp-mode-setup-completion ()
-	(setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-		  '(orderless))) ;; Configure orderless
-  :hook ((c-mode          	; clangd
-		  c++-mode        	; clangd
-		  c-or-c++-mode   	; clangd
-		  js2-mode        	; ts-ls (tsserver wrapper)
-		  js-mode         	; ts-ls (tsserver wrapper)
-		  rjsx-mode       	; ts-ls (tsserver wrapper)
-		  js-jsx-mode     	; ts-ls (tsserver wrapper)
-		  typescript-ts-base-mode ; ts-ls (tsserver wrapper)
-		  rust-mode       	; rust-analyzer
-		  ruby-mode       	; solargraph
-		  web-mode        	; ts-ls/HTML/CSS
-		  ) . lsp-deferred)
-  ((lsp-completion-mode . my/lsp-mode-setup-completion))
-  ((lsp-mode . lsp-enable-which-key-integration))
-  :commands (lsp lsp-deferred)
-  :config
-  (setq lsp-auto-guess-root t)
-  (setq lsp-log-io nil)
-  (setq lsp-restart 'auto-restart)
-  (setq lsp-ui-sideline-show-diagnostics nil)
-  (setq lsp-ui-sideline-show-hover nil)
-  (setq lsp-ui-sideline-show-code-actions nil)
-  (setq lsp-enable-symbol-highlighting nil)
-  (setq lsp-enable-indentation nil)
-  (setq lsp-enable-on-type-formatting nil)
-  (setq lsp-signature-auto-activate nil)
-  (setq lsp-signature-render-documentation nil)
-  (setq lsp-eldoc-hook nil)
-  (setq lsp-modeline-code-actions-enable nil)
-  (setq lsp-modeline-diagnostics-enable nil)
-  (setq lsp-headerline-breadcrumb-enable nil)
-  (setq lsp-semantic-tokens-enable nil)
-  (setq lsp-enable-folding nil)
-  (setq lsp-enable-imenu nil)
-  (setq lsp-enable-snippet nil)
-  (setq lsp-enable-completion-at-point t)
-  (setq lsp-idle-delay 0.5)
-  (setq lsp-clients-typescript-server "typescript-language-server"
-		lsp-clients-typescript-server-args '("--stdio"))
-  (setq lsp-disabled-clients '(eslint)))
+  (eglot-autoshutdown t)
+  (eglot-events-buffer-config '(:size 0 :format full))
+  (eglot-code-action-indications nil)
+  (eglot-ignored-server-capabilities '(:documentHighlightProvider
+									   :documentOnTypeFormattingProvider
+									   :inlayHintProvider
+									   :semanticTokensProvider)))
 
-(use-package lsp-ui
-  :straight t
-  :after lsp
-  :commands lsp-ui-mode
-  :config
-  (setq lsp-ui-doc-enable nil)
-  (setq lsp-ui-doc-header t)
-  (setq lsp-ui-doc-include-signature t)
-  (setq lsp-ui-doc-border (face-foreground 'default))
-  (setq lsp-ui-sideline-show-code-actions t)
-  (setq lsp-ui-sideline-delay 0.05))
+(defun db/eglot-format-on-save ()
+  "Format with the language server before saving, when one is connected."
+  (add-hook 'before-save-hook
+			(lambda () (when (and (fboundp 'eglot-managed-p) (eglot-managed-p))
+						 (eglot-format-buffer)))
+			nil t))
 
 ;; C/C++
-(use-package ccls
-  :straight t
-  :hook ((c-mode c++-mode objc-mode cuda-mode) .
-		 (lambda () (require 'ccls) (lsp))))
-
-(use-package modern-cpp-font-lock
-  :straight t
-  :hook
-  ((c++-mode) . #'modern-c++-font-lock-mode))
-
-;;; cmake-font-lock
-;; Better syntax highlighting for CMake scripts.
-;; https://github.com/Lindydancer/cmake-font-lock
-(use-package cmake-font-lock
-  :defer t)
+(use-package c-ts-mode
+  :straight (:type built-in)
+  :custom
+  (c-ts-mode-indent-style 'linux)
+  (c-ts-mode-indent-offset tab-width)
+  :hook (c-ts-base-mode . subword-mode))
 
 ;; astyle formatter function
 (defun astyle-buffer (&optional justify)
@@ -93,24 +45,22 @@
 	(goto-line saved-line-number)))
 
 ;; Go
-(use-package go-mode
-  :straight t
-  :mode "\\.go\\'"
+(use-package go-ts-mode
+  :straight (:type built-in)
+  :custom (go-ts-mode-indent-offset 2)
   :config
   (defun db/go-mode-hook()
 	(setq tab-width 2)
-	(add-hook 'before-save-hook 'gofmt-before-save)
 	(set (make-local-variable 'compile-command)
 		 "go test"))
-  :hook ((go-mode . lsp-deferred))
-  :hook ((go-mode . db/go-mode-hook))
-  :hook ((go-mode . subword-mode)))
+  :hook ((go-ts-mode . db/go-mode-hook)
+		 (go-ts-mode . db/eglot-format-on-save)
+		 (go-ts-mode . subword-mode)))
 
 ;; Rust
-(use-package rust-mode
-  :straight t
-  :mode "\\.rs\\'"
-  :init (setq rust-format-on-save t))
+(use-package rust-ts-mode
+  :straight (:type built-in)
+  :hook (rust-ts-mode . db/eglot-format-on-save))
 
 (use-package cargo
   :straight t
@@ -127,15 +77,9 @@
   :mode ("\\.csv\\'" . csv-mode))
 
 ;; LUA
-(use-package lua-mode
-  :straight t
-  :config
-  (setq lua-indent-level 2))
-
-;; Ruby
-(use-package ruby-mode
-  :defer 4
-  :straight t)
+(use-package lua-ts-mode
+  :straight (:type built-in)
+  :custom (lua-ts-indent-offset 2))
 
 ;; Python formatter
 (use-package python-black
@@ -148,66 +92,28 @@
   :mode "\\.md\\'"
   :hook ((markdown-mode . auto-fill-mode)))
 
-;; FlyCheck
-(use-package flycheck
-  :straight t
-  :bind (:map flycheck-mode-map
-			  ("C-c n" . flycheck-next-error)
-			  ("C-c p" . flycheck-previous-error)))
 ;; JavaScript
-(use-package js-mode
+(use-package js
   :straight (:type built-in)
-  :init
-  (with-eval-after-load 'subword
-	(diminish 'subword-mode))
-  (add-hook 'js-mode-hook 'subword-mode)
-  :mode (("\\.js\\'" . js-mode)))
-
-(use-package js2-mode
-  :straight t
-  :diminish (js2-mode js2-minor-mode)
-  :custom
-  (js-indent-level 2)
-  (js2-basic-offset 2)
-  :config
-  (setq js2-strict-missing-semi-warning nil)
-  (setq js2-mode-show-strict-warnings nil)
-  ;; override js2-error
-  (custom-set-faces
-   '(js2-error ((t (:foreground unspecified :weight normal)))))
-  ;; just for JS linting
-  (add-hook 'js-mode-hook 'js2-minor-mode))
-
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (subword-mode 1)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save))
-  (eldoc-mode +1)
-  (diminish 'subword-mode "")
-  (tide-hl-identifier-mode +1))
+  :custom (js-indent-level 2)
+  :hook (js-base-mode . subword-mode))
 
 ;; Tree-sitter (built-in). Grammars install to ~/.emacs.d/tree-sitter/ on
-;; first use. Only these ts-modes are enabled; other languages keep their
-;; classic modes so their hooks (lsp, ccls, gofmt...) keep firing.
-;; .ts/.tsx open in typescript-ts-mode/tsx-ts-mode out of the box.
+;; first use. Languages not listed here keep their classic modes.
 (use-package treesit
   :straight (:type built-in)
   :custom
   (treesit-auto-install-grammar 'always)
   (treesit-font-lock-level 4)
-  (treesit-enabled-modes '(typescript-ts-mode tsx-ts-mode json-ts-mode css-ts-mode))
+  (treesit-enabled-modes '(c-ts-mode c++-ts-mode c-or-c++-ts-mode
+							go-ts-mode go-mod-ts-mode rust-ts-mode
+							js-ts-mode typescript-ts-mode tsx-ts-mode
+							json-ts-mode css-ts-mode python-ts-mode
+							lua-ts-mode ruby-ts-mode cmake-ts-mode))
   :bind ("C-c t d" . treesit-explore-mode))
 
 ;; TypeScript (typescript-ts-base-mode covers both .ts and .tsx)
-(add-hook 'typescript-ts-base-mode-hook #'setup-tide-mode)
-
-;; TypeScript IDE
-(use-package tide
-  :straight t
-  :config
-  (define-key evil-normal-state-map (kbd "M-.") 'tide-jump-to-definition))
+(add-hook 'typescript-ts-base-mode-hook #'subword-mode)
 
 ;; Add node_modules to PATH
 (use-package add-node-modules-path
@@ -218,6 +124,7 @@
 (use-package prettier-js
   :after (typescript-ts-mode)
   :straight t)
+
 ;; Web mode (HTML)
 (use-package web-mode
   :straight t
@@ -239,13 +146,6 @@
 	"Hooks for Web mode.  Adjust indent."
 	(setq web-mode-markup-indent-offset 4))
   (add-hook 'web-mode-hook 'web-mode-init-hook)
-
-  ;; disable other js linters
-  (setq-default flycheck-disabled-checkers
-				(append flycheck-disabled-checkers
-						'(javascript-jshint json-jsonlist)))
-  ;; enable eslint
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
   :mode (;;("\\.js\\'" . web-mode)
 		 ("\\.html\\'" . web-mode))
   :commands web-mode)

@@ -145,14 +145,11 @@
   :config
   (put 'dired-find-alternate-file 'disabled nil))
 
-(use-package all-the-icons-dired
+(use-package nerd-icons-dired
   :straight t
-  :diminish all-the-icons-dired-mode
-  :after all-the-icons
   :hook (dired-mode . (lambda ()
-						(interactive)
 						(unless (file-remote-p default-directory)
-						  (all-the-icons-dired-mode)))))
+						  (nerd-icons-dired-mode)))))
 
 (use-package dired-open
   :config
@@ -218,6 +215,9 @@
   (evil-set-initial-state 'pdf-view-mode 'emacs)
   (evil-set-initial-state 'dictionary-mode ' emacs)
 
+  ;; M-. jumps to definition (xref/eglot) instead of evil-repeat-pop-next
+  (define-key evil-normal-state-map (kbd "M-.") #'xref-find-definitions)
+
   ;; <tab> cycles org-mode visiblity
   (evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
 
@@ -246,49 +246,6 @@
 	"go" 'elfeed-show-visit
 	"gr" 'elfeed-show-refresh
 	"q" 'elfeed-kill-buffer))
-
-;; Smart parentheses
-(use-package smartparens
-  :diminish smartparens-mode
-  :defer 1
-  :config
-  ;; Load default smartparens rules for various languages
-  (require 'smartparens-config)
-  (setq sp-max-prefix-length 25)
-  (setq sp-max-pair-length 4)
-  (setq sp-highlight-pair-overlay nil
-		sp-highlight-wrap-overlay nil
-		sp-highlight-wrap-tag-overlay nil)
-
-  (with-eval-after-load 'evil
-	(setq sp-show-pair-from-inside t)
-	(setq sp-cancel-autoskip-on-backward-movement nil)
-	(setq sp-pair-overlay-keymap (make-sparse-keymap)))
-
-  (let ((unless-list '(sp-point-before-word-p
-					   sp-point-after-word-p
-					   sp-point-before-same-p)))
-	(sp-pair "'"  nil :unless unless-list)
-	(sp-pair "\"" nil :unless unless-list))
-
-  ;; In lisps ( should open a new form if before another parenthesis
-  (sp-local-pair sp-lisp-modes "(" ")" :unless '(:rem sp-point-before-same-p))
-
-  ;; Don't do square-bracket space-expansion where it doesn't make sense to
-  (sp-local-pair '(emacs-lisp-mode org-mode markdown-mode gfm-mode)
-				 "[" nil :post-handlers '(:rem ("| " "SPC")))
-
-
-  (dolist (brace '("(" "{" "["))
-	(sp-pair brace nil
-			 :post-handlers '(("||\n[i]" "RET") ("| " "SPC"))
-			 ;; Don't autopair opening braces if before a word character or
-			 ;; other opening brace. The rationale: it interferes with manual
-			 ;; balancing of braces, and is odd form to have s-exps with no
-			 ;; whitespace in between, e.g. ()()(). Insert whitespace if
-			 ;; genuinely want to start a new form in the middle of a word.
-			 :unless '(sp-point-before-word-p sp-point-before-same-p)))
-  (smartparens-global-mode t))
 
 ;; Configure Emacs compile command
 (use-package compile
@@ -359,6 +316,7 @@
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (setq dashboard-items '((recents  . 5)
 						  (projects . 5)))
+  (setq dashboard-projects-backend 'project-el)
   (setq dashboard-banner-logo-title nil)
   (setq dashboard-startup-banner 'official)
   (setq dashboard-center-content t)
@@ -450,13 +408,9 @@
   (eval-after-load "org" '(diminish 'org-indent-mode))
   (eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
   (eval-after-load "outline" '(diminish 'outline-minor-mode))
-  (eval-after-load "projectile" '(diminish 'projectile-mode))
-  (eval-after-load "rust-mode" '(diminish 'lsp-lens-mode))
-  (eval-after-load "typescript-ts-mode" '(diminish 'subword-mode))
-  (eval-after-load "js2-mode" '(diminish 'subword-mode ""))
+  (eval-after-load "subword" '(diminish 'subword-mode))
   (eval-after-load "dired" '(diminish 'dired-async-mode))
   (eval-after-load "dired" '(diminish 'dired-hide-dotfiles-mode))
-  (eval-after-load "dired" '(diminish 'all-the-icons-dired-mode))
   (eval-after-load "magit" '(diminish 'auto-fill-mode ""))
   (eval-after-load "magit" '(diminish 'with-editor-mode ""))
   (eval-after-load "olivetti" '(diminish 'olivetti-mode ""))
@@ -474,17 +428,12 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; Project management
-(use-package projectile
-  :straight t
-  :init
-  (setq projectile-sort-order 'recentf
-		projectile-enable-caching t)
-  :config
-  (global-set-key (kbd "C-c p p") 'projectile-switch-project)
-  (global-set-key (kbd "C-c p b") 'consult-project-buffer)
-  (global-set-key (kbd "C-c p s") 'consult-ripgrep)
-  (global-set-key (kbd "C-c p !") 'projectile-run-shell-command-in-root)
-  (projectile-mode +1))
+(use-package project
+  :straight (:type built-in)
+  :bind (("C-c p p" . project-switch-project)
+		 ("C-c p b" . consult-project-buffer)
+		 ("C-c p s" . consult-ripgrep)
+		 ("C-c p !" . project-shell-command)))
 
 ;; Replace fancy major modes with basic major mode
 ;; when long lines are detected.
@@ -590,15 +539,11 @@
 		("C-x t C-t" . treemacs-find-file)
 		("C-x t M-t" . treemacs-find-tag)))
 
-(use-package treemacs-all-the-icons
+(use-package treemacs-nerd-icons
   :straight t
   :after treemacs
   :config
-  (treemacs-load-theme "all-the-icons"))
-
-(use-package treemacs-projectile
-  :straight t
-  :after treemacs)
+  (treemacs-load-theme "nerd-icons"))
 
 (use-package treemacs-evil
   :straight t)
@@ -659,21 +604,20 @@
 		(browse-url (parse-url url))
 		(message "opening repo %s" url)))))
 
-;; Git diff
-(use-package git-gutter
+;; Git diff in the fringe, refreshed after magit operations
+(use-package diff-hl
   :straight t
-  :hook (prog-mode . git-gutter-mode)
-  :diminish (git-gutter-mode)
+  :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
+		 (magit-post-refresh . diff-hl-magit-post-refresh))
+  :init
+  (setq diff-hl-draw-borders nil)
+  (global-diff-hl-mode)
   :config
-  (setq git-gutter:update-interval 0.02))
-
-;; Git diff in the fringe
-(use-package git-gutter-fringe
-  :straight t
-  :config
-  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+  (define-fringe-bitmap 'db/diff-hl-bar [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'db/diff-hl-delete [128 192 224 240] nil nil 'bottom)
+  (setq diff-hl-fringe-bmp-function
+		(lambda (type _pos) (if (eq type 'delete) 'db/diff-hl-delete 'db/diff-hl-bar)))
+  (diff-hl-flydiff-mode))
 
 ;; Use dabbrev with Corfu!
 (use-package dabbrev
@@ -898,30 +842,25 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-;; Fancy icons
-(use-package all-the-icons
-  :straight t)
+;; Fancy icons (glyphs come from any installed Nerd Font)
+(use-package nerd-icons
+  :straight t
+  :custom (nerd-icons-font-family "SauceCodePro Nerd Font Mono"))
 
 ;; Fancy icons for completions
-(use-package all-the-icons-completion
-  :after (marginalia all-the-icons)
-  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
+(use-package nerd-icons-completion
+  :straight t
+  :after marginalia
+  :hook (marginalia-mode . nerd-icons-completion-marginalia-setup)
   :init
-  (all-the-icons-completion-mode))
+  (nerd-icons-completion-mode))
 
 ;; Corfu completion icons
-(use-package kind-icon
+(use-package nerd-icons-corfu
   :straight t
   :after corfu
-  :custom
-  (kind-icon-use-icons t)
-  ;; Have background color be the same as `corfu' face background
-  (kind-icon-default-face 'corfu-default)
-  ;; Use midpoint color between foreground and background colors ("blended")?
-  (kind-icon-blend-background nil)
-  (kind-icon-blend-frac 0.08)
   :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 ;; Dictionary
 (use-package dictionary

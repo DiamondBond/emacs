@@ -17,45 +17,27 @@
 
 ;; Garbage Collection
 ;; A big contributor to startup times is garbage collection. We up the gc
-;; threshold to temporarily prevent it from running, then reset it later.
-(setq gc-cons-percentage-original gc-cons-percentage
-	  gc-cons-threshold-original gc-cons-threshold)
-(setq gc-cons-threshold most-positive-fixnum
-	  gc-cons-percentage 0.6)
+;; threshold to prevent it from running during startup; gcmh takes over after.
+(setq gc-cons-threshold most-positive-fixnum)
 
 ;; Silence compiler warnings
-(setq warning-minimum-level :emergency)
+(setq warning-minimum-level :error)
 (setq warning-suppress-types '((comp)))
 (setq native-comp-async-report-warnings-errors nil)
 (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local cl-functions))
 
-;; Warning: with 3, the compiler is free to perform dangerous optimizations.
-(setq-default native-comp-speed 3) ;; -O3
-
 ;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;
 ;; packages are compiled ahead-of-time when they are installed and site files
 ;; are compiled when gccemacs is installed.
-(setq native-comp-deferred-compilation nil)
-(setq native-comp-deferred-compilation-deny-list nil)
+(setq native-comp-jit-compilation nil)
 
-;; In Emacs 27+, package initialization occurs before `user-init-file' is
-;; loaded, but after `early-init-file'.
+;; Packages are managed by straight.el, not package.el.
 (setq package-enable-at-startup nil)
 
 ;; In noninteractive sessions, prioritize non-byte-compiled source files to
 ;; prevent the use of stale byte-code. Otherwise, it saves us a little IO time
 ;; to skip the mtime checks on every *.elc file.
 (setq load-prefer-newer noninteractive)
-
-;; Initialise installed packages
-(setq package-enable-at-startup t)
-
-;; Allow loading from the package cache
-(defvar package-quickstart)
-(setq package-quickstart t)
-
-;; Fully redraw the display before processing queued input events
-(setq redisplay-dont-pause t)
 
 ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 (setq tool-bar-mode nil

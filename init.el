@@ -32,15 +32,14 @@
 ;; Load newer .elc or .el
 (setq load-prefer-newer t)
 
-;; Initialize melpa repo
-(require 'package)
-(add-to-list 'package-archives
-			 '("melpa" . "https://melpa.org/packages/"))
-(package-initialize)
-
 ;; Define when to check for package modifications,
 ;; for improved straight.el startup time.
 (setq straight-check-for-modifications '(check-on-save))
+
+;; Use the versions Emacs ships instead of cloning these as dependencies.
+(setq straight-built-in-pseudo-packages
+	  '(emacs nadvice python image-mode use-package bind-key project xref
+			  eldoc flymake jsonrpc eglot so-long which-key erc))
 
 ;; Bootstrap straight.el
 (defvar bootstrap-version)
@@ -56,8 +55,8 @@
 	  (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; Install use-package with straight.el
-(straight-use-package 'use-package)
+;; use-package is built in; loading it activates straight's :straight keyword
+(require 'use-package)
 
 ;; Configure straight.el
 (use-package straight
@@ -130,11 +129,5 @@
 ;;---------------------------------------------------------------------
 ;; END
 ;;---------------------------------------------------------------------
-
-;; Restore desired GC values
-(add-hook 'emacs-startup-hook
-		  (lambda ()
-			(setq gc-cons-threshold lsp-cons-threshold)
-			(setq gc-cons-percentage gc-cons-percentage-original)))
 
 ;;; init.el ends here

@@ -21,12 +21,11 @@
 ;; Garbage Collection Magic Hack
 (use-package gcmh
   :straight t
+  :diminish gcmh-mode
+  :hook (emacs-startup . gcmh-mode)
   :init
   (setq gcmh-idle-delay 15
-		gcmh-high-cons-threshold (* 16 1024 1024))  ; 16mb
-  :config
-  (setq gc-cons-threshold lsp-cons-threshold)
-  (gcmh-mode 1))
+		gcmh-high-cons-threshold (* 16 1024 1024)))  ; 16mb
 
 ;; Org-mode - one mode to rule them all.
 (use-package org
@@ -69,7 +68,6 @@
 		   ((agenda #1="")
 			(alltodo #1#)))))
 
-
   ;; set org todo keywords
   (setq org-todo-keywords
 		'((sequence "TODO(t)"
@@ -88,7 +86,6 @@
 	(setq org-refile-targets
 		  '(("~/org/archive.org" :maxlevel . 1)
 			("~/org/tasks.org" :maxlevel . 1))))
-
 
   ;; org-src languages
   (org-babel-do-load-languages
@@ -120,7 +117,7 @@
   ("C-c c" . 'org-capture)
   ("C-c a" . 'org-agenda)
   ("C-c l" . 'org-store-link)
-  ("C-<f1>" . (lambda()(interactive)(show-all))))
+  ("C-<f1>" . org-fold-show-all))
 
 ;; Org-mode extras
 (use-package org-contrib
@@ -197,8 +194,6 @@
   ;; more granular undo with evil
   (setq evil-want-fine-undo t)
 
-  (setq sentence-end-double-space nil)
-
   ;; evil-redo
   (define-key evil-normal-state-map (kbd "U") 'undo-redo)
 
@@ -213,7 +208,6 @@
   ;; motion
   (evil-set-initial-state 'dashboard-mode 'motion)
   (evil-set-initial-state 'debugger-mode 'motion)
-  (evil-set-initial-state 'pdf-view-mode 'motion)
   ;; emacs
   (evil-set-initial-state 'nov-mode 'emacs)
   (evil-set-initial-state 'term-mode 'emacs)
@@ -298,7 +292,7 @@
 
 ;; Configure Emacs compile command
 (use-package compile
-  :straight t
+  :straight (:type built-in)
   :init
   (setq compilation-ask-about-save nil
 		compilation-scroll-output 'next-error
@@ -341,7 +335,6 @@
   :custom
   (modus-themes-italic-constructs t)
   (modus-themes-bold-constructs t)
-  (modus-themes-region '(accented bg-only no-extend))
   (modus-themes-common-palette-overrides
 		'((bg-region bg-magenta-intense)
 		  (fg-region fg-main))))
@@ -362,7 +355,6 @@
   :init
   (add-hook 'after-init-hook 'dashboard-refresh-buffer)
   (add-hook 'dashboard-mode-hook (lambda () (setq show-trailing-whitespace nil)))
-  :preface
   :config
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (setq dashboard-items '((recents  . 5)
@@ -452,11 +444,8 @@
   (diminish 'abbrev-mode "")
   (diminish 'visual-line-mode)
   (diminish 'outline-mode)
-  (diminish 'gcmh-mode)
   ;; diminish after mode is loaded
   (eval-after-load "eldoc" '(diminish 'eldoc-mode))
-  (eval-after-load "c-mode" '(diminish 'c-mode))
-  (eval-after-load "c++-mode" '(diminish 'c++-mode))
   (eval-after-load "which-key" '(diminish 'which-key-mode))
   (eval-after-load "org" '(diminish 'org-indent-mode))
   (eval-after-load "ox-beamer" '(diminish 'org-beamer-mode))
@@ -471,10 +460,7 @@
   (eval-after-load "magit" '(diminish 'auto-fill-mode ""))
   (eval-after-load "magit" '(diminish 'with-editor-mode ""))
   (eval-after-load "olivetti" '(diminish 'olivetti-mode ""))
-  (eval-after-load "evil" '(diminish 'evil-collection-unimpaired-mode ""))
-  (eval-after-load "mu4e" '(diminish 'overwrite-mode ""))
-  (eval-after-load "mu4e" '(diminish 'mu4e-modeline-mode ""))
-  (eval-after-load "auto-revert-mode" '(diminish 'auto-revert-mode "")))
+  (eval-after-load "evil" '(diminish 'evil-collection-unimpaired-mode "")))
 
 ;; Colorize color-codes in prog-modes
 (use-package rainbow-mode
@@ -503,13 +489,12 @@
 ;; Replace fancy major modes with basic major mode
 ;; when long lines are detected.
 (use-package so-long
-  :defer t
-  :straight t
+  :straight (:type built-in)
+  :init (global-so-long-mode 1)
   :bind
   (:map so-long-mode-map
 		("C-s" . isearch-forward)
-		("C-r" . isearch-backward))
-  :config (global-so-long-mode 1))
+		("C-r" . isearch-backward)))
 
 ;; Input unicode symbols
 (use-package xah-math-input
@@ -521,7 +506,7 @@
 
 ;; Diagnostics for elisp
 (use-package flymake
-  :straight t
+  :straight (:type built-in)
   :config
   ;; Message navigation bindings
   (with-eval-after-load 'flymake
@@ -531,7 +516,7 @@
 
 ;; Spellchecking
 (use-package flyspell
-  :straight t
+  :straight (:type built-in)
   :config
   (add-to-list 'ispell-skip-region-alist '("~" "~"))
   (add-to-list 'ispell-skip-region-alist '("=" "="))
@@ -674,19 +659,6 @@
 		(browse-url (parse-url url))
 		(message "opening repo %s" url)))))
 
-;; Autorevert - required by magit
-(use-package autorevert
-  :straight t
-  :after magit
-  :diminish auto-revert-mode
-  :init
-  (setq auto-revert-verbose nil)
-  :hook ((prog-mode
-		  text-mode
-		  tex-mode
-		  org-mode
-		  conf-mode) . auto-revert-mode))
-
 ;; Git diff
 (use-package git-gutter
   :straight t
@@ -705,20 +677,20 @@
 
 ;; Use dabbrev with Corfu!
 (use-package dabbrev
-  :straight t
+  :straight (:type built-in)
   ;; swap M-/ and C-M-/
   :bind (("M-/" . dabbrev-completion)
 		 ("C-M-/" . dabbrev-expand)))
 
 ;; Expand/highlight regions
 (use-package expand-region
-  :ensure t
+  :straight t
   :bind (("C-=" . er/expand-region)
 		 ("C--" . er/contract-region)))
 
 ;; Display keybinds
 (use-package which-key
-  :straight t
+  :straight (:type built-in)
   :init
   (which-key-mode)
   :config
@@ -743,12 +715,6 @@
 ;; Completion pre-configuration
 (use-package emacs
   :init
-  ;; add prompt indicator to `completing-read-multiple'.
-  ;; alternatively try `consult-completing-read-multiple'.
-  (defun crm-indicator (args)
-	(cons (concat "[CRM] " (car args)) (cdr args)))
-  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
-
   ;; do not allow the cursor in the minibuffer prompt
   (setq minibuffer-prompt-properties
 		'(read-only t cursor-intangible t face minibuffer-prompt))
@@ -758,7 +724,6 @@
   ;; Vertico commands are hidden in normal buffers.
   (setq read-extended-command-predicate
 		#'command-completion-default-include-p)
-
 
   ;; completion ignores case
   (setq read-buffer-completion-ignore-case t
@@ -775,8 +740,8 @@
   :bind (:map corfu-map
 			  ("<escape>". corfu-quit)
 			  ("<return>" . corfu-insert)
-			  ("C-h" . corfu-show-documentation)
-			  ("M-l" . 'corfu-show-location)
+			  ("C-h" . corfu-info-documentation)
+			  ("M-l" . corfu-info-location)
 			  ("RET" . nil)
 			  ("M-j" . corfu-next)
 			  ("M-k" . corfu-previous)
@@ -788,7 +753,6 @@
   (corfu-auto t)
   (corfu-auto-prefix 3)
   (corfu-auto-delay 0.2)
-  (corfu-echo-documentation 0)
   (corfu-preview-current nil)
   (corfu-quit-no-match 'separator)
   (corfu-separator ?\s) ;; Necessary for use with orderless
@@ -905,10 +869,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :init
   ;; Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
-		xref-show-definitions-function #'consult-xref)
-
-  ;; Updating the default to include "--ignore-case"
-  (setq consult-ripgrep-command "rg --null --line-buffered --color=ansi --max-columns=1000 --ignore-case --no-heading --line-number . -e ARG OPTS"))
+		xref-show-definitions-function #'consult-xref))
 
 ;; Act on minibuffer completions
 (use-package embark
@@ -925,10 +886,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (add-to-list 'display-buffer-alist
 			   '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
 				 nil
-				 (window-parameters (mode-line-format . none))))
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode)
-  (embark-collect-mode . embark-consult-preview-minor-mode))
+				 (window-parameters (mode-line-format . none)))))
 
 ;; Emark & Consult integrations
 (use-package embark-consult
@@ -967,7 +925,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 ;; Dictionary
 (use-package dictionary
-  :straight t
+  :straight (:type built-in)
   :commands (dictionary-search)
   :init
   (global-set-key (kbd "C-c d") #'dictionary-search)
@@ -1046,7 +1004,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 ;; Mailing lists
 (use-package gnus
-  :straight t
+  :straight (:type built-in)
   :defer 2
   :config
   ;; make Gnus startup faster
@@ -1129,7 +1087,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 ;; Rizon IRC client
 (use-package erc
-  :straight t
+  :straight (:type built-in)
   :defer 2
   :custom
   (erc-autojoin-timing 'ident)
@@ -1170,9 +1128,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 ;; Librea IRC client
 (use-package rcirc
+  :straight (:type built-in)
   :defer 2
   :commands (irc rcirc)
-  :ensure nil
   :config
   (setq rcirc-auto-authenticate-flag t)
   (setq rcirc-time-format "[%I:%M %p] ")
@@ -1203,7 +1161,6 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :straight t
   :commands (pdf-view-mode pdf-tools-install)
   :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
-  :load-path "site-lisp/pdf-tools/lisp"
   :magic ("%PDF" . pdf-view-mode)
   :config
   ;; install pdf-tools
@@ -1212,15 +1169,12 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (setq-default pdf-view-display-size 'fit-page)
   ;; automatically annotate highlights
   (setq pdf-annot-activate-created-annotations t)
-  (define-pdf-cache-function pagelabels)
-  :hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
-		 (pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
+  (define-pdf-cache-function pagelabels))
 
 ;; Restore pdf view
 (use-package pdf-view-restore
   :after pdf-tools
   :straight t
-  :config
   :hook (pdf-view-mode . pdf-view-restore-mode))
 
 ;; Focus writing mode
@@ -1231,14 +1185,14 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 ;; Save place in buffer
 (use-package saveplace
-  :straight t
+  :straight (:type built-in)
   :defer nil
   :config
   (save-place-mode))
 
 ;; Save history
 (use-package savehist
-  :straight t
+  :straight (:type built-in)
   :init
   (savehist-mode))
 

@@ -19,36 +19,16 @@
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
 ;; Email to encrypt to
-(setq epa-file-encrypt-to '(globals--email))
-
-;; Set GC threshold
-(setq lsp-cons-threshold 100000000)
-
-;; Do not GC during startup
-(setq gc-cons-threshold most-positive-fixnum)
-
-;; Garbage collection minibuffer hack
-(defun my-minibuffer-setup-hook ()
-  "Garbage collection will never occur."
-  (setq gc-cons-threshold most-positive-fixnum))
-
-(defun my-minibuffer-exit-hook ()
-  "Garbage collection will kick off immediately."
-  (setq gc-cons-threshold lsp-cons-threshold)) ;; or gc-cons-threshold-original
-
-;;(add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
-;;(add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
+(setq epa-file-encrypt-to (list globals--email))
 
 ;; Disable warnings
-(setq warning-suppress-types '((comp)))
 (setq ad-redefinition-action 'accept)
 
 ;; Disable auto-window-vscroll
 (setq auto-window-vscroll nil)
 
-;; Set initial major modes
-(setq-default initial-major-mode 'fundamental-mode
-			  default-major-mode 'text-mode)
+;; Set initial major mode
+(setq-default initial-major-mode 'fundamental-mode)
 
 ;; Disable confirmation on visiting a new file
 (setq confirm-nonexistent-file-or-buffer nil)
@@ -90,6 +70,10 @@
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
 (setq vc-make-backup-files nil)
+
+;; Revert buffers when their files change on disk (e.g. edited by Claude)
+(setq auto-revert-verbose nil)
+(global-auto-revert-mode 1)
 
 ;; Delete whitespace on save
 (add-hook 'before-save-hook
@@ -151,7 +135,6 @@
 (setq-default indent-tabs-mode t)
 (setq-default tab-width 4)
 (setq-default standard-indent 4)
-(setq-default indent-line-function 4)
 (setq-default lisp-indent-offset nil)
 (setq-default sgml-basic-offset 4)
 (setq-default electric-indent-inhibit nil)
@@ -251,11 +234,10 @@
 (defalias 'third 'caddr)
 (defalias 'when-not 'unless)
 (defalias 'word-count 'count-words)
-(defalias 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
 
 (defalias 'shrink-wrap 'fit-frame-to-buffer)
 
-(defalias 'bookmark-delete-all 'bookmark-delete)
 
 (defalias 'sync/news 'elfeed-update)
 

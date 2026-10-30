@@ -5,10 +5,9 @@
 !.gitignore
 !CLAUDE.md
 !LICENSE
-!README.org
+!README.md
 !early-init.el
 !init.el
 !custom.el
 !bin/
-!docs/
 !lisp/

@@ -367,6 +367,8 @@
   (corfu-auto t)
   (corfu-preview-current nil)
   (corfu-scroll-margin 5)
+  ;; no popup while writing prose; M-i still completes on demand
+  :hook (text-mode . (lambda () (setq-local corfu-auto nil)))
   :init (global-corfu-mode)
   :config
   ;; adapted from Corfu's manual.

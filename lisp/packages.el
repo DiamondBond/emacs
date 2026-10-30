@@ -921,7 +921,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 	:straight t
 	:defer 3
 	:config
-	(setq deft-directory org-directory
+	(setq deft-directory "~/org"
 		  deft-recursive t
 		  deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
 		  deft-use-filename-as-title t)))

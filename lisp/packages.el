@@ -382,12 +382,11 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :bind (("M-i" . completion-at-point)
 		 ("C-c C-c d" . cape-dabbrev)
 		 ("C-c C-c f" . cape-file)
-		 ("C-c C-c s" . cape-symbol)
-		 ("C-c C-c i" . cape-ispell))
+		 ("C-c C-c s" . cape-elisp-symbol))
   :custom (cape-dabbrev-min-length 3)
-  :config
-  (dolist (backend '( cape-symbol cape-keyword cape-file cape-dabbrev))
-	(add-to-list 'completion-at-point-functions backend)))
+  :init
+  (dolist (backend '(cape-elisp-symbol cape-keyword cape-file cape-dabbrev))
+	(add-hook 'completion-at-point-functions backend)))
 
 ;;---------------------------------------------------------------------
 ;; FILES

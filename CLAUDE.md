@@ -1,6 +1,6 @@
 # Emacs config
 
-Personal Emacs 31 config. Emacs sits next to Claude Code here: scratch notes, todo/plan markdown, magit, vterm, quick edits.
+Personal Emacs 31 config.
 
 ## Layout
 

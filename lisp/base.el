@@ -69,7 +69,7 @@
 (setq create-lockfiles nil)
 (setq vc-make-backup-files nil)
 
-;; Revert buffers when their files change on disk (e.g. edited by Claude)
+;; Revert buffers when their files change on disk
 (setq auto-revert-verbose nil)
 (global-auto-revert-mode 1)
 

@@ -1,6 +1,6 @@
 # Diamond's Emacs
 
-An Emacs 31 config that sits next to Claude Code: evil, vertico, consult, corfu, magit, vterm, eglot and tree-sitter. Small, and built-in wherever Emacs allows.
+My Emacs 31 config: evil, vertico, consult, corfu, magit, vterm, eglot and tree-sitter. Small, and built-in wherever Emacs allows.
 
 ## Install
 

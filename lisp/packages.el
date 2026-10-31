@@ -545,6 +545,15 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (modus-themes-common-palette-overrides '((bg-region bg-magenta-intense)
 										   (fg-region fg-main))))
 
+;; Myron themes
+(use-package myron-themes
+  :straight (:host github :repo "neeasade/myron-themes" :files ("*.el" "themes/*.el"))
+  :defer t
+  :custom
+  ;; Myron's named colours only resolve through the real palette; base16's
+  ;; terminal fallback lacks them and breaks the theme in -nw frames
+  (base16-theme-256-color-source 'colors))
+
 ;; Prot's EF themes
 (use-package ef-themes
   :defer 3)

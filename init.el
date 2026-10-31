@@ -83,6 +83,8 @@
  globals--auth-sources '("~/.authinfo.gpg")                 ; Auth Src
  globals--browser      'browse-url-firefox                  ; Browser
  globals--scratch      "~/org/scratch.md"                   ; Scratch
+ globals--light-theme  'myron-mcfay                         ; Light theme
+ globals--dark-theme   'modus-vivendi                       ; Dark theme
  )
 
 ;;---------------------------------------------------------------------

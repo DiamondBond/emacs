@@ -402,14 +402,25 @@ If the prefix argument ARG is non-nil, convert the text to uppercase."
 		(message "Text wrapped to 80 columns in the selected region."))
 	(message "No active region. Please select a region to wrap.")))
 
-(defun load-theme-based-on-system-theme ()
-  "Load a theme based on GNOME dark mode preference."
+(defun db/load-theme (theme)
+  "Make THEME the only enabled theme."
+  (disable-all-themes)
+  (load-theme theme t))
+
+(defun db/toggle-theme ()
+  "Switch between the light and dark theme."
   (interactive)
-  (let* ((color-scheme (string-trim (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")))
-		 (dark-mode (string-equal color-scheme "'prefer-dark'")))
-	(if dark-mode
-		(modus-themes-select 'modus-vivendi)
-	  (modus-themes-select 'modus-operandi))))
+  (db/load-theme (if (memq globals--dark-theme custom-enabled-themes)
+					 globals--light-theme
+				   globals--dark-theme)))
+
+(defun load-theme-based-on-system-theme ()
+  "Load the light or dark theme based on GNOME dark mode preference."
+  (interactive)
+  (let ((color-scheme (string-trim (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme"))))
+	(db/load-theme (if (string-equal color-scheme "'prefer-dark'")
+					   globals--dark-theme
+					 globals--light-theme))))
 
 (provide 'functions)
 ;;; functions.el ends here

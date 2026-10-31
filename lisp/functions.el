@@ -105,13 +105,23 @@
 		  ;; Claude sets the terminal title; keep our name so we find it again
 		  (setq-local vterm-buffer-name-string nil))))))
 
+(defun db/claude-buffer-p ()
+  "Non-nil if this buffer's process is Claude Code, or a shell running it."
+  (when-let* ((pid (and (derived-mode-p 'vterm-mode)
+						(process-id (get-buffer-process (current-buffer))))))
+	(seq-some (lambda (p)
+				(let ((attrs (process-attributes p)))
+				  (and (equal (alist-get 'comm attrs) "claude")
+					   (memql pid (list p (alist-get 'ppid attrs))))))
+			  (list-system-processes))))
+
 (defvar magit-display-buffer-function)
 (defun db/claude-workspace ()
   "Claude Code in a wide left window, magit for the same project on the right.
 From a Claude buffer, toggle magit-status instead, reusing a magit window
 that has moved on to a log or diff."
   (interactive)
-  (let* ((in-claude (string-prefix-p "*claude " (buffer-name)))
+  (let* ((in-claude (db/claude-buffer-p))
 		 (magit-win (and in-claude
 						 (seq-find (lambda (w)
 									 (provided-mode-derived-p

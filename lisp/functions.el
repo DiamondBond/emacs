@@ -110,12 +110,22 @@
   (interactive)
   (delete-other-windows)
   (claude-here)
+  ;; Weakly dedicated: display-buffer leaves it alone, switch-to-buffer still works
+  (set-window-dedicated-p nil 'claude)
   (let ((root default-directory))
 	(select-window (split-window-right (floor (* 0.75 (window-total-width)))))
 	(let ((default-directory root)
 		  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 	  (magit-status)))
   (other-window -1))
+
+(defun db/project-tab (dir)
+  "Give DIR's project its own tab, raising it if it already exists."
+  (let ((name (file-name-nondirectory (directory-file-name dir))))
+	(if (tab-bar--tab-index-by-name name)
+		(tab-bar-select-tab-by-name name)
+	  (tab-bar-new-tab)
+	  (tab-bar-rename-tab name))))
 
 (defun ncmpcpp ()
   (interactive)

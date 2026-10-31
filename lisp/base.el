@@ -190,6 +190,9 @@
 (setq window-resize-pixelwise t)
 (setq frame-resize-pixelwise t)
 
+;; Split along the longer axis: side by side when wide, stacked when tall
+(setq split-window-preferred-direction 'longest)
+
 ;; Inhibit startup screen
 (setq inhibit-startup-message t)
 (setq initial-scratch-message "")

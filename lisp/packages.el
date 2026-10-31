@@ -426,7 +426,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   :bind (("C-c p p" . project-switch-project)
 		 ("C-c p b" . consult-project-buffer)
 		 ("C-c p s" . consult-ripgrep)
-		 ("C-c p !" . project-shell-command)))
+		 ("C-c p !" . project-shell-command))
+  :config
+  (advice-add 'project-switch-project :before #'db/project-tab))
 
 ;; Treemacs
 (use-package treemacs

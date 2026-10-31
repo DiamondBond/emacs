@@ -107,18 +107,27 @@
 
 (defvar magit-display-buffer-function)
 (defun db/claude-workspace ()
-  "Claude Code in a wide left window, magit for the same project on the right."
+  "Claude Code in a wide left window, magit for the same project on the right.
+From a Claude buffer, toggle the magit window instead."
   (interactive)
-  (delete-other-windows)
-  (claude-here)
-  ;; Weakly dedicated: display-buffer leaves it alone, switch-to-buffer still works
-  (set-window-dedicated-p nil 'claude)
-  (let ((root default-directory))
-	(select-window (split-window-right (floor (* 0.75 (window-total-width)))))
-	(let ((default-directory root)
-		  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-	  (magit-status)))
-  (other-window -1))
+  (let ((in-claude (string-prefix-p "*claude " (buffer-name)))
+		(magit-win (seq-find (lambda (w)
+							   (provided-mode-derived-p
+								(buffer-local-value 'major-mode (window-buffer w)) 'magit-mode))
+							 (window-list))))
+	(if (and in-claude magit-win)
+		(delete-window magit-win)
+	  (unless in-claude
+		(delete-other-windows)
+		(claude-here))
+	  ;; Weakly dedicated: display-buffer leaves it alone, switch-to-buffer still works
+	  (set-window-dedicated-p nil 'claude)
+	  (let ((root default-directory))
+		(select-window (split-window-right (floor (* 0.75 (window-total-width)))))
+		(let ((default-directory root)
+			  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+		  (magit-status)))
+	  (other-window -1))))
 
 (defun db/project-tab (dir)
   "Give DIR's project its own tab, raising it if it already exists."

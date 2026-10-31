@@ -98,7 +98,9 @@
 		 (name (format "*claude %s*" (abbreviate-file-name default-directory))))
 	(if (get-buffer name)
 		(switch-to-buffer name)
-	  (let ((vterm-shell "claude"))
+	  (let ((vterm-shell "claude")
+			;; The alt-screen renderer hides scrollback from the Emacs buffer
+			(vterm-environment '("CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN=1")))
 		(with-current-buffer (vterm name)
 		  ;; Claude sets the terminal title; keep our name so we find it again
 		  (setq-local vterm-buffer-name-string nil))))))

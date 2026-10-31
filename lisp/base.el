@@ -197,17 +197,9 @@
 ;; Disable blinking cursor
 (blink-cursor-mode -1)
 
-;; Menu-bar
-(if (fboundp 'menu-bar-mode)
-	(menu-bar-mode 1))
-
 ;; Tool-bar
 (if (fboundp 'tool-bar-mode)
 	(tool-bar-mode 0))
-
-;; Scroll-bar
-(if (fboundp 'scroll-bar-mode)
-	(scroll-bar-mode 1))
 
 ;; Tab-bar
 (setq tab-bar-history-limit 25)

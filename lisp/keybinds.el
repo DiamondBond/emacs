@@ -19,6 +19,7 @@
 (if (eq system-type 'gnu/linux)
 	(define-key z-map (kbd "v") 'vterm))
 (define-key z-map (kbd "C") 'claude-here)
+(define-key z-map (kbd "g") 'db/claude-workspace)
 (if (eq system-type 'windows-nt)
 	(define-key z-map (kbd "v") 'eshell))
 

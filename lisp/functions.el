@@ -105,6 +105,18 @@
 		  ;; Claude sets the terminal title; keep our name so we find it again
 		  (setq-local vterm-buffer-name-string nil))))))
 
+(defun db/claude-workspace ()
+  "Claude Code in a wide left window, magit for the same project on the right."
+  (interactive)
+  (delete-other-windows)
+  (claude-here)
+  (let ((root default-directory))
+	(select-window (split-window-right (floor (* 0.75 (window-total-width)))))
+	(let ((default-directory root)
+		  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+	  (magit-status)))
+  (other-window -1))
+
 (defun ncmpcpp ()
   (interactive)
   (run-in-vterm "ncmpcpp"))

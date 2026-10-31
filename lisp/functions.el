@@ -105,6 +105,7 @@
 		  ;; Claude sets the terminal title; keep our name so we find it again
 		  (setq-local vterm-buffer-name-string nil))))))
 
+(defvar magit-display-buffer-function)
 (defun db/claude-workspace ()
   "Claude Code in a wide left window, magit for the same project on the right."
   (interactive)

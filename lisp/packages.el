@@ -549,10 +549,14 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (use-package myron-themes
   :straight (:host github :repo "neeasade/myron-themes" :files ("*.el" "themes/*.el"))
   :defer t
-  :custom
-  ;; Myron's named colours only resolve through the real palette; base16's
-  ;; terminal fallback lacks them and breaks the theme in -nw frames
-  (base16-theme-256-color-source 'colors))
+  :config
+  ;; Myron's named colours only resolve through the real palette. base16's
+  ;; terminal fallbacks lack them, and the daemon's initial frame always
+  ;; takes the bare-terminal clause, so loading the theme errors there.
+  (define-advice base16-theme-transform-face (:around (fn spec colors) db/all-displays)
+	(let ((base16-theme-shell-colors colors)
+		  (base16-theme-shell-colors-256 colors))
+	  (funcall fn spec colors))))
 
 ;; Prot's EF themes
 (use-package ef-themes
